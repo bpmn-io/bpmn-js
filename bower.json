@@ -1,0 +1,28 @@
+{
+  "name": "diagram.js",
+  "version": "0.0.0",
+  "authors": [
+    "Nico Rehwaldt <nico.rehwaldt@camunda.com>"
+  ],
+  "description": "diagrams for the web",
+  "main": "build/diagram-min.js",
+  "keywords": [
+    "models",
+    "diagram",
+    "renderer",
+    "modeler"
+  ],
+  "dependencies": {
+    "snapsvg": "https://raw2.github.com/wookiehangover/Snap.svg/browserify-dist/dist/snap.svg.js"
+  },
+  "license": "AGPL",
+  "homepage": "http://bpmn.io",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

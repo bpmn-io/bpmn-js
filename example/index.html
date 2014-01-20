@@ -1,0 +1,29 @@
+<html>
+<head>
+  <!--link href='/build/build.css' rel='stylesheet' -->
+</head>
+<body>
+  <script src='../build/common.js'></script>
+  <script src='../build/diagram.js'></script>
+  <script>
+    var Diagram = require('diagram');
+    var diagram = new Diagram();
+
+    diagram.inject([ 'events', 'canvas', function(events, canvas) {
+
+      events.on('connection.added', function(event) {
+        console.log('connection added', event);
+      });
+
+      events.on('shape.added', function(event) {
+        console.log('shape added', event);
+      });
+
+      canvas.addShape({x: 10, y: 10, width: 30, height: 30 });
+      canvas.addShape({x: 100, y: 100, width: 30, height: 30 });
+      canvas.addShape({x: 300, y: 300, width: 100, height: 100 });
+
+      canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+    }]);
+  </script>
+</body>
