@@ -42,7 +42,7 @@ function chainToString(chain, current) {
 }
 
 /**
- * @class Injector
+ * @class
  * 
  * A injector that allows it to resolve
  * known modules.
@@ -123,9 +123,10 @@ function Injector(moduleMap) {
 
 
 /**
- * @class Registry
+ * @class
  * 
- * A registry that can be used to register modules by name.
+ * A registry that can be used to register modules by name that can later
+ * be instantiated using an {@link Injector}.
  */
 function Registry() {
   

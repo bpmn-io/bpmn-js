@@ -1,7 +1,7 @@
 var _ = require('../util/underscore');
 
 /**
- * @class Events
+ * @class
  * 
  * A general purpose event bus
  */

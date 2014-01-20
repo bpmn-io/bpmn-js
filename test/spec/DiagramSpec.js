@@ -2,6 +2,10 @@ var Diagram = require('../../src/Diagram');
 
 describe('diagram', function() {
 
+  it('should offer #plugin API', function() {
+    expect(Diagram.plugin).toBeDefined();
+  });
+
   it('should bootstrap app', function() {
 
     var diagram = new Diagram();

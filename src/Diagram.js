@@ -7,7 +7,12 @@ var modules = require('./util/modules'),
 var registry = new modules.Registry();
 
 /**
- * @class Diagram
+ * @class
+ *
+ * The main diagram.js entry point.
+ * 
+ * @param {Object} options
+ * @param {String[]} options.plugins a list of plugins to use when creating the diagram
  */
 function Diagram(options) {
 
@@ -30,9 +35,9 @@ function Diagram(options) {
   }
 
   options = options || {};
-  options.modules = (options.modules || []).concat([ 'canvas', 'events', 'svgFactory' ]);
+  options.plugins = (options.plugins || []).concat([ 'canvas', 'events', 'svgFactory' ]);
 
-  injector = bootstrap(options.modules, options);
+  injector = bootstrap(options.plugins, options);
 
   return {
 
@@ -65,4 +70,35 @@ registry.register('events', Events);
 registry.register('svgFactory', SvgFactory);
 
 module.exports = Diagram;
-module.exports.modules = registry;
+
+/**
+ * Register a new plugin with the diagram.
+ * 
+ * @method Diagram.plugin
+ *
+ * @example
+ *
+ * var Diagram = require('Diagram');
+ *
+ * Diagram.plugin('mySamplePlugin', [ 'events', function(events) {
+ *   events.on('shape.added', function(event) {
+ *     console.log('shape ', event.shape, ' was added to the diagram');
+ *   });
+ * }]);
+ *
+ * var diagram = new Diagram({ plugins: 'mySamplePlugin' });
+ *
+ * diagram.resolve([ 'canvas', function(canvas) {
+ *   
+ *   // add shape to drawing canvas
+ *   canvas.addShape({ x: 10, y: 10 });
+ * });
+ *
+ * // 'shape ... was added to the diagram' logged to console
+ * 
+ * @param {String} pluginId a unique identifier to reference this plugin from other components
+ * @param {Object[]|Function} definition the plugin definition
+ *
+ * @see Diagram
+ */
+module.exports.plugin = registry.register;
