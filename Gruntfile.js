@@ -55,6 +55,19 @@ module.exports = function(grunt) {
       browserify: {
         files: [ 'src/**/*.js' ],
         tasks: [ 'browserify' ],
+      },
+      jsdoc: {
+        files: [ 'src/**/*.js', 'test/**/*.js' ],
+        tasks: [ 'jsdoc']
+      }
+    },
+    jsdoc : {
+      dist : {
+        src: [ 'src/**/*.js', 'test/**/*.js' ],
+        options: {
+          destination: 'doc',
+          plugins: [ 'plugins/markdown' ]
+        }
       }
     }
   });
@@ -62,13 +75,16 @@ module.exports = function(grunt) {
   // load external scripts
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-jsdoc');
 
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // register tasks
-  grunt.registerTask('test', [ 'karma:unit' ]);
+  grunt.registerTask('test', [ 'karma:single' ]);
   grunt.registerTask('build', [ 'browserify' ]);
-  grunt.registerTask('dev', [ 'browserify', 'watch' ]);
 
-  grunt.registerTask('default', [ 'test' ]);
+  grunt.registerTask('auto-test', [ 'karma:unit' ]);
+  grunt.registerTask('auto-build', [ 'browserify', 'watch' ]);
+
+  grunt.registerTask('default', [ 'test', 'build', 'jsdoc' ]);
 };

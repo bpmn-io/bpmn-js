@@ -2,6 +2,8 @@ var _ = require('../util/underscore');
 
 /**
  * @class Events
+ * 
+ * A general purpose event bus
  */
 function Events() {
   
@@ -45,12 +47,12 @@ function Events() {
   }
 
   /**
-   * @method
-   * 
    * Register an event listener for events with the given name.
    *
-   * The callback will be invoked with {Event}, ... additionalArguments
+   * The callback will be invoked with `event, ...additionalArguments`
    * that have been passed to the evented element.
+   *
+   * @method Events#on
    * 
    * @param {String} event
    * @param {Function} callback
@@ -61,14 +63,14 @@ function Events() {
   }
 
   /**
-   * @method
-   * 
    * Register an event listener that is executed only once.
+   * 
+   * @method Events#once
    *
-   * @param event
-   * @param callback
+   * @param {String} event the event name to register for
+   * @param {Function} callback the callback to execute
    *
-   * @see #on(event,callback)
+   * @see Events#on
    */
   function once(event, callback) {
 
@@ -85,12 +87,14 @@ function Events() {
   }
 
   /**
-   * @method
+   * Removes event listeners by event and callback.
    * 
-   * Removes event listeners by event and optionally callback.
+   * If no callback is given, all listeners for a given event name are being removed.
    *
+   * @method Events#off
+   * 
    * @param {String} event
-   * @param {Function} callback (optional)
+   * @param {Function} [callback]
    */
   function off(event, callback) {
     var listeners, idx;
@@ -109,14 +113,33 @@ function Events() {
   }
 
   /**
-   * @method
-   * 
    * Fires a named event.
-   *
-   * @param {String} name (optional) the optional event name
-   * @param {Object} event the event object
    * 
-   * @param {...} ... additionalArgs to be passed to the callback functions
+   * @method Events#fire
+   *
+   * @example
+   *
+   * // fire event by name
+   * events.fire('foo');
+   *
+   * // fire event object with nested type
+   * var event = { type: 'foo' };
+   * events.fire(event);
+   *
+   * // fire event with explicit type
+   * var event = { x: 10, y: 20 };
+   * events.fire('element.moved', event);
+   *
+   * // pass additional arguments to the event
+   * events.on('foo', function(event, bar) {
+   *   alert(bar);
+   * });
+   *
+   * events.fire({ type: 'foo' }, 'I am bar!');
+   * 
+   * @param {String} [name] the optional event name
+   * @param {Object} [event] the event object
+   * @param {...Object} additional arguments to be passed to the callback functions
    */
   function fire() {
     var event, eventType,

@@ -1,2 +1,4 @@
 bower_components/
 node_modules/
+doc/
+build/

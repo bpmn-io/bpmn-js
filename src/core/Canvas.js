@@ -7,7 +7,11 @@ function Canvas(config, events, svgFactory) {
   var canvas = Snap(config.container);
 
   /**
-   * @method Canvas.addShape
+   * Adds a shape to the drawing canvas
+   *
+   * @method Canvas#addShape
+   * 
+   * @param {Object} shape a descriptor for the shape
    */
   function addShape(shape) {
     var gfx = svgFactory.createShape(canvas, shape);
@@ -15,7 +19,11 @@ function Canvas(config, events, svgFactory) {
   }
 
   /**
-   * @method Canvas.addConnection
+   * Adds a connection to the drawing canvas
+   *
+   * @method Canvas#addConnection
+   * 
+   * @param {Object} connection a descriptor for the connection
    */
   function addConnection(connection) {
     var gfx = svgFactory.createConnection(canvas, connection);

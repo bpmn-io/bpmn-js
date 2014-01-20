@@ -2,16 +2,16 @@ var _ = require('./underscore');
 
 
 /**
- * @function parseDefinition
- *
- * Parses a definition from an appropriate representation (Array || Function).
+ * Parses a definition from an appropriate representation.
  * 
- * @param {Array||Function} the service definition
+ * @function
+ * 
+ * @param {Object[]|Function} the service definition
  *
- * @return {Object} the definition object, containing `dependencies` (Array<String>) and the `factory` function for instantiation)
+ * @return {Object} the definition object, containing `dependencies` (`String[]`) and the `factory` (`Function`) for instantiation)
  */
 function parseDefinition(fn) {
-  
+
   var constructor, factory;
 
   if (_.isArray(fn)) {
@@ -43,7 +43,7 @@ function chainToString(chain, current) {
 
 /**
  * @class Injector
- *
+ * 
  * A injector that allows it to resolve
  * known modules.
  */
@@ -52,13 +52,13 @@ function Injector(moduleMap) {
   var instanceMap = {};
 
   /**
-   * @method Injector.resolve
-   *
    * Resolve a given name using a number of locals
+   * 
+   * @method Injector#resolve
    *
    * @param {String} name the name of the service
    * @param {Object} locals to be injected into the service in case it gets created
-   * @param {Array<String>} chain 
+   * @param {String[]} chain
    */
   function resolve(name, locals, chain) {
 
@@ -86,13 +86,13 @@ function Injector(moduleMap) {
   }
 
   /**
-   * @method Injector.inject
-   *
    * Inject locals and known services into a function, bringing it to live.
    * 
-   * @param {Array||Function} fn constructor to be instantiated.
+   * @method Injector#inject
+   * 
+   * @param {Object[]|Function} fn constructor to be instantiated.
    * @param {Object} locals locals to employ during injection
-   * @param {Array} chain
+   * @param {String[]} chain
    */
   function inject(fn, locals, chain) {
     var definition = parseDefinition(fn),
@@ -132,9 +132,9 @@ function Registry() {
   var moduleMap = {};
 
   /**
-   * @method Registry.register
-   *
    * Registers a new module.
+   *
+   * @method Registry#register
    *
    * @param {String} name
    * @param {Function|Array} constructor
@@ -151,6 +151,8 @@ function Registry() {
   /**
    * Creates an injector based on all modules known to this registry.
    *
+   * @method Registry#createInjector
+   * 
    * @return {Injector} an injector that can be used to resolve known modules.
    */
   function createInjector() {

@@ -18,22 +18,42 @@ function Diagram(options) {
    * configured through an options hash
    */
   function bootstrap(modules, options) {
-    injector = registry.createInjector();
+    var di = registry.createInjector();
     
     var locals = { config: options };
 
     for (var i = 0, m; !!(m = modules[i]); i++) {
-      injector.resolve(m, locals);
+      di.resolve(m, locals);
     }
+
+    return di;
   }
 
   options = options || {};
   options.modules = (options.modules || []).concat([ 'canvas', 'events', 'svgFactory' ]);
 
-  bootstrap(options.modules, options);
+  injector = bootstrap(options.modules, options);
 
   return {
+
+    /**
+     * Resolves a diagram service
+     *
+     * @method Diagram#resolve
+     *
+     * @param {Function|Object[]} function that should be called with internal diag<asdf></asdf>ram services on
+     * @param {Object} locals a number of locals to use to resolve certain dependencies
+     */
     resolve: injector.resolve,
+
+    /**
+     * Executes a function into which diagram services are injected
+     * 
+     * @method Diagram#inject
+     *
+     * @param {Function|Object[]} fn the function to resolve
+     * @param {Object} locals a number of locals to use to resolve certain dependencies
+     */
     inject: injector.inject
   };
 }

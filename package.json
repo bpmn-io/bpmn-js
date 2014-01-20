@@ -31,7 +31,8 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "debowerify": "~0.5.0",
     "bower-resolve": "0.0.3",
-    "uglifyify": "~1.1.0"
+    "uglifyify": "~1.1.0",
+    "grunt-jsdoc": "~0.5.1"
   },
   "dependencies": {
     "lodash": "~2.4.0",
