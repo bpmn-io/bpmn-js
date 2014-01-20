@@ -1,13 +1,13 @@
 <html>
 <head>
-  <!--link href='/build/build.css' rel='stylesheet' -->
+  <link href='style.css' rel='stylesheet' />
 </head>
 <body>
   <script src='../build/common.js'></script>
   <script src='../build/diagram.js'></script>
   <script>
     var Diagram = require('diagram');
-    var diagram = new Diagram();
+    var diagram = new Diagram({ plugins: [ 'interactivity' ] });
 
     diagram.inject([ 'events', 'canvas', function(events, canvas) {
 
@@ -17,6 +17,26 @@
 
       events.on('shape.added', function(event) {
         console.log('shape added', event);
+      });
+
+      events.on('shape.hover', function(event) {
+        console.log('shape hover', event);
+      });
+
+      events.on('shape.out', function(event) {
+        console.log('shape out', event);
+      });
+
+      events.on('shape.click', function(event) {
+        console.log('shape click', event);
+      });
+
+      events.on('connection.hover', function(event) {
+        console.log('connection hover', event);
+      });
+      
+      events.on('connection.out', function(event) {
+        console.log('connection out', event);
       });
 
       canvas.addShape({x: 10, y: 10, width: 30, height: 30 });

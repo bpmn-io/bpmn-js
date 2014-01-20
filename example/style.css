@@ -1,0 +1,16 @@
+.djs-shape {
+  stroke: black;
+  stroke-width: 2px;
+  fill: #F3F3F3;
+}
+
+.djs-connection {
+  stroke-width: 2px;
+  stroke: #333;
+}
+
+.djs-connection-hit, .djs-shape-hit {
+  stroke-opacity: 0.0;
+  stroke-width: 10px;
+  stroke: fuchsia;
+}
