@@ -34,8 +34,7 @@ module.exports = function(grunt) {
           alias: [
             'bower_components/snapsvg/index.js:snapsvg',
             'node_modules/lodash/lodash.js:lodash'
-          ],
-          transform: [ 'uglifyify' ]
+          ]
         }
       },
       src: {
@@ -46,8 +45,7 @@ module.exports = function(grunt) {
           external: [ 'snapsvg', 'lodash' ],
           alias: [
             'src/diagram.js:diagram'
-          ],
-          transform: [ 'uglifyify' ]
+          ]
         }
       }
     },
