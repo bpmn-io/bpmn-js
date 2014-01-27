@@ -13,7 +13,7 @@
     "modeler"
   ],
   "dependencies": {
-    "snapsvg": "https://raw2.github.com/wookiehangover/Snap.svg/browserify-dist/dist/snap.svg.js"
+    "snapsvg": "https://raw2.github.com/Nikku/Snap.svg/browserify-dev/dist/snap.svg.js"
   },
   "license": "AGPL",
   "homepage": "http://bpmn.io",
