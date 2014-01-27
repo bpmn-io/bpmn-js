@@ -9,6 +9,12 @@
   stroke-dasharray: 2,4;
 }
 
+.dragger {
+  fill: #DDD;
+  stroke: #CCC;
+  stroke-dasharray: 2,1;
+}
+
 .selection-box.selected {
   stroke: blue;
   stroke-width: 1px;
@@ -29,10 +35,15 @@
   stroke: #333;
 }
 
+.djs-shape.dragging {
+  opacity: 0.5;
+}
+
 .djs-connection-hit, .djs-shape-hit {
   stroke-opacity: 0.0;
   stroke-width: 10px;
   stroke: fuchsia;
+  fill: none;
 }
 
 .djs-connection {

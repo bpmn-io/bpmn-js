@@ -7,7 +7,7 @@
   <script src='../build/diagram.js'></script>
   <script>
     var Diagram = require('diagram');
-    var diagram = new Diagram({ plugins: [ 'shapeSelection' ] });
+    var diagram = new Diagram({ plugins: [ 'shapeSelection', 'drag' ] });
 
     diagram.inject([ 'events', 'canvas', function(events, canvas) {
 
@@ -39,8 +39,8 @@
         console.log('connection out', event);
       });
 
-      canvas.addShape({x: 10, y: 10, width: 30, height: 30 });
-      canvas.addShape({x: 100, y: 100, width: 30, height: 30 });
+      canvas.addShape({x: 10, y: 10, width: 30, height: 30, draggable: true });
+      canvas.addShape({x: 100, y: 100, width: 30, height: 30, draggable: true });
       canvas.addShape({x: 300, y: 300, width: 100, height: 100 });
 
       canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});

@@ -24,20 +24,37 @@ function Selection(events) {
     return selectedElements.indexOf(shape) != -1;
   }
 
-  function select(element, add) {
+  /**
+   * This method selects one or more elements on the diagram.
+   * 
+   * By passing an additional add parameter you can decide whether or not the element(s)
+   * should be added to the already existing selection or not.
+   * 
+   * @method Selection#select
+   *
+   * @param  {Object|Object[]} elements element or array of elements to be selected
+   * @param  {boolean} [add] whether the element(s) should be appended to the current selection, defaults to false
+   */
+  function select(elements, add) {
     var oldSelection = selectedElements.slice();
-    if (element && add) {
-      if (selectedElements.indexOf(element) != -1) {
-        // already selected
-        return;
-      } else {
-        selectedElements.push(element);
-      }
+
+    if (!_.isArray(elements)) {
+      elements = elements ? [ elements ] : [];
+    }
+
+    // selection may be cleared by passing an empty array or null
+    // to the method
+    if (elements.length && add) {
+      _.forEach(elements, function(element) {
+        if (selectedElements.indexOf(element) != -1) {
+          // already selected
+          return;
+        } else {
+          selectedElements.push(element);
+        }
+      });
     } else {
-      selectedElements.length = 0;
-      if (element) {
-        selectedElements.push(element);
-      }
+      selectedElements = elements.slice();
     }
 
     events.fire('selection.changed', { oldSelection: oldSelection, newSelection: selectedElements });

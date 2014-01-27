@@ -104,6 +104,11 @@ function ShapeSelection(events, selection, shapes) {
     updateSelectionBox(graphics, selectionBox);
   });
 
+  events.on('shape.dragstart', function(e) {
+    // remove hover effect on drag start
+    out(e.element);
+  });
+
   events.on('selection.changed', function(event) {
     var oldSelection = event.oldSelection,
         newSelection = event.newSelection;
