@@ -83,19 +83,19 @@ function Shapes(events) {
   }
 
   events.on('shape.added', function(event) {
-    addShape(event.shape, event.gfx);
+    addShape(event.element, event.gfx);
   });
 
   events.on('connection.added', function(event) {
-    addShape(event.shape, event.gfx);
+    addShape(event.element, event.gfx);
   });
 
   events.on('shape.removed', function(event) {
-    removeShape(event.shape);
+    removeShape(event.element);
   });
 
   events.on('connection.removed', function(event) {
-    removeShape(event.shape);
+    removeShape(event.element);
   });
 
   return {

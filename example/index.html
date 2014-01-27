@@ -7,7 +7,7 @@
   <script src='../build/diagram.js'></script>
   <script>
     var Diagram = require('diagram');
-    var diagram = new Diagram({ plugins: [ 'interactivity' ] });
+    var diagram = new Diagram({ plugins: [ 'shapeSelection' ] });
 
     diagram.inject([ 'events', 'canvas', function(events, canvas) {
 

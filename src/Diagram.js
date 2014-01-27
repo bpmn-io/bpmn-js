@@ -1,8 +1,10 @@
 var modules = require('./util/modules'),
-    
     Canvas = require('./core/Canvas'),
     Events = require('./core/Events'),
     SvgFactory = require('./core/SvgFactory');
+
+// require snapsvg extensions
+require('./snapsvg.ext');
 
 var registry = new modules.Registry();
 

@@ -1,3 +1,23 @@
+.selection-box {
+  fill: none;
+  visibility: hidden;
+}
+
+.selection-box.selected,
+.selection-box.hover {
+  visibility: visible;
+  stroke-dasharray: 2,4;
+}
+
+.selection-box.selected {
+  stroke: blue;
+  stroke-width: 1px;
+}
+.selection-box.hover {
+  stroke: red;
+  stroke-width: 1px;
+}
+
 .djs-shape {
   stroke: black;
   stroke-width: 2px;
@@ -13,4 +33,12 @@
   stroke-opacity: 0.0;
   stroke-width: 10px;
   stroke: fuchsia;
+}
+
+.djs-connection {
+  marker-end: url(#sequenceflow-end-marker);
+}
+
+.djs-connection-marker {
+  
 }

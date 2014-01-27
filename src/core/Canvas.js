@@ -1,6 +1,8 @@
 
 /**
  * @class
+ *
+ * @emits Canvas#event:"canvas.init"
  */
 function Canvas(config, events, svgFactory) {
 
@@ -15,6 +17,17 @@ function Canvas(config, events, svgFactory) {
    */
   function addShape(shape) {
     var gfx = svgFactory.createShape(paper, shape);
+
+    /**
+     * An event indicating that a new shape has been added to the canvas.
+     *
+     * @memberOf Canvas
+     * 
+     * @event shape.added
+     * @type {Object}
+     * @property {Object} element the shape descriptor
+     * @property {Object} gfx the graphical representation of the shape
+     */
     events.fire('shape.added', { element: shape, gfx: gfx });
   }
 
@@ -27,8 +40,28 @@ function Canvas(config, events, svgFactory) {
    */
   function addConnection(connection) {
     var gfx = svgFactory.createConnection(paper, connection);
+
+    /**
+     * An event indicating that a new connection has been added to the canvas.
+     *
+     * @memberOf Canvas
+     * 
+     * @event connection.added
+     * @type {Object}
+     * @property {Object} element the connection descriptor
+     * @property {Object} gfx the graphical representation of the connection
+     */
     events.fire('connection.added', { element: connection, gfx: gfx });
   }
+
+  /**
+   * An event indicating that the canvas is ready to be drawn on.
+   *
+   * @event Canvas#"canvas.init"
+   * @type {Object}
+   * @property {Object} paper the initialized drawing paper
+   */
+  events.fire('canvas.init', { paper: paper });
 
   return {
     addShape: addShape,
