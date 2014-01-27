@@ -26,7 +26,7 @@ function Selection(events) {
 
   function select(element, add) {
     var oldSelection = selectedElements.slice();
-    if (add) {
+    if (element && add) {
       if (selectedElements.indexOf(element) != -1) {
         // already selected
         return;
@@ -35,7 +35,9 @@ function Selection(events) {
       }
     } else {
       selectedElements.length = 0;
-      selectedElements.push(element);
+      if (element) {
+        selectedElements.push(element);
+      }
     }
 
     events.fire('selection.changed', { oldSelection: oldSelection, newSelection: selectedElements });

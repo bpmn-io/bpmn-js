@@ -124,6 +124,18 @@ function ShapeSelection(events, selection, shapes) {
       }
     });
   });
+
+  // intercept direct canvas clicks to deselect all
+  // selected shapes
+  events.on('canvas.init', function(event) {
+    var paper = event.paper;
+
+    paper.click(function(event) {
+      if (event.srcElement === paper.node) {
+        selection.select(null);
+      }
+    });
+  });
 }
 
 Diagram.plugin('shapeSelection', [ 'events', 'selection', 'shapes', 'interactivity', ShapeSelection ]);
