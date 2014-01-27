@@ -174,6 +174,23 @@ describe('util/modules', function() {
       expect(a).toBe(anotherA);
     });
 
+    it('should create placeholder for anonymous modules', function() {
+
+      // given
+      var registry = new Registry();
+
+      registry.register('a', function() {
+        // do not return stuff
+      });
+
+      var injector = registry.createInjector();
+
+      // when
+      var a = injector.resolve('a');
+
+      // then
+      expect(a).toBeDefined();
+    });
 
     //// error handling ////////////////////////////////
 

@@ -16,7 +16,7 @@ function parseDefinition(fn) {
 
   if (_.isArray(fn)) {
 
-    dependencies = fn;
+    dependencies = Array.prototype.slice.call(fn);
     factory = dependencies.pop();
   } else {
     if (fn.$inject) {
@@ -62,6 +62,8 @@ function Injector(moduleMap) {
    */
   function resolve(name, locals, chain) {
 
+    var instance, module;
+
     // check if dependency is currently loading
     // if so, we detected a circluar dependendency
     // (and indicate that by throwing an error)
@@ -69,16 +71,29 @@ function Injector(moduleMap) {
       throw new Error('[modules] circular dependency ' + chainToString(chain, name));
     }
 
-    var instance = instanceMap[name];
+    instance = instanceMap[name];
     
     if (!instance) {
-      var module = moduleMap[name];
+      module = moduleMap[name];
 
       if (!module) {
         throw new Error('[modules] unknown module ' + chainToString(chain, name));
       }
 
       instance = inject(module, locals, (chain || []).concat([ name ]));
+
+      // if (!instance) {
+      //   throw new Error('[modules] factory did not return an instance: ' + chainToString(chain, name));
+      // }
+
+
+      // some modules may be anonymous, meaning that they 
+      // do not return a service once instantiated
+      // we simply replace the module with an empty object
+      if (!instance) {
+        instance = {};
+      }
+      
       instanceMap[name] = instance;
     }
 
@@ -99,7 +114,7 @@ function Injector(moduleMap) {
         args = [];
     
     var i, d, value;
-    
+
     for (i = 0, d; !!(d = definition.dependencies[i]); i++) {
       
       // get value from locals
@@ -112,7 +127,7 @@ function Injector(moduleMap) {
       args.push(value);
     }
 
-    return definition.factory.apply(definition.factory, args);
+    return definition.factory.apply(null, args);
   }
 
   return {
