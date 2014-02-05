@@ -16,7 +16,7 @@ describe('Shapes', function() {
         gfx = {};
 
     // when
-    events.fire('shape.added', { shape: shape, gfx: gfx });
+    events.fire('shape.added', { element: shape, gfx: gfx });
 
     // then
     expect(shape.id).toBeDefined();
@@ -30,7 +30,7 @@ describe('Shapes', function() {
         gfx = {};
 
     // when
-    events.fire('shape.added', { shape: shape, gfx: gfx });
+    events.fire('shape.added', { element: shape, gfx: gfx });
 
     // then
     expect(shapes.getShapeByGraphics(gfx)).toBe(shape);
@@ -49,8 +49,8 @@ describe('Shapes', function() {
         gfx = {};
 
     // when
-    events.fire('shape.added', { shape: shape, gfx: gfx });
-    events.fire('shape.removed', { shape: shape, gfx: gfx });
+    events.fire('shape.added', { element: shape, gfx: gfx });
+    events.fire('shape.removed', { element: shape, gfx: gfx });
 
     // then
     expect(shapes.getShapeByGraphics(gfx)).not.toBeDefined();
