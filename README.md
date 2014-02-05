@@ -5,21 +5,27 @@
 
 ## Setup
 
-`npm install`
-`bower install`
+To get the development setup ready execute 
+
+```
+npm install
+bower install
+```
 
 
-## Grunt Tasks
+## Develop
 
-There are a number of grunt tasks available to develop, test and build the system for deployment.
+Execute `grunt auto-build` to run the development setup including automatic rebuild and live reload.
 
-#### Development
-
-*   `auto-test` - starts the test environment in watch mode and continuously reexecutes tests on changes
-*   `auto-build` - starts in watch mode and continuously packages the environment for production
+The task serves the project files on [localhost:9003](http://localhost:9003). Browse to the [example](http://localhost:9003/example/) directory to view the examples.
 
 
-#### Packaging
+### Execute Tests
+
+To execute tests, run `grunt auto-test`.
+
+
+## Package
 
 Simply execute `grunt`.
 

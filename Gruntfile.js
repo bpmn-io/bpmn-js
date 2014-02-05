@@ -3,6 +3,14 @@ module.exports = function(grunt) {
   // project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
+    config: {
+      sources: 'src',
+      tests: 'test',
+      dist: 'build',
+      samples: 'example'
+    },
+
     karma: {
       single: {
 
@@ -10,7 +18,7 @@ module.exports = function(grunt) {
         autoWatch: false,
         singleRun: true,
 
-        configFile: 'test/config/karma.unit.js',
+        configFile: '<%= config.tests %>/config/karma.unit.js',
 
         browserify: {
           watch: false,
@@ -19,7 +27,7 @@ module.exports = function(grunt) {
         }
       },
       unit: {
-        configFile: 'test/config/karma.unit.js',
+        configFile: '<%= config.tests %>/config/karma.unit.js',
       
         singleRun: false,
         autoWatch: true,
@@ -29,7 +37,7 @@ module.exports = function(grunt) {
     browserify: {
       vendor: {
         src: [ 'bower_components/snapsvg/index.js', 'node_modules/lodash/lodash.js' ],
-        dest: 'build/common.js',
+        dest: '<%= config.dist %>/common.js',
         options: {
           alias: [
             'bower_components/snapsvg/index.js:snapsvg',
@@ -39,29 +47,66 @@ module.exports = function(grunt) {
       },
       src: {
         files: {
-          'build/diagram.js': [ 'src/**/*.js' ]
+          '<%= config.dist %>/diagram.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
           external: [ 'snapsvg', 'lodash' ],
           alias: [
-            'src/diagram.js:diagram'
+            '<%= config.sources %>/Diagram.js:diagram'
           ]
         }
       }
     },
+    copy: {
+      samples: {
+        files: [
+          // copy sample files
+          {
+            expand: true,
+            cwd: '<%= config.samples %>/',
+            src: ['*.{js,css,html}'],
+            dest: '<%= config.dist %>/<%= config.samples %>'
+          }
+        ]
+      }
+    },
     watch: {
-      browserify: {
-        files: [ 'src/**/*.js' ],
-        tasks: [ 'browserify' ],
+      sources: {
+        files: [ '<%= config.sources %>/**/*.js' ],
+        tasks: [ 'browserify', 'jsdoc']
       },
-      jsdoc: {
-        files: [ 'src/**/*.js', 'test/**/*.js' ],
-        tasks: [ 'jsdoc']
+      samples: {
+        files: [ '<%= config.samples %>/*.{html,css,js}' ],
+        tasks: [ 'copy:samples']
+      },
+      livereload: {
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        },
+        files: [
+          '<%= config.dist %>/*.js',
+          '<%= config.dist %>/<%= config.samples %>/*.{html,css,js}'
+        ]
+      }
+    },
+    connect: {
+      options: {
+        port: 9003,
+        livereload: 35726,
+        hostname: 'localhost'
+      },
+      livereload: {
+        options: {
+          open: true,
+          base: [
+            '<%= config.dist %>'
+          ]
+        }
       }
     },
     jsdoc: {
       dist: {
-        src: [ 'src/**/*.js', 'test/**/*.js' ],
+        src: [ '<%= config.sources %>/**/*.js' ],
         options: {
           destination: 'doc',
           plugins: [ 'plugins/markdown' ]
@@ -76,13 +121,22 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jsdoc');
 
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
-  // register tasks
+  // tasks
+  
   grunt.registerTask('test', [ 'karma:single' ]);
-  grunt.registerTask('build', [ 'browserify' ]);
+  grunt.registerTask('build', [ 'browserify', 'copy' ]);
 
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
-  grunt.registerTask('auto-build', [ 'browserify', 'watch' ]);
+
+  grunt.registerTask('auto-build', [
+    'build',
+    'jsdoc',
+    'connect:livereload',
+    'watch'
+  ]);
 
   grunt.registerTask('default', [ 'test', 'build', 'jsdoc' ]);
 };
