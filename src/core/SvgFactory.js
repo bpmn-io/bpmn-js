@@ -1,7 +1,7 @@
 var snap = require('snapsvg');
 
 function SvgFactory(events) {
-
+  'use strict';
   var markers;
 
   function addMarker(id, element) {
@@ -75,10 +75,10 @@ function SvgFactory(events) {
 
   function createShape(paper, data) {
 
-    var rect = paper.rect(data.x, data.y, data.width, data.height, 10, 10)
+    var rect = paper.rect(0, 0, data.width, data.height, 10, 10)
                     .attr({ 'class': 'djs-shape' });
-
     var group = wrap(paper, rect);
+    setPosition(group, data.x, data.y);
 
     return rect;
   }
@@ -93,6 +93,12 @@ function SvgFactory(events) {
     var group = wrap(paper, line);
 
     return line;
+  }
+
+  function setPosition(rect, x, y) {
+    var positionMatrix = new Snap.Matrix();
+    positionMatrix.translate(x, y);
+    rect.transform(positionMatrix);
   }
 
   return {

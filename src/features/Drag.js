@@ -32,6 +32,7 @@ function Drag(events, selection, shapes) {
 
         // activate visual drag once a certain threshold is reached
         if (dx > DRAG_START_THRESHOLD || dy > DRAG_START_THRESHOLD) {
+          //TODO add to group and move group only
           _.forEach(graphics, function(gfx) {
             var dragger = gfx.clone();
             dragger.attr('class', 'dragger');
@@ -63,24 +64,24 @@ function Drag(events, selection, shapes) {
           dragShapes = selectedShapes.filter(function(s) { return s.draggable; }),
           dragGraphics = [];
 
-      // add drag target to selection if not done already
-      if (dragShapes.indexOf(shape) === -1) {
-        dragShapes.push(shape);
-      }
+        // add drag target to selection if not done already
+        if (dragShapes.indexOf(shape) === -1) {
+            dragShapes.push(shape);
+        }
 
-      // prepare a drag ctx that gets later activated when 
-      // a given drag threshold is reached
-      dragCtx = {
-        dragging: false,
-        shapes: dragShapes,
-        graphics: dragGraphics,
-        selection: selectedShapes
-      };
+        _.forEach(dragShapes, function(s) {
+            var gfx = shapes.getGraphicsByShape(s);
+            dragGraphics.push(gfx);
+        });
 
-      _.forEach(dragShapes, function(s) {
-        var gfx = shapes.getGraphicsByShape(s);
-        dragGraphics.push(gfx);
-      });
+        // prepare a drag ctx that gets later activated when
+        // a given drag threshold is reached
+        dragCtx = {
+          dragging: false,
+          shapes: dragShapes,
+          graphics: dragGraphics,
+          selection: selectedShapes
+        };
     }, function dragEnd(x, y, e) {
 
       _.forEach(dragCtx.graphics, function(gfx) {
