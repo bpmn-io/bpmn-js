@@ -39,6 +39,7 @@ module.exports = function(grunt) {
         src: [ 'bower_components/snapsvg/index.js', 'node_modules/lodash/lodash.js' ],
         dest: '<%= config.dist %>/common.js',
         options: {
+          debug: true,
           alias: [
             'bower_components/snapsvg/index.js:snapsvg',
             'node_modules/lodash/lodash.js:lodash'
@@ -50,6 +51,7 @@ module.exports = function(grunt) {
           '<%= config.dist %>/diagram.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
+          debug: true,
           external: [ 'snapsvg', 'lodash' ],
           alias: [
             '<%= config.sources %>/Diagram.js:diagram'
