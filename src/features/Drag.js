@@ -52,10 +52,9 @@ function Drag(events, selection, shapes) {
         _.forEach(graphics, function(gfx) {
 
           var dragger = gfx.dragger;
-          dragger.attr({
-            x: parseInt(gfx.attr('x'), 10) + dx,
-            y: parseInt(gfx.attr('y'), 10) + dy
-          });
+          var translateMatrix = new Snap.Matrix();
+          translateMatrix.translate(dx,dy);
+          dragger.transform(translateMatrix);
         });
       }
     }, function dragStart(x, y, e) {
