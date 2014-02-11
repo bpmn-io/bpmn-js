@@ -6,14 +6,14 @@ var Diagram = require('../Diagram'),
 /**
  * @class
  * 
- * A plugin that provides interactivity (mouse over and selection to a diagram).
+ * A plugin that provides interactivity in terms of events (mouse over and selection to a diagram).
  *
  * @param {Events} events the event bus to attach to
  */
-function Interactivity(events, canvas) {
+function Interactivity(events) {
 
   function isCtxSwitch(e) {
-    return e.fromElement.parentNode != e.toElement.parentNode;
+    return e.target.parentNode != e.relatedTarget.parentNode;
   }
 
   function fire(event, baseEvent, eventName) {
