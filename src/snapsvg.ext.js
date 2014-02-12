@@ -27,7 +27,7 @@ Snap.plugin(function (Snap, Element, Paper, global) {
     return array.join(' ');
   }
 
-  function getClasses(e, classes) {
+  function getClasses(e) {
     return split(e.attr('class') || '');
   }
 
@@ -66,6 +66,20 @@ Snap.plugin(function (Snap, Element, Paper, global) {
     setClasses(this, current);
 
     return this;
+  };
+
+  /**
+   * @method snapsvg.Element#hasClass
+   * 
+   * @param  {String}  cls the class to query for
+   * @return {Boolean} returns true if the element has the given class
+   */
+  Element.prototype.hasClass = function(cls) {
+    if (!cls) {
+      throw new Error("[snapsvg] syntax: hasClass(clsStr)");
+    }
+
+    return getClasses(this).indexOf(cls) !== -1;
   };
 
   /**
