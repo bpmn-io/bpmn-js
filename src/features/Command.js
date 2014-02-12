@@ -1,3 +1,5 @@
+_ = require('../util/underscore');
+
 /**
  * @description TODO
  */
@@ -11,11 +13,26 @@ function Command() {
     addCommandListener(id, fn);
   }
 
-  function unregisterCommand() {}
+  function unregisterCommand(id) {
+    //TODO
+  }
+
   function getCommandList() {
     return commandListenersMap;
   }
-  function doCommand() {}
+
+  /**
+   * Execute all registered actions for this command id
+   * @param id
+   * @param params
+   */
+  function doCommand(id, params) {
+    var commandListeners = getCommandListener(id);
+    _.forEach(commandListeners, function(commandListener) {
+      commandListener(params);
+    });
+  }
+
   function undoCommand() {}
 
   var getCommandListener = function getCommandListener(id) {
