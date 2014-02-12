@@ -1,8 +1,9 @@
 require('../core/Events');
+require('../core/Canvas');
 require('./services/Selection');
 require('./services/Shapes');
+require('./services/Rules');
 require('./Interactivity');
-require('../core/Canvas');
 
 var Snap = require('snapsvg');
 
@@ -19,7 +20,7 @@ var Diagram = require('../Diagram'),
  * @param {Selection} selection the selection service
  * @param {Shapes} shapes the shapes service
  */
-function Drag(events, selection, shapes, canvas) {
+function Drag(events, selection, shapes, canvas, rules) {
 
   var DRAG_START_THRESHOLD = 10;
 
@@ -27,6 +28,24 @@ function Drag(events, selection, shapes, canvas) {
 
     var dragCtx;
     var dragGroup;
+
+    function removeDragMarkers(gfx) {
+      gfx
+        .removeClass('drop-ok')
+        .removeClass('drop-not-ok');
+    }
+
+    function dragOver(event) {
+      var marker = rules.can('drop', dragCtx) ? 'drop-ok' : 'drop-not-ok';
+
+      event.gfx.addClass(marker);
+
+      dragCtx.over = event.gfx;
+    }
+
+    function dragOut(event) {
+      removeDragMarkers(event.gfx);
+    }
 
     graphics.drag(function dragging(dx, dy, x, y, e) {
 
@@ -55,6 +74,9 @@ function Drag(events, selection, shapes, canvas) {
             gfx.addClass('djs-dragging');
 
             dragGroup.add(dragger);
+
+            events.on('shape.hover', dragOver);
+            events.on('shape.out', dragOut);
           });
 
           selection.select(null);
@@ -93,7 +115,8 @@ function Drag(events, selection, shapes, canvas) {
           dragging: false,
           shapes: dragShapes,
           graphics: dragGraphics,
-          selection: selectedShapes
+          selection: selectedShapes,
+          over: null
         };
     }, function dragEnd(x, y, e) {
 
@@ -108,13 +131,21 @@ function Drag(events, selection, shapes, canvas) {
         selection.select(dragCtx.selection);
 
         if (dragCtx.dragging) {
-          events.fire('shape.dragend', { element: shape, gfx: graphics, drag: dragCtx });
+          events.fire('shape.dragend', { element: shape, gfx: gfx, drag: dragCtx });
         }
-        if(dragGroup) {
+
+        if (dragGroup) {
           dragGroup.remove();
           dragGroup = undefined;
         }
       });
+
+      events.off('shape.hover', dragOver);
+      events.off('shape.out', dragOut);
+
+      if (dragCtx.over) {
+        removeDragMarkers(dragCtx.over);
+      }
 
       dragCtx = null;
     });
@@ -128,6 +159,6 @@ function Drag(events, selection, shapes, canvas) {
   });
 }
 
-Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'canvas', 'interactivity', Drag ]);
+Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'canvas', 'rules', 'interactivity', Drag ]);
 
 module.exports = Drag;

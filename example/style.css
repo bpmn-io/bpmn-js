@@ -22,6 +22,14 @@
   stroke-width: 1px;
 }
 
+.djs-group.drop-ok .djs-visual {
+  fill: green;
+}
+
+.djs-group.drop-not-ok .djs-visual {
+  fill: red;
+}
+
 /**
  * drag styles
  */
@@ -31,8 +39,8 @@
   stroke-dasharray: 2,1;
 }
 
-.djs-shape.dragging {
-  opacity: 0.1;
+.djs-shape.djs-dragging {
+  visibility: hidden;
 }
 
 /**
