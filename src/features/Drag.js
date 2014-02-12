@@ -35,7 +35,7 @@ function Drag(events, selection, shapes, canvas) {
       if (!dragCtx.dragging) {
 
         // activate visual drag once a certain threshold is reached
-        if (dx > DRAG_START_THRESHOLD || dy > DRAG_START_THRESHOLD) {
+        if (Math.abs(dx) > DRAG_START_THRESHOLD || Math.abs(dy) > DRAG_START_THRESHOLD) {
 
           if(!dragGroup) {
             dragGroup = canvas.getContext().group();
@@ -70,14 +70,6 @@ function Drag(events, selection, shapes, canvas) {
         var translateMatrix = new Snap.Matrix();
         translateMatrix.translate(dx,dy);
         dragGroup.transform(translateMatrix);
-
-        var currentHover = Snap.getElementByPoint(x, y);
-
-        if (currentHover != dragCtx.hoverShape) {
-          console.log('hover changed: ', dragCtx.hoverShape);
-
-          dragCtx.hoverShape = currentHover;
-        }
       }
     }, function dragStart(x, y, e) {
 
