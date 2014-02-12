@@ -116,7 +116,7 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      'sources': [ 'browserify', 'jsdoc' ],
+      'sources': [ 'browserify:src' ],
       'build': [ 'build', 'jsdoc' ]
     }
   });
