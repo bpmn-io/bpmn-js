@@ -8,6 +8,11 @@ require('./snapsvg.ext');
 
 var registry = new modules.Registry();
 
+
+/**
+ * @namespace djs
+ */
+
 /**
  * @class
  *
@@ -19,6 +24,7 @@ var registry = new modules.Registry();
 function Diagram(options) {
 
   var injector;
+
 
   /**
    * Bootstrap the diagram with the given modules
@@ -37,9 +43,32 @@ function Diagram(options) {
   }
 
   options = options || {};
-  options.plugins = (options.plugins || []).concat([ 'canvas', 'events', 'svgFactory' ]);
+  options.plugins = [ 'canvas', 'events', 'svgFactory' ].concat(options.plugins || []);
 
   injector = bootstrap(options.plugins, options);
+
+  // fire diagram init because
+  // all components have been loaded now
+
+  /**
+   * An event indicating that all plug-ins are loaded.
+   *
+   * Use this event to fire other events to interested plug-ins
+   *
+   * @memberOf Diagram
+   *
+   * @event canvas.init
+   *
+   * @example
+   *
+   * events.on('diagram.init', function() {
+   *   events.fire('my-custom-event', { foo: 'BAR' });
+   * });
+   * 
+   * @type {Object}
+   * @property {snapsvg.Paper} paper the initialized drawing paper
+   */
+  injector.resolve('events').fire('diagram.init');
 
   return {
 
