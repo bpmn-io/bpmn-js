@@ -1,0 +1,25 @@
+{
+  "bitwise" : true,
+  "curly" : true,
+  "eqeqeq" : true,
+  "forin" : true,
+  "freeze" : true,
+  "immed" : true,
+  "latedef" : true,
+  "newcap" : true,
+  "noarg" : true,
+  "noempty" : false,
+  "nonew" : true,
+  "quotmark" : true,
+  "undef" : true,
+  "strict" : true,
+  "trailing" : true,
+  "maxdepth" : 5,
+  "maxstatements" : 50,
+  "maxcomplexity" : 10,
+  "maxlen" : 120,
+  "browser" : true,
+  "globals": {
+    "require": false
+  }
+}
