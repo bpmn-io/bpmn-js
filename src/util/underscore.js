@@ -1,5 +1,7 @@
 var util = require('util');
 
+var toString = Object.prototype.toString;
+
 /**
  * Utilities taken from AngularJS v1.2.1 | MIT
  */
