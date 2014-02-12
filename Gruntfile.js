@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     watch: {
       sources: {
         files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'browserify', 'jsdoc']
+        tasks: [ 'concurrent:sources']
       },
       samples: {
         files: [ '<%= config.samples %>/*.{html,css,js}' ],
@@ -114,6 +114,10 @@ module.exports = function(grunt) {
           plugins: [ 'plugins/markdown' ]
         }
       }
+    },
+    concurrent: {
+      'sources': [ 'browserify', 'jsdoc' ],
+      'build': [ 'build', 'jsdoc' ]
     }
   });
 
@@ -121,6 +125,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-jsdoc');
+  grunt.loadNpmTasks('grunt-concurrent');
 
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
@@ -134,8 +139,7 @@ module.exports = function(grunt) {
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
   grunt.registerTask('auto-build', [
-    'build',
-    'jsdoc',
+    'concurrent:build',
     'connect:livereload',
     'watch'
   ]);
