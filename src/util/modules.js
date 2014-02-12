@@ -115,8 +115,8 @@ function Injector(moduleMap) {
     
     var i, d, value;
 
-    for (i = 0, d; !!(d = definition.dependencies[i]); i++) {
-      
+    for (i = 0, d = null; !!(d = definition.dependencies[i]); i++) {
+
       // get value from locals
       value = locals ? locals[d] : undefined;
       

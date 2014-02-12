@@ -5,6 +5,7 @@
  * @emits Canvas#event:"canvas.init"
  */
 function Canvas(config, events, svgFactory) {
+  'use strict';
 
   var paper = Snap(config.container);
 
@@ -55,6 +56,15 @@ function Canvas(config, events, svgFactory) {
   }
 
   /**
+   * Returns the actual graphics context.
+   *
+   * @returns {Object} the global paper object
+   */
+  function getContext() {
+    return paper;
+  }
+
+  /**
    * An event indicating that the canvas is ready to be drawn on.
    *
    * @event Canvas#"canvas.init"
@@ -65,7 +75,8 @@ function Canvas(config, events, svgFactory) {
 
   return {
     addShape: addShape,
-    addConnection: addConnection
+    addConnection: addConnection,
+    getContext: getContext
   };
 }
 

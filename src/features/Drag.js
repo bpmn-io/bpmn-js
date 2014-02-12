@@ -2,6 +2,7 @@ require('../core/Events');
 require('./Selection');
 require('./Shapes');
 require('./Interactivity');
+require('../core/Canvas');
 
 var Diagram = require('../Diagram'),
     _ = require('../util/underscore');
@@ -16,13 +17,14 @@ var Diagram = require('../Diagram'),
  * @param {Selection} selection the selection service
  * @param {Shapes} shapes the shapes service
  */
-function Drag(events, selection, shapes) {
+function Drag(events, selection, shapes, canvas) {
 
   var DRAG_START_THRESHOLD = 10;
 
   function makeDraggable(shape, graphics) {
 
     var dragCtx;
+    var dragGroup;
 
     graphics.drag(function dragging(dx, dy, x, y, e) {
 
@@ -32,13 +34,25 @@ function Drag(events, selection, shapes) {
 
         // activate visual drag once a certain threshold is reached
         if (dx > DRAG_START_THRESHOLD || dy > DRAG_START_THRESHOLD) {
-          //TODO add to group and move group only
+
+          if(!dragGroup) {
+            dragGroup = canvas.getContext().group();
+            dragGroup.attr('class', 'djs-drag-group');
+          }
+
           _.forEach(graphics, function(gfx) {
             var dragger = gfx.clone();
-            dragger.attr('class', 'dragger');
+
+            dragger.attr({
+              'class': 'djs-dragger',
+              'x': gfx.parent().getBBox(false).x,
+              'y': gfx.parent().getBBox(false).y
+            });
 
             gfx.dragger = dragger;
-            gfx.addClass('dragging');
+            gfx.addClass('djs-dragging');
+
+            dragGroup.add(dragger);
           });
 
           selection.select(null);
@@ -50,13 +64,10 @@ function Drag(events, selection, shapes) {
       
       // update draggers with new coordinates
       if (dragCtx.dragging) {
-        _.forEach(graphics, function(gfx) {
 
-          var dragger = gfx.dragger;
           var translateMatrix = new Snap.Matrix();
           translateMatrix.translate(dx,dy);
-          dragger.transform(translateMatrix);
-        });
+          dragGroup.transform(translateMatrix);
       }
     }, function dragStart(x, y, e) {
 
@@ -85,7 +96,7 @@ function Drag(events, selection, shapes) {
     }, function dragEnd(x, y, e) {
 
       _.forEach(dragCtx.graphics, function(gfx) {
-        gfx.removeClass('dragging');
+        gfx.removeClass('djs-dragging');
 
         if (gfx.dragger) {
           gfx.dragger.remove();
@@ -96,6 +107,10 @@ function Drag(events, selection, shapes) {
 
         if (dragCtx.dragging) {
           events.fire('shape.dragend', { element: shape, gfx: graphics, drag: dragCtx });
+        }
+        if(dragGroup) {
+          dragGroup.remove();
+          dragGroup = undefined;
         }
       });
 
@@ -113,6 +128,6 @@ function Drag(events, selection, shapes) {
   });
 }
 
-Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'interactivity', Drag ]);
+Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'canvas', 'interactivity', Drag ]);
 
 module.exports = Drag;
