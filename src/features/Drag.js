@@ -1,8 +1,10 @@
 require('../core/Events');
-require('./Selection');
-require('./Shapes');
+require('./services/Selection');
+require('./services/Shapes');
 require('./Interactivity');
 require('../core/Canvas');
+
+var Snap = require('snapsvg');
 
 var Diagram = require('../Diagram'),
     _ = require('../util/underscore');
@@ -42,7 +44,7 @@ function Drag(events, selection, shapes, canvas) {
 
           _.forEach(graphics, function(gfx) {
             var dragger = gfx.clone();
-
+            
             dragger.attr({
               'class': 'djs-dragger',
               'x': gfx.parent().getBBox(false).x,
@@ -65,14 +67,22 @@ function Drag(events, selection, shapes, canvas) {
       // update draggers with new coordinates
       if (dragCtx.dragging) {
 
-          var translateMatrix = new Snap.Matrix();
-          translateMatrix.translate(dx,dy);
-          dragGroup.transform(translateMatrix);
+        var translateMatrix = new Snap.Matrix();
+        translateMatrix.translate(dx,dy);
+        dragGroup.transform(translateMatrix);
+
+        var currentHover = Snap.getElementByPoint(x, y);
+
+        if (currentHover != dragCtx.hoverShape) {
+          console.log('hover changed: ', dragCtx.hoverShape);
+
+          dragCtx.hoverShape = currentHover;
+        }
       }
     }, function dragStart(x, y, e) {
 
       var selectedShapes = selection.getSelection(),
-          dragShapes = selectedShapes.filter(function(s) { return s.draggable; }),
+          dragShapes = Array.prototype.slice.call(selectedShapes),
           dragGraphics = [];
 
         // add drag target to selection if not done already
@@ -122,9 +132,7 @@ function Drag(events, selection, shapes, canvas) {
     var shape = event.element,
         graphics = event.gfx;
 
-    if (shape.draggable) {
-      makeDraggable(shape, graphics);
-    }
+    makeDraggable(shape, graphics);
   });
 }
 

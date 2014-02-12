@@ -1,7 +1,7 @@
-require('../core/Events');
+require('../../core/Events');
 
-var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+var Diagram = require('../../Diagram'),
+    _ = require('../../util/underscore');
 
 
 /**

@@ -65,34 +65,35 @@ function SvgFactory(events) {
     return result;
   }
 
-  function wrap(paper, gfx) {
+  function wrap(paper, gfx, type) {
 
     // append djs-visual to the element
-    gfx.attr('class', (gfx.attr('class') || '') + ' djs-visual');
+    gfx.addClass('djs-visual');
 
-    return paper.group(gfx);
+    return paper
+             .group(gfx)
+               .addClass('djs-group')
+               .addClass('djs-' + type);
   }
 
   function createShape(paper, data) {
 
-    var rect = paper.rect(0, 0, data.width, data.height, 10, 10)
-                    .attr({ 'class': 'djs-shape' });
-    var group = wrap(paper, rect);
+    var rect = paper.rect(0, 0, data.width, data.height, 10, 10);
+    var group = wrap(paper, rect, 'shape');
+
     setPosition(group, data.x, data.y);
 
-    return rect;
+    return group;
   }
 
   function createConnection(paper, data) {
     var points = flatenPoints(data.waypoints);
 
-    var line = paper
-      .polyline(points)
-      .attr({ 'class': 'djs-connection' });
+    var line = paper.polyline(points);
 
-    var group = wrap(paper, line);
+    var group = wrap(paper, line, 'connection');
 
-    return line;
+    return group;
   }
 
   function setPosition(rect, x, y) {

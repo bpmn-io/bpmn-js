@@ -1,7 +1,7 @@
-require('../core/Events');
+require('../../core/Events');
 
-var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+var Diagram = require('../../Diagram'),
+    _ = require('../../util/underscore');
 
 /**
  * @class
@@ -12,40 +12,34 @@ var Diagram = require('../Diagram'),
  */
 function Shapes(events) {
 
-  var nextId = 0;
-
   var shapeMap = {};
   var graphicsMap = {};
 
-  function assignId(prefix, e) {
-    e.id = prefix + nextId++;
-  }
-
-  function addShape(shape, graphics) {
+  function addShape(shape, gfx) {
     if (!shape.id) {
-      assignId('s', shape);
+      throw new Error('[shapes] shape has no id');
     }
 
-    if (!graphics.id) {
-      assignId('g', graphics);
+    if (!gfx.id) {
+      throw new Error('[shapes] graphics has no id');
     }
 
-    if (graphicsMap[graphics.id]) {
-      throw new Error('[mod] graphics with id ' + graphics.id + ' already registered');
+    if (graphicsMap[gfx.id]) {
+      throw new Error('[mod] graphics with id ' + gfx.id + ' already registered');
     }
 
     if (shapeMap[shape.id]) {
       throw new Error('[mod] shape with id ' + shape.id + ' already added');
     }
 
-    shapeMap[shape.id] = graphicsMap[graphics.id] = { shape: shape, graphics: graphics };
+    shapeMap[shape.id] = graphicsMap[gfx.id] = { shape: shape, gfx: gfx };
   }
 
   function removeShape(shape) {
-    var graphics = getGraphicsByShape(shape);
+    var gfx = getGraphicsByShape(shape);
 
     delete shapeMap[shape.id];
-    delete graphicsMap[graphics.id];
+    delete graphicsMap[gfx.id];
   }
 
   /**
@@ -61,8 +55,8 @@ function Shapes(events) {
   /**
    * @method Shapes#getShapeByGraphics
    */
-  function getShapeByGraphics(graphics) {
-    var id = _.isString(graphics) ? graphics : graphics.id;
+  function getShapeByGraphics(gfx) {
+    var id = _.isString(gfx) ? gfx : gfx.id;
 
     var container = graphicsMap[id];
     if (container) {
@@ -78,7 +72,7 @@ function Shapes(events) {
 
     var container = shapeMap[id];
     if (container) {
-      return container.graphics;
+      return container.gfx;
     }
   }
 

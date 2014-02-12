@@ -1,52 +1,68 @@
-.selection-box {
+/**
+ * outline styles
+ */
+.djs-outline {
   fill: none;
   visibility: hidden;
 }
 
-.selection-box.selected,
-.selection-box.hover {
+.djs-group.hover .djs-outline,
+.djs-group.selected .djs-outline {
   visibility: visible;
   stroke-dasharray: 2,4;
 }
 
-.djs-dragger {
-  fill: #DDD;
-  stroke: #CCC;
-  stroke-dasharray: 2,1;
-}
-
-.selection-box.selected {
+.djs-group.selected .djs-outline {
   stroke: blue;
   stroke-width: 1px;
 }
-.selection-box.hover {
+
+.djs-group.hover .djs-outline {
   stroke: red;
   stroke-width: 1px;
 }
 
-.djs-shape {
-  stroke: black;
-  stroke-width: 2px;
-  fill: #F3F3F3;
-}
-
-.djs-connection {
-  stroke-width: 2px;
-  stroke: #333;
+/**
+ * drag styles
+ */
+.djs-dragger {
+  fill: none;
+  stroke: #CCC;
+  stroke-dasharray: 2,1;
 }
 
 .djs-shape.dragging {
-  opacity: 0.5;
+  opacity: 0.1;
 }
 
-.djs-connection-hit, .djs-shape-hit {
+/**
+ * hit shape styles
+ */
+.djs-hit {
   stroke-opacity: 0.0;
   stroke-width: 10px;
   stroke: fuchsia;
   fill: none;
 }
 
-.djs-connection {
+/**
+ * shape / connection basic styles
+ */
+.djs-shape .djs-visual {
+  stroke: black;
+  stroke-width: 2px;
+  fill: #F3F3F3;
+}
+
+.djs-connection .djs-visual {
+  stroke-width: 2px;
+  stroke: #333;
+}
+
+/**
+ * markers
+ */
+.djs-connection .djs-visual {
   marker-end: url(#sequenceflow-end-marker);
 }
 

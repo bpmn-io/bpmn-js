@@ -1,7 +1,10 @@
 require('../core/Events');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+    _ = require('../util/underscore'),
+    svgUtil = require('../util/svgUtil');
+
+var getVisual = svgUtil.getVisual;
 
 /**
  * @class
@@ -13,7 +16,7 @@ var Diagram = require('../Diagram'),
 function Interactivity(events) {
 
   function isCtxSwitch(e) {
-    return e.target.parentNode != e.relatedTarget.parentNode;
+    return !e.relatedTarget || e.target.parentNode != e.relatedTarget.parentNode;
   }
 
   function fire(event, baseEvent, eventName) {
@@ -27,12 +30,12 @@ function Interactivity(events) {
 
     var baseEvent = { element: element, gfx: gfx };
 
-    var parent = gfx.parent();
+    var visual = getVisual(gfx);
 
     // add a slightly bigger event rect
-    gfx.clone().attr('class', 'djs-' + type + '-hit').insertBefore(gfx);
+    visual.clone().attr('class', 'djs-hit').prependTo(gfx);
 
-    parent.hover(function(e) {
+    gfx.hover(function(e) {
       if (isCtxSwitch(e)) {
         fire(e, baseEvent, type + '.hover');
       }
@@ -42,23 +45,21 @@ function Interactivity(events) {
       }
     });
 
-    parent.click(function(e) {
+    gfx.click(function(e) {
       fire(e, baseEvent, type + '.click');
     });
 
-    if (dblclick) {
-      parent.dblclick(function(e) {
-        fire(e, baseEvent, type + '.dblclick');
-      });
-    }
+    gfx.dblclick(function(e) {
+      fire(e, baseEvent, type + '.dblclick');
+    });
   }
 
   function makeConnectionSelectable(connection, gfx) {
-    makeSelectable(connection, gfx, { type: 'connection', dblclick: false });
+    makeSelectable(connection, gfx, { type: 'connection' });
   }
 
   function makeShapeSelectable(shape, gfx) {
-    makeSelectable(shape, gfx, { type: 'shape', dblclick: true });
+    makeSelectable(shape, gfx, { type: 'shape' });
   }
 
   function registerEvents(events) {
