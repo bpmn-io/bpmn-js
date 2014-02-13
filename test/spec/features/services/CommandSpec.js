@@ -1,6 +1,6 @@
-var Command = require('../../../src/features/Command');
+var Command = require('../../../../src/features/services/CommandStack');
 
-describe('Command', function() {
+describe('CommandStack', function() {
   'use strict';
 
   var command = new Command();
@@ -9,7 +9,6 @@ describe('Command', function() {
   };
   var f2 = function f2(param) {
     param.test = 'B';
-    console.log(param);
   };
   var f3 = function f3(param) {
     param.test = 'C';
@@ -25,26 +24,26 @@ describe('Command', function() {
 
   it('Initial test of method registration', function() {
 
-    command.registerCommand('id_1', f1);
+    command.register('id_1', f1);
     expect(command.getCommandList()['id_1']).toBeDefined();
 
-    command.registerCommand('id_2', f2);
-    command.registerCommand('id_3', f3);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
 
     expect(command.getCommandList()['id_3']).toBeDefined();
   });
 
   it('Execute a command', function() {
 
-    command.registerCommand('id_1', f1);
-    command.registerCommand('id_2', f2);
-    command.registerCommand('id_3', f3);
+    command.register('id_1', f1);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
     var param1 = {};
-    command.doCommand('id_2', param1);
+    command.execute('id_2', param1);
     expect(param1.test).toEqual('B');
-    command.registerCommand('id_4', f4);
+    command.register('id_4', f4);
     var param2 = {};
-    command.doCommand('id_4', param2);
+    command.execute('id_4', param2);
     expect(param2.test).toEqual('D');
   });
 
