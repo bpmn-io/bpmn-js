@@ -37,11 +37,11 @@ function CommandStack() {
    * @param id
    * @param params
    */
-  function applyAction(id, params) {
+  function applyAction(id, ctx) {
     var commandListeners = getCommandListener(id);
     _.forEach(commandListeners, function(commandListener) {
-      if(commandListener(params)) {
-        pushAction(id, params);
+      if(commandListener.do(ctx)) {
+        pushAction(id, ctx);
       }
     });
   }
@@ -54,13 +54,13 @@ function CommandStack() {
     return commandListenersMap[id];
   };
 
-  var addCommandListener = function addCommandListener(id, fn) {
+  var addCommandListener = function addCommandListener(id, handler) {
     var commandListeners = getCommandListener(id);
     if(commandListeners) {
-      commandListenersMap.push(fn);
+      commandListenersMap.push(handler);
     } else {
       commandListenersMap[id] = [];
-      commandListenersMap[id].push(fn);
+      commandListenersMap[id].push(handler);
     }
   };
 
