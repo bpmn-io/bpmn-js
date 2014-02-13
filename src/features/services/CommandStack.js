@@ -1,4 +1,6 @@
-_ = require('../../util/underscore');
+
+var Diagram = require('../../Diagram'),
+    _ = require('../../util/underscore');
 
 /**
  * @namespace djs
@@ -94,3 +96,5 @@ function CommandStack() {
 }
 
 module.exports = CommandStack;
+
+Diagram.plugin('commandStack', CommandStack);
