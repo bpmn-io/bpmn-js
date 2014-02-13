@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  require('load-grunt-tasks')(grunt);
+
   // project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -120,16 +122,6 @@ module.exports = function(grunt) {
       'build': [ 'build', 'jsdoc' ]
     }
   });
-
-  // load external scripts
-  grunt.loadNpmTasks('grunt-karma');
-  grunt.loadNpmTasks('grunt-browserify');
-  grunt.loadNpmTasks('grunt-jsdoc');
-  grunt.loadNpmTasks('grunt-concurrent');
-
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // tasks
   
