@@ -1,11 +1,8 @@
 require('../core/Events');
-require('../core/Canvas');
 require('./services/Selection');
 require('./services/Shapes');
-require('./services/Rules');
+require('./services/CommandStack');
 require('./Interactivity');
-
-var Snap = require('snapsvg');
 
 var Diagram = require('../Diagram'),
     _ = require('../util/underscore');
@@ -19,132 +16,162 @@ var Diagram = require('../Diagram'),
  * @param {Events} events the event bus
  * @param {Selection} selection the selection service
  * @param {Shapes} shapes the shapes service
+ * @param {CommandStack} commandStack the command stack to perform the actual move action
  */
-function Drag(events, selection, shapes, canvas, rules) {
+function Drag(events, selection, shapes, commandStack) {
+
+  'use strict';
 
   var DRAG_START_THRESHOLD = 10;
 
-  function makeDraggable(shape, graphics) {
+  function dragStartThresholdReached(dx, dy) {
+    return Math.abs(dx) > DRAG_START_THRESHOLD ||
+           Math.abs(dy) > DRAG_START_THRESHOLD;
+  }
+
+  function makeDraggable(shape, gfx) {
 
     var dragCtx;
-    var dragGroup;
-
-    function removeDragMarkers(gfx) {
-      gfx
-        .removeClass('drop-ok')
-        .removeClass('drop-not-ok');
-    }
 
     function dragOver(event) {
-      var marker = rules.can('drop', dragCtx) ? 'drop-ok' : 'drop-not-ok';
+      var dragEvt = _.extend({}, event, { dragCtx: dragCtx });
 
-      event.gfx.addClass(marker);
+      /**
+       * An event indicating that a shape is dragged over another shape
+       *
+       * @memberOf Drag
+       * 
+       * @event shape.dragover
+       * @type {Object}
+       * 
+       * @property {djs.ElementDescriptor} element the shape descriptor
+       * @property {Object} gfx the graphical representation of the shape
+       * @property {Object} dragCtx the drag context
+       */
+      events.fire('shape.dragover', dragEvt);
 
-      dragCtx.over = event.gfx;
+      dragCtx.hover = event.gfx;
     }
 
     function dragOut(event) {
-      removeDragMarkers(event.gfx);
+      var dragEvt = _.extend({}, event, { dragCtx: dragCtx });
+
+      /**
+       * An event indicating that a shape is dragged out of another shape after 
+       * it had been previously dragged over it
+       *
+       * @memberOf Drag
+       * 
+       * @event shape.dragout
+       * @type {Object}
+       * 
+       * @property {djs.ElementDescriptor} element the shape descriptor
+       * @property {Object} gfx the graphical representation of the shape
+       * @property {Object} dragCtx the drag context
+       */
+      events.fire('shape.dragout', dragEvt);
+
+      delete dragCtx.hover;
     }
 
-    graphics.drag(function dragging(dx, dy, x, y, e) {
+    gfx.drag(function dragging(dx, dy, x, y, e) {
 
       var graphics = dragCtx.graphics;
 
-      if (!dragCtx.dragging) {
+      // drag start
+      if (!dragCtx.dragging && dragStartThresholdReached(dx, dy)) {
 
-        // activate visual drag once a certain threshold is reached
-        if (Math.abs(dx) > DRAG_START_THRESHOLD || Math.abs(dy) > DRAG_START_THRESHOLD) {
+        events.on('shape.hover', dragOver);
+        events.on('shape.out', dragOut);
 
-          if(!dragGroup) {
-            dragGroup = canvas.getContext().group();
-            dragGroup.attr('class', 'djs-drag-group');
-          }
+        dragCtx.dragging = true;
 
-          _.forEach(graphics, function(gfx) {
-            var dragger = gfx.clone();
-            
-            dragger.attr({
-              'class': 'djs-dragger',
-              'x': gfx.parent().getBBox(false).x,
-              'y': gfx.parent().getBBox(false).y
-            });
-
-            gfx.dragger = dragger;
-            gfx.addClass('djs-dragging');
-
-            dragGroup.add(dragger);
-
-            events.on('shape.hover', dragOver);
-            events.on('shape.out', dragOut);
-          });
-
-          selection.select(null);
-          dragCtx.dragging = true;
-
-          events.fire('shape.dragstart', { element: shape, gfx: graphics, drag: dragCtx });
-        }
+        /**
+         * An event indicating that a drag operation has started
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragstart
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('shape.dragstart', { element: shape, gfx: gfx, dragCtx: dragCtx });
       }
-      
-      // update draggers with new coordinates
+
+      // drag move
       if (dragCtx.dragging) {
 
-        var translateMatrix = new Snap.Matrix();
-        translateMatrix.translate(dx,dy);
-        dragGroup.transform(translateMatrix);
+        _.extend(dragCtx, {
+          dx: dx, dy: dy
+        });
+
+        /**
+         * An event indicating that a move happens during a drag operation
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragmove
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('shape.dragmove', { element: shape, gfx: gfx, dragCtx: dragCtx });
       }
     }, function dragStart(x, y, e) {
 
       var selectedShapes = selection.getSelection(),
           dragShapes = Array.prototype.slice.call(selectedShapes),
+          dragGroup = null,
           dragGraphics = [];
 
         // add drag target to selection if not done already
         if (dragShapes.indexOf(shape) === -1) {
-            dragShapes.push(shape);
+          dragShapes.push(shape);
         }
 
         _.forEach(dragShapes, function(s) {
-            var gfx = shapes.getGraphicsByShape(s);
-            dragGraphics.push(gfx);
+          var gfx = shapes.getGraphicsByShape(s);
+          dragGraphics.push(gfx);
         });
 
         // prepare a drag ctx that gets later activated when
         // a given drag threshold is reached
         dragCtx = {
-          dragging: false,
           shapes: dragShapes,
           graphics: dragGraphics,
-          selection: selectedShapes,
-          over: null
+          selection: selectedShapes
         };
     }, function dragEnd(x, y, e) {
-
-      _.forEach(dragCtx.graphics, function(gfx) {
-        gfx.removeClass('djs-dragging');
-
-        if (gfx.dragger) {
-          gfx.dragger.remove();
-          delete gfx.dragger;
-        }
-
-        selection.select(dragCtx.selection);
-
-        if (dragCtx.dragging) {
-          events.fire('shape.dragend', { element: shape, gfx: gfx, drag: dragCtx });
-        }
-
-        if (dragGroup) {
-          dragGroup.remove();
-          dragGroup = undefined;
-        }
-      });
 
       events.off('shape.hover', dragOver);
       events.off('shape.out', dragOut);
 
-      if (dragCtx.over) {
-        removeDragMarkers(dragCtx.over);
+      if (dragCtx.dragging) {
+
+        var event = { element: shape, gfx: gfx, dragCtx: dragCtx };
+
+        /**
+         * An event indicating that a drag operation has ended
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragstart
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('shape.dragend', event);
+
+        if (!event.isDefaultPrevented()) {
+          commandStack.execute('moveshape', { event: event });
+        }
       }
 
       dragCtx = null;
@@ -153,12 +180,12 @@ function Drag(events, selection, shapes, canvas, rules) {
 
   events.on('shape.added', function(event) {
     var shape = event.element,
-        graphics = event.gfx;
+        gfx = event.gfx;
 
-    makeDraggable(shape, graphics);
+    makeDraggable(shape, gfx);
   });
 }
 
-Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'canvas', 'rules', 'interactivity', Drag ]);
+Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'commandStack', 'interactivity', Drag ]);
 
 module.exports = Drag;
