@@ -9,7 +9,10 @@ var Diagram = require('../../Diagram'),
 /**
  * @class
  *
- * The command registry.
+ * This service offer an action history for the application.
+ * So that the diagram can support undo/redo. All actions applied
+ * to the diagram must be invoked through this Service.
+ *
  */
 function CommandStack() {
   'use strict';
