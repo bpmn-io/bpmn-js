@@ -19,26 +19,6 @@
         console.log('shape added', event);
       });
 
-      events.on('shape.hover', function(event) {
-        console.log('shape hover', event);
-      });
-
-      events.on('shape.out', function(event) {
-        console.log('shape out', event);
-      });
-
-      events.on('shape.click', function(event) {
-        console.log('shape click', event);
-      });
-
-      events.on('connection.hover', function(event) {
-        console.log('connection hover', event);
-      });
-      
-      events.on('connection.out', function(event) {
-        console.log('connection out', event);
-      });
-
       var s1 = {x: 10, y: 20, width: 100, height: 80 };
       var s2 = {x: 80, y: 10, width: 300, height: 140 };
       var s3 = {x: 100, y: 20, width: 100, height: 80, parent: s2 };

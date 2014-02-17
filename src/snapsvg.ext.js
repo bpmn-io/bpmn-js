@@ -76,7 +76,7 @@ Snap.plugin(function (Snap, Element, Paper, global) {
    */
   Element.prototype.hasClass = function(cls) {
     if (!cls) {
-      throw new Error("[snapsvg] syntax: hasClass(clsStr)");
+      throw new Error('[snapsvg] syntax: hasClass(clsStr)');
     }
 
     return getClasses(this).indexOf(cls) !== -1;
@@ -118,4 +118,32 @@ Snap.plugin(function (Snap, Element, Paper, global) {
     return this;
   };
 
+});
+
+/**
+ * @class TranslatePlugin
+ *
+ * Extends snapsvg with methods to translate elements
+ */
+Snap.plugin(function (Snap, Element, Paper, global) {
+  
+  /*
+   * @method snapsvg.Element#translate
+   *
+   * @example
+   *
+   * e.translate(10, 20);
+   *
+   * // sets transform matrix to translate(10, 20)
+   *
+   * @param {Number} x translation
+   * @param {Number} y translation
+   *
+   * @return {snapsvg.Element} the element (this)
+   */
+  Element.prototype.translate = function(x, y) {
+    var matrix = new Snap.Matrix();
+    matrix.translate(x, y);
+    this.transform(matrix);
+  };
 });

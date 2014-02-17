@@ -26,8 +26,6 @@ var Diagram = require('../Diagram'),
  */
 function DragUI(events, selection, shapes, canvas, rules) {
 
-  'use strict';
-
   var paper = canvas.getContext();
 
   function getGfx(s) {
@@ -72,7 +70,7 @@ function DragUI(events, selection, shapes, canvas, rules) {
     var dragCtx = event.dragCtx,
         dragShapes = dragCtx.shapes;
 
-    var dragGroup = paper.group().attr('class', 'djs-drag-group');
+    var dragGroup = paper.group().attr('class', 'djs-drag-group').attr('pointer-events', 'none');
 
     var visuallyDraggedShapes = getVisualDragShapes(dragShapes),
         allDraggedShapes = getAllChildShapes(dragShapes);
@@ -102,9 +100,7 @@ function DragUI(events, selection, shapes, canvas, rules) {
         dy = dragCtx.dy,
         dragGroup = dragCtx.dragGroup;
 
-    var translateMatrix = new Snap.Matrix();
-    translateMatrix.translate(dx, dy);
-    dragGroup.transform(translateMatrix);
+    dragGroup.translate(dx, dy);
   });
 
   events.on('shape.dragover', function(event) {

@@ -126,7 +126,6 @@ function Drag(events, selection, shapes, commandStack) {
 
       var selectedShapes = selection.getSelection(),
           dragShapes = Array.prototype.slice.call(selectedShapes),
-          dragGroup = null,
           dragGraphics = [];
 
         // add drag target to selection if not done already
