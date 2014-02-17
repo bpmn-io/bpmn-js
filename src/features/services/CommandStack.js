@@ -30,7 +30,7 @@ function CommandStack() {
     addCommandListener(id, handler);
   }
 
-  function getCommandList() {
+  function commandList() {
     return commandListenersMap;
   }
 
@@ -49,7 +49,15 @@ function CommandStack() {
   }
 
   function undoAction() {
-      popAction();
+    var lastAction = popAction();
+    if(!lastAction) {
+      console.log('false  ' + false);
+      return false;
+    }
+    var commandListeners = getCommandListener(lastAction.id);
+    _.forEach(commandListeners, function(commandListener) {
+        commandListener.undo(lastAction.param);
+    });
   }
 
   var getCommandListener = function getCommandListener(id) {
@@ -81,7 +89,17 @@ function CommandStack() {
   };
 
   var popAction = function popAction() {
-    actionStack.pop();
+    return actionStack.pop();
+  };
+
+  var getActionStack = function getActionStack() {
+    return actionStack;
+  };
+
+  var clearActionStack = function clearActionStack() {
+    while (actionStack.length > 0) {
+      actionStack.pop();
+    }
   };
 
   return {
@@ -89,9 +107,9 @@ function CommandStack() {
     execute: applyAction,
     undo: undoAction,
     redo: undefined,
-    getCommandList: getCommandList,
-    getStack: undefined,
-    clear: undefined
+    getCommandList: commandList,
+    actionStack: getActionStack,
+    clearStack: clearActionStack
   };
 }
 
