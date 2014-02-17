@@ -19,7 +19,11 @@
   "maxcomplexity" : 10,
   "maxlen" : 120,
   "browser" : true,
+  "strict": false,
   "globals": {
-    "require": false
+    "require": false,
+    "module": false,
+    "describe": false,
+    "it": false
   }
 }

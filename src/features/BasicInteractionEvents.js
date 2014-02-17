@@ -16,7 +16,7 @@ var getVisual = svgUtil.getVisual;
 function Interactivity(events) {
 
   function isCtxSwitch(e) {
-    return !e.relatedTarget || e.target.parentNode != e.relatedTarget.parentNode;
+    return !e.relatedTarget || e.target.parentNode !== e.relatedTarget.parentNode;
   }
 
   function fire(event, baseEvent, eventName) {
@@ -75,6 +75,6 @@ function Interactivity(events) {
   registerEvents(events);
 }
 
-Diagram.plugin('interactivity', [ 'events', Interactivity ]);
+Diagram.plugin('basicInteractionEvents', [ 'events', Interactivity ]);
 
 module.exports = Interactivity;

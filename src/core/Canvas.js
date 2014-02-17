@@ -1,4 +1,5 @@
-var IdGenerator = require('../util/IdGenerator'),
+var Snap = require('snapsvg'),
+    IdGenerator = require('../util/IdGenerator'),
     _ = require('../util/underscore');
 
 /**
@@ -12,11 +13,9 @@ var IdGenerator = require('../util/IdGenerator'),
  */
 function Canvas(config, events, svgFactory) {
 
-  'use strict';
-
   var ids = new IdGenerator('s');
 
-  var paper = Snap(config.container);
+  var paper = new Snap(config.container);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
@@ -133,7 +132,7 @@ function Canvas(config, events, svgFactory) {
    *
    * @method Canvas#getGraphics
    * 
-   * @param {djs.ElementDescriptor} element descriptor of the element for which the grapical representation should be returned
+   * @param {djs.ElementDescriptor} element descriptor of the element
    */
   function getGraphics(element) {
     return elementMap[element.id].gfx;

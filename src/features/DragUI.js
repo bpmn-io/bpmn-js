@@ -3,12 +3,14 @@ require('../core/Canvas');
 require('./services/Selection');
 require('./services/Shapes');
 require('./services/Rules');
-require('./Interactivity');
+
+require('./DragEvents');
 
 var Snap = require('snapsvg');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+    _ = require('../util/underscore'),
+    shapeUtil = require('../util/shapeUtil');
 
 
 /**
@@ -19,21 +21,25 @@ var Diagram = require('../Diagram'),
  * @param {Events} events the event bus
  * @param {Selection} selection the selection service
  * @param {Shapes} shapes the shapes service
+ * @param {Canvas} canvas the drawing canvas
+ * @param {Rules} the rule engine
  */
 function DragUI(events, selection, shapes, canvas, rules) {
+
   'use strict';
 
   var paper = canvas.getContext();
 
-  function getChildGfx(shape) {
+  function getGfx(s) {
+    return shapes.getGraphicsByShape(s);
+  }
 
-    var allGraphics = [ shapes.getGraphicsByShape(shape) ];
+  function getVisualDragShapes(shapeList) {
+    return shapeUtil.selfAndDirectChildren(shapeList, true);
+  }
 
-    _.forEach(shape.children, function(c) {
-      allGraphics = allGraphics.concat(getChildGfx(c));
-    });
-
-    return allGraphics;
+  function getAllChildShapes(shapeList) {
+    return shapeUtil.selfAndAllChildren(shapeList, true);
   }
 
   function removeDropMarkers(gfx) {
@@ -68,17 +74,19 @@ function DragUI(events, selection, shapes, canvas, rules) {
 
     var dragGroup = paper.group().attr('class', 'djs-drag-group');
 
-    _.forEach(dragShapes, function(s) {
+    var visuallyDraggedShapes = getVisualDragShapes(dragShapes),
+        allDraggedShapes = getAllChildShapes(dragShapes);
 
+    visuallyDraggedShapes.forEach(function(s) {
       addDragger(s, dragGroup);
+    });
 
-      _.forEach(s.children, function(c) {
-        addDragger(c, dragGroup);
-      });
+    // cache all dragged gfx
+    // so that we can quickly undo their state changes later
+    var allDraggedGfx = dragCtx.allDraggedGfx = allDraggedShapes.map(getGfx);
 
-      _.forEach(getChildGfx(s), function(g) {
-        g.addClass('djs-dragging');
-      });
+    allDraggedGfx.forEach(function(gfx) {
+      gfx.addClass('djs-dragging');
     });
 
     // deselect shapes
@@ -116,14 +124,15 @@ function DragUI(events, selection, shapes, canvas, rules) {
   events.on('shape.dragend', function(event) {
 
     var dragCtx = event.dragCtx,
-        shapes = dragCtx.shapes,
+        allDraggedGfx = dragCtx.allDraggedGfx,
         dragGroup = dragCtx.dragGroup;
 
-    _.forEach(shapes, function(shape) {
-      _.forEach(getChildGfx(shape), function(gfx) {
+    // cache all dragged gfx
+    if (allDraggedGfx) {
+      allDraggedGfx.forEach(function(gfx) {
         gfx.removeClass('djs-dragging');
       });
-    });
+    }
 
     dragGroup.remove();
     
@@ -136,6 +145,6 @@ function DragUI(events, selection, shapes, canvas, rules) {
   });
 }
 
-Diagram.plugin('dragUI', [ 'events', 'selection', 'shapes', 'canvas', 'rules', 'drag', DragUI ]);
+Diagram.plugin('dragUI', [ 'events', 'selection', 'shapes', 'canvas', 'rules', 'dragEvents', DragUI ]);
 
 module.exports = DragUI;

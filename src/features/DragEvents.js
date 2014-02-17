@@ -1,8 +1,10 @@
 require('../core/Events');
+
 require('./services/Selection');
 require('./services/Shapes');
 require('./services/CommandStack');
-require('./Interactivity');
+
+require('./BasicInteractionEvents');
 
 var Diagram = require('../Diagram'),
     _ = require('../util/underscore');
@@ -19,8 +21,6 @@ var Diagram = require('../Diagram'),
  * @param {CommandStack} commandStack the command stack to perform the actual move action
  */
 function Drag(events, selection, shapes, commandStack) {
-
-  'use strict';
 
   var DRAG_START_THRESHOLD = 10;
 
@@ -186,6 +186,6 @@ function Drag(events, selection, shapes, commandStack) {
   });
 }
 
-Diagram.plugin('drag', [ 'events', 'selection', 'shapes', 'commandStack', 'interactivity', Drag ]);
+Diagram.plugin('dragEvents', [ 'events', 'selection', 'shapes', 'commandStack', 'basicInteractionEvents', Drag ]);
 
 module.exports = Drag;

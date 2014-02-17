@@ -1,5 +1,5 @@
 require('../core/Events');
-require('./Interactivity');
+require('./BasicInteractionEvents');
 require('./services/Selection');
 require('./services/Shapes');
 
@@ -89,6 +89,6 @@ function SelectionUI(events, selection, shapes) {
   });
 }
 
-Diagram.plugin('selectionUI', [ 'events', 'selection', 'shapes', 'interactivity', 'outline', SelectionUI ]);
+Diagram.plugin('selectionUI', [ 'events', 'selection', 'shapes', 'basicInteractionEvents', 'outline', SelectionUI ]);
 
 module.exports = SelectionUI;

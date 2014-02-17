@@ -1,7 +1,6 @@
-var snap = require('snapsvg');
+var Snap = require('snapsvg');
 
 function SvgFactory(events) {
-  'use strict';
   var markers;
 
   function addMarker(id, element) {
@@ -16,7 +15,7 @@ function SvgFactory(events) {
 
     addMarker('sequenceflow-end-marker',
       paper
-        .path("M 0 0 L 10 5 L 0 10 Z")
+        .path('M 0 0 L 10 5 L 0 10 Z')
           .attr('class', 'djs-connection-marker')
           .marker(0, 0, 10, 10, 10, 5)
             .attr({
@@ -29,7 +28,7 @@ function SvgFactory(events) {
 
   //   addMarker('sequenceFlowEnd',
   //     paper
-  //       .path("M 0 0 L 10 5 L 0 10")
+  //       .path('M 0 0 L 10 5 L 0 10')
   //       .marker(0, 0, 10, 10, 0, 5)
   //         .attr({
   //           markerUnits: 'strokeWidth',
@@ -39,12 +38,12 @@ function SvgFactory(events) {
   //           overflow: 'visible'
   //         }));
 
-  //   <marker id="starttriangle" overflow="visible"
-  // viewBox="0 0 10 10" refX="5" refY="5" 
-  // markerUnits="strokeWidth"
-  // markerWidth="2" markerHeight="3"
-  // orient="auto">
-  //   <path d="M -2 5 L 8 0 L 8 10" />
+  //   <marker id='starttriangle' overflow='visible'
+  // viewBox='0 0 10 10' refX='5' refY='5' 
+  // markerUnits='strokeWidth'
+  // markerWidth='2' markerHeight='3'
+  // orient='auto'>
+  //   <path d='M -2 5 L 8 0 L 8 10' />
   //   </marker>
   }
 
