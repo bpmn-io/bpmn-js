@@ -34,8 +34,9 @@
  * drag styles
  */
 .djs-dragger {
-  fill: none;
-  stroke: #CCC;
+  fill: white;
+  opacity: 0.3;
+  stroke: #333;
   stroke-dasharray: 2,1;
 }
 
@@ -65,6 +66,21 @@
 .djs-connection .djs-visual {
   stroke-width: 2px;
   stroke: #333;
+  fill: none;
+}
+
+.djs-connection .djs-bendpoint {
+  visibility: hidden;
+}
+
+.djs-connection:hover .djs-bendpoint {
+  visibility: visible;
+}
+
+.djs-connection .djs-bendpoint:hover {
+  stroke: #CCC;
+  stroke-width: 1px;
+  fill: yellow;
 }
 
 /**
@@ -75,5 +91,6 @@
 }
 
 .djs-connection-marker {
-  
+  fill: black;
+  stroke: none;
 }
