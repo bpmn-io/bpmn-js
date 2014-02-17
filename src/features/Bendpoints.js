@@ -1,0 +1,162 @@
+require('../core/Events');
+
+require('./services/Shapes');
+require('./BasicInteractionEvents');
+
+var Diagram = require('../Diagram'),
+    _ = require('../util/underscore');
+
+/**
+ * Provides bendpoint visualization, hover and interactivity.
+ * 
+ * @class
+ *
+ * @param {Events} events the event bus
+ * @param {Shapes} shapes the shape registry
+ * @param {CommandStack} commandStack the command stack
+ */
+function Bendpoints(events, shapes, canvas, commandStack) {
+
+  var DRAG_START_THRESHOLD = 10;
+
+  function dragStartThresholdReached(dx, dy) {
+    return Math.abs(dx) > DRAG_START_THRESHOLD ||
+           Math.abs(dy) > DRAG_START_THRESHOLD;
+  }
+
+  var paper = canvas.getContext();
+
+  function makeDraggable(connection, gfx, bendpointGfx) {
+
+    var dragCtx;
+
+    function connectOver(event) {
+      var dragEvt = _.extend({}, event, { dragCtx: dragCtx });
+
+      events.fire('shape.connectover', dragEvt);
+
+      dragCtx.hover = event.gfx;
+    }
+
+    function connectOut(event) {
+      var dragEvt = _.extend({}, event, { dragCtx: dragCtx });
+
+      events.fire('shape.connectout', dragEvt);
+
+      delete dragCtx.hover;
+    }
+
+    bendpointGfx.drag(function dragging(dx, dy, x, y, e) {
+
+      var graphics = dragCtx.graphics,
+          dragGroup = dragCtx.dragGroup;
+
+      // drag start
+      if (!dragCtx.dragging && dragStartThresholdReached(dx, dy)) {
+
+        events.on('shape.hover', connectOver);
+        events.on('shape.out', connectOut);
+
+        dragCtx.dragging = true;
+
+        dragCtx.dragGroup = dragGroup = paper.group(graphics.clone()).attr('pointer-events', 'none');
+
+        /**
+         * An event indicating that a drag operation has started
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragstart
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('bendpoint.dragstart', { element: connection, gfx: gfx, dragCtx: dragCtx });
+      }
+
+      // drag move
+      if (dragCtx.dragging) {
+
+        _.extend(dragCtx, {
+          dx: dx, dy: dy
+        });
+
+        dragGroup.translate(dx, dy);
+
+        /**
+         * An event indicating that a move happens during a drag operation
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragmove
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('bendpoint.dragmove', { element: connection, gfx: gfx, dragCtx: dragCtx });
+      }
+    }, function dragStart(x, y, e) {
+
+        // prepare a drag ctx that gets later activated when
+        // a given drag threshold is reached
+        dragCtx = {
+          graphics: bendpointGfx,
+          connectionGfx: gfx,
+          connection: connection
+        };
+    }, function dragEnd(x, y, e) {
+
+      events.off('shape.hover', connectOver);
+      events.off('shape.out', connectOut);
+
+      if (dragCtx.dragging) {
+
+        var event = { element: connection, gfx: gfx, dragCtx: dragCtx };
+
+        dragCtx.dragGroup.remove();
+
+        /**
+         * An event indicating that a drag operation has ended
+         *
+         * @memberOf Drag
+         * 
+         * @event shape.dragstart
+         * @type {Object}
+         * 
+         * @property {djs.ElementDescriptor} element the shape descriptor
+         * @property {Object} gfx the graphical representation of the shape
+         * @property {Object} dragCtx the drag context
+         */
+        events.fire('bendpoint.dragend', event);
+
+        if (!event.isDefaultPrevented()) {
+          commandStack.execute('movebendpoint', { event: event });
+        }
+      }
+
+      dragCtx = null;
+    });
+  }
+
+  function addBendpoints(element, gfx) {
+
+    element.waypoints.forEach(function(p) {
+
+      var bendpointGfx = paper.circle(p.x, p.y, 10).addClass('djs-bendpoint').appendTo(gfx);
+
+      makeDraggable(element, gfx, bendpointGfx);
+    });
+  }
+
+  events.on('connection.added', function(event) {
+    addBendpoints(event.element, event.gfx);
+  });
+}
+
+Diagram.plugin('bendpoints', [ 'events', 'shapes', 'canvas', 'commandStack', 'basicInteractionEvents', Bendpoints ]);
+
+module.exports = Bendpoints;

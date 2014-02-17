@@ -1,0 +1,26 @@
+<html>
+<head>
+  <link href='style.css' rel='stylesheet' />
+</head>
+<body>
+  <script src='../common.js'></script>
+  <script src='../diagram.js'></script>
+  <script>
+    var Diagram = require('diagram');
+    var diagram = new Diagram({ plugins: [ 'selectionUI', 'dragUI', 'bendpoints' ] });
+
+    diagram.inject([ 'events', 'canvas', function(events, canvas) {
+      
+      var s1 = {x: 10, y: 20, width: 100, height: 80 };
+      var s2 = {x: 300, y: 300, width: 100, height: 80 };
+
+      canvas
+        .addShape(s1)
+        .addShape(s2);
+      
+      canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      canvas.addConnection({ waypoints: [ { x: 150, y: 150 }, { x: 200, y: 150 }, { x: 200, y: 200 }, { x: 300, y: 200} ]});
+      canvas.addConnection({ waypoints: [ { x: 300, y: 300 }, { x: 100, y: 400 }, { x: 400, y: 100 }, { x: 500, y: 100 } ]});
+    }]);
+  </script>
+</body>
