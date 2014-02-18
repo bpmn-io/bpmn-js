@@ -83,13 +83,6 @@
   fill: yellow;
 }
 
-/**
- * markers
- */
-.djs-connection .djs-visual {
-  marker-end: url(#sequenceflow-end-marker);
-}
-
 .djs-connection-marker {
   fill: black;
   stroke: none;
