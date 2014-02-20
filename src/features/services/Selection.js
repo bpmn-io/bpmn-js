@@ -21,7 +21,7 @@ function Selection(events) {
   }
 
   function isSelected(shape) {
-    return selectedElements.indexOf(shape) != -1;
+    return selectedElements.indexOf(shape) !== -1;
   }
 
   /**
@@ -46,7 +46,7 @@ function Selection(events) {
     // to the method
     if (elements.length && add) {
       _.forEach(elements, function(element) {
-        if (selectedElements.indexOf(element) != -1) {
+        if (selectedElements.indexOf(element) !== -1) {
           // already selected
           return;
         } else {

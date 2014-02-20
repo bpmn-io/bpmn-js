@@ -8,11 +8,13 @@ var _ = require('./underscore');
  * 
  * @param {Object[]|Function} the service definition
  *
- * @return {Object} the definition object, containing `dependencies` (`String[]`) and the `factory` (`Function`) for instantiation)
+ * @return {Object} the definition object, containing `dependencies`
+ *  (`String[]`) and the `factory` (`Function`) for instantiation)
  */
 function parseDefinition(fn) {
+  'use strict';
 
-  var constructor, factory;
+  var factory, dependencies;
 
   if (_.isArray(fn)) {
 

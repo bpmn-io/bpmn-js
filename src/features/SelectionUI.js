@@ -64,13 +64,13 @@ function SelectionUI(events, selection, shapes) {
         newSelection = event.newSelection;
 
     _.forEach(oldSelection, function(e) {
-      if (newSelection.indexOf(e) == -1) {
+      if (newSelection.indexOf(e) === -1) {
         select(e);
       }
     });
 
     _.forEach(newSelection, function(e) {
-      if (oldSelection.indexOf(e) == -1) {
+      if (oldSelection.indexOf(e) === -1) {
         deselect(e);
       }
     });

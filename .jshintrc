@@ -5,7 +5,7 @@
   "forin" : true,
   "freeze" : true,
   "immed" : true,
-  "latedef" : true,
+  "latedef" : false,
   "newcap" : true,
   "noarg" : true,
   "noempty" : false,
@@ -21,9 +21,12 @@
   "browser" : true,
   "strict": false,
   "globals": {
+    "console": true,
     "require": false,
     "module": false,
     "describe": false,
-    "it": false
+    "it": false,
+    "jasmine": true,
+    "expect": true
   }
 }

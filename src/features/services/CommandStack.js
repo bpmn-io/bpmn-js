@@ -54,7 +54,6 @@ function CommandStack() {
   function undoAction() {
     var lastAction = popAction();
     if(!lastAction) {
-      console.log('false  ' + false);
       return false;
     }
     var commandListeners = getCommandListener(lastAction.id);
