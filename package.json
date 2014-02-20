@@ -34,6 +34,7 @@
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
     "grunt-jsdoc": "~0.5.1",
     "grunt-concurrent": "~0.4.3",
     "load-grunt-tasks": "~0.3.0"

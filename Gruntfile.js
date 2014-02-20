@@ -13,6 +13,18 @@ module.exports = function(grunt) {
       samples: 'example'
     },
 
+    jshint: {
+      src: [
+        ['<%=config.sources %>']
+      ],
+      gruntfile: [
+        'Gruntfile.js'
+      ],
+      options: {
+        jshintrc: true
+      }
+    },
+
     karma: {
       single: {
 
@@ -77,7 +89,7 @@ module.exports = function(grunt) {
     watch: {
       sources: {
         files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'concurrent:sources']
+        tasks: [ 'jshint', 'concurrent:sources']
       },
       samples: {
         files: [ '<%= config.samples %>/*.{html,css,js}' ],
@@ -133,6 +145,7 @@ module.exports = function(grunt) {
   grunt.registerTask('auto-build', [
     'concurrent:build',
     'connect:livereload',
+    'jshint',
     'watch'
   ]);
 
