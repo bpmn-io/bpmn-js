@@ -16,7 +16,30 @@
   <script src='../diagram.js'></script>
   <script>
     var Diagram = require('diagram');
-    var diagram = new Diagram({ plugins: [ 'selectionUI', 'dragUI' ] });
+    var diagram = new Diagram({ plugins: [
+                                        'selectionUI',
+                                        'dragUI',
+                                        'standardPalette' ],
+                                menu: [
+                                  {
+                                    type: 'standardPalette',
+                                    position: 'left',
+                                    items: [
+                                      {
+                                        id: 'undo',
+                                        icon: 'undo.svg',
+                                        text: 'Undo last action'
+                                      },
+                                      {
+                                        id: 'add shape',
+                                        icon: 'add.svg',
+                                        text: 'Add rect'
+                                      }
+                                    ]
+                                  }
+                                ]
+    });
+
 
     diagram.inject([ 'events', 'canvas', function(events, canvas) {
 

@@ -17,24 +17,24 @@ var registry = new modules.Registry();
  * @class
  *
  * The main diagram.js entry point.
- * 
+ *
  * @param {Object} options
  * @param {String[]} options.plugins a list of plugins to use when creating the diagram
  */
+/**
+ * Bootstrap the diagram with the given modules
+ * configured through an options hash
+ */
+
 function Diagram(options) {
+  'use strict';
 
   var injector;
-
-
-  /**
-   * Bootstrap the diagram with the given modules
-   * configured through an options hash
-   */
   function bootstrap(modules, options) {
-    var di = registry.createInjector();
-    
-    var locals = { config: options };
 
+    var di = registry.createInjector();
+
+    var locals = { config: options };
     for (var i = 0, m; !!(m = modules[i]); i++) {
       di.resolve(m, locals);
     }
@@ -42,10 +42,19 @@ function Diagram(options) {
     return di;
   }
 
+  function bootstrapMenus(menu) {
+    //TODO
+    //_.foreach(menu)
+      //create drawing surface for menu <div> or so
+      //then call menu for init
+  }
+
   options = options || {};
   options.plugins = [ 'canvas', 'events', 'svgFactory' ].concat(options.plugins || []);
 
   injector = bootstrap(options.plugins, options);
+  bootstrapMenus(options.menu || {});
+
 
   // fire diagram init because
   // all components have been loaded now
