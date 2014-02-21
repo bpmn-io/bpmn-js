@@ -42,11 +42,32 @@ function Diagram(options) {
     return di;
   }
 
-  function bootstrapMenus(menu) {
-    //TODO
-    //_.foreach(menu)
-      //create drawing surface for menu <div> or so
+  function bootstrapMenus(menus) {
+    if(!menus) {
+      console.warn('Menu was undefined');
+      return;
+    }
+    menus.forEach(function(menu) {
+      var menuContainer = createMenuContainer(menu);
       //then call menu for init
+      //Add to page
+      var body = document.querySelector('body');
+      body.appendChild(menuContainer);
+    });
+
+    function createMenuContainer(menu) {
+      var menuDiv = document.createElement('div');
+      menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'id', 'menu-' + menu.id);
+
+      if(menu.align === 'vertical') {
+        menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'class', 'menu-vertical');
+      } else if(menu.align === 'vertical') {
+        menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'class', 'menu-horizontal');
+      } else {
+        console.warn('Align %s is invalid', menu.align);
+      }
+      return menuDiv;
+    }
   }
 
   options = options || {};
