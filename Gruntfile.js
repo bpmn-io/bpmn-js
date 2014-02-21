@@ -89,7 +89,7 @@ module.exports = function(grunt) {
     watch: {
       sources: {
         files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'jshint', 'concurrent:sources']
+        tasks: [ 'concurrent:sources']
       },
       samples: {
         files: [ '<%= config.samples %>/*.{html,css,js}' ],
@@ -130,8 +130,8 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      'sources': [ 'browserify:src' ],
-      'build': [ 'build', 'jsdoc' ]
+      'sources': [ 'browserify:src', 'jshint' ],
+      'build': [ 'jshint', 'build', 'jsdoc' ]
     }
   });
 
@@ -145,7 +145,6 @@ module.exports = function(grunt) {
   grunt.registerTask('auto-build', [
     'concurrent:build',
     'connect:livereload',
-    'jshint',
     'watch'
   ]);
 
