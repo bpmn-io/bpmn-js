@@ -5,7 +5,11 @@ var Registry = modules.Registry;
 describe('util/modules', function() {
 
   function createFunctionSpy(fn) {
-    return jasmine.createSpy('aFactory').andCallFake(fn);
+    return jasmine.createSpy('aFactory').and.callFake(fn);
+  }
+
+  function moduleError(msg) {
+    return '[modules] ' + msg;
   }
 
   function buildRegistry() {
@@ -164,7 +168,7 @@ describe('util/modules', function() {
       var a = injector.resolve('a');
 
       // reset spy
-      registry.aFactory.reset();
+      registry.aFactory.calls.reset();
 
       // when
       var anotherA = injector.resolve('a');
@@ -205,7 +209,7 @@ describe('util/modules', function() {
         // then
         expect(function() {
           var module = injector.resolve('non-existing-module');
-        }).toThrow('[modules] unknown module <non-existing-module>');
+        }).toThrowError(moduleError('unknown module <non-existing-module>'));
       });
 
       it('fail resolving non-existing module - nested', function() {
@@ -222,7 +226,7 @@ describe('util/modules', function() {
         // then
         expect(function() {
           var module = injector.resolve('a');
-        }).toThrow('[modules] unknown module <a> -> <non-existing-module>');
+        }).toThrowError(moduleError('unknown module <a> -> <non-existing-module>'));
       });
 
       it('fail on circular dependencies', function() {
@@ -243,7 +247,7 @@ describe('util/modules', function() {
         // then
         expect(function() {
           var module = injector.resolve('a');
-        }).toThrow('[modules] circular dependency <a> -> <b> -> <a>');
+        }).toThrowError(moduleError('circular dependency <a> -> <b> -> <a>'));
       });
     });
   });

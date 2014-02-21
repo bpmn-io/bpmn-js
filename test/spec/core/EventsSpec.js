@@ -42,7 +42,7 @@ describe('Events', function() {
     
     // given
     var e = createEventEmitter();
-    var listener1 = createSpy('listener1').andCallFake(function(event) {
+    var listener1 = createSpy('listener1').and.callFake(function(event) {
       event.stopPropagation();
     });
 
