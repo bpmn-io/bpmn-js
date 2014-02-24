@@ -11,7 +11,8 @@ var Snap = require('snapsvg'),
  *
  * @emits Canvas#canvas.init
  */
-function Canvas(config, events, svgFactory) {
+function Canvas(config, events, commandStack, svgFactory) {
+  'use strict';
 
   var ids = new IdGenerator('s');
 
@@ -19,6 +20,24 @@ function Canvas(config, events, svgFactory) {
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
+
+  // Todo remove addShape/addConnection from public API?
+  // should only be called over command stack
+  (function registerCommands() {
+    commandStack.register('addShape', {
+      do: function addShapeDo(param) {
+        addShape(param);
+        return true;
+      },
+      undo: function addShapeUndo(param) {
+       elementMap[param.id].gfx.remove();
+       return true;
+      },
+      canDo: function canUndoShape() {
+        return true;
+      }
+    });
+  })();
 
   function addElement(e, gfx) {
     if (!e.id) {
@@ -64,7 +83,7 @@ function Canvas(config, events, svgFactory) {
      */
     events.fire('shape.added', { element: shape, gfx: gfx });
 
-    return this;
+    return that;
   }
 
   /**
@@ -91,7 +110,7 @@ function Canvas(config, events, svgFactory) {
      */
     events.fire('connection.added', { element: connection, gfx: gfx });
 
-    return this;
+    return that;
   }
 
   /**
@@ -162,15 +181,17 @@ function Canvas(config, events, svgFactory) {
     events.fire('canvas.init', { paper: paper });
   });
 
-  return {
+  var that = {
     addShape: addShape,
     addConnection: addConnection,
     getContext: getContext,
     getGraphics: getGraphics,
     sendToFront: sendToFront
   };
+
+  return that;
 }
 
-Canvas.$inject = ['config', 'events', 'svgFactory'];
+Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory'];
 
 module.exports = Canvas;
