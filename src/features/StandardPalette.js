@@ -7,7 +7,7 @@ var Diagram = require('../Diagram');
 /**
  * @class
  */
-function StandardPalette(config, events, canvas) {
+function StandardPalette(config, events, canvas, commandStack) {
   'use strict';
 
   var xinc = 30;
@@ -58,7 +58,7 @@ function StandardPalette(config, events, canvas) {
     addButton.addEventListener('click',
       function() {
         xinc = xinc + 10;
-        canvas.addShape({x: xinc, y:30, width: 100, height: 80 });
+        commandStack.execute('addShape', {x: xinc, y:30, width: 100, height: 80 });
       }, false);
     menuDiv.appendChild(addButton);
 
@@ -67,13 +67,13 @@ function StandardPalette(config, events, canvas) {
     undoButton.innerHTML = 'Undo';
     undoButton.addEventListener('click',
       function() {
-        console.log('Undo TODO');
+        commandStack.undo();
       }, false);
     menuDiv.appendChild(undoButton);
     return menuDiv;
   }
 }
 
-Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', StandardPalette ]);
+Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'commandStack', StandardPalette ]);
 
 module.exports = StandardPalette;
