@@ -87,3 +87,39 @@
   fill: black;
   stroke: none;
 }
+
+.djs-menu-vertical, .djs-menu-horizontal {
+    height: 35px;
+    background-color: #52B415;
+    padding-left: 10px;
+}
+.djs-menu-vertical > button {
+    display:inline-block;
+    margin-bottom:0;
+    font-weight:400;
+    text-align:center;
+    vertical-align:middle;
+    cursor:pointer;
+    background: #52B415 none;
+    color: white;
+    border: 0px #ffffff;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-left-width: 1px;
+    white-space:nowrap;
+    padding:5px 12px;
+    font-size:15px;
+    line-height:1.428571429;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.djs-menu-vertical >  .button:focus{
+    outline:thin dotted #333;
+    outline:5px auto -webkit-focus-ring-color;
+    outline-offset:-2px;
+}
+.djs-menu-vertical >  .btn:hover,.btn:focus {
+    color:#707070;text-decoration:none;
+}

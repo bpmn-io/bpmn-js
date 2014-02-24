@@ -42,40 +42,10 @@ function Diagram(options) {
     return di;
   }
 
-  function bootstrapMenus(menus) {
-    if(!menus) {
-      console.warn('Menu was undefined');
-      return;
-    }
-    menus.forEach(function(menu) {
-      var menuContainer = createMenuContainer(menu);
-      //then call menu for init
-      //Add to page
-      var body = document.querySelector('body');
-      body.appendChild(menuContainer);
-    });
-
-    function createMenuContainer(menu) {
-      var menuDiv = document.createElement('div');
-      menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'id', 'menu-' + menu.id);
-
-      if(menu.align === 'vertical') {
-        menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'class', 'menu-vertical');
-      } else if(menu.align === 'vertical') {
-        menuDiv.setAttributeNS('http://www.w3.org/1999/xhtml', 'class', 'menu-horizontal');
-      } else {
-        console.warn('Align %s is invalid', menu.align);
-      }
-      return menuDiv;
-    }
-  }
-
   options = options || {};
   options.plugins = [ 'canvas', 'events', 'svgFactory' ].concat(options.plugins || []);
 
   injector = bootstrap(options.plugins, options);
-  bootstrapMenus(options.menu || {});
-
 
   // fire diagram init because
   // all components have been loaded now
