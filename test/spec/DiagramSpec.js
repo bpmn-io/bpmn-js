@@ -8,12 +8,24 @@ describe('diagram', function() {
 
   it('should bootstrap app', function() {
 
-    var diagram = new Diagram();
+    var diagram = new Diagram({
+      canvas: {
+        container: undefined,
+        width: 700,
+        height: 500
+      }
+    });
   });
 
   it('should expose diagram services', function() {
 
-    var diagram = new Diagram();
+    var diagram = new Diagram({
+      canvas: {
+        container: undefined,
+        width: 700,
+        height: 500
+      }
+    });
 
     diagram.inject([ 'canvas', function(canvas) {
       canvas.addShape({x: 10, y: 10, width: 30, height: 30 });
