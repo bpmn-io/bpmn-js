@@ -35,8 +35,7 @@ function StandardPalette(config, events, canvas, commandStack) {
       var menuContainer = createMenuContainer(menu);
       //then call menu for init
       //Add to page
-      var body = document.querySelector('body');
-      body.appendChild(menuContainer);
+      menu.parentNode.appendChild(menuContainer);
     });
   }
 
