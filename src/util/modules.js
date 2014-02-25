@@ -132,10 +132,12 @@ function Injector(moduleMap) {
     return definition.factory.apply(null, args);
   }
 
-  return {
+  instanceMap.injector = {
     inject: inject,
     resolve: resolve
   };
+
+  return instanceMap.injector;
 }
 
 
