@@ -1,4 +1,5 @@
-var Diagram = require('../Diagram');
+var Diagram = require('../Diagram'),
+          _ = require('../util/underscore');
 
 /**
  * @namespace djs
@@ -7,7 +8,7 @@ var Diagram = require('../Diagram');
 /**
  * @class
  */
-function StandardPalette(config, events, canvas, commandStack) {
+function StandardPalette(config, events, canvas, commandStack, injector) {
   'use strict';
 
   var xinc = 30;
@@ -35,7 +36,7 @@ function StandardPalette(config, events, canvas, commandStack) {
       var menuContainer = createMenuContainer(menu);
       //then call menu for init
       //Add to page
-      menu.parentNode.appendChild(menuContainer);
+      menu.parentContainer.appendChild(menuContainer);
     });
   }
 
@@ -51,28 +52,21 @@ function StandardPalette(config, events, canvas, commandStack) {
       console.warn('Align %s is invalid', menu.align);
     }
 
-    var addButton = document.createElement('button');
-    addButton.setAttribute('class', 'djs-addshape');
-    addButton.innerHTML = 'Add shape';
-    addButton.addEventListener('click',
-      function() {
-        xinc = xinc + 10;
-        commandStack.execute('addShape', {x: xinc, y:30, width: 100, height: 80 });
-      }, false);
-    menuDiv.appendChild(addButton);
+    _.forEach(menu.items, function(item) {
 
-    var undoButton = document.createElement('button');
-    undoButton.setAttribute('class', 'djs-undo');
-    undoButton.innerHTML = 'Undo';
-    undoButton.addEventListener('click',
-      function() {
-        commandStack.undo();
-      }, false);
-    menuDiv.appendChild(undoButton);
+      var button = document.createElement('button');
+      button.setAttribute('class', 'djs-addshape');
+      button.innerHTML = item.text;
+      button.addEventListener('click', function(event) {
+        injector.inject(item.action, { event: event });
+      });
+
+      menuDiv.appendChild(button);
+    });
     return menuDiv;
   }
 }
 
-Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'commandStack', StandardPalette ]);
+Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'commandStack', 'injector', StandardPalette ]);
 
 module.exports = StandardPalette;

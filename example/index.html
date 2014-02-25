@@ -19,6 +19,7 @@
   <script>
 
     function createDiagram(id, menuid) {
+      var xinc = 50;
       var container = document.querySelector('#' + id);
       var menuContainer = document.querySelector('#' + menuid);
       var Diagram = require('diagram');
@@ -35,7 +36,7 @@
         menu: [
           {
             id:   'main-menu',
-            parentNode: menuContainer,
+            parentContainer: menuContainer,
             type: 'standardPalette',
             align: 'vertical',
             draggable: 'false',
@@ -44,17 +45,18 @@
                 id: 'undo',
                 icon: 'undo.svg',
                 text: 'Undo last action',
-                action: function(commandStack) {
+                action: [ 'commandStack', function(commandStack) {
                   commandStack.undo();
-                }
+                }]
               },
               {
                 id: 'addShape',
                 icon: 'add.svg',
                 text: 'Add rect',
-                action: function(canvas) {
-                  canvas.addShape({ x: 10, y: 40 });
-                }
+                action: [ 'canvas', function(canvas) {
+                  xinc += 50;
+                  canvas.addShape({x: xinc , y:30, width: 100, height: 80 });
+                }]
               }
             ]
           }
@@ -78,10 +80,10 @@
         var s4 = {x: 300, y: 300, width: 100, height: 80 };
 
         // Added via command stack
-        commandStack.execute('addShape', s1);
-        commandStack.execute('addShape', s2);
-        commandStack.execute('addShape', s3);
-        commandStack.execute('addShape', s4);
+        canvas.addShape(s1);
+        canvas.addShape(s2);
+        canvas.addShape(s3);
+        canvas.addShape(s4);
 
         // Added via canvas directly
         canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115} ]});
