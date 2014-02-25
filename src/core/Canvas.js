@@ -12,6 +12,7 @@ var Snap = require('snapsvg'),
  * @emits Canvas#canvas.init
  */
 function Canvas(config, events, svgFactory) {
+  'use strict';
 
   var ids = new IdGenerator('s');
 
@@ -42,6 +43,8 @@ function Canvas(config, events, svgFactory) {
    * @method Canvas#addShape
    * 
    * @param {djs.ShapeDescriptor} shape a descriptor for the shape
+   *
+   * @return {Canvas} the canvas api
    */
   function addShape(shape) {
     var gfx = svgFactory.createShape(paper, shape);
@@ -64,6 +67,7 @@ function Canvas(config, events, svgFactory) {
      */
     events.fire('shape.added', { element: shape, gfx: gfx });
 
+    // for chaining of API calls
     return this;
   }
 
@@ -73,6 +77,8 @@ function Canvas(config, events, svgFactory) {
    * @method Canvas#addConnection
    * 
    * @param {djs.ElementDescriptor} connection a descriptor for the connection
+   * 
+   * @return {Canvas} the canvas api
    */
   function addConnection(connection) {
     var gfx = svgFactory.createConnection(paper, connection);
@@ -91,6 +97,7 @@ function Canvas(config, events, svgFactory) {
      */
     events.fire('connection.added', { element: connection, gfx: gfx });
 
+    // for chaining of API calls
     return this;
   }
 

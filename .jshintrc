@@ -20,6 +20,7 @@
   "maxlen" : 120,
   "browser" : true,
   "strict": false,
+  "-W040": true,
   "globals": {
     "console": true,
     "require": false,
