@@ -40,16 +40,22 @@
             align: 'vertical',
             draggable: 'false',
             items: [
-                {
-                  id: 'undo',
-                  icon: 'undo.svg',
-                  text: 'Undo last action'
-                },
-                {
-                  id: 'addShape',
-                  icon: 'add.svg',
-                  text: 'Add rect'
+              {
+                id: 'undo',
+                icon: 'undo.svg',
+                text: 'Undo last action',
+                action: function(commandStack) {
+                  commandStack.undo();
                 }
+              },
+              {
+                id: 'addShape',
+                icon: 'add.svg',
+                text: 'Add rect',
+                action: function(canvas) {
+                  canvas.addShape({ x: 10, y: 40 });
+                }
+              }
             ]
           }
         ]

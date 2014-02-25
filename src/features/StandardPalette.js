@@ -17,7 +17,7 @@ function StandardPalette(config, events, canvas, commandStack) {
   });
 
   function init() {
-    var menuConfig = config.menu ||ª {};
+    var menuConfig = config.menu || {};
 
     bootstrapMenus(menuConfig);
 
@@ -28,7 +28,7 @@ function StandardPalette(config, events, canvas, commandStack) {
 
   function bootstrapMenus(menus) {
     if(!menus) {
-      console.warn('Menu was undefined');ª
+      console.warn('Menu was undefined');
       return;
     }
     menus.forEach(function(menu) {

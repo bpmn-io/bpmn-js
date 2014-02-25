@@ -28,12 +28,12 @@ function Canvas(config, events, commandStack, svgFactory) {
   (function registerCommands() {
     commandStack.register('addShape', {
       do: function addShapeDo(param) {
-        addShape(param);
+        internalAddShape(param);
         return true;
       },
       undo: function addShapeUndo(param) {
-       elementMap[param.id].gfx.remove();
-       return true;
+        internalUndoAddShape(param.id);
+        return true;
       },
       canDo: function canUndoShape() {
         return true;
@@ -57,14 +57,9 @@ function Canvas(config, events, commandStack, svgFactory) {
     }
   }
 
-  /**
-   * Adds a shape to the canvas
-   *
-   * @method Canvas#addShape
-   * 
-   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
-   */
-  function addShape(shape) {
+  function internalAddShape(shape) {
+    'use strict';
+
     var gfx = svgFactory.createShape(paper, shape);
 
     if (shape.parent) {
@@ -77,14 +72,29 @@ function Canvas(config, events, commandStack, svgFactory) {
      * An event indicating that a new shape has been added to the canvas.
      *
      * @memberOf Canvas
-     * 
+     *
      * @event shape.added
      * @type {Object}
      * @property {djs.ElementDescriptor} element the shape descriptor
      * @property {Object} gfx the graphical representation of the shape
      */
     events.fire('shape.added', { element: shape, gfx: gfx });
+  }
 
+  function internalUndoAddShape(id) {
+    elementMap[id].gfx.remove();
+    delete elementMap[id];
+  }
+
+  /**
+   * Adds a shape to the canvas
+   *
+   * @method Canvas#addShape
+   * 
+   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
+   */
+  function addShape(param) {
+    commandStack.execute('addShape', param);
     return this;
   }
 
