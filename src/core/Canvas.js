@@ -12,11 +12,13 @@ var Snap = require('snapsvg'),
  * @emits Canvas#canvas.init
  */
 function Canvas(config, events, commandStack, svgFactory) {
-  'use strict';
+  //'use strict';
 
   var ids = new IdGenerator('s');
 
-  var paper = new Snap(config.container);
+  var paper = Snap.createSnapAt(config.canvas.width,
+                              config.canvas.height,
+                              config.canvas.container);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
@@ -83,7 +85,7 @@ function Canvas(config, events, commandStack, svgFactory) {
      */
     events.fire('shape.added', { element: shape, gfx: gfx });
 
-    return that;
+    return this;
   }
 
   /**
@@ -110,7 +112,7 @@ function Canvas(config, events, commandStack, svgFactory) {
      */
     events.fire('connection.added', { element: connection, gfx: gfx });
 
-    return that;
+    return this;
   }
 
   /**
@@ -181,15 +183,13 @@ function Canvas(config, events, commandStack, svgFactory) {
     events.fire('canvas.init', { paper: paper });
   });
 
-  var that = {
+  return {
     addShape: addShape,
     addConnection: addConnection,
     getContext: getContext,
     getGraphics: getGraphics,
     sendToFront: sendToFront
   };
-
-  return that;
 }
 
 Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory'];
