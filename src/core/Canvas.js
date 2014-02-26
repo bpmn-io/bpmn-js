@@ -11,15 +11,35 @@ var Snap = require('snapsvg'),
  *
  * @emits Canvas#canvas.init
  */
-function Canvas(config, events, svgFactory) {
-  'use strict';
+function Canvas(config, events, commandStack, svgFactory) {
+  //'use strict';
 
   var ids = new IdGenerator('s');
 
-  var paper = new Snap(config.container);
+  var paper = Snap.createSnapAt(config.canvas.width,
+                              config.canvas.height,
+                              config.canvas.container);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
+
+  // Todo remove addShape/addConnection from public API?
+  // should only be called over command stack
+  (function registerCommands() {
+    commandStack.register('addShape', {
+      do: function addShapeDo(param) {
+        internalAddShape(param);
+        return true;
+      },
+      undo: function addShapeUndo(param) {
+        internalUndoAddShape(param.id);
+        return true;
+      },
+      canDo: function canUndoShape() {
+        return true;
+      }
+    });
+  })();
 
   function addElement(e, gfx) {
     if (!e.id) {
@@ -37,16 +57,9 @@ function Canvas(config, events, svgFactory) {
     }
   }
 
-  /**
-   * Adds a shape to the canvas
-   *
-   * @method Canvas#addShape
-   * 
-   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
-   *
-   * @return {Canvas} the canvas api
-   */
-  function addShape(shape) {
+  function internalAddShape(shape) {
+    'use strict';
+
     var gfx = svgFactory.createShape(paper, shape);
 
     if (shape.parent) {
@@ -59,15 +72,31 @@ function Canvas(config, events, svgFactory) {
      * An event indicating that a new shape has been added to the canvas.
      *
      * @memberOf Canvas
-     * 
+     *
      * @event shape.added
      * @type {Object}
      * @property {djs.ElementDescriptor} element the shape descriptor
      * @property {Object} gfx the graphical representation of the shape
      */
     events.fire('shape.added', { element: shape, gfx: gfx });
+  }
 
-    // for chaining of API calls
+  function internalUndoAddShape(id) {
+    elementMap[id].gfx.remove();
+    delete elementMap[id];
+  }
+
+  /**
+   * Adds a shape to the canvas
+   *
+   * @method Canvas#addShape
+   *
+   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
+   *
+   * @return {Canvas} the canvas api
+   */
+  function addShape(param) {
+    commandStack.execute('addShape', param);
     return this;
   }
 
@@ -178,6 +207,6 @@ function Canvas(config, events, svgFactory) {
   };
 }
 
-Canvas.$inject = ['config', 'events', 'svgFactory'];
+Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory'];
 
 module.exports = Canvas;

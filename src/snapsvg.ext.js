@@ -147,3 +147,38 @@ Snap.plugin(function (Snap, Element, Paper, global) {
     this.transform(matrix);
   };
 });
+
+/**
+ * @class CreatSnapAtPlugin
+ *
+ * Extends snap.svg with a method to create a SVG element
+ * at a specific position in the DOM.
+ */
+Snap.plugin(function (Snap, Element, Paper, global) {
+
+  /*
+   * @method snapsvg.#createSnapAt
+   *
+   * @example
+   *
+   * e.createSVG(parentNode, 200, 200);
+   *
+   * @param {Number} width of svg
+   * @param {Number} height of svg
+   * @param {Object} parentNode svg Element will be child of this
+   *
+   * @return {snapsvg.Element} the element (this)
+   */
+  Snap.createSnapAt = function(width, height, parentNode) {
+
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', width);
+    svg.setAttribute('height', height);
+    if(!parentNode) {
+      parentNode = document.querySelector('body');
+    }
+    parentNode.appendChild(svg);
+
+    return new Snap(svg);
+  };
+});

@@ -2,47 +2,102 @@
 <head>
   <link href='style.css' rel='stylesheet'>
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
-</head>
-<body>
   <style  type="text/css">
     /**
      * markers
      */
     .djs-visual {
-        marker-end: url(#sequenceflow-end-marker);
+      marker-end: url(#sequenceflow-end-marker);
+    }
+    #page-main-menu {
+        width: 800px;
+    }
+    #main-svg-canvas {
+        width: 100%;
+        height: 500px;
     }
   </style>
+  <script>
 
+    function createDiagram(id, menuid) {
+      var xinc = 50;
+      var container = document.querySelector('#' + id);
+      var menuContainer = document.querySelector('#' + menuid);
+      var Diagram = require('diagram');
+      var diagram = new Diagram({
+        canvas: {
+          container: container,
+          width: 700,
+          height: 500
+        },
+        plugins: [
+          'selectionUI',
+          'dragUI',
+          'standardPalette' ],
+        menu: [
+          {
+            id:   'main-menu',
+            parentContainer: menuContainer,
+            type: 'standardPalette',
+            align: 'vertical',
+            draggable: 'false',
+            items: [
+              {
+                id: 'undo',
+                icon: 'undo.svg',
+                text: 'Undo last action',
+                action: [ 'commandStack', function(commandStack) {
+                  commandStack.undo();
+                }]
+              },
+              {
+                id: 'addShape',
+                icon: 'add.svg',
+                text: 'Add rect',
+                action: [ 'canvas', function(canvas) {
+                  xinc += 50;
+                  canvas.addShape({x: xinc , y:30, width: 100, height: 80 });
+                }]
+              }
+            ]
+          }
+        ]
+      });
+
+
+      diagram.inject([ 'events', 'canvas', 'commandStack', function(events, canvas, commandStack) {
+
+        events.on('connection.added', function(event) {
+          console.log('connection added', event);
+        });
+
+        events.on('shape.added', function(event) {
+          console.log('shape added', event);
+        });
+
+        var s1 = {x: 10, y: 20, width: 100, height: 80 };
+        var s2 = {x: 80, y: 10, width: 300, height: 140 };
+        var s3 = {x: 100, y: 20, width: 100, height: 80, parent: s2 };
+        var s4 = {x: 300, y: 300, width: 100, height: 80 };
+
+        // Added via command stack
+        canvas.addShape(s1);
+        canvas.addShape(s2);
+        canvas.addShape(s3);
+        canvas.addShape(s4);
+
+        // Added via canvas directly
+        canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115} ]});
+        canvas.addConnection({ waypoints: [ { x: 150, y: 150 }, { x: 200, y: 150 }, { x: 200, y: 200 }, { x: 300, y: 200} ]});
+        canvas.addConnection({ waypoints: [ { x: 300, y: 300 }, { x: 100, y: 400 }, { x: 400, y: 100 }, { x: 500, y: 100 } ]});
+    }]);
+    }
+  </script>
+</head>
+<body onload="createDiagram('main-svg-container', 'page-main-menu')">
   <script src='../common.js'></script>
   <script src='../diagram.js'></script>
-  <script>
-    var Diagram = require('diagram');
-    var diagram = new Diagram({ plugins: [ 'selectionUI', 'dragUI' ] });
 
-    diagram.inject([ 'events', 'canvas', function(events, canvas) {
-
-      events.on('connection.added', function(event) {
-        console.log('connection added', event);
-      });
-
-      events.on('shape.added', function(event) {
-        console.log('shape added', event);
-      });
-
-      var s1 = {x: 10, y: 20, width: 100, height: 80 };
-      var s2 = {x: 80, y: 10, width: 300, height: 140 };
-      var s3 = {x: 100, y: 20, width: 100, height: 80, parent: s2 };
-      var s4 = {x: 300, y: 300, width: 100, height: 80 };
-
-      canvas
-        .addShape(s1)
-        .addShape(s2)
-        .addShape(s3)
-        .addShape(s4);
-      
-      canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
-      canvas.addConnection({ waypoints: [ { x: 150, y: 150 }, { x: 200, y: 150 }, { x: 200, y: 200 }, { x: 300, y: 200} ]});
-      canvas.addConnection({ waypoints: [ { x: 300, y: 300 }, { x: 100, y: 400 }, { x: 400, y: 100 }, { x: 500, y: 100 } ]});
-    }]);
-  </script>
+  <div id="page-main-menu"></div>
+  <div id="main-svg-container"></div>
 </body>
