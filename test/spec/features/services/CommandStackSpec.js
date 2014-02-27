@@ -135,4 +135,37 @@ describe('CommandStack', function() {
     expect(param1.test).toEqual('undo_A');
   });
 
+  /*it('test redo', function() {
+
+    command.register('id_1', f1);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
+    command.register('id_4', f4);
+
+    var param1 = {};
+
+    command.execute('id_1', param1);
+    command.execute('id_1', param1);
+    command.execute('id_3', param1);
+    command.execute('id_2', param1);
+
+    expect(param1.test).toEqual('do_B');
+    command.undo();
+    expect(param1.test).toEqual('undo_B');
+    command.undo();
+    expect(param1.test).toEqual('undo_C');
+    command.undo();
+    expect(param1.test).toEqual('undo_A');
+    command.undo();
+
+    command.redo();
+    expect(param1.test).toEqual('do_A');
+    command.redo();
+    expect(param1.test).toEqual('do_A');
+    command.redo();
+    expect(param1.test).toEqual('do_C');
+    command.redo();
+    expect(param1.test).toEqual('do_B');
+  });*/
+
 });
