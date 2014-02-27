@@ -196,15 +196,15 @@ describe('util/modules', function() {
       expect(a).toBeDefined();
     });
 
-    describe('can resolve injector as standalone module', function() {
-      'use strict';
+    describe('can injector', function() {
 
-      var registry = new Registry();
-      var injector = registry.createInjector();
-      var injectorInstance = injector.resolve('injector');
+      it('be resolved as standalone module', function() {
+        var registry = new Registry();
+        var injector = registry.createInjector();
+        var injectorInstance = injector.resolve('injector');
 
-      expect(injectorInstance).toBeDefined();
-
+        expect(injectorInstance).toBeDefined();
+      });
     });
 
     //// error handling ////////////////////////////////
