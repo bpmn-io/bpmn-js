@@ -1,6 +1,6 @@
 var Command = require('../../../../src/features/services/CommandStack');
 
-describe('CommandStack', function() {
+describe('CommandStack should,', function() {
   'use strict';
 
   var command = new Command();
@@ -64,7 +64,7 @@ describe('CommandStack', function() {
     command = new Command();
   });
 
-  it('Initial test of method registration', function() {
+  it('be able to register commands', function() {
 
     command.register('id_1', f1);
     expect(command.getCommandList()['id_1']).toBeDefined();
@@ -75,7 +75,7 @@ describe('CommandStack', function() {
     expect(command.getCommandList()['id_3']).toBeDefined();
   });
 
-  it('Execute a command', function() {
+  it('execute commands', function() {
 
     command.register('id_1', f1);
     command.register('id_2', f2);
@@ -89,7 +89,7 @@ describe('CommandStack', function() {
     expect(param2.test).toEqual('do_D');
   });
 
-  it('Clear action stack', function() {
+  it('reset the action stack', function() {
 
     command.register('id_1', f1);
     command.register('id_2', f2);
@@ -110,7 +110,7 @@ describe('CommandStack', function() {
     expect(stack.length).toBe(0);
   });
 
-  it('test undo', function() {
+  it('undo last actions', function() {
 
     command.register('id_1', f1);
     command.register('id_2', f2);
@@ -135,7 +135,7 @@ describe('CommandStack', function() {
     expect(param1.test).toEqual('undo_A');
   });
 
-  /*it('test redo', function() {
+  it('redo last actions', function() {
 
     command.register('id_1', f1);
     command.register('id_2', f2);
@@ -166,6 +166,6 @@ describe('CommandStack', function() {
     expect(param1.test).toEqual('do_C');
     command.redo();
     expect(param1.test).toEqual('do_B');
-  });*/
+  });
 
 });
