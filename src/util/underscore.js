@@ -322,6 +322,23 @@ function debounce(fn, timeout) {
   };
 }
 
+/**
+ * @name modeler.util.emptyArray
+ *
+ * Fastest way to empty an array. see http://jsperf.com/array-destroy
+ *
+ * @param {Array} array that is emptied.
+ * @return {Array} array the empty array.
+ */
+function emptyArray(array) {
+  'use strict';
+
+  while (array.length > 0) {
+    array.shift();
+  }
+  return array;
+}
+
 
 /**
  * module exports
@@ -336,3 +353,4 @@ module.exports.isObject = isObject;
 module.exports.async = async;
 module.exports.asyncFn = asyncFn;
 module.exports.debounce = debounce;
+module.exports.emptyArray = emptyArray;
