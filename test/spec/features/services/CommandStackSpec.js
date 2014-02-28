@@ -7,6 +7,7 @@ describe('CommandStack should,', function() {
 
   var f1 = {
     do: function f1_do(param) {
+
       param.test = 'do_A';
       return true;
     },
@@ -209,6 +210,27 @@ describe('CommandStack should,', function() {
     command.undo();
     command.undo();
     command.undo();
+  });
+
+  it('test integrity', function() {
+    command.register('id_1', f1);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
+    command.register('id_4', f4);
+
+    var param = {};
+    command.execute('id_1', param);
+    command.execute('id_2', param);
+    command.execute('id_3', param);
+    expect(param.test).toEqual('do_C');
+    command.undo();
+    expect(param.test).toEqual('undo_C');
+    command.undo();
+    expect(param.test).toEqual('undo_B');
+    command.redo();
+    expect(param.test).toEqual('do_B');
+    command.undo();
+    expect(param.test).toEqual('undo_B');
   });
 
 });

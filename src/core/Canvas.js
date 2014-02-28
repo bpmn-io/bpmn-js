@@ -82,6 +82,7 @@ function Canvas(config, events, commandStack, svgFactory) {
   }
 
   function internalUndoAddShape(id) {
+    events.fire('shape.removed', { element: elementMap[id].element});
     elementMap[id].gfx.remove();
     delete elementMap[id];
   }
