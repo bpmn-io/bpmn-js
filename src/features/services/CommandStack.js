@@ -27,6 +27,11 @@ function CommandStack() {
    * @type {Array} A stack containing the last operations on the diagram}
    */
   var actionStack = [];
+  /**
+   *
+   * @type {Array} A stack containing the last operations on the diagram that were undone}
+   */
+  var redoStack = [];
 
   function registerCommand(id, handler) {
     checkId(id);
@@ -39,14 +44,31 @@ function CommandStack() {
 
   /**
    * Execute all registered actions for this command id
-   * @param id
-   * @param params
+   *
+   * @param {String} id of the action
+   * @param {Object} ctx is a parameter object for the executed action
    */
   function applyAction(id, ctx) {
+    internalApplyAction(id, ctx, false);
+  }
+
+  /**
+   * Execute all registered actions for this command id
+   *
+   * @param {String} id of the action
+   * @param {Object} ctx is a parameter object for the executed action
+   * @param {Boolean} saveRedoStack if true the redo stack is not reset.
+   *                  This must be set when an redo action is applied.
+   */
+  function internalApplyAction(id, ctx, saveRedoStack) {
     var commandListeners = getCommandListener(id);
     _.forEach(commandListeners, function(commandListener) {
       if(commandListener.do(ctx)) {
         pushAction(id, ctx);
+        if(!saveRedoStack) {
+          // A new action invalidates all actions in the redoStack.
+          _.emptyArray(redoStack);
+        }
       }
     });
   }
@@ -58,9 +80,18 @@ function CommandStack() {
     }
     var commandListeners = getCommandListener(lastAction.id);
     _.forEach(commandListeners, function(commandListener) {
-        commandListener.undo(lastAction.param);
+      commandListener.undo(lastAction.param);
     });
+    pushActionToRedoStack(lastAction);
   }
+
+  var redoAction = function redoAction() {
+    var actionToRedo = popFromRedoStack();
+    if(actionToRedo) {
+      internalApplyAction(actionToRedo.id, actionToRedo.param, true);
+    }
+    return actionToRedo;
+  };
 
   var getCommandListener = function getCommandListener(id) {
     return commandListenersMap[id];
@@ -94,8 +125,20 @@ function CommandStack() {
     return actionStack.pop();
   };
 
+  var pushActionToRedoStack = function pushActionToRedoStack(action) {
+    redoStack.push(action);
+  };
+
+  var popFromRedoStack = function popFromRedoStack() {
+    return redoStack.pop();
+  };
+
   var getActionStack = function getActionStack() {
     return actionStack;
+  };
+
+  var getRedoStack = function getRedoStack() {
+    return redoStack;
   };
 
   var clearActionStack = function clearActionStack() {
@@ -108,9 +151,10 @@ function CommandStack() {
     register: registerCommand,
     execute: applyAction,
     undo: undoAction,
-    redo: undefined,
+    redo: redoAction,
     getCommandList: commandList,
     actionStack: getActionStack,
+    redoStack: getRedoStack,
     clearStack: clearActionStack
   };
 }

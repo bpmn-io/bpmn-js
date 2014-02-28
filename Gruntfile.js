@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     karma: {
       single: {
 
-        browsers: [ 'PhantomJS' ],
+        browsers: [ 'Chrome' ],
         autoWatch: false,
         singleRun: true,
 

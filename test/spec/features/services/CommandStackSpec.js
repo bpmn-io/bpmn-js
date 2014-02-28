@@ -143,12 +143,10 @@ describe('CommandStack should,', function() {
     command.register('id_4', f4);
 
     var param1 = {};
-
     command.execute('id_1', param1);
     command.execute('id_1', param1);
     command.execute('id_3', param1);
     command.execute('id_2', param1);
-
     expect(param1.test).toEqual('do_B');
     command.undo();
     expect(param1.test).toEqual('undo_B');
@@ -157,7 +155,7 @@ describe('CommandStack should,', function() {
     command.undo();
     expect(param1.test).toEqual('undo_A');
     command.undo();
-
+    expect(param1.test).toEqual('undo_A');
     command.redo();
     expect(param1.test).toEqual('do_A');
     command.redo();
@@ -166,6 +164,51 @@ describe('CommandStack should,', function() {
     expect(param1.test).toEqual('do_C');
     command.redo();
     expect(param1.test).toEqual('do_B');
+  });
+
+  it('not fail on to many redos', function() {
+    command.register('id_1', f1);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
+    command.register('id_4', f4);
+
+    var param1 = {};
+    command.execute('id_1', param1);
+    command.execute('id_1', param1);
+    command.execute('id_3', param1);
+    command.execute('id_2', param1);
+
+    command.undo();
+    command.undo();
+    command.undo();
+
+    command.redo();
+    command.redo();
+    command.redo();
+    command.redo();
+    command.redo();
+    command.redo();
+  });
+
+  it('not fail on to many undos', function() {
+    command.register('id_1', f1);
+    command.register('id_2', f2);
+    command.register('id_3', f3);
+    command.register('id_4', f4);
+
+    var param1 = {};
+    command.execute('id_1', param1);
+    command.execute('id_1', param1);
+    command.execute('id_3', param1);
+    command.execute('id_2', param1);
+
+    command.undo();
+    command.undo();
+    command.undo();
+    command.undo();
+    command.undo();
+    command.undo();
+    command.undo();
   });
 
 });
