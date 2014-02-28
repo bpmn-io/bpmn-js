@@ -10,6 +10,7 @@ module.exports = function(grunt) {
       sources: 'src',
       tests: 'test',
       dist: 'build',
+      fonts: 'bower_components/font-awesome',
       samples: 'example'
     },
 
@@ -82,6 +83,16 @@ module.exports = function(grunt) {
             cwd: '<%= config.samples %>/',
             src: ['*.{js,css,html}'],
             dest: '<%= config.dist %>/<%= config.samples %>'
+          }
+        ]
+      },
+      fonts:  {
+        files: [
+          {
+            expand: true,
+            cwd: '<%= config.fonts %>/',
+            src: ['fonts/*.woff'],
+            dest: '<%= config.dist %>'
           }
         ]
       }

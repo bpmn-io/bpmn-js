@@ -54,9 +54,15 @@ function StandardPalette(config, events, canvas, commandStack, injector) {
 
     _.forEach(menu.items, function(item) {
 
+      var icon = document.createElement('i');
       var button = document.createElement('button');
-      button.setAttribute('class', 'djs-addshape');
-      button.innerHTML = item.text;
+      button.setAttribute('class', 'djs-addshape ' + item.cssClass);
+      button.appendChild(icon);
+
+      if(item.text) {
+        var textNode = document.createTextNode(item.text);
+        button.appendChild(textNode);
+      }
       button.addEventListener('click', function(event) {
         injector.inject(item.action, { event: event });
       });

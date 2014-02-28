@@ -123,3 +123,30 @@
 .djs-menu-vertical >  .btn:hover,.btn:focus {
     color:#707070;text-decoration:none;
 }
+
+/* Button icons*/
+.djs-undo-button > i:before {
+    font-family: awesomesymbols;
+    content: "\f0e2";
+    font-style: normal;
+}
+
+.djs-redo-button > i:before {
+    font-family: awesomesymbols;
+    content: "\f01e";
+    font-style: normal;
+}
+
+.djs-rect-button > i {
+    width: 10px;
+    height: 10px;
+    border: 1px solid;
+    display: block;
+}
+
+/* Fonts */
+@font-face {
+    font-family: "awesomesymbols";
+    src: url("../fonts/fontawesome-webfont.woff") format('woff');
+    font-weight: normal;
+}

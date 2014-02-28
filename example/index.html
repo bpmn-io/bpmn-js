@@ -44,16 +44,25 @@
             items: [
               {
                 id: 'undo',
-                icon: 'undo.svg',
-                text: 'Undo last action',
+                text: undefined,
+                cssClass: 'djs-undo-button',
                 action: [ 'commandStack', function(commandStack) {
                   commandStack.undo();
                 }]
               },
               {
+                id: 'redo',
+                text: undefined,
+                cssClass: 'djs-redo-button',
+                action: [ 'commandStack', function(commandStack) {
+                  commandStack.redo();
+                }]
+              },
+              {
                 id: 'addShape',
                 icon: 'add.svg',
-                text: 'Add rect',
+                cssClass: 'djs-rect-button',
+                text: undefined,
                 action: [ 'canvas', function(canvas) {
                   xinc += 50;
                   canvas.addShape({x: xinc , y:30, width: 100, height: 80 });
