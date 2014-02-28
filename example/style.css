@@ -124,6 +124,14 @@
     color:#707070;text-decoration:none;
 }
 
+.djs-menu-brand {
+    background: url("logo.png")  scroll no-repeat transparent;
+    background-size: 35px 35px;
+    width: 35px;
+    height: 35px;
+    float: right;
+}
+
 /* Button icons*/
 .djs-undo-button > i:before {
     font-family: awesomesymbols;

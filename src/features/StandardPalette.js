@@ -69,6 +69,9 @@ function StandardPalette(config, events, canvas, commandStack, injector) {
 
       menuDiv.appendChild(button);
     });
+    var brand = document.createElement('div');
+    brand.setAttribute('class', 'djs-menu-brand');
+    menuDiv.appendChild(brand);
     return menuDiv;
   }
 }
