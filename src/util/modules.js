@@ -12,7 +12,17 @@ var _ = require('./underscore');
  *  (`String[]`) and the `factory` (`Function`) for instantiation)
  */
 function parseDefinition(fn) {
+
   'use strict';
+
+  /** START adapted from AngularJS | MIT | http://angularjs.org */
+
+  var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+  var FN_ARG_SPLIT = /,/;
+  var FN_ARG = /^\s*(_?)(\S+?)\1\s*$/;
+  var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+
+  /** END adapted from AngularJS */
 
   var factory, dependencies;
 
@@ -20,12 +30,27 @@ function parseDefinition(fn) {
 
     dependencies = Array.prototype.slice.call(fn);
     factory = dependencies.pop();
-  } else {
-    if (fn.$inject) {
-      dependencies = fn.$inject;
-    } else {
+  } else
+  if (typeof fn === 'function') {
+
+    /** START adapted from AngularJS | MIT | http://angularjs.org */
+    var fnText,
+        argDecl;
+
+    if (!(dependencies = fn.$inject)) {
       dependencies = [];
+      fnText = fn.toString().replace(STRIP_COMMENTS, '');
+      argDecl = fnText.match(FN_ARGS);
+      _.forEach(argDecl[1].split(FN_ARG_SPLIT), function(arg) {
+        arg.replace(FN_ARG, function(all, underscore, name) {
+          dependencies.push(name);
+        });
+      });
+      fn.$inject = dependencies;
     }
+
+    /** END adapted from AngularJS */
+
     factory = fn;
   }
 
@@ -75,7 +100,19 @@ function Injector(moduleMap) {
 
     instance = instanceMap[name];
     
+    if (!instance && locals) {
+
+      // retrieve instance from locals
+      instance = locals[name];
+      if (instance) {
+        instanceMap[name] = instance;
+        return instance;
+      }
+    }
+
     if (!instance) {
+
+      // instantiate instance
       module = moduleMap[name];
 
       if (!module) {

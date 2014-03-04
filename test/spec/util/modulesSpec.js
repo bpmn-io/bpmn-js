@@ -64,6 +64,28 @@ describe('util/modules', function() {
         expect(a).toEqual('a');
       });
 
+      it('fn syntax with arguments', function() {
+
+        // given
+        var registry = new Registry();
+
+        registry.register('a', function() {
+          return 'a';
+        });
+
+        registry.register('b', function(a) {
+          return 'b/' + a;
+        });
+
+        var injector = registry.createInjector();
+
+        // when
+        var b = injector.resolve('b');
+
+        // then
+        expect(b).toEqual('b/a');
+      });
+
       it('array syntax', function() {
 
         // given
@@ -153,6 +175,28 @@ describe('util/modules', function() {
 
         // then
         expect(a).toEqual('b');
+      });
+
+      it('locals (override)', function() {
+
+        // given
+        var registry = new Registry();
+
+        registry.register('a', [ 'b', function(b) {
+          return b;
+        }]);
+
+        registry.register('b', function() {
+          return 'b';
+        });
+
+        var injector = registry.createInjector();
+        
+        // when
+        var a = injector.resolve('a', { b: 'B' });
+
+        // then
+        expect(a).toEqual('B');
       });
     });
 
