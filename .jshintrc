@@ -28,6 +28,7 @@
     "describe": false,
     "it": false,
     "jasmine": true,
-    "expect": true
+    "expect": true,
+    "beforeEach": true
   }
 }

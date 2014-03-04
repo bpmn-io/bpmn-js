@@ -14,11 +14,13 @@ var Snap = require('snapsvg'),
 function Canvas(config, events, commandStack, svgFactory) {
   //'use strict';
 
+  var options = _.extend({}, { width: 'auto', height: 'auto' }, config.canvas || {});
+
   var ids = new IdGenerator('s');
 
-  var paper = Snap.createSnapAt(config.canvas.width,
-                              config.canvas.height,
-                              config.canvas.container);
+  var paper = Snap.createSnapAt(options.width,
+                              options.height,
+                              options.container);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};

@@ -1,7 +1,8 @@
 var modules = require('./util/modules'),
     Canvas = require('./core/Canvas'),
     Events = require('./core/Events'),
-    SvgFactory = require('./core/SvgFactory');
+    SvgFactory = require('./core/SvgFactory'),
+    _ = require('lodash');
 
 // require snapsvg extensions
 require('./snapsvg.ext');
@@ -33,11 +34,12 @@ function Diagram(options) {
   function bootstrap(modules, options) {
 
     var di = registry.createInjector();
+    
+    var locals = _.extend({}, { config: options }, options.locals || {});
 
-    var locals = { config: options };
-    for (var i = 0, m; !!(m = modules[i]); i++) {
+    _.forEach(modules, function(m) {
       di.resolve(m, locals);
-    }
+    });
 
     return di;
   }
