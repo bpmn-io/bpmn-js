@@ -53,7 +53,7 @@ function SvgFactory(events) {
     initMarkers(paper);
   });
 
-  function flatenPoints(points) {
+  function flattenPoints(points) {
     var result = [];
 
     for (var i = 0, p; !!(p = points[i]); i++) {
@@ -86,7 +86,7 @@ function SvgFactory(events) {
   }
 
   function createConnection(paper, data) {
-    var points = flatenPoints(data.waypoints);
+    var points = flattenPoints(data.waypoints);
 
     var line = paper.polyline(points);
 

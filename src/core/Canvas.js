@@ -41,6 +41,9 @@ function Canvas(config, events, commandStack, svgFactory) {
     });
   })();
 
+  /**
+   * Only register shape in Canvas' ElementMap.
+   */
   function addElement(e, gfx) {
     if (!e.id) {
       e.id = ids.next();
@@ -49,6 +52,9 @@ function Canvas(config, events, commandStack, svgFactory) {
     elementMap[e.id] = { element: e, gfx: gfx };
   }
 
+  /**
+   * Add shape to DOM
+   */
   function addChild(parent, child) {
     if (parent.children) {
       parent.children.push(child);
