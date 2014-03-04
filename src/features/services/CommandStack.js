@@ -62,6 +62,10 @@ function CommandStack() {
    */
   function internalApplyAction(id, ctx, saveRedoStack) {
     var commandListeners = getCommandListener(id);
+    if(!commandListeners ||
+      commandListeners.length < 1) {
+      console.warn('[CommandStack] command \'%s\' is not registered.', id);
+    }
     _.forEach(commandListeners, function(commandListener) {
       if(commandListener.do(ctx)) {
         pushAction(id, ctx);

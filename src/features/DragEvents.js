@@ -169,7 +169,7 @@ function Drag(events, selection, shapes, commandStack) {
         events.fire('shape.dragend', event);
 
         if (!event.isDefaultPrevented()) {
-          commandStack.execute('moveshape', { event: event });
+          commandStack.execute('moveShape', { event: event });
         }
       }
 

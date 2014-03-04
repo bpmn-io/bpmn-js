@@ -41,6 +41,35 @@ function Canvas(config, events, commandStack, svgFactory) {
         return true;
       }
     });
+    commandStack.register('moveShape', {
+      do: function moveShapeDo(param) {
+        var dragCtx = param.event.dragCtx;
+        if(dragCtx) {
+          _.forEach(dragCtx.allDraggedGfx, function(gfx) {
+            var actualTMatrix = gfx.transform().local;
+            gfx.attr({
+              transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [dragCtx.dx, dragCtx.dy]
+            });
+          });
+        }
+        return true;
+      },
+      undo: function moveShapeUndo(param) {
+        var dragCtx = param.event.dragCtx;
+        if(dragCtx) {
+          _.forEach(dragCtx.allDraggedGfx, function(gfx) {
+            var actualTMatrix = gfx.transform().local;
+            gfx.attr({
+              transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [(-1)*dragCtx.dx, (-1)*dragCtx.dy]
+            });
+          });
+        }
+        return true;
+      },
+      canDo: function canUndoMoveShape() {
+        return true;
+      }
+    });
   })();
 
   /**
