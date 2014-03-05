@@ -74,7 +74,7 @@
       });
 
 
-      diagram.inject([ 'events', 'canvas', 'commandStack', function(events, canvas, commandStack) {
+      diagram.inject([ 'events', 'canvas', 'commandStack', 'shapes', function(events, canvas, commandStack, shapes) {
 
         events.on('connection.added', function(event) {
           console.log('connection added', event);
@@ -84,10 +84,10 @@
           console.log('shape added', event);
         });
 
-        var s1 = {x: 10, y: 20, width: 100, height: 80 };
-        var s2 = {x: 80, y: 10, width: 300, height: 140 };
-        var s3 = {x: 100, y: 20, width: 100, height: 80, parent: s2 };
-        var s4 = {x: 300, y: 300, width: 100, height: 80 };
+        var s1 = shapes.convertToShape({x: 10, y: 20, width: 100, height: 80 });
+        var s2 = shapes.convertToShape({x: 80, y: 10, width: 300, height: 140});
+        var s3 = shapes.convertToShape({x: 100, y: 20, width: 110, height: 110, parent: s2});
+        var s4 = shapes.convertToShape({x: 300, y: 300, width: 100, height: 80 });
 
         // Added via command stack
         canvas.addShape(s1);

@@ -30,7 +30,6 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   (function registerCommands() {
     commandStack.register('addShape', {
       do: function addShapeDo(param) {
-        param = shapes.convertToShape(param);
         internalAddShape(param);
         return true;
       },
