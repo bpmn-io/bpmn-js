@@ -92,10 +92,46 @@ function Shapes(events) {
     removeShape(event.element);
   });
 
+  /**
+   * @class
+   * A prototype for shapes, offers basing functions
+   */
+  var Shape = {
+    translate: function(x, y) {
+      'use strict';
+
+      this.x += x;
+      this.y += y;
+    }
+  };
+
+  /**
+   * Creates a new object with prototype Shape.
+   * @param {Object} baseObj all properties are copied on the new object
+   *
+   * @return {Object} Return an object with properties of baseObj and prototype = Shape
+   */
+  function convertToShape(baseObj) {
+    'use strict';
+
+    var extObj = Object.create(Shape);
+
+    _.extend(extObj, baseObj);
+
+    if(!extObj.hasOwnProperty('x')) {
+      extObj.x = 0;
+    }
+    if(!extObj.hasOwnProperty('y')) {
+      extObj.y = 0;
+    }
+    return extObj;
+  }
+
   return {
     getGraphicsByShape: getGraphicsByShape,
     getShapeById: getShapeById,
-    getShapeByGraphics: getShapeByGraphics
+    getShapeByGraphics: getShapeByGraphics,
+    convertToShape: convertToShape
   };
 }
 
