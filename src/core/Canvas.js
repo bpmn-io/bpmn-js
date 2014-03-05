@@ -11,7 +11,7 @@ var Snap = require('snapsvg'),
  *
  * @emits Canvas#canvas.init
  */
-function Canvas(config, events, commandStack, svgFactory) {
+function Canvas(config, events, commandStack, svgFactory, shapes) {
   //'use strict';
 
   var options = _.extend({}, { width: 'auto', height: 'auto' }, config.canvas || {});
@@ -30,6 +30,7 @@ function Canvas(config, events, commandStack, svgFactory) {
   (function registerCommands() {
     commandStack.register('addShape', {
       do: function addShapeDo(param) {
+        param = shapes.convertToShape(param);
         internalAddShape(param);
         return true;
       },
@@ -46,10 +47,14 @@ function Canvas(config, events, commandStack, svgFactory) {
         var dragCtx = param.event.dragCtx;
         if(dragCtx) {
           _.forEach(dragCtx.allDraggedGfx, function(gfx) {
+            //Update Viewport
             var actualTMatrix = gfx.transform().local;
             gfx.attr({
               transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [dragCtx.dx, dragCtx.dy]
             });
+            //Update model
+            var model = shapes.getShapeByGraphics(gfx);
+            model.translate(dragCtx.dx, dragCtx.dy);
           });
         }
         return true;
@@ -58,10 +63,14 @@ function Canvas(config, events, commandStack, svgFactory) {
         var dragCtx = param.event.dragCtx;
         if(dragCtx) {
           _.forEach(dragCtx.allDraggedGfx, function(gfx) {
+            //Update Viewport
             var actualTMatrix = gfx.transform().local;
             gfx.attr({
               transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [(-1)*dragCtx.dx, (-1)*dragCtx.dy]
             });
+            //Update model
+            var model = shapes.getShapeByGraphics(gfx);
+            model.translate((-1)*dragCtx.dx, (-1)*dragCtx.dy);
           });
         }
         return true;
@@ -245,6 +254,6 @@ function Canvas(config, events, commandStack, svgFactory) {
   };
 }
 
-Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory'];
+Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory', 'shapes'];
 
 module.exports = Canvas;
