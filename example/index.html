@@ -73,10 +73,21 @@
                 action: {
                   type: 'mousedown',
                   handler: [ 'canvas', 'shapes', function(canvas, shapes) {
+
+                    var onMouseUp = function() {
+                      cleanupListener();
+                    }
+                    //Stop on Escape
+                    var onEscapeKey = function(event) {
+                      if(event.keyCode === 27) {
+                        cleanupListener();
+                      }
+                    }
+
                     // As chrome does not support mouseenter when left button
                     // is clicked using that complicated mousemove work around
-                    canvas.addListener('mousemove', function move(event) {
-                      console.log('Menu move Listener triggered');
+                    var move = function(event) {
+
                       // If left mouse button is not pressed stop with work
                       if(event.button !== 0) {
                         return;
@@ -85,12 +96,21 @@
                         x: event.clientX - 100 / 2,
                         y: event.clientY - 80 / 2,
                         width: 100,
-                        height: 80 });
+                        height: 80
+                      });
                       canvas.addShape(newShape);
-                      //REMOVE this listener
-                      canvas.removeListener('mousemove', move);
+                      cleanupListener();
                       //TODO start drag mode of the canvas....
-                    });
+                    };
+                    document.addEventListener('mouseup', onMouseUp);
+                    document.addEventListener('keyup', onEscapeKey);
+                    canvas.addListener('mousemove', move);
+
+                    var cleanupListener = function() {
+                      canvas.removeListener('mousemove', move);
+                      document.removeEventListener('mouseup', onMouseUp);
+                      document.removeEventListener('keyup', onEscapeKey);
+                    }
                   }]
                 }
               }
@@ -125,10 +145,6 @@
         canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115} ]});
         canvas.addConnection({ waypoints: [ { x: 150, y: 150 }, { x: 200, y: 150 }, { x: 200, y: 200 }, { x: 300, y: 200} ]});
         canvas.addConnection({ waypoints: [ { x: 300, y: 300 }, { x: 100, y: 400 }, { x: 400, y: 100 }, { x: 500, y: 100 } ]});
-
-        canvas.addListener('mouseenter', function() {
-          console.log('enter;');
-        });
     }]);
     }
   </script>
