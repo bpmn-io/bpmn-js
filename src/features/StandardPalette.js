@@ -8,10 +8,8 @@ var Diagram = require('../Diagram'),
 /**
  * @class
  */
-function StandardPalette(config, events, canvas, commandStack, injector) {
+function StandardPalette(config, events, canvas, injector) {
   'use strict';
-
-  var xinc = 30;
 
   events.on('canvas.init', function(event) {
     init();
@@ -63,8 +61,8 @@ function StandardPalette(config, events, canvas, commandStack, injector) {
         var textNode = document.createTextNode(item.text);
         button.appendChild(textNode);
       }
-      button.addEventListener('click', function(event) {
-        injector.inject(item.action, { event: event });
+      button.addEventListener(item.action.type, function(event) {
+        injector.inject(item.action.handler, { event: event });
       });
 
       menuDiv.appendChild(button);
@@ -76,6 +74,6 @@ function StandardPalette(config, events, canvas, commandStack, injector) {
   }
 }
 
-Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'commandStack', 'injector', StandardPalette ]);
+Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'injector', StandardPalette ]);
 
 module.exports = StandardPalette;

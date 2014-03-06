@@ -229,6 +229,24 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
     return paper;
   }
 
+  /**
+   * Add event listener to paper.
+   */
+  function addListener(id, eventListener) {
+    'use strict';
+
+    paper.node.addEventListener(id, eventListener);
+  }
+
+  /**
+   * Remove event from paper.
+   */
+  function removeListener(id, eventListener) {
+    'use strict';
+
+    paper.node.removeEventListener(id, eventListener);
+  }
+
   events.on('diagram.init', function(event) {
     
     /**
@@ -249,7 +267,9 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
     addConnection: addConnection,
     getContext: getContext,
     getGraphics: getGraphics,
-    sendToFront: sendToFront
+    sendToFront: sendToFront,
+    addListener: addListener,
+    removeListener: removeListener
   };
 }
 
