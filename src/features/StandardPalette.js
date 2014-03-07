@@ -76,6 +76,6 @@ function StandardPalette(config, events, canvas, paletteDragDrop, injector) {
   }
 }
 
-Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'injector', 'paletteDragDrop', StandardPalette ]);
+Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'paletteDragDrop', 'injector',  StandardPalette ]);
 
 module.exports = StandardPalette;
