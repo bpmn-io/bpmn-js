@@ -13,7 +13,6 @@ var Diagram = require('../../Diagram'),
 function PaletteDragDrop(canvas, events, shapes, injector) {
   'use strict';
 
-  var i = 0;
   var dragInProgress = false;
 
   events.on('standard.palette.init', function(event) {
@@ -25,15 +24,14 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
     // the event if left button is pressed
     canvas.addListener('mousemove', paletteMoveListener);
     canvas.addListener('mouseup', canvasOnMouseUp);
-    //TODO register canvasOnMouseUpAnywhere
+    document.addEventListener('mouseup', canvasOnMouseUpAnywhere);
   }
 
   /**
-   * Handles what happen in the canvas.
+   * Handles what happen in the canvas
    */
   var paletteMoveListener = function paletteMoveListener() {
     if(dragInProgress) {
-      console.log('Move on canvas: ' + i++);
       // TODO dragging draw shape
     }
   };
@@ -55,7 +53,7 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
   };
 
   var canvasOnMouseUpAnywhere = function canvasOnMouseUpAnywhere() {
-    //TODO Stop interaction
+    dragInProgress = false;
   };
 
   /**
