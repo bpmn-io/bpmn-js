@@ -8,7 +8,8 @@ var Diagram = require('../../Diagram'),
 /**
  * @class
  *
- * A service that allow to drop an element
+ * A service that allow to drop an element via drag (from palette)
+ * to the canvas (drop).
  */
 function PaletteDragDrop(canvas, events, shapes, injector) {
   'use strict';
