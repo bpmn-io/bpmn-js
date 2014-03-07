@@ -72,7 +72,7 @@
                 text: undefined,
                 action: {
                   type: 'mousedown',
-                  handler: [ 'canvas', 'shapes', function(canvas, shapes) {
+                  handler: [ 'canvas', 'shapes', 'selection', function(canvas, shapes, selection) {
 
                     var onMouseUp = function() {
                       cleanupListener();
@@ -92,6 +92,7 @@
                       if(event.button !== 0) {
                         return;
                       }
+                      cleanupListener();
                       var newShape = shapes.convertToShape({
                         x: event.clientX - 100 / 2,
                         y: event.clientY - 80 / 2,
@@ -99,8 +100,10 @@
                         height: 80
                       });
                       canvas.addShape(newShape);
-                      cleanupListener();
                       //TODO start drag mode of the canvas....
+                      shapes.getGraphicsByShape(newShape).drag();
+                      //selection.select(newShape);
+
                     };
                     document.addEventListener('mouseup', onMouseUp);
                     document.addEventListener('keyup', onEscapeKey);
