@@ -43,10 +43,10 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
   var canvasOnMouseUp = function canvasOnMouseUp(mouseEvent) {
     if(dragInProgress && mouseEvent.button === 0) {
       var newShape = shapes.convertToShape({
-        x: mouseEvent.clientX - 100 / 2.5,
-        y: mouseEvent.clientY - 80,
-        width: 100,
-        height: 80
+        x: mouseEvent.clientX - 90 / 2.5,
+        y: mouseEvent.clientY - 90,
+        width: 110,
+        height: 110
       });
       canvas.addShape(newShape);
     }
