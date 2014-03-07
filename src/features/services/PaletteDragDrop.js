@@ -10,7 +10,7 @@ var Diagram = require('../../Diagram'),
  *
  * A service that allow to drop an element
  */
-function PaletteDragDrop(canvas, events, injector) {
+function PaletteDragDrop(canvas, events, shapes, injector) {
   'use strict';
 
   var i = 0;
@@ -21,6 +21,8 @@ function PaletteDragDrop(canvas, events, injector) {
   });
 
   function init() {
+    // mouseenter does not work as chrome doesn't fire
+    // the event if left button is pressed
     canvas.addListener('mousemove', paletteMoveListener);
     canvas.addListener('mouseup', canvasOnMouseUp);
     //TODO register canvasOnMouseUpAnywhere
@@ -32,7 +34,7 @@ function PaletteDragDrop(canvas, events, injector) {
   var paletteMoveListener = function paletteMoveListener() {
     if(dragInProgress) {
       console.log('Move on canvas: ' + i++);
-      // TODO draw shape
+      // TODO dragging draw shape
     }
   };
 
@@ -41,7 +43,16 @@ function PaletteDragDrop(canvas, events, injector) {
    */
   var canvasOnMouseUp = function canvasOnMouseUp(mouseEvent) {
     //TODO ADD shape
-    console.log('Add shape');
+    if(dragInProgress) {
+      console.log('Add shape');
+      var newShape = shapes.convertToShape({
+        x: event.clientX - 100 / 2,
+        y: event.clientY - 80 / 2,
+        width: 100,
+        height: 80
+      });
+      canvas.addShape(newShape);
+    }
   };
 
   var canvasOnMouseUpAnywhere = function canvasOnMouseUpAnywhere() {
@@ -68,6 +79,6 @@ function PaletteDragDrop(canvas, events, injector) {
   };
 }
 
-Diagram.plugin('paletteDragDrop', ['canvas', 'events', 'injector', PaletteDragDrop ]);
+Diagram.plugin('paletteDragDrop', ['canvas', 'events', 'shapes', 'injector', PaletteDragDrop ]);
 
 module.exports = PaletteDragDrop;

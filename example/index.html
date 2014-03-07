@@ -72,48 +72,8 @@
                 text: undefined,
                 action: {
                   type: 'mousedown',
-                  handler: [ 'canvas', 'shapes', 'selection', function(canvas, shapes, selection) {
-
-                    var onMouseUp = function() {
-                      cleanupListener();
-                    }
-                    //Stop on Escape
-                    var onEscapeKey = function(event) {
-                      if(event.keyCode === 27) {
-                        cleanupListener();
-                      }
-                    }
-
-                    // As chrome does not support mouseenter when left button
-                    // is clicked using that complicated mousemove work around
-                    var move = function(event) {
-
-                      // If left mouse button is not pressed stop with work
-                      if(event.button !== 0) {
-                        return;
-                      }
-                      cleanupListener();
-                      var newShape = shapes.convertToShape({
-                        x: event.clientX - 100 / 2,
-                        y: event.clientY - 80 / 2,
-                        width: 100,
-                        height: 80
-                      });
-                      canvas.addShape(newShape);
-                      //TODO start drag mode of the canvas....
-                      shapes.getGraphicsByShape(newShape).drag();
-                      //selection.select(newShape);
-
-                    };
-                    document.addEventListener('mouseup', onMouseUp);
-                    document.addEventListener('keyup', onEscapeKey);
-                    canvas.addListener('mousemove', move);
-
-                    var cleanupListener = function() {
-                      canvas.removeListener('mousemove', move);
-                      document.removeEventListener('mouseup', onMouseUp);
-                      document.removeEventListener('keyup', onEscapeKey);
-                    }
+                  handler: [ 'canvas', 'shapes', 'selection', 'paletteDragDrop', function(canvas, shapes, selection, paletteDragDrop) {
+                    paletteDragDrop.startDragAndDrop();
                   }]
                 }
               }
