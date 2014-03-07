@@ -42,17 +42,16 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
    * What happens on mouseup event over canvas
    */
   var canvasOnMouseUp = function canvasOnMouseUp(mouseEvent) {
-    //TODO ADD shape
-    if(dragInProgress) {
-      console.log('Add shape');
+    if(dragInProgress && mouseEvent.button === 0) {
       var newShape = shapes.convertToShape({
-        x: event.clientX - 100 / 2,
-        y: event.clientY - 80 / 2,
+        x: mouseEvent.clientX - 100 / 2.5,
+        y: mouseEvent.clientY - 80,
         width: 100,
         height: 80
       });
       canvas.addShape(newShape);
     }
+    dragInProgress = false;
   };
 
   var canvasOnMouseUpAnywhere = function canvasOnMouseUpAnywhere() {
