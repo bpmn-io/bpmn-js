@@ -61,7 +61,6 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
   var onEscapeKey = function(event) {
     if(event.keyCode === 27) {
       dragInProgress = false;
-      console.log('ESC');
     }
   };
 
