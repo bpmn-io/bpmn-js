@@ -8,7 +8,7 @@ var Diagram = require('../Diagram'),
 /**
  * @class
  */
-function StandardPalette(config, events, canvas, injector) {
+function StandardPalette(config, events, canvas, paletteDragDrop, injector) {
   'use strict';
 
   events.on('canvas.init', function(event) {
@@ -19,6 +19,8 @@ function StandardPalette(config, events, canvas, injector) {
     var menuConfig = config.menu || {};
 
     bootstrapMenus(menuConfig);
+
+    events.fire('standard.palette.init');
 
     // intercept direct canvas clicks to deselect all
     // selected shapes
@@ -74,6 +76,6 @@ function StandardPalette(config, events, canvas, injector) {
   }
 }
 
-Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'injector', StandardPalette ]);
+Diagram.plugin('standardPalette', [ 'config', 'events', 'canvas', 'injector', 'paletteDragDrop', StandardPalette ]);
 
 module.exports = StandardPalette;
