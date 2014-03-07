@@ -25,6 +25,7 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
     canvas.addListener('mousemove', paletteMoveListener);
     canvas.addListener('mouseup', canvasOnMouseUp);
     document.addEventListener('mouseup', canvasOnMouseUpAnywhere);
+    document.addEventListener('keyup', onEscapeKey);
   }
 
   /**
@@ -55,6 +56,14 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
   var canvasOnMouseUpAnywhere = function canvasOnMouseUpAnywhere() {
     dragInProgress = false;
   };
+
+  var onEscapeKey = function(event) {
+    if(event.keyCode === 27) {
+      dragInProgress = false;
+      console.log('ESC');
+    }
+  };
+
 
   /**
    * Must be called if a draggable button on palette is clicked
