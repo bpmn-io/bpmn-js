@@ -38,6 +38,14 @@ function Shapes(events) {
   function removeShape(shape) {
     var gfx = getGraphicsByShape(shape);
 
+    if(shape.parent) {
+      for(var i = 0; i < shape.parent.children.length;i++) {
+        if(shape.parent.children[i].id === shape.id) {
+          shape.parent.children.splice(i, 1);
+        }
+      }
+    }
+   // delete shape.parent.children[];
     delete shapeMap[shape.id];
     delete graphicsMap[gfx.id];
   }
