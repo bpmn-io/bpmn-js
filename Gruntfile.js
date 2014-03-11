@@ -78,6 +78,19 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      samples: {
+        files: [
+          // copy sample files
+          {
+            expand: true,
+            cwd: '<%= config.samples %>/',
+            src: ['*.{js,css,html,png}'],
+            dest: '<%= config.dist %>/<%= config.samples %>'
+          }
+        ]
+      }
+    },
     watch: {
       sources: {
         files: [ '<%= config.sources %>/**/*.js'],
@@ -106,7 +119,7 @@ module.exports = function(grunt) {
   // tasks
   
   grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
-  grunt.registerTask('build', [ 'browserify' ]);
+  grunt.registerTask('build', [ 'browserify', 'copy:samples' ]);
 
   grunt.registerTask('auto-test', [ 'jasmine_node', 'watch:test' ]);
 

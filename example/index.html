@@ -1,0 +1,53 @@
+<html>
+<head>
+  <title>bpmn-js demo</title>
+</head>
+<body>
+  <div id="drop-zone">Drop files here</div>
+  <output id="list"></output>
+
+  <script src="../bpmn.js"></script>
+
+  <script>
+    var BpmnModel = require('BpmnModel');
+  </script>
+  <script>
+    function handleFileSelect(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+
+      var files = evt.dataTransfer.files; // FileList object.
+
+      // files is a FileList of File objects. List some properties.
+      var output = [];
+      for (var i = 0, f; f = files[i]; i++) {
+        
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+
+          var xml = e.target.result;
+
+          BpmnModel.fromXML(xml, 'bpmn:Definitions', function(err, result) {
+
+            var resultAsJson = JSON.stringify(result, null, '  ');
+            document.getElementById('list').innerHTML = resultAsJson;
+          });
+        };
+
+        reader.readAsText(f);
+      }
+    }
+
+    function handleDragOver(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    }
+
+    // Setup the dnd listeners.
+    var dropZone = document.getElementById('drop-zone');
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
+  </script>
+</html>
