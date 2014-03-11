@@ -80,8 +80,16 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
     return true;
   };
 
+  /**
+   * @return {boolean} returns the current dragging status.
+   */
+  var isDragInProgress = function isDragInProgress() {
+     return isDragInProgress;
+  };
+
   return {
-    startDragAndDrop: startDragAndDrop
+    startDragAndDrop: startDragAndDrop,
+    isDragInProgress: isDragInProgress
   };
 }
 
