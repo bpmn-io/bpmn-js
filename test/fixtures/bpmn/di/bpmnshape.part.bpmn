@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmndi:BPMNShape xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI"  id="BPMNShape_1" bpmnElement="SubProcess_1" isExpanded="true">
+  <dc:Bounds height="300.0" width="300.0" x="300.0" y="80.0"/>
+</bpmndi:BPMNShape>

@@ -1,0 +1,400 @@
+{
+  "name": "DI",
+  "uri": "http://www.omg.org/spec/DD/20100524/DI",
+  "id": "_0",
+  "types": [
+    {
+      "name": "DiagramElement",
+      "isAbstract": true,
+      "id": "DiagramElement",
+      "properties": [
+        {
+          "name": "owningDiagram",
+          "type": "Diagram",
+          "isReadOnly": true,
+          "association": "A_rootElement_owningDiagram",
+          "id": "DiagramElement-owningDiagram",
+          "isVirtual": true,
+          "isReference": true
+        },
+        {
+          "name": "owningElement",
+          "type": "DiagramElement",
+          "isReadOnly": true,
+          "association": "A_ownedElement_owningElement",
+          "id": "DiagramElement-owningElement",
+          "isVirtual": true,
+          "isReference": true
+        },
+        {
+          "name": "modelElement",
+          "isReadOnly": true,
+          "association": "A_modelElement_diagramElement",
+          "id": "DiagramElement-modelElement",
+          "isVirtual": true,
+          "isReference": true,
+          "type": "Element"
+        },
+        {
+          "name": "style",
+          "type": "Style",
+          "isReadOnly": true,
+          "association": "A_style_diagramElement",
+          "id": "DiagramElement-style",
+          "isVirtual": true,
+          "isReference": true
+        },
+        {
+          "name": "ownedElement",
+          "type": "DiagramElement",
+          "isReadOnly": true,
+          "association": "A_ownedElement_owningElement",
+          "id": "DiagramElement-ownedElement",
+          "isVirtual": true,
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Node",
+      "isAbstract": true,
+      "superClass": [
+        "DiagramElement"
+      ],
+      "id": "Node"
+    },
+    {
+      "name": "Edge",
+      "isAbstract": true,
+      "superClass": [
+        "DiagramElement"
+      ],
+      "id": "Edge",
+      "properties": [
+        {
+          "name": "source",
+          "type": "DiagramElement",
+          "isReadOnly": true,
+          "association": "A_source_sourceEdge",
+          "id": "Edge-source",
+          "isVirtual": true,
+          "isReference": true
+        },
+        {
+          "name": "target",
+          "type": "DiagramElement",
+          "isReadOnly": true,
+          "association": "A_target_targetEdge",
+          "id": "Edge-target",
+          "isVirtual": true,
+          "isReference": true
+        },
+        {
+          "name": "waypoint",
+          "isUnique": false,
+          "id": "Edge-waypoint",
+          "isMany": true,
+          "type": "dc:Point",
+          "serialize": "xsi:type"
+        }
+      ]
+    },
+    {
+      "name": "Diagram",
+      "isAbstract": true,
+      "id": "Diagram",
+      "properties": [
+        {
+          "name": "rootElement",
+          "type": "DiagramElement",
+          "isReadOnly": true,
+          "association": "A_rootElement_owningDiagram",
+          "id": "Diagram-rootElement",
+          "isVirtual": true
+        },
+        {
+          "name": "name",
+          "id": "Diagram-name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "documentation",
+          "id": "Diagram-documentation",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "resolution",
+          "id": "Diagram-resolution",
+          "isAttr": true,
+          "type": "Real"
+        },
+        {
+          "name": "ownedStyle",
+          "type": "Style",
+          "isReadOnly": true,
+          "association": "A_ownedStyle_owningDiagram",
+          "id": "Diagram-ownedStyle",
+          "isVirtual": true,
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Shape",
+      "isAbstract": true,
+      "superClass": [
+        "Node"
+      ],
+      "id": "Shape",
+      "properties": [
+        {
+          "name": "bounds",
+          "id": "Shape-bounds",
+          "type": "dc:Bounds"
+        }
+      ]
+    },
+    {
+      "name": "Plane",
+      "isAbstract": true,
+      "superClass": [
+        "Node"
+      ],
+      "id": "Plane",
+      "properties": [
+        {
+          "name": "planeElement",
+          "type": "DiagramElement",
+          "subsettedProperty": "DiagramElement-ownedElement",
+          "association": "A_planeElement_plane",
+          "id": "Plane-planeElement",
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "LabeledEdge",
+      "isAbstract": true,
+      "superClass": [
+        "Edge"
+      ],
+      "id": "LabeledEdge",
+      "properties": [
+        {
+          "name": "ownedLabel",
+          "type": "Label",
+          "isReadOnly": true,
+          "subsettedProperty": "DiagramElement-ownedElement",
+          "association": "A_ownedLabel_owningEdge",
+          "id": "LabeledEdge-ownedLabel",
+          "isVirtual": true,
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "LabeledShape",
+      "isAbstract": true,
+      "superClass": [
+        "Shape"
+      ],
+      "id": "LabeledShape",
+      "properties": [
+        {
+          "name": "ownedLabel",
+          "type": "Label",
+          "isReadOnly": true,
+          "subsettedProperty": "DiagramElement-ownedElement",
+          "association": "A_ownedLabel_owningShape",
+          "id": "LabeledShape-ownedLabel",
+          "isVirtual": true,
+          "isMany": true
+        }
+      ]
+    },
+    {
+      "name": "Label",
+      "isAbstract": true,
+      "superClass": [
+        "Node"
+      ],
+      "id": "Label",
+      "properties": [
+        {
+          "name": "bounds",
+          "id": "Label-bounds",
+          "type": "dc:Bounds"
+        }
+      ]
+    },
+    {
+      "name": "Style",
+      "isAbstract": true,
+      "id": "Style"
+    }
+  ],
+  "associations": [
+    {
+      "name": "A_target_targetEdge",
+      "visibility": "private",
+      "memberEnd": "Edge-target A_target_targetEdge-targetEdge",
+      "id": "A_target_targetEdge",
+      "ownedEnd": {
+        "name": "targetEdge",
+        "visibility": "public",
+        "type": "Edge",
+        "upper": "*",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_target_targetEdge",
+        "association": "A_target_targetEdge",
+        "id": "A_target_targetEdge-targetEdge"
+      }
+    },
+    {
+      "name": "A_source_sourceEdge",
+      "visibility": "private",
+      "memberEnd": "Edge-source A_source_sourceEdge-sourceEdge",
+      "id": "A_source_sourceEdge",
+      "ownedEnd": {
+        "name": "sourceEdge",
+        "visibility": "public",
+        "type": "Edge",
+        "upper": "*",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_source_sourceEdge",
+        "association": "A_source_sourceEdge",
+        "id": "A_source_sourceEdge-sourceEdge"
+      }
+    },
+    {
+      "name": "A_ownedElement_owningElement",
+      "visibility": "private",
+      "memberEnd": "DiagramElement-ownedElement DiagramElement-owningElement",
+      "id": "A_ownedElement_owningElement"
+    },
+    {
+      "name": "A_modelElement_diagramElement",
+      "visibility": "private",
+      "memberEnd": "DiagramElement-modelElement A_modelElement_diagramElement-diagramElement",
+      "id": "A_modelElement_diagramElement",
+      "ownedEnd": {
+        "name": "diagramElement",
+        "visibility": "public",
+        "type": "DiagramElement",
+        "upper": "*",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_modelElement_diagramElement",
+        "association": "A_modelElement_diagramElement",
+        "id": "A_modelElement_diagramElement-diagramElement"
+      }
+    },
+    {
+      "name": "A_rootElement_owningDiagram",
+      "visibility": "private",
+      "memberEnd": "Diagram-rootElement DiagramElement-owningDiagram",
+      "id": "A_rootElement_owningDiagram"
+    },
+    {
+      "name": "A_ownedLabel_owningEdge",
+      "visibility": "private",
+      "memberEnd": "LabeledEdge-ownedLabel A_ownedLabel_owningEdge-owningEdge",
+      "id": "A_ownedLabel_owningEdge",
+      "ownedEnd": {
+        "name": "owningEdge",
+        "visibility": "public",
+        "type": "LabeledEdge",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_ownedLabel_owningEdge",
+        "subsettedProperty": "DiagramElement-owningElement",
+        "association": "A_ownedLabel_owningEdge",
+        "id": "A_ownedLabel_owningEdge-owningEdge"
+      }
+    },
+    {
+      "name": "A_planeElement_plane",
+      "visibility": "private",
+      "memberEnd": "Plane-planeElement A_planeElement_plane-plane",
+      "id": "A_planeElement_plane",
+      "ownedEnd": {
+        "name": "plane",
+        "visibility": "public",
+        "type": "Plane",
+        "lower": "0",
+        "owningAssociation": "A_planeElement_plane",
+        "subsettedProperty": "DiagramElement-owningElement",
+        "association": "A_planeElement_plane",
+        "id": "A_planeElement_plane-plane"
+      }
+    },
+    {
+      "name": "A_style_diagramElement",
+      "visibility": "private",
+      "memberEnd": "DiagramElement-style A_style_diagramElement-diagramElement",
+      "id": "A_style_diagramElement",
+      "ownedEnd": {
+        "name": "diagramElement",
+        "visibility": "public",
+        "type": "DiagramElement",
+        "upper": "*",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_style_diagramElement",
+        "association": "A_style_diagramElement",
+        "id": "A_style_diagramElement-diagramElement"
+      }
+    },
+    {
+      "name": "A_ownedStyle_owningDiagram",
+      "visibility": "private",
+      "memberEnd": "Diagram-ownedStyle A_ownedStyle_owningDiagram-owningDiagram",
+      "id": "A_ownedStyle_owningDiagram",
+      "ownedEnd": {
+        "name": "owningDiagram",
+        "visibility": "public",
+        "type": "Diagram",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_ownedStyle_owningDiagram",
+        "association": "A_ownedStyle_owningDiagram",
+        "id": "A_ownedStyle_owningDiagram-owningDiagram"
+      }
+    },
+    {
+      "name": "A_ownedLabel_owningShape",
+      "visibility": "private",
+      "memberEnd": "LabeledShape-ownedLabel A_ownedLabel_owningShape-owningShape",
+      "id": "A_ownedLabel_owningShape",
+      "ownedEnd": {
+        "name": "owningShape",
+        "visibility": "public",
+        "type": "LabeledShape",
+        "lower": "0",
+        "isReadOnly": true,
+        "isDerived": true,
+        "isDerivedUnion": true,
+        "owningAssociation": "A_ownedLabel_owningShape",
+        "subsettedProperty": "DiagramElement-owningElement",
+        "association": "A_ownedLabel_owningShape",
+        "id": "A_ownedLabel_owningShape-owningShape"
+      }
+    }
+  ],
+  "prefix": "di"
+}

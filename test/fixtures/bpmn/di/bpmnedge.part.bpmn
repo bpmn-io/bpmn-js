@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmndi:BPMNEdge xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="BPMNEdge_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_1" targetElement="BPMNShape_2">
+  <di:waypoint xsi:type="dc:Point" x="388.0" y="260.0"/>
+  <di:waypoint xsi:type="dc:Point" x="420.0" y="260.0"/>
+</bpmndi:BPMNEdge>

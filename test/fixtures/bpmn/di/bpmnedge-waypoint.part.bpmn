@@ -1,0 +1,4 @@
+<bpmndi:BPMNEdge xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" bpmnElement="sid-2365FF07-4092-4B79-976A-AD192FE4E4E9" id="sid-2365FF07-4092-4B79-976A-AD192FE4E4E9_gui">
+  <omgdi:waypoint x="4905.0" y="1545.0"/>
+  <omgdi:waypoint x="4950.0" y="1545.0"/>
+</bpmndi:BPMNEdge>

@@ -1,0 +1,58 @@
+{
+  "name": "moddle",
+  "version": "0.0.1",
+  "description": "A bpmn 2.0 toolkit and web modeler",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "main": "lib/main",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmn-io/bpmn-js"
+  },
+  "keywords": [
+    "bpmn",
+    "toolkit",
+    "web modeler",
+    "modeler",
+    "modeling",
+    "process modeling"
+  ],
+  "author": {
+    "name": "Nico Rehwaldt",
+    "url": "https://github.com/Nikku"
+  },
+  "contributors": [
+    {
+      "name": "bpmn.io contributors",
+      "url": "https://github.com/bpmn-io"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.3",
+    "grunt-contrib-watch": "~0.5.0",
+    "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-browserify": "~1.3.0",
+    "grunt-jsdoc": "~0.5.1",
+    "grunt-jasmine-node": "~0.1.0",
+    "load-grunt-tasks": "~0.3.0",
+    "uglifyify": "~1.1.0",
+    "debowerify": "0.6.0",
+    "jsondiffpatch": "~0.1.4",
+    "xsd-schema-validator": "0.0.3",
+    "sax": "~0.6.0",
+    "karma": "~0.12.0",
+    "grunt-karma": "~0.8.0",
+    "browserify": "~3.32.1",
+    "karma-browserify": "~0.0.6",
+    "karma-jasmine": "~0.2.0",
+    "karma-chrome-launcher": "~0.1.2",
+    "karma-phantomjs-launcher": "~0.1.2"
+  },
+  "dependencies": {
+    "moddle": "~0.0.1",
+    "moddle-xml": "~0.0.1",
+    "lodash": "~2.4.0"
+  }
+}

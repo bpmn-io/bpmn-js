@@ -1,0 +1,1369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:cmof="http://schema.omg.org/spec/MOF/2.0/cmof.xml">
+  <cmof:Package xmi:id="_0" name="BPMN20" uri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_errorRefs_operation" name="A_errorRefs_operation" visibility="private" memberEnd="Operation-errorRefs A_errorRefs_operation-operation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_errorRefs_operation-operation" name="operation" type="Operation" upper="*" lower="0" owningAssociation="A_errorRefs_operation" association="A_errorRefs_operation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inMessageRef_operation" name="A_inMessageRef_operation" visibility="private" memberEnd="Operation-inMessageRef A_inMessageRef_operation-operation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_inMessageRef_operation-operation" name="operation" type="Operation" upper="*" lower="0" owningAssociation="A_inMessageRef_operation" association="A_inMessageRef_operation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outMessageRef_operation" name="A_outMessageRef_operation" visibility="private" memberEnd="Operation-outMessageRef A_outMessageRef_operation-operation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outMessageRef_operation-operation" name="operation" type="Operation" upper="*" lower="0" owningAssociation="A_outMessageRef_operation" association="A_outMessageRef_operation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Interface" name="Interface" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Interface-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Interface-operations" name="operations" type="Operation" upper="*" isComposite="true" association="A_operations_interface"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Interface-implementationRef" name="implementationRef" visibility="public" lower="0">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Operation" name="Operation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Operation-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Operation-inMessageRef" name="inMessageRef" type="Message" association="A_inMessageRef_operation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Operation-outMessageRef" name="outMessageRef" type="Message" lower="0" association="A_outMessageRef_operation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Operation-errorRefs" name="errorRefs" type="Error" upper="*" lower="0" association="A_errorRefs_operation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Operation-implementationRef" name="implementationRef" visibility="public" lower="0">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operations_interface" name="A_operations_interface" visibility="private" memberEnd="Interface-operations A_operations_interface-interface">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operations_interface-interface" name="interface" type="Interface" owningAssociation="A_operations_interface" association="A_operations_interface"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="EndPoint" name="EndPoint" superClass="RootElement"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_definitionalCollaborationRef_process" name="A_definitionalCollaborationRef_process" visibility="private" memberEnd="Process-definitionalCollaborationRef A_definitionalCollaborationRef_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_definitionalCollaborationRef_process-process" name="process" type="Process" upper="*" lower="0" owningAssociation="A_definitionalCollaborationRef_process" association="A_definitionalCollaborationRef_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_partitionElement_lane" name="A_partitionElement_lane" visibility="private" memberEnd="Lane-partitionElement A_partitionElement_lane-lane">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_partitionElement_lane-lane" name="lane" type="Lane" lower="0" owningAssociation="A_partitionElement_lane" association="A_partitionElement_lane"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_flowNodeRefs_lanes" name="A_flowNodeRefs_lanes" visibility="private" memberEnd="Lane-flowNodeRefs FlowNode-lanes"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_partitionElementRef_lane" name="A_partitionElementRef_lane" visibility="private" memberEnd="Lane-partitionElementRef A_partitionElementRef_lane-lane">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_partitionElementRef_lane-lane" name="lane" type="Lane" upper="*" lower="0" owningAssociation="A_partitionElementRef_lane" association="A_partitionElementRef_lane"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_auditing_process" name="A_auditing_process" visibility="private" memberEnd="Process-auditing A_auditing_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_auditing_process-process" name="process" type="Process" lower="0" owningAssociation="A_auditing_process" association="A_auditing_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_monitoring_process" name="A_monitoring_process" visibility="private" memberEnd="Process-monitoring A_monitoring_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_monitoring_process-process" name="process" type="Process" lower="0" owningAssociation="A_monitoring_process" association="A_monitoring_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Auditing" name="Auditing" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalTask" name="GlobalTask" superClass="CallableElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalTask-resources" name="resources" type="ResourceRole" upper="*" lower="0" isComposite="true" association="A_resources_globalTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Monitoring" name="Monitoring" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Performer" name="Performer" superClass="ResourceRole"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Process" name="Process" superClass="FlowElementsContainer CallableElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-processType" name="processType" type="ProcessType"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-isClosed" name="isClosed">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-auditing" name="auditing" type="Auditing" lower="0" isComposite="true" association="A_auditing_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-monitoring" name="monitoring" type="Monitoring" lower="0" isComposite="true" association="A_monitoring_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-properties" name="properties" type="Property" upper="*" lower="0" isComposite="true" association="A_properties_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-supports" name="supports" type="Process" upper="*" lower="0" association="A_supports_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-definitionalCollaborationRef" name="definitionalCollaborationRef" type="Collaboration" lower="0" association="A_definitionalCollaborationRef_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-isExecutable" name="isExecutable" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-resources" name="resources" visibility="public" type="ResourceRole" upper="*" lower="0" isComposite="true" association="A_resources_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-artifacts" name="artifacts" visibility="public" type="Artifact" upper="*" lower="0" isComposite="true" association="A_artifacts_process"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Process-correlationSubscriptions" name="correlationSubscriptions" visibility="public" type="CorrelationSubscription" upper="*" lower="0" isComposite="true" association="A_correlationSubscriptions_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="ProcessType" name="ProcessType">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ProcessType-None" name="None" classifier="ProcessType" enumeration="ProcessType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ProcessType-Public" name="Public" classifier="ProcessType" enumeration="ProcessType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ProcessType-Private" name="Private" classifier="ProcessType" enumeration="ProcessType"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_properties_process" name="A_properties_process" visibility="private" memberEnd="Process-properties A_properties_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_properties_process-process" name="process" type="Process" lower="0" owningAssociation="A_properties_process" association="A_properties_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="LaneSet" name="LaneSet" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="LaneSet-lanes" name="lanes" type="Lane" upper="*" lower="0" isComposite="true" association="A_lanes_laneSet"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="LaneSet-name" name="name" visibility="public" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Lane" name="Lane" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Lane-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Lane-childLaneSet" name="childLaneSet" type="LaneSet" lower="0" isComposite="true" association="A_childLaneSet_parentLane"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Lane-partitionElementRef" name="partitionElementRef" type="BaseElement" lower="0" association="A_partitionElementRef_lane"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Lane-flowNodeRefs" name="flowNodeRefs" type="FlowNode" upper="*" lower="0" association="A_flowNodeRefs_lanes"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Lane-partitionElement" name="partitionElement" type="BaseElement" lower="0" isComposite="true" association="A_partitionElement_lane"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_lanes_laneSet" name="A_lanes_laneSet" visibility="private" memberEnd="LaneSet-lanes A_lanes_laneSet-laneSet">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_lanes_laneSet-laneSet" name="laneSet" type="LaneSet" owningAssociation="A_lanes_laneSet" association="A_lanes_laneSet"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_childLaneSet_parentLane" name="A_childLaneSet_parentLane" visibility="private" memberEnd="Lane-childLaneSet A_childLaneSet_parentLane-parentLane">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_childLaneSet_parentLane-parentLane" name="parentLane" type="Lane" lower="0" owningAssociation="A_childLaneSet_parentLane" association="A_childLaneSet_parentLane"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resources_globalTask" name="A_resources_globalTask" visibility="private" memberEnd="GlobalTask-resources A_resources_globalTask-globalTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resources_globalTask-globalTask" name="globalTask" type="GlobalTask" lower="0" owningAssociation="A_resources_globalTask" association="A_resources_globalTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_supports_process" name="A_supports_process" visibility="private" memberEnd="Process-supports A_supports_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_supports_process-process" name="process" type="Process" upper="*" lower="0" owningAssociation="A_supports_process" association="A_supports_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resources_process" name="A_resources_process" visibility="private" memberEnd="Process-resources A_resources_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resources_process-process" name="process" visibility="public" type="Process" lower="0" owningAssociation="A_resources_process" association="A_resources_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_artifacts_process" name="A_artifacts_process" visibility="private" memberEnd="Process-artifacts A_artifacts_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_artifacts_process-process" name="process" visibility="public" type="Process" lower="0" owningAssociation="A_artifacts_process" association="A_artifacts_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationSubscriptions_process" name="A_correlationSubscriptions_process" visibility="private" memberEnd="Process-correlationSubscriptions A_correlationSubscriptions_process-process">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationSubscriptions_process-process" name="process" visibility="public" type="Process" owningAssociation="A_correlationSubscriptions_process" association="A_correlationSubscriptions_process"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalManualTask" name="GlobalManualTask" superClass="GlobalTask"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ManualTask" name="ManualTask" superClass="Task"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="UserTask" name="UserTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="UserTask-renderings" name="renderings" type="Rendering" upper="*" lower="0" isComposite="true" association="A_renderings_usertask"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="UserTask-implementation" name="implementation">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Rendering" name="Rendering" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_renderings_usertask" name="A_renderings_usertask" visibility="private" memberEnd="UserTask-renderings A_renderings_usertask-usertask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_renderings_usertask-usertask" name="usertask" type="UserTask" lower="0" owningAssociation="A_renderings_usertask" association="A_renderings_usertask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="HumanPerformer" name="HumanPerformer" superClass="Performer"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="PotentialOwner" name="PotentialOwner" superClass="HumanPerformer"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalUserTask" name="GlobalUserTask" superClass="GlobalTask">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalUserTask-implementation" name="implementation">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalUserTask-renderings" name="renderings" type="Rendering" upper="*" lower="0" isComposite="true" association="A_renderings_globalUserTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_renderings_globalUserTask" name="A_renderings_globalUserTask" visibility="private" memberEnd="GlobalUserTask-renderings A_renderings_globalUserTask-globalUserTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_renderings_globalUserTask-globalUserTask" name="globalUserTask" type="GlobalUserTask" lower="0" owningAssociation="A_renderings_globalUserTask" association="A_renderings_globalUserTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_activationCondition_complexGateway" name="A_activationCondition_complexGateway" visibility="private" memberEnd="ComplexGateway-activationCondition A_activationCondition_complexGateway-complexGateway">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_activationCondition_complexGateway-complexGateway" name="complexGateway" type="ComplexGateway" lower="0" owningAssociation="A_activationCondition_complexGateway" association="A_activationCondition_complexGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Gateway" name="Gateway" isAbstract="true" superClass="FlowNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Gateway-gatewayDirection" name="gatewayDirection" type="GatewayDirection" default="unspecified"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="GatewayDirection" name="GatewayDirection">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="GatewayDirection-Unspecified" name="Unspecified" classifier="GatewayDirection" enumeration="GatewayDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="GatewayDirection-Converging" name="Converging" classifier="GatewayDirection" enumeration="GatewayDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="GatewayDirection-Diverging" name="Diverging" classifier="GatewayDirection" enumeration="GatewayDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="GatewayDirection-Mixed" name="Mixed" classifier="GatewayDirection" enumeration="GatewayDirection"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_default_inclusiveGateway" name="A_default_inclusiveGateway" visibility="private" memberEnd="InclusiveGateway-default A_default_inclusiveGateway-inclusiveGateway">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_default_inclusiveGateway-inclusiveGateway" name="inclusiveGateway" type="InclusiveGateway" upper="*" lower="0" owningAssociation="A_default_inclusiveGateway" association="A_default_inclusiveGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_default_exclusiveGateway" name="A_default_exclusiveGateway" visibility="private" memberEnd="ExclusiveGateway-default A_default_exclusiveGateway-exclusiveGateway">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_default_exclusiveGateway-exclusiveGateway" name="exclusiveGateway" type="ExclusiveGateway" upper="*" lower="0" owningAssociation="A_default_exclusiveGateway" association="A_default_exclusiveGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="EventBasedGateway" name="EventBasedGateway" superClass="Gateway">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="EventBasedGateway-instantiate" name="instantiate" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="EventBasedGateway-eventGatewayType" name="eventGatewayType" type="EventBasedGatewayType"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ComplexGateway" name="ComplexGateway" superClass="Gateway">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ComplexGateway-activationCondition" name="activationCondition" type="Expression" lower="0" isComposite="true" association="A_activationCondition_complexGateway"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ComplexGateway-default" name="default" type="SequenceFlow" lower="0" association="A_default_complexGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ExclusiveGateway" name="ExclusiveGateway" superClass="Gateway">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExclusiveGateway-default" name="default" type="SequenceFlow" lower="0" association="A_default_exclusiveGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="InclusiveGateway" name="InclusiveGateway" superClass="Gateway">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InclusiveGateway-default" name="default" type="SequenceFlow" lower="0" association="A_default_inclusiveGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ParallelGateway" name="ParallelGateway" superClass="Gateway"/>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="EventBasedGatewayType" name="EventBasedGatewayType">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="EventBasedGatewayType-Parallel" name="Parallel" classifier="EventBasedGatewayType" enumeration="EventBasedGatewayType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="EventBasedGatewayType-Exclusive" name="Exclusive" classifier="EventBasedGatewayType" enumeration="EventBasedGatewayType"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_default_complexGateway" name="A_default_complexGateway" visibility="private" memberEnd="ComplexGateway-default A_default_complexGateway-complexGateway">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_default_complexGateway-complexGateway" name="complexGateway" type="ComplexGateway" upper="*" lower="0" owningAssociation="A_default_complexGateway" association="A_default_complexGateway"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="RootElement" name="RootElement" isAbstract="true" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Relationship" name="Relationship" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Relationship-type" name="type">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Relationship-direction" name="direction" type="RelationshipDirection"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Relationship-sources" name="sources" upper="*" association="A_sources_relationship">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Relationship-targets" name="targets" upper="*" association="A_targets_relationship">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_valueRef_extensionAttributeValue" name="A_valueRef_extensionAttributeValue" visibility="private" memberEnd="ExtensionAttributeValue-valueRef A_valueRef_extensionAttributeValue-extensionAttributeValue">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_valueRef_extensionAttributeValue-extensionAttributeValue" name="extensionAttributeValue" type="ExtensionAttributeValue" upper="*" lower="0" owningAssociation="A_valueRef_extensionAttributeValue" association="A_valueRef_extensionAttributeValue"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_value_extensionAttributeValue" name="A_value_extensionAttributeValue" visibility="private" memberEnd="ExtensionAttributeValue-value A_value_extensionAttributeValue-extensionAttributeValue">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_value_extensionAttributeValue-extensionAttributeValue" name="extensionAttributeValue" type="ExtensionAttributeValue" owningAssociation="A_value_extensionAttributeValue" association="A_value_extensionAttributeValue"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="BaseElement" name="BaseElement" isAbstract="true">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BaseElement-id" name="id">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BaseElement-extensionDefinitions" name="extensionDefinitions" type="ExtensionDefinition" upper="*" lower="0" association="A_extensionDefinitions_baseElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BaseElement-extensionValues" name="extensionValues" type="ExtensionAttributeValue" upper="*" lower="0" isComposite="true" association="A_extensionValues_baseElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BaseElement-documentation" name="documentation" type="Documentation" upper="*" lower="0" isComposite="true" association="A_documentation_baseElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Extension" name="Extension">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Extension-mustUnderstand" name="mustUnderstand" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Extension-definition" name="definition" type="ExtensionDefinition" isComposite="true" association="A_definition_extension"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ExtensionDefinition" name="ExtensionDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionDefinition-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionDefinition-extensionAttributeDefinitions" name="extensionAttributeDefinitions" type="ExtensionAttributeDefinition" upper="*" lower="0" isComposite="true" association="A_extensionAttributeDefinitions_extensionDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ExtensionAttributeDefinition" name="ExtensionAttributeDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeDefinition-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeDefinition-type" name="type">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeDefinition-isReference" name="isReference" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeDefinition-extensionDefinition" name="extensionDefinition" type="ExtensionDefinition" association="A_extensionAttributeDefinitions_extensionDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ExtensionAttributeValue" name="ExtensionAttributeValue">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeValue-valueRef" name="valueRef" lower="0" association="A_valueRef_extensionAttributeValue">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeValue-value" name="value" lower="0" isComposite="true" association="A_value_extensionAttributeValue">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ExtensionAttributeValue-extensionAttributeDefinition" name="extensionAttributeDefinition" type="ExtensionAttributeDefinition" association="A_extensionAttributeDefinition_extensionAttributeValue"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_extensionDefinitions_baseElement" name="A_extensionDefinitions_baseElement" visibility="private" memberEnd="BaseElement-extensionDefinitions A_extensionDefinitions_baseElement-baseElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_extensionDefinitions_baseElement-baseElement" name="baseElement" type="BaseElement" upper="*" lower="0" owningAssociation="A_extensionDefinitions_baseElement" association="A_extensionDefinitions_baseElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_definition_extension" name="A_definition_extension" visibility="private" memberEnd="Extension-definition A_definition_extension-extension">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_definition_extension-extension" name="extension" type="Extension" owningAssociation="A_definition_extension" association="A_definition_extension"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_extensionAttributeDefinitions_extensionDefinition" name="A_extensionAttributeDefinitions_extensionDefinition" visibility="private" memberEnd="ExtensionDefinition-extensionAttributeDefinitions ExtensionAttributeDefinition-extensionDefinition"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_extensionValues_baseElement" name="A_extensionValues_baseElement" visibility="private" memberEnd="BaseElement-extensionValues A_extensionValues_baseElement-baseElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_extensionValues_baseElement-baseElement" name="baseElement" type="BaseElement" owningAssociation="A_extensionValues_baseElement" association="A_extensionValues_baseElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="RelationshipDirection" name="RelationshipDirection">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="RelationshipDirection-None" name="None" classifier="RelationshipDirection" enumeration="RelationshipDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="RelationshipDirection-Forward" name="Forward" classifier="RelationshipDirection" enumeration="RelationshipDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="RelationshipDirection-Backward" name="Backward" classifier="RelationshipDirection" enumeration="RelationshipDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="RelationshipDirection-Both" name="Both" classifier="RelationshipDirection" enumeration="RelationshipDirection"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_extensionAttributeDefinition_extensionAttributeValue" name="A_extensionAttributeDefinition_extensionAttributeValue" visibility="private" memberEnd="ExtensionAttributeValue-extensionAttributeDefinition A_extensionAttributeDefinition_extensionAttributeValue-extensionAttributeValue">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_extensionAttributeDefinition_extensionAttributeValue-extensionAttributeValue" name="extensionAttributeValue" type="ExtensionAttributeValue" upper="*" lower="0" owningAssociation="A_extensionAttributeDefinition_extensionAttributeValue" association="A_extensionAttributeDefinition_extensionAttributeValue"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Documentation" name="Documentation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Documentation-text" name="text">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Documentation-textFormat" name="textFormat" visibility="public" default="text/plain">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_documentation_baseElement" name="A_documentation_baseElement" visibility="private" memberEnd="BaseElement-documentation A_documentation_baseElement-baseElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_documentation_baseElement-baseElement" name="baseElement" type="BaseElement" owningAssociation="A_documentation_baseElement" association="A_documentation_baseElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sources_relationship" name="A_sources_relationship" visibility="private" memberEnd="Relationship-sources A_sources_relationship-relationship">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_sources_relationship-relationship" name="relationship" type="Relationship" upper="*" lower="0" owningAssociation="A_sources_relationship" association="A_sources_relationship"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targets_relationship" name="A_targets_relationship" visibility="private" memberEnd="Relationship-targets A_targets_relationship-relationship">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_targets_relationship-relationship" name="relationship" type="Relationship" upper="*" lower="0" owningAssociation="A_targets_relationship" association="A_targets_relationship"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataInputAssociation_throwEvent" name="A_dataInputAssociation_throwEvent" visibility="private" memberEnd="ThrowEvent-dataInputAssociation A_dataInputAssociation_throwEvent-throwEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataInputAssociation_throwEvent-throwEvent" name="throwEvent" type="ThrowEvent" lower="0" owningAssociation="A_dataInputAssociation_throwEvent" association="A_dataInputAssociation_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataOutputAssociation_catchEvent" name="A_dataOutputAssociation_catchEvent" visibility="private" memberEnd="CatchEvent-dataOutputAssociation A_dataOutputAssociation_catchEvent-catchEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataOutputAssociation_catchEvent-catchEvent" name="catchEvent" type="CatchEvent" lower="0" owningAssociation="A_dataOutputAssociation_catchEvent" association="A_dataOutputAssociation_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Event" name="Event" isAbstract="true" superClass="FlowNode InteractionNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Event-properties" name="properties" visibility="public" type="Property" upper="*" lower="0" isComposite="true" association="A_properties_event"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_activityRef_compensateEventDefinition" name="A_activityRef_compensateEventDefinition" visibility="private" memberEnd="CompensateEventDefinition-activityRef A_activityRef_compensateEventDefinition-compensateEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_activityRef_compensateEventDefinition-compensateEventDefinition" name="compensateEventDefinition" type="CompensateEventDefinition" upper="*" lower="0" owningAssociation="A_activityRef_compensateEventDefinition" association="A_activityRef_compensateEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inputSet_throwEvent" name="A_inputSet_throwEvent" visibility="private" memberEnd="ThrowEvent-inputSet A_inputSet_throwEvent-throwEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_inputSet_throwEvent-throwEvent" name="throwEvent" type="ThrowEvent" lower="0" owningAssociation="A_inputSet_throwEvent" association="A_inputSet_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_structureRef_signal" name="A_structureRef_signal" visibility="private" memberEnd="Signal-structureRef A_structureRef_signal-signal">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_structureRef_signal-signal" name="signal" type="Signal" upper="*" lower="0" owningAssociation="A_structureRef_signal" association="A_structureRef_signal"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageRef_messageEventDefinition" name="A_messageRef_messageEventDefinition" visibility="private" memberEnd="MessageEventDefinition-messageRef A_messageRef_messageEventDefinition-messageEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageRef_messageEventDefinition-messageEventDefinition" name="messageEventDefinition" type="MessageEventDefinition" upper="*" lower="0" owningAssociation="A_messageRef_messageEventDefinition" association="A_messageRef_messageEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputSet_catchEvent" name="A_outputSet_catchEvent" visibility="private" memberEnd="CatchEvent-outputSet A_outputSet_catchEvent-catchEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outputSet_catchEvent-catchEvent" name="catchEvent" type="CatchEvent" lower="0" owningAssociation="A_outputSet_catchEvent" association="A_outputSet_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_structureRef_escalation" name="A_structureRef_escalation" visibility="private" memberEnd="Escalation-structureRef A_structureRef_escalation-escalation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_structureRef_escalation-escalation" name="escalation" type="Escalation" upper="*" lower="0" owningAssociation="A_structureRef_escalation" association="A_structureRef_escalation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="IntermediateCatchEvent" name="IntermediateCatchEvent" superClass="CatchEvent"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="IntermediateThrowEvent" name="IntermediateThrowEvent" superClass="ThrowEvent"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="EndEvent" name="EndEvent" superClass="ThrowEvent"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="StartEvent" name="StartEvent" superClass="CatchEvent">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="StartEvent-isInterrupting" name="isInterrupting" default="true">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ThrowEvent" name="ThrowEvent" isAbstract="true" superClass="Event">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ThrowEvent-inputSet" name="inputSet" type="InputSet" lower="0" isComposite="true" association="A_inputSet_throwEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ThrowEvent-eventDefinitionRefs" name="eventDefinitionRefs" type="EventDefinition" upper="*" lower="0" association="A_eventDefinitionRefs_throwEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ThrowEvent-dataInputAssociation" name="dataInputAssociation" type="DataInputAssociation" upper="*" lower="0" isComposite="true" association="A_dataInputAssociation_throwEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ThrowEvent-dataInputs" name="dataInputs" type="DataInput" upper="*" lower="0" isComposite="true" association="A_dataInputs_throwEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ThrowEvent-eventDefinitions" name="eventDefinitions" type="EventDefinition" upper="*" lower="0" isComposite="true" association="A_eventDefinitions_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CatchEvent" name="CatchEvent" isAbstract="true" superClass="Event">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-parallelMultiple" name="parallelMultiple">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-outputSet" name="outputSet" type="OutputSet" lower="0" isComposite="true" association="A_outputSet_catchEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-eventDefinitionRefs" name="eventDefinitionRefs" type="EventDefinition" upper="*" lower="0" association="A_eventDefinitionRefs_catchEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-dataOutputAssociation" name="dataOutputAssociation" type="DataOutputAssociation" upper="*" lower="0" isComposite="true" association="A_dataOutputAssociation_catchEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-dataOutputs" name="dataOutputs" type="DataOutput" upper="*" lower="0" isComposite="true" association="A_dataOutputs_catchEvent"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CatchEvent-eventDefinitions" name="eventDefinitions" type="EventDefinition" upper="*" lower="0" isComposite="true" association="A_eventDefinitions_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="BoundaryEvent" name="BoundaryEvent" superClass="CatchEvent">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BoundaryEvent-cancelActivity" name="cancelActivity" default="true">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BoundaryEvent-attachedToRef" name="attachedToRef" type="Activity" association="A_boundaryEventRefs_attachedToRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="EventDefinition" name="EventDefinition" isAbstract="true" superClass="RootElement"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_eventDefinitionRefs_throwEvent" name="A_eventDefinitionRefs_throwEvent" visibility="private" memberEnd="ThrowEvent-eventDefinitionRefs A_eventDefinitionRefs_throwEvent-throwEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_eventDefinitionRefs_throwEvent-throwEvent" name="throwEvent" type="ThrowEvent" upper="*" lower="0" owningAssociation="A_eventDefinitionRefs_throwEvent" association="A_eventDefinitionRefs_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_eventDefinitionRefs_catchEvent" name="A_eventDefinitionRefs_catchEvent" visibility="private" memberEnd="CatchEvent-eventDefinitionRefs A_eventDefinitionRefs_catchEvent-catchEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_eventDefinitionRefs_catchEvent-catchEvent" name="catchEvent" type="CatchEvent" upper="*" lower="0" owningAssociation="A_eventDefinitionRefs_catchEvent" association="A_eventDefinitionRefs_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CancelEventDefinition" name="CancelEventDefinition" superClass="EventDefinition"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ErrorEventDefinition" name="ErrorEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ErrorEventDefinition-errorRef" name="errorRef" type="Error" lower="0" association="A_errorRef_errorEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="TerminateEventDefinition" name="TerminateEventDefinition" superClass="EventDefinition"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_errorRef_errorEventDefinition" name="A_errorRef_errorEventDefinition" visibility="private" memberEnd="ErrorEventDefinition-errorRef A_errorRef_errorEventDefinition-errorEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_errorRef_errorEventDefinition-errorEventDefinition" name="errorEventDefinition" type="ErrorEventDefinition" upper="*" lower="0" owningAssociation="A_errorRef_errorEventDefinition" association="A_errorRef_errorEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="EscalationEventDefinition" name="EscalationEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="EscalationEventDefinition-escalationRef" name="escalationRef" type="Escalation" lower="0" association="A_escalationRef_escalationEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Escalation" name="Escalation">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Escalation-structureRef" name="structureRef" type="ItemDefinition" lower="0" association="A_structureRef_escalation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Escalation-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Escalation-escalationCode" name="escalationCode" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_escalationRef_escalationEventDefinition" name="A_escalationRef_escalationEventDefinition" visibility="private" memberEnd="EscalationEventDefinition-escalationRef A_escalationRef_escalationEventDefinition-escalationEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_escalationRef_escalationEventDefinition-escalationEventDefinition" name="escalationEventDefinition" type="EscalationEventDefinition" upper="*" lower="0" owningAssociation="A_escalationRef_escalationEventDefinition" association="A_escalationRef_escalationEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CompensateEventDefinition" name="CompensateEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CompensateEventDefinition-waitForCompletion" name="waitForCompletion">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CompensateEventDefinition-activityRef" name="activityRef" type="Activity" lower="0" association="A_activityRef_compensateEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="TimerEventDefinition" name="TimerEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="TimerEventDefinition-timeDate" name="timeDate" type="Expression" lower="0" isComposite="true" association="A_timeDate_timerEventDefinition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="TimerEventDefinition-timeCycle" name="timeCycle" type="Expression" lower="0" isComposite="true" association="A_timeCycle_timerEventDefinition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="TimerEventDefinition-timeDuration" name="timeDuration" visibility="public" type="Expression" lower="0" isComposite="true" association="A_timeDuration_timerEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="LinkEventDefinition" name="LinkEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="LinkEventDefinition-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="LinkEventDefinition-target" name="target" visibility="public" type="LinkEventDefinition" lower="0" association="A_target_source"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="LinkEventDefinition-source" name="source" visibility="public" type="LinkEventDefinition" upper="*" lower="0" association="A_target_source"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="MessageEventDefinition" name="MessageEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageEventDefinition-messageRef" name="messageRef" type="Message" lower="0" association="A_messageRef_messageEventDefinition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageEventDefinition-operationRef" name="operationRef" type="Operation" lower="0" association="A_operationRef_messageEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ConditionalEventDefinition" name="ConditionalEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConditionalEventDefinition-condition" name="condition" type="Expression" isComposite="true" association="A_condition_conditionalEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SignalEventDefinition" name="SignalEventDefinition" superClass="EventDefinition">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SignalEventDefinition-signalRef" name="signalRef" type="Signal" lower="0" association="A_signalRef_signalEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Signal" name="Signal" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Signal-structureRef" name="structureRef" type="ItemDefinition" lower="0" association="A_structureRef_signal"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Signal-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_signalRef_signalEventDefinition" name="A_signalRef_signalEventDefinition" visibility="private" memberEnd="SignalEventDefinition-signalRef A_signalRef_signalEventDefinition-signalEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_signalRef_signalEventDefinition-signalEventDefinition" name="signalEventDefinition" type="SignalEventDefinition" upper="*" lower="0" owningAssociation="A_signalRef_signalEventDefinition" association="A_signalRef_signalEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ImplicitThrowEvent" name="ImplicitThrowEvent" superClass="ThrowEvent"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_eventDefinitions_throwEvent" name="A_eventDefinitions_throwEvent" visibility="private" memberEnd="ThrowEvent-eventDefinitions A_eventDefinitions_throwEvent-throwEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_eventDefinitions_throwEvent-throwEvent" name="throwEvent" type="ThrowEvent" lower="0" owningAssociation="A_eventDefinitions_throwEvent" association="A_eventDefinitions_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_eventDefinitions_catchEvent" name="A_eventDefinitions_catchEvent" visibility="private" memberEnd="CatchEvent-eventDefinitions A_eventDefinitions_catchEvent-catchEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_eventDefinitions_catchEvent-catchEvent" name="catchEvent" type="CatchEvent" lower="0" owningAssociation="A_eventDefinitions_catchEvent" association="A_eventDefinitions_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataInputs_throwEvent" name="A_dataInputs_throwEvent" visibility="private" memberEnd="ThrowEvent-dataInputs A_dataInputs_throwEvent-throwEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataInputs_throwEvent-throwEvent" name="throwEvent" type="ThrowEvent" lower="0" owningAssociation="A_dataInputs_throwEvent" association="A_dataInputs_throwEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataOutputs_catchEvent" name="A_dataOutputs_catchEvent" visibility="private" memberEnd="CatchEvent-dataOutputs A_dataOutputs_catchEvent-catchEvent">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataOutputs_catchEvent-catchEvent" name="catchEvent" type="CatchEvent" lower="0" owningAssociation="A_dataOutputs_catchEvent" association="A_dataOutputs_catchEvent"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operationRef_messageEventDefinition" name="A_operationRef_messageEventDefinition" visibility="private" memberEnd="MessageEventDefinition-operationRef A_operationRef_messageEventDefinition-messageEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operationRef_messageEventDefinition-messageEventDefinition" name="messageEventDefinition" type="MessageEventDefinition" upper="*" lower="0" owningAssociation="A_operationRef_messageEventDefinition" association="A_operationRef_messageEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_condition_conditionalEventDefinition" name="A_condition_conditionalEventDefinition" visibility="private" memberEnd="ConditionalEventDefinition-condition A_condition_conditionalEventDefinition-conditionalEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_condition_conditionalEventDefinition-conditionalEventDefinition" name="conditionalEventDefinition" type="ConditionalEventDefinition" lower="0" owningAssociation="A_condition_conditionalEventDefinition" association="A_condition_conditionalEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_timeDate_timerEventDefinition" name="A_timeDate_timerEventDefinition" visibility="private" memberEnd="TimerEventDefinition-timeDate A_timeDate_timerEventDefinition-timerEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_timeDate_timerEventDefinition-timerEventDefinition" name="timerEventDefinition" type="TimerEventDefinition" lower="0" owningAssociation="A_timeDate_timerEventDefinition" association="A_timeDate_timerEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_timeCycle_timerEventDefinition" name="A_timeCycle_timerEventDefinition" visibility="private" memberEnd="TimerEventDefinition-timeCycle A_timeCycle_timerEventDefinition-timerEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_timeCycle_timerEventDefinition-timerEventDefinition" name="timerEventDefinition" type="TimerEventDefinition" lower="0" owningAssociation="A_timeCycle_timerEventDefinition" association="A_timeCycle_timerEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_target_source" name="A_target_source" visibility="private" memberEnd="LinkEventDefinition-target LinkEventDefinition-source"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_properties_event" name="A_properties_event" visibility="private" memberEnd="Event-properties A_properties_event-event">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_properties_event-event" name="event" visibility="public" type="Event" lower="0" owningAssociation="A_properties_event" association="A_properties_event"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_timeDuration_timerEventDefinition" name="A_timeDuration_timerEventDefinition" visibility="private" memberEnd="TimerEventDefinition-timeDuration A_timeDuration_timerEventDefinition-timerEventDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_timeDuration_timerEventDefinition-timerEventDefinition" name="timerEventDefinition" visibility="public" type="TimerEventDefinition" lower="0" owningAssociation="A_timeDuration_timerEventDefinition" association="A_timeDuration_timerEventDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataState_itemAwareElement" name="A_dataState_itemAwareElement" visibility="private" memberEnd="ItemAwareElement-dataState A_dataState_itemAwareElement-itemAwareElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataState_itemAwareElement-itemAwareElement" name="itemAwareElement" type="ItemAwareElement" owningAssociation="A_dataState_itemAwareElement" association="A_dataState_itemAwareElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataState" name="DataState" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataState-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ItemAwareElement" name="ItemAwareElement" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemAwareElement-itemSubjectRef" name="itemSubjectRef" type="ItemDefinition" lower="0" association="A_itemSubjectRef_itemAwareElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemAwareElement-dataState" name="dataState" type="DataState" lower="0" isComposite="true" association="A_dataState_itemAwareElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operationRef_ioBinding" name="A_operationRef_ioBinding" visibility="private" memberEnd="InputOutputBinding-operationRef A_operationRef_ioBinding-ioBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operationRef_ioBinding-ioBinding" name="ioBinding" type="InputOutputBinding" upper="*" lower="0" owningAssociation="A_operationRef_ioBinding" association="A_operationRef_ioBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sourceRef_dataAssociation" name="A_sourceRef_dataAssociation" visibility="private" memberEnd="DataAssociation-sourceRef A_sourceRef_dataAssociation-dataAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_sourceRef_dataAssociation-dataAssociation" name="dataAssociation" type="DataAssociation" upper="*" lower="0" owningAssociation="A_sourceRef_dataAssociation" association="A_sourceRef_dataAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targetRef_dataAssociation" name="A_targetRef_dataAssociation" visibility="private" memberEnd="DataAssociation-targetRef A_targetRef_dataAssociation-dataAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_targetRef_dataAssociation-dataAssociation" name="dataAssociation" type="DataAssociation" upper="*" lower="0" owningAssociation="A_targetRef_dataAssociation" association="A_targetRef_dataAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataAssociation" name="DataAssociation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataAssociation-transformation" name="transformation" type="FormalExpression" lower="0" isComposite="true" association="A_transformation_dataAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataAssociation-assignment" name="assignment" type="Assignment" upper="*" lower="0" isComposite="true" association="A_assignment_dataAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataAssociation-targetRef" name="targetRef" type="ItemAwareElement" association="A_targetRef_dataAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataAssociation-sourceRef" name="sourceRef" type="ItemAwareElement" upper="*" lower="0" association="A_sourceRef_dataAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_transformation_dataAssociation" name="A_transformation_dataAssociation" visibility="private" memberEnd="DataAssociation-transformation A_transformation_dataAssociation-dataAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_transformation_dataAssociation-dataAssociation" name="dataAssociation" type="DataAssociation" lower="0" owningAssociation="A_transformation_dataAssociation" association="A_transformation_dataAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataInput" name="DataInput" superClass="ItemAwareElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataInput-name" name="name" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataInput-isCollection" name="isCollection" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataInput-inputSetRefs" name="inputSetRefs" type="InputSet" upper="*" isDerived="true" association="A_dataInputRefs_inputSetRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataInput-inputSetWithOptional" name="inputSetWithOptional" type="InputSet" upper="*" lower="0" isDerived="true" association="A_optionalInputRefs_inputSetWithOptional"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataInput-inputSetWithWhileExecuting" name="inputSetWithWhileExecuting" type="InputSet" upper="*" lower="0" isDerived="true" association="A_whileExecutingInputRefs_inputSetWithWhileExecuting"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataOutput" name="DataOutput" superClass="ItemAwareElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataOutput-name" name="name" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataOutput-isCollection" name="isCollection" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataOutput-outputSetRefs" name="outputSetRefs" type="OutputSet" upper="*" isDerived="true" association="A_dataOutputRefs_outputSetRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataOutput-outputSetWithOptional" name="outputSetWithOptional" type="OutputSet" upper="*" lower="0" isDerived="true" association="A_outputSetWithOptional_optionalOutputRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataOutput-outputSetWithWhileExecuting" name="outputSetWithWhileExecuting" type="OutputSet" upper="*" lower="0" isDerived="true" association="A_outputSetWithWhileExecuting_whileExecutingOutputRefs"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="InputSet" name="InputSet" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputSet-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputSet-dataInputRefs" name="dataInputRefs" type="DataInput" upper="*" lower="0" association="A_dataInputRefs_inputSetRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputSet-optionalInputRefs" name="optionalInputRefs" type="DataInput" upper="*" lower="0" association="A_optionalInputRefs_inputSetWithOptional"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputSet-whileExecutingInputRefs" name="whileExecutingInputRefs" type="DataInput" upper="*" lower="0" association="A_whileExecutingInputRefs_inputSetWithWhileExecuting"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputSet-outputSetRefs" name="outputSetRefs" type="OutputSet" upper="*" lower="0" association="A_inputSetRefs_outputSetRefs"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="OutputSet" name="OutputSet" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="OutputSet-dataOutputRefs" name="dataOutputRefs" type="DataOutput" upper="*" lower="0" association="A_dataOutputRefs_outputSetRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="OutputSet-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="OutputSet-inputSetRefs" name="inputSetRefs" type="InputSet" upper="*" lower="0" association="A_inputSetRefs_outputSetRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="OutputSet-optionalOutputRefs" name="optionalOutputRefs" type="DataOutput" upper="*" lower="0" association="A_outputSetWithOptional_optionalOutputRefs"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="OutputSet-whileExecutingOutputRefs" name="whileExecutingOutputRefs" type="DataOutput" upper="*" lower="0" association="A_outputSetWithWhileExecuting_whileExecutingOutputRefs"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataInputRefs_inputSetRefs" name="A_dataInputRefs_inputSetRefs" visibility="private" memberEnd="InputSet-dataInputRefs DataInput-inputSetRefs"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataOutputRefs_outputSetRefs" name="A_dataOutputRefs_outputSetRefs" visibility="private" memberEnd="OutputSet-dataOutputRefs DataOutput-outputSetRefs"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Property" name="Property" superClass="ItemAwareElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Property-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataInputAssociation" name="DataInputAssociation" superClass="DataAssociation"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataOutputAssociation" name="DataOutputAssociation" superClass="DataAssociation"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="InputOutputSpecification" name="InputOutputSpecification" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputSpecification-inputSets" name="inputSets" type="InputSet" upper="*" isComposite="true" association="A_inputSets_inputOutputSpecification"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputSpecification-outputSets" name="outputSets" type="OutputSet" upper="*" isComposite="true" association="A_outputSets_inputOutputSpecification"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputSpecification-dataInputs" name="dataInputs" type="DataInput" upper="*" lower="0" isComposite="true" association="A_dataInputs_inputOutputSpecification"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputSpecification-dataOutputs" name="dataOutputs" type="DataOutput" upper="*" lower="0" isComposite="true" association="A_dataOutputs_inputOutputSpecification"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inputSets_inputOutputSpecification" name="A_inputSets_inputOutputSpecification" visibility="private" memberEnd="InputOutputSpecification-inputSets A_inputSets_inputOutputSpecification-inputOutputSpecification">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_inputSets_inputOutputSpecification-inputOutputSpecification" name="inputOutputSpecification" type="InputOutputSpecification" owningAssociation="A_inputSets_inputOutputSpecification" association="A_inputSets_inputOutputSpecification"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputSets_inputOutputSpecification" name="A_outputSets_inputOutputSpecification" visibility="private" memberEnd="InputOutputSpecification-outputSets A_outputSets_inputOutputSpecification-inputOutputSpecification">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outputSets_inputOutputSpecification-inputOutputSpecification" name="inputOutputSpecification" type="InputOutputSpecification" owningAssociation="A_outputSets_inputOutputSpecification" association="A_outputSets_inputOutputSpecification"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataInputs_inputOutputSpecification" name="A_dataInputs_inputOutputSpecification" visibility="private" memberEnd="InputOutputSpecification-dataInputs A_dataInputs_inputOutputSpecification-inputOutputSpecification">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataInputs_inputOutputSpecification-inputOutputSpecification" name="inputOutputSpecification" type="InputOutputSpecification" owningAssociation="A_dataInputs_inputOutputSpecification" association="A_dataInputs_inputOutputSpecification"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataOutputs_inputOutputSpecification" name="A_dataOutputs_inputOutputSpecification" visibility="private" memberEnd="InputOutputSpecification-dataOutputs A_dataOutputs_inputOutputSpecification-inputOutputSpecification">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataOutputs_inputOutputSpecification-inputOutputSpecification" name="inputOutputSpecification" type="InputOutputSpecification" owningAssociation="A_dataOutputs_inputOutputSpecification" association="A_dataOutputs_inputOutputSpecification"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataObject" name="DataObject" superClass="FlowElement ItemAwareElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataObject-isCollection" name="isCollection" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inputSetRefs_outputSetRefs" name="A_inputSetRefs_outputSetRefs" visibility="private" memberEnd="OutputSet-inputSetRefs InputSet-outputSetRefs"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="InputOutputBinding" name="InputOutputBinding">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputBinding-inputDataRef" name="inputDataRef" type="InputSet" association="A_inputDataRef_inputOutputBinding"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputBinding-outputDataRef" name="outputDataRef" type="OutputSet" association="A_outputDataRef_inputOutputBinding"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InputOutputBinding-operationRef" name="operationRef" type="Operation" association="A_operationRef_ioBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inputDataRef_inputOutputBinding" name="A_inputDataRef_inputOutputBinding" visibility="private" memberEnd="InputOutputBinding-inputDataRef A_inputDataRef_inputOutputBinding-inputOutputBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_inputDataRef_inputOutputBinding-inputOutputBinding" name="inputOutputBinding" type="InputOutputBinding" upper="*" lower="0" owningAssociation="A_inputDataRef_inputOutputBinding" association="A_inputDataRef_inputOutputBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputDataRef_inputOutputBinding" name="A_outputDataRef_inputOutputBinding" visibility="private" memberEnd="InputOutputBinding-outputDataRef A_outputDataRef_inputOutputBinding-inputOutputBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outputDataRef_inputOutputBinding-inputOutputBinding" name="inputOutputBinding" type="InputOutputBinding" upper="*" lower="0" owningAssociation="A_outputDataRef_inputOutputBinding" association="A_outputDataRef_inputOutputBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_whileExecutingInputRefs_inputSetWithWhileExecuting" name="A_whileExecutingInputRefs_inputSetWithWhileExecuting" visibility="private" memberEnd="InputSet-whileExecutingInputRefs DataInput-inputSetWithWhileExecuting"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_optionalInputRefs_inputSetWithOptional" name="A_optionalInputRefs_inputSetWithOptional" visibility="private" memberEnd="InputSet-optionalInputRefs DataInput-inputSetWithOptional"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputSetWithOptional_optionalOutputRefs" name="A_outputSetWithOptional_optionalOutputRefs" visibility="private" memberEnd="DataOutput-outputSetWithOptional OutputSet-optionalOutputRefs"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputSetWithWhileExecuting_whileExecutingOutputRefs" name="A_outputSetWithWhileExecuting_whileExecutingOutputRefs" visibility="private" memberEnd="DataOutput-outputSetWithWhileExecuting OutputSet-whileExecutingOutputRefs"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Assignment" name="Assignment" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Assignment-from" name="from" visibility="public" type="Expression" isComposite="true" association="A_from_assignment"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Assignment-to" name="to" visibility="public" type="Expression" isComposite="true" association="A_to_assignment"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_assignment_dataAssociation" name="A_assignment_dataAssociation" visibility="private" memberEnd="DataAssociation-assignment A_assignment_dataAssociation-dataAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_assignment_dataAssociation-dataAssociation" name="dataAssociation" type="DataAssociation" owningAssociation="A_assignment_dataAssociation" association="A_assignment_dataAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataStore" name="DataStore" superClass="RootElement ItemAwareElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataStore-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataStore-capacity" name="capacity">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataStore-isUnlimited" name="isUnlimited" default="true">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataStoreReference" name="DataStoreReference" superClass="ItemAwareElement FlowElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataStoreReference-dataStoreRef" name="dataStoreRef" type="DataStore" lower="0" association="A_dataStoreRef_dataStoreReference"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataStoreRef_dataStoreReference" name="A_dataStoreRef_dataStoreReference" visibility="private" memberEnd="DataStoreReference-dataStoreRef A_dataStoreRef_dataStoreReference-dataStoreReference">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataStoreRef_dataStoreReference-dataStoreReference" name="dataStoreReference" type="DataStoreReference" upper="*" lower="0" owningAssociation="A_dataStoreRef_dataStoreReference" association="A_dataStoreRef_dataStoreReference"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_itemSubjectRef_itemAwareElement" name="A_itemSubjectRef_itemAwareElement" visibility="private" memberEnd="ItemAwareElement-itemSubjectRef A_itemSubjectRef_itemAwareElement-itemAwareElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_itemSubjectRef_itemAwareElement-itemAwareElement" name="itemAwareElement" type="ItemAwareElement" upper="*" lower="0" owningAssociation="A_itemSubjectRef_itemAwareElement" association="A_itemSubjectRef_itemAwareElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_from_assignment" name="A_from_assignment" visibility="private" memberEnd="Assignment-from A_from_assignment-assignment">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_from_assignment-assignment" name="assignment" visibility="public" type="Assignment" lower="0" owningAssociation="A_from_assignment" association="A_from_assignment"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_to_assignment" name="A_to_assignment" visibility="private" memberEnd="Assignment-to A_to_assignment-assignment">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_to_assignment-assignment" name="assignment" visibility="public" type="Assignment" lower="0" owningAssociation="A_to_assignment" association="A_to_assignment"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="DataObjectReference" name="DataObjectReference" superClass="ItemAwareElement FlowElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="DataObjectReference-dataObjectRef" name="dataObjectRef" visibility="public" type="DataObject" association="A_dataObjectRef_dataObject"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataObjectRef_dataObject" name="A_dataObjectRef_dataObject" visibility="private" memberEnd="DataObjectReference-dataObjectRef A_dataObjectRef_dataObject-dataObject">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataObjectRef_dataObject-dataObject" name="dataObject" visibility="public" type="DataObjectReference" upper="*" lower="0" owningAssociation="A_dataObjectRef_dataObject" association="A_dataObjectRef_dataObject"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ConversationLink" name="ConversationLink" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationLink-sourceRef" name="sourceRef" visibility="public" type="InteractionNode" association="A_sourceRef_outgoingConversationLinks"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationLink-targetRef" name="targetRef" visibility="public" type="InteractionNode" association="A_targetRef_incomingConversationLinks"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationLink-name" name="name" visibility="public" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ConversationAssociation" name="ConversationAssociation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationAssociation-innerConversationNodeRef" name="innerConversationNodeRef" visibility="public" type="ConversationNode" association="A_innerConversationNodeRef_conversationAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationAssociation-outerConversationNodeRef" name="outerConversationNodeRef" visibility="public" type="ConversationNode" association="A_outerConversationNodeRef_conversationAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_calledCollaborationRef_callConversation" name="A_calledCollaborationRef_callConversation" visibility="private" memberEnd="CallConversation-calledCollaborationRef A_calledCollaborationRef_callConversation-callConversation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_calledCollaborationRef_callConversation-callConversation" name="callConversation" type="CallConversation" upper="*" lower="0" owningAssociation="A_calledCollaborationRef_callConversation" association="A_calledCollaborationRef_callConversation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantRefs_conversationNode" name="A_participantRefs_conversationNode" visibility="private" memberEnd="ConversationNode-participantRefs A_participantRefs_conversationNode-conversationNode">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantRefs_conversationNode-conversationNode" name="conversationNode" type="ConversationNode" upper="*" lower="0" owningAssociation="A_participantRefs_conversationNode" association="A_participantRefs_conversationNode"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageFlowRefs_communication" name="A_messageFlowRefs_communication" visibility="private" memberEnd="ConversationNode-messageFlowRefs A_messageFlowRefs_communication-communication">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageFlowRefs_communication-communication" name="communication" type="ConversationNode" upper="*" lower="0" owningAssociation="A_messageFlowRefs_communication" association="A_messageFlowRefs_communication"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantAssociations_callConversation" name="A_participantAssociations_callConversation" visibility="private" memberEnd="CallConversation-participantAssociations A_participantAssociations_callConversation-callConversation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantAssociations_callConversation-callConversation" name="callConversation" type="CallConversation" lower="0" owningAssociation="A_participantAssociations_callConversation" association="A_participantAssociations_callConversation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CallConversation" name="CallConversation" superClass="ConversationNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallConversation-calledCollaborationRef" name="calledCollaborationRef" type="Collaboration" lower="0" association="A_calledCollaborationRef_callConversation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallConversation-participantAssociations" name="participantAssociations" type="ParticipantAssociation" upper="*" lower="0" isComposite="true" association="A_participantAssociations_callConversation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Conversation" name="Conversation" superClass="ConversationNode"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SubConversation" name="SubConversation" superClass="ConversationNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SubConversation-conversationNodes" name="conversationNodes" visibility="public" type="ConversationNode" upper="*" lower="0" isComposite="true" association="A_conversationNodes_subConversation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ConversationNode" name="ConversationNode" isAbstract="true" superClass="InteractionNode BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationNode-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationNode-participantRefs" name="participantRefs" type="Participant" upper="*" lower="2" association="A_participantRefs_conversationNode"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationNode-messageFlowRefs" name="messageFlowRefs" type="MessageFlow" upper="*" lower="0" association="A_messageFlowRefs_communication"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ConversationNode-correlationKeys" name="correlationKeys" type="CorrelationKey" upper="*" lower="0" isComposite="true" association="A_correlationKeys_conversationNode"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalConversation" name="GlobalConversation" superClass="Collaboration"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationKeys_collaboration" name="A_correlationKeys_collaboration" visibility="private" memberEnd="Collaboration-correlationKeys A_correlationKeys_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationKeys_collaboration-collaboration" name="collaboration" visibility="public" type="Collaboration" lower="0" owningAssociation="A_correlationKeys_collaboration" association="A_correlationKeys_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationKeys_conversationNode" name="A_correlationKeys_conversationNode" visibility="private" memberEnd="ConversationNode-correlationKeys A_correlationKeys_conversationNode-conversationNode">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationKeys_conversationNode-conversationNode" name="conversationNode" visibility="public" type="ConversationNode" lower="0" owningAssociation="A_correlationKeys_conversationNode" association="A_correlationKeys_conversationNode"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_innerConversationNodeRef_conversationAssociation" name="A_innerConversationNodeRef_conversationAssociation" visibility="private" memberEnd="ConversationAssociation-innerConversationNodeRef A_innerConversationNodeRef_conversationAssociation-conversationAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_innerConversationNodeRef_conversationAssociation-conversationAssociation" name="conversationAssociation" visibility="public" type="ConversationAssociation" upper="*" lower="0" owningAssociation="A_innerConversationNodeRef_conversationAssociation" association="A_innerConversationNodeRef_conversationAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outerConversationNodeRef_conversationAssociation" name="A_outerConversationNodeRef_conversationAssociation" visibility="private" memberEnd="ConversationAssociation-outerConversationNodeRef A_outerConversationNodeRef_conversationAssociation-conversationAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outerConversationNodeRef_conversationAssociation-conversationAssociation" name="conversationAssociation" visibility="public" type="ConversationAssociation" upper="*" lower="0" owningAssociation="A_outerConversationNodeRef_conversationAssociation" association="A_outerConversationNodeRef_conversationAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_conversationNodes_subConversation" name="A_conversationNodes_subConversation" visibility="private" memberEnd="SubConversation-conversationNodes A_conversationNodes_subConversation-subConversation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_conversationNodes_subConversation-subConversation" name="subConversation" visibility="public" type="SubConversation" lower="0" owningAssociation="A_conversationNodes_subConversation" association="A_conversationNodes_subConversation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sourceRef_outgoingConversationLinks" name="A_sourceRef_outgoingConversationLinks" visibility="private" memberEnd="ConversationLink-sourceRef InteractionNode-outgoingConversationLinks"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targetRef_incomingConversationLinks" name="A_targetRef_incomingConversationLinks" visibility="private" memberEnd="ConversationLink-targetRef InteractionNode-incomingConversationLinks"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="PartnerEntity" name="PartnerEntity" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="PartnerEntity-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="PartnerEntity-participantRef" name="participantRef" type="Participant" upper="*" lower="0" association="A_partnerEntityRef_participantRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="PartnerRole" name="PartnerRole" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="PartnerRole-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="PartnerRole-participantRef" name="participantRef" type="Participant" upper="*" lower="0" association="A_partnerRoleRef_participantRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationPropertyRef_correlationKey" name="A_correlationPropertyRef_correlationKey" visibility="private" memberEnd="CorrelationKey-correlationPropertyRef A_correlationPropertyRef_correlationKey-correlationKey">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationPropertyRef_correlationKey-correlationKey" name="correlationKey" type="CorrelationKey" upper="*" lower="0" owningAssociation="A_correlationPropertyRef_correlationKey" association="A_correlationPropertyRef_correlationKey"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CorrelationProperty" name="CorrelationProperty" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationProperty-correlationPropertyRetrievalExpression" name="correlationPropertyRetrievalExpression" type="CorrelationPropertyRetrievalExpression" upper="*" isComposite="true" association="A_correlationPropertyRetrievalExpression_correlationproperty"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationProperty-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationProperty-type" name="type" visibility="public" type="ItemDefinition" lower="0" association="A_type_correlationProperty"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="ItemKind" name="ItemKind">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ItemKind-Physical" name="Physical" classifier="ItemKind" enumeration="ItemKind"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ItemKind-Information" name="Information" classifier="ItemKind" enumeration="ItemKind"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_supportedInterfaceRefs_callableElements" name="A_supportedInterfaceRefs_callableElements" visibility="private" memberEnd="CallableElement-supportedInterfaceRefs A_supportedInterfaceRefs_callableElements-callableElements">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_supportedInterfaceRefs_callableElements-callableElements" name="callableElements" type="CallableElement" upper="*" lower="0" owningAssociation="A_supportedInterfaceRefs_callableElements" association="A_supportedInterfaceRefs_callableElements"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_ioBinding_callableElement" name="A_ioBinding_callableElement" visibility="private" memberEnd="CallableElement-ioBinding A_ioBinding_callableElement-callableElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_ioBinding_callableElement-callableElement" name="callableElement" type="CallableElement" lower="0" owningAssociation="A_ioBinding_callableElement" association="A_ioBinding_callableElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_ioSpecification_callableElement" name="A_ioSpecification_callableElement" visibility="private" memberEnd="CallableElement-ioSpecification A_ioSpecification_callableElement-callableElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_ioSpecification_callableElement-callableElement" name="callableElement" type="CallableElement" lower="0" owningAssociation="A_ioSpecification_callableElement" association="A_ioSpecification_callableElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messagePath_correlationset" name="A_messagePath_correlationset" visibility="private" memberEnd="CorrelationPropertyRetrievalExpression-messagePath A_messagePath_correlationset-correlationset">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messagePath_correlationset-correlationset" name="correlationset" type="CorrelationPropertyRetrievalExpression" lower="0" owningAssociation="A_messagePath_correlationset" association="A_messagePath_correlationset"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_structureRef_error" name="A_structureRef_error" visibility="private" memberEnd="Error-structureRef A_structureRef_error-error">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_structureRef_error-error" name="error" type="Error" upper="*" lower="0" owningAssociation="A_structureRef_error" association="A_structureRef_error"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Error" name="Error" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Error-structureRef" name="structureRef" type="ItemDefinition" lower="0" association="A_structureRef_error"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Error-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Error-errorCode" name="errorCode" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_evaluatesToTypeRef_formalExpression" name="A_evaluatesToTypeRef_formalExpression" visibility="private" memberEnd="FormalExpression-evaluatesToTypeRef A_evaluatesToTypeRef_formalExpression-formalExpression">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_evaluatesToTypeRef_formalExpression-formalExpression" name="formalExpression" type="FormalExpression" upper="*" lower="0" owningAssociation="A_evaluatesToTypeRef_formalExpression" association="A_evaluatesToTypeRef_formalExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CorrelationKey" name="CorrelationKey" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationKey-correlationPropertyRef" name="correlationPropertyRef" type="CorrelationProperty" upper="*" lower="0" association="A_correlationPropertyRef_correlationKey"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationKey-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Expression" name="Expression" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="FormalExpression" name="FormalExpression" superClass="Expression">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FormalExpression-language" name="language">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FormalExpression-body" name="body">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FormalExpression-evaluatesToTypeRef" name="evaluatesToTypeRef" type="ItemDefinition" association="A_evaluatesToTypeRef_formalExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Message" name="Message" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Message-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Message-itemRef" name="itemRef" visibility="public" type="ItemDefinition" lower="0" association="A_itemRef_message"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ItemDefinition" name="ItemDefinition" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemDefinition-itemKind" name="itemKind" type="ItemKind"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemDefinition-structureRef" name="structureRef">
+        <type xmi:type="cmof:Class" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Element"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemDefinition-isCollection" name="isCollection" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ItemDefinition-import" name="import" type="Import" lower="0" association="A_import_itemDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_conditionExpression_sequenceFlow" name="A_conditionExpression_sequenceFlow" visibility="private" memberEnd="SequenceFlow-conditionExpression A_conditionExpression_sequenceFlow-sequenceFlow">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_conditionExpression_sequenceFlow-sequenceFlow" name="sequenceFlow" type="SequenceFlow" lower="0" owningAssociation="A_conditionExpression_sequenceFlow" association="A_conditionExpression_sequenceFlow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="FlowElement" name="FlowElement" isAbstract="true" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElement-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElement-auditing" name="auditing" type="Auditing" lower="0" isComposite="true" association="A_auditing_flowElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElement-monitoring" name="monitoring" type="Monitoring" lower="0" isComposite="true" association="A_monitoring_flowElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElement-categoryValueRef" name="categoryValueRef" type="CategoryValue" upper="*" lower="0" association="A_categorizedFlowElements_categoryValueRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SequenceFlow" name="SequenceFlow" superClass="FlowElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SequenceFlow-isImmediate" name="isImmediate" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SequenceFlow-conditionExpression" name="conditionExpression" type="Expression" lower="0" isComposite="true" association="A_conditionExpression_sequenceFlow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SequenceFlow-sourceRef" name="sourceRef" type="FlowNode" association="A_sourceRef_outgoing_flow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SequenceFlow-targetRef" name="targetRef" type="FlowNode" association="A_targetRef_incoming_flow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="FlowElementsContainer" name="FlowElementsContainer" isAbstract="true" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElementsContainer-flowElements" name="flowElements" type="FlowElement" upper="*" lower="0" isComposite="true" association="A_flowElements_container"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowElementsContainer-laneSets" name="laneSets" visibility="public" type="LaneSet" upper="*" lower="0" isComposite="true" association="A_laneSets_flowElementsContainer"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_flowElements_container" name="A_flowElements_container" visibility="private" memberEnd="FlowElementsContainer-flowElements A_flowElements_container-container">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_flowElements_container-container" name="container" type="FlowElementsContainer" owningAssociation="A_flowElements_container" association="A_flowElements_container"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CallableElement" name="CallableElement" isAbstract="true" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallableElement-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallableElement-ioSpecification" name="ioSpecification" type="InputOutputSpecification" lower="0" isComposite="true" association="A_ioSpecification_callableElement"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallableElement-supportedInterfaceRefs" name="supportedInterfaceRefs" type="Interface" upper="*" lower="0" association="A_supportedInterfaceRefs_callableElements"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallableElement-ioBinding" name="ioBinding" type="InputOutputBinding" upper="*" lower="0" isComposite="true" association="A_ioBinding_callableElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="FlowNode" name="FlowNode" isAbstract="true" superClass="FlowElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowNode-outgoing" name="outgoing" type="SequenceFlow" isOrdered="true" upper="*" lower="0" association="A_sourceRef_outgoing_flow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowNode-incoming" name="incoming" type="SequenceFlow" upper="*" lower="0" association="A_targetRef_incoming_flow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="FlowNode-lanes" name="lanes" type="Lane" upper="*" lower="0" isDerived="true" association="A_flowNodeRefs_lanes"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sourceRef_outgoing_flow" name="A_sourceRef_outgoing_flow" visibility="private" memberEnd="SequenceFlow-sourceRef FlowNode-outgoing"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targetRef_incoming_flow" name="A_targetRef_incoming_flow" visibility="private" memberEnd="SequenceFlow-targetRef FlowNode-incoming"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CorrelationPropertyRetrievalExpression" name="CorrelationPropertyRetrievalExpression" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationPropertyRetrievalExpression-messagePath" name="messagePath" type="FormalExpression" isComposite="true" association="A_messagePath_correlationset"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationPropertyRetrievalExpression-messageRef" name="messageRef" type="Message" association="A_messageRef_correlationPropertyRetrievalExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CorrelationPropertyBinding" name="CorrelationPropertyBinding" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationPropertyBinding-dataPath" name="dataPath" type="FormalExpression" isComposite="true" association="A_dataPath_correlationPropertyBinding"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationPropertyBinding-correlationPropertyRef" name="correlationPropertyRef" type="CorrelationProperty" association="A_correlationPropertyRef_correlationPropertyBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationPropertyRetrievalExpression_correlationproperty" name="A_correlationPropertyRetrievalExpression_correlationproperty" visibility="private" memberEnd="CorrelationProperty-correlationPropertyRetrievalExpression A_correlationPropertyRetrievalExpression_correlationproperty-correlationproperty">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationPropertyRetrievalExpression_correlationproperty-correlationproperty" name="correlationproperty" type="CorrelationProperty" owningAssociation="A_correlationPropertyRetrievalExpression_correlationproperty" association="A_correlationPropertyRetrievalExpression_correlationproperty"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageRef_correlationPropertyRetrievalExpression" name="A_messageRef_correlationPropertyRetrievalExpression" visibility="private" memberEnd="CorrelationPropertyRetrievalExpression-messageRef A_messageRef_correlationPropertyRetrievalExpression-correlationPropertyRetrievalExpression">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageRef_correlationPropertyRetrievalExpression-correlationPropertyRetrievalExpression" name="correlationPropertyRetrievalExpression" type="CorrelationPropertyRetrievalExpression" upper="*" lower="0" owningAssociation="A_messageRef_correlationPropertyRetrievalExpression" association="A_messageRef_correlationPropertyRetrievalExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataPath_correlationPropertyBinding" name="A_dataPath_correlationPropertyBinding" visibility="private" memberEnd="CorrelationPropertyBinding-dataPath A_dataPath_correlationPropertyBinding-correlationPropertyBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataPath_correlationPropertyBinding-correlationPropertyBinding" name="correlationPropertyBinding" type="CorrelationPropertyBinding" lower="0" owningAssociation="A_dataPath_correlationPropertyBinding" association="A_dataPath_correlationPropertyBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationPropertyRef_correlationPropertyBinding" name="A_correlationPropertyRef_correlationPropertyBinding" visibility="private" memberEnd="CorrelationPropertyBinding-correlationPropertyRef A_correlationPropertyRef_correlationPropertyBinding-correlationPropertyBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationPropertyRef_correlationPropertyBinding-correlationPropertyBinding" name="correlationPropertyBinding" type="CorrelationPropertyBinding" upper="*" lower="0" owningAssociation="A_correlationPropertyRef_correlationPropertyBinding" association="A_correlationPropertyRef_correlationPropertyBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Resource" name="Resource" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Resource-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Resource-resourceParameters" name="resourceParameters" type="ResourceParameter" upper="*" lower="0" isComposite="true" association="A_resourceParameters_resource"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ResourceParameter" name="ResourceParameter" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceParameter-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceParameter-isRequired" name="isRequired">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceParameter-type" name="type" visibility="public" type="ItemDefinition" lower="0" association="A_type_resourceParameter"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resourceParameters_resource" name="A_resourceParameters_resource" visibility="private" memberEnd="Resource-resourceParameters A_resourceParameters_resource-resource">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resourceParameters_resource-resource" name="resource" type="Resource" owningAssociation="A_resourceParameters_resource" association="A_resourceParameters_resource"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_import_itemDefinition" name="A_import_itemDefinition" visibility="private" memberEnd="ItemDefinition-import A_import_itemDefinition-itemDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_import_itemDefinition-itemDefinition" name="itemDefinition" type="ItemDefinition" upper="*" lower="0" owningAssociation="A_import_itemDefinition" association="A_import_itemDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CorrelationSubscription" name="CorrelationSubscription" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationSubscription-correlationKeyRef" name="correlationKeyRef" type="CorrelationKey" association="A_correlationKeyRef_correlationSubscription"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CorrelationSubscription-correlationPropertyBinding" name="correlationPropertyBinding" type="CorrelationPropertyBinding" upper="*" lower="0" isComposite="true" association="A_correlationPropertyBinding_correlationSubscription"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationKeyRef_correlationSubscription" name="A_correlationKeyRef_correlationSubscription" visibility="private" memberEnd="CorrelationSubscription-correlationKeyRef A_correlationKeyRef_correlationSubscription-correlationSubscription">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationKeyRef_correlationSubscription-correlationSubscription" name="correlationSubscription" type="CorrelationSubscription" upper="*" lower="0" owningAssociation="A_correlationKeyRef_correlationSubscription" association="A_correlationKeyRef_correlationSubscription"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationPropertyBinding_correlationSubscription" name="A_correlationPropertyBinding_correlationSubscription" visibility="private" memberEnd="CorrelationSubscription-correlationPropertyBinding A_correlationPropertyBinding_correlationSubscription-correlationSubscription">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationPropertyBinding_correlationSubscription-correlationSubscription" name="correlationSubscription" type="CorrelationSubscription" lower="0" owningAssociation="A_correlationPropertyBinding_correlationSubscription" association="A_correlationPropertyBinding_correlationSubscription"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_auditing_flowElement" name="A_auditing_flowElement" visibility="private" memberEnd="FlowElement-auditing A_auditing_flowElement-flowElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_auditing_flowElement-flowElement" name="flowElement" type="FlowElement" lower="0" owningAssociation="A_auditing_flowElement" association="A_auditing_flowElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_monitoring_flowElement" name="A_monitoring_flowElement" visibility="private" memberEnd="FlowElement-monitoring A_monitoring_flowElement-flowElement">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_monitoring_flowElement-flowElement" name="flowElement" type="FlowElement" lower="0" owningAssociation="A_monitoring_flowElement" association="A_monitoring_flowElement"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_type_correlationProperty" name="A_type_correlationProperty" visibility="private" memberEnd="CorrelationProperty-type A_type_correlationProperty-correlationProperty">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_type_correlationProperty-correlationProperty" name="correlationProperty" visibility="public" type="CorrelationProperty" upper="*" lower="0" owningAssociation="A_type_correlationProperty" association="A_type_correlationProperty"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_type_resourceParameter" name="A_type_resourceParameter" visibility="private" memberEnd="ResourceParameter-type A_type_resourceParameter-resourceParameter">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_type_resourceParameter-resourceParameter" name="resourceParameter" visibility="public" type="ResourceParameter" upper="*" lower="0" owningAssociation="A_type_resourceParameter" association="A_type_resourceParameter"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_itemRef_message" name="A_itemRef_message" visibility="private" memberEnd="Message-itemRef A_itemRef_message-message">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_itemRef_message-message" name="message" visibility="public" type="Message" upper="*" lower="0" owningAssociation="A_itemRef_message" association="A_itemRef_message"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_laneSets_flowElementsContainer" name="A_laneSets_flowElementsContainer" visibility="private" memberEnd="FlowElementsContainer-laneSets A_laneSets_flowElementsContainer-flowElementsContainer">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_laneSets_flowElementsContainer-flowElementsContainer" name="flowElementsContainer" visibility="public" type="FlowElementsContainer" lower="0" owningAssociation="A_laneSets_flowElementsContainer" association="A_laneSets_flowElementsContainer"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="MessageFlow" name="MessageFlow" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlow-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlow-sourceRef" name="sourceRef" type="InteractionNode" association="A_sourceRef_messageFlow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlow-targetRef" name="targetRef" type="InteractionNode" association="A_targetRef_messageFlow"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlow-messageRef" name="messageRef" type="Message" lower="0" association="A_messageRef_messageFlow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="MessageFlowAssociation" name="MessageFlowAssociation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlowAssociation-innerMessageFlowRef" name="innerMessageFlowRef" type="MessageFlow" association="A_innerMessageFlowRef_messageFlowAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MessageFlowAssociation-outerMessageFlowRef" name="outerMessageFlowRef" type="MessageFlow" association="A_outerMessageFlowRef_messageFlowAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="InteractionNode" name="InteractionNode" isAbstract="true">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InteractionNode-incomingConversationLinks" name="incomingConversationLinks" visibility="public" type="ConversationLink" upper="*" lower="0" isDerived="true" association="A_targetRef_incomingConversationLinks"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="InteractionNode-outgoingConversationLinks" name="outgoingConversationLinks" visibility="public" type="ConversationLink" upper="*" lower="0" isDerived="true" association="A_sourceRef_outgoingConversationLinks"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Participant" name="Participant" superClass="InteractionNode BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Participant-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Participant-interfaceRefs" name="interfaceRefs" type="Interface" upper="*" lower="0" association="A_interfaceRefs_participant"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Participant-participantMultiplicity" name="participantMultiplicity" type="ParticipantMultiplicity" lower="0" isComposite="true" association="A_participantMultiplicity_participant"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Participant-endPointRefs" name="endPointRefs" type="EndPoint" upper="*" lower="0" association="A_endPointRefs_participant"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Participant-processRef" name="processRef" type="Process" lower="0" association="A_processRef_participant"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ParticipantAssociation" name="ParticipantAssociation" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ParticipantAssociation-innerParticipantRef" name="innerParticipantRef" type="Participant" association="A_innerParticipantRef_participantAssociation"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ParticipantAssociation-outerParticipantRef" name="outerParticipantRef" type="Participant" association="A_outerParticipantRef_participantAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ParticipantMultiplicity" name="ParticipantMultiplicity">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ParticipantMultiplicity-minimum" name="minimum" default="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ParticipantMultiplicity-maximum" name="maximum" lower="0" default="1">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Integer"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageFlowAssociations_collaboration" name="A_messageFlowAssociations_collaboration" visibility="private" memberEnd="Collaboration-messageFlowAssociations A_messageFlowAssociations_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageFlowAssociations_collaboration-collaboration" name="collaboration" type="Collaboration" owningAssociation="A_messageFlowAssociations_collaboration" association="A_messageFlowAssociations_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantAssociations_collaboration" name="A_participantAssociations_collaboration" visibility="private" memberEnd="Collaboration-participantAssociations A_participantAssociations_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantAssociations_collaboration-collaboration" name="collaboration" type="Collaboration" lower="0" owningAssociation="A_participantAssociations_collaboration" association="A_participantAssociations_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_artifacts_collaboration" name="A_artifacts_collaboration" visibility="private" memberEnd="Collaboration-artifacts A_artifacts_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_artifacts_collaboration-collaboration" name="collaboration" type="Collaboration" lower="0" owningAssociation="A_artifacts_collaboration" association="A_artifacts_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Collaboration" name="Collaboration" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-name" name="name">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-isClosed" name="isClosed">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-choreographyRef" name="choreographyRef" type="Choreography" upper="*" lower="0" association="A_choreographyRef_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-artifacts" name="artifacts" type="Artifact" upper="*" lower="0" isComposite="true" association="A_artifacts_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-participantAssociations" name="participantAssociations" type="ParticipantAssociation" upper="*" lower="0" isComposite="true" association="A_participantAssociations_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-messageFlowAssociations" name="messageFlowAssociations" type="MessageFlowAssociation" upper="*" lower="0" isComposite="true" association="A_messageFlowAssociations_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-conversationAssociations" name="conversationAssociations" type="ConversationAssociation" isComposite="true" association="A_conversationAssociations_converstaionAssociations"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-participants" name="participants" visibility="public" type="Participant" upper="*" lower="0" isComposite="true" association="A_participants_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-messageFlows" name="messageFlows" visibility="public" type="MessageFlow" upper="*" lower="0" isComposite="true" association="A_messageFlows_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-correlationKeys" name="correlationKeys" type="CorrelationKey" upper="*" lower="0" isComposite="true" association="A_correlationKeys_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-conversations" name="conversations" visibility="public" type="ConversationNode" upper="*" lower="0" isComposite="true" association="A_conversations_collaboration"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Collaboration-conversationLinks" name="conversationLinks" visibility="public" type="ConversationLink" upper="*" lower="0" isComposite="true" association="A_conversationLinks_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_conversationAssociations_converstaionAssociations" name="A_conversationAssociations_converstaionAssociations" visibility="private" memberEnd="Collaboration-conversationAssociations A_conversationAssociations_converstaionAssociations-converstaionAssociations">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_conversationAssociations_converstaionAssociations-converstaionAssociations" name="converstaionAssociations" type="Collaboration" owningAssociation="A_conversationAssociations_converstaionAssociations" association="A_conversationAssociations_converstaionAssociations"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_choreographyRef_collaboration" name="A_choreographyRef_collaboration" visibility="private" memberEnd="Collaboration-choreographyRef A_choreographyRef_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_choreographyRef_collaboration-collaboration" name="collaboration" type="Collaboration" upper="*" lower="0" owningAssociation="A_choreographyRef_collaboration" association="A_choreographyRef_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_innerParticipantRef_participantAssociation" name="A_innerParticipantRef_participantAssociation" visibility="private" memberEnd="ParticipantAssociation-innerParticipantRef A_innerParticipantRef_participantAssociation-participantAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_innerParticipantRef_participantAssociation-participantAssociation" name="participantAssociation" type="ParticipantAssociation" upper="*" lower="0" owningAssociation="A_innerParticipantRef_participantAssociation" association="A_innerParticipantRef_participantAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outerParticipantRef_participantAssociation" name="A_outerParticipantRef_participantAssociation" visibility="private" memberEnd="ParticipantAssociation-outerParticipantRef A_outerParticipantRef_participantAssociation-participantAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outerParticipantRef_participantAssociation-participantAssociation" name="participantAssociation" type="ParticipantAssociation" upper="*" lower="0" owningAssociation="A_outerParticipantRef_participantAssociation" association="A_outerParticipantRef_participantAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_endPointRefs_participant" name="A_endPointRefs_participant" visibility="private" memberEnd="Participant-endPointRefs A_endPointRefs_participant-participant">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_endPointRefs_participant-participant" name="participant" type="Participant" upper="*" lower="0" owningAssociation="A_endPointRefs_participant" association="A_endPointRefs_participant"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantMultiplicity_participant" name="A_participantMultiplicity_participant" visibility="private" memberEnd="Participant-participantMultiplicity A_participantMultiplicity_participant-participant">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantMultiplicity_participant-participant" name="participant" type="Participant" owningAssociation="A_participantMultiplicity_participant" association="A_participantMultiplicity_participant"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_interfaceRefs_participant" name="A_interfaceRefs_participant" visibility="private" memberEnd="Participant-interfaceRefs A_interfaceRefs_participant-participant">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_interfaceRefs_participant-participant" name="participant" type="Participant" upper="*" lower="0" owningAssociation="A_interfaceRefs_participant" association="A_interfaceRefs_participant"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_partnerEntityRef_participantRef" name="A_partnerEntityRef_participantRef" visibility="private" memberEnd="A_partnerEntityRef_participantRef-partnerEntityRef PartnerEntity-participantRef">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_partnerEntityRef_participantRef-partnerEntityRef" name="partnerEntityRef" type="PartnerEntity" upper="*" lower="0" isDerived="true" owningAssociation="A_partnerEntityRef_participantRef" association="A_partnerEntityRef_participantRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_partnerRoleRef_participantRef" name="A_partnerRoleRef_participantRef" visibility="private" memberEnd="A_partnerRoleRef_participantRef-partnerRoleRef PartnerRole-participantRef">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_partnerRoleRef_participantRef-partnerRoleRef" name="partnerRoleRef" type="PartnerRole" upper="*" lower="0" isDerived="true" owningAssociation="A_partnerRoleRef_participantRef" association="A_partnerRoleRef_participantRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_processRef_participant" name="A_processRef_participant" visibility="private" memberEnd="Participant-processRef A_processRef_participant-participant">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_processRef_participant-participant" name="participant" type="Participant" upper="*" lower="0" owningAssociation="A_processRef_participant" association="A_processRef_participant"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_innerMessageFlowRef_messageFlowAssociation" name="A_innerMessageFlowRef_messageFlowAssociation" visibility="private" memberEnd="MessageFlowAssociation-innerMessageFlowRef A_innerMessageFlowRef_messageFlowAssociation-messageFlowAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_innerMessageFlowRef_messageFlowAssociation-messageFlowAssociation" name="messageFlowAssociation" type="MessageFlowAssociation" upper="*" lower="0" owningAssociation="A_innerMessageFlowRef_messageFlowAssociation" association="A_innerMessageFlowRef_messageFlowAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outerMessageFlowRef_messageFlowAssociation" name="A_outerMessageFlowRef_messageFlowAssociation" visibility="private" memberEnd="MessageFlowAssociation-outerMessageFlowRef A_outerMessageFlowRef_messageFlowAssociation-messageFlowAssociation">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outerMessageFlowRef_messageFlowAssociation-messageFlowAssociation" name="messageFlowAssociation" type="MessageFlowAssociation" upper="*" lower="0" owningAssociation="A_outerMessageFlowRef_messageFlowAssociation" association="A_outerMessageFlowRef_messageFlowAssociation"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targetRef_messageFlow" name="A_targetRef_messageFlow" visibility="private" memberEnd="MessageFlow-targetRef A_targetRef_messageFlow-messageFlow">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_targetRef_messageFlow-messageFlow" name="messageFlow" type="MessageFlow" upper="*" lower="0" owningAssociation="A_targetRef_messageFlow" association="A_targetRef_messageFlow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageRef_messageFlow" name="A_messageRef_messageFlow" visibility="private" memberEnd="MessageFlow-messageRef A_messageRef_messageFlow-messageFlow">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageRef_messageFlow-messageFlow" name="messageFlow" type="MessageFlow" upper="*" lower="0" owningAssociation="A_messageRef_messageFlow" association="A_messageRef_messageFlow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sourceRef_messageFlow" name="A_sourceRef_messageFlow" visibility="private" memberEnd="MessageFlow-sourceRef A_sourceRef_messageFlow-messageFlow">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_sourceRef_messageFlow-messageFlow" name="messageFlow" type="MessageFlow" upper="*" lower="0" owningAssociation="A_sourceRef_messageFlow" association="A_sourceRef_messageFlow"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participants_collaboration" name="A_participants_collaboration" visibility="private" memberEnd="Collaboration-participants A_participants_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participants_collaboration-collaboration" name="collaboration" visibility="public" type="Collaboration" owningAssociation="A_participants_collaboration" association="A_participants_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageFlows_collaboration" name="A_messageFlows_collaboration" visibility="private" memberEnd="Collaboration-messageFlows A_messageFlows_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageFlows_collaboration-collaboration" name="collaboration" visibility="public" type="Collaboration" owningAssociation="A_messageFlows_collaboration" association="A_messageFlows_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_conversations_collaboration" name="A_conversations_collaboration" visibility="private" memberEnd="Collaboration-conversations A_conversations_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_conversations_collaboration-collaboration" name="collaboration" visibility="public" type="Collaboration" lower="0" owningAssociation="A_conversations_collaboration" association="A_conversations_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_conversationLinks_collaboration" name="A_conversationLinks_collaboration" visibility="private" memberEnd="Collaboration-conversationLinks A_conversationLinks_collaboration-collaboration">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_conversationLinks_collaboration-collaboration" name="collaboration" visibility="public" type="Collaboration" owningAssociation="A_conversationLinks_collaboration" association="A_conversationLinks_collaboration"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantAssociations_callChoreographyActivity" name="A_participantAssociations_callChoreographyActivity" visibility="private" memberEnd="CallChoreography-participantAssociations A_participantAssociations_callChoreographyActivity-callChoreographyActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantAssociations_callChoreographyActivity-callChoreographyActivity" name="callChoreographyActivity" type="CallChoreography" lower="0" owningAssociation="A_participantAssociations_callChoreographyActivity" association="A_participantAssociations_callChoreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ChoreographyActivity" name="ChoreographyActivity" isAbstract="true" superClass="FlowNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ChoreographyActivity-participantRefs" name="participantRefs" type="Participant" upper="*" lower="2" association="A_participantRefs_choreographyActivity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ChoreographyActivity-initiatingParticipantRef" name="initiatingParticipantRef" type="Participant" association="A_initiatingParticipantRef_choreographyActivity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ChoreographyActivity-correlationKeys" name="correlationKeys" visibility="public" type="CorrelationKey" upper="*" lower="0" isComposite="true" association="A_correlationKeys_choreographyActivity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ChoreographyActivity-loopType" name="loopType" visibility="public" type="ChoreographyLoopType" default="None"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CallChoreography" name="CallChoreography" superClass="ChoreographyActivity">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallChoreography-calledChoreographyRef" name="calledChoreographyRef" type="Choreography" lower="0" association="A_calledChoreographyRef_callChoreographyActivity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallChoreography-participantAssociations" name="participantAssociations" type="ParticipantAssociation" upper="*" lower="0" isComposite="true" association="A_participantAssociations_callChoreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SubChoreography" name="SubChoreography" superClass="ChoreographyActivity FlowElementsContainer">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SubChoreography-artifacts" name="artifacts" visibility="public" type="Artifact" upper="*" lower="0" isComposite="true" association="A_artifacts_subChoreography"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ChoreographyTask" name="ChoreographyTask" superClass="ChoreographyActivity">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ChoreographyTask-messageFlowRef" name="messageFlowRef" type="MessageFlow" upper="2" association="A_messageFlowRef_choreographyTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_calledChoreographyRef_callChoreographyActivity" name="A_calledChoreographyRef_callChoreographyActivity" visibility="private" memberEnd="CallChoreography-calledChoreographyRef A_calledChoreographyRef_callChoreographyActivity-callChoreographyActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_calledChoreographyRef_callChoreographyActivity-callChoreographyActivity" name="callChoreographyActivity" type="CallChoreography" upper="*" lower="0" owningAssociation="A_calledChoreographyRef_callChoreographyActivity" association="A_calledChoreographyRef_callChoreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageFlowRef_choreographyTask" name="A_messageFlowRef_choreographyTask" visibility="private" memberEnd="ChoreographyTask-messageFlowRef A_messageFlowRef_choreographyTask-choreographyTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageFlowRef_choreographyTask-choreographyTask" name="choreographyTask" visibility="public" type="ChoreographyTask" lower="0" owningAssociation="A_messageFlowRef_choreographyTask" association="A_messageFlowRef_choreographyTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_initiatingParticipantRef_choreographyActivity" name="A_initiatingParticipantRef_choreographyActivity" visibility="private" memberEnd="ChoreographyActivity-initiatingParticipantRef A_initiatingParticipantRef_choreographyActivity-choreographyActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_initiatingParticipantRef_choreographyActivity-choreographyActivity" name="choreographyActivity" type="ChoreographyActivity" upper="*" lower="0" owningAssociation="A_initiatingParticipantRef_choreographyActivity" association="A_initiatingParticipantRef_choreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_participantRefs_choreographyActivity" name="A_participantRefs_choreographyActivity" visibility="private" memberEnd="ChoreographyActivity-participantRefs A_participantRefs_choreographyActivity-choreographyActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_participantRefs_choreographyActivity-choreographyActivity" name="choreographyActivity" type="ChoreographyActivity" upper="*" lower="0" owningAssociation="A_participantRefs_choreographyActivity" association="A_participantRefs_choreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_artifacts_subChoreography" name="A_artifacts_subChoreography" visibility="private" memberEnd="SubChoreography-artifacts A_artifacts_subChoreography-subChoreography">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_artifacts_subChoreography-subChoreography" name="subChoreography" visibility="public" type="SubChoreography" lower="0" owningAssociation="A_artifacts_subChoreography" association="A_artifacts_subChoreography"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="ChoreographyLoopType" name="ChoreographyLoopType">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ChoreographyLoopType-None" name="None" classifier="ChoreographyLoopType" enumeration="ChoreographyLoopType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ChoreographyLoopType-Standard" name="Standard" classifier="ChoreographyLoopType" enumeration="ChoreographyLoopType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ChoreographyLoopType-MultiInstanceSequential" name="MultiInstanceSequential" classifier="ChoreographyLoopType" enumeration="ChoreographyLoopType"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="ChoreographyLoopType-MultiInstanceParallel" name="MultiInstanceParallel" classifier="ChoreographyLoopType" enumeration="ChoreographyLoopType"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_correlationKeys_choreographyActivity" name="A_correlationKeys_choreographyActivity" visibility="private" memberEnd="ChoreographyActivity-correlationKeys A_correlationKeys_choreographyActivity-choreographyActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_correlationKeys_choreographyActivity-choreographyActivity" name="choreographyActivity" visibility="public" type="ChoreographyActivity" lower="0" owningAssociation="A_correlationKeys_choreographyActivity" association="A_correlationKeys_choreographyActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_initiatingParticipantRef_globalChoreographyTask" name="A_initiatingParticipantRef_globalChoreographyTask" visibility="private" memberEnd="GlobalChoreographyTask-initiatingParticipantRef A_initiatingParticipantRef_globalChoreographyTask-globalChoreographyTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_initiatingParticipantRef_globalChoreographyTask-globalChoreographyTask" name="globalChoreographyTask" type="GlobalChoreographyTask" upper="*" lower="0" owningAssociation="A_initiatingParticipantRef_globalChoreographyTask" association="A_initiatingParticipantRef_globalChoreographyTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Choreography" name="Choreography" superClass="FlowElementsContainer Collaboration"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalChoreographyTask" name="GlobalChoreographyTask" superClass="Choreography">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalChoreographyTask-initiatingParticipantRef" name="initiatingParticipantRef" type="Participant" association="A_initiatingParticipantRef_globalChoreographyTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_sourceRef_outgoing_association" name="A_sourceRef_outgoing_association" visibility="private" memberEnd="Association-sourceRef A_sourceRef_outgoing_association-outgoing">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_sourceRef_outgoing_association-outgoing" name="outgoing" type="Association" upper="*" lower="0" owningAssociation="A_sourceRef_outgoing_association" association="A_sourceRef_outgoing_association"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_targetRef_incoming_association" name="A_targetRef_incoming_association" visibility="private" memberEnd="Association-targetRef A_targetRef_incoming_association-incoming">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_targetRef_incoming_association-incoming" name="incoming" type="Association" upper="*" lower="0" owningAssociation="A_targetRef_incoming_association" association="A_targetRef_incoming_association"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="TextAnnotation" name="TextAnnotation" superClass="Artifact">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="TextAnnotation-text" name="text">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="TextAnnotation-textFormat" name="textFormat" visibility="public" default="text/plain">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Group" name="Group" superClass="Artifact">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Group-categoryValueRef" name="categoryValueRef" type="CategoryValue" lower="0" association="A_categoryValueRef_categoryValueRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Association" name="Association" superClass="Artifact">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Association-associationDirection" name="associationDirection" type="AssociationDirection"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Association-sourceRef" name="sourceRef" type="BaseElement" association="A_sourceRef_outgoing_association"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Association-targetRef" name="targetRef" type="BaseElement" association="A_targetRef_incoming_association"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Category" name="Category" superClass="RootElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Category-categoryValue" name="categoryValue" type="CategoryValue" upper="*" lower="0" isComposite="true" association="A_categoryValue_category"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Category-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Artifact" name="Artifact" isAbstract="true" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_categoryValueRef_categoryValueRef" name="A_categoryValueRef_categoryValueRef" visibility="private" memberEnd="Group-categoryValueRef A_categoryValueRef_categoryValueRef-categoryValueRef">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_categoryValueRef_categoryValueRef-categoryValueRef" name="categoryValueRef" type="Group" upper="*" lower="0" owningAssociation="A_categoryValueRef_categoryValueRef" association="A_categoryValueRef_categoryValueRef"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="AssociationDirection" name="AssociationDirection">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="AssociationDirection-None" name="None" classifier="AssociationDirection" enumeration="AssociationDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="AssociationDirection-One" name="One" classifier="AssociationDirection" enumeration="AssociationDirection"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="AssociationDirection-Both" name="Both" classifier="AssociationDirection" enumeration="AssociationDirection"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CategoryValue" name="CategoryValue" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CategoryValue-categorizedFlowElements" name="categorizedFlowElements" type="FlowElement" upper="*" lower="0" isDerived="true" association="A_categorizedFlowElements_categoryValueRef"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CategoryValue-value" name="value">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_categoryValue_category" name="A_categoryValue_category" visibility="private" memberEnd="Category-categoryValue A_categoryValue_category-category">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_categoryValue_category-category" name="category" type="Category" owningAssociation="A_categoryValue_category" association="A_categoryValue_category"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_categorizedFlowElements_categoryValueRef" name="A_categorizedFlowElements_categoryValueRef" visibility="private" memberEnd="CategoryValue-categorizedFlowElements FlowElement-categoryValueRef"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_event_complexBehaviorDefinition" name="A_event_complexBehaviorDefinition" visibility="private" memberEnd="ComplexBehaviorDefinition-event A_event_complexBehaviorDefinition-complexBehaviorDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_event_complexBehaviorDefinition-complexBehaviorDefinition" name="complexBehaviorDefinition" type="ComplexBehaviorDefinition" owningAssociation="A_event_complexBehaviorDefinition" association="A_event_complexBehaviorDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_expression_resourceAssignmentExpression" name="A_expression_resourceAssignmentExpression" visibility="private" memberEnd="ResourceAssignmentExpression-expression A_expression_resourceAssignmentExpression-resourceAssignmentExpression">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_expression_resourceAssignmentExpression-resourceAssignmentExpression" name="resourceAssignmentExpression" type="ResourceAssignmentExpression" lower="0" owningAssociation="A_expression_resourceAssignmentExpression" association="A_expression_resourceAssignmentExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_expression_resourceParameterBinding" name="A_expression_resourceParameterBinding" visibility="private" memberEnd="ResourceParameterBinding-expression A_expression_resourceParameterBinding-resourceParameterBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_expression_resourceParameterBinding-resourceParameterBinding" name="resourceParameterBinding" type="ResourceParameterBinding" lower="0" owningAssociation="A_expression_resourceParameterBinding" association="A_expression_resourceParameterBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics" name="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-noneBehaviorEventRef A_noneBehaviorEventRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" upper="*" lower="0" owningAssociation="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics" association="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics" name="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-oneBehaviorEventRef A_oneBehaviorEventRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" upper="*" lower="0" owningAssociation="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics" association="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_completionCondition_multiInstanceLoopCharacteristics" name="A_completionCondition_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-completionCondition A_completionCondition_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_completionCondition_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_completionCondition_multiInstanceLoopCharacteristics" association="A_completionCondition_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_condition_complexBehaviorDefinition" name="A_condition_complexBehaviorDefinition" visibility="private" memberEnd="ComplexBehaviorDefinition-condition A_condition_complexBehaviorDefinition-complexBehaviorDefinition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_condition_complexBehaviorDefinition-complexBehaviorDefinition" name="complexBehaviorDefinition" type="ComplexBehaviorDefinition" lower="0" owningAssociation="A_condition_complexBehaviorDefinition" association="A_condition_complexBehaviorDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resourceRef_activityResource" name="A_resourceRef_activityResource" visibility="private" memberEnd="ResourceRole-resourceRef A_resourceRef_activityResource-activityResource">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resourceRef_activityResource-activityResource" name="activityResource" type="ResourceRole" upper="*" lower="0" owningAssociation="A_resourceRef_activityResource" association="A_resourceRef_activityResource"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageRef_sendTask" name="A_messageRef_sendTask" visibility="private" memberEnd="SendTask-messageRef A_messageRef_sendTask-sendTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageRef_sendTask-sendTask" name="sendTask" type="SendTask" upper="*" lower="0" owningAssociation="A_messageRef_sendTask" association="A_messageRef_sendTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_messageRef_receiveTask" name="A_messageRef_receiveTask" visibility="private" memberEnd="ReceiveTask-messageRef A_messageRef_receiveTask-receiveTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_messageRef_receiveTask-receiveTask" name="receiveTask" type="ReceiveTask" upper="*" lower="0" owningAssociation="A_messageRef_receiveTask" association="A_messageRef_receiveTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Activity" name="Activity" isAbstract="true" superClass="FlowNode">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-isForCompensation" name="isForCompensation" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-loopCharacteristics" name="loopCharacteristics" type="LoopCharacteristics" lower="0" isComposite="true" association="A_loopCharacteristics_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-resources" name="resources" type="ResourceRole" upper="*" lower="0" isComposite="true" association="A_resources_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-default" name="default" type="SequenceFlow" lower="0" association="A_default_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-properties" name="properties" type="Property" upper="*" lower="0" isComposite="true" association="A_properties_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-ioSpecification" name="ioSpecification" type="InputOutputSpecification" lower="0" isComposite="true" association="A_ioSpecification_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-boundaryEventRefs" name="boundaryEventRefs" type="BoundaryEvent" upper="*" lower="0" association="A_boundaryEventRefs_attachedToRef"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-dataInputAssociations" name="dataInputAssociations" type="DataInputAssociation" upper="*" lower="0" isComposite="true" association="A_dataInputAssociations_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-dataOutputAssociations" name="dataOutputAssociations" type="DataOutputAssociation" upper="*" lower="0" isComposite="true" association="A_dataOutputAssociations_activity"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-startQuantity" name="startQuantity" default="1">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Activity-completionQuantity" name="completionQuantity" default="1">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Integer"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operationRef_serviceTask" name="A_operationRef_serviceTask" visibility="private" memberEnd="ServiceTask-operationRef A_operationRef_serviceTask-serviceTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operationRef_serviceTask-serviceTask" name="serviceTask" type="ServiceTask" upper="*" lower="0" owningAssociation="A_operationRef_serviceTask" association="A_operationRef_serviceTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_calledElementRef_callActivity" name="A_calledElementRef_callActivity" visibility="private" memberEnd="CallActivity-calledElementRef A_calledElementRef_callActivity-callActivity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_calledElementRef_callActivity-callActivity" name="callActivity" type="CallActivity" upper="*" lower="0" owningAssociation="A_calledElementRef_callActivity" association="A_calledElementRef_callActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopCardinality_multiInstanceLoopCharacteristics" name="A_loopCardinality_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-loopCardinality A_loopCardinality_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopCardinality_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_loopCardinality_multiInstanceLoopCharacteristics" association="A_loopCardinality_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_properties_activity" name="A_properties_activity" visibility="private" memberEnd="Activity-properties A_properties_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_properties_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_properties_activity" association="A_properties_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resources_activity" name="A_resources_activity" visibility="private" memberEnd="Activity-resources A_resources_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resources_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_resources_activity" association="A_resources_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopCondition_standardLoopCharacteristics" name="A_loopCondition_standardLoopCharacteristics" visibility="private" memberEnd="StandardLoopCharacteristics-loopCondition A_loopCondition_standardLoopCharacteristics-standardLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopCondition_standardLoopCharacteristics-standardLoopCharacteristics" name="standardLoopCharacteristics" type="StandardLoopCharacteristics" lower="0" owningAssociation="A_loopCondition_standardLoopCharacteristics" association="A_loopCondition_standardLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopCharacteristics_activity" name="A_loopCharacteristics_activity" visibility="private" memberEnd="Activity-loopCharacteristics A_loopCharacteristics_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopCharacteristics_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_loopCharacteristics_activity" association="A_loopCharacteristics_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_ioSpecification_activity" name="A_ioSpecification_activity" visibility="private" memberEnd="Activity-ioSpecification A_ioSpecification_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_ioSpecification_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_ioSpecification_activity" association="A_ioSpecification_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_completionCondition_adHocSubProcess" name="A_completionCondition_adHocSubProcess" visibility="private" memberEnd="AdHocSubProcess-completionCondition A_completionCondition_adHocSubProcess-adHocSubProcess">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_completionCondition_adHocSubProcess-adHocSubProcess" name="adHocSubProcess" type="AdHocSubProcess" lower="0" owningAssociation="A_completionCondition_adHocSubProcess" association="A_completionCondition_adHocSubProcess"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ServiceTask" name="ServiceTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ServiceTask-implementation" name="implementation">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ServiceTask-operationRef" name="operationRef" type="Operation" lower="0" association="A_operationRef_serviceTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SubProcess" name="SubProcess" superClass="Activity FlowElementsContainer">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SubProcess-triggeredByEvent" name="triggeredByEvent" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SubProcess-artifacts" name="artifacts" visibility="public" type="Artifact" upper="*" lower="0" isComposite="true" association="A_artifacts_subProcess"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operationRef_receiveTask" name="A_operationRef_receiveTask" visibility="private" memberEnd="ReceiveTask-operationRef A_operationRef_receiveTask-receiveTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operationRef_receiveTask-receiveTask" name="receiveTask" type="ReceiveTask" upper="*" lower="0" owningAssociation="A_operationRef_receiveTask" association="A_operationRef_receiveTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_operationRef_sendTask" name="A_operationRef_sendTask" visibility="private" memberEnd="SendTask-operationRef A_operationRef_sendTask-sendTask">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_operationRef_sendTask-sendTask" name="sendTask" type="SendTask" upper="*" lower="0" owningAssociation="A_operationRef_sendTask" association="A_operationRef_sendTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="LoopCharacteristics" name="LoopCharacteristics" isAbstract="true" superClass="BaseElement"/>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="MultiInstanceBehavior" name="MultiInstanceBehavior">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="MultiInstanceBehavior-None" name="None" classifier="MultiInstanceBehavior" enumeration="MultiInstanceBehavior"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="MultiInstanceBehavior-One" name="One" classifier="MultiInstanceBehavior" enumeration="MultiInstanceBehavior"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="MultiInstanceBehavior-All" name="All" classifier="MultiInstanceBehavior" enumeration="MultiInstanceBehavior"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="MultiInstanceBehavior-Complex" name="Complex" classifier="MultiInstanceBehavior" enumeration="MultiInstanceBehavior"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="MultiInstanceLoopCharacteristics" name="MultiInstanceLoopCharacteristics" superClass="LoopCharacteristics">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-isSequential" name="isSequential" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-behavior" name="behavior" type="MultiInstanceBehavior" default="All"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-loopCardinality" name="loopCardinality" type="Expression" lower="0" isComposite="true" association="A_loopCardinality_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-loopDataInputRef" name="loopDataInputRef" type="ItemAwareElement" lower="0" association="A_loopDataInputRef_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-loopDataOutputRef" name="loopDataOutputRef" type="ItemAwareElement" lower="0" association="A_loopDataOutputRef_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-inputDataItem" name="inputDataItem" type="DataInput" lower="0" isComposite="true" association="A_inputDataItem_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-outputDataItem" name="outputDataItem" type="DataOutput" lower="0" isComposite="true" association="A_outputDataItem_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-completionCondition" name="completionCondition" type="Expression" lower="0" isComposite="true" association="A_completionCondition_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-complexBehaviorDefinition" name="complexBehaviorDefinition" type="ComplexBehaviorDefinition" upper="*" lower="0" isComposite="true" association="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-oneBehaviorEventRef" name="oneBehaviorEventRef" type="EventDefinition" lower="0" association="A_oneBehaviorEventRef_multiInstanceLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="MultiInstanceLoopCharacteristics-noneBehaviorEventRef" name="noneBehaviorEventRef" type="EventDefinition" lower="0" association="A_noneBehaviorEventRef_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="StandardLoopCharacteristics" name="StandardLoopCharacteristics" superClass="LoopCharacteristics">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="StandardLoopCharacteristics-testBefore" name="testBefore" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="StandardLoopCharacteristics-loopCondition" name="loopCondition" type="Expression" lower="0" isComposite="true" association="A_loopCondition_standardLoopCharacteristics"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="StandardLoopCharacteristics-loopMaximum" name="loopMaximum" type="Expression" lower="0" isComposite="true" association="A_loopMaximum_standardLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="CallActivity" name="CallActivity" superClass="Activity">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="CallActivity-calledElementRef" name="calledElementRef" type="CallableElement" lower="0" association="A_calledElementRef_callActivity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Task" name="Task" superClass="Activity InteractionNode"/>
+    <ownedMember xmi:type="cmof:Class" xmi:id="SendTask" name="SendTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SendTask-implementation" name="implementation">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SendTask-operationRef" name="operationRef" type="Operation" lower="0" association="A_operationRef_sendTask"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="SendTask-messageRef" name="messageRef" type="Message" lower="0" association="A_messageRef_sendTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ReceiveTask" name="ReceiveTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ReceiveTask-implementation" name="implementation">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ReceiveTask-instantiate" name="instantiate" default="false">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ReceiveTask-operationRef" name="operationRef" type="Operation" lower="0" association="A_operationRef_receiveTask"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ReceiveTask-messageRef" name="messageRef" type="Message" lower="0" association="A_messageRef_receiveTask"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ScriptTask" name="ScriptTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ScriptTask-scriptFormat" name="scriptFormat" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ScriptTask-script" name="script">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="BusinessRuleTask" name="BusinessRuleTask" superClass="Task">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="BusinessRuleTask-implementation" name="implementation" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="AdHocSubProcess" name="AdHocSubProcess" superClass="SubProcess">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="AdHocSubProcess-completionCondition" name="completionCondition" type="Expression" isComposite="true" association="A_completionCondition_adHocSubProcess"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="AdHocSubProcess-ordering" name="ordering" type="AdHocOrdering"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="AdHocSubProcess-cancelRemainingInstances" name="cancelRemainingInstances" default="true">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#Boolean"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Enumeration" xmi:id="AdHocOrdering" name="AdHocOrdering">
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="AdHocOrdering-Parallel" name="Parallel" classifier="AdHocOrdering" enumeration="AdHocOrdering"/>
+      <ownedLiteral xmi:type="cmof:EnumerationLiteral" xmi:id="AdHocOrdering-Sequential" name="Sequential" classifier="AdHocOrdering" enumeration="AdHocOrdering"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Transaction" name="Transaction" superClass="SubProcess">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Transaction-protocol" name="protocol" lower="0">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Transaction-method" name="method">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalScriptTask" name="GlobalScriptTask" superClass="GlobalTask">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalScriptTask-scriptLanguage" name="scriptLanguage">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalScriptTask-script" name="script">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="GlobalBusinessRuleTask" name="GlobalBusinessRuleTask" superClass="GlobalTask">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="GlobalBusinessRuleTask-implementation" name="implementation" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ComplexBehaviorDefinition" name="ComplexBehaviorDefinition" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ComplexBehaviorDefinition-condition" name="condition" type="FormalExpression" isComposite="true" association="A_condition_complexBehaviorDefinition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ComplexBehaviorDefinition-event" name="event" type="ImplicitThrowEvent" lower="0" isComposite="true" association="A_event_complexBehaviorDefinition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics" name="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-complexBehaviorDefinition A_complexBehaviorDefinition_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" owningAssociation="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics" association="A_complexBehaviorDefinition_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ResourceRole" name="ResourceRole" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceRole-resourceRef" name="resourceRef" type="Resource" lower="0" association="A_resourceRef_activityResource"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceRole-resourceParameterBindings" name="resourceParameterBindings" type="ResourceParameterBinding" upper="*" lower="0" isComposite="true" association="A_resourceParameterBindings_activityResource"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceRole-resourceAssignmentExpression" name="resourceAssignmentExpression" type="ResourceAssignmentExpression" lower="0" isComposite="true" association="A_resourceAssignmentExpression_activityResource"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceRole-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ResourceParameterBinding" name="ResourceParameterBinding">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceParameterBinding-expression" name="expression" type="Expression" isComposite="true" association="A_expression_resourceParameterBinding"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceParameterBinding-parameterRef" name="parameterRef" type="ResourceParameter" association="A_parameterRef_resourceParameterBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="ResourceAssignmentExpression" name="ResourceAssignmentExpression">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="ResourceAssignmentExpression-expression" name="expression" type="Expression" isComposite="true" association="A_expression_resourceAssignmentExpression"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resourceParameterBindings_activityResource" name="A_resourceParameterBindings_activityResource" visibility="private" memberEnd="ResourceRole-resourceParameterBindings A_resourceParameterBindings_activityResource-activityResource">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resourceParameterBindings_activityResource-activityResource" name="activityResource" type="ResourceRole" owningAssociation="A_resourceParameterBindings_activityResource" association="A_resourceParameterBindings_activityResource"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_resourceAssignmentExpression_activityResource" name="A_resourceAssignmentExpression_activityResource" visibility="private" memberEnd="ResourceRole-resourceAssignmentExpression A_resourceAssignmentExpression_activityResource-activityResource">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_resourceAssignmentExpression_activityResource-activityResource" name="activityResource" type="ResourceRole" owningAssociation="A_resourceAssignmentExpression_activityResource" association="A_resourceAssignmentExpression_activityResource"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopMaximum_standardLoopCharacteristics" name="A_loopMaximum_standardLoopCharacteristics" visibility="private" memberEnd="StandardLoopCharacteristics-loopMaximum A_loopMaximum_standardLoopCharacteristics-standardLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopMaximum_standardLoopCharacteristics-standardLoopCharacteristics" name="standardLoopCharacteristics" type="StandardLoopCharacteristics" lower="0" owningAssociation="A_loopMaximum_standardLoopCharacteristics" association="A_loopMaximum_standardLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataInputAssociations_activity" name="A_dataInputAssociations_activity" visibility="private" memberEnd="Activity-dataInputAssociations A_dataInputAssociations_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataInputAssociations_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_dataInputAssociations_activity" association="A_dataInputAssociations_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_dataOutputAssociations_activity" name="A_dataOutputAssociations_activity" visibility="private" memberEnd="Activity-dataOutputAssociations A_dataOutputAssociations_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_dataOutputAssociations_activity-activity" name="activity" type="Activity" lower="0" owningAssociation="A_dataOutputAssociations_activity" association="A_dataOutputAssociations_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_parameterRef_resourceParameterBinding" name="A_parameterRef_resourceParameterBinding" visibility="private" memberEnd="ResourceParameterBinding-parameterRef A_parameterRef_resourceParameterBinding-resourceParameterBinding">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_parameterRef_resourceParameterBinding-resourceParameterBinding" name="resourceParameterBinding" type="ResourceParameterBinding" upper="*" lower="0" owningAssociation="A_parameterRef_resourceParameterBinding" association="A_parameterRef_resourceParameterBinding"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopDataInputRef_multiInstanceLoopCharacteristics" name="A_loopDataInputRef_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-loopDataInputRef A_loopDataInputRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopDataInputRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_loopDataInputRef_multiInstanceLoopCharacteristics" association="A_loopDataInputRef_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_loopDataOutputRef_multiInstanceLoopCharacteristics" name="A_loopDataOutputRef_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-loopDataOutputRef A_loopDataOutputRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_loopDataOutputRef_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_loopDataOutputRef_multiInstanceLoopCharacteristics" association="A_loopDataOutputRef_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_inputDataItem_multiInstanceLoopCharacteristics" name="A_inputDataItem_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-inputDataItem A_inputDataItem_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_inputDataItem_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_inputDataItem_multiInstanceLoopCharacteristics" association="A_inputDataItem_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_outputDataItem_multiInstanceLoopCharacteristics" name="A_outputDataItem_multiInstanceLoopCharacteristics" visibility="private" memberEnd="MultiInstanceLoopCharacteristics-outputDataItem A_outputDataItem_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_outputDataItem_multiInstanceLoopCharacteristics-multiInstanceLoopCharacteristics" name="multiInstanceLoopCharacteristics" type="MultiInstanceLoopCharacteristics" lower="0" owningAssociation="A_outputDataItem_multiInstanceLoopCharacteristics" association="A_outputDataItem_multiInstanceLoopCharacteristics"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_boundaryEventRefs_attachedToRef" name="A_boundaryEventRefs_attachedToRef" visibility="private" memberEnd="Activity-boundaryEventRefs BoundaryEvent-attachedToRef"/>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_default_activity" name="A_default_activity" visibility="private" memberEnd="Activity-default A_default_activity-activity">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_default_activity-activity" name="activity" type="Activity" owningAssociation="A_default_activity" association="A_default_activity"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_artifacts_subProcess" name="A_artifacts_subProcess" visibility="private" memberEnd="SubProcess-artifacts A_artifacts_subProcess-subProcess">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_artifacts_subProcess-subProcess" name="subProcess" visibility="public" type="SubProcess" lower="0" owningAssociation="A_artifacts_subProcess" association="A_artifacts_subProcess"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Import" name="Import">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Import-importType" name="importType" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Import-location" name="location" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Import-namespace" name="namespace" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Class" xmi:id="Definitions" name="Definitions" superClass="BaseElement">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-name" name="name" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-targetNamespace" name="targetNamespace" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-expressionLanguage" name="expressionLanguage" visibility="public" default="http://www.w3.org/1999/XPath">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-typeLanguage" name="typeLanguage" visibility="public" default="http://www.w3.org/2001/XMLSchema">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-imports" name="imports" visibility="public" type="Import" upper="*" lower="0" isComposite="true" association="A_imports_definition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-extensions" name="extensions" visibility="public" type="Extension" upper="*" lower="0" isComposite="true" association="A_extensions_definitions"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-relationships" name="relationships" visibility="public" type="Relationship" upper="*" lower="0" isComposite="true" association="A_relationships_definition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-rootElements" name="rootElements" visibility="public" type="RootElement" upper="*" lower="0" isComposite="true" association="A_rootElements_definition"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-diagrams" name="diagrams" visibility="public" upper="*" lower="0" isComposite="true" association="A_diagrams_definitions">
+        <type xmi:type="cmof:Class" href="BPMNDI.cmof#BPMNDiagram"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-exporter" name="exporter" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Definitions-exporterVersion" name="exporterVersion" visibility="public">
+        <type xmi:type="cmof:PrimitiveType" href="http://schema.omg.org/spec/MOF/2.0/cmof.xml#String"/>
+      </ownedAttribute>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_diagrams_definitions" name="A_diagrams_definitions" visibility="private" memberEnd="Definitions-diagrams A_diagrams_definitions-definitions">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_diagrams_definitions-definitions" name="definitions" visibility="public" type="Definitions" owningAssociation="A_diagrams_definitions" association="A_diagrams_definitions"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_imports_definition" name="A_imports_definition" visibility="private" memberEnd="Definitions-imports A_imports_definition-definition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_imports_definition-definition" name="definition" type="Definitions" owningAssociation="A_imports_definition" association="A_imports_definition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_extensions_definitions" name="A_extensions_definitions" visibility="private" memberEnd="Definitions-extensions A_extensions_definitions-definitions">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_extensions_definitions-definitions" name="definitions" type="Definitions" owningAssociation="A_extensions_definitions" association="A_extensions_definitions"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_relationships_definition" name="A_relationships_definition" visibility="private" memberEnd="Definitions-relationships A_relationships_definition-definition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_relationships_definition-definition" name="definition" type="Definitions" owningAssociation="A_relationships_definition" association="A_relationships_definition"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:Association" xmi:id="A_rootElements_definition" name="A_rootElements_definition" visibility="private" memberEnd="Definitions-rootElements A_rootElements_definition-definition">
+      <ownedEnd xmi:type="cmof:Property" xmi:id="A_rootElements_definition-definition" name="definition" type="Definitions" lower="0" owningAssociation="A_rootElements_definition" association="A_rootElements_definition"/>
+    </ownedMember>
+  </cmof:Package>
+  <cmof:Tag xmi:id="_1" name="org.omg.xmi.nsPrefix" value="bpmn" element="_0"/>
+  <cmof:Tag xmi:id="_2" name="org.omg.xmi.nsURI" value="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI" element="_0"/>
+</xmi:XMI>

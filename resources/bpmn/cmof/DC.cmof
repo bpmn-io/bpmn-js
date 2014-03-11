@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:cmof="http://schema.omg.org/spec/MOF/2.0/cmof.xml">
+  <cmof:Package xmi:id="_0" name="DC" uri="http://www.omg.org/spec/DD/20100524/DC-XMI">
+    <ownedMember xmi:type="cmof:PrimitiveType" xmi:id="Boolean" name="Boolean"/>
+    <ownedMember xmi:type="cmof:PrimitiveType" xmi:id="Integer" name="Integer"/>
+    <ownedMember xmi:type="cmof:PrimitiveType" xmi:id="Real" name="Real"/>
+    <ownedMember xmi:type="cmof:PrimitiveType" xmi:id="String" name="String"/>
+    <ownedMember xmi:type="cmof:DataType" xmi:id="Font" name="Font">
+      <ownedRule xmi:type="cmof:Constraint" xmi:id="Font-non_negative_size" name="non_negative_size" constrainedElement="Font" namespace="Font">
+        <specification xmi:type="cmof:OpaqueExpression" xmi:id="Font-non_negative_size-_specification">
+          <language>OCL</language>
+          <body>size >=  0</body>
+        </specification>
+      </ownedRule>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-name" name="name" visibility="public" type="String" lower="0" datatype="Font"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-size" name="size" visibility="public" type="Real" lower="0" datatype="Font"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-isBold" name="isBold" visibility="public" type="Boolean" lower="0" datatype="Font"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-isItalic" name="isItalic" visibility="public" type="Boolean" lower="0" datatype="Font"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-isUnderline" name="isUnderline" visibility="public" type="Boolean" lower="0" datatype="Font"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Font-isStrikeThrough" name="isStrikeThrough" visibility="public" type="Boolean" lower="0" datatype="Font"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:DataType" xmi:id="Point" name="Point">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Point-x" name="x" visibility="public" type="Real" datatype="Point" default="0"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Point-y" name="y" visibility="public" type="Real" datatype="Point" default="0"/>
+    </ownedMember>
+    <ownedMember xmi:type="cmof:DataType" xmi:id="Bounds" name="Bounds">
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Bounds-x" name="x" visibility="public" type="Real" datatype="Bounds" default="0"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Bounds-y" name="y" visibility="public" type="Real" datatype="Bounds" default="0"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Bounds-width" name="width" visibility="public" type="Real" datatype="Bounds"/>
+      <ownedAttribute xmi:type="cmof:Property" xmi:id="Bounds-height" name="height" visibility="public" type="Real" datatype="Bounds"/>
+    </ownedMember>
+  </cmof:Package>
+  <cmof:Tag xmi:id="_1" name="org.omg.xmi.nsPrefix" value="dc" element="_0"/>
+  <cmof:Tag xmi:id="_2" name="org.omg.xmi.nsURI" value="http://www.omg.org/spec/DD/20100524/DC-XMI" element="_0"/>
+  <cmof:Tag xmi:id="_3" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#boolean" element="Boolean"/>
+  <cmof:Tag xmi:id="_4" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#integer" element="Integer"/>
+  <cmof:Tag xmi:id="_5" name="org.omg.xmi.schemaType" value="http://www.w3.org/2001/XMLSchema#double" element="Real"/>
+</xmi:XMI>
