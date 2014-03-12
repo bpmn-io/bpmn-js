@@ -29,7 +29,6 @@ describe('PaletteDragDrop should ', function() {
 
   it('have listeners registered on init', function() {
     mockEvents.fire('standard.palette.init');
-    debugger;
     expect(canvas.listeners.mousemove).toBeDefined();
     expect(canvas.listeners.mouseup).toBeDefined();
   });
