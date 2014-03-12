@@ -1,5 +1,6 @@
 var Diagram = require('../../Diagram'),
-          _ = require('../../util/underscore');
+          _ = require('../../util/underscore'),
+          shapeUtil = require('../../util/shapeUtil');
 
 /**
  * @namespace djs
@@ -11,7 +12,7 @@ var Diagram = require('../../Diagram'),
  * A service that allow to drop an element via drag (from palette)
  * to the canvas (drop).
  */
-function PaletteDragDrop(canvas, events, shapes, injector) {
+function PaletteDragDrop(canvas, events, shapes) {
   'use strict';
 
   var dragInProgress = false;
@@ -43,12 +44,12 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
    */
   var canvasOnMouseUp = function canvasOnMouseUp(mouseEvent) {
     if(dragInProgress && mouseEvent.button === 0) {
-      var newShape = shapes.convertToShape({
+      var newShape = {
         x: mouseEvent.clientX - 90 / 2.5,
         y: mouseEvent.clientY - 90,
         width: 110,
         height: 110
-      });
+      };
       canvas.addShape(newShape);
     }
     dragInProgress = false;
@@ -93,6 +94,6 @@ function PaletteDragDrop(canvas, events, shapes, injector) {
   };
 }
 
-Diagram.plugin('paletteDragDrop', ['canvas', 'events', 'shapes', 'injector', PaletteDragDrop ]);
+Diagram.plugin('paletteDragDrop', ['canvas', 'events', 'shapes', PaletteDragDrop ]);
 
 module.exports = PaletteDragDrop;
