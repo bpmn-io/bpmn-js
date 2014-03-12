@@ -86,6 +86,18 @@ function selfAndAllChildren(shapes, allowDuplicates) {
   return selfAndChildren(shapes, !allowDuplicates, -1);
 }
 
+/**
+ * Translate a shape
+ * Move shape to shape.x + x and shape.y + y
+ */
+function translateShape(shape, x, y) {
+  'use strict';
+
+  shape.x += x;
+  shape.y += y;
+}
+
 module.exports.eachShape = each;
 module.exports.selfAndDirectChildren = selfAndDirectChildren;
 module.exports.selfAndAllChildren = selfAndAllChildren;
+module.exports.translateShape = translateShape;

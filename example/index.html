@@ -93,10 +93,10 @@
           console.log('shape added', event);
         });
 
-        var s1 = shapes.convertToShape({x: 100, y: 300, width: 110, height: 110 });
-        var s2 = shapes.convertToShape({x: 50, y: 10, width: 300, height: 140});
-        var s3 = shapes.convertToShape({x: 100, y: 20, width: 110, height: 110, parent: s2}); //TODO position in parent seems incorrect
-        var s4 = shapes.convertToShape({x: 400, y: 300, width: 110, height: 110 });
+        var s1 = {x: 100, y: 300, width: 110, height: 110 };
+        var s2 = {x: 50, y: 10, width: 300, height: 140};
+        var s3 = {x: 100, y: 20, width: 110, height: 110, parent: s2}; //TODO position in parent seems incorrect
+        var s4 = {x: 400, y: 300, width: 110, height: 110 };
 
         // Added via command stack
         canvas.addShape(s1);

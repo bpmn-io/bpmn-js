@@ -1,6 +1,7 @@
 var Snap = require('snapsvg'),
     IdGenerator = require('../util/IdGenerator'),
-    _ = require('../util/underscore');
+    _ = require('../util/underscore'),
+    shapeUtil = require('../util/shapeUtil');
 
 /**
  * @type djs.ShapeDescriptor
@@ -53,7 +54,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
             });
             //Update model
             var model = shapes.getShapeByGraphics(gfx);
-            model.translate(dragCtx.dx, dragCtx.dy);
+            shapeUtil.translateShape(model, dragCtx.dx, dragCtx.dy);
           });
         }
         return true;
@@ -69,7 +70,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
             });
             //Update model
             var model = shapes.getShapeByGraphics(gfx);
-            model.translate((-1)*dragCtx.dx, (-1)*dragCtx.dy);
+            shapeUtil.translateShape(model,(-1)*dragCtx.dx, (-1)*dragCtx.dy);
           });
         }
         return true;

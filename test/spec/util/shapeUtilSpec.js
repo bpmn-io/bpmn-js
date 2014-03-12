@@ -99,4 +99,25 @@ describe('util/shapeUtil', function() {
       expect(result.length).toBe(14);
     });
   });
+
+  describe('translateShape should', function() {
+
+    it('move shape correctly', function() {
+
+      // given
+      var shape = {x: 11, y: 23};
+
+      // when
+      shapeUtil.translateShape(shape, 7, 9);
+
+      expect(shape.x).toEqual(18);
+      expect(shape.y).toEqual(32);
+
+      // when
+      shapeUtil.translateShape(shape, -14, -9);
+
+      expect(shape.x).toEqual(4);
+      expect(shape.y).toEqual(23);
+    });
+  });
 });
