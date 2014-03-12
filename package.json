@@ -49,7 +49,10 @@
     "karma-jasmine": "~0.2.0",
     "karma-chrome-launcher": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.2",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "moddle": "~0.0.1",
+    "moddle-xml": "~0.0.1",
+    "lodash": "~2.4.0"
   },
   "dependencies": {
     "moddle": "~0.0.1",
