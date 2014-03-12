@@ -113,13 +113,33 @@ module.exports = function(grunt) {
     concurrent: {
       'sources': [ 'browserify:src', 'jshint' ],
       'build': [ 'jshint', 'build', 'jsdoc' ]
-    }
+    },
+    connect: {
+      options: {
+        port: 9003,
+        livereload: 35726,
+        hostname: 'localhost'
+      },
+      livereload: {
+        options: {
+          open: true,
+          base: [
+            '<%= config.dist %>'
+          ]
+        }
+      }
+    },
   });
 
   // tasks
   
   grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
   grunt.registerTask('build', [ 'browserify', 'copy:samples' ]);
+  grunt.registerTask('auto-build', [
+    'concurrent:build',
+    'connect:livereload',
+    'watch'
+  ]);
 
   grunt.registerTask('auto-test', [ 'jasmine_node', 'watch:test' ]);
 
