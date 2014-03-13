@@ -1,10 +1,9 @@
-var Events = require('../../../src/core/Events');
-var Shapes = require('../../../src/features/services/Shapes');
+var Events = require('../../../src/core/Events'),
+    Shapes = require('../../../src/core/Shapes');
+
 
 describe('Shapes', function() {
-  if(true) {
-    return;
-  }
+
   var events, shapes;
 
   beforeEach(function() {
@@ -15,22 +14,8 @@ describe('Shapes', function() {
   it('should register shape on add', function() {
     
     // given
-    var shape = {},
-        gfx = {};
-
-    // when
-    events.fire('shape.added', { element: shape, gfx: gfx });
-
-    // then
-    expect(shape.id).toBeDefined();
-    expect(gfx.id).toBeDefined();
-  });
-
-  it('should register shape on add', function() {
-    
-    // given
-    var shape = {},
-        gfx = {};
+    var shape = { id: 's0' },
+        gfx = { id: 'g0' };
 
     // when
     events.fire('shape.added', { element: shape, gfx: gfx });
@@ -48,8 +33,8 @@ describe('Shapes', function() {
   it('should unregister shape on remove', function() {
     
     // given
-    var shape = {},
-        gfx = {};
+    var shape = { id: 's0' },
+        gfx = { id: 'g0' };
 
     // when
     events.fire('shape.added', { element: shape, gfx: gfx });
@@ -64,4 +49,5 @@ describe('Shapes', function() {
     expect(shapes.getGraphicsByShape(shape)).not.toBeDefined();
     expect(shapes.getGraphicsByShape(shape.id)).not.toBeDefined();
   });
+  
 });

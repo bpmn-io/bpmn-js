@@ -1,8 +1,11 @@
 var modules = require('./util/modules'),
     Canvas = require('./core/Canvas'),
     Events = require('./core/Events'),
+    Shapes = require('./core/Shapes'),
     SvgFactory = require('./core/SvgFactory'),
-    _ = require('lodash');
+    CommandStack = require('./core/CommandStack');
+
+var _ = require('lodash');
 
 // require snapsvg extensions
 require('./snapsvg.ext');
@@ -101,6 +104,8 @@ function Diagram(options) {
 registry.register('canvas', Canvas);
 registry.register('events', Events);
 registry.register('svgFactory', SvgFactory);
+registry.register('commandStack', CommandStack);
+registry.register('shapes', Shapes);
 
 module.exports = Diagram;
 

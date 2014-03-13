@@ -1,6 +1,4 @@
-
-var Diagram = require('../../Diagram'),
-    _ = require('../../util/underscore');
+var _ = require('lodash');
 
 /**
  * @namespace djs
@@ -71,7 +69,7 @@ function CommandStack() {
         pushAction(id, ctx);
         if(!saveRedoStack) {
           // A new action invalidates all actions in the redoStack.
-          _.emptyArray(redoStack);
+          redoStack = [];
         }
       }
     });
@@ -164,5 +162,3 @@ function CommandStack() {
 }
 
 module.exports = CommandStack;
-
-Diagram.plugin('commandStack', CommandStack);

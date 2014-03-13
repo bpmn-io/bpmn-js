@@ -27,25 +27,24 @@ module.exports = function(grunt) {
     },
 
     karma: {
-      single: {
-
-        browsers: [ 'Chrome' ],
-        autoWatch: false,
-        singleRun: true,
-
+      options: {
+        browserify: {
+          transform: [ 'debowerify' ]
+        },
         configFile: '<%= config.tests %>/config/karma.unit.js',
+      },
+      single: {
+        singleRun: true,
+        autoWatch: false,
+
+        browsers: [ 'PhantomJS' ],
 
         browserify: {
           watch: false,
-          debug: false,
-          transform: [ 'debowerify' ]
+          debug: false
         }
       },
       unit: {
-        configFile: '<%= config.tests %>/config/karma.unit.js',
-      
-        singleRun: false,
-        autoWatch: true,
         browsers: [ 'Chrome' ]
       }
     },

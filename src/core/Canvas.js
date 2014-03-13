@@ -1,7 +1,7 @@
 var Snap = require('snapsvg'),
     IdGenerator = require('../util/IdGenerator'),
-    _ = require('../util/underscore'),
-    shapeUtil = require('../util/shapeUtil');
+    shapeUtil = require('../util/shapeUtil'),
+    _ = require('lodash');
 
 /**
  * @type djs.ShapeDescriptor
@@ -13,7 +13,7 @@ var Snap = require('snapsvg'),
  * @emits Canvas#canvas.init
  */
 function Canvas(config, events, commandStack, svgFactory, shapes) {
-  //'use strict';
+  'use strict';
 
   var options = _.extend({}, { width: 'auto', height: 'auto' }, config.canvas || {});
 
@@ -30,12 +30,12 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   // should only be called over command stack
   (function registerCommands() {
     commandStack.register('addShape', {
-      do: function addShapeDo(param) {
-        internalAddShape(param);
+      do: function addShapeDo(shape) {
+        internalAddShape(shape);
         return true;
       },
-      undo: function addShapeUndo(param) {
-        internalUndoAddShape(param.id);
+      undo: function addShapeUndo(shape) {
+        internalUndoAddShape(shape);
         return true;
       },
       canDo: function canUndoShape() {
@@ -84,12 +84,10 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   /**
    * Only register shape in Canvas' ElementMap.
    */
-  function addElement(e, gfx) {
+  function checkId(e, gfx) {
     if (!e.id) {
       e.id = ids.next();
     }
-
-    elementMap[e.id] = { element: e, gfx: gfx };
   }
 
   /**
@@ -104,15 +102,14 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   }
 
   function internalAddShape(shape) {
-    'use strict';
 
     var gfx = svgFactory.createShape(paper, shape);
 
+    checkId(shape, gfx);
+    
     if (shape.parent) {
       addChild(shape.parent, shape);
     }
-
-    addElement(shape, gfx);
 
     /**
      * An event indicating that a new shape has been added to the canvas.
@@ -127,10 +124,11 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
     events.fire('shape.added', { element: shape, gfx: gfx });
   }
 
-  function internalUndoAddShape(id) {
-    events.fire('shape.removed', { element: elementMap[id].element});
-    elementMap[id].gfx.remove();
-    delete elementMap[id];
+  function internalUndoAddShape(shape) {
+    var gfx = getGraphics(shape);
+    gfx.remove();
+
+    events.fire('shape.removed', { element: shape, gfx: gfx });
   }
 
   /**
@@ -159,7 +157,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   function addConnection(connection) {
     var gfx = svgFactory.createConnection(paper, connection);
 
-    addElement(connection, gfx);
+    checkId(connection, gfx);
 
     /**
      * An event indicating that a new connection has been added to the canvas.
@@ -218,7 +216,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
    * @param {djs.ElementDescriptor} element descriptor of the element
    */
   function getGraphics(element) {
-    return elementMap[element.id].gfx;
+    return shapes.getGraphicsByShape(element);
   }
 
   /**

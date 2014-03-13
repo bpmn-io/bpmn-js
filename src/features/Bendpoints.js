@@ -4,7 +4,7 @@ require('./services/Shapes');
 require('./BasicInteractionEvents');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+    _ = require('lodash');
 
 /**
  * Provides bendpoint visualization, hover and interactivity.

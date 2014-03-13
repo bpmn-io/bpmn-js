@@ -1,7 +1,6 @@
-require('../../core/Events');
+var _ = require('lodash');
 
-var Diagram = require('../../Diagram'),
-    _ = require('../../util/underscore');
+require('./Events');
 
 /**
  * @class
@@ -11,8 +10,11 @@ var Diagram = require('../../Diagram'),
  * @param {Events} events the event bus
  */
 function Shapes(events) {
-
+  
+  // mapping shape.id -> container
   var shapeMap = {};
+
+  // mapping gfx.id -> container
   var graphicsMap = {};
 
   function addShape(shape, gfx) {
@@ -51,22 +53,22 @@ function Shapes(events) {
   }
 
   /**
-   * @method Shapes#getShapeById
-   */
-  function getShapeById(id) {
-    var container = shapeMap[id];
-    if (container) {
-      return container.shape;
-    }
-  }
-
-  /**
    * @method Shapes#getShapeByGraphics
    */
   function getShapeByGraphics(gfx) {
     var id = _.isString(gfx) ? gfx : gfx.id;
 
     var container = graphicsMap[id];
+    if (container) {
+      return container.shape;
+    }
+  }
+
+  /**
+   * @method Shapes#getShapeById
+   */
+  function getShapeById(id) {
+    var container = shapeMap[id];
     if (container) {
       return container.shape;
     }
@@ -106,7 +108,5 @@ function Shapes(events) {
     getShapeByGraphics: getShapeByGraphics
   };
 }
-
-Diagram.plugin('shapes', [ 'events', Shapes ]);
 
 module.exports = Shapes;

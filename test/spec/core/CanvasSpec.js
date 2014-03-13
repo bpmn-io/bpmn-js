@@ -1,7 +1,7 @@
-var Canvas = require('../../../src/core/Canvas');
-var Events = require('../../../src/core/Events');
-var CommandStack = require('../../../src/features/services/CommandStack');
-var SvgFactory = require('../../../src/core/SvgFactory');
+var Canvas = require('../../../src/core/Canvas'),
+    Events = require('../../../src/core/Events'),
+    CommandStack = require('../../../src/core/CommandStack'),
+    SvgFactory = require('../../../src/core/SvgFactory');
 
 var createSpy = jasmine.createSpy;
 

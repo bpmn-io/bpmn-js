@@ -4,7 +4,7 @@ require('./services/Selection');
 require('./services/Shapes');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore'),
+    _ = require('lodash'),
     svgUtil = require('../util/svgUtil');
 
 /**

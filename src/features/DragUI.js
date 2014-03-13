@@ -9,7 +9,7 @@ require('./DragEvents');
 var Snap = require('snapsvg');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore'),
+    _ = require('lodash'),
     shapeUtil = require('../util/shapeUtil');
 
 

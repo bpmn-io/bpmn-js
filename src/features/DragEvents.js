@@ -1,13 +1,13 @@
 require('../core/Events');
+require('../core/CommandStack');
 
 require('./services/Selection');
 require('./services/Shapes');
-require('./services/CommandStack');
 
 require('./BasicInteractionEvents');
 
 var Diagram = require('../Diagram'),
-    _ = require('../util/underscore');
+    _ = require('lodash');
 
 
 /**

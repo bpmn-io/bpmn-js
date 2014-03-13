@@ -1,4 +1,4 @@
-var Command = require('../../../../src/features/services/CommandStack');
+var Command = require('../../../src/core/CommandStack');
 
 describe('CommandStack should,', function() {
   'use strict';

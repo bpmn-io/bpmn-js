@@ -1,5 +1,5 @@
 {
-  "name": "diagram.js",
+  "name": "diagram-js",
   "version": "0.0.0",
   "authors": [
     "Nico Rehwaldt <nico.rehwaldt@camunda.com>"
@@ -16,14 +16,12 @@
     "snapsvg": "https://raw2.github.com/Nikku/Snap.svg/browserify-dev/dist/snap.svg.js",
     "font-awesome": "~4.0.3"
   },
-  "license": "AGPL",
   "homepage": "http://bpmn.io",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "test"
   ]
 }

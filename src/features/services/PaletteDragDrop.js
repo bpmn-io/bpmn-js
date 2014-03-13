@@ -1,6 +1,6 @@
 var Diagram = require('../../Diagram'),
-          _ = require('../../util/underscore'),
-          shapeUtil = require('../../util/shapeUtil');
+    shapeUtil = require('../../util/shapeUtil'),
+    _ = require('lodash');
 
 /**
  * @namespace djs

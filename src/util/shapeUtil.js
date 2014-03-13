@@ -1,4 +1,4 @@
-var _ = require('../util/underscore');
+var _ = require('lodash');
 
 /**
  * Adds an element to a collection and returns true if the 

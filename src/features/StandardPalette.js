@@ -1,5 +1,5 @@
 var Diagram = require('../Diagram'),
-          _ = require('../util/underscore');
+          _ = require('lodash');
 
 /**
  * @namespace djs
