@@ -1,0 +1,160 @@
+/**
+ * outline styles
+ */
+.djs-outline {
+  fill: none;
+  visibility: hidden;
+}
+
+.djs-group.hover .djs-outline,
+.djs-group.selected .djs-outline {
+  visibility: visible;
+  stroke-dasharray: 2,4;
+}
+
+.djs-group.selected .djs-outline {
+  stroke: blue;
+  stroke-width: 1px;
+}
+
+.djs-group.hover .djs-outline {
+  stroke: red;
+  stroke-width: 1px;
+}
+
+.djs-group.drop-ok .djs-visual {
+  fill: green;
+}
+
+.djs-group.drop-not-ok .djs-visual {
+  fill: red;
+}
+
+/**
+ * drag styles
+ */
+.djs-dragger {
+  fill: white;
+  opacity: 0.3;
+  stroke: #333;
+  stroke-dasharray: 2,1;
+}
+
+.djs-shape.djs-dragging {
+  visibility: hidden;
+}
+
+/**
+ * hit shape styles
+ */
+.djs-hit {
+  stroke-opacity: 0.0;
+  stroke-width: 10px;
+  stroke: fuchsia;
+  fill: none;
+}
+
+/**
+ * shape / connection basic styles
+ */
+.djs-shape .djs-visual {
+  stroke: black;
+  stroke-width: 2px;
+  fill: #F3F3F3;
+}
+
+.djs-connection .djs-visual {
+  stroke-width: 2px;
+  stroke: #333;
+  fill: none;
+}
+
+.djs-connection .djs-bendpoint {
+  visibility: hidden;
+}
+
+.djs-connection:hover .djs-bendpoint {
+  visibility: visible;
+}
+
+.djs-connection .djs-bendpoint:hover {
+  stroke: #CCC;
+  stroke-width: 1px;
+  fill: yellow;
+}
+
+.djs-connection-marker {
+  fill: black;
+  stroke: none;
+}
+
+.djs-menu-vertical, .djs-menu-horizontal {
+    height: 35px;
+    background-color: #52B415;
+    padding-left: 10px;
+}
+.djs-menu-vertical > button {
+    display:inline-block;
+    margin-bottom:0;
+    font-weight:400;
+    text-align:center;
+    vertical-align:middle;
+    cursor:pointer;
+    background: #52B415 none;
+    color: white;
+    border: 0px #ffffff;
+    border-right-width: 1px;
+    border-bottom-style: solid;
+    border-left-width: 1px;
+    white-space:nowrap;
+    padding:5px 12px;
+    font-size:15px;
+    line-height:1.428571429;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.djs-menu-vertical >  .button:focus{
+    outline:thin dotted #333;
+    outline:5px auto -webkit-focus-ring-color;
+    outline-offset:-2px;
+}
+.djs-menu-vertical >  .btn:hover,.btn:focus {
+    color:#707070;text-decoration:none;
+}
+
+.djs-menu-brand {
+    background: url("logo.png")  scroll no-repeat transparent;
+    background-size: 35px 35px;
+    width: 35px;
+    height: 35px;
+    float: right;
+}
+
+/* Button icons*/
+.djs-undo-button > i:before {
+    font-family: awesomesymbols;
+    content: "\f0e2";
+    font-style: normal;
+}
+
+.djs-redo-button > i:before {
+    font-family: awesomesymbols;
+    content: "\f01e";
+    font-style: normal;
+}
+
+.djs-rect-button > i {
+    width: 10px;
+    height: 10px;
+    border: 1px solid;
+    display: block;
+}
+
+/* Fonts */
+@font-face {
+    font-family: "awesomesymbols";
+    src: url("../fonts/fontawesome-webfont.woff") format('woff');
+    font-weight: normal;
+}

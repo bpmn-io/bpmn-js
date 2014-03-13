@@ -52,7 +52,8 @@
     "xsd-schema-validator": "0.0.3",
     "sax": "~0.6.0",
     "lodash": "~2.4.0",
-    "eve": "0.4.1"
+    "eve": "0.4.1",
+    "brfs": "~1.0.0"
   },
   "dependencies": {
     "moddle": "~0.0.1",

@@ -57,7 +57,8 @@ module.exports = function(grunt) {
       options: {
         alias: [
           '<%= config.sources %>/main.js:bpmn',
-          '<%= config.sources %>/Model.js:bpmn/Model'
+          '<%= config.sources %>/Model.js:bpmn/Model',
+          '<%= config.sources %>/Diagram.js:bpmn/Diagram'
         ]
       },
       sources: {

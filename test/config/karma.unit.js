@@ -23,7 +23,8 @@ module.exports = function(karma) {
     // browserify configuration
     browserify: {
       debug: true,
-      watch: true
+      watch: true,
+      transform: [ 'debowerify', 'brfs' ]
     }
   });
 };
