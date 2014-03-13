@@ -1,12 +1,14 @@
 var _ = require('lodash');
 
-var BpmnModel = require('../../../lib/model/BpmnModel');
+var BpmnModel = require('../../../lib/Model');
 
-var Helper = require('../Helper');
+var Helper = require('./Helper'),
+    Matchers = require('../Matchers');
 
-describe('BpmnModel', function() {
 
-  beforeEach(Helper.initAdditionalMatchers);
+describe('Model', function() {
+
+  beforeEach(Matchers.add);
 
   describe('parsing', function() {
 
@@ -37,6 +39,7 @@ describe('BpmnModel', function() {
       expect(descriptor).toBeDefined();
       expect(descriptor.propertiesByName['di:modelElement']).toEqual(descriptor.propertiesByName['bpmndi:bpmnElement']);
     });
+
   });
 
   describe('creation', function() {
@@ -58,6 +61,7 @@ describe('BpmnModel', function() {
 
       expect(definitions.$type).toEqual('bpmn:Definitions');
     });
+
   });
 
   describe('property access', function() {
@@ -146,6 +150,7 @@ describe('BpmnModel', function() {
           ]
         });
       });
+      
     });
   });
 });

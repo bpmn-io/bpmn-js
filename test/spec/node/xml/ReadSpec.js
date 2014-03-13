@@ -1,10 +1,11 @@
 var os = require('os');
 
-var BpmnModel = require('../../../../lib/model/BpmnModel');
+var BpmnModel = require('../../../../lib/Model'),
+    Helper = require('../Helper'),
+    Matchers = require('../../Matchers');
 
-var Helper = require('../../Helper');
 
-describe('BpmnModel - read', function() {
+describe('Model', function() {
 
   var bpmnModel = BpmnModel.instance();
 
@@ -20,7 +21,7 @@ describe('BpmnModel - read', function() {
     return read(readBpmnDiagram(file), root, opts, callback);
   }
 
-  beforeEach(Helper.initAdditionalMatchers);
+  beforeEach(Matchers.add);
 
   describe('fromXML', function() {
 
@@ -62,7 +63,7 @@ describe('BpmnModel - read', function() {
     it('import simple Process', function(done) {
 
       // given
-      
+
       // when
       readFile('simple.bpmn', 'bpmn:Definitions', function(err, result) {
         

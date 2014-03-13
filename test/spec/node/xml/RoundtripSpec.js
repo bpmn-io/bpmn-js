@@ -1,12 +1,13 @@
-var BpmnModel = require('../../../../lib/model/BpmnModel'),
-    SchemaValidator = require('xsd-schema-validator');
+var SchemaValidator = require('xsd-schema-validator');
 
-var Helper = require('../../Helper');
+var BpmnModel = require('../../../../lib/Model'),
+    Helper = require('../Helper'),
+    Matchers = require('../../Matchers');
 
 var BPMN_XSD = 'resources/bpmn/xsd/BPMN20.xsd';
 
 
-xdescribe('BpmnModel - roundtrip', function() {
+describe('Model - roundtrip', function() {
 
   var bpmnModel = BpmnModel.instance();
 
@@ -19,25 +20,21 @@ xdescribe('BpmnModel - roundtrip', function() {
   }
 
   function writeBpmn(element, opts, callback) {
-    var result, err;
-
-    try {
-      result = BpmnModel.toXML(element, callback, opts);
-    } catch (e) {
-      err = e;
-    }
-
-    callback(err, result);
+    BpmnModel.toXML(element, opts, callback);
   }
 
   function validate(err, xml, done) {
-    console.log('validate');
 
     if (err) {
       done(err);
     } else {
+
+      if (!xml) {
+        done(new Error('XML is not defined'));
+      }
+
       SchemaValidator.validateXML(xml, BPMN_XSD, function(err, result) {
-        
+
         if (err) {
           done(err);
         } else {
@@ -48,15 +45,16 @@ xdescribe('BpmnModel - roundtrip', function() {
     }
   }
 
-  beforeEach(Helper.initAdditionalMatchers);
+  beforeEach(Matchers.add);
 
   describe('Roundtrip', function() {
 
     it('should serialize home-made bpmn model', function(done) {
 
+      // given
       var model = bpmnModel;
 
-      var definitions = model.create('bpmn:Definitions');
+      var definitions = model.create('bpmn:Definitions', { targetNamespace: 'http://foo' });
 
       var ServiceTask = model.getType('bpmn:ServiceTask');
 
@@ -68,6 +66,8 @@ xdescribe('BpmnModel - roundtrip', function() {
 
       // when
       writeBpmn(definitions, { format: true }, function(err, xml) {
+
+        // then
         validate(err, xml, done);
       });
     });
@@ -77,6 +77,11 @@ xdescribe('BpmnModel - roundtrip', function() {
       // given
       readBpmn('complex.bpmn', function(err, result) {
 
+        if (err) {
+          done(err);
+          return;
+        }
+        
         // when
         writeBpmn(result, { format: true }, function(err, xml) {
           validate(err, xml, done);
@@ -88,6 +93,11 @@ xdescribe('BpmnModel - roundtrip', function() {
 
       // given
       readBpmn('complex-no-extensions.bpmn', function(err, result) {
+
+        if (err) {
+          done(err);
+          return;
+        }
 
         // when
         writeBpmn(result, { format: true }, function(err, xml) {
@@ -101,6 +111,11 @@ xdescribe('BpmnModel - roundtrip', function() {
       // given
       readBpmn('simple.bpmn', function(err, result) {
 
+        if (err) {
+          done(err);
+          return;
+        }
+        
         // when
         writeBpmn(result, { format: true }, function(err, xml) {
           validate(err, xml, done);

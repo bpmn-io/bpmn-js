@@ -1,17 +1,19 @@
-var fs = require('fs');
-var _ = require('lodash');
+var fs = require('fs'),
+    _ = require('lodash');
 
-var Helper = require('../../../Helper');
-var Parser = require('moddle/lib/adapter/cmof/Parser');
+var CmofParser = require('moddle/lib/adapter/cmof/Parser');
+
+var Helper = require('../../Helper');
 
 
 Helper.ensureDirExists('resources/bpmn/json');
+
 
 describe('generate JSON meta model', function() {
 
   function parsed(file, callback, options) {
     return function(done) {
-      new Parser({ clean: true }).parseFile(file, function(err, results) {
+      new CmofParser({ clean: true }).parseFile(file, function(err, results) {
         if (err) {
           done(err);
         } else {

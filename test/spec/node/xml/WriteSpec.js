@@ -1,13 +1,11 @@
 var _ = require('lodash');
 
-var BpmnModel = require('../../../../lib/model/BpmnModel');
-    logger = require('moddle').util.Logger;
-
-var Helper = require('../../Helper'),
-    log = Helper.log;
+var BpmnModel = require('../../../../lib/Model'),
+    Helper = require('../Helper'),
+    Matchers = require('../../Matchers');
 
 
-describe('BpmnModel - write', function() {
+describe('Model', function() {
 
   var createModel = Helper.createModelBuilder('resources/bpmn/json/');
 
@@ -25,7 +23,7 @@ describe('BpmnModel - write', function() {
     BpmnModel.toXML(element, options, callback);
   }
 
-  beforeEach(Helper.initAdditionalMatchers);
+  beforeEach(Matchers.add);
 
   describe('toXML', function() {
 

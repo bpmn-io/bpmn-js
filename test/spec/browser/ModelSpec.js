@@ -1,6 +1,6 @@
-var BpmnModel = require('../../../lib/model/BpmnModel');
+var BpmnModel = require('../../../lib/Model');
 
-describe('BpmnModel - browser support', function() {
+describe('Model - browser support', function() {
 
   function read(xml, callback, done) {
 

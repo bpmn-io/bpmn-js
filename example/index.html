@@ -6,11 +6,16 @@
   <div id="drop-zone">Drop files here</div>
   <output id="list"></output>
 
+  <div class="canvas"></div>
+
   <script src="../bpmn.js"></script>
 
   <script>
-    var BpmnModel = require('BpmnModel');
+    var bpmn = require('bpmn');
+    var Model = require('bpmn/Model');
   </script>
+
+
   <script>
     function handleFileSelect(evt) {
       evt.stopPropagation();
@@ -19,7 +24,6 @@
       var files = evt.dataTransfer.files; // FileList object.
 
       // files is a FileList of File objects. List some properties.
-      var output = [];
       for (var i = 0, f; f = files[i]; i++) {
         
         var reader = new FileReader();
@@ -28,11 +32,17 @@
 
           var xml = e.target.result;
 
-          BpmnModel.fromXML(xml, 'bpmn:Definitions', function(err, result) {
-
-            var resultAsJson = JSON.stringify(result, null, '  ');
-            document.getElementById('list').innerHTML = resultAsJson;
+          Model.fromXML(xml, 'bpmn:Definitions', function(err, definitions) {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log(definitions);
+            }
           });
+
+          /*renderer.renderXML(xml, function(err) {
+            console.log('diagram rendererd');
+          });*/
         };
 
         reader.readAsText(f);
