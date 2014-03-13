@@ -637,8 +637,8 @@
             <targetRef>sid-8D8BD39F-1B08-433F-8F93-A1FF7520BA8B</targetRef>
          </dataOutputAssociation>
       </task>
-      <dataObject id="sid-8D8BD39F-1B08-433F-8F93-A1FF7520BA8B" isCollection="true" name="Bewerber">
-      </dataObject>
+      <dataObjectReference id="sid-8D8BD39F-1B08-433F-8F93-A1FF7520BA8B" isCollection="true" name="Bewerber">
+      </dataObjectReference>
       <exclusiveGateway gatewayDirection="Diverging" id="sid-B9B94A24-2819-461A-B5E8-61182BDA87DD" name="Bewerbungen&#10;eingegangen?">
          <incoming>sid-770DE0CC-14BD-46C1-B93A-3C10BD8A3933</incoming>
          <outgoing>sid-155BB3AD-386C-4EF2-92C6-E2800D82A875</outgoing>
@@ -903,8 +903,8 @@
          <incoming>sid-3906E383-5898-47F6-84FE-CBA12360BCF9</incoming>
          <outgoing>sid-11A2840A-596D-4937-BB37-0D5952E03535</outgoing>
       </task>
-      <dataObject id="sid-DF651323-2973-4344-A5E5-4FFF3FDCD702" name="Führungskraft&#10;Fachbereich">
-      </dataObject>
+      <dataObjectReference id="sid-DF651323-2973-4344-A5E5-4FFF3FDCD702" name="Führungskraft&#10;Fachbereich">
+      </dataObjectReference>
       <startEvent id="sid-3B833F36-ABCE-49A9-B268-445BAC9F758D" isInterrupting="true" name="Gesprächs-&#10;termin&#10;erreicht">
          <outgoing>sid-3906E383-5898-47F6-84FE-CBA12360BCF9</outgoing>
          <conditionalEventDefinition id="sid-3334a259-921f-4caa-bf4e-fc23785e7a21">

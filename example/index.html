@@ -2,9 +2,20 @@
 <head>
   <title>bpmn-js demo</title>
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    #drop-zone {
+      width: 200px;
+      line-height: 100px;
+      background: fuchsia;
+      color: #FFF;
+      font-size: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <div id="drop-zone">Drop files here</div>
+  <div id="drop-zone">Drop BPMN here</div>
   <output id="list"></output>
 
   <div id="canvas"></div>
@@ -17,8 +28,9 @@
     var Diagram = require('bpmn/Diagram');
   </script>
 
-
   <script>
+    var diagram = new Diagram(document.getElementById('canvas'));
+
     function handleFileSelect(evt) {
       evt.stopPropagation();
       evt.preventDefault();
@@ -38,12 +50,9 @@
             if (err) {
               console.error(err);
             } else {
-              var diagram = new Diagram(document.getElementById('canvas'));
               diagram.importDefinitions(definitions, function() {
                 console.log("import done!!");
               });
-
-              console.log(definitions);
             }
           });
 
