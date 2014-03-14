@@ -46,7 +46,8 @@ module.exports = function(grunt) {
 
         browserify: {
           watch: false,
-          debug: false
+          debug: false,
+          transform: [ 'brfs' ]
         }
       },
       unit: {
@@ -66,8 +67,7 @@ module.exports = function(grunt) {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
-          debug: true,
-          transform: [ 'debowerify' ]
+          debug: true
         }
       },
       dist: {
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
         },
         options: {
           debug: false,
-          transform: [ 'debowerify', 'uglifyify' ]
+          transform: [ 'uglifyify' ]
         }
       }
     },

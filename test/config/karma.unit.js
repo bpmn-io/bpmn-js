@@ -17,6 +17,9 @@ module.exports = function(karma) {
 
     browsers: [ 'Chrome' ],
 
+    // fixing slow browserify build
+    browserNoActivityTimeout: 30000,
+
     singleRun: false,
     autoWatch: true,
 
@@ -24,7 +27,7 @@ module.exports = function(karma) {
     browserify: {
       debug: true,
       watch: true,
-      transform: [ 'debowerify', 'brfs' ]
+      transform: [ 'brfs' ]
     }
   });
 };

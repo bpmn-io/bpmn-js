@@ -41,10 +41,9 @@
     "grunt-jasmine-node": "~0.1.0",
     "load-grunt-tasks": "~0.3.0",
     "uglifyify": "~1.1.0",
-    "debowerify": "0.6.0",
-    "browserify": "~3.32.1",
+    "browserify": ">3.0 && <3.30",
     "karma": "~0.12.0",
-    "karma-browserify": "~0.0.6",
+    "karma-browserify": "~0.1.0",
     "karma-jasmine": "~0.2.0",
     "karma-chrome-launcher": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.2",
@@ -52,13 +51,14 @@
     "xsd-schema-validator": "0.0.3",
     "sax": "~0.6.0",
     "lodash": "~2.4.0",
-    "eve": "0.4.1",
     "brfs": "~1.0.0"
   },
   "dependencies": {
     "moddle": "~0.0.1",
     "moddle-xml": "~0.0.1",
-    "diagram-js": "~0.0.1",
+    "diagram-js": "~0.0.1"
+  },
+  "peerDependencies": {
     "lodash": "~2.4.0"
   }
 }
