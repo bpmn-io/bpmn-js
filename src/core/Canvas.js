@@ -15,13 +15,11 @@ var Snap = require('snapsvg'),
 function Canvas(config, events, commandStack, svgFactory, shapes) {
   'use strict';
 
-  var options = _.extend({}, { width: 'auto', height: 'auto' }, config.canvas || {});
+  var options = _.extend({}, { width: '100%', height: '100%' }, config.canvas || {});
 
   var ids = new IdGenerator('s');
 
-  var paper = Snap.createSnapAt(options.width,
-                              options.height,
-                              options.container);
+  var paper = Snap.createSnapAt(options.width, options.height, options.container);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
@@ -232,8 +230,6 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
    * Add event listener to paper.
    */
   function addListener(id, eventListener) {
-    'use strict';
-
     paper.node.addEventListener(id, eventListener);
   }
 
@@ -241,8 +237,6 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
    * Remove event from paper.
    */
   function removeListener(id, eventListener) {
-    'use strict';
-
     paper.node.removeEventListener(id, eventListener);
   }
 

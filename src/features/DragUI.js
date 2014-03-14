@@ -1,7 +1,8 @@
 require('../core/Events');
 require('../core/Canvas');
+require('../core/Shapes');
+
 require('./services/Selection');
-require('./services/Shapes');
 require('./services/Rules');
 
 require('./DragEvents');

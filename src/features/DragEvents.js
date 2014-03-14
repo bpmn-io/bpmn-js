@@ -1,8 +1,8 @@
 require('../core/Events');
 require('../core/CommandStack');
+require('../core/Shapes');
 
 require('./services/Selection');
-require('./services/Shapes');
 
 require('./BasicInteractionEvents');
 

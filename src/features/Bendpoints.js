@@ -1,6 +1,6 @@
 require('../core/Events');
+require('../core/Shapes');
 
-require('./services/Shapes');
 require('./BasicInteractionEvents');
 
 var Diagram = require('../Diagram'),
