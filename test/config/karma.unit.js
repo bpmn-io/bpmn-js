@@ -11,20 +11,21 @@ module.exports = function(karma) {
     
     reporters: [ 'dots' ],
 
-    preprocessors: {
-      'test/spec/**/*Spec.js': [ 'browserify' ]
-    },
-
     browsers: [ 'PhantomJS' ],
 
     singleRun: false,
     autoWatch: true,
 
+    browserNoActivityTimeout: 30000,
+
     // browserify configuration
     browserify: {
       debug: true,
-      watch: true,
-      transform: [ 'debowerify' ]
+      watch: true
+    },
+
+    preprocessors: {
+      'test/spec/**/*Spec.js': [ 'browserify' ]
     }
   });
 };

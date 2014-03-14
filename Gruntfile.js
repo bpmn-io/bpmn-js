@@ -28,9 +28,6 @@ module.exports = function(grunt) {
 
     karma: {
       options: {
-        browserify: {
-          transform: [ 'debowerify' ]
-        },
         configFile: '<%= config.tests %>/config/karma.unit.js',
       },
       single: {
@@ -50,13 +47,13 @@ module.exports = function(grunt) {
     },
     browserify: {
       vendor: {
-        src: [ 'bower_components/snapsvg/index.js', 'node_modules/lodash/lodash.js' ],
+        src: [ 'snapsvg', 'lodash' ],
         dest: '<%= config.dist %>/common.js',
         options: {
           debug: true,
           alias: [
-            'bower_components/snapsvg/index.js:snapsvg',
-            'node_modules/lodash/lodash.js:lodash'
+            'snapsvg',
+            'lodash'
           ]
         }
       },
