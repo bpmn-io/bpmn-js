@@ -155,6 +155,25 @@ describe('BpmnTreeWalker', function() {
       expectWalkOrder('collaboration-message-flows.bpmn', expectedOrder, done);
     });
 
+    it('collaboration / sequence flows', function(done) {
+
+      // given
+      var expectedOrder = [
+        { id : 'Participant_2', parent : undefined },
+        { id : 'Lane_1', parent : 'Participant_2' },
+        { id : 'Lane_2', parent : 'Lane_1' },
+        { id : 'EndEvent_1', parent : 'Lane_2' },
+        { id : 'Lane_3', parent : 'Lane_1' },
+        { id : 'Task_1', parent : 'Lane_3' },
+        { id : 'Lane_4', parent : 'Participant_2' },
+        { id : 'ExclusiveGateway_1', parent : 'Lane_4' },
+        { id : 'SequenceFlow_1', parent : undefined },
+        { id : 'SequenceFlow_2', parent : undefined }
+      ];
+
+      expectWalkOrder('collaboration-sequence-flows.bpmn', expectedOrder, done);
+    });
+
     it('collaboration / data items', function(done) {
 
       // given
