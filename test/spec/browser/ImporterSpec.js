@@ -36,4 +36,15 @@ describe('Importer', function() {
       diagram.importDefinitions(result, done);
     });
   });
+
+  it('should import empty definitions', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
+
+    read(xml, function(err, result) {
+      var diagram = new Diagram(container);
+
+      diagram.importDefinitions(result, done);
+    });
+  });
 });
