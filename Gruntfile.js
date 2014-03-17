@@ -60,7 +60,8 @@ module.exports = function(grunt) {
           '<%= config.sources %>/main.js:bpmn',
           '<%= config.sources %>/Model.js:bpmn/Model',
           '<%= config.sources %>/Diagram.js:bpmn/Diagram'
-        ]
+        ],
+        insertGlobalVars: []
       },
       sources: {
         files: {
