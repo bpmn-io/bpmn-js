@@ -41,6 +41,6 @@
   },
   "dependencies": {
     "eve": "0.4.1",
-    "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.2.1-browserify.tar.gz"
+    "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.2.2-browserify.tar.gz"
   }
 }
