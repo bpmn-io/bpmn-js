@@ -1,7 +1,7 @@
 node_modules/
 bower_components/
 tmp/
-docs/
+docs/api/
 dist/
 .idea
 *.iml

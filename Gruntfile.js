@@ -112,7 +112,7 @@ module.exports = function(grunt) {
       dist: {
         src: [ '<%= config.sources %>/**/*.js' ],
         options: {
-          destination: 'docs',
+          destination: 'docs/api',
           plugins: [ 'plugins/markdown' ]
         }
       }
