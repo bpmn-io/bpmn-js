@@ -143,6 +143,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [ 'browserify:dist', 'copy:samples' ]);
 
   grunt.registerTask('auto-build', [
+    'copy:samples',
     'concurrent:sources',
     'connect:livereload',
     'watch'
