@@ -1,8 +1,10 @@
 require('../core/Events');
 require('../core/Shapes');
 
-require('./BasicInteractionEvents');
 require('./services/Selection');
+
+require('./BasicInteractionEvents');
+require('./Outline');
 
 var Diagram = require('../Diagram'),
     _ = require('lodash'),

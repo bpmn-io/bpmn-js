@@ -6,6 +6,7 @@ require('./services/Selection');
 require('./services/Rules');
 
 require('./DragEvents');
+require('./Outline');
 
 var Snap = require('snapsvg');
 
