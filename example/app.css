@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Open Sans', sans-serif;
+
+  font-size: 12px;
+
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.content,
+.content > div {
+  width: 100%;
+  height: 100%;
+}
+
+.content .intro {
+  text-align: center;
+  display: table;
+
+  font-size: 16px;
+  color: #111;
+}
+
+.content .intro .note {
+  vertical-align: middle;
+  text-align: center;
+  display: table-cell;
+}
+
+.content .canvas, 
+.content.with-diagram .intro {
+  display: none;
+}
+
+.content.with-diagram .canvas {
+  display: block;
+}
+
+.buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  opacity: 0.8;
+  
+  background: no-repeat url('bpmn-io-icon.png');
+}
