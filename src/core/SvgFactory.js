@@ -1,4 +1,9 @@
+var components = require('../di').defaultModule;
+
 var Snap = require('snapsvg');
+
+// required components
+require('./Events');
 
 function SvgFactory(events) {
   var markers;
@@ -107,6 +112,6 @@ function SvgFactory(events) {
   };
 }
 
-SvgFactory.$inject = [ 'events' ];
+components.factory('svgFactory', [ 'events', SvgFactory ]);
 
 module.exports = SvgFactory;

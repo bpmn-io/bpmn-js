@@ -1,5 +1,8 @@
+var components = require('../di').defaultModule;
+
 var _ = require('lodash');
 
+// required components
 require('./Events');
 
 /**
@@ -108,5 +111,7 @@ function Shapes(events) {
     getShapeByGraphics: getShapeByGraphics
   };
 }
+
+components.type('shapes', [ 'events', Shapes ]);
 
 module.exports = Shapes;

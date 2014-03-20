@@ -1,7 +1,7 @@
 var _ = require('lodash');
 var Diagram = require('../src/Diagram');
 
-var OPTIONS, LOCALS, DIAGRAM;
+var OPTIONS, DIAGRAM;
 
 function options(opts) {
   if (_.isFunction(opts)) {
@@ -47,10 +47,15 @@ function bootstrapDiagram(options, locals) {
       locals = locals();
     }
 
-    LOCALS = locals || {};
-
     options = _.extend({}, OPTIONS || {}, options || {});
-    options.locals = _.extend(options.locals || {}, LOCALS);
+
+    var mockModule = {};
+
+    _.forEach(locals, function(v, k) {
+      mockModule[k] = ['value', v];
+    });
+
+    options.modules = _.unique([].concat(options.modules || [], [ mockModule ]));
 
     DIAGRAM = new Diagram(options);
   };
@@ -80,7 +85,7 @@ function bootstrapDiagram(options, locals) {
  */
 function inject(fn) {
   return function() {
-    DIAGRAM.inject(fn);
+    DIAGRAM.invoke(fn);
   };
 }
 

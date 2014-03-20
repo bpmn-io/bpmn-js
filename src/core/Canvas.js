@@ -1,7 +1,16 @@
+var components = require('../di').defaultModule;
+
+var IdGenerator = require('../util/IdGenerator'),
+    shapeUtil = require('../util/shapeUtil');
+
 var Snap = require('snapsvg'),
-    IdGenerator = require('../util/IdGenerator'),
-    shapeUtil = require('../util/shapeUtil'),
     _ = require('lodash');
+
+// required components
+require('./Events');
+require('./CommandStack');
+require('./SvgFactory');
+require('./Shapes');
 
 /**
  * @type djs.ShapeDescriptor
@@ -266,6 +275,6 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   };
 }
 
-Canvas.$inject = ['config', 'events', 'commandStack', 'svgFactory', 'shapes'];
+components.type('canvas', [ 'config', 'events', 'commandStack', 'svgFactory', 'shapes', Canvas ]);
 
 module.exports = Canvas;

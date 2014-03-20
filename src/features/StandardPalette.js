@@ -64,7 +64,7 @@ function StandardPalette(config, events, canvas, paletteDragDrop, injector) {
         button.appendChild(textNode);
       }
       button.addEventListener(item.action.type, function(event) {
-        injector.inject(item.action.handler, { event: event });
+        injector.invoke(item.action.handler, { event: event });
       });
 
       menuDiv.appendChild(button);

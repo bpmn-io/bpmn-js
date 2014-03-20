@@ -1,56 +1,48 @@
-var modules = require('./util/modules'),
-    Canvas = require('./core/Canvas'),
-    Events = require('./core/Events'),
-    Shapes = require('./core/Shapes'),
-    SvgFactory = require('./core/SvgFactory'),
-    CommandStack = require('./core/CommandStack');
+var di = require('./di');
 
-var _ = require('lodash');
+// diagram-js main components
+require('./core/Canvas');
+require('./core/Events');
 
 // require snapsvg extensions
-require('./snapsvg.ext');
-
-var registry = new modules.Registry();
+require('./snapsvg-extensions');
 
 
 /**
  * @namespace djs
  */
 
+var defaultModule = di.defaultModule;
+
+function createInjector(options) {
+
+  options = options || {};
+
+  var components = [ 'canvas', 'events' ].concat(options.components || []),
+      modules = [].concat(options.modules || []);
+
+  if (modules.indexOf(defaultModule) === -1) {
+    modules.unshift(defaultModule);
+  }
+
+  return di.bootstrap(modules, components, options);
+}
+
 /**
  * @class
  *
- * The main diagram.js entry point.
+ * The main diagram-js entry point that bootstraps the diagram with the given 
+ * configuration.
  *
  * @param {Object} options
- * @param {String[]} options.plugins a list of plugins to use when creating the diagram
+ * @param {String[]} options.components a list of components to instantiate when creating the diagram
+ * @param {String[]} options.modules a list of modules to use for locating instantiatable diagram components
  */
-/**
- * Bootstrap the diagram with the given modules
- * configured through an options hash
- */
-
-function Diagram(options) {
+function Diagram(options, injector) {
   'use strict';
 
-  var injector;
-  function bootstrap(modules, options) {
-
-    var di = registry.createInjector();
-    
-    var locals = _.extend({}, { config: options }, options.locals || {});
-
-    _.forEach(modules, function(m) {
-      di.resolve(m, locals);
-    });
-
-    return di;
-  }
-
-  options = options || {};
-  options.plugins = [ 'canvas', 'events', 'svgFactory' ].concat(options.plugins || []);
-
-  injector = bootstrap(options.plugins, options);
+  // create injector unless explicitly specified
+  injector = injector || createInjector(options);
 
   // fire diagram init because
   // all components have been loaded now
@@ -73,47 +65,47 @@ function Diagram(options) {
    * @type {Object}
    * @property {snapsvg.Paper} paper the initialized drawing paper
    */
-  injector.resolve('events').fire('diagram.init');
+  injector.get('events').fire('diagram.init');
 
   return {
 
     /**
      * Resolves a diagram service
      *
-     * @method Diagram#resolve
+     * @method Diagram#get
      *
-     * @param {Function|Object[]} function that should be called with internal diag<asdf></asdf>ram services on
+     * @param {Function|Object[]} function that should be called with internal diagram services on
      * @param {Object} locals a number of locals to use to resolve certain dependencies
      */
-    resolve: injector.resolve,
+    get: injector.get,
 
     /**
      * Executes a function into which diagram services are injected
      * 
-     * @method Diagram#inject
+     * @method Diagram#invoke
      *
      * @param {Function|Object[]} fn the function to resolve
      * @param {Object} locals a number of locals to use to resolve certain dependencies
      */
-    inject: injector.inject
+    invoke: injector.invoke
   };
 }
-
-// register default modules here as part of the core
-// prevents circular dependency core_module -> diagram -> core_module
-registry.register('canvas', Canvas);
-registry.register('events', Events);
-registry.register('svgFactory', SvgFactory);
-registry.register('commandStack', CommandStack);
-registry.register('shapes', Shapes);
 
 module.exports = Diagram;
 
 /**
- * Register a new plugin with the diagram.
+ * The main diagram module that can be used
+ * to register an extension on the diagram.
  * 
- * @method Diagram.plugin
- *
+ * @field Diagram.components
+ * @type {didi.Module}
+ */
+module.exports.components = defaultModule;
+
+/**
+ * Registers an extension with the diagram.
+ * 
+ * @method Diagram.plugin 
  * @example
  *
  * var Diagram = require('Diagram');
@@ -124,9 +116,9 @@ module.exports = Diagram;
  *   });
  * }]);
  *
- * var diagram = new Diagram({ plugins: 'mySamplePlugin' });
+ * var diagram = new Diagram({ components: ['mySamplePlugin'] });
  *
- * diagram.resolve([ 'canvas', function(canvas) {
+ * diagram.invoke([ 'canvas', function(canvas) {
  *   
  *   // add shape to drawing canvas
  *   canvas.addShape({ x: 10, y: 10 });
@@ -139,4 +131,4 @@ module.exports = Diagram;
  *
  * @see Diagram
  */
-module.exports.plugin = registry.register;
+module.exports.plugin = defaultModule.type;

@@ -1,3 +1,5 @@
+var components = require('../di').defaultModule;
+
 var _ = require('lodash');
 
 /**
@@ -181,5 +183,7 @@ function Events() {
     fire: fire
   };
 }
+
+components.type('events', Events);
 
 module.exports = Events;

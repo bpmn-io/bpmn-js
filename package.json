@@ -34,10 +34,12 @@
     "grunt-jsdoc": "~0.5.1",
     "grunt-concurrent": "~0.4.0",
     "load-grunt-tasks": "~0.3.0",
-    "lodash": "~2.4.0"
+    "lodash": "~2.4.0",
+    "didi": "~0.0.4"
   },
   "peerDependencies": {
-    "lodash": "~2.4.0"
+    "lodash": "~2.4.0",
+    "didi": "~0.0.4"
   },
   "dependencies": {
     "eve": "0.4.1",

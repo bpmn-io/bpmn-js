@@ -1,3 +1,5 @@
+var components = require('../di').defaultModule;
+
 var _ = require('lodash');
 
 /**
@@ -160,5 +162,7 @@ function CommandStack() {
     clearStack: clearActionStack
   };
 }
+
+components.type('commandStack', CommandStack);
 
 module.exports = CommandStack;

@@ -27,7 +27,7 @@ describe('diagram', function() {
       }
     });
 
-    diagram.inject([ 'canvas', function(canvas) {
+    diagram.invoke([ 'canvas', function(canvas) {
       canvas.addShape({x: 10, y: 10, width: 30, height: 30 });
       canvas.addShape({x: 100, y: 100, width: 30, height: 30 });
 

@@ -30,7 +30,7 @@
           width: 700,
           height: 500
         },
-        plugins: [
+        components: [
           'selectionUI',
           'dragUI',
           'standardPalette' ],
@@ -83,7 +83,7 @@
       });
 
 
-      diagram.inject([ 'events', 'canvas', 'commandStack', 'shapes', function(events, canvas, commandStack, shapes) {
+      diagram.invoke([ 'events', 'canvas', 'commandStack', 'shapes', function(events, canvas, commandStack, shapes) {
 
         events.on('connection.added', function(event) {
           console.log('connection added', event);
