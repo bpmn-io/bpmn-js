@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         alias: [
           '<%= config.sources %>/main.js:bpmn',
           '<%= config.sources %>/Model.js:bpmn/Model',
-          '<%= config.sources %>/Renderer.js:bpmn/Renderer',
+          '<%= config.sources %>/Viewer.js:bpmn/Viewer',
           '<%= config.sources %>/Modeler.js:bpmn/Modeler'
         ],
         insertGlobalVars: []

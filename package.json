@@ -50,8 +50,9 @@
     "jsondiffpatch": "~0.1.4",
     "xsd-schema-validator": "0.0.3",
     "sax": "~0.6.0",
+    "brfs": "~1.0.0",
     "lodash": "~2.4.0",
-    "brfs": "~1.0.0"
+    "didi": "~0.0.4"
   },
   "dependencies": {
     "moddle": "~0.0.1",
@@ -59,6 +60,7 @@
     "diagram-js": "~0.0.1"
   },
   "peerDependencies": {
-    "lodash": "~2.4.0"
+    "lodash": "~2.4.0",
+    "didi": "~0.0.4"
   }
 }

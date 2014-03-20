@@ -1,14 +1,14 @@
 (function() {
 
   var Model = require('bpmn/Model'),
-      Renderer = require('bpmn/Renderer'),
+      Viewer = require('bpmn/Viewer'),
       Modeler = require('bpmn/Modeler');
 
   var container = $('#js-drop-zone');
 
   var canvas = $('#js-canvas');
 
-  var BpmnJS = canvas.is('.modeler') ? Modeler : Renderer;
+  var BpmnJS = canvas.is('.modeler') ? Modeler : Viewer;
   
   var renderer = new BpmnJS(canvas.get(0));
 

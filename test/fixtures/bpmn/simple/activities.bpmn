@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sample-diagram" targetNamespace="http://activiti.org/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:task id="Task_1"/>
+    <bpmn:userTask id="UserTask_1"/>
+    <bpmn:serviceTask id="ServiceTask_1"/>
+    <bpmn:sendTask id="SendTask_1"/>
+    <bpmn:receiveTask id="ReceiveTask_1"/>
+    <bpmn:scriptTask id="ScriptTask_1"/>
+    <bpmn:businessRuleTask id="BusinessRuleTask_1"/>
+    <bpmn:manualTask id="ManualTask_1"/>
+    <bpmn:subProcess id="SubProcess_2"/>
+    <bpmn:subProcess id="SubProcess_1"/>
+    <bpmn:transaction id="Transaction_1"/>
+    <bpmn:transaction id="Transaction_2"/>
+    <bpmn:adHocSubProcess id="AdHocSubProcess_1"/>
+    <bpmn:adHocSubProcess id="AdHocSubProcess_2"/>
+    <bpmn:callActivity id="CallActivity_1"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_Task_4" bpmnElement="Task_1">
+        <dc:Bounds height="80.0" width="100.0" x="112.0" y="105.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ManualTask_2" bpmnElement="ManualTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="264.0" y="348.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="112.0" y="225.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ScriptTask_2" bpmnElement="ScriptTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="264.0" y="105.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BusinessRuleTask_2" bpmnElement="BusinessRuleTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="264.0" y="228.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="112.0" y="348.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ReceiveTask_2" bpmnElement="ReceiveTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="264.0" y="468.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SendTask_2" bpmnElement="SendTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="264.0" y="591.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1">
+        <dc:Bounds height="80.0" width="100.0" x="672.0" y="105.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_3" bpmnElement="SubProcess_2" isExpanded="true">
+        <dc:Bounds height="157.0" width="217.0" x="420.0" y="105.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Transaction_2" bpmnElement="Transaction_1" isExpanded="true">
+        <dc:Bounds height="162.0" width="217.0" x="420.0" y="348.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Transaction_3" bpmnElement="Transaction_2">
+        <dc:Bounds height="80.0" width="100.0" x="672.0" y="348.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_AdHocSubProcess_2" bpmnElement="AdHocSubProcess_1" isExpanded="true">
+        <dc:Bounds height="166.0" width="217.0" x="420.0" y="591.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_AdHocSubProcess_3" bpmnElement="AdHocSubProcess_2">
+        <dc:Bounds height="80.0" width="100.0" x="672.0" y="591.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_CallActivity_2" bpmnElement="CallActivity_1">
+        <dc:Bounds height="80.0" width="100.0" x="828.0" y="105.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
