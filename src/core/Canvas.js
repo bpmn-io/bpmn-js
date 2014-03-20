@@ -3,13 +3,12 @@ var components = require('../di').defaultModule;
 var IdGenerator = require('../util/IdGenerator'),
     shapeUtil = require('../util/shapeUtil');
 
-var Snap = require('snapsvg'),
-    _ = require('lodash');
+var _ = require('lodash');
 
 // required components
 require('./Events');
 require('./CommandStack');
-require('./SvgFactory');
+require('./GraphicsFactory');
 require('./Shapes');
 
 /**
@@ -21,14 +20,14 @@ require('./Shapes');
  *
  * @emits Canvas#canvas.init
  */
-function Canvas(config, events, commandStack, svgFactory, shapes) {
+function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   'use strict';
 
   var options = _.extend({}, { width: '100%', height: '100%' }, config.canvas || {});
 
   var ids = new IdGenerator('s');
 
-  var paper = Snap.createSnapAt(options.width, options.height, options.container);
+  var paper = graphicsFactory.createPaper(options);
 
   // holds id -> { element, gfx } mappings
   var elementMap = {};
@@ -110,7 +109,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
 
   function internalAddShape(shape) {
 
-    var gfx = svgFactory.createShape(paper, shape);
+    var gfx = graphicsFactory.createShape(paper, shape);
 
     checkId(shape, gfx);
     
@@ -162,7 +161,7 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
    * @return {Canvas} the canvas api
    */
   function addConnection(connection) {
-    var gfx = svgFactory.createConnection(paper, connection);
+    var gfx = graphicsFactory.createConnection(paper, connection);
 
     checkId(connection, gfx);
 
@@ -275,6 +274,6 @@ function Canvas(config, events, commandStack, svgFactory, shapes) {
   };
 }
 
-components.type('canvas', [ 'config', 'events', 'commandStack', 'svgFactory', 'shapes', Canvas ]);
+components.type('canvas', [ 'config', 'events', 'commandStack', 'graphicsFactory', 'shapes', Canvas ]);
 
 module.exports = Canvas;

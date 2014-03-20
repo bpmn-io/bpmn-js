@@ -4,9 +4,6 @@ var di = require('./di');
 require('./core/Canvas');
 require('./core/Events');
 
-// require snapsvg extensions
-require('./snapsvg-extensions');
-
 
 /**
  * @namespace djs

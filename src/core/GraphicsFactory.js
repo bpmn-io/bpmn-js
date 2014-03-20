@@ -1,11 +1,11 @@
 var components = require('../di').defaultModule;
 
-var Snap = require('snapsvg');
-
 // required components
 require('./Events');
+require('../draw/Snap');
 
-function SvgFactory(events) {
+function GraphicsFactory(events, Snap) {
+
   var markers;
 
   function addMarker(id, element) {
@@ -106,12 +106,16 @@ function SvgFactory(events) {
     rect.transform(positionMatrix);
   }
 
-  return {
-    createConnection: createConnection,
-    createShape: createShape
-  };
+  function createPaper(options) {
+    return Snap.createSnapAt(options.width, options.height, options.container);
+  }
+  
+  // API
+  this.createConnection = createConnection;
+  this.createShape = createShape;
+  this.createPaper = createPaper;
 }
 
-components.factory('svgFactory', [ 'events', SvgFactory ]);
+components.type('graphicsFactory', [ 'events', 'Snap', GraphicsFactory ]);
 
-module.exports = SvgFactory;
+module.exports = GraphicsFactory;
