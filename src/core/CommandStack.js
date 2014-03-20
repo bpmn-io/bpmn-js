@@ -1,4 +1,4 @@
-var components = require('../di').defaultModule;
+var diagramModule = require('../di').defaultModule;
 
 var _ = require('lodash');
 
@@ -163,6 +163,6 @@ function CommandStack() {
   };
 }
 
-components.type('commandStack', CommandStack);
+diagramModule.type('commandStack', CommandStack);
 
 module.exports = CommandStack;

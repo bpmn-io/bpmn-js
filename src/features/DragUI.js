@@ -2,13 +2,13 @@ require('../core/Events');
 require('../core/Canvas');
 require('../core/Shapes');
 
+require('../draw/Snap');
+
 require('./services/Selection');
 require('./services/Rules');
 
 require('./DragEvents');
 require('./Outline');
-
-var Snap = require('snapsvg');
 
 var Diagram = require('../Diagram'),
     _ = require('lodash'),
@@ -26,7 +26,7 @@ var Diagram = require('../Diagram'),
  * @param {Canvas} canvas the drawing canvas
  * @param {Rules} the rule engine
  */
-function DragUI(events, selection, shapes, canvas, rules) {
+function DragUI(events, selection, shapes, canvas, snap, rules) {
 
   var paper = canvas.getContext();
 
@@ -143,6 +143,6 @@ function DragUI(events, selection, shapes, canvas, rules) {
   });
 }
 
-Diagram.plugin('dragUI', [ 'events', 'selection', 'shapes', 'canvas', 'rules', 'dragEvents', DragUI ]);
+Diagram.plugin('dragUI', [ 'events', 'selection', 'shapes', 'canvas', 'snap', 'rules', 'dragEvents', DragUI ]);
 
 module.exports = DragUI;

@@ -1,89 +1,28 @@
-var components = require('../di').defaultModule;
+var diagramModule = require('../di').defaultModule;
 
 // required components
 require('./Events');
+
 require('../draw/Snap');
+require('../draw/Renderer');
 
-function GraphicsFactory(events, Snap) {
 
-  var markers;
+function GraphicsFactory(events, renderer, snap) {
 
-  function addMarker(id, element) {
-    if (!markers) {
-      markers = {};
-    }
+  function wrapVisual(paper, gfx, type) {
 
-    markers[id] = element.attr({ id: id });
-  }
-
-  function initMarkers(paper) {
-
-    addMarker('sequenceflow-end-marker',
-      paper
-        .path('M 0 0 L 10 5 L 0 10 Z')
-          .attr('class', 'djs-connection-marker')
-          .marker(0, 0, 10, 10, 10, 5)
-            .attr({
-              markerUnits: 'strokeWidth',
-              markerWidth: 10,
-              markerHeight: 6,
-              orient: 'auto',
-              overflow: 'visible'
-            }));
-
-  //   addMarker('sequenceFlowEnd',
-  //     paper
-  //       .path('M 0 0 L 10 5 L 0 10')
-  //       .marker(0, 0, 10, 10, 0, 5)
-  //         .attr({
-  //           markerUnits: 'strokeWidth',
-  //           markerWidth: 5,
-  //           markerHeight: 3,
-  //           orient: auto,
-  //           overflow: 'visible'
-  //         }));
-
-  //   <marker id='starttriangle' overflow='visible'
-  // viewBox='0 0 10 10' refX='5' refY='5' 
-  // markerUnits='strokeWidth'
-  // markerWidth='2' markerHeight='3'
-  // orient='auto'>
-  //   <path d='M -2 5 L 8 0 L 8 10' />
-  //   </marker>
-  }
-
-  events.on('canvas.init', function(event) {
-    var paper = event.paper;
-
-    initMarkers(paper);
-  });
-
-  function flattenPoints(points) {
-    var result = [];
-
-    for (var i = 0, p; !!(p = points[i]); i++) {
-      result.push(p.x);
-      result.push(p.y);
-    }
-
-    return result;
-  }
-
-  function wrap(paper, gfx, type) {
-
-    // append djs-visual to the element
     gfx.addClass('djs-visual');
 
     return paper
-             .group(gfx)
-               .addClass('djs-group')
-               .addClass('djs-' + type);
+      .group(gfx)
+        .addClass('djs-group')
+        .addClass('djs-' + type);
   }
 
   function createShape(paper, data) {
 
-    var rect = paper.rect(0, 0, data.width, data.height, 10, 10);
-    var group = wrap(paper, rect, 'shape');
+    var gfx = renderer.drawShape(paper, data);
+    var group = wrapVisual(paper, gfx, 'shape');
 
     setPosition(group, data.x, data.y);
 
@@ -91,23 +30,21 @@ function GraphicsFactory(events, Snap) {
   }
 
   function createConnection(paper, data) {
-    var points = flattenPoints(data.waypoints);
+    var gfx = renderer.drawConnection(paper, data);
 
-    var line = paper.polyline(points);
-
-    var group = wrap(paper, line, 'connection');
+    var group = wrapVisual(paper, gfx, 'connection');
 
     return group;
   }
 
-  function setPosition(rect, x, y) {
-    var positionMatrix = new Snap.Matrix();
+  function setPosition(gfx, x, y) {
+    var positionMatrix = new snap.Matrix();
     positionMatrix.translate(x, y);
-    rect.transform(positionMatrix);
+    gfx.transform(positionMatrix);
   }
 
   function createPaper(options) {
-    return Snap.createSnapAt(options.width, options.height, options.container);
+    return snap.createSnapAt(options.width, options.height, options.container);
   }
   
   // API
@@ -116,6 +53,6 @@ function GraphicsFactory(events, Snap) {
   this.createPaper = createPaper;
 }
 
-components.type('graphicsFactory', [ 'events', 'Snap', GraphicsFactory ]);
+diagramModule.type('graphicsFactory', [ 'events', 'renderer', 'snap', GraphicsFactory ]);
 
 module.exports = GraphicsFactory;

@@ -1,4 +1,4 @@
-var components = require('../di').defaultModule;
+var diagramModule = require('../di').defaultModule;
 
 var _ = require('lodash');
 
@@ -184,6 +184,6 @@ function Events() {
   };
 }
 
-components.type('events', Events);
+diagramModule.type('events', Events);
 
 module.exports = Events;

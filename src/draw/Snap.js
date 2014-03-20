@@ -1,4 +1,4 @@
-var components = require('../di').defaultModule;
+var diagramModule = require('../di').defaultModule;
 
 var snapsvg = require('snapsvg');
 
@@ -6,6 +6,6 @@ var snapsvg = require('snapsvg');
 require('./snapsvg-extensions');
 
 // register as a value
-components.value('Snap', snapsvg);
+diagramModule.value('snap', snapsvg);
 
 module.exports = snapsvg;

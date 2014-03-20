@@ -1,4 +1,4 @@
-var components = require('../di').defaultModule;
+var diagramModule = require('../di').defaultModule;
 
 var IdGenerator = require('../util/IdGenerator'),
     shapeUtil = require('../util/shapeUtil');
@@ -274,6 +274,6 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   };
 }
 
-components.type('canvas', [ 'config', 'events', 'commandStack', 'graphicsFactory', 'shapes', Canvas ]);
+diagramModule.type('canvas', [ 'config', 'events', 'commandStack', 'graphicsFactory', 'shapes', Canvas ]);
 
 module.exports = Canvas;
