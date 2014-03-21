@@ -5,7 +5,6 @@
       <bpmn:dataInput id="DataInput_1"/>
       <bpmn:dataOutput id="DataOutput_1"/>
     </bpmn:ioSpecification>
-    <bpmn:choreographyTask id="ChoreographyTask_1"/>
     <bpmn:dataObject id="DataObject_1" name="Data Object 1"/>
     <bpmn:dataObjectReference id="DataObjectReference_1" name="Data Object" dataObjectRef="DataObject_1"/>
     <bpmn:dataStoreReference id="_DataStoreReference_2" name="Data Store" dataStoreRef="DataStore_1"/>
@@ -13,9 +12,6 @@
   <bpmn:dataStore id="DataStore_1" name="Data Store 1"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="_BPMNShape_ChoreographyTask_2" bpmnElement="ChoreographyTask_1">
-        <dc:Bounds height="150.0" width="150.0" x="981.0" y="363.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_2" bpmnElement="DataObjectReference_1">
         <dc:Bounds height="50.0" width="36.0" x="108.0" y="84.0"/>
         <bpmndi:BPMNLabel>
