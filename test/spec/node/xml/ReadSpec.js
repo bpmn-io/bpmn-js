@@ -34,7 +34,7 @@ describe('Model', function() {
         expect(result).toDeepEqual({
           $type: 'bpmn:Definitions',
           id: 'documentation',
-          targetNamespace: 'http://activiti.org/bpmn',
+          targetNamespace: 'http://bpmn.io/schema/bpmn',
           rootElements: [
             {
               $type: 'bpmn:Process',
@@ -185,7 +185,7 @@ describe('Model', function() {
           var expected = {
             $type: 'bpmn:Definitions',
             id: 'empty-definitions',
-            targetNamespace: 'http://activiti.org/bpmn'
+            targetNamespace: 'http://bpmn.io/schema/bpmn'
           };
 
           // then
@@ -205,7 +205,7 @@ describe('Model', function() {
           var expected = {
             $type: 'bpmn:Definitions',
             id: 'empty-definitions',
-            targetNamespace: 'http://activiti.org/bpmn'
+            targetNamespace: 'http://bpmn.io/schema/bpmn'
           };
 
           // then
