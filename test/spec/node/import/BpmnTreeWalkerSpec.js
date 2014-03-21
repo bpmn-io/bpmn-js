@@ -22,43 +22,73 @@ describe('BpmnTreeWalker', function() {
   }
 
 
+  /**
+   * A simple handler that records what a tree walker processes
+   */
+  function RecordingHandler() {
+
+    var elements = [];
+    var errors = [];
+
+    function handleElement(element, di, ctx) {
+      var id = element.id;
+
+      elements.push({ id: id, parent: ctx });
+
+      return id;
+    }
+
+    function handleError(message, context) {
+      errors.push({ message: message, context: context });
+    }
+
+    this.element = handleElement;
+    this.error = handleError;
+
+    this._errors = errors;
+    this._elements = elements;
+  }
+
+  function readBpmn(file, fn, done) {
+    readFile(file, 'bpmn:Definitions', function(err, definitions) {
+
+      if (err) {
+        return done(err);
+      }
+
+      fn(definitions);
+
+      done();
+    });
+  }
+
+
+  /**
+   * Expect a certain render order when parsing the given file contents.
+   * 
+   * Call done when done.
+   */
+  function expectWalkOrder(file, expectedOrder, done) {
+
+    readBpmn(file, function(definitions) {
+
+      var handler = new RecordingHandler();
+
+      new BpmnTreeWalker(handler).handleDefinitions(definitions);
+
+      expect(handler._elements).toDeepEqual(expectedOrder);
+      expect(handler._errors.length).toBe(0);
+
+    }, done);
+  }
+
+
   beforeEach(Matchers.add);
 
   var bpmnModel = BpmnModel.instance();
 
+
   describe('should walk', function() {
-
-    /**
-     * Expect a certain render order when parsing the given file contents.
-     * 
-     * Call done when done.
-     */
-    function expectWalkOrder(file, expectedOrder, done) {
-
-      readFile(file, 'bpmn:Definitions', function(err, definitions) {
-
-        if (err) {
-          done(err);
-          return;
-        }
-
-        var actualOrder = [];
-
-        var visitor = function(element, di, ctx) {
-          var id = element.id;
-
-          actualOrder.push({ id: id, parent: ctx });
-
-          return id;
-        };
-
-        new BpmnTreeWalker(visitor).handleDefinitions(definitions);
-
-        expect(actualOrder).toDeepEqual(expectedOrder);
-
-        done();
-      });
-    }
 
     it('process / sub process', function(done) {
 
@@ -195,4 +225,30 @@ describe('BpmnTreeWalker', function() {
     });
 
   });
+
+
+  describe('should handle errors', function() {
+
+    it('missing bpmnElement on di', function(done) {
+
+      // given
+      readBpmn('error/di-no-bpmn-element.bpmn', function(definitions) {
+
+        // when
+        var handler = new RecordingHandler();
+        new BpmnTreeWalker(handler).handleDefinitions(definitions);
+
+        expect(handler._elements).toDeepEqual([]);
+        expect(handler._errors.length).toBe(1);
+
+        var error = handler._errors[0];
+
+        expect(error.message).toBe('no bpmnElement for <bpmndi:BPMNShape#_BPMNShape_StartEvent_2>');
+      }, done);
+
+    });
+
+  });
+
+
 });
