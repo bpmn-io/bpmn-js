@@ -16,6 +16,7 @@
     "font-awesome": "~4.0.3"
   },
   "homepage": "http://bpmn.io",
+  "license": "MIT",
   "private": true,
   "ignore": [
     "**/.*",
