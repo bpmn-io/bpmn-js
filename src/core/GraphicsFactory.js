@@ -9,32 +9,33 @@ require('../draw/Renderer');
 
 function GraphicsFactory(events, renderer, snap) {
 
-  function wrapVisual(paper, gfx, type) {
-
-    gfx.addClass('djs-visual');
+  function createParent(paper, type) {
 
     return paper
-      .group(gfx)
+      .group()
         .addClass('djs-group')
         .addClass('djs-' + type);
   }
 
   function createShape(paper, data) {
 
-    var gfx = renderer.drawShape(paper, data);
-    var group = wrapVisual(paper, gfx, 'shape');
+    var parent = createParent(paper, 'shape');
 
-    setPosition(group, data.x, data.y);
+    var gfx = renderer.drawShape(parent, data);
+    gfx.addClass('djs-visual');
 
-    return group;
+    setPosition(parent, data.x, data.y);
+
+    return parent;
   }
 
   function createConnection(paper, data) {
-    var gfx = renderer.drawConnection(paper, data);
+    var parent = createParent(paper, 'connection');
 
-    var group = wrapVisual(paper, gfx, 'connection');
-
-    return group;
+    var gfx = renderer.drawConnection(parent, data);
+    gfx.addClass('djs-visual');
+    
+    return parent;
   }
 
   function setPosition(gfx, x, y) {
