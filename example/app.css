@@ -22,7 +22,7 @@ a:link {
   height: 100%;
 }
 
-.content .intro {
+.content > .message {
   text-align: center;
   display: table;
 
@@ -30,13 +30,29 @@ a:link {
   color: #111;
 }
 
-.content .intro .note {
+.content > .message .note {
   vertical-align: middle;
   text-align: center;
   display: table-cell;
 }
 
-.content .canvas, 
+.content .error .details {
+  max-width: 500px;
+  font-size: 12px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+.content .error pre {
+  border: solid 1px #CCC;
+  background: #EEE;
+  padding: 10px;
+}
+
+.content:not(.with-error) .error,
+.content .canvas,
+.content.with-error .canvas,
+.content.with-error .intro,
 .content.with-diagram .intro {
   display: none;
 }

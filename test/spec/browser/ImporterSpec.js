@@ -13,9 +13,11 @@ describe('Importer', function() {
     return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
   }
 
-  beforeEach(Matchers.add);
 
   var container;
+
+
+  beforeEach(Matchers.add);
 
   beforeEach(function() {
     container = document.createElement('div');
@@ -26,25 +28,43 @@ describe('Importer', function() {
     container.parentNode.removeChild(container);
   });
 
+
   it('should import simple process', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-    read(xml, function(err, result) {
-      var renderer = new Viewer(container);
+    var renderer = new Viewer(container);
 
-      renderer.importDefinitions(result, done);
+    renderer.importXML(xml, function(err) {
+      done(err);
     });
   });
+
 
   it('should import empty definitions', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
-    read(xml, function(err, result) {
-      var renderer = new Viewer(container);
+    var renderer = new Viewer(container);
 
-      renderer.importDefinitions(result, done);
+    renderer.importXML(xml, function(err) {
+      done(err);
     });
   });
+
+
+  it('should handle errors', function(done) {
+
+    var xml = 'invalid stuff';
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+
+      expect(err).toBeDefined();
+
+      done();
+    });
+  });
+
 });

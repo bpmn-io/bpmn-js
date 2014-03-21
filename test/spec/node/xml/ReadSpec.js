@@ -401,6 +401,55 @@ describe('Model', function() {
       });
 
     });
+
+    describe('should handle errors', function() {
+
+
+      it('when importing non-xml text', function(done) {
+
+        // when
+        readFile('error/no-xml.txt', 'bpmn:Definitions', function(err, result) {
+          
+          expect(err).toBeDefined();
+          
+          done();
+        });
+      });
+
+      it('when importing binary', function(done) {
+
+        // when
+        readFile('error/binary.png', 'bpmn:Definitions', function(err, result) {
+
+          expect(err).toBeDefined();
+
+          done();
+        });
+
+      });
+
+      it('when importing extension elements', function(done) {
+
+        // when
+        readFile('error/extension-elements.bpmn', 'bpmn:Definitions', function(err, result) {
+          
+          expect(err).toBeDefined();
+
+          done();
+        });
+      });
+
+      it('when importing invalid bpmn', function(done) {
+
+        // when
+        readFile('error/invalid-child.bpmn', 'bpmn:Definitions', function(err, result) {
+          
+          expect(err).toBeDefined();
+
+          done();
+        });
+      });
+    });
   });
 
 });

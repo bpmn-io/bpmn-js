@@ -1,8 +1,8 @@
 (function() {
 
-  var Model = require('bpmn/Model'),
-      Viewer = require('bpmn/Viewer'),
-      Modeler = require('bpmn/Modeler');
+  var Viewer = require('bpmn/Viewer'),
+      Modeler = require('bpmn/Modeler'),
+      Model = require('bpmn/Model');
 
   var container = $('#js-drop-zone');
 
@@ -28,21 +28,25 @@
 '</bpmn2:definitions>';
 
   function createNewDiagram() {
-
-    var bpmn = Model.instance();
-
     openDiagram(newDiagramXML);
   }
 
   function openDiagram(xml) {
 
-    Model.fromXML(xml, 'bpmn:Definitions', function(err, definitions) {
+    renderer.importXML(xml, function(err) {
+      
       if (err) {
-        console.error(err);
+        container
+          .removeClass('with-diagram')
+          .addClass('with-error');
+
+        container.find('.error pre').text(err.message);
+
+        console.warn('[import] ' + err.message);
       } else {
-        renderer.importDefinitions(definitions, function() {
-          container.addClass('with-diagram');
-        });
+        container
+          .removeClass('with-error')
+          .addClass('with-diagram');
       }
     });
   }
