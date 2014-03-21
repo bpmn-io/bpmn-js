@@ -55,8 +55,8 @@
     "didi": "~0.0.4"
   },
   "dependencies": {
-    "moddle": "~0.0.1",
-    "moddle-xml": "~0.0.1",
+    "moddle": "~0.0.2",
+    "moddle-xml": "~0.0.2",
     "diagram-js": "~0.0.1"
   },
   "peerDependencies": {
