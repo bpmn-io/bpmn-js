@@ -3,6 +3,7 @@ require('../core/Canvas');
 require('../core/Shapes');
 
 require('../draw/Snap');
+require('../draw/Styles');
 
 require('./services/Selection');
 require('./services/Rules');
@@ -24,9 +25,11 @@ var Diagram = require('../Diagram'),
  * @param {Selection} selection the selection service
  * @param {Shapes} shapes the shapes service
  * @param {Canvas} canvas the drawing canvas
+ * @param {SnapSVG} snap
+ * @param {Styles} styles
  * @param {Rules} the rule engine
  */
-function DragUI(events, selection, shapes, canvas, snap, rules) {
+function DragUI(events, selection, shapes, canvas, snap, styles, rules) {
 
   var paper = canvas.getContext();
 
@@ -58,11 +61,10 @@ function DragUI(events, selection, shapes, canvas, snap, rules) {
     var dragger = gfx.clone();
     var bbox = gfx.getBBox();
 
-    dragger.attr({
-      'class': 'djs-dragger',
-      'x': bbox.x,
-      'y': bbox.y
-    });
+    dragger.attr(styles.cls('djs-dragger', [], {
+      x: bbox.x,
+      y: bbox.y
+    }));
 
     dragGroup.add(dragger);
   }
@@ -143,6 +145,8 @@ function DragUI(events, selection, shapes, canvas, snap, rules) {
   });
 }
 
-Diagram.plugin('dragUI', [ 'events', 'selection', 'shapes', 'canvas', 'snap', 'rules', 'dragEvents', DragUI ]);
+Diagram.plugin('dragUI', [
+  'events', 'selection', 'shapes', 'canvas', 'snap', 'styles', 'rules', 'dragEvents', DragUI
+]);
 
 module.exports = DragUI;

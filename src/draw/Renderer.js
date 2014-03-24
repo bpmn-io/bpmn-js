@@ -2,6 +2,7 @@ var diagramModule = require('../di').defaultModule;
 
 // required components
 require('../core/Events');
+require('./Styles');
 
 
 function flattenPoints(points) {
@@ -22,24 +23,24 @@ function flattenPoints(points) {
  * The default renderer used for shapes and connections.
  * 
  * @param {Events} events
+ * @param {Styles} styles
  */
-function Renderer(events) {
-
-  function drawShape(paper, data) {
-    return paper.rect(0, 0, data.width, data.height, 10, 10);
-  }
-
-  function drawConnection(paper, data) {
-    var points = flattenPoints(data.waypoints);
-    return paper.polyline(points);
-  }
-
-  // API
-  this.drawShape = drawShape;
-  this.drawConnection = drawConnection;
+function Renderer(events, styles) {
+  this.CONNECTION_STYLE = styles.style([ 'no-fill' ]);
+  this.SHAPE_STYLE = styles.style({ fill: 'fuchsia' });
 }
 
-diagramModule.type('renderer', [ 'events', Renderer ]);
+Renderer.prototype.drawShape = function drawShape(paper, data) {
+  return paper.rect(0, 0, data.width, data.height, 10, 10).attr(this.SHAPE_STYLE);
+};
+
+Renderer.prototype.drawConnection = function drawConnection(paper, data) {
+  var points = flattenPoints(data.waypoints);
+  return paper.polyline(points).attr(this.CONNECTION_STYLE);
+};
+
+
+diagramModule.type('renderer', [ 'events', 'styles', Renderer ]);
 
 
 module.exports = Renderer;

@@ -1,5 +1,6 @@
-require('../core/Canvas');
 require('../core/Events');
+
+require('../draw/Styles');
 
 var Diagram = require('../Diagram'),
     svgUtil = require('../util/svgUtil');
@@ -14,15 +15,15 @@ var getVisual = svgUtil.getVisual;
  * 
  * @param {Events} events the event bus
  */
-function Outline(events, canvas) {
+function Outline(events, styles) {
 
   var OUTLINE_OFFSET = 10;
 
-  var paper = canvas.getContext();
-
+  var OUTLINE_STYLE = styles.cls('djs-outline', [ 'no-fill' ]);
+  
   function createOutline(gfx) {
-    return paper.rect(0, 0, 0, 0)
-            .attr('class', 'djs-outline')
+    return gfx.rect(0, 0, 0, 0)
+            .attr(OUTLINE_STYLE)
             .prependTo(gfx);
   }
 
@@ -54,6 +55,6 @@ function Outline(events, canvas) {
   });
 }
 
-Diagram.plugin('outline', [ 'events', 'canvas', Outline ]);
+Diagram.plugin('outline', [ 'events', 'styles', Outline ]);
 
 module.exports = Outline;
