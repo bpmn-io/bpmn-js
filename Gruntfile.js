@@ -14,6 +14,14 @@ module.exports = function(grunt) {
       samples: 'example'
     },
 
+    release: {
+      options: {
+        tagName: 'v<%= version %>',
+        commitMessage: 'chore(project): release v<%= version %>',
+        tagMessage: 'chore(project): tag v<%= version %>'
+      }
+    },
+
     jshint: {
       src: [
         ['<%=config.sources %>']
