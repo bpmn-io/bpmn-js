@@ -2,36 +2,59 @@ var Diagram = require('../../src/Diagram');
 
 describe('diagram', function() {
 
-  it('should offer #plugin API', function() {
-    expect(Diagram.plugin).toBeDefined();
+  var container;
+
+  beforeEach(function() {
+    container = document.createElement('div');
+    document.getElementsByTagName('body')[0].appendChild(container);
   });
 
-  it('should bootstrap app', function() {
-
-    var diagram = new Diagram({
-      canvas: {
-        container: undefined,
-        width: 700,
-        height: 500
-      }
-    });
+  afterEach(function() {
+    container.parentNode.removeChild(container);
   });
 
-  it('should expose diagram services', function() {
-
-    var diagram = new Diagram({
-      canvas: {
-        container: undefined,
-        width: 700,
-        height: 500
-      }
+  describe('static', function() {
+    
+    it('should offer #plugin API', function() {
+      expect(Diagram.plugin).toBeDefined();
     });
 
-    diagram.invoke([ 'canvas', function(canvas) {
-      canvas.addShape({x: 10, y: 10, width: 30, height: 30 });
-      canvas.addShape({x: 100, y: 100, width: 30, height: 30 });
-
-      canvas.addConnection({ waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
-    }]);
   });
+
+
+  describe('runtime', function() {
+
+    it('should bootstrap app', function() {
+
+      var diagram = new Diagram({
+        canvas: {
+          container: container,
+          width: 700,
+          height: 500
+        }
+      });
+    });
+
+
+    it('should expose diagram services', function() {
+
+      var diagram = new Diagram({
+        canvas: {
+          container: container,
+          width: 700,
+          height: 500
+        }
+      });
+
+      diagram.invoke([ 'canvas', function(canvas) {
+        canvas
+          .addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 })
+          .addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
+
+        canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      }]);
+    });
+
+  });
+
 });

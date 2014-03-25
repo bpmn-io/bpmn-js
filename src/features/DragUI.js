@@ -136,8 +136,8 @@ function DragUI(events, selection, shapes, canvas, snap, styles, rules) {
 
     dragGroup.remove();
     
-    if (dragCtx.hover) {
-      removeDropMarkers(dragCtx.hover);
+    if (dragCtx.hoverGfx) {
+      removeDropMarkers(dragCtx.hoverGfx);
     }
 
     // restore selection

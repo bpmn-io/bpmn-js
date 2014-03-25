@@ -97,7 +97,32 @@ function translateShape(shape, x, y) {
   shape.y += y;
 }
 
+function setParent(shape, newParent) {
+  // TODO(nre): think about parent->child magic
+  
+  var old = shape.parent;
+  if (old && old.children) {
+    var idx = old.children.indexOf(shape);
+    if (idx !== -1) {
+      old.children.splice(idx, 1);
+    }
+  }
+
+  if (newParent) {
+    if (!newParent.children) {
+      newParent.children = [];
+    }
+
+    newParent.children.push(shape);
+  }
+
+  shape.parent = newParent;
+
+  return old;
+}
+
 module.exports.eachShape = each;
 module.exports.selfAndDirectChildren = selfAndDirectChildren;
 module.exports.selfAndAllChildren = selfAndAllChildren;
 module.exports.translateShape = translateShape;
+module.exports.setParent = setParent;

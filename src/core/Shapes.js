@@ -30,11 +30,11 @@ function Shapes(events) {
     }
 
     if (graphicsMap[gfx.id]) {
-      throw new Error('[mod] graphics with id ' + gfx.id + ' already registered');
+      throw new Error('graphics with id ' + gfx.id + ' already registered');
     }
 
     if (shapeMap[shape.id]) {
-      throw new Error('[mod] shape with id ' + shape.id + ' already added');
+      throw new Error('shape with id ' + shape.id + ' already added');
     }
 
     shapeMap[shape.id] = graphicsMap[gfx.id] = { shape: shape, gfx: gfx };

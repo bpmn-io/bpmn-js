@@ -6,7 +6,8 @@ require('./services/Selection');
 
 require('./BasicInteractionEvents');
 
-var Diagram = require('../Diagram'),
+var MoveShapesHandler = require('../commands/MoveShapes'),
+    Diagram = require('../Diagram'),
     _ = require('lodash');
 
 
@@ -29,6 +30,32 @@ function Drag(events, selection, shapes, commandStack) {
            Math.abs(dy) > DRAG_START_THRESHOLD;
   }
 
+
+  ///// execution of actual move ///////////////////////////
+  
+  function executeMove(ctx) {
+
+    var moveContext = {
+      dx: ctx.dx,
+      dy: ctx.dy,
+      shapes: ctx.shapes
+    };
+
+    var hoverGfx = ctx.hoverGfx;
+    
+    if (hoverGfx) {
+      moveContext.newParent = shapes.getShapeByGraphics(hoverGfx);
+    }
+
+    commandStack.execute('shape.move', moveContext);
+  }
+
+  // commandStack default move handler registration
+  commandStack.registerHandler('shape.move', MoveShapesHandler);
+
+
+  ///// draggable implementation ////////////////////////////
+  
   function makeDraggable(shape, gfx) {
 
     var dragCtx;
@@ -50,7 +77,7 @@ function Drag(events, selection, shapes, commandStack) {
        */
       events.fire('shape.dragover', dragEvt);
 
-      dragCtx.hover = event.gfx;
+      dragCtx.hoverGfx = event.gfx;
     }
 
     function dragOut(event) {
@@ -71,7 +98,7 @@ function Drag(events, selection, shapes, commandStack) {
        */
       events.fire('shape.dragout', dragEvt);
 
-      delete dragCtx.hover;
+      delete dragCtx.hoverGfx;
     }
 
     gfx.drag(function dragging(dx, dy, x, y, e) {
@@ -169,7 +196,7 @@ function Drag(events, selection, shapes, commandStack) {
         events.fire('shape.dragend', event);
 
         if (!event.isDefaultPrevented()) {
-          commandStack.execute('moveShape', { event: event });
+          executeMove(event.dragCtx);
         }
       }
 

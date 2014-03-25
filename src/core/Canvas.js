@@ -1,7 +1,6 @@
 var diagramModule = require('../di').defaultModule;
 
-var IdGenerator = require('../util/IdGenerator'),
-    shapeUtil = require('../util/shapeUtil');
+var AddShapeHandler = require('../commands/AddShape');
 
 var _ = require('lodash');
 
@@ -25,96 +24,22 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
 
   var options = _.extend({}, { width: '100%', height: '100%' }, config.canvas || {});
 
-  var ids = new IdGenerator('s');
-
   var paper = graphicsFactory.createPaper(options);
 
-  // holds id -> { element, gfx } mappings
-  var elementMap = {};
-
-  // Todo remove addShape/addConnection from public API?
-  // should only be called over command stack
-  (function registerCommands() {
-    commandStack.register('addShape', {
-      do: function addShapeDo(shape) {
-        internalAddShape(shape);
-        return true;
-      },
-      undo: function addShapeUndo(shape) {
-        internalUndoAddShape(shape);
-        return true;
-      },
-      canDo: function canUndoShape() {
-        return true;
-      }
-    });
-    commandStack.register('moveShape', {
-      do: function moveShapeDo(param) {
-        var dragCtx = param.event.dragCtx;
-        if(dragCtx) {
-          _.forEach(dragCtx.allDraggedGfx, function(gfx) {
-            //Update Viewport
-            var actualTMatrix = gfx.transform().local;
-            gfx.attr({
-              transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [dragCtx.dx, dragCtx.dy]
-            });
-            //Update model
-            var model = shapes.getShapeByGraphics(gfx);
-            shapeUtil.translateShape(model, dragCtx.dx, dragCtx.dy);
-          });
-        }
-        return true;
-      },
-      undo: function moveShapeUndo(param) {
-        var dragCtx = param.event.dragCtx;
-        if(dragCtx) {
-          _.forEach(dragCtx.allDraggedGfx, function(gfx) {
-            //Update Viewport
-            var actualTMatrix = gfx.transform().local;
-            gfx.attr({
-              transform: actualTMatrix + (actualTMatrix ? 'T' : 't') + [(-1)*dragCtx.dx, (-1)*dragCtx.dy]
-            });
-            //Update model
-            var model = shapes.getShapeByGraphics(gfx);
-            shapeUtil.translateShape(model,(-1)*dragCtx.dx, (-1)*dragCtx.dy);
-          });
-        }
-        return true;
-      },
-      canDo: function canUndoMoveShape() {
-        return true;
-      }
-    });
-  })();
 
   /**
-   * Only register shape in Canvas' ElementMap.
+   * Adds a shape to the canvas
+   *
+   * @method Canvas#addShape
+   *
+   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
+   *
+   * @return {Canvas} the canvas api
    */
-  function checkId(e, gfx) {
-    if (!e.id) {
-      e.id = ids.next();
-    }
-  }
+  function addShape(shape) {
 
-  /**
-   * Add shape to DOM
-   */
-  function addChild(parent, child) {
-    if (parent.children) {
-      parent.children.push(child);
-    } else {
-      parent.children = [ child ];
-    }
-  }
-
-  function internalAddShape(shape) {
-
-    var gfx = graphicsFactory.createShape(paper, shape);
-
-    checkId(shape, gfx);
-    
-    if (shape.parent) {
-      addChild(shape.parent, shape);
+    if (!shape.id) {
+      throw new Error('shape must have an id');
     }
 
     /**
@@ -127,29 +52,15 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
      * @property {djs.ElementDescriptor} element the shape descriptor
      * @property {Object} gfx the graphical representation of the shape
      */
-    events.fire('shape.added', { element: shape, gfx: gfx });
-  }
+    
+    commandStack.execute('shape.add', { shape: shape });
 
-  function internalUndoAddShape(shape) {
-    var gfx = getGraphics(shape);
-    gfx.remove();
-
-    events.fire('shape.removed', { element: shape, gfx: gfx });
-  }
-
-  /**
-   * Adds a shape to the canvas
-   *
-   * @method Canvas#addShape
-   *
-   * @param {djs.ShapeDescriptor} shape a descriptor for the shape
-   *
-   * @return {Canvas} the canvas api
-   */
-  function addShape(param) {
-    commandStack.execute('addShape', param);
     return this;
   }
+
+  // register shape add handlers
+  commandStack.registerHandler('shape.add', AddShapeHandler);
+
 
   /**
    * Adds a connection to the canvas
@@ -161,9 +72,12 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
    * @return {Canvas} the canvas api
    */
   function addConnection(connection) {
-    var gfx = graphicsFactory.createConnection(paper, connection);
 
-    checkId(connection, gfx);
+    if (!connection.id) {
+      throw new Error('connection must have an id');
+    }
+
+    var gfx = graphicsFactory.createConnection(paper, connection);
 
     /**
      * An event indicating that a new connection has been added to the canvas.

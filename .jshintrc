@@ -30,6 +30,8 @@
     "it": false,
     "jasmine": true,
     "expect": true,
-    "beforeEach": true
+    "fail": true,
+    "beforeEach": true,
+    "afterEach": true
   }
 }

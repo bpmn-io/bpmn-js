@@ -38,7 +38,7 @@ function bootstrapDiagram(options, locals) {
 
   return function() {
 
-    if (!locals) {
+    if (!locals && _.isFunction(options)) {
       locals = options;
       options = null;
     }

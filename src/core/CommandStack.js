@@ -14,7 +14,7 @@ var _ = require('lodash');
  * to the diagram must be invoked through this Service.
  *
  */
-function CommandStack() {
+function CommandStack(injector) {
   'use strict';
 
   /**
@@ -67,7 +67,7 @@ function CommandStack() {
       console.warn('[CommandStack] command \'%s\' is not registered.', id);
     }
     _.forEach(commandListeners, function(commandListener) {
-      if(commandListener.do(ctx)) {
+      if(commandListener.execute(ctx)) {
         pushAction(id, ctx);
         if(!saveRedoStack) {
           // A new action invalidates all actions in the redoStack.
@@ -84,7 +84,7 @@ function CommandStack() {
     }
     var commandListeners = getCommandListener(lastAction.id);
     _.forEach(commandListeners, function(commandListener) {
-      commandListener.undo(lastAction.param);
+      commandListener.revert(lastAction.param);
     });
     pushActionToRedoStack(lastAction);
   }
@@ -151,6 +151,16 @@ function CommandStack() {
     }
   };
 
+  function registerHandler(command, handlerCls) {
+
+    if (!command || !handlerCls) {
+      throw new Error('command and handlerCls must be defined');
+    }
+
+    var handler = injector.instantiate(handlerCls);
+    registerCommand(command, handler);
+  }
+
   return {
     register: registerCommand,
     execute: applyAction,
@@ -159,10 +169,11 @@ function CommandStack() {
     getCommandList: commandList,
     actionStack: getActionStack,
     redoStack: getRedoStack,
-    clearStack: clearActionStack
+    clearStack: clearActionStack,
+    registerHandler: registerHandler
   };
 }
 
-diagramModule.type('commandStack', CommandStack);
+diagramModule.type('commandStack', [ 'injector', CommandStack ]);
 
 module.exports = CommandStack;

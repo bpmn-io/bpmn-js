@@ -6,57 +6,57 @@ describe('CommandStack should,', function() {
   var command = new Command();
 
   var f1 = {
-    do: function f1_do(param) {
+    execute: function f1_execute(param) {
 
       param.test = 'do_A';
       return true;
     },
-    undo: function f1_undo(param) {
+    revert: function f1_revert(param) {
       param.test = 'undo_A';
       return true;
     },
-    canDo: function f1_canDo(param) {
-      param.test = 'canDo_A';
+    canExecute: function f1_canExecute(param) {
+      param.test = 'canExecute_A';
       return true;
     }
   };
   var f2 = {
-    do: function f2_do(param) {
+    execute: function f2_execute(param) {
       param.test = 'do_B';
       return true;
     },
-    undo: function f2_undo(param) {
+    revert: function f2_revert(param) {
       param.test = 'undo_B';
       return true;
     },
-    canDo: function f2_canDo(param) {
-      param.test = 'canDo_B';
+    canExecute: function f2_canExecute(param) {
+      param.test = 'canExecute_B';
       return true;
     }
   };
   var f3 = {
-    do: function f3_do(param) {
+    execute: function f3_execute(param) {
       param.test = 'do_C';
       return true;
     },
-    undo: function f3_undo(param) {
+    revert: function f3_revert(param) {
       param.test = 'undo_C';
       return true;
     },
-    canDo: function f3_canDo(param) {
-      param.test = 'canDo_C';
+    canExecute: function f3_canExecute(param) {
+      param.test = 'canExecute_C';
       return true;
     }
   };
   var f4 = {
-    do: function f4_do(param) {
+    execute: function f4_execute(param) {
       param.test = 'do_D';
     },
-    undo: function f4_undo(param) {
+    revert: function f4_revert(param) {
       param.test = 'undo_D';
     },
-    canDo: function f4_canDo(param) {
-      param.test = 'canDo_D';
+    canExecute: function f4_canExecute(param) {
+      param.test = 'canExecute_D';
     }
   };
 

@@ -100,9 +100,62 @@ describe('util/shapeUtil', function() {
     });
   });
 
-  describe('translateShape should', function() {
 
-    it('move shape correctly', function() {
+  describe('setParent', function() {
+
+    it('should initialize parent', function() {
+      
+      // given    
+      var shape = { };
+      var parent = { };
+
+      // when
+      shapeUtil.setParent(shape, parent);
+
+      // then
+      expect(shape.parent).toBe(parent);
+      expect(parent.children).toEqual([ shape ]);
+    });
+
+    it('should handle undefined parent#children', function() {
+
+      // given
+      var oldParent = {};
+      var newParent = {};
+
+      var s = { parent: oldParent };
+
+      // when
+      shapeUtil.setParent(s, newParent);
+
+      // then
+      expect(s.parent).toBe(newParent);
+    });
+
+    it('should unwire old parent relationship', function() {
+
+      // given    
+      var shape = { };
+      var oldParent = { };
+      var newParent = { };
+
+      shapeUtil.setParent(shape, oldParent);
+
+      // when
+      shapeUtil.setParent(shape, newParent);
+
+      // then
+      expect(shape.parent).toBe(newParent);
+      expect(newParent.children).toEqual([ shape ]);
+      expect(oldParent.children.indexOf(shape)).toBe(-1);
+    });
+
+  });
+
+
+  describe('translateShape', function() {
+
+    it('should move shape correctly', function() {
 
       // given
       var shape = {x: 11, y: 23};

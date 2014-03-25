@@ -61,7 +61,7 @@ function Selection(events) {
   }
 
   function deselect(element) {
-    throw new Error('[mod] not implemented');
+    throw new Error('not implemented');
   }
 
   return {
