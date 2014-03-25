@@ -28,19 +28,31 @@
       </div>
     </div>
 
-    <div class="canvas modeler" id="js-canvas"></div>
+    <div class="canvas" id="js-canvas"></div>
   </div>
 
   <div class="logo"></div>
 
-  <div class="buttons">
-    <a id="js-download-diagram" href>
-      <i class="fa fa-download fa-3"></i>
-    </a>
-  </div>
+  <ul class="buttons">
+    <li>
+      <a id="js-download-diagram" href title="download">
+        <i class="fa fa-download fa-3"></i>
+      </a>
+    </li>
+    <li>
+      <a id="js-download-svg" href title="download as svg">
+        <i class="fa fa-code fa-3"></i>
+      </a>
+    </li>
+  </ul>
 
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
   <script src="../bpmn.js"></script>
+
+  <script>
+    var BpmnJS = require('bpmn/Modeler');
+  </script>
+
   <script src="app.js"></script>
 </html>

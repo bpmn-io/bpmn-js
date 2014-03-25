@@ -1,14 +1,8 @@
-(function() {
-
-  var Viewer = require('bpmn/Viewer'),
-      Modeler = require('bpmn/Modeler'),
-      Model = require('bpmn/Model');
+(function(BpmnJS) {
 
   var container = $('#js-drop-zone');
 
   var canvas = $('#js-canvas');
-
-  var BpmnJS = canvas.is('.modeler') ? Modeler : Viewer;
   
   var renderer = new BpmnJS(canvas.get(0));
 
@@ -42,7 +36,7 @@
 
         container.find('.error pre').text(err.message);
 
-        console.warn('[import] ' + err.message);
+        console.error(err);
       } else {
         container
           .removeClass('with-error')
@@ -51,15 +45,15 @@
     });
   }
 
+  function saveSVG(done) {
+    renderer.saveSVG(done);
+  }
+
   function saveDiagram(done) {
 
-    var definitions = renderer.definitions;
-
-    if (definitions) {
-      Model.toXML(definitions, { format: true }, function(err, xml) {
-        done(err, xml);
-      });
-    }
+    renderer.saveXML({ format: true }, function(err, xml) {
+      done(err, xml);
+    });
   }
 
   ////// file drag / drop ///////////////////////
@@ -115,23 +109,39 @@
     });
 
     var downloadLink = $('#js-download-diagram');
+    var downloadSvgLink = $('#js-download-svg');
 
-    setInterval(function() {
-      saveDiagram(function(err, xml) {
+    $('.buttons a').click(function(e) {
+      if (!$(this).is('.active')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+    
+    function setEncoded(link, name, data) {
+      var encodedData = encodeURIComponent(data);
 
-        if (!xml || err) {
-          return;
-        }
-
-        var encoded = encodeURIComponent(xml);
-
-        downloadLink.attr({
-          'href': 'data:application/bpmn20-xml;charset=UTF-8,' + encoded,
-          'download': 'diagram.bpmn'
+      if (data) {
+        link.addClass('active').attr({
+          'href': 'data:application/bpmn20-xml;charset=UTF-8,' + encodedData,
+          'download': name
         });
+      } else {
+        link.removeClass('active');
+      }
+    }
+    
+    setInterval(function() {
+
+      saveSVG(function(err, svg) {
+        setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg);
+      });
+
+      saveDiagram(function(err, xml) {
+        setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
       });
 
     }, 5000);
   });
 
-})();
+})(window.BpmnJS);

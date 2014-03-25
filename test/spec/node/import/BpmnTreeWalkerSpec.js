@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
 var BpmnModel = require('../../../../lib/Model'),
-    BpmnTreeWalker = require('../../../../lib/BpmnTreeWalker');
+    BpmnTreeWalker = require('../../../../lib/import/BpmnTreeWalker');
 
 var Helper = require('../Helper'),
     Matchers = require('../../Matchers');

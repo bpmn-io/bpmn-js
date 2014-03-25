@@ -16,6 +16,7 @@ a:link {
   text-decoration: none;
 }
 
+
 .content,
 .content > div {
   width: 100%;
@@ -65,6 +66,23 @@ a:link {
   position: fixed;
   bottom: 20px;
   left: 20px;
+
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.buttons > li {
+  display: inline-block;
+  padding: 5px;
+}
+
+.buttons a {
+  opacity: 0.3;
+}
+
+.buttons a.active {
+  opacity: 1.0;
 }
 
 .logo {

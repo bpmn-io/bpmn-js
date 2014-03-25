@@ -4,8 +4,8 @@
 
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="app.css" />
-  <link rel="stylesheet" href="diagram-js.css" />
+  <link rel="stylesheet" href="../app.css" />
+  <link rel="stylesheet" href="../diagram-js.css" />
   <link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" />
 </head>
 <body>
@@ -33,14 +33,25 @@
 
   <div class="logo"></div>
 
-  <div class="buttons">
-    <a id="js-download-diagram" href>
-      <i class="fa fa-download fa-3"></i>
-    </a>
-  </div>
+  <ul class="buttons">
+    <li>
+      <a id="js-download-diagram" href title="download">
+        <i class="fa fa-download fa-3"></i>
+      </a>
+    </li>
+    <li>
+      <a id="js-download-svg" href title="download as svg">
+        <i class="fa fa-code fa-3"></i>
+      </a>
+    </li>
+  </ul>
 
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
-  <script src="../bpmn.js"></script>
-  <script src="app.js"></script>
+  <script src="../../bpmn.js"></script>
+
+  <script>
+    var BpmnJS = require('bpmn/Viewer');
+  </script>
+  <script src="../app.js"></script>
 </html>
