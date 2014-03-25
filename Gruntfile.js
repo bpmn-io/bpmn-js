@@ -56,29 +56,31 @@ module.exports = function(grunt) {
     },
     browserify: {
       options: {
-        alias: [
-          '<%= config.sources %>/main.js:bpmn',
-          '<%= config.sources %>/Model.js:bpmn/Model',
-          '<%= config.sources %>/Viewer.js:bpmn/Viewer',
-          '<%= config.sources %>/Modeler.js:bpmn/Modeler'
-        ],
         insertGlobalVars: []
       },
-      sources: {
+      modeler: {
         files: {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
-          debug: true
+          alias: [
+            '<%= config.sources %>/main.js:bpmn',
+            '<%= config.sources %>/Model.js:bpmn/Model',
+            '<%= config.sources %>/Viewer.js:bpmn/Viewer',
+            '<%= config.sources %>/Modeler.js:bpmn/Modeler'
+          ],
         }
       },
-      dist: {
+      viewer: {
         files: {
-          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
+          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
         },
         options: {
-          debug: false,
-          transform: [ 'uglifyify' ]
+          alias: [
+            '<%= config.sources %>/main.js:bpmn',
+            '<%= config.sources %>/Model.js:bpmn/Model',
+            '<%= config.sources %>/Viewer.js:bpmn/Viewer'
+          ]
         }
       }
     },
@@ -89,7 +91,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: '<%= config.samples %>/',
-            src: ['*.{js,css,html,png}'],
+            src: ['**/*.{js,css,html,png}'],
             dest: '<%= config.dist %>/<%= config.samples %>'
           }
         ]
@@ -97,12 +99,12 @@ module.exports = function(grunt) {
     },
     watch: {
       sources: {
-        files: [ '<%= config.sources %>/**/*.js', '<%= config.samples %>/**/*.*' ],
-        tasks: [ 'browserify:sources', 'copy:samples' ]
+        files: [ '<%= config.sources %>/**/*.js' ],
+        tasks: [ 'build:lib:dev' ]
       },
       samples: {
         files: [ '<%= config.samples %>/**/*.*' ],
-        tasks: [ 'copy:samples' ]
+        tasks: [ 'build:samples' ]
       },
       jasmine_node: {
         files: [ '<%= config.sources %>/**/*.js', '<%= config.tests %>/spec/node/**/*.js' ],
@@ -119,7 +121,7 @@ module.exports = function(grunt) {
       }
     },
     concurrent: {
-      'sources': [ 'browserify:sources', 'jshint' ],
+      'lib': [ 'build:lib', 'jshint' ],
       'build': [ 'jshint', 'build', 'jsdoc' ]
     },
     connect: {
@@ -142,11 +144,30 @@ module.exports = function(grunt) {
   // tasks
   
   grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
-  grunt.registerTask('build', [ 'browserify:dist', 'copy:samples' ]);
+
+  grunt.registerTask('build', function(target, mode) {
+
+    if (mode === 'dev') {
+      grunt.config.set('browserify.options.debug', true);
+    } else {
+      grunt.config.set('browserify.options.transform', [ 'uglifyify' ]);
+    }
+
+    if (target === 'lib') {
+      return grunt.task.run([ 'browserify:modeler', 'browserify:viewer' ]);
+    }
+
+    if (target === 'samples') {
+      return grunt.task.run(['copy:samples']);
+    }
+
+    if (!target || target === 'all') {
+      return grunt.task.run([ 'build:lib', 'build:samples' ]);
+    }
+  });
 
   grunt.registerTask('auto-build', [
-    'copy:samples',
-    'concurrent:sources',
+    'build:all:dev',
     'connect:livereload',
     'watch'
   ]);
