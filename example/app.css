@@ -74,7 +74,7 @@ a:link {
 
 .buttons > li {
   display: inline-block;
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 .buttons a {
@@ -83,6 +83,10 @@ a:link {
 
 .buttons a.active {
   opacity: 1.0;
+}
+
+.buttons a .fa {
+  font-size: 2em;
 }
 
 .logo {
@@ -96,4 +100,29 @@ a:link {
   opacity: 0.8;
   
   background: no-repeat url('bpmn-io-icon.png');
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('fontawesome.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.fa {
+  display: inline-block;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fa-download:before {
+  content: "\f019";
+}
+
+.fa-picture-o:before {
+  content: "\f03e";
 }

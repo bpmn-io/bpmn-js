@@ -64,6 +64,7 @@ module.exports = function(grunt) {
         },
         options: {
           alias: [
+            'lodash',
             '<%= config.sources %>/main.js:bpmn',
             '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer',
@@ -77,6 +78,7 @@ module.exports = function(grunt) {
         },
         options: {
           alias: [
+            'lodash',
             '<%= config.sources %>/main.js:bpmn',
             '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer'
@@ -91,7 +93,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: '<%= config.samples %>/',
-            src: ['**/*.{js,css,html,png}'],
+            src: ['**/*.*'],
             dest: '<%= config.dist %>/<%= config.samples %>'
           }
         ]
