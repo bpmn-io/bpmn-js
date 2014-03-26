@@ -1,236 +1,268 @@
-var Command = require('../../../src/core/CommandStack');
+var CommandStack = require('../../../src/core/CommandStack'),
+    Events = require('../../../src/core/Events');
 
-describe('CommandStack should,', function() {
+describe('CommandStack', function() {
+
   'use strict';
 
-  var command = new Command();
+  /**
+   * Create a new handler with the given identifier
+   */
+  function handler(name) {
+    
+    return {
+      execute: function(ctx) {
+        ctx.last = 'execute-' + name;
+      },
+      revert: function(ctx) {
+        ctx.last = 'revert-' + name;
+      },
+      canExecute: function(ctx) {
+        ctx.last = 'can-execute-' + name;
+      }
+    };
+  }
 
-  var f1 = {
-    execute: function f1_execute(param) {
+  var handlerA = handler('A');
+  var handlerB = handler('B');
+  var handlerC = handler('C');
 
-      param.test = 'do_A';
-      return true;
-    },
-    revert: function f1_revert(param) {
-      param.test = 'undo_A';
-      return true;
-    },
-    canExecute: function f1_canExecute(param) {
-      param.test = 'canExecute_A';
-      return true;
-    }
-  };
-  var f2 = {
-    execute: function f2_execute(param) {
-      param.test = 'do_B';
-      return true;
-    },
-    revert: function f2_revert(param) {
-      param.test = 'undo_B';
-      return true;
-    },
-    canExecute: function f2_canExecute(param) {
-      param.test = 'canExecute_B';
-      return true;
-    }
-  };
-  var f3 = {
-    execute: function f3_execute(param) {
-      param.test = 'do_C';
-      return true;
-    },
-    revert: function f3_revert(param) {
-      param.test = 'undo_C';
-      return true;
-    },
-    canExecute: function f3_canExecute(param) {
-      param.test = 'canExecute_C';
-      return true;
-    }
-  };
-  var f4 = {
-    execute: function f4_execute(param) {
-      param.test = 'do_D';
-    },
-    revert: function f4_revert(param) {
-      param.test = 'undo_D';
-    },
-    canExecute: function f4_canExecute(param) {
-      param.test = 'canExecute_D';
-    }
-  };
+
+  var fired;
+  var commandStack, events;
 
 
   beforeEach(function() {
-    command = new Command();
+    events = new Events();
+    fired = [];
+
+    events.fire = function() {
+      fired.push(Array.prototype.slice.call(arguments));
+    };
+
+    commandStack = new CommandStack(null, events);
   });
 
-  it('be able to register commands', function() {
 
-    command.register('id_1', f1);
-    expect(command.getCommandList()['id_1']).toBeDefined();
+  function expectFired(events) {
+    expect(fired).toEqual(events);
+  }
 
-    command.register('id_2', f2);
-    command.register('id_3', f3);
+  function expectStack(actions, idx) { 
+    expect(commandStack.getStack()).toEqual(actions);
+    expect(commandStack.getStackIndex()).toEqual(idx);    
+  }
 
-    expect(command.getCommandList()['id_3']).toBeDefined();
+  function action(id, ctx) {
+    return { id: id, ctx: ctx };
+  }
+
+
+  describe('register', function() {
+
+    it('should register handler', function() {
+
+      // when
+      commandStack.register('a', handlerA);
+      commandStack.register('c', handlerC);
+
+      // then
+      var handlers_a = commandStack.getHandlers('a');
+      var handlers_c = commandStack.getHandlers('c');
+
+      expect(handlers_a).toEqual([ handlerA ]);
+      expect(handlers_c).toEqual([ handlerC ]);
+    });
+
   });
 
-  it('execute commands', function() {
 
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    var param1 = {};
-    command.execute('id_2', param1);
-    expect(param1.test).toEqual('do_B');
-    command.register('id_4', f4);
-    var param2 = {};
-    command.execute('id_4', param2);
-    expect(param2.test).toEqual('do_D');
+  describe('execute', function() {
+
+    it('should put action on stack', function() {
+
+      // given
+      commandStack.register('a', handlerA);
+
+      var ctx = {};
+      
+      // when
+      commandStack.execute('a', ctx);
+
+      // then
+      expect(ctx.last).toEqual('execute-A');
+
+      expectStack([ action('a', ctx) ], 0);
+    });
+
+
+    it('should fire commandStack.(execute|changed) events', function() {
+
+      // given
+
+      // when
+      commandStack.execute('a', {});
+
+      // then
+      expectFired([
+        [ 'commandStack.execute', { id: 'a' } ],
+        [ 'commandStack.changed' ]
+      ]);
+
+    });
+
+
+    it('should put multiple actions on stack', function() {
+
+      // given
+      commandStack.register('a', handlerA);
+      commandStack.register('b', handlerB);
+
+      var ctx = {};
+      
+      // when
+      commandStack.execute('a', ctx);
+      commandStack.execute('b', ctx);
+
+      // then
+      expect(ctx.last).toEqual('execute-B');
+
+      expectStack([ action('a', ctx), action('b', ctx) ], 1);
+    });
+
   });
 
-  it('reset the action stack', function() {
 
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
+  describe('undo', function() {
 
-    var stack = command.actionStack();
-    expect(stack.length).toBe(0);
-    var param1 = {};
-    command.execute('id_2', param1);
-    command.execute('id_2', param1);
-    command.execute('id_3', param1);
-    command.execute('id_2', param1);
+    it('should undo single action', function() {
+
+      // given
+      commandStack.register('a', handlerA);
+
+      var ctx = {};
+      
+      // when
+      commandStack.execute('a', ctx);
+      commandStack.undo();
+
+      // then
+      expect(ctx.last).toEqual('revert-A');
+
+      expectStack([ action('a', ctx) ], -1);
+    });
 
 
-    expect(stack.length).toBe(4);
-    command.clearStack();
-    expect(stack.length).toBe(0);
+    it('should fire commandStack.(revert|changed) events', function() {
+
+      // given
+
+      // when
+      commandStack.execute('a', {});
+      commandStack.undo();
+
+      // then
+      expectFired([
+        [ 'commandStack.execute', { id: 'a' } ],
+        [ 'commandStack.changed' ],
+        [ 'commandStack.revert', { id: 'a' } ],
+        [ 'commandStack.changed' ]
+      ]);
+      
+    });
+
+
+    it('should undo multiple actions', function() {
+
+      // given
+      commandStack.register('a', handlerA);
+      commandStack.register('b', handlerB);
+
+      var ctx = {};
+      
+      // when
+      commandStack.execute('a', ctx);
+      commandStack.execute('b', ctx);
+      commandStack.undo();
+      commandStack.undo();
+
+      // then
+      expect(ctx.last).toEqual('revert-A');
+
+      expectStack([ action('a', ctx), action('b', ctx) ], -1);
+    });
+
+
+    it('should not fail if nothing to undo', function() {
+
+      // given
+
+      // when
+      commandStack.undo();
+
+      // then
+      expectStack([ ], -1);
+    });
+
   });
 
-  it('undo last actions', function() {
 
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
+  describe('redo', function() {
 
-    var stack = command.actionStack();
-    expect(stack.length).toBe(0);
-    var param1 = {};
-    command.execute('id_1', param1);
-    command.execute('id_1', param1);
-    command.execute('id_3', param1);
-    command.execute('id_2', param1);
-    expect(param1.test).toEqual('do_B');
-    command.undo();
-    expect(param1.test).toEqual('undo_B');
-    command.undo();
-    expect(param1.test).toEqual('undo_C');
-    command.undo();
-    expect(param1.test).toEqual('undo_A');
-    command.undo();
-    expect(param1.test).toEqual('undo_A');
+    it('should redo previously undone action', function() {
+
+      // given
+      commandStack.register('a', handlerA);
+
+      var ctx = {};
+      
+      // when
+      commandStack.execute('a', ctx);
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(ctx.last).toEqual('execute-A');
+
+      expectStack([ action('a', ctx) ], 0);
+    });
+
+
+    it('should not fail if nothing to redo', function() {
+
+      // given
+
+      // when
+      commandStack.redo();
+
+      // then
+      expectStack([ ], -1);
+    });
+
   });
 
-  it('redo last actions', function() {
 
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
+  describe('reset', function() {
 
-    var param1 = {};
-    command.execute('id_1', param1);
-    command.execute('id_1', param1);
-    command.execute('id_3', param1);
-    command.execute('id_2', param1);
-    expect(param1.test).toEqual('do_B');
-    command.undo();
-    expect(param1.test).toEqual('undo_B');
-    command.undo();
-    expect(param1.test).toEqual('undo_C');
-    command.undo();
-    expect(param1.test).toEqual('undo_A');
-    command.undo();
-    expect(param1.test).toEqual('undo_A');
-    command.redo();
-    expect(param1.test).toEqual('do_A');
-    command.redo();
-    expect(param1.test).toEqual('do_A');
-    command.redo();
-    expect(param1.test).toEqual('do_C');
-    command.redo();
-    expect(param1.test).toEqual('do_B');
-  });
+    it('should clear stack', function() {
 
-  it('not fail on to many redos', function() {
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
+      // given
+      commandStack.register('a', handlerA);
 
-    var param1 = {};
-    command.execute('id_1', param1);
-    command.execute('id_1', param1);
-    command.execute('id_3', param1);
-    command.execute('id_2', param1);
+      commandStack.execute('a', {});
+      commandStack.execute('a', {});
+      commandStack.undo();
+      commandStack.redo();
+      commandStack.execute('a', {});
+      commandStack.undo();
 
-    command.undo();
-    command.undo();
-    command.undo();
+      // when
+      commandStack.clear();
 
-    command.redo();
-    command.redo();
-    command.redo();
-    command.redo();
-    command.redo();
-    command.redo();
-  });
+      // then
+      expectStack([ ], -1);
+    });
 
-  it('not fail on to many undos', function() {
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
-
-    var param1 = {};
-    command.execute('id_1', param1);
-    command.execute('id_1', param1);
-    command.execute('id_3', param1);
-    command.execute('id_2', param1);
-
-    command.undo();
-    command.undo();
-    command.undo();
-    command.undo();
-    command.undo();
-    command.undo();
-    command.undo();
-  });
-
-  it('test integrity', function() {
-    command.register('id_1', f1);
-    command.register('id_2', f2);
-    command.register('id_3', f3);
-    command.register('id_4', f4);
-
-    var param = {};
-    command.execute('id_1', param);
-    command.execute('id_2', param);
-    command.execute('id_3', param);
-    expect(param.test).toEqual('do_C');
-    command.undo();
-    expect(param.test).toEqual('undo_C');
-    command.undo();
-    expect(param.test).toEqual('undo_B');
-    command.redo();
-    expect(param.test).toEqual('do_B');
-    command.undo();
-    expect(param.test).toEqual('undo_B');
   });
 
 });

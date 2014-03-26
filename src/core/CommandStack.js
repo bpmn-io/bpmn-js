@@ -2,6 +2,9 @@ var diagramModule = require('../di').defaultModule;
 
 var _ = require('lodash');
 
+
+require('./Events');
+
 /**
  * @namespace djs
  */
@@ -14,32 +17,34 @@ var _ = require('lodash');
  * to the diagram must be invoked through this Service.
  *
  */
-function CommandStack(injector) {
+function CommandStack(injector, events) {
   'use strict';
 
   /**
    *
    * @type {Object} Key is the command id and value is a list of registered handler methods}
    */
-  var commandListenersMap = {};
+  var handlerMap = {};
+  
   /**
-   *
-   * @type {Array} A stack containing the last operations on the diagram}
+   * The stack containing all re/undoable actions on the diagram
+   * @type {Array<Object>}
    */
-  var actionStack = [];
-  /**
-   *
-   * @type {Array} A stack containing the last operations on the diagram that were undone}
-   */
-  var redoStack = [];
+  var stack = [];
 
-  function registerCommand(id, handler) {
-    checkId(id);
-    addCommandListener(id, handler);
+  /**
+   * The current index on the stack
+   * @type {Number}
+   */
+  var stackIdx = -1;
+
+
+  function redoAction() {
+    return stack[stackIdx + 1];
   }
 
-  function commandList() {
-    return commandListenersMap;
+  function undoAction() {
+    return stack[stackIdx];
   }
 
   /**
@@ -48,8 +53,10 @@ function CommandStack(injector) {
    * @param {String} id of the action
    * @param {Object} ctx is a parameter object for the executed action
    */
-  function applyAction(id, ctx) {
-    internalApplyAction(id, ctx, false);
+  function execute(id, ctx) {
+    var action = { id: id, ctx: ctx };
+
+    internalExecute(action);
   }
 
   /**
@@ -60,96 +67,123 @@ function CommandStack(injector) {
    * @param {Boolean} saveRedoStack if true the redo stack is not reset.
    *                  This must be set when an redo action is applied.
    */
-  function internalApplyAction(id, ctx, saveRedoStack) {
-    var commandListeners = getCommandListener(id);
-    if(!commandListeners ||
-      commandListeners.length < 1) {
-      console.warn('[CommandStack] command \'%s\' is not registered.', id);
+  function internalExecute(action) {
+    var id = action.id,
+        ctx = action.ctx;
+
+    if (!action.id) {
+      throw new Error('action has no id');
     }
-    _.forEach(commandListeners, function(commandListener) {
-      if(commandListener.execute(ctx)) {
-        pushAction(id, ctx);
-        if(!saveRedoStack) {
-          // A new action invalidates all actions in the redoStack.
-          redoStack = [];
-        }
+
+    events.fire('commandStack.execute', { id: id });
+    
+    var handlers = getHandlers(id);
+
+    if (!(handlers && handlers.length)) {
+      console.warn('no command handler registered for ', id);
+    }
+
+    var executedHandlers = [];
+
+    _.forEach(handlers, function(handler) {
+      if (handler.execute(ctx)) {
+        executedHandlers.push(handler);
+      } else {
+        // TODO(nre): handle revert case, i.e. the situation that one of a number of handlers fail
       }
     });
+
+    executeFinished(action);
   }
 
-  function undoAction() {
-    var lastAction = popAction();
-    if(!lastAction) {
+  function executeFinished(action) {
+    if (redoAction() !== action) {
+      stack.splice(stackIdx + 1, stack.length, action);
+    }
+
+    stackIdx++;
+
+    events.fire('commandStack.changed');
+  }
+
+
+  function undo() {
+
+    var action = undoAction();
+    if (!action) {
       return false;
     }
-    var commandListeners = getCommandListener(lastAction.id);
-    _.forEach(commandListeners, function(commandListener) {
-      commandListener.revert(lastAction.param);
+
+    events.fire('commandStack.revert', { id: action.id });
+
+    var handlers = getHandlers(action.id);
+    _.forEach(handlers, function(handler) {
+      handler.revert(action.ctx);
     });
-    pushActionToRedoStack(lastAction);
+
+    revertFinished(action);
   }
 
-  var redoAction = function redoAction() {
-    var actionToRedo = popFromRedoStack();
-    if(actionToRedo) {
-      internalApplyAction(actionToRedo.id, actionToRedo.param, true);
+  function revertFinished(action) {
+    stackIdx--;
+
+    events.fire('commandStack.changed');
+  }
+
+  function redo() {
+
+    var action = redoAction();
+    if (action) {
+      internalExecute(action);
     }
-    return actionToRedo;
-  };
 
-  var getCommandListener = function getCommandListener(id) {
-    return commandListenersMap[id];
-  };
+    return action;
+  }
 
-  var addCommandListener = function addCommandListener(id, handler) {
-    var commandListeners = getCommandListener(id);
-    if(commandListeners) {
-      commandListenersMap.push(handler);
+  function getHandlers(id) {
+    if (id) {
+      return handlerMap[id];
     } else {
-      commandListenersMap[id] = [];
-      commandListenersMap[id].push(handler);
+      return handlerMap;
     }
-  };
+  }
 
-  var checkId = function checkId(id) {
+  function addHandler(id, handler) {
+    assertValidId(id);
+
+    var handlers = handlerMap[id];
+    if (!handlers) {
+      handlerMap[id] = handlers = [];
+    }
+    
+    handlers.push(handler);
+  }
+
+  function getStack() {
+    return stack;
+  }
+
+  function getStackIndex() {
+    return stackIdx;
+  }
+
+  function clear() {
+    stack.length = 0;
+    stackIdx = -1;
+  }
+
+
+  ////// registration ////////////////////////////////////////
+  
+  function assertValidId(id) {
     if (!id) {
-      throw {
-        message: 'No ID specified.'
-      };
+      throw new Error('no id specified');
     }
-  };
+  }
 
-  var pushAction = function pushAction(id, param) {
-    actionStack.push({'id': id,
-                      'param': param
-                     });
-  };
-
-  var popAction = function popAction() {
-    return actionStack.pop();
-  };
-
-  var pushActionToRedoStack = function pushActionToRedoStack(action) {
-    redoStack.push(action);
-  };
-
-  var popFromRedoStack = function popFromRedoStack() {
-    return redoStack.pop();
-  };
-
-  var getActionStack = function getActionStack() {
-    return actionStack;
-  };
-
-  var getRedoStack = function getRedoStack() {
-    return redoStack;
-  };
-
-  var clearActionStack = function clearActionStack() {
-    while (actionStack.length > 0) {
-      actionStack.pop();
-    }
-  };
+  function register(id, handler) {
+    addHandler(id, handler);
+  }
 
   function registerHandler(command, handlerCls) {
 
@@ -158,22 +192,22 @@ function CommandStack(injector) {
     }
 
     var handler = injector.instantiate(handlerCls);
-    registerCommand(command, handler);
+    register(command, handler);
   }
 
   return {
-    register: registerCommand,
-    execute: applyAction,
-    undo: undoAction,
-    redo: redoAction,
-    getCommandList: commandList,
-    actionStack: getActionStack,
-    redoStack: getRedoStack,
-    clearStack: clearActionStack,
-    registerHandler: registerHandler
+    execute: execute,
+    undo: undo,
+    redo: redo,
+    clear: clear,
+    getStack: getStack,
+    getStackIndex: getStackIndex,
+    getHandlers: getHandlers,
+    registerHandler: registerHandler,
+    register: register
   };
 }
 
-diagramModule.type('commandStack', [ 'injector', CommandStack ]);
+diagramModule.type('commandStack', [ 'injector', 'events', CommandStack ]);
 
 module.exports = CommandStack;
