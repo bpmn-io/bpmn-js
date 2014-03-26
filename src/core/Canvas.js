@@ -148,6 +148,99 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
     return paper;
   }
 
+  function parseViewBox(str) {
+    if (!str) {
+      return;
+    }
+
+    var value = str.split(/\s/);
+
+    return {
+      x: parseInt(value[0], 10),
+      y: parseInt(value[1], 10),
+      width: parseInt(value[2], 10),
+      height: parseInt(value[3], 10),
+    };
+  }
+
+  function viewbox(box) {
+
+    var svg = paper.node,
+        boundingRect = svg.getBoundingClientRect(),
+        bbox = svg.getBBox();
+
+    var inner = {
+      width: bbox.width + bbox.x,
+      height: bbox.height + bbox.y
+    };
+
+    var outer = {
+      width: boundingRect.width,
+      height: boundingRect.height,
+    };
+
+    if (box === undefined) {
+      box = parseViewBox(svg.getAttribute('viewBox'));
+
+      if (!box) {
+        box = { x: 0, y: 0, width: outer.width, height: outer.height };
+      }
+
+      // calculate current scale based on svg bbox (inner) and viewbox (outer)
+      box.scale = Math.min(outer.width / box.width, outer.height / box.height);
+
+      box.inner = inner;
+      box.outer = outer;
+    } else {
+      svg.setAttribute('viewBox', [ box.x, box.y, box.width, box.height ].join(' '));
+    }
+
+    return box;
+  }
+
+  /**
+   * Scales the canvas, optionally zooming to the specified position.
+   *  
+   * @param {String|Number} scale the new zoom level, either a number, i.e. 0.9 or 'viewport' to fit to the viewport.
+   * @param {Object} [position]
+   * @param {Number} position.x
+   * @param {Number} position.y
+   * 
+   * @return {Number} the current scale after zooming
+   */
+  function scale(newScale, position) {
+
+    var vbox = viewbox(),
+        inner = vbox.inner,
+        outer = vbox.outer;
+
+    if (newScale === undefined) {
+      return vbox.scale;
+    }
+
+    debugger;
+
+    if (newScale === 'fit-viewport') {
+
+      if (vbox.width < inner.width || vbox.height < inner.height) {
+        newScale = Math.min(outer.width / inner.width, outer.height / inner.height);
+      } else {
+        newScale = vbox.scale;
+      }
+    }
+
+    _.extend(vbox, {
+      width: outer.width / newScale,
+      height: outer.height / newScale
+    }, position || {});
+
+
+    viewbox(vbox);
+
+    // return current scale
+    return newScale;
+  }
+
   /**
    * Add event listener to paper.
    */
@@ -178,6 +271,8 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   });
 
   return {
+    scale: scale,
+    viewbox: viewbox,
     addShape: addShape,
     addConnection: addConnection,
     getContext: getContext,

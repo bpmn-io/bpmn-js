@@ -8,10 +8,10 @@ var createSpy = jasmine.createSpy;
 
 describe('Canvas', function() {
 
-  beforeEach(bootstrapDiagram());
 
+  describe('addShape', function() {
 
-  describe('add shape', function() {
+    beforeEach(bootstrapDiagram());
 
     it('should fire <shape.added> event', inject(function(canvas, events) {
 
@@ -108,5 +108,210 @@ describe('Canvas', function() {
     }));
 
   });
+
+  
+  describe('viewbox', function() {
+
+    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+
+
+    describe('getter', function() {
+
+      it('should provide default viewbox', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        // when
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 300, height: 300,
+          scale: 1.0,
+          inner: { width: 300, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+
+      it('should provide default viewbox / overflowing diagram', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        // when
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 300, height: 300,
+          scale: 1.0,
+          inner: { width: 600, height: 600 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+    });
+
+
+    describe('setter', function() {
+
+      it('should set new viewbox', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+        
+        var viewbox = { x: 100, y: 100, width: 600, height: 600 };
+
+        // when
+        canvas.viewbox(viewbox);
+
+        var changedViewbox = canvas.viewbox();
+
+        // then
+        expect(changedViewbox).toEqual({
+          x: 100, y: 100,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 300, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+    });
+  });
+
+
+  describe('scale', function() {
+
+    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+
+
+    describe('getter', function() {
+
+      it('should return 1.0 / without zoom', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        // when
+        var scale = canvas.scale();
+
+        // then
+        expect(scale).toEqual(1.0);
+      }));
+
+
+      it('should return 1.0 / without zoom / with overflow', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        // when
+        var scale = canvas.scale();
+
+        // then
+        expect(scale).toEqual(1.0);
+      }));
+
+
+      it('should return new scale after zoom', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        // when
+        canvas.scale(0.5);
+        var scale = canvas.scale();
+
+        // then
+        expect(scale).toEqual(0.5);
+      }));
+
+    });
+
+    describe('setter', function() {
+
+      it('should return new scale', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        // when
+        var scale = canvas.scale(0.5);
+
+        // then
+        expect(scale).toEqual(0.5);
+      }));
+
+
+      it('should scale fit-viewport', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        // when
+        var scale = canvas.scale('fit-viewport');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(scale).toEqual(0.5);
+
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 600, height: 600 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
+      it('should scale 1.0', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        var originalViewbox = canvas.viewbox();
+
+        // when
+        canvas.scale('fit-viewport');
+        canvas.scale(1.0);
+
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual(originalViewbox);
+      }));
+
+
+      it('should scale zoom', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        // when
+        var scale = canvas.scale(2.0, { x: 100, y: 100 });
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(scale).toEqual(2.0);
+
+        expect(viewbox).toEqual({
+          x: 100, y: 100,
+          width: 150, height: 150,
+          scale: 2,
+          inner: { width: 300, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+    });
+  });
+
 
 });
