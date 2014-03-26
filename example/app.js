@@ -1,4 +1,4 @@
-(function(BpmnJS) {
+(function(BpmnJS, $) {
 
   var container = $('#js-drop-zone');
 
@@ -42,6 +42,8 @@
           .removeClass('with-error')
           .addClass('with-diagram');
       }
+
+
     });
   }
 
@@ -131,7 +133,9 @@
       }
     }
     
-    setInterval(function() {
+    var _ = require('lodash');
+
+    var exportArtifacts = _.debounce(function() {
 
       saveSVG(function(err, svg) {
         setEncoded(downloadSvgLink, 'diagram.svg', err ? null : svg);
@@ -140,8 +144,9 @@
       saveDiagram(function(err, xml) {
         setEncoded(downloadLink, 'diagram.bpmn', err ? null : xml);
       });
+    }, 500);
 
-    }, 5000);
+    renderer.on('commandStack.changed', exportArtifacts);
   });
 
-})(window.BpmnJS);
+})(window.BpmnJS, window.jQuery);
