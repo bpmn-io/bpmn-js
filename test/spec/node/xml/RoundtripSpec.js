@@ -45,7 +45,9 @@ describe('Model - roundtrip', function() {
     }
   }
 
+
   beforeEach(Matchers.add);
+
 
   describe('Roundtrip', function() {
 
@@ -72,22 +74,6 @@ describe('Model - roundtrip', function() {
       });
     });
 
-    xit('should write complex process', function(done) {
-
-      // given
-      readBpmn('complex.bpmn', function(err, result) {
-
-        if (err) {
-          done(err);
-          return;
-        }
-        
-        // when
-        writeBpmn(result, { format: true }, function(err, xml) {
-          validate(err, xml, done);
-        });
-      });
-    });
 
     it('should write complex process', function(done) {
 
@@ -106,6 +92,25 @@ describe('Model - roundtrip', function() {
       });
     });
 
+
+    it('should write complex process / extensionElements', function(done) {
+
+      // given
+      readBpmn('complex.bpmn', function(err, result) {
+
+        if (err) {
+          done(err);
+          return;
+        }
+        
+        // when
+        writeBpmn(result, { format: true }, function(err, xml) {
+          validate(err, xml, done);
+        });
+      });
+    });
+
+
     it('should write simple process', function(done) {
 
       // given
@@ -122,5 +127,6 @@ describe('Model - roundtrip', function() {
         });
       });
     });
+
   });
 });

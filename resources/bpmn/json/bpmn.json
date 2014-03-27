@@ -403,16 +403,16 @@
       "id": "A_extensionAttributeDefinitions_extensionDefinition"
     },
     {
-      "name": "A_extensionValues_baseElement",
+      "name": "A_extensionElements_baseElement",
       "visibility": "private",
-      "memberEnd": "BaseElement-extensionValues A_extensionValues_baseElement-baseElement",
-      "id": "A_extensionValues_baseElement",
+      "memberEnd": "BaseElement-extensionElements A_extensionElements_baseElement-baseElement",
+      "id": "A_extensionElements_baseElement",
       "ownedEnd": {
         "name": "baseElement",
         "type": "BaseElement",
-        "owningAssociation": "A_extensionValues_baseElement",
-        "association": "A_extensionValues_baseElement",
-        "id": "A_extensionValues_baseElement-baseElement"
+        "owningAssociation": "A_extensionElements_baseElement",
+        "association": "A_extensionElements_baseElement",
+        "id": "A_extensionElements_baseElement-baseElement"
       }
     },
     {
@@ -3164,11 +3164,10 @@
           "isReference": true
         },
         {
-          "name": "extensionValues",
+          "name": "extensionElements",
           "type": "ExtensionElements",
-          "association": "A_extensionValues_baseElement",
-          "id": "BaseElement-extensionValues",
-          "isMany": true
+          "association": "A_extensionElements_baseElement",
+          "id": "BaseElement-extensionElements"
         },
         {
           "name": "documentation",
@@ -3263,10 +3262,11 @@
           "type": "Element"
         },
         {
-          "name": "value",
+          "name": "values",
           "association": "A_value_extensionElements",
           "id": "ExtensionElements-value",
-          "type": "Element"
+          "type": "Element",
+          "isMany": true
         },
         {
           "name": "extensionAttributeDefinition",

@@ -23,14 +23,16 @@ describe('Model', function() {
 
   beforeEach(Matchers.add);
 
+
   describe('fromXML', function() {
 
-    it('should read documentation', function(done) {
+    it('should import documentation', function(done) {
       // given
       
       // when
       readFile('documentation.bpmn', 'bpmn:Definitions', function(err, result) {
         
+        // then
         expect(result).toDeepEqual({
           $type: 'bpmn:Definitions',
           id: 'documentation',
@@ -60,7 +62,32 @@ describe('Model', function() {
       });
     });
 
-    it('import simple Process', function(done) {
+
+    it('should import extensionElements', function(done) {
+      // given
+      
+      // when
+      readFile('extension-elements.bpmn', 'bpmn:Definitions', function(err, result) {
+        
+        expect(result).toDeepEqual({
+          $type: 'bpmn:Definitions',
+          id: 'test',
+          targetNamespace: 'http://bpmn.io/schema/bpmn',
+          extensionElements: {
+            $type : 'bpmn:ExtensionElements',
+            values : [
+              { $type: 'vendor:info', key: 'bgcolor', value: '#ffffff' },
+              { $type: 'vendor:info', key: 'role', value: '[]' }
+            ]
+          }
+        });
+        
+        done(err);
+      });
+    });
+
+
+    it('should import simple Process', function(done) {
 
       // given
 
@@ -74,7 +101,8 @@ describe('Model', function() {
       });
     });
 
-    it('import edge waypoints', function(done) {
+
+    it('should import edge waypoints', function(done) {
 
       // given
       
@@ -95,7 +123,8 @@ describe('Model', function() {
       });
     });
 
-    it('import simple Process (default ns)', function(done) {
+
+    it('should import simple Process (default ns)', function(done) {
 
       // given
 
@@ -107,6 +136,7 @@ describe('Model', function() {
         done(err);
       });
     });
+
 
     describe('should import references', function() {
 
@@ -134,6 +164,7 @@ describe('Model', function() {
           done(err);
         });
       });
+
 
       it('via elements', function(done) {
 
@@ -173,6 +204,7 @@ describe('Model', function() {
       });
     });
 
+
     describe('should import element', function() {
 
       it('empty Definitions', function(done) {
@@ -195,6 +227,7 @@ describe('Model', function() {
         });
       });
 
+
       it('empty Definitions (default ns)', function(done) {
 
         // given
@@ -214,6 +247,7 @@ describe('Model', function() {
           done(err);
         });
       });
+
 
       it('SubProcess / flow nodes', function(done) {
 
@@ -241,6 +275,7 @@ describe('Model', function() {
         });
       });
 
+
       it('SubProcess / flow nodes / nested references', function(done) {
 
         // given
@@ -266,6 +301,7 @@ describe('Model', function() {
           done(err);
         });
       });
+
 
       it('SubProcess / incoming + flow nodes', function(done) {
 
@@ -315,6 +351,7 @@ describe('Model', function() {
         });
       });
 
+
       it('BPMNShape / nested bounds / non-ns-attributes', function(done) {
 
         // given
@@ -336,6 +373,7 @@ describe('Model', function() {
           done(err);
         });
       });
+
 
       it('BPMNEdge / nested waypoints / explicit xsi:type', function(done) {
 
@@ -359,6 +397,7 @@ describe('Model', function() {
           done(err);
         });
       });
+
 
       it('BPMNDiagram / nested elements', function(done) {
 
@@ -402,6 +441,7 @@ describe('Model', function() {
 
     });
 
+    
     describe('should handle errors', function() {
 
 
@@ -410,7 +450,7 @@ describe('Model', function() {
         // when
         readFile('error/no-xml.txt', 'bpmn:Definitions', function(err, result) {
           
-          expect(err).toBeDefined();
+          expect(err).not.toEqual(null);
           
           done();
         });
@@ -421,22 +461,11 @@ describe('Model', function() {
         // when
         readFile('error/binary.png', 'bpmn:Definitions', function(err, result) {
 
-          expect(err).toBeDefined();
+          expect(err).not.toEqual(null);
 
           done();
         });
 
-      });
-
-      it('when importing extension elements', function(done) {
-
-        // when
-        readFile('error/extension-elements.bpmn', 'bpmn:Definitions', function(err, result) {
-          
-          expect(err).toBeDefined();
-
-          done();
-        });
       });
 
       it('when importing invalid bpmn', function(done) {
@@ -444,7 +473,7 @@ describe('Model', function() {
         // when
         readFile('error/invalid-child.bpmn', 'bpmn:Definitions', function(err, result) {
           
-          expect(err).toBeDefined();
+          expect(err).not.toEqual(null);
 
           done();
         });

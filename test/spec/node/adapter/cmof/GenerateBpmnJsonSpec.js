@@ -91,7 +91,7 @@ describe('generate JSON meta model', function() {
 
     if (elementParts[1]) {
       var property = _.find(element.properties, function(p) {
-        return p.name == elementParts[1];
+        return p.name === elementParts[1];
       });
 
       if (!property) {
@@ -114,10 +114,36 @@ describe('generate JSON meta model', function() {
 
   it('should transform BPMN20.cmof', parsed('resources/bpmn/cmof/BPMN20.cmof', function(results) {
 
+    // perform a translation from
+    // 
+    // BaseElement
+    //   - extensionValues = [ ExtensionAttributeValue#value = ... ]
+    //   
+    // to
+    // 
+    // BaseElement
+    //   - extensionElements: ExtensionElements#values = [ ... ]
+    //
+    alter(results, 'ExtensionAttributeValue#value', {
+      name: 'values',
+      isMany: true
+    });
+
+    alter(results, 'BaseElement#extensionValues', function(p) {
+      p.name = 'extensionElements';
+
+      delete p.isMany;
+    });
+
     rename(results, 'extensionAttributeValue', 'extensionElements');
+
+    rename(results, 'extensionValues', 'extensionElements');
 
     rename(results, 'ExtensionAttributeValue', 'ExtensionElements');
 
+
+    // fix positioning of elements
+    
     alter(results, 'FlowElementsContainer', function(desc) {
       swapProperties(desc, 'laneSets', 'flowElements');
     });
@@ -154,7 +180,9 @@ describe('generate JSON meta model', function() {
     exportAsJson(results, { alias: 'lowerCase' });
   }));
 
+
   it('should transform BPMNDI.cmof', parsed('resources/bpmn/cmof/BPMNDI.cmof', exportAsJson));
+
 
   it('should transform DI.cmof', parsed('resources/bpmn/cmof/DI.cmof', function(results) {
     
@@ -164,6 +192,7 @@ describe('generate JSON meta model', function() {
 
     exportAsJson(results);
   }));
+
 
   it('should transform DC.cmof', parsed('resources/bpmn/cmof/DC.cmof', exportAsJson));
 });

@@ -25,6 +25,7 @@ describe('Model', function() {
 
   beforeEach(Matchers.add);
 
+
   describe('toXML', function() {
 
     it('export empty Definitions', function(done) {
@@ -44,6 +45,7 @@ describe('Model', function() {
         done(err);
       });
     });
+
 
     it('export BPMNShape', function(done) {
 
@@ -68,5 +70,40 @@ describe('Model', function() {
       });
     });
 
+
+    it('export extensionElements', function(done) {
+
+      // given
+      var extensionElements = bpmnModel.create('bpmn:ExtensionElements');
+
+      var foo = bpmnModel.createAny('vendor:foo', 'http://vendor', {
+        key: 'FOO',
+        value: 'BAR'
+      });
+
+      extensionElements.get('values').push(foo);
+
+      var definitions = bpmnModel.create('bpmn:Definitions', {
+        extensionElements: extensionElements
+      });
+
+      var expectedXML =
+        '<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" ' +
+                          'xmlns:vendor="http://vendor">' +
+          '<bpmn:extensionElements>' +
+            '<vendor:foo key="FOO" value="BAR" />' +
+          '</bpmn:extensionElements>' +
+        '</bpmn:definitions>';
+
+
+      // when
+      write(definitions, function(err, result) {
+
+        // then
+        expect(result).toEqual(expectedXML);
+
+        done(err);
+      });
+    });
   });
 });
