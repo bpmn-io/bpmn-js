@@ -47,7 +47,12 @@
 
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 
-  <script src="../bpmn.min.js"></script>
+  <script>
+    var str = window.location.search;
+    var min = !/\?debug=/.test(str);
+
+    document.write('<script src="../bpmn' + (min ? '.min': '') + '.js"></' + 'script>');
+  </script>
 
   <script>
     var BpmnJS = require('bpmn/Modeler');
