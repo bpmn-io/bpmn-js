@@ -56,16 +56,24 @@ module.exports = function(grunt) {
     },
     browserify: {
       options: {
-        insertGlobalVars: [],
-        debug: true
+        browserifyOptions: {
+          builtins: false,
+          commondir: false
+        },
+        bundleOptions: {
+          detectGlobals: false,
+          ignoreMissing: true,
+          insertGlobalVars: [],
+          debug: true
+        }
       },
       modeler: {
         files: {
-          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
+          '<%= config.dist %>/bpmn.js': [ 'shim/*.js', '<%= config.sources %>/**/*.js' ]
         },
         options: {
           alias: [
-            'lodash',
+            'node_modules/lodash:lodash',
             '<%= config.sources %>/main.js:bpmn',
             '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer',
@@ -79,7 +87,7 @@ module.exports = function(grunt) {
         },
         options: {
           alias: [
-            'lodash',
+            'node_modules/lodash:lodash',
             '<%= config.sources %>/main.js:bpmn',
             '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer'
