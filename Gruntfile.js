@@ -56,7 +56,8 @@ module.exports = function(grunt) {
     },
     browserify: {
       options: {
-        insertGlobalVars: []
+        insertGlobalVars: [],
+        debug: true
       },
       modeler: {
         files: {
@@ -69,7 +70,7 @@ module.exports = function(grunt) {
             '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer',
             '<%= config.sources %>/Modeler.js:bpmn/Modeler'
-          ],
+          ]
         }
       },
       viewer: {
@@ -140,6 +141,41 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+    uglify: {
+      options: {
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> - ' +
+                'https://github.com/bpmn-io/bpmn-js */',
+        sourceMap: true,
+        sourceMapIncludeSources: true,
+        sourceMapIn: function(file) {
+          var content = grunt.file.read(file, { encoding: 'utf-8' });
+
+          var match = /\/\/# sourceMappingURL=data:application\/json;base64,(.*)/.exec(content);
+
+          if (match) {
+            var b = new Buffer(match[1] + '==', 'base64');
+            var s = b.toString();
+
+            grunt.file.write('tmp/sourceMap.json', s, { encoding: 'utf-8' });
+
+            return 'tmp/sourceMap.json';
+          } else {
+            return null;
+          }
+        }
+      },
+      modeler: {
+        files: {
+          '<%= config.dist %>/bpmn.min.js': [ '<%= config.dist %>/bpmn.js' ]
+        }
+      },
+      viewer: {
+        files: {
+          '<%= config.dist %>/bpmn-viewer.min.js': [ '<%= config.dist %>/bpmn-viewer.js' ]
+        }
+      }
     }
   });
 
@@ -149,14 +185,16 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', function(target, mode) {
 
-    if (mode === 'dev') {
-      grunt.config.set('browserify.options.debug', true);
-    } else {
-      grunt.config.set('browserify.options.transform', [ 'uglifyify' ]);
-    }
+    mode = mode || 'prod';
 
     if (target === 'lib') {
-      return grunt.task.run([ 'browserify:modeler', 'browserify:viewer' ]);
+      var tasks = [];
+
+      if (mode !== 'dev') {
+        tasks.push('uglify:modeler', 'uglify:viewer');
+      }
+
+      return grunt.task.run([ 'browserify:modeler', 'browserify:viewer' ].concat(tasks));
     }
 
     if (target === 'samples') {
@@ -164,7 +202,7 @@ module.exports = function(grunt) {
     }
 
     if (!target || target === 'all') {
-      return grunt.task.run([ 'build:lib', 'build:samples' ]);
+      return grunt.task.run([ 'build:lib:' + mode, 'build:samples:' + mode ]);
     }
   });
 
