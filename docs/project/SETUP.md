@@ -108,6 +108,7 @@ cd $base/bpmn-js
 mkdir node_modules
 ln -s $base/moddle node_modules/moddle
 ln -s $base/moddle-xml node_modules/moddle-xml
+ln -s $base/diagram-js node_modules/diagram-js
 npm install > /dev/null
 
 echo all done.
