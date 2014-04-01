@@ -14,6 +14,37 @@ require('./Shapes');
  * @type djs.ShapeDescriptor
  */
 
+
+function createParent(options) {
+
+  options = _.extend({}, { width: '100%', height: '100%' }, options);
+
+  var container = options.container || document.getElementsByTagName('body')[0];
+  
+  // create a <div> around the svg element with the respective size
+  // this way we can always get the correct container size
+  // (this is impossible for <svg> elements at the moment)
+  var parent = document.createElement('div');
+  parent.setAttribute('class', 'djs-container');
+
+  parent.style.width = _.isNumber(options.width) ? options.width + 'px' : options.width;
+  parent.style.height = _.isNumber(options.height) ? options.height + 'px' : options.height;
+
+  container.appendChild(parent);
+
+  return parent;
+}
+
+function getSize(svg) {
+  var parent = svg.parentNode;
+
+  return {
+    width: parent.clientWidth,
+    height: parent.clientHeight
+  };
+}
+
+
 /**
  * @class
  *
@@ -22,10 +53,28 @@ require('./Shapes');
 function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   'use strict';
 
-  var options = _.extend({}, { width: '100%', height: '100%' }, config.canvas || {});
+  var options = _.extend(config.canvas || {});
 
-  var paper = graphicsFactory.createPaper(options);
+  var paper = createPaper(options);
 
+  function createPaper(options) {
+
+    // Creates a <svg> element that is wrapped into a <div>.
+    // This way we are always able to correctly figure out the size of the svg element
+    // by querying the parent node.
+    // 
+    // (It is not possible to get the size of a svg element cross browser @ 2014-04-01)
+    // 
+    // <div class="djs-container" style="width: {desired-width}, height: {desired-height}">
+    //   <svg width="100%" height="100%">
+    //    ...
+    //   </svg>
+    // </div>
+    //
+    var parent = createParent(options);
+
+    return graphicsFactory.createPaper({ container: parent, width: '100%', height: '100%' });
+  }
 
   /**
    * Adds a shape to the canvas
@@ -166,19 +215,23 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   function viewbox(box) {
 
     var svg = paper.node,
-        boundingRect = svg.getBoundingClientRect(),
         bbox = svg.getBBox();
 
+    function round(i, accuracy) {
+      accuracy = accuracy || 100;
+      return Math.round(i * accuracy) / accuracy;
+    }
+
     var inner = {
-      width: bbox.width + bbox.x,
-      height: bbox.height + bbox.y
+      width: round(bbox.width + bbox.x),
+      height: round(bbox.height + bbox.y)
     };
 
-    var outer = {
-      width: boundingRect.width,
-      height: boundingRect.height,
-    };
-
+    // returns the acutal embedded size of the SVG element
+    // would be awesome to be able to use svg.client(Width|Height) or
+    // svg.getBoundingClientRect(). Not supported in IE/Firefox though
+    var outer = getSize(svg);
+    
     if (box === undefined) {
       box = parseViewBox(svg.getAttribute('viewBox'));
 
@@ -187,7 +240,7 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
       }
 
       // calculate current scale based on svg bbox (inner) and viewbox (outer)
-      box.scale = Math.min(outer.width / box.width, outer.height / box.height);
+      box.scale = round(Math.min(outer.width / box.width, outer.height / box.height));
 
       box.inner = inner;
       box.outer = outer;
@@ -217,8 +270,6 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
     if (newScale === undefined) {
       return vbox.scale;
     }
-
-    debugger;
 
     if (newScale === 'fit-viewport') {
 
