@@ -3,6 +3,7 @@ var Events = require('../../../src/core/Events'),
 
 
 describe('Shapes', function() {
+  'use strict';
 
   var events, shapes;
 
@@ -49,5 +50,4 @@ describe('Shapes', function() {
     expect(shapes.getGraphicsByShape(shape)).not.toBeDefined();
     expect(shapes.getGraphicsByShape(shape.id)).not.toBeDefined();
   });
-  
 });

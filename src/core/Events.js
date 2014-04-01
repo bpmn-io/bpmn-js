@@ -3,12 +3,23 @@ var diagramModule = require('../di').defaultModule;
 var _ = require('lodash');
 
 /**
+ * @global
+ * @type {Object}
+ * @static
+ */
+var EventPriority = {
+  standard: 1000,
+  overwrite: 10000
+};
+
+/**
  * @class
  * 
  * A general purpose event bus
  */
 function Events() {
-  
+  'use strict';
+
   var listenerMap = {};
 
   function getListeners(name) {
@@ -30,18 +41,18 @@ function Events() {
       type: type,
 
       stopPropagation: function() {
-        propagationStopped = true;
+        this.propagationStopped = true;
       },
       preventDefault: function() {
-        defaultPrevented = true;
+        this.defaultPrevented = true;
       },
 
       isPropagationStopped: function() {
-        return !!propagationStopped;
+        return !!this.propagationStopped;
       },
 
       isDefaultPrevented: function() {
-        return !!defaultPrevented;
+        return !!this.defaultPrevented;
       }
     });
 
@@ -58,10 +69,20 @@ function Events() {
    * 
    * @param {String} event
    * @param {Function} callback
+   * @param {Number} Set priority to influence the execution order of the callbacks.
+   * The default priority is 1000. It should only set to higher values (> {@link EventPriority#overwrite}) if
+   * there is real need for a changed execution priority.
    */
-  function on(event, callback) {
+  function on(event, callback, priority) {
+    if(priority && !_.isNumber(priority)) {
+      console.error('Priority needs to be a number');
+      priority = EventPriority.standard;
+    }
+    if(!priority) {
+      priority = EventPriority.standard;
+    }
     var listeners = getListeners(event);
-    listeners.push(callback);
+    addEventToArray(listeners, callback, priority);
   }
 
   /**
@@ -77,11 +98,9 @@ function Events() {
   function once(event, callback) {
 
     var self = this;
-
     var wrappedCallback = function() {
-
       var eventType = arguments[0].type;
-
+      callback.apply(this, arguments);
       self.off(eventType, wrappedCallback);
     };
 
@@ -102,9 +121,12 @@ function Events() {
     var listeners, idx;
 
     listeners = getListeners(event);
-
     if (callback) {
-      idx = listeners.indexOf(callback);
+      _.forEach(listeners, function(listener) {
+        if(listener.callback === callback) {
+          idx = listeners.indexOf(listener);
+        }
+      });
 
       if (idx !== -1) {
         listeners.splice(idx, 1);
@@ -162,6 +184,10 @@ function Events() {
       args.shift();
 
       event = args[0] || {};
+      event.type = eventType;
+      if(args.length === 0) {
+        args.push(event);
+      }
     }
 
     listeners = getListeners(eventType);
@@ -171,9 +197,26 @@ function Events() {
       if (event.isPropagationStopped()) {
         break;
       }
-
-      l.apply(this, args);
+      l.callback.apply(this, args);
     }
+  }
+
+  function addEventToArray(array, callback, priority) {
+
+    array.push({
+      priority: priority,
+      callback: callback
+    });
+
+    array.sort(function(a, b) {
+      if(a.priority < b.priority) {
+        return 1;
+      } else if (a.priority > b.priority) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
 
   return {

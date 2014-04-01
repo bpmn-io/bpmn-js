@@ -1,4 +1,3 @@
-
 /**
  * @name modeler.util.emptyArray
  *
@@ -16,8 +15,5 @@ function emptyArray(array) {
   return array;
 }
 
-
-/**
- * module exports
- */
 module.exports.emptyArray = emptyArray;
+
