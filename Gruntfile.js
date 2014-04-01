@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  /* global Buffer */
+  
   require('load-grunt-tasks')(grunt);
 
   // project configuration
