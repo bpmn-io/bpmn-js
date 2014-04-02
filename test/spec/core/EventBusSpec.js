@@ -1,8 +1,8 @@
-var Events = require('../../../src/core/Events');
+var Events = require('../../../src/core/EventBus');
 
 var createSpy = jasmine.createSpy;
 
-describe('Events', function() {
+describe('eventBus', function() {
   'use strict';
 
   function createEventEmitter() {

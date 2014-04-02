@@ -3,7 +3,7 @@ var diagramModule = require('../di').defaultModule;
 var _ = require('lodash');
 
 
-require('./Events');
+require('./EventBus');
 
 /**
  * @namespace djs
@@ -16,6 +16,8 @@ require('./Events');
  * So that the diagram can support undo/redo. All actions applied
  * to the diagram must be invoked through this Service.
  *
+ * @param {Injector} injector
+ * @param {EventBus} events
  */
 function CommandStack(injector, events) {
   'use strict';
@@ -208,6 +210,6 @@ function CommandStack(injector, events) {
   };
 }
 
-diagramModule.type('commandStack', [ 'injector', 'events', CommandStack ]);
+diagramModule.type('commandStack', [ 'injector', 'eventBus', CommandStack ]);
 
 module.exports = CommandStack;

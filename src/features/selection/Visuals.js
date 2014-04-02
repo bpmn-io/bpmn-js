@@ -1,14 +1,14 @@
-require('../core/Events');
-require('../core/Shapes');
+require('../../core/EventBus');
+require('../../core/ElementRegistry');
 
-require('./services/Selection');
 
-require('./BasicInteractionEvents');
-require('./Outline');
+require('../InteractionEvents');
+require('../Outline');
 
-var Diagram = require('../Diagram'),
-    _ = require('lodash'),
-    svgUtil = require('../util/svgUtil');
+require('./Service');
+
+var Diagram = require('../../Diagram'),
+    _ = require('lodash');
 
 /**
  * @class
@@ -18,11 +18,11 @@ var Diagram = require('../Diagram'),
  *
  * Makes elements selectable, too.
  * 
- * @param {Events} events the event bus
- * @param {Selection} selection the selection service
- * @param {Shapes} shapes the shapes service
+ * @param {EventBus} events
+ * @param {SelectionService} selection
+ * @param {ElementRegistry} shapes
  */
-function SelectionUI(events, selection, shapes) {
+function SelectionVisuals(events, selection, shapes) {
 
   var HOVER_CLS = 'hover',
       SELECTED_CLS = 'selected';
@@ -92,6 +92,11 @@ function SelectionUI(events, selection, shapes) {
   });
 }
 
-Diagram.plugin('selectionUI', [ 'events', 'selection', 'shapes', 'basicInteractionEvents', 'outline', SelectionUI ]);
+Diagram.plugin('selectionVisuals', [
+  'eventBus',
+  'selection',
+  'elementRegistry',
+  'interactionEvents',
+  'outline', SelectionVisuals ]);
 
-module.exports = SelectionUI;
+module.exports = SelectionVisuals;

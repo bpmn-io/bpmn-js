@@ -1,22 +1,20 @@
-require('../core/Events');
+require('../core/EventBus');
 
 require('../draw/Styles');
 
 var Diagram = require('../Diagram'),
     _ = require('lodash'),
-    svgUtil = require('../util/svgUtil');
-
-var getVisual = svgUtil.getVisual;
+    getVisual = require('../util/SvgUtil').getVisual;
 
 /**
  * @class
  * 
  * A plugin that provides interactivity in terms of events (mouse over and selection to a diagram).
  *
- * @param {Events} events the event bus to attach to
+ * @param {EventBus} events the event bus to attach to
  * @param {Styles} styles to build the interaction shape on
  */
-function Interactivity(events, styles) {
+function InteractionEvents(events, styles) {
 
   var HIT_STYLE = styles.cls('djs-hit', [ 'no-fill', 'no-border' ]);
 
@@ -80,6 +78,6 @@ function Interactivity(events, styles) {
   registerEvents(events);
 }
 
-Diagram.plugin('basicInteractionEvents', [ 'events', 'styles', Interactivity ]);
+Diagram.plugin('interactionEvents', [ 'eventBus', 'styles', InteractionEvents ]);
 
-module.exports = Interactivity;
+module.exports = InteractionEvents;

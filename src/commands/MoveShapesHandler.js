@@ -1,4 +1,4 @@
-require('../core/Shapes');
+require('../core/ElementRegistry');
 
 var _ = require('lodash'),
     selfAndAllChildren = require('../util/shapeUtil').selfAndAllChildren,
@@ -9,9 +9,9 @@ var _ = require('lodash'),
  * Implements re- and undoable movement of shapes and their
  * related graphical representations.
  *
- * @param {Shapes} shapes
+ * @param {ElementRegistry} shapes
  */
-function MoveShapesHandler(shapeRegistry) {
+function MoveShapesHandler(elementRegistry) {
 
   function getAllMovedShapes(shapes) {
     var allShapes = selfAndAllChildren(shapes);
@@ -57,11 +57,11 @@ function MoveShapesHandler(shapeRegistry) {
         oldParents[sid] = setParent(s, newParent);
       }
 
-      var gfx = shapeRegistry.getGraphicsByShape(s);
+      var gfx = elementRegistry.getGraphicsByShape(s);
       gfx.translate(newX, newY);
 
       if (s.parent) {
-        var parentGfx = shapeRegistry.getGraphicsByShape(s.parent);
+        var parentGfx = elementRegistry.getGraphicsByShape(s.parent);
         gfx.insertAfter(parentGfx);
       }
     });
@@ -95,7 +95,7 @@ function MoveShapesHandler(shapeRegistry) {
 
       setParent(s, oldParents[s.id]);
 
-      var gfx = shapeRegistry.getGraphicsByShape(s);
+      var gfx = elementRegistry.getGraphicsByShape(s);
       gfx.translate(newX, newY);
     });
 
@@ -119,7 +119,7 @@ function MoveShapesHandler(shapeRegistry) {
 }
 
 
-MoveShapesHandler.$inject = ['shapes'];
+MoveShapesHandler.$inject = [ 'elementRegistry' ];
 
 // export
 module.exports = MoveShapesHandler;

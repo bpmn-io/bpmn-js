@@ -1,4 +1,4 @@
-require('../core/Shapes');
+require('../core/ElementRegistry');
 
 var _ = require('lodash'),
     setParent = require('../util/shapeUtil').setParent;
@@ -7,9 +7,9 @@ var _ = require('lodash'),
 /**
  * Implements re- and undoable addition of shapes to the diagram
  *
- * @param {Events} events
+ * @param {EventBus} events
  * @param {GraphicsFactory} graphicsFactory
- * @param {Shapes} shapes
+ * @param {ElementRegistry} shapes
  */
 function AddShapeHandler(events, graphicsFactory, shapes) {
 
@@ -73,7 +73,7 @@ function AddShapeHandler(events, graphicsFactory, shapes) {
 }
 
 
-AddShapeHandler.$inject = ['events', 'graphicsFactory', 'shapes'];
+AddShapeHandler.$inject = ['eventBus', 'graphicsFactory', 'elementRegistry'];
 
 // export
 module.exports = AddShapeHandler;

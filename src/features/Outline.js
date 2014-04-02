@@ -1,11 +1,11 @@
-require('../core/Events');
+require('../core/EventBus');
 
 require('../draw/Styles');
 
 var Diagram = require('../Diagram'),
-    svgUtil = require('../util/svgUtil');
+    SvgUtil = require('../util/SvgUtil');
 
-var getVisual = svgUtil.getVisual;
+var getVisual = SvgUtil.getVisual;
 
 /**
  * @class
@@ -13,7 +13,7 @@ var getVisual = svgUtil.getVisual;
  * A plugin that adds an outline to shapes and connections that may be activated and styled 
  * via CSS classes.
  * 
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  */
 function Outline(events, styles) {
 
@@ -55,6 +55,6 @@ function Outline(events, styles) {
   });
 }
 
-Diagram.plugin('outline', [ 'events', 'styles', Outline ]);
+Diagram.plugin('outline', [ 'eventBus', 'styles', Outline ]);
 
 module.exports = Outline;

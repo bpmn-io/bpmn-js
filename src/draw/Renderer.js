@@ -1,7 +1,7 @@
 var diagramModule = require('../di').defaultModule;
 
 // required components
-require('../core/Events');
+require('../core/EventBus');
 require('./Styles');
 
 
@@ -22,7 +22,7 @@ function flattenPoints(points) {
  *
  * The default renderer used for shapes and connections.
  * 
- * @param {Events} events
+ * @param {EventBus} events
  * @param {Styles} styles
  */
 function Renderer(events, styles) {
@@ -40,7 +40,7 @@ Renderer.prototype.drawConnection = function drawConnection(paper, data) {
 };
 
 
-diagramModule.type('renderer', [ 'events', 'styles', Renderer ]);
+diagramModule.type('renderer', [ 'eventBus', 'styles', Renderer ]);
 
 
 module.exports = Renderer;

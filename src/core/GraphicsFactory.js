@@ -1,12 +1,18 @@
 var diagramModule = require('../di').defaultModule;
 
 // required components
-require('./Events');
+require('./EventBus');
 
 require('../draw/Snap');
 require('../draw/Renderer');
 
-
+/**
+ * A factory that creates graphical elements
+ * 
+ * @param {EventBus} events
+ * @param {Renderer} renderer
+ * @param {Snap} snap
+ */
 function GraphicsFactory(events, renderer, snap) {
 
   function createParent(paper, type) {
@@ -54,6 +60,6 @@ function GraphicsFactory(events, renderer, snap) {
   this.createPaper = createPaper;
 }
 
-diagramModule.type('graphicsFactory', [ 'events', 'renderer', 'snap', GraphicsFactory ]);
+diagramModule.type('graphicsFactory', [ 'eventBus', 'renderer', 'snap', GraphicsFactory ]);
 
 module.exports = GraphicsFactory;

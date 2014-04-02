@@ -1,18 +1,19 @@
-require('../core/Events');
-require('../core/Shapes');
+require('../core/EventBus');
+require('../core/ElementRegistry');
 
-require('./BasicInteractionEvents');
+require('./InteractionEvents');
 
 var Diagram = require('../Diagram'),
     _ = require('lodash');
+
 
 /**
  * Provides bendpoint visualization, hover and interactivity.
  * 
  * @class
  *
- * @param {Events} events the event bus
- * @param {Shapes} shapes the shape registry
+ * @param {EventBus} events the event bus
+ * @param {ElementRegistry} shapes the shape registry
  * @param {CommandStack} commandStack the command stack
  */
 function Bendpoints(events, shapes, canvas, commandStack) {
@@ -157,6 +158,11 @@ function Bendpoints(events, shapes, canvas, commandStack) {
   });
 }
 
-Diagram.plugin('bendpoints', [ 'events', 'shapes', 'canvas', 'commandStack', 'basicInteractionEvents', Bendpoints ]);
+Diagram.plugin('bendpoints', [
+  'eventBus',
+  'elementRegistry',
+  'canvas',
+  'commandStack',
+  'interactionEvents', Bendpoints ]);
 
 module.exports = Bendpoints;

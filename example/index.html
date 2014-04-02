@@ -31,8 +31,8 @@
           height: 500
         },
         components: [
-          'selectionUI',
-          'dragUI',
+          'selectionVisuals',
+          'dragVisuals',
           'standardPalette' ],
         menu: [
           {
@@ -83,7 +83,7 @@
       });
 
 
-      diagram.invoke([ 'events', 'canvas', 'commandStack', 'shapes', function(events, canvas, commandStack, shapes) {
+      diagram.invoke([ 'eventBus', 'canvas', 'commandStack', 'elementRegistry', function(events, canvas, commandStack, shapes) {
 
         events.on('connection.added', function(event) {
           console.log('connection added', event);

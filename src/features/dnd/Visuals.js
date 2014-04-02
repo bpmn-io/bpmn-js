@@ -1,19 +1,20 @@
-require('../core/Events');
-require('../core/Canvas');
-require('../core/Shapes');
+require('../../core/EventBus');
+require('../../core/Canvas');
+require('../../core/ElementRegistry');
 
-require('../draw/Snap');
-require('../draw/Styles');
+require('../../draw/Snap');
+require('../../draw/Styles');
 
-require('./services/Selection');
-require('./services/Rules');
+require('../selection/Service');
+require('../services/Rules');
 
-require('./DragEvents');
-require('./Outline');
+require('../Outline');
 
-var Diagram = require('../Diagram'),
+require('./Events');
+
+var Diagram = require('../../Diagram'),
     _ = require('lodash'),
-    shapeUtil = require('../util/shapeUtil');
+    ShapeUtil = require('../../util/ShapeUtil');
 
 
 /**
@@ -21,15 +22,15 @@ var Diagram = require('../Diagram'),
  *
  * A plugin that makes shapes draggable / droppable.
  * 
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  * @param {Selection} selection the selection service
- * @param {Shapes} shapes the shapes service
+ * @param {ElementRegistry} shapes the shapes service
  * @param {Canvas} canvas the drawing canvas
- * @param {SnapSVG} snap
+ * @param {Snap} snap
  * @param {Styles} styles
  * @param {Rules} the rule engine
  */
-function DragUI(events, selection, shapes, canvas, snap, styles, rules) {
+function DragVisuals(events, selection, shapes, canvas, snap, styles, rules) {
 
   var paper = canvas.getContext();
 
@@ -38,11 +39,11 @@ function DragUI(events, selection, shapes, canvas, snap, styles, rules) {
   }
 
   function getVisualDragShapes(shapeList) {
-    return shapeUtil.selfAndDirectChildren(shapeList, true);
+    return ShapeUtil.selfAndDirectChildren(shapeList, true);
   }
 
   function getAllChildShapes(shapeList) {
-    return shapeUtil.selfAndAllChildren(shapeList, true);
+    return ShapeUtil.selfAndAllChildren(shapeList, true);
   }
 
   function removeDropMarkers(gfx) {
@@ -145,8 +146,8 @@ function DragUI(events, selection, shapes, canvas, snap, styles, rules) {
   });
 }
 
-Diagram.plugin('dragUI', [
-  'events', 'selection', 'shapes', 'canvas', 'snap', 'styles', 'rules', 'dragEvents', DragUI
+Diagram.plugin('dragVisuals', [
+  'eventBus', 'selection', 'elementRegistry', 'canvas', 'snap', 'styles', 'rules', 'dragEvents', DragVisuals
 ]);
 
-module.exports = DragUI;
+module.exports = DragVisuals;

@@ -2,7 +2,7 @@ var di = require('./di');
 
 // diagram-js main components
 require('./core/Canvas');
-require('./core/Events');
+require('./core/EventBus');
 
 
 /**
@@ -15,7 +15,7 @@ function createInjector(options) {
 
   options = options || {};
 
-  var components = [ 'canvas', 'events' ].concat(options.components || []),
+  var components = [ 'canvas', 'eventBus' ].concat(options.components || []),
       modules = [].concat(options.modules || []);
 
   if (modules.indexOf(defaultModule) === -1) {
@@ -62,7 +62,7 @@ function Diagram(options, injector) {
    * @type {Object}
    * @property {snapsvg.Paper} paper the initialized drawing paper
    */
-  injector.get('events').fire('diagram.init');
+  injector.get('eventBus').fire('diagram.init');
 
   return {
 
@@ -107,7 +107,7 @@ module.exports.components = defaultModule;
  *
  * var Diagram = require('Diagram');
  *
- * Diagram.plugin('mySamplePlugin', [ 'events', function(events) {
+ * Diagram.plugin('mySamplePlugin', [ 'eventBus', function(events) {
  *   events.on('shape.added', function(event) {
  *     console.log('shape ', event.shape, ' was added to the diagram');
  *   });

@@ -1,4 +1,4 @@
-require('../../core/Events');
+require('../../core/EventBus');
 
 var Diagram = require('../../Diagram'),
     _ = require('lodash');
@@ -10,9 +10,9 @@ var Diagram = require('../../Diagram'),
  * A service that offers the current selection in a diagram.
  * Offers the api to control the selection, too.
  * 
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  */
-function Selection(events) {
+function SelectionService(events) {
 
   var selectedElements = [];
 
@@ -72,6 +72,6 @@ function Selection(events) {
   };
 }
 
-Diagram.plugin('selection', [ 'events', Selection ]);
+Diagram.plugin('selection', [ 'eventBus', SelectionService ]);
 
-module.exports = Selection;
+module.exports = SelectionService;

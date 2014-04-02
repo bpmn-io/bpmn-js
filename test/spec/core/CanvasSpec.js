@@ -1,5 +1,5 @@
 
-var Events = require('../../../src/core/Events');
+var Events = require('../../../src/core/EventBus');
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,
     bootstrapDiagram = TestHelper.bootstrapDiagram;
@@ -13,11 +13,11 @@ describe('Canvas', function() {
 
     beforeEach(bootstrapDiagram());
 
-    it('should fire <shape.added> event', inject(function(canvas, events) {
+    it('should fire <shape.added> event', inject(function(canvas, eventBus) {
 
       // given
       var listener = createSpy('listener');
-      events.on('shape.added', listener);
+      eventBus.on('shape.added', listener);
 
       // when
       canvas.addShape({ id: 'a', x: 10, y: 20 });
@@ -57,7 +57,7 @@ describe('Canvas', function() {
     }));
 
 
-    it('should undo add of shape', inject(function(canvas, commandStack, shapes) {
+    it('should undo add of shape', inject(function(canvas, commandStack, elementRegistry) {
 
       // given
       var s1 = { id: 's1', x: 10, y: 20 };
@@ -74,12 +74,12 @@ describe('Canvas', function() {
       commandStack.undo();
 
       // then
-      expect(shapes.getShapeById('s2')).not.toBeDefined();
-      expect(shapes.getShapeById('s3')).not.toBeDefined();
+      expect(elementRegistry.getShapeById('s2')).not.toBeDefined();
+      expect(elementRegistry.getShapeById('s3')).not.toBeDefined();
     }));
 
 
-    it('should redo add of shape', inject(function(canvas, commandStack, shapes) {
+    it('should redo add of shape', inject(function(canvas, commandStack, elementRegistry) {
 
       // given
       var s1 = { id: 's1', x: 10, y: 20 };
@@ -100,8 +100,8 @@ describe('Canvas', function() {
       commandStack.redo();
 
       // then
-      expect(shapes.getShapeById('s2')).toEqual(s2);
-      expect(shapes.getShapeById('s3')).toEqual(s3);
+      expect(elementRegistry.getShapeById('s2')).toEqual(s2);
+      expect(elementRegistry.getShapeById('s3')).toEqual(s3);
 
       expect(s2.parent).toEqual(s1);
       expect(s3.parent).toEqual(s1);
@@ -311,6 +311,7 @@ describe('Canvas', function() {
       }));
 
     });
+
   });
 
 

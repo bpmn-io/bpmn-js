@@ -1,13 +1,13 @@
-require('../core/Events');
-require('../core/CommandStack');
-require('../core/Shapes');
+require('../../core/EventBus');
+require('../../core/CommandStack');
+require('../../core/ElementRegistry');
 
-require('./services/Selection');
+require('../selection/Service');
 
-require('./BasicInteractionEvents');
+require('../InteractionEvents');
 
-var MoveShapesHandler = require('../commands/MoveShapes'),
-    Diagram = require('../Diagram'),
+var MoveShapesHandler = require('../../commands/MoveShapesHandler'),
+    Diagram = require('../../Diagram'),
     _ = require('lodash');
 
 
@@ -16,12 +16,12 @@ var MoveShapesHandler = require('../commands/MoveShapes'),
  *
  * A plugin that makes shapes draggable / droppable.
  * 
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  * @param {Selection} selection the selection service
- * @param {Shapes} shapes the shapes service
+ * @param {ElementRegistry} shapes the shapes service
  * @param {CommandStack} commandStack the command stack to perform the actual move action
  */
-function Drag(events, selection, shapes, commandStack) {
+function DragEvents(events, selection, shapes, commandStack) {
 
   var DRAG_START_THRESHOLD = 10;
 
@@ -212,6 +212,8 @@ function Drag(events, selection, shapes, commandStack) {
   });
 }
 
-Diagram.plugin('dragEvents', [ 'events', 'selection', 'shapes', 'commandStack', 'basicInteractionEvents', Drag ]);
+Diagram.plugin('dragEvents', [
+  'eventBus', 'selection', 'elementRegistry',
+  'commandStack', 'interactionEvents', DragEvents ]);
 
-module.exports = Drag;
+module.exports = DragEvents;

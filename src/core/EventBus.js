@@ -17,7 +17,7 @@ var EventPriority = {
  * 
  * A general purpose event bus
  */
-function Events() {
+function EventBus() {
   'use strict';
 
   var listenerMap = {};
@@ -219,14 +219,12 @@ function Events() {
     });
   }
 
-  return {
-    on: on,
-    once: once,
-    off: off,
-    fire: fire
-  };
+  this.on = on;
+  this.once = once;
+  this.off = off;
+  this.fire = fire;
 }
 
-diagramModule.type('events', Events);
+diagramModule.type('eventBus', EventBus);
 
-module.exports = Events;
+module.exports = EventBus;

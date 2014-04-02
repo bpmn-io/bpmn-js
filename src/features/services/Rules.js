@@ -1,4 +1,4 @@
-require('../../core/Events');
+require('../../core/EventBus');
 
 var Diagram = require('../../Diagram'),
     _ = require('lodash');
@@ -10,7 +10,7 @@ var Diagram = require('../../Diagram'),
  * A service that provides rules for certain diagram actions.
  * 
  * @param {Object} config the configuration passed to the diagram
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  */
 function Rules(config, events) {
 
@@ -36,4 +36,4 @@ function Rules(config, events) {
   };
 }
 
-Diagram.plugin('rules', ['config', 'events', Rules ]);
+Diagram.plugin('rules', ['config', 'eventBus', Rules ]);

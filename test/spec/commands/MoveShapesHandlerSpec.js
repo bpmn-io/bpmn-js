@@ -1,13 +1,12 @@
-
-require('../../../src/core/Events');
-require('../../../src/features/DragEvents');
+require('../../../src/core/EventBus');
+require('../../../src/features/dnd/Events');
 
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,
     bootstrapDiagram = TestHelper.bootstrapDiagram;
 
 
-describe('MoveShapes', function() {
+describe('MoveShapesHandler', function() {
 
   
   beforeEach(bootstrapDiagram({ components: [ 'dragEvents' ] }));
@@ -31,7 +30,7 @@ describe('MoveShapes', function() {
     }));
 
 
-    it('with children', inject(function(canvas, shapes, commandStack) {
+    it('with children', inject(function(canvas, elementRegistry, commandStack) {
 
       // given
       var parent = { id: 's1', x: 10, y: 10, width: 100, height: 100 };
@@ -47,7 +46,7 @@ describe('MoveShapes', function() {
       expect(child.x).toEqual(60);
       expect(child.y).toEqual(60);
 
-      var gfx = shapes.getGraphicsByShape(child);
+      var gfx = elementRegistry.getGraphicsByShape(child);
       var bbox = gfx.getBBox();
 
       expect(bbox.x).toEqual(60);
@@ -55,7 +54,7 @@ describe('MoveShapes', function() {
     }));
 
 
-    it('with children selected', inject(function(canvas, shapes, commandStack) {
+    it('with children selected', inject(function(canvas, elementRegistry, commandStack) {
 
       // given
       var parent = { id: 's1', x: 10, y: 10, width: 100, height: 100 };
@@ -71,7 +70,7 @@ describe('MoveShapes', function() {
       expect(child.x).toEqual(60);
       expect(child.y).toEqual(60);
 
-      var gfx = shapes.getGraphicsByShape(child);
+      var gfx = elementRegistry.getGraphicsByShape(child);
       var bbox = gfx.getBBox();
 
       expect(bbox.x).toEqual(60);
@@ -80,7 +79,7 @@ describe('MoveShapes', function() {
   });
 
 
-  it('should undo add of shape', inject(function(canvas, commandStack, shapes) {
+  it('should undo add of shape', inject(function(canvas, elementRegistry, commandStack) {
 
     // given
     var s1 = { id: 's1', x: 10, y: 20 };
@@ -97,7 +96,7 @@ describe('MoveShapes', function() {
   }));
 
 
-  it('should redo shape movement', inject(function(canvas, commandStack, shapes) {
+  it('should redo shape movement', inject(function(canvas, elementRegistry, commandStack) {
 
     // given
     var s1 = { id: 's1', x: 10, y: 20 };

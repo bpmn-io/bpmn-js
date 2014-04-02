@@ -3,16 +3,16 @@ var diagramModule = require('../di').defaultModule;
 var _ = require('lodash');
 
 // required components
-require('./Events');
+require('./EventBus');
 
 /**
  * @class
  * 
  * A registry that keeps track of all shapes in the diagram.
  * 
- * @param {Events} events the event bus
+ * @param {EventBus} events the event bus
  */
-function Shapes(events) {
+function ElementRegistry(events) {
   
   // mapping shape.id -> container
   var shapeMap = {};
@@ -56,7 +56,7 @@ function Shapes(events) {
   }
 
   /**
-   * @method Shapes#getShapeByGraphics
+   * @method ElementRegistry#getShapeByGraphics
    */
   function getShapeByGraphics(gfx) {
     var id = _.isString(gfx) ? gfx : gfx.id;
@@ -68,7 +68,7 @@ function Shapes(events) {
   }
 
   /**
-   * @method Shapes#getShapeById
+   * @method ElementRegistry#getShapeById
    */
   function getShapeById(id) {
     var container = shapeMap[id];
@@ -78,7 +78,7 @@ function Shapes(events) {
   }
 
   /**
-   * @method Shapes#getGraphicsByShape
+   * @method ElementRegistry#getGraphicsByShape
    */
   function getGraphicsByShape(shape) {
     var id = _.isString(shape) ? shape : shape.id;
@@ -112,6 +112,6 @@ function Shapes(events) {
   };
 }
 
-diagramModule.type('shapes', [ 'events', Shapes ]);
+diagramModule.type('elementRegistry', [ 'eventBus', ElementRegistry ]);
 
-module.exports = Shapes;
+module.exports = ElementRegistry;

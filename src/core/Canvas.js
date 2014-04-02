@@ -1,21 +1,27 @@
 var diagramModule = require('../di').defaultModule;
 
-var AddShapeHandler = require('../commands/AddShape');
+var AddShapeHandlerHandler = require('../commands/AddShapeHandler');
 
 var _ = require('lodash');
 
 // required components
-require('./Events');
+require('./EventBus');
 require('./CommandStack');
 require('./GraphicsFactory');
-require('./Shapes');
+require('./ElementRegistry');
 
 /**
  * @type djs.ShapeDescriptor
  */
 
-
-function createParent(options) {
+/**
+ * Creates a HTML container element for a SVG element with 
+ * the given configuration
+ * 
+ * @param  {Object} options
+ * @return {DOMElement} the container element
+ */
+function createSvgContainer(options) {
 
   options = _.extend({}, { width: '100%', height: '100%' }, options);
 
@@ -35,6 +41,12 @@ function createParent(options) {
   return parent;
 }
 
+/**
+ * Returns the size of an svg element
+ *
+ * @param {DOMElement} svg
+ * @return {Object} with x/y coordinates
+ */
 function getSize(svg) {
   var parent = svg.parentNode;
 
@@ -49,6 +61,12 @@ function getSize(svg) {
  * @class
  *
  * @emits Canvas#canvas.init
+ * 
+ * @param {Object} config
+ * @param {EventBus} events
+ * @param {CommandStack} commandStack
+ * @param {GraphicsFactory} graphicsFactory
+ * @param {ElementRegistry} shapes
  */
 function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   'use strict';
@@ -71,7 +89,7 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
     //   </svg>
     // </div>
     //
-    var parent = createParent(options);
+    var parent = createSvgContainer(options);
 
     return graphicsFactory.createPaper({ container: parent, width: '100%', height: '100%' });
   }
@@ -108,7 +126,7 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   }
 
   // register shape add handlers
-  commandStack.registerHandler('shape.add', AddShapeHandler);
+  commandStack.registerHandler('shape.add', AddShapeHandlerHandler);
 
 
   /**
@@ -334,6 +352,6 @@ function Canvas(config, events, commandStack, graphicsFactory, shapes) {
   };
 }
 
-diagramModule.type('canvas', [ 'config', 'events', 'commandStack', 'graphicsFactory', 'shapes', Canvas ]);
+diagramModule.type('canvas', [ 'config', 'eventBus', 'commandStack', 'graphicsFactory', 'elementRegistry', Canvas ]);
 
 module.exports = Canvas;

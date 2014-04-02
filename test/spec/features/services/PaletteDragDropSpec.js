@@ -1,5 +1,5 @@
 var PaletteDragDrop = require('../../../../src/features/services/PaletteDragDrop');
-var Events = require('../../../../src/core/Events');
+var Events = require('../../../../src/core/EventBus');
 var TestHelper = require('../../../TestHelper'),
     inject = TestHelper.inject,
     bootstrapDiagram = TestHelper.bootstrapDiagram;
@@ -18,7 +18,7 @@ describe('PaletteDragDrop should ', function() {
       addListener: function(lname, listener) {
         this.listeners[lname] = listener;
       }};
-    pdd = new PaletteDragDrop(canvas, mockEvents, 'shapes');
+    pdd = new PaletteDragDrop(canvas, mockEvents, 'elementRegistry');
 
     return {
       events: mockEvents,

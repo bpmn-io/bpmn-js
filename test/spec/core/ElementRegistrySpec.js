@@ -1,15 +1,15 @@
-var Events = require('../../../src/core/Events'),
-    Shapes = require('../../../src/core/Shapes');
+var EventBus = require('../../../src/core/EventBus'),
+    ElementRegistry = require('../../../src/core/ElementRegistry');
 
 
-describe('Shapes', function() {
+describe('elementRegistry', function() {
   'use strict';
 
-  var events, shapes;
+  var eventBus, shapes;
 
   beforeEach(function() {
-    events = new Events();
-    shapes = new Shapes(events);
+    eventBus = new EventBus();
+    shapes = new ElementRegistry(eventBus);
   });
 
   it('should register shape on add', function() {
@@ -19,7 +19,7 @@ describe('Shapes', function() {
         gfx = { id: 'g0' };
 
     // when
-    events.fire('shape.added', { element: shape, gfx: gfx });
+    eventBus.fire('shape.added', { element: shape, gfx: gfx });
 
     // then
     expect(shapes.getShapeByGraphics(gfx)).toBe(shape);
@@ -38,8 +38,8 @@ describe('Shapes', function() {
         gfx = { id: 'g0' };
 
     // when
-    events.fire('shape.added', { element: shape, gfx: gfx });
-    events.fire('shape.removed', { element: shape, gfx: gfx });
+    eventBus.fire('shape.added', { element: shape, gfx: gfx });
+    eventBus.fire('shape.removed', { element: shape, gfx: gfx });
 
     // then
     expect(shapes.getShapeByGraphics(gfx)).not.toBeDefined();

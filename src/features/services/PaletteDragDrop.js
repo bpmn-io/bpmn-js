@@ -94,6 +94,6 @@ function PaletteDragDrop(canvas, events, shapes) {
   };
 }
 
-Diagram.plugin('paletteDragDrop', ['canvas', 'events', 'shapes', PaletteDragDrop ]);
+Diagram.plugin('paletteDragDrop', ['canvas', 'eventBus', 'elementRegistry', PaletteDragDrop ]);
 
 module.exports = PaletteDragDrop;
