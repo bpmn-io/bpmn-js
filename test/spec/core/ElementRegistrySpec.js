@@ -1,5 +1,5 @@
-var EventBus = require('../../../src/core/EventBus'),
-    ElementRegistry = require('../../../src/core/ElementRegistry');
+var EventBus = require('../../../lib/core/EventBus'),
+    ElementRegistry = require('../../../lib/core/ElementRegistry');
 
 
 describe('elementRegistry', function() {

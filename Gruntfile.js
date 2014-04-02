@@ -14,9 +14,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     config: {
-      sources: 'src',
+      sources: 'lib',
       tests: 'test',
-      dist: 'build',
+      dist: 'dist',
       fonts: 'bower_components/font-awesome',
       samples: 'example'
     },
@@ -93,7 +93,7 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: '<%= config.samples %>/',
-            src: ['*.{js,css,html,png}'],
+            src: ['**/*.*'],
             dest: '<%= config.dist %>/<%= config.samples %>'
           }
         ]
@@ -147,7 +147,7 @@ module.exports = function(grunt) {
       dist: {
         src: [ '<%= config.sources %>/**/*.js' ],
         options: {
-          destination: 'doc',
+          destination: 'docs/api',
           plugins: [ 'plugins/markdown' ]
         }
       }

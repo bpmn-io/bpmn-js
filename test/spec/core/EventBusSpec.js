@@ -1,4 +1,4 @@
-var Events = require('../../../src/core/EventBus');
+var Events = require('../../../lib/core/EventBus');
 
 var createSpy = jasmine.createSpy;
 

@@ -1,4 +1,4 @@
-var Events = require('../../../../src/features/dnd/Visuals');
+var Events = require('../../../../lib/features/dnd/Visuals');
 
 var TestHelper = require('../../../TestHelper'),
     inject = TestHelper.inject,

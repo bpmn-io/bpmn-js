@@ -1,4 +1,4 @@
-var Styles = require('../../../src/draw/Styles'),
+var Styles = require('../../../lib/draw/Styles'),
     TestHelper = require('../../TestHelper');
 
 

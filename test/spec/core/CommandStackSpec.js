@@ -1,5 +1,5 @@
-var CommandStack = require('../../../src/core/CommandStack'),
-    Events = require('../../../src/core/EventBus');
+var CommandStack = require('../../../lib/core/CommandStack'),
+    Events = require('../../../lib/core/EventBus');
 
 describe('CommandStack', function() {
 

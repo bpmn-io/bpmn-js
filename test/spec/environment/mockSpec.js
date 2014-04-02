@@ -1,4 +1,4 @@
-var Events = require('../../../src/core/EventBus');
+var Events = require('../../../lib/core/EventBus');
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,
     bootstrapDiagram = TestHelper.bootstrapDiagram;

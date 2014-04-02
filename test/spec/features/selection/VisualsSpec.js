@@ -1,4 +1,4 @@
-var Events = require('../../../../src/features/selection/Visuals');
+var Events = require('../../../../lib/features/selection/Visuals');
 
 var TestHelper = require('../../../TestHelper'),
     inject = TestHelper.inject,

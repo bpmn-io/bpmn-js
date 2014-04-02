@@ -1,5 +1,5 @@
-var PaletteDragDrop = require('../../../../src/features/services/PaletteDragDrop');
-var Events = require('../../../../src/core/EventBus');
+var PaletteDragDrop = require('../../../../lib/features/services/PaletteDragDrop');
+var Events = require('../../../../lib/core/EventBus');
 var TestHelper = require('../../../TestHelper'),
     inject = TestHelper.inject,
     bootstrapDiagram = TestHelper.bootstrapDiagram;

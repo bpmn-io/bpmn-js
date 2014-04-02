@@ -1,4 +1,4 @@
-var shapeUtil = require('../../../src/util/shapeUtil');
+var shapeUtil = require('../../../lib/util/shapeUtil');
 
 describe('util/shapeUtil', function() {
 

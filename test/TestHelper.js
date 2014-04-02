@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var Diagram = require('../src/Diagram');
+var Diagram = require('../lib/Diagram');
 
 var OPTIONS, DIAGRAM;
 

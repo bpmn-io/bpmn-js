@@ -1,4 +1,4 @@
-var Diagram = require('../../src/Diagram');
+var Diagram = require('../../lib/Diagram');
 
 describe('diagram', function() {
 

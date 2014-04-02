@@ -1,5 +1,5 @@
-require('../../../src/core/EventBus');
-require('../../../src/features/dnd/Events');
+require('../../../lib/core/EventBus');
+require('../../../lib/features/dnd/Events');
 
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,

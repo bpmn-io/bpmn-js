@@ -1,4 +1,4 @@
-var Events = require('../../../src/features/Bendpoints');
+var Events = require('../../../lib/features/Bendpoints');
 
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,
