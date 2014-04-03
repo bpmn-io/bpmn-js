@@ -1,11 +1,11 @@
 var fs = require('fs');
 
 var BpmnModel = require('../../../lib/Model'),
-    Viewer = require('../../../lib/Viewer');
+    Modeler = require('../../../lib/Modeler');
 
 var Matchers = require('../Matchers');
 
-describe('Importer', function() {
+describe('Modeler', function() {
 
   var bpmnModel = BpmnModel.instance();
 
@@ -33,21 +33,22 @@ describe('Importer', function() {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-    var renderer = new Viewer(container);
+    var renderer = new Modeler(container);
 
     renderer.importXML(xml, function(err) {
       done(err);
     });
   });
-
-
+  
+  
   it('should import empty definitions', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
-    var renderer = new Viewer(container);
+    var renderer = new Modeler(container);
 
     renderer.importXML(xml, function(err) {
+
       done(err);
     });
   });
@@ -57,7 +58,7 @@ describe('Importer', function() {
 
     var xml = 'invalid stuff';
 
-    var renderer = new Viewer(container);
+    var renderer = new Modeler(container);
 
     renderer.importXML(xml, function(err) {
 
