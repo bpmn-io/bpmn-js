@@ -1,8 +1,13 @@
 module.exports = function(grunt) {
 
-  /* global Buffer */
-  
   require('load-grunt-tasks')(grunt);
+
+  /* global Buffer,process*/
+
+  // configures browsers to run test against
+  // any of [ 'PhantomJS', 'Chrome', 'Firefox', 'IE']
+  var TEST_BROWSERS = ((process.env.TEST_BROWSERS || '').replace(/^\s+|\s+$/, '') || 'PhantomJS').split(/\s*,\s*/g);
+
 
   // project configuration
   grunt.initConfig({
@@ -44,7 +49,7 @@ module.exports = function(grunt) {
         singleRun: true,
         autoWatch: false,
 
-        browsers: ['PhantomJS'],
+        browsers: TEST_BROWSERS,
 
         browserify: {
           watch: false,
@@ -53,7 +58,7 @@ module.exports = function(grunt) {
         }
       },
       unit: {
-        browsers: [ 'Chrome' ]
+        browsers: TEST_BROWSERS
       }
     },
     browserify: {
