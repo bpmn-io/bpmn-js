@@ -1,6 +1,6 @@
-var shapeUtil = require('../../../lib/util/shapeUtil');
+var ShapeUtil = require('../../../lib/util/ShapeUtil');
 
-describe('util/shapeUtil', function() {
+describe('util/ShapeUtil', function() {
 
   'use strict';
 
@@ -56,7 +56,7 @@ describe('util/shapeUtil', function() {
       var a = shapeA;
 
       // when
-      var result = shapeUtil.selfAndDirectChildren([shapeA]);
+      var result = ShapeUtil.selfAndDirectChildren([shapeA]);
 
       expect(result.length).toBe(4);
       expect(result).toEqual([ a ].concat(a.children));
@@ -65,7 +65,7 @@ describe('util/shapeUtil', function() {
     it('should return self (no children)', function() {
 
       // when
-      var result = shapeUtil.selfAndDirectChildren([shapeB]);
+      var result = ShapeUtil.selfAndDirectChildren([shapeB]);
 
       expect(result.length).toBe(1);
       expect(result).toEqual([ shapeB ]);
@@ -78,7 +78,7 @@ describe('util/shapeUtil', function() {
           child = shapeA.children[1];
 
       // when
-      var result = shapeUtil.selfAndDirectChildren([ a, child ]);
+      var result = ShapeUtil.selfAndDirectChildren([ a, child ]);
 
       expect(result.length).toBe(6);
       expect(ids(result)).toEqual(ids([ a ].concat(a.children).concat(child.children)));
@@ -94,7 +94,7 @@ describe('util/shapeUtil', function() {
           d = shapeD; // parent of A
 
       // when
-      var result = shapeUtil.selfAndAllChildren([ a, d ]);
+      var result = ShapeUtil.selfAndAllChildren([ a, d ]);
 
       expect(result.length).toBe(14);
     });
@@ -110,7 +110,7 @@ describe('util/shapeUtil', function() {
       var parent = { };
 
       // when
-      shapeUtil.setParent(shape, parent);
+      ShapeUtil.setParent(shape, parent);
 
       // then
       expect(shape.parent).toBe(parent);
@@ -126,7 +126,7 @@ describe('util/shapeUtil', function() {
       var s = { parent: oldParent };
 
       // when
-      shapeUtil.setParent(s, newParent);
+      ShapeUtil.setParent(s, newParent);
 
       // then
       expect(s.parent).toBe(newParent);
@@ -139,10 +139,10 @@ describe('util/shapeUtil', function() {
       var oldParent = { };
       var newParent = { };
 
-      shapeUtil.setParent(shape, oldParent);
+      ShapeUtil.setParent(shape, oldParent);
 
       // when
-      shapeUtil.setParent(shape, newParent);
+      ShapeUtil.setParent(shape, newParent);
 
       // then
       expect(shape.parent).toBe(newParent);
@@ -161,13 +161,13 @@ describe('util/shapeUtil', function() {
       var shape = {x: 11, y: 23};
 
       // when
-      shapeUtil.translateShape(shape, 7, 9);
+      ShapeUtil.translateShape(shape, 7, 9);
 
       expect(shape.x).toEqual(18);
       expect(shape.y).toEqual(32);
 
       // when
-      shapeUtil.translateShape(shape, -14, -9);
+      ShapeUtil.translateShape(shape, -14, -9);
 
       expect(shape.x).toEqual(4);
       expect(shape.y).toEqual(23);
