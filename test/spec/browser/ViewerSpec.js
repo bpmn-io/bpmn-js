@@ -53,18 +53,58 @@ describe('Viewer', function() {
   });
 
 
-  it('should handle errors', function(done) {
+  describe('error handling', function() {
 
-    var xml = 'invalid stuff';
+    it('should handle errors', function(done) {
 
-    var renderer = new Viewer(container);
+      var xml = 'invalid stuff';
 
-    renderer.importXML(xml, function(err) {
+      var renderer = new Viewer(container);
 
-      expect(err).toBeDefined();
+      renderer.importXML(xml, function(err) {
 
-      done();
+        expect(err).toBeDefined();
+
+        done();
+      });
     });
+
+  });
+
+
+  describe('export', function() {
+
+    it('should export svg', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
+      var renderer = new Viewer(container);
+
+      renderer.importXML(xml, function(err) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // when
+        renderer.saveSVG(function(err, svg) {
+
+          if (err) {
+            return done(err);
+          }
+
+          var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
+          var expectedEnd = '</svg>';
+
+          // then
+          expect(svg.indexOf(expectedStart)).toEqual(0);
+          expect(svg.indexOf(expectedEnd)).toEqual(svg.length - expectedEnd.length);
+
+          done();
+        });
+      });
+    });
+
   });
 
 });
