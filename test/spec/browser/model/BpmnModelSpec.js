@@ -1,4 +1,4 @@
-var BpmnModel = require('../../../lib/Model');
+var BpmnModel = require('bpmn-moddle');
 
 describe('Model - browser support', function() {
 

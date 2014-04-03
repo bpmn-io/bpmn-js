@@ -81,8 +81,8 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'node_modules/lodash:lodash',
+            'node_modules/bpmn-moddle:bpmn/Model',
             '<%= config.sources %>/main.js:bpmn',
-            '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer',
             '<%= config.sources %>/Modeler.js:bpmn/Modeler'
           ]
@@ -95,8 +95,8 @@ module.exports = function(grunt) {
         options: {
           alias: [
             'node_modules/lodash:lodash',
+            'node_modules/bpmn-moddle:bpmn/Model',
             '<%= config.sources %>/main.js:bpmn',
-            '<%= config.sources %>/Model.js:bpmn/Model',
             '<%= config.sources %>/Viewer.js:bpmn/Viewer'
           ]
         }

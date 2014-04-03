@@ -13,7 +13,7 @@
     "modeler"
   ],
   "dependencies": {
-    "font-awesome": "~4.0.3"
+    
   },
   "homepage": "http://bpmn.io",
   "private": true,

@@ -19,6 +19,7 @@ The following projects from the [bpmn-io](https://github.com/bpmn-io) project on
 
 * [bpmn-js](https://github.com/bpmn-io/bpmn-js)
 * [diagram-js](https://github.com/bpmn-io/bpmn-js)
+* [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle)
 * [moddle](https://github.com/bpmn-io/bpmn-js)
 * [moddle-xml](https://github.com/bpmn-io/bpmn-js)
 
@@ -38,6 +39,10 @@ git clone git@github.com:bpmn-io/PROJECT_NAME.git
 ├─bpmn-js
 │   └─node_modules
 │       ├─diagram-js <link>
+│       ├─moddle <link>
+│       └─bpmn-moddle <link>
+├─bpmn-moddle
+│   └─node_modules
 │       ├─moddle <link>
 │       └─moddle-xml <link>
 ├─diagram-js
@@ -78,7 +83,8 @@ echo cloning repositories
 git clone git@github.com:bpmn-io/diagram-js.git > /dev/null
 git clone git@github.com:bpmn-io/moddle.git > /dev/null
 git clone git@github.com:bpmn-io/moddle-xml.git > /dev/null
-git clone git@github.com:bpmn-io/bpmn-js.git > /dev/null 
+git clone git@github.com:bpmn-io/bpmn-js.git > /dev/null
+git clone git@github.com:bpmn-io/bpmn-moddle.git > /dev/null
 
 echo done.
 
@@ -102,12 +108,20 @@ ln -s $base/moddle node_modules/moddle
 npm install > /dev/null
 
 
+echo setup bpmn-moddle
+
+cd $base/bpmn-moddle
+mkdir node_modules
+ln -s $base/moddle node_modules/moddle
+ln -s $base/moddle-xml node_modules/moddle-xml
+npm install > /dev/null
+
 echo setup bpmn-js
 
 cd $base/bpmn-js
 mkdir node_modules
 ln -s $base/moddle node_modules/moddle
-ln -s $base/moddle-xml node_modules/moddle-xml
+ln -s $base/bpmn-moddle node_modules/bpmn-moddle
 ln -s $base/diagram-js node_modules/diagram-js
 npm install > /dev/null
 

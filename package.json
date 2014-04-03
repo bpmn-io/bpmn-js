@@ -58,8 +58,8 @@
     "didi": "~0.0.4"
   },
   "dependencies": {
+    "bpmn-moddle": "~0.0.2",
     "moddle": "~0.0.2",
-    "moddle-xml": "~0.0.3",
     "diagram-js": "~0.0.2"
   },
   "peerDependencies": {

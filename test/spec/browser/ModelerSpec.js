@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var BpmnModel = require('../../../lib/Model'),
+var BpmnModel = require('bpmn-moddle'),
     Modeler = require('../../../lib/Modeler');
 
 var Matchers = require('../Matchers');

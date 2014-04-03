@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:intermediateThrowEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" targetNamespace="http://bpmn.io/schema/bpmn" id="start">
-  <bpmn2:outgoing>sequenceFlow_1</bpmn2:outgoing>
-  <bpmn2:outgoing>sequenceFlow_2</bpmn2:outgoing>
-  <bpmn2:incoming>sequenceFlow_3</bpmn2:incoming>
-</bpmn2:intermediateThrowEvent>

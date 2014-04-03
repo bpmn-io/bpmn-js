@@ -1,7 +1,7 @@
 var fs = require('fs'),
     Diagram = require('diagram-js/lib/Diagram');
 
-var BpmnModel = require('../../../../lib/Model');
+var BpmnModel = require('bpmn-moddle');
 var Importer = require('../../../../lib/import/Importer');
 
 var bpmnModule = require('../../../../lib/di').defaultModule;
