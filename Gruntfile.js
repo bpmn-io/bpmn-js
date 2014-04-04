@@ -43,7 +43,7 @@ module.exports = function(grunt) {
     },
     karma: {
       options: {
-        configFile: '<%= config.tests %>/config/karma.unit.js'
+        configFile: '<%= config.tests %>/config/karma.unit.js',
       },
       single: {
         singleRun: true,
@@ -58,11 +58,28 @@ module.exports = function(grunt) {
         }
       },
       unit: {
-        browsers: TEST_BROWSERS
+        browsers: TEST_BROWSERS,
+        transform: [ 'brfs' ]
       }
     },
     browserify: {
       options: {
+        transform: [ 'brfs', function() {
+
+          // remove require('fs') from source code as it is 
+          // optimized away (i.e. inlined) by brfs transform
+
+          var through = require('through');
+
+          var data = '';
+          return through(write, end);
+
+          function write (buf) { data += buf; }
+          function end () {
+            this.queue(data.replace(/require\('fs'\)/, '{}'));
+            this.queue(null);
+          }
+        }],
         browserifyOptions: {
           builtins: false,
           commondir: false
@@ -80,6 +97,7 @@ module.exports = function(grunt) {
         },
         options: {
           alias: [
+            'node_modules/jquery:jquery',
             'node_modules/lodash:lodash',
             'node_modules/bpmn-moddle:bpmn/Model',
             '<%= config.sources %>/main.js:bpmn',
@@ -94,6 +112,7 @@ module.exports = function(grunt) {
         },
         options: {
           alias: [
+            'node_modules/jquery:jquery',
             'node_modules/lodash:lodash',
             'node_modules/bpmn-moddle:bpmn/Model',
             '<%= config.sources %>/main.js:bpmn',
@@ -118,7 +137,7 @@ module.exports = function(grunt) {
     watch: {
       sources: {
         files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'build:lib:dev' ]
+        tasks: [ 'build:lib' ]
       },
       samples: {
         files: [ '<%= config.samples %>/**/*.*' ],
@@ -222,7 +241,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('auto-build', [
-    'build:all:dev',
+    'build:all',
     'connect:livereload',
     'watch'
   ]);

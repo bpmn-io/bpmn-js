@@ -4,7 +4,7 @@
 
   var canvas = $('#js-canvas');
   
-  var renderer = new BpmnJS(canvas.get(0));
+  var renderer = new BpmnJS({ container: canvas });
 
   var newDiagramXML =
 '<?xml version="1.0" encoding="UTF-8"?>' +
@@ -149,4 +149,4 @@
     renderer.on('commandStack.changed', exportArtifacts);
   });
 
-})(window.BpmnJS, window.jQuery);
+})(window.BpmnJS, require('jquery'));

@@ -15,7 +15,7 @@ module.exports = function(karma) {
       'test/spec/browser/**/*Spec.js': [ 'browserify' ]
     },
 
-    browsers: [ 'Chrome' ],
+    browsers: [ 'PhantomJS' ],
 
     // fixing slow browserify build
     browserNoActivityTimeout: 30000,

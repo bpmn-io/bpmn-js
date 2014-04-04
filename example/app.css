@@ -89,19 +89,6 @@ a:link {
   font-size: 2em;
 }
 
-.logo {
-  width: 80px;
-  height: 80px;
-  
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  opacity: 0.8;
-  
-  background: no-repeat url('bpmn-io-icon.png');
-}
-
 @font-face {
   font-family: 'FontAwesome';
   src: url('fontawesome.woff') format('woff');

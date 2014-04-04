@@ -55,7 +55,9 @@
     "sax": "~0.6.0",
     "brfs": "~1.0.0",
     "lodash": "~2.4.0",
-    "didi": "~0.0.4"
+    "didi": "~0.0.4",
+    "jquery": "~2.1.0",
+    "through": "^2.3.4"
   },
   "dependencies": {
     "bpmn-moddle": "~0.0.2",
@@ -64,6 +66,7 @@
   },
   "peerDependencies": {
     "lodash": "~2.4.0",
-    "didi": "~0.0.4"
+    "didi": "~0.0.4",
+    "jquery": "~2.1.0"
   }
 }
