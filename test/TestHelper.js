@@ -38,26 +38,33 @@ function bootstrapDiagram(options, locals) {
 
   return function() {
 
-    if (!locals && _.isFunction(options)) {
-      locals = options;
-      options = null;
+    var _options = options,
+        _locals = locals;
+
+    if (!_locals && _.isFunction(_options)) {
+      _locals = _options;
+      _options = null;
     }
 
-    if (_.isFunction(locals)) {
-      locals = locals();
+    if (_.isFunction(_options)) {
+      _options = _options();
     }
 
-    options = _.extend({}, OPTIONS || {}, options || {});
+    if (_.isFunction(_locals)) {
+      _locals = _locals();
+    }
+
+    _options = _.extend({}, OPTIONS || {}, _options || {});
 
     var mockModule = {};
 
-    _.forEach(locals, function(v, k) {
+    _.forEach(_locals, function(v, k) {
       mockModule[k] = ['value', v];
     });
 
-    options.modules = _.unique([].concat(options.modules || [], [ mockModule ]));
+    _options.modules = _.unique([].concat(_options.modules || [], [ mockModule ]));
 
-    DIAGRAM = new Diagram(options);
+    DIAGRAM = new Diagram(_options);
   };
 }
 
