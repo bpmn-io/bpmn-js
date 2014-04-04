@@ -8,10 +8,56 @@ var createSpy = jasmine.createSpy;
 
 describe('Canvas', function() {
 
+  var container;
+
+  var defaultBootstrap = bootstrapDiagram(function() {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    return {
+      canvas: {
+        container: container
+      }
+    };
+  }, {});
+
+
+  describe('initialize', function() {
+
+    beforeEach(defaultBootstrap);
+
+    it('should create <svg> element', inject(function() {
+
+      // then
+      var svg = container.querySelector('svg');
+
+      expect(svg).not.toEqual(null);
+    }));
+
+  });
+
+
+  describe('destroy', function() {
+
+    beforeEach(defaultBootstrap);
+
+    it('should remove created elements', inject(function(eventBus) {
+
+      // when
+      eventBus.fire('diagram.destroy');
+
+      // then
+      expect(container.childNodes.length).toBe(0);
+
+      console.log(container.childNodes[0]);
+    }));
+
+  });
+
 
   describe('addShape', function() {
 
-    beforeEach(bootstrapDiagram());
+    beforeEach(defaultBootstrap);
 
     it('should fire <shape.added> event', inject(function(canvas, eventBus) {
 

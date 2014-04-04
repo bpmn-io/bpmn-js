@@ -6,7 +6,7 @@ describe('diagram', function() {
 
   beforeEach(function() {
     container = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(container);
+    document.body.appendChild(container);
   });
 
   afterEach(function() {
