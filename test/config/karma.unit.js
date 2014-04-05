@@ -18,7 +18,7 @@ module.exports = function(karma) {
     browsers: [ 'PhantomJS' ],
 
     // fixing slow browserify build
-    browserNoActivityTimeout: 30000,
+    browserNoActivityTimeout: 60000,
 
     singleRun: false,
     autoWatch: true,
