@@ -4,7 +4,7 @@
 
   var canvas = $('#js-canvas');
   
-  var renderer = new BpmnJS({ container: canvas });
+  var renderer = new BpmnJS({ container: canvas, width: '100%', height: '100%' });
 
   var newDiagramXML =
 '<?xml version="1.0" encoding="UTF-8"?>' +
