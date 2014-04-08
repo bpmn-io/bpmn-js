@@ -110,6 +110,33 @@
       createNewDiagram();
     });
 
+    //Special debug modus to open a file from web servers root.
+    (function loadFromServer() {
+      var bpmnDoc = getQueryVariable('bpmndoc');
+
+      if(bpmnDoc) {
+        var client = new XMLHttpRequest();
+        client.open('GET', bpmnDoc);
+        client.onreadystatechange = function () {
+          console.log('Opening: ' + bpmnDoc);
+          openDiagram(client.responseText);
+        }
+        client.send();
+      }
+
+      function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i = 0; i < vars.length; i++) {
+          var pair = vars[i].split("=");
+          if (pair[0] === variable) {
+            return pair[1];
+          }
+        }
+        return(false);
+      }
+    })();
+
     var downloadLink = $('#js-download-diagram');
     var downloadSvgLink = $('#js-download-svg');
 
