@@ -246,7 +246,7 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('auto-test', [ 'jasmine_node', 'watch:jasmine_node' ]);
+  grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
   grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
 };
