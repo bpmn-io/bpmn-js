@@ -59,7 +59,7 @@
     "through": "^2.3.4"
   },
   "dependencies": {
-    "bpmn-moddle": "~0.0.2",
+    "bpmn-moddle": "~0.0.1",
     "moddle": "~0.0.2",
     "diagram-js": "~0.0.2"
   },
