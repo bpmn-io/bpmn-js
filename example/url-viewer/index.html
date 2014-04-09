@@ -68,7 +68,7 @@
 
       log('attempting to open <' + url + '>');
 
-      $.get(url, function(xml) {
+      $.ajax(url, { dataType : 'text' }).done(function(xml) {
 
         viewer.importXML(xml, function(err) {
           
