@@ -1,9 +1,9 @@
 <html>
 <head>
-  <title>bpmn-js modeler demo</title>
+  <title>bpmn-js viewer demo</title>
 
-  <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="css/diagram-js.css" />
+  <link rel="stylesheet" href="app.css" />
+  <link rel="stylesheet" href="../css/diagram-js.css" />
 </head>
 <body>
   <div class="content" id="js-drop-zone">
@@ -48,11 +48,11 @@
     var str = window.location.search;
     var min = !/\?debug=/.test(str);
 
-    document.write('<script src="../bpmn' + (min ? '.min': '') + '.js"></' + 'script>');
+    document.write('<script src="../../bpmn-viewer' + (min ? '.min': '') + '.js"></' + 'script>');
   </script>
 
   <script>
-    var BpmnJS = require('bpmn/Modeler');
+    var BpmnJS = require('bpmn/Viewer');
   </script>
 
   <script src="app.js"></script>
