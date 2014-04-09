@@ -62,7 +62,10 @@
 
   // check file api availability
   if (!window.FileList || !window.FileReader) {
-    window.alert('Looks like you use an older browser that does not support drag and drop. Try using Chrome, Firefox or the Internet Explorer > 10.');
+    window.alert(
+      'Looks like you use an older browser that does not support drag and drop. ' +
+      'Try using Chrome, Firefox or the Internet Explorer > 10.');
+    
     return;
   }
 
