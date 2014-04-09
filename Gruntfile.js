@@ -32,14 +32,16 @@ module.exports = function(grunt) {
       }
     },
     jasmine_node: {
-      specNameMatcher: '.*Spec',
-      projectRoot: 'test/spec/node',
-      jUnit: {
-        report: true,
-        savePath : 'tmp/reports/jasmine',
-        useDotNotation: true,
-        consolidate: true
-      }
+      options: {
+        specNameMatcher: '.*Spec',
+        jUnit: {
+          report: true,
+          savePath : 'tmp/reports/jasmine',
+          useDotNotation: true,
+          consolidate: true
+        }
+      },
+      node: [ 'test/spec/node/' ]
     },
     karma: {
       options: {
