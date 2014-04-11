@@ -230,7 +230,35 @@ describe('Canvas', function() {
   });
 
 
-  describe('scale', function() {
+  describe('scroll', function() {
+
+    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+
+
+    describe('getter', function() {
+
+      it('should scroll x/y', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        var viewbox = canvas.viewbox();
+
+        // when
+        var newScroll = canvas.scroll({ dx: 50, dy: 100 });
+
+        // then
+        expect(newScroll.x).toBe(viewbox.x + 50);
+        expect(newScroll.y).toBe(viewbox.y + 100);
+
+      }));
+
+    });
+  
+  });
+
+
+  describe('zoom', function() {
 
     beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -243,10 +271,10 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
 
         // when
-        var scale = canvas.scale();
+        var zoom = canvas.zoom();
 
         // then
-        expect(scale).toEqual(1.0);
+        expect(zoom).toEqual(1.0);
       }));
 
 
@@ -256,10 +284,10 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
         // when
-        var scale = canvas.scale();
+        var zoom = canvas.zoom();
 
         // then
-        expect(scale).toEqual(1.0);
+        expect(zoom).toEqual(1.0);
       }));
 
 
@@ -269,14 +297,15 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
         // when
-        canvas.scale(0.5);
-        var scale = canvas.scale();
+        canvas.zoom(0.5);
+        var zoom = canvas.zoom();
 
         // then
-        expect(scale).toEqual(0.5);
+        expect(zoom).toEqual(0.5);
       }));
 
     });
+
 
     describe('setter', function() {
 
@@ -286,24 +315,24 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
 
         // when
-        var scale = canvas.scale(0.5);
+        var zoom = canvas.zoom(0.5);
 
         // then
-        expect(scale).toEqual(0.5);
+        expect(zoom).toEqual(0.5);
       }));
 
 
-      it('should scale fit-viewport', inject(function(canvas) {
+      it('should zoom fit-viewport', inject(function(canvas) {
 
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
         // when
-        var scale = canvas.scale('fit-viewport');
+        var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
 
         // then
-        expect(scale).toEqual(0.5);
+        expect(zoom).toEqual(0.5);
 
         expect(viewbox).toEqual({
           x: 0, y: 0,
@@ -316,7 +345,7 @@ describe('Canvas', function() {
       }));
 
 
-      it('should scale 1.0', inject(function(canvas) {
+      it('should zoom 1.0', inject(function(canvas) {
 
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
@@ -324,8 +353,8 @@ describe('Canvas', function() {
         var originalViewbox = canvas.viewbox();
 
         // when
-        canvas.scale('fit-viewport');
-        canvas.scale(1.0);
+        canvas.zoom('fit-viewport');
+        canvas.zoom(1.0);
 
         var viewbox = canvas.viewbox();
 
@@ -334,31 +363,178 @@ describe('Canvas', function() {
       }));
 
 
-      it('should scale zoom', inject(function(canvas) {
+      describe('reposition', function() {
 
-        // given
-        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+        it('should zoom out (center)', inject(function(canvas) {
 
-        // when
-        var scale = canvas.scale(2.0, { x: 100, y: 100 });
-        var viewbox = canvas.viewbox();
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
 
-        // then
-        expect(scale).toEqual(2.0);
+          // when
+          var zoom = canvas.zoom(0.5, { x: 150, y: 150 });
+          var viewbox = canvas.viewbox();
 
-        expect(viewbox).toEqual({
-          x: 100, y: 100,
-          width: 150, height: 150,
-          scale: 2,
-          inner: { width: 300, height: 300 },
-          outer: { width: 300, height: 300 }
-        });
+          // then
+          expect(zoom).toEqual(0.5);
 
-      }));
+          expect(viewbox).toEqual({
+            x: -150, y: -150,
+            width: 600, height: 600,
+            scale: 0.5,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+
+        it('should zoom out (1/3)', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+          // when
+          var zoom = canvas.zoom(0.5, { x: 100, y: 100 });
+          var viewbox = canvas.viewbox();
+
+          // then
+          expect(zoom).toEqual(0.5);
+
+          expect(viewbox).toEqual({
+            x: -100, y: -100,
+            width: 600, height: 600,
+            scale: 0.5,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+
+        it('should zoom out / zoomed in', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+          canvas.viewbox({ x: 50, y: 50, width: 200, height: 200 });
+          
+          // when
+          var zoom = canvas.zoom(0.5, { x: 150, y: 150 });
+          var viewbox = canvas.viewbox();
+
+          expect(zoom).toEqual(0.5);
+
+          // then
+          expect(viewbox).toEqual({
+            x: -150,
+            y: -150,
+            width: 600,
+            height: 600,
+            scale: 0.5,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+
+        it('should zoom in (center)', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+          // when
+          var zoom = canvas.zoom(2.0, { x: 150, y: 150 });
+          var viewbox = canvas.viewbox();
+
+          expect(zoom).toEqual(2.0);
+
+          // then
+          expect(viewbox).toEqual({
+            x: 75,
+            y: 75,
+            width: 150,
+            height: 150,
+            scale: 2.0,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+
+        it('should zoom in (1/3)', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+          // when
+          var zoom = canvas.zoom(2.0, { x: 100, y: 150 });
+          var viewbox = canvas.viewbox();
+
+          expect(zoom).toEqual(2.0);
+
+          // then
+          expect(viewbox).toEqual({
+            x: 50,
+            y: 75,
+            width: 150,
+            height: 150,
+            scale: 2.0,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+        it('should zoom in (2/3)', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+          // when
+          var zoom = canvas.zoom(2.0, { x: 150, y: 200 });
+          var viewbox = canvas.viewbox();
+
+          expect(zoom).toEqual(2.0);
+         
+          // then
+          expect(viewbox).toEqual({
+            x: 75,
+            y: 100,
+            width: 150,
+            height: 150,
+            scale: 2.0,
+            inner: { width: 300, height: 300 },
+            outer: { width: 300, height: 300 }
+          });
+
+        }));
+
+
+        it('should zoom with auto positioning in / out', inject(function(canvas) {
+
+          // given
+          canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+          
+          // when
+          canvas.zoom(2.0, 'auto');
+          canvas.zoom(0.3, 'auto');
+          canvas.zoom(1.5, 'auto');
+          canvas.zoom(1.8, 'auto');
+          canvas.zoom(0.5, 'auto');
+
+          var viewbox = canvas.viewbox();
+
+          // then
+          expect(viewbox.x).toEqual(-150);
+          expect(viewbox.y).toEqual(-150);
+        }));
+
+      });
 
     });
 
   });
-
 
 });
