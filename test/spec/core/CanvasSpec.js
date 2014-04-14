@@ -226,7 +226,35 @@ describe('Canvas', function() {
         });
       }));
 
+
+      it('should fire <canvas.viewbox.changed> event', inject(function(canvas, eventBus) {
+
+        var changedListener = createSpy('listener');
+        eventBus.on('canvas.viewbox.changed', changedListener);
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 1200, height: 1200 });
+
+        var viewbox = { x: 100, y: 100, width: 600, height: 600 };
+
+        // when
+        canvas.viewbox(viewbox);
+
+        // then
+        var calls = changedListener.calls;
+
+        expect(calls.count()).toEqual(1);
+        expect(calls.argsFor(0)[0].viewbox).toEqual({
+          x: 100, y: 100, width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 1200, height: 1200 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
     });
+
   });
 
 
@@ -327,6 +355,32 @@ describe('Canvas', function() {
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
+        // when
+        var zoom = canvas.zoom('fit-viewport');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(0.5);
+
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 600, height: 600 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
+      it('should zoom fit-viewport / scroll into view', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+
+        // scroll somewhere to change viewbox (x, y)
+        canvas.zoom(2.0, { x: 200, y: 200 });
+        
         // when
         var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
