@@ -1,5 +1,5 @@
 require('../../../lib/core/EventBus');
-require('../../../lib/features/dnd/Events');
+require('../../../lib/features/move');
 
 var TestHelper = require('../../TestHelper'),
     inject = TestHelper.inject,
@@ -9,7 +9,7 @@ var TestHelper = require('../../TestHelper'),
 describe('MoveShapesHandler', function() {
 
   
-  beforeEach(bootstrapDiagram({ components: [ 'dragEvents' ] }));
+  beforeEach(bootstrapDiagram({ components: [ 'moveEvents' ] }));
 
   describe('should execute move', function() {
 
