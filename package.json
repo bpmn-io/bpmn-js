@@ -56,7 +56,8 @@
     "lodash": "~2.4.0",
     "didi": "~0.0.4",
     "jquery": "~2.1.0",
-    "through": "^2.3.4"
+    "through": "^2.3.4",
+    "jquery-mousewheel": "^3.1.11"
   },
   "dependencies": {
     "bpmn-moddle": "~0.0.1",
