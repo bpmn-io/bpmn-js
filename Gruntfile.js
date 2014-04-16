@@ -30,14 +30,11 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      src: [
-        ['<%=config.sources %>']
-      ],
-      gruntfile: [
-        'Gruntfile.js'
-      ],
+      src: ['<%= config.sources %>'],
+
       options: {
-        jshintrc: true
+        jshintrc: true,
+        ignores: [ '<%= config.sources %>/util/EventEmitter.js' ]
       }
     },
 
@@ -171,5 +168,5 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
-  grunt.registerTask('default', [ 'test', 'build', 'jsdoc' ]);
+  grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
 };
