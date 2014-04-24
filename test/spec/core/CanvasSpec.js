@@ -48,8 +48,6 @@ describe('Canvas', function() {
 
       // then
       expect(container.childNodes.length).toBe(0);
-
-      console.log(container.childNodes[0]);
     }));
 
   });
@@ -155,7 +153,7 @@ describe('Canvas', function() {
 
   });
 
-  
+
   describe('viewbox', function() {
 
     beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
@@ -208,7 +206,7 @@ describe('Canvas', function() {
 
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
-        
+
         var viewbox = { x: 100, y: 100, width: 600, height: 600 };
 
         // when
@@ -282,7 +280,7 @@ describe('Canvas', function() {
       }));
 
     });
-  
+
   });
 
 
@@ -380,7 +378,7 @@ describe('Canvas', function() {
 
         // scroll somewhere to change viewbox (x, y)
         canvas.zoom(2.0, { x: 200, y: 200 });
-        
+
         // when
         var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
@@ -471,7 +469,7 @@ describe('Canvas', function() {
           canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
 
           canvas.viewbox({ x: 50, y: 50, width: 200, height: 200 });
-          
+
           // when
           var zoom = canvas.zoom(0.5, { x: 150, y: 150 });
           var viewbox = canvas.viewbox();
@@ -551,7 +549,7 @@ describe('Canvas', function() {
           var viewbox = canvas.viewbox();
 
           expect(zoom).toEqual(2.0);
-         
+
           // then
           expect(viewbox).toEqual({
             x: 75,
@@ -570,7 +568,7 @@ describe('Canvas', function() {
 
           // given
           canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
-          
+
           // when
           canvas.zoom(2.0, 'auto');
           canvas.zoom(0.3, 'auto');
