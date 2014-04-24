@@ -16,7 +16,7 @@
   "trailing" : true,
   "maxdepth" : 5,
   "maxstatements" : 50,
-  "maxcomplexity" : 10,
+  "maxcomplexity" : 13,
   "maxlen" : 120,
   "browser" : true,
   "debug": true,
