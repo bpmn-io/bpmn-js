@@ -66,29 +66,13 @@ module.exports = function(grunt) {
     },
     browserify: {
       options: {
-        transform: [ 'brfs', function() {
-
-          // remove require('fs') from source code as it is 
-          // optimized away (i.e. inlined) by brfs transform
-
-          var through = require('through');
-
-          var data = '';
-          return through(write, end);
-
-          function write (buf) { data += buf; }
-          function end () {
-            this.queue(data.replace(/require\('fs'\)/, '{}'));
-            this.queue(null);
-          }
-        }],
+        transform: [ 'brfs' ],
         browserifyOptions: {
-          builtins: false,
+          builtins: [ 'fs' ],
           commondir: false
         },
         bundleOptions: {
           detectGlobals: false,
-          ignoreMissing: true,
           insertGlobalVars: [],
           debug: true
         }
@@ -216,7 +200,7 @@ module.exports = function(grunt) {
   });
 
   // tasks
-  
+
   grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
 
   grunt.registerTask('build', function(target, mode) {

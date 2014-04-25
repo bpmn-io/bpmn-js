@@ -22,6 +22,9 @@
     "name": "Nico Rehwaldt",
     "url": "https://github.com/Nikku"
   },
+  "browser": {
+    "fs": false
+  },
   "contributors": [
     {
       "name": "bpmn.io contributors",
