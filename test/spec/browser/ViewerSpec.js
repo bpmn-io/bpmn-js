@@ -1,31 +1,19 @@
 var fs = require('fs');
 
-var BpmnModel = require('bpmn-moddle'),
-    Viewer = require('../../../lib/Viewer');
+var Viewer = require('../../../lib/Viewer');
 
 var Matchers = require('../Matchers');
 
+
 describe('Viewer', function() {
 
-  var bpmnModel = BpmnModel.instance();
-
-  function read(xml, opts, callback) {
-    return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
-  }
-
+  beforeEach(Matchers.add);
 
   var container;
-
-
-  beforeEach(Matchers.add);
 
   beforeEach(function() {
     container = document.createElement('div');
     document.getElementsByTagName('body')[0].appendChild(container);
-  });
-
-  afterEach(function() {
-    container.parentNode.removeChild(container);
   });
 
 

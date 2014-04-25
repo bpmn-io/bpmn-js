@@ -29,20 +29,16 @@ describe('import/Importer', function() {
     document.getElementsByTagName('body')[0].appendChild(container);
   });
 
-  afterEach(function() {
-    container.parentNode.removeChild(container);
-  });
-
 
   function createDiagram() {
     return new Diagram({
       canvas: { container: container },
       modules: [ bpmnModule ],
-      components: [ 'bpmnRegistry']
+      components: [ 'bpmnRegistry' ]
     });
   }
 
-  it('should fire bpmn.element.add during import', function(done) {
+  it('should fire <bpmn.element.add> during import', function(done) {
 
     // given
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');

@@ -1,31 +1,19 @@
 var fs = require('fs');
 
-var BpmnModel = require('bpmn-moddle'),
-    Modeler = require('../../../lib/Modeler');
+var Modeler = require('../../../lib/Modeler');
 
 var Matchers = require('../Matchers');
 
+
 describe('Modeler', function() {
 
-  var bpmnModel = BpmnModel.instance();
-
-  function read(xml, opts, callback) {
-    return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
-  }
-
+  beforeEach(Matchers.add);
 
   var container;
-
-
-  beforeEach(Matchers.add);
 
   beforeEach(function() {
     container = document.createElement('div');
     document.getElementsByTagName('body')[0].appendChild(container);
-  });
-
-  afterEach(function() {
-    container.parentNode.removeChild(container);
   });
 
 
@@ -39,8 +27,8 @@ describe('Modeler', function() {
       done(err);
     });
   });
-  
-  
+
+
   it('should import empty definitions', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
