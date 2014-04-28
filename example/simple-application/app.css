@@ -51,15 +51,19 @@ a:link {
 }
 
 .content:not(.with-error) .error,
-.content .canvas,
-.content.with-error .canvas,
 .content.with-error .intro,
 .content.with-diagram .intro {
   display: none;
 }
 
+
+.content .canvas,
+.content.with-error .canvas {
+  visibility: hidden;
+}
+
 .content.with-diagram .canvas {
-  display: block;
+  visibility: visible;
 }
 
 .buttons {
