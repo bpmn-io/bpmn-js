@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "bpmn-moddle": "~0.0.1",
-    "moddle": "~0.0.2",
+    "moddle": "~0.0.4",
     "diagram-js": "~0.0.2"
   },
   "peerDependencies": {
