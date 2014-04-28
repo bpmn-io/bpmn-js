@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
+  require('time-grunt')(grunt);
 
   /* global Buffer,process*/
 
@@ -77,9 +78,27 @@ module.exports = function(grunt) {
           debug: true
         }
       },
+      watch: {
+        options: {
+          alias: [
+            'node_modules/jquery:jquery',
+            'node_modules/lodash:lodash',
+            'node_modules/bpmn-moddle:bpmn/Model',
+            '<%= config.sources %>/main.js:bpmn',
+            '<%= config.sources %>/Viewer.js:bpmn/Viewer',
+            '<%= config.sources %>/Modeler.js:bpmn/Modeler'
+          ],
+          watch: true,
+          keepalive: true
+        },
+        files: {
+          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
+          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+        }
+      },
       modeler: {
         files: {
-          '<%= config.dist %>/bpmn.js': [ 'shim/*.js', '<%= config.sources %>/**/*.js' ]
+          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
           alias: [
@@ -121,10 +140,6 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      sources: {
-        files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'build:lib' ]
-      },
       samples: {
         files: [ '<%= config.samples %>/**/*.*' ],
         tasks: [ 'build:samples' ]
@@ -227,7 +242,7 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('auto-build', [
-    'build:all',
+    'browserify:watch',
     'connect:livereload',
     'watch'
   ]);

@@ -45,6 +45,7 @@
     "grunt-jasmine-node": "~0.2.1",
     "grunt-release": "~0.7.0",
     "load-grunt-tasks": "~0.3.0",
+    "time-grunt": "~0.3.0",
     "karma": "~0.12.8",
     "karma-jasmine": "https://github.com/Nikku/karma-jasmine/archive/jasmine-v2.0.0-latest-1.tar.gz",
     "karma-chrome-launcher": "~0.1.2",
@@ -59,8 +60,8 @@
     "lodash": "~2.4.0",
     "didi": "~0.0.4",
     "jquery": "~2.1.0",
-    "through": "^2.3.4",
-    "jquery-mousewheel": "^3.1.11"
+    "jquery-mousewheel": "~3.1.11",
+    "through": "~2.3.4"
   },
   "dependencies": {
     "bpmn-moddle": "~0.0.1",
