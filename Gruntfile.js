@@ -55,7 +55,6 @@ module.exports = function(grunt) {
         browsers: TEST_BROWSERS,
 
         browserify: {
-          watch: false,
           debug: false,
           transform: [ 'brfs' ]
         }
