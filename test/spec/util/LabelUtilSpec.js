@@ -113,7 +113,11 @@ describe('LabelUtil', function() {
         var label = 'I am\n\nnatural language\nwith some superdooooper-longwordinthe-middle';
 
         // when
-        var text = createLabel(container, label, { box: { width: 100, height: 100 }, align: 'center-middle', padding: 5 });
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'center-middle',
+          padding: 5
+        });
 
         expect(text).toBeDefined();
         expect(text).toFitBBox({ x: 0, y: -40, width: 100, height: 190 });
@@ -126,7 +130,11 @@ describe('LabelUtil', function() {
         var label = 'Some superdooooper-\nlong-\nword in the middle';
 
         // when
-        var text = createLabel(container, label, { box: { width: 100, height: 100 }, align: 'center-middle', padding: 5 });
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'center-middle',
+          padding: 5
+        });
 
         expect(text).toBeDefined();
         expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
@@ -147,46 +155,74 @@ describe('LabelUtil', function() {
     });
 
 
-    describe('should box in bounds', function() {
+    describe('should align', function() {
 
-      it('centered', function() {
+      it('center-middle', function() {
 
         // given
         var label = 'I am a long label that should break on spaces';
 
         // when
-        var text = createLabel(container, label, { box: { width: 100, height: 100 }, align: 'center-middle', padding: 5 });
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'center-middle',
+          padding: 5
+        });
 
         expect(text).toBeDefined();
         expect(text).toFitBBox({ x: 0, y: 5, width: 100, height: 90 });
       });
 
 
-      it('preformated using line breaks', function() {
+      it('center-middle / preformated using line breaks', function() {
 
         // given
         var label = 'I am\na long label that\r\nshould break on line breaks';
 
         // when
-        var text = createLabel(container, label, { box: { width: 100, height: 100 }, align: 'center-middle', padding: 5 });
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'center-middle',
+          padding: 5
+        });
 
         expect(text).toBeDefined();
         expect(text).toFitBBox({ x: 0, y: -5, width: 100, height: 120 });
       });
 
 
-      it('vertical float out', function() {
+      it('center-middle / vertical float out', function() {
 
         // given
-        var label = 'I am a long label that should break on spaces and that floats out of the container';
+        var label = 'I am a long label that should break on spaces and float out of the container';
 
         // when
-        var text = createLabel(container, label, { box: { width: 100, height: 100 }, align: 'center-middle', padding: 5 });
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'center-middle',
+          padding: 5
+        });
 
         expect(text).toBeDefined();
         expect(text).toFitBBox({ x: 0, y: -30, width: 100, height: 180 });
       });
 
+
+      it('left-middle', function() {
+
+        // given
+        var label = 'I am a long label that should break on spaces and float out of the container';
+
+        // when
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'left-middle',
+          padding: 5
+        });
+
+        expect(text).toBeDefined();
+        expect(text).toFitBBox({ x: 0, y: -30, width: 100, height: 180 });
+      });
     });
 
 
