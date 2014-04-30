@@ -3,12 +3,16 @@ module.exports = function(karma) {
 
     basePath: '../../',
 
-    frameworks: [ 'jasmine', 'browserify' ],
+    frameworks: [ 'browserify', 'jasmine' ],
 
     files: [
       'test/spec/**/*Spec.js'
     ],
-    
+
+    preprocessors: {
+      'test/spec/**/*Spec.js': [ 'browserify' ]
+    },
+
     reporters: [ 'dots' ],
 
     browsers: [ 'PhantomJS' ],
@@ -16,17 +20,9 @@ module.exports = function(karma) {
     singleRun: false,
     autoWatch: true,
 
-    // fixing slow browserify build
-    browserNoActivityTimeout: 30000,
-
     // browserify configuration
     browserify: {
-      debug: true,
-      watch: true
-    },
-
-    preprocessors: {
-      'test/spec/**/*Spec.js': [ 'browserify' ]
+      debug: true
     }
   });
 };
