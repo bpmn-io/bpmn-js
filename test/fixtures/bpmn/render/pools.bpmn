@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+    <collaboration id="sid-f8863819-d0a3-4398-8786-2aa28d8881ca">
+        <participant id="sid-B6042939-0D7C-4AF0-BAFF-9C4E6077762C" name="Pool with Lanes" processRef="sid-BCDFC1B7-A79C-404F-991E-C2118E9BD3F9">
+        </participant>
+        <participant id="sid-466F4E40-A5E9-4F4C-B93A-9CE8E398FAEF" name="Collapsed Pool">
+        </participant>
+        <participant id="sid-55BF12B8-A470-4AC8-BA67-9CD9635C0237" name="Expanded Pool" processRef="sid-D57EF85C-3D1F-4C36-B59C-AFC17EA2A83F">
+        </participant>
+    </collaboration>
+    <process id="sid-D57EF85C-3D1F-4C36-B59C-AFC17EA2A83F" isClosed="false" isExecutable="false" name="Expanded Pool" processType="None">
+        <extensionElements/>
+        <laneSet id="sid-f9c5db81-fc51-45fb-92c1-0877010a1024">
+            <lane id="sid-22F29359-85D2-405B-8F51-887C1B11E81C">
+            </lane>
+        </laneSet>
+    </process>
+    <process id="sid-BCDFC1B7-A79C-404F-991E-C2118E9BD3F9" isClosed="false" isExecutable="false" name="Pool with Lanes" processType="None">
+        <extensionElements/>
+        <laneSet id="sid-f997dc05-50b1-403b-beff-e24019286476">
+            <lane id="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5" name="Lane with Sublane">
+                <childLaneSet id="sid-0728dccd-679d-4818-aa2a-b3aa5c2c0d4f">
+                    <lane id="sid-54427248-3EE5-4B6B-B580-794CE6ABC2CD" name="Sublane">
+                    </lane>
+                    <lane id="sid-D9D4AB6C-736D-4C70-B79D-88D75AB42E05" name="Sublane 2">
+                    </lane>
+                </childLaneSet>
+            </lane>
+            <lane id="sid-6F662015-27C5-45EF-8576-795E32058777" name="Single Lane">
+            </lane>
+        </laneSet>
+    </process>
+    <bpmndi:BPMNDiagram id="sid-b70bf1fa-bbbf-4854-812e-f87fbb7a62d9">
+        <bpmndi:BPMNPlane bpmnElement="sid-f8863819-d0a3-4398-8786-2aa28d8881ca" id="sid-12cea966-e39b-469c-bbfa-c560094678a7">
+            <bpmndi:BPMNShape bpmnElement="sid-B6042939-0D7C-4AF0-BAFF-9C4E6077762C" id="sid-B6042939-0D7C-4AF0-BAFF-9C4E6077762C_gui" isHorizontal="true">
+                <omgdc:Bounds height="399.0" width="594.0" x="96.0" y="460.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="93.42857360839844" width="12.000000000000014" x="101.99999999999999" y="612.7857131958008"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-466F4E40-A5E9-4F4C-B93A-9CE8E398FAEF" id="sid-466F4E40-A5E9-4F4C-B93A-9CE8E398FAEF_gui" isHorizontal="true">
+                <omgdc:Bounds height="60.0" width="594.0" x="92.0" y="57.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="20.0" width="144.28570556640625" x="316.8571472167969" y="76.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-55BF12B8-A470-4AC8-BA67-9CD9635C0237" id="sid-55BF12B8-A470-4AC8-BA67-9CD9635C0237_gui" isHorizontal="true">
+                <omgdc:Bounds height="250.0" width="600.0" x="90.0" y="165.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="89.14286041259766" width="12.000000000000014" x="95.99999999999999" y="245.42856979370117"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-22F29359-85D2-405B-8F51-887C1B11E81C" id="sid-22F29359-85D2-405B-8F51-887C1B11E81C_gui" isHorizontal="true">
+                <omgdc:Bounds height="250.0" width="570.0" x="120.0" y="165.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5" id="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5_gui" isHorizontal="true">
+                <omgdc:Bounds height="266.0" width="564.0" x="126.0" y="593.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="109.71428680419922" width="12.000000000000028" x="132.0" y="671.1428565979004"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-54427248-3EE5-4B6B-B580-794CE6ABC2CD" id="sid-54427248-3EE5-4B6B-B580-794CE6ABC2CD_gui" isHorizontal="true">
+                <omgdc:Bounds height="133.0" width="534.0" x="156.0" y="593.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="48.0" width="12.0" x="162.0" y="635.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-D9D4AB6C-736D-4C70-B79D-88D75AB42E05" id="sid-D9D4AB6C-736D-4C70-B79D-88D75AB42E05_gui" isHorizontal="true">
+                <omgdc:Bounds height="133.0" width="534.0" x="156.0" y="726.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="60.0" width="12.0" x="162.0" y="762.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-6F662015-27C5-45EF-8576-795E32058777" id="sid-6F662015-27C5-45EF-8576-795E32058777_gui" isHorizontal="true">
+                <omgdc:Bounds height="133.0" width="564.0" x="126.0" y="460.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+                    <omgdc:Bounds height="68.57142639160156" width="12.0" x="132.0" y="492.2142868041992"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</definitions>
