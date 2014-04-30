@@ -15,14 +15,8 @@
         </participant>
     </collaboration>
     <process id="sid-D57EF85C-3D1F-4C36-B59C-AFC17EA2A83F" isClosed="false" isExecutable="false" name="Expanded Pool" processType="None">
-        <extensionElements/>
-        <laneSet id="sid-f9c5db81-fc51-45fb-92c1-0877010a1024">
-            <lane id="sid-22F29359-85D2-405B-8F51-887C1B11E81C">
-            </lane>
-        </laneSet>
     </process>
     <process id="sid-BCDFC1B7-A79C-404F-991E-C2118E9BD3F9" isClosed="false" isExecutable="false" name="Pool with Lanes" processType="None">
-        <extensionElements/>
         <laneSet id="sid-f997dc05-50b1-403b-beff-e24019286476">
             <lane id="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5" name="Lane with Sublane">
                 <childLaneSet id="sid-0728dccd-679d-4818-aa2a-b3aa5c2c0d4f">
@@ -55,9 +49,6 @@
                 <bpmndi:BPMNLabel labelStyle="sid-c28ef72c-8dac-4861-9bdf-355327f4346e">
                     <omgdc:Bounds height="89.14286041259766" width="12.000000000000014" x="95.99999999999999" y="245.42856979370117"/>
                 </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="sid-22F29359-85D2-405B-8F51-887C1B11E81C" id="sid-22F29359-85D2-405B-8F51-887C1B11E81C_gui" isHorizontal="true">
-                <omgdc:Bounds height="250.0" width="570.0" x="120.0" y="165.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5" id="sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5_gui" isHorizontal="true">
                 <omgdc:Bounds height="266.0" width="564.0" x="126.0" y="593.0"/>
