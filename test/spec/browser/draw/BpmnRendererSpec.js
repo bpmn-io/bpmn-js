@@ -29,6 +29,17 @@ describe('draw/BpmnRenderer', function() {
   });
 
 
+  it('should render group', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/group.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
   it('should render events (interrupting)', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/render/events-interrupting.bpmn', 'utf8');

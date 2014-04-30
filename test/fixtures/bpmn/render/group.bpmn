@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.0.0" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-cfa9858b-87ba-4fce-9fef-52e81f98f01b" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <category id="sid-318c8299-67a6-4ce8-85d5-063e8d3ecb02">
+      <categoryValue id="sid-318c8299-67a6-4ce8-85d5-063e8d3ecb0a" value="The Group&#10;"/>
+   </category>
+
+   <process id="sid-d7765c68-4a90-436c-a48e-13fb5a554632" isClosed="false" isExecutable="false" processType="None">
+      <task completionQuantity="1" id="sid-D1AF5313-B39D-4296-9046-4E6EB4BC0C09" isForCompensation="false" name="Test" startQuantity="1">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+         </extensionElements>
+      </task>
+      <group categoryValueRef="sid-318c8299-67a6-4ce8-85d5-063e8d3ecb0a" id="sid-49EB3CED-C884-4360-82F6-A512CDE8A8BA"/>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-07ebd7fb-c83e-428d-98b0-8c1a295d0104">
+      <bpmndi:BPMNPlane bpmnElement="sid-d7765c68-4a90-436c-a48e-13fb5a554632" id="sid-6e859ea3-c93f-4c89-9709-67d30808c49f">
+         <bpmndi:BPMNShape bpmnElement="sid-D1AF5313-B39D-4296-9046-4E6EB4BC0C09" id="sid-D1AF5313-B39D-4296-9046-4E6EB4BC0C09_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="540.0" y="300.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="sid-49EB3CED-C884-4360-82F6-A512CDE8A8BA" id="sid-49EB3CED-C884-4360-82F6-A512CDE8A8BA_gui">
+            <omgdc:Bounds height="262.0" width="494.0" x="343.0" y="209.0"/>
+         </bpmndi:BPMNShape>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>
