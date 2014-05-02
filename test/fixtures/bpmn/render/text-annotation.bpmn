@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+    <collaboration id="sid-49651cba-f289-4cd9-9a5b-8969178ca335">
+        <participant id="_Participant_2" name="Pool" processRef="Process_1">
+        </participant>
+        <textAnnotation id="TextAnnotation_1" textFormat="text/plain">
+            <text>Test test consetetursadipscingelitrametamet nonumy</text>
+        </textAnnotation>
+        <association associationDirection="None" id="Association_1" sourceRef="TextAnnotation_1" targetRef="_Participant_2">
+        </association>
+    </collaboration>
+    <process id="Process_1" isClosed="false" isExecutable="false" name="Pool" processType="None">
+        <extensionElements/>
+        <laneSet id="sid-d72f7e1f-1ff7-4acd-8c18-2665c93f2f70">
+            <lane id="sid-20961CB3-C62C-427D-BDB6-60540C6DDB27">
+            </lane>
+        </laneSet>
+        <association associationDirection="None" id="sid-69238ACB-D883-4966-8B04-ED6B08BD768E" sourceRef="sid-B802FDA8-0B67-48E0-B9B3-124D4FE51208" targetRef="sid-20961CB3-C62C-427D-BDB6-60540C6DDB27">
+        </association>
+        <textAnnotation id="sid-B802FDA8-0B67-48E0-B9B3-124D4FE51208" textFormat="text/plain">
+            <text>Lorem ipsum dolor sit amet, consetetursadipscingelitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor s
+            </text>
+        </textAnnotation>
+    </process>
+    <bpmndi:BPMNDiagram id="sid-960bc49b-b0b7-416d-9690-c6bac6c75959">
+        <bpmndi:BPMNPlane bpmnElement="sid-49651cba-f289-4cd9-9a5b-8969178ca335" id="sid-2cab5264-8ff4-4c79-8102-439d73e6a2ae">
+            <bpmndi:BPMNShape bpmnElement="_Participant_2" id="_Participant_2_gui" isHorizontal="true">
+                <omgdc:Bounds height="250.0" width="577.0" x="338.0" y="170.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-86581e21-80e0-4748-b7d7-60415bfb954e">
+                    <omgdc:Bounds height="24.85714340209961" width="12.0" x="343.0" y="282.5714282989502"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="TextAnnotation_1" id="TextAnnotation_1_gui">
+                <omgdc:Bounds height="74.0" width="217.0" x="864.0" y="48.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-71eec29f-7cba-4b30-818c-4860d4588b18">
+                    <omgdc:Bounds height="36.0" width="212.57142639160156" x="868.0" y="63.52000045776367"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Association_1" id="Association_1_gui">
+                <omgdi:waypoint x="930.0" y="122.0"/>
+                <omgdi:waypoint x="734.0" y="170.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="sid-20961CB3-C62C-427D-BDB6-60540C6DDB27" id="sid-20961CB3-C62C-427D-BDB6-60540C6DDB27_gui" isHorizontal="true">
+                <omgdc:Bounds height="250.0" width="547.0" x="368.0" y="170.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-B802FDA8-0B67-48E0-B9B3-124D4FE51208" id="sid-B802FDA8-0B67-48E0-B9B3-124D4FE51208_gui">
+                <omgdc:Bounds height="162.0" width="217.0" x="1126.0" y="214.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-71eec29f-7cba-4b30-818c-4860d4588b18">
+                    <omgdc:Bounds height="108.00000762939453" width="210.85714721679688" x="1130.0" y="235.76000213623047"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sid-69238ACB-D883-4966-8B04-ED6B08BD768E" id="sid-69238ACB-D883-4966-8B04-ED6B08BD768E_gui">
+                <omgdi:waypoint x="1126.0" y="291.7666735324408"/>
+                <omgdi:waypoint x="915.0" y="293.17478887744596"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="sid-71eec29f-7cba-4b30-818c-4860d4588b18">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>
+        </bpmndi:BPMNLabelStyle>
+        <bpmndi:BPMNLabelStyle id="sid-86581e21-80e0-4748-b7d7-60415bfb954e">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</definitions>

@@ -16,6 +16,17 @@ describe('draw/BpmnRenderer', function() {
     document.getElementsByTagName('body')[0].appendChild(container);
   });
 
+  it('should render text annotations', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/text-annotation.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
   it('should render data objects', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/render/data-objects.bpmn', 'utf8');
