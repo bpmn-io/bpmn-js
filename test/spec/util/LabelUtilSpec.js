@@ -12,7 +12,8 @@ describe('LabelUtil', function() {
 
   var options = {
     size: { width: 100 },
-    padding: 0
+    padding: 0,
+    style: { fontSize: 12 }
   };
 
   var labelUtil = new LabelUtil(options);
