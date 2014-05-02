@@ -16,10 +16,9 @@ describe('draw/BpmnRenderer', function() {
     document.getElementsByTagName('body')[0].appendChild(container);
   });
 
+  it('should render data objects', function(done) {
 
-  it('should render events', function(done) {
-
-    var xml = fs.readFileSync('test/fixtures/bpmn/render/events.bpmn', 'utf8');
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/data-objects.bpmn', 'utf8');
 
     var renderer = new Viewer(container);
 
@@ -28,10 +27,9 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
+  it('should render events', function(done) {
 
-  it('should render group', function(done) {
-
-    var xml = fs.readFileSync('test/fixtures/bpmn/render/group.bpmn', 'utf8');
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/events.bpmn', 'utf8');
 
     var renderer = new Viewer(container);
 
@@ -51,4 +49,36 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
+  it('should render gateways', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/gateways.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
+  it('should render groups', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/group.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
+  it('should render pools', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/pools.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
 });
