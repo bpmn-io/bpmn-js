@@ -64,7 +64,7 @@ describe('Canvas', function() {
       eventBus.on('shape.added', listener);
 
       // when
-      canvas.addShape({ id: 'a', x: 10, y: 20 });
+      canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
 
       // then
       expect(listener).toHaveBeenCalled();
@@ -74,7 +74,7 @@ describe('Canvas', function() {
     it('should fail when shape#id is not set', inject(function(canvas) {
 
       // given
-      var s = { x: 10, y: 20};
+      var s = { x: 10, y: 20, width: 50, height: 50 };
 
       expect(function() {
 
@@ -89,7 +89,7 @@ describe('Canvas', function() {
     it('should fail when adding shape#id twice', inject(function(canvas) {
 
       // given
-      var s = { id: 'FOO', x: 10, y: 10 };
+      var s = { id: 'FOO', x: 10, y: 10, width: 50, height: 50 };
 
       expect(function() {
         // when
@@ -104,9 +104,9 @@ describe('Canvas', function() {
     it('should undo add of shape', inject(function(canvas, commandStack, elementRegistry) {
 
       // given
-      var s1 = { id: 's1', x: 10, y: 20 };
-      var s2 = { id: 's2', x: 10, y: 20, parent: s1 };
-      var s3 = { id: 's3', x: 10, y: 20, parent: s1 };
+      var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
+      var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+      var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
 
       canvas
         .addShape(s1)
@@ -126,9 +126,9 @@ describe('Canvas', function() {
     it('should redo add of shape', inject(function(canvas, commandStack, elementRegistry) {
 
       // given
-      var s1 = { id: 's1', x: 10, y: 20 };
-      var s2 = { id: 's2', x: 10, y: 20, parent: s1 };
-      var s3 = { id: 's3', x: 10, y: 20, parent: s1 };
+      var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
+      var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+      var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
 
       canvas
         .addShape(s1)

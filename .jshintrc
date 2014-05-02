@@ -19,6 +19,7 @@
   "maxcomplexity" : 10,
   "maxlen" : 120,
   "browser" : true,
+  "node" : true,
   "debug": true,
   "strict": false,
   "-W040": true,

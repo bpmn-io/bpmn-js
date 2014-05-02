@@ -8,7 +8,7 @@ var TestHelper = require('../../TestHelper'),
 
 describe('MoveShapesHandler', function() {
 
-  
+
   beforeEach(bootstrapDiagram({ components: [ 'moveEvents' ] }));
 
   describe('should execute move', function() {
@@ -17,7 +17,7 @@ describe('MoveShapesHandler', function() {
     it('on diagram', inject(function(canvas, commandStack) {
 
       // given
-      var s1 = { id: 's1', x: 10, y: 20 };
+      var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
 
       canvas.addShape(s1);
 
@@ -82,7 +82,7 @@ describe('MoveShapesHandler', function() {
   it('should undo add of shape', inject(function(canvas, elementRegistry, commandStack) {
 
     // given
-    var s1 = { id: 's1', x: 10, y: 20 };
+    var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
 
     canvas.addShape(s1);
     commandStack.execute('shape.move', { dx: 30, dy: 30, shapes: [ s1 ]});
@@ -99,7 +99,7 @@ describe('MoveShapesHandler', function() {
   it('should redo shape movement', inject(function(canvas, elementRegistry, commandStack) {
 
     // given
-    var s1 = { id: 's1', x: 10, y: 20 };
+    var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
 
     canvas.addShape(s1);
     commandStack.execute('shape.move', { dx: 30, dy: 30, shapes: [ s1 ]});

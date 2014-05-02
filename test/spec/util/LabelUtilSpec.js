@@ -13,7 +13,7 @@ describe('LabelUtil', function() {
   var options = {
     size: { width: 100 },
     padding: 0,
-    style: { fontSize: 12 }
+    style: { fontSize: '11pt' }
   };
 
   var labelUtil = new LabelUtil(options);
@@ -229,14 +229,15 @@ describe('LabelUtil', function() {
 
     describe('should style', function() {
 
-      it('with custom font-size / weight / color', function() {
+      it('with custom size / weight / color / center-middle', function() {
 
         // given
         var label = 'I am a\nstyled\nlabel that will float';
         var style = {
           fill: 'fuchsia',
           fontWeight: 'bold',
-          fontFamily: 'Arial'
+          fontFamily: 'Arial',
+          fontSize: '13pt'
         };
 
         // when
@@ -248,7 +249,53 @@ describe('LabelUtil', function() {
         });
 
         expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 10, y: 5, width: 80, height: 90 });
+        expect(text).toFitBBox({ x: 5, y: 5, width: 90, height: 90 });
+      });
+
+
+      it('with custom size / weight / color / center-top', function() {
+
+        // given
+        var label = 'I am a\nstyled\nlabel that will float';
+        var style = {
+          fill: 'fuchsia',
+          fontWeight: 'bold',
+          fontFamily: 'Arial',
+          fontSize: '13pt'
+        };
+
+        // when
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          style: style,
+          align: 'center-top'
+        });
+
+        expect(text).toBeDefined();
+        expect(text).toFitBBox({ x: 5, y: 0, width: 90, height: 100 });
+      });
+
+
+      it('big / center-top', function() {
+
+        // given
+        var label = 'I am a style';
+        var style = {
+          fill: 'fuchsia',
+          fontWeight: 'bold',
+          fontFamily: 'Arial',
+          fontSize: '20pt'
+        };
+
+        // when
+        var text = createLabel(container, label, {
+          box: { width: 100, height: 100 },
+          style: style,
+          align: 'center-top'
+        });
+
+        expect(text).toBeDefined();
+        expect(text).toFitBBox({ x: 5, y: 5, width: 90, height: 90 });
       });
     });
   });
