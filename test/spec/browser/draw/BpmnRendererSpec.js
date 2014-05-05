@@ -27,6 +27,28 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
+ it('should render activity-marker', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/activity-marker-combination.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
+  it('should render activity-marker', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/render/activity-marker.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
   it('should render data objects', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/render/data-objects.bpmn', 'utf8');
