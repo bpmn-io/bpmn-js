@@ -11,10 +11,10 @@
     <bpmn:inclusiveGateway id="InclusiveGateway_1"/>
     <bpmn:exclusiveGateway id="ExclusiveGateway_1"/>
     <bpmn:parallelGateway id="ParallelGateway_1"/>
-    <bpmn:eventBasedGateway id="EventBasedGateway_1"/>
+    <bpmn:eventBasedGateway id="EventBasedGateway_1" eventGatewayType="Exclusive" instantiate="false"/>
     <bpmn:complexGateway id="ComplexGateway_1"/>
-    <bpmn:eventBasedGateway id="EventBasedGateway_2" eventGatewayType="Parallel"/>
-    <bpmn:eventBasedGateway id="EventBasedGateway_3" eventGatewayType="Exclusive"/>
+    <bpmn:eventBasedGateway id="EventBasedGateway_2" eventGatewayType="Parallel" instantiate="true"/>
+    <bpmn:eventBasedGateway id="EventBasedGateway_3" eventGatewayType="Exclusive" instantiate="true"/>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
