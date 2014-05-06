@@ -188,6 +188,7 @@ module.exports = function(grunt) {
       options: {
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
                 '<%= grunt.template.today("yyyy-mm-dd") %> - ' +
+                'http://bpmn.io/license - ' +
                 'https://github.com/bpmn-io/bpmn-js */',
         sourceMap: true,
         sourceMapIncludeSources: true,

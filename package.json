@@ -22,6 +22,7 @@
     "name": "Nico Rehwaldt",
     "url": "https://github.com/Nikku"
   },
+  "license": "http://bpmn.io/license",
   "browser": {
     "fs": false
   },
