@@ -146,6 +146,14 @@ module.exports = function(grunt) {
       jasmine_node: {
         files: [ '<%= config.sources %>/**/*.js', '<%= config.tests %>/spec/node/**/*.js' ],
         tasks: [ 'jasmine_node' ]
+      },
+      modeler: {
+        files: [ '<%= config.dist %>/bpmn.js' ],
+        tasks: [ 'uglify:modeler' ]
+      },
+      viewer: {
+        files: [ '<%= config.dist %>/bpmn-viewer.js' ],
+        tasks: [ 'uglify:viewer' ]
       }
     },
     jsdoc: {
