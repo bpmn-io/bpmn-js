@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 
 var Viewer = require('../../../../lib/Viewer');
@@ -17,15 +19,31 @@ describe('import - labels', function() {
   });
 
 
-  it('should import embedded labels', function(done) {
+  describe('should import embedded labels', function() {
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/labels/embedded.bpmn', 'utf8');
+    it('on flow nodes', function(done) {
 
-    var renderer = new Viewer(container);
+      var xml = fs.readFileSync('test/fixtures/bpmn/labels/embedded.bpmn', 'utf8');
 
-    renderer.importXML(xml, function(err) {
-      done(err);
+      var renderer = new Viewer(container);
+
+      renderer.importXML(xml, function(err) {
+        done(err);
+      });
     });
+
+
+    it('on pools and lanes', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/labels/collaboration.bpmn', 'utf8');
+
+      var renderer = new Viewer(container);
+
+      renderer.importXML(xml, function(err) {
+        done(err);
+      });
+    });
+
   });
 
 
