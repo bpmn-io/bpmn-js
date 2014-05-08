@@ -1,6 +1,6 @@
 {
   "name": "diagram-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A modeling framework for the web",
   "main": "lib/Diagram.js",
   "scripts": {
