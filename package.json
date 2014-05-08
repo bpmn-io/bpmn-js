@@ -5,7 +5,7 @@
   "scripts": {
     "test": "grunt test"
   },
-  "main": "lib/main",
+  "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/bpmn-js"
@@ -22,16 +22,16 @@
     "name": "Nico Rehwaldt",
     "url": "https://github.com/Nikku"
   },
-  "license": "http://bpmn.io/license",
-  "browser": {
-    "fs": false
-  },
   "contributors": [
     {
       "name": "bpmn.io contributors",
       "url": "https://github.com/bpmn-io"
     }
   ],
+  "license": "http://bpmn.io/license",
+  "browser": {
+    "fs": false
+  },
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-contrib-watch": "~0.5.0",
@@ -66,8 +66,8 @@
   },
   "dependencies": {
     "bpmn-moddle": "~0.0.1",
-    "moddle": "~0.0.4",
-    "diagram-js": "~0.0.2"
+    "moddle": "~0.0.5",
+    "diagram-js": "~0.0.3"
   },
   "peerDependencies": {
     "lodash": "~2.4.0",
