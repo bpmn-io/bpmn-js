@@ -32,6 +32,15 @@ module.exports = function(grunt) {
         jshintrc: true
       }
     },
+
+    release: {
+      options: {
+        tagName: 'v<%= version %>',
+        commitMessage: 'chore(project): release v<%= version %>',
+        tagMessage: 'chore(project): tag v<%= version %>'
+      }
+    },
+
     jasmine_node: {
       options: {
         specNameMatcher: '.*Spec',
