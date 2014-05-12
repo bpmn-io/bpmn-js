@@ -28,7 +28,18 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
- it('should render activity-marker', function(done) {
+  it('should render task types', function(done) {
+
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/task-types.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
+ it('should render activity marker', function(done) {
 
     var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/activity-marker-combination.bpmn', 'utf8');
 
@@ -39,7 +50,7 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
-  it('should render activity-marker', function(done) {
+  it('should render activity marker', function(done) {
 
     var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/activity-marker.bpmn', 'utf8');
 

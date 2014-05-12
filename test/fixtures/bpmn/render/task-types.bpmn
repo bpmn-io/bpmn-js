@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             id="task-types"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+    <process id="task-types" isClosed="false" isExecutable="false" processType="None">
+        <sendTask completionQuantity="1" id="sid-DC73E8B3-54C4-44E3-A172-E10E072A37CF" implementation="webService" isForCompensation="false" name="Send Task" startQuantity="1" />
+        <receiveTask completionQuantity="1" id="sid-18A8B7B4-13B7-4F5E-8D27-FC63B5F6FC32" implementation="webService" instantiate="false" isForCompensation="false" name="Receive Task" startQuantity="1" />
+        <userTask completionQuantity="1" id="sid-DD2A4023-C8B5-4C7A-87A6-F9BE5F8E6E4A" implementation="webService" isForCompensation="false" name="User Task" startQuantity="1" />
+        <manualTask completionQuantity="1" id="sid-6D88755E-A486-41A5-99DE-355AB75503A0" isForCompensation="false" name="Manual Task" startQuantity="1" />
+        <serviceTask completionQuantity="1" id="sid-2283F70F-1590-4D2A-A79D-0788721A3BD3" implementation="webService" isForCompensation="false" name="Service Task" startQuantity="1" />
+        <businessRuleTask completionQuantity="1" id="sid-05937FE7-AACD-4DC5-9607-9C0AD6EA9655" implementation="webService" isForCompensation="false" name="Business Rule Task&#10;" startQuantity="1" />
+        <scriptTask completionQuantity="1" id="sid-0C42A159-4787-4799-A340-A55F7FA6CBDA" isForCompensation="false" name="Script Task" scriptFormat="" startQuantity="1">
+            <script/>
+        </scriptTask>
+        <receiveTask completionQuantity="1" id="sid-D049CA0A-81EE-481B-B9E4-5A1577B3D729" implementation="webService" instantiate="true" isForCompensation="false" name="Receive Task&#10;(Instantiating)&#10;" startQuantity="1" />
+    </process>
+    <bpmndi:BPMNDiagram id="sid-565cb505-781d-4873-8263-dc70591a87a9">
+        <bpmndi:BPMNPlane bpmnElement="task-types" id="sid-7ebdcce4-7617-4e73-a47c-5facab598852">
+            <bpmndi:BPMNShape bpmnElement="sid-DC73E8B3-54C4-44E3-A172-E10E072A37CF" id="sid-DC73E8B3-54C4-44E3-A172-E10E072A37CF_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="45.0" y="75.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="63.42857360839844" x="63.28571319580078" y="107.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-18A8B7B4-13B7-4F5E-8D27-FC63B5F6FC32" id="sid-18A8B7B4-13B7-4F5E-8D27-FC63B5F6FC32_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="190.0" y="75.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="77.14286041259766" x="201.42856979370117" y="107.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-DD2A4023-C8B5-4C7A-87A6-F9BE5F8E6E4A" id="sid-DD2A4023-C8B5-4C7A-87A6-F9BE5F8E6E4A_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="45.0" y="200.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="60.0" x="65.0" y="232.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-6D88755E-A486-41A5-99DE-355AB75503A0" id="sid-6D88755E-A486-41A5-99DE-355AB75503A0_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="190.0" y="200.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="73.71428680419922" x="203.1428565979004" y="232.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-2283F70F-1590-4D2A-A79D-0788721A3BD3" id="sid-2283F70F-1590-4D2A-A79D-0788721A3BD3_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="45.0" y="325.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="75.42857360839844" x="57.28571319580078" y="357.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-05937FE7-AACD-4DC5-9607-9C0AD6EA9655" id="sid-05937FE7-AACD-4DC5-9607-9C0AD6EA9655_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="190.0" y="325.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="24.0" width="84.0" x="198.0" y="351.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-0C42A159-4787-4799-A340-A55F7FA6CBDA" id="sid-0C42A159-4787-4799-A340-A55F7FA6CBDA_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="45.0" y="450.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+                    <omgdc:Bounds height="12.0" width="67.71428680419922" x="61.14285659790039" y="482.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-D049CA0A-81EE-481B-B9E4-5A1577B3D729" id="sid-D049CA0A-81EE-481B-B9E4-5A1577B3D729_gui">
+                <omgdc:Bounds height="80.0" width="100.0" x="190.0" y="450.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-f50f8ab6-960d-41a1-81ea-6ab94239978f">
+                    <omgdc:Bounds height="24.0" width="86.57142639160156" x="196.71428680419922" y="476.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</definitions>
