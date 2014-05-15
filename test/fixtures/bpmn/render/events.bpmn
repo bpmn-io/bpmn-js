@@ -94,31 +94,6 @@
       <intermediateCatchEvent id="sid-90E968EF-F90A-4DE6-B282-099FC460A3A9">
          <escalationEventDefinition escalationRef="sid-3a003af1-ec01-4aea-81af-a76ba91c6961" id="sid-8684fabb-f5a9-4431-86af-fb5517c192dd"/>
       </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-85853B2A-082E-4FD7-9C18-8A1D104AB269">
-         <conditionalEventDefinition id="sid-b6092f81-b34d-454a-a157-86ded1f765cc">
-            <condition id="sid-55cf68c4-7cde-45dc-9b73-00523319e8cf" xsi:type="tFormalExpression"/>
-         </conditionalEventDefinition>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-26E1B69A-B793-4FA4-ACB5-B9BD5641DC9F">
-         <timerEventDefinition id="sid-284fc69d-ed3a-458f-a101-5f5f7261a0ff"/>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-B33AD5CF-DFFA-4292-AF45-D1C6BF18B20B">
-         <messageEventDefinition id="sid-b5c8a1f2-39e7-4a63-a6af-1f36006ea8ac"/>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-F56DC2BF-8EEF-462F-ACFC-DC716ED6B8F3">
-         <escalationEventDefinition escalationRef="sid-3a003af1-ec01-4aea-81af-a76ba91c6961" id="sid-758cebba-4fb9-4b1a-8b50-cc278420228b"/>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-588CB273-5FF9-4978-82F9-2D0A1390F1D4">
-         <signalEventDefinition id="sid-f456aeed-532d-49b4-8b02-3a9fb7ac41e8"/>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-C1FDA427-1786-4145-8803-C546EF1CD64D" parallelMultiple="false">
-         <cancelEventDefinition id="sid-fce62aa3-8564-4c07-aeca-fb3f7dd1488a"/>
-         <terminateEventDefinition id="sid-75a4383d-4c70-4ec5-847b-c1bf8e585a1f"/>
-      </intermediateCatchEvent>
-      <intermediateCatchEvent id="sid-F82BAB42-B58A-4489-9C24-57E28AF4B1C3" parallelMultiple="true">
-         <cancelEventDefinition id="sid-9e81aa27-6f33-4499-8bdb-45708591c258"/>
-         <terminateEventDefinition id="sid-e99de8c8-a427-48eb-a38b-b44ed32a2d97"/>
-      </intermediateCatchEvent>
       <intermediateThrowEvent id="sid-7AFC42BA-037D-4917-8E1E-B92140171DAC">
       </intermediateThrowEvent>
       <intermediateThrowEvent id="sid-1918E9CF-6A08-49C2-AB7B-0AD7E828F39F">
@@ -241,27 +216,6 @@
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-90E968EF-F90A-4DE6-B282-099FC460A3A9" id="sid-90E968EF-F90A-4DE6-B282-099FC460A3A9_gui">
             <dc:Bounds height="36.0" width="36.0" x="587.0" y="345.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-85853B2A-082E-4FD7-9C18-8A1D104AB269" id="sid-85853B2A-082E-4FD7-9C18-8A1D104AB269_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="420.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-26E1B69A-B793-4FA4-ACB5-B9BD5641DC9F" id="sid-26E1B69A-B793-4FA4-ACB5-B9BD5641DC9F_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="270.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-B33AD5CF-DFFA-4292-AF45-D1C6BF18B20B" id="sid-B33AD5CF-DFFA-4292-AF45-D1C6BF18B20B_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="195.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-F56DC2BF-8EEF-462F-ACFC-DC716ED6B8F3" id="sid-F56DC2BF-8EEF-462F-ACFC-DC716ED6B8F3_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="345.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-588CB273-5FF9-4978-82F9-2D0A1390F1D4" id="sid-588CB273-5FF9-4978-82F9-2D0A1390F1D4_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="795.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-C1FDA427-1786-4145-8803-C546EF1CD64D" id="sid-C1FDA427-1786-4145-8803-C546EF1CD64D_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="870.0"/>
-         </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="sid-F82BAB42-B58A-4489-9C24-57E28AF4B1C3" id="sid-F82BAB42-B58A-4489-9C24-57E28AF4B1C3_gui">
-            <dc:Bounds height="36.0" width="36.0" x="662.0" y="945.0"/>
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-7AFC42BA-037D-4917-8E1E-B92140171DAC" id="sid-7AFC42BA-037D-4917-8E1E-B92140171DAC_gui">
             <dc:Bounds height="36.0" width="36.0" x="737.0" y="120.0"/>
