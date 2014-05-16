@@ -17,6 +17,17 @@ describe('draw/BpmnRenderer', function() {
   });
 
 
+  it('should render conditional flows', function(done) {
+
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/conditional-flow.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
   it('should render text annotations', function(done) {
 
     var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/text-annotation.bpmn', 'utf8');
