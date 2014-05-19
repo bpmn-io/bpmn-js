@@ -28,6 +28,17 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
+  it('should render conditional default flows', function(done) {
+
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/conditional-default-flow.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
   it('should render conditional flows', function(done) {
 
     var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/conditional-flow.bpmn', 'utf8');
