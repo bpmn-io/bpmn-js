@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_602NsOCpEeOMld_vAxsi8Q" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="Process_1" isExecutable="false">
+    <bpmn2:subProcess id="SubProcess_1">
+      <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_1"/>
+    </bpmn2:subProcess>
+    <bpmn2:transaction id="Transaction_1">
+      <bpmn2:userTask id="UserTask_1"/>
+    </bpmn2:transaction>
+    <bpmn2:adHocSubProcess id="AdHocSubProcess_1">
+      <bpmn2:startEvent id="StartEvent_1"/>
+    </bpmn2:adHocSubProcess>
+    <bpmn2:subProcess id="SubProcess_3">
+      <bpmn2:task id="Task_2"/>
+    </bpmn2:subProcess>
+    <bpmn2:subProcess id="SubProcess_4">
+      <bpmn2:subProcess id="SubProcess_5">
+        <bpmn2:task id="Task_3"/>
+      </bpmn2:subProcess>
+    </bpmn2:subProcess>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1">
+        <dc:Bounds height="80.0" width="100.0" x="96.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Transaction_2" bpmnElement="Transaction_1">
+        <dc:Bounds height="80.0" width="100.0" x="272.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_AdHocSubProcess_2" bpmnElement="AdHocSubProcess_1">
+        <dc:Bounds height="80.0" width="100.0" x="456.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="272.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_2" bpmnElement="IntermediateCatchEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="128.0" y="130.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="146.0" y="171.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_4" bpmnElement="SubProcess_3" isExpanded="true">
+        <dc:Bounds height="150.0" width="200.0" x="96.0" y="252.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_7" bpmnElement="Task_2">
+        <dc:Bounds height="80.0" width="100.0" x="120.0" y="272.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="488.0" y="130.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="506.0" y="171.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_5" bpmnElement="SubProcess_4">
+        <dc:Bounds height="80.0" width="100.0" x="648.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_6" bpmnElement="SubProcess_5" isExpanded="true">
+        <dc:Bounds height="140.0" width="160.0" x="618.0" y="78.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task_3">
+        <dc:Bounds height="80.0" width="100.0" x="648.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -2,9 +2,9 @@
 
 var fs = require('fs');
 
-var Viewer = require('../../../../lib/Viewer');
+var Viewer = require('../../../../../lib/Viewer');
 
-var Matchers = require('../../Matchers');
+var Matchers = require('../../../Matchers');
 
 
 describe('import - labels', function() {

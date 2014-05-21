@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs'),
     Diagram = require('diagram-js/lib/Diagram');
 
@@ -9,7 +11,9 @@ var bpmnModule = require('../../../../lib/di').defaultModule;
 require('../../../../lib/core/BpmnRegistry');
 require('../../../../lib/draw/BpmnRenderer');
 
+
 var Matchers = require('../../Matchers');
+
 
 describe('import/Importer', function() {
 
@@ -38,6 +42,7 @@ describe('import/Importer', function() {
     });
   }
 
+
   it('should fire <bpmn.element.add> during import', function(done) {
 
     // given
@@ -52,6 +57,7 @@ describe('import/Importer', function() {
       events.push({ type: 'add', semantic: e.semantic.id, di: e.di.id, diagramElement: e.diagramElement.id });
     });
 
+    // when
     BpmnModel.fromXML(xml, function(err, definitions) {
       if (err) {
         return done(err);
