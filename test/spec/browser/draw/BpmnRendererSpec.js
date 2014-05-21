@@ -16,6 +16,16 @@ describe('draw/BpmnRenderer', function() {
     document.getElementsByTagName('body')[0].appendChild(container);
   });
 
+  it('should render message flow message marker', function(done) {
+
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/render/message-marker.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
 
   it('should render pool collection marker', function(done) {
 
