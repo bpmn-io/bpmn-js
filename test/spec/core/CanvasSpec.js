@@ -57,6 +57,7 @@ describe('Canvas', function() {
 
     beforeEach(defaultBootstrap);
 
+
     it('should fire <shape.added> event', inject(function(canvas, eventBus) {
 
       // given
@@ -102,55 +103,74 @@ describe('Canvas', function() {
     }));
 
 
-    it('should undo add of shape', inject(function(canvas, commandStack, elementRegistry) {
+    it('should add element hidden', inject(function(canvas, elementRegistry) {
 
       // given
-      var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
-      var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-      var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-
-      canvas
-        .addShape(s1)
-        .addShape(s2)
-        .addShape(s3);
+      var shape = { id: 'FOO', x: 10, y: 10, width: 50, height: 50, hidden: true };
 
       // when
-      commandStack.undo();
-      commandStack.undo();
+      canvas.addShape(shape);
+
+      var gfx = elementRegistry.getGraphicsByShape(shape);
 
       // then
-      expect(elementRegistry.getShapeById('s2')).not.toBeDefined();
-      expect(elementRegistry.getShapeById('s3')).not.toBeDefined();
+      expect(gfx.attr('visibility')).toBe('hidden');
     }));
 
 
-    it('should redo add of shape', inject(function(canvas, commandStack, elementRegistry) {
+    describe('undo / redo', function() {
 
-      // given
-      var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
-      var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-      var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+      it('should undo add of shape', inject(function(canvas, commandStack, elementRegistry) {
 
-      canvas
-        .addShape(s1)
-        .addShape(s2)
-        .addShape(s3);
+        // given
+        var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
+        var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+        var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
 
-      // when
-      commandStack.undo();
-      commandStack.undo();
-      commandStack.redo();
-      commandStack.undo();
-      commandStack.redo();
-      commandStack.redo();
+        canvas
+          .addShape(s1)
+          .addShape(s2)
+          .addShape(s3);
 
-      // then
-      expect(elementRegistry.getShapeById('s2')).toEqual(s2);
-      expect(elementRegistry.getShapeById('s3')).toEqual(s3);
+        // when
+        commandStack.undo();
+        commandStack.undo();
 
-      expect(s2.parent).toEqual(s1);
-      expect(s3.parent).toEqual(s1);
-    }));
+        // then
+        expect(elementRegistry.getShapeById('s2')).not.toBeDefined();
+        expect(elementRegistry.getShapeById('s3')).not.toBeDefined();
+      }));
+
+
+      it('should redo add of shape', inject(function(canvas, commandStack, elementRegistry) {
+
+        // given
+        var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
+        var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+        var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+
+        canvas
+          .addShape(s1)
+          .addShape(s2)
+          .addShape(s3);
+
+        // when
+        commandStack.undo();
+        commandStack.undo();
+        commandStack.redo();
+        commandStack.undo();
+        commandStack.redo();
+        commandStack.redo();
+
+        // then
+        expect(elementRegistry.getShapeById('s2')).toEqual(s2);
+        expect(elementRegistry.getShapeById('s3')).toEqual(s3);
+
+        expect(s2.parent).toEqual(s1);
+        expect(s3.parent).toEqual(s1);
+      }));
+
+    });
 
   });
 
