@@ -82,11 +82,11 @@ describe('Canvas', function() {
         canvas.addShape(s);
 
         fail('expected exception');
-      }).toThrowError('shape must have an id');
+      }).toThrowError('element must have an id');
     }));
 
 
-    it('should fail when adding shape#id twice', inject(function(canvas) {
+    it('should fail when adding shape#id twice', inject(function(canvas, elementRegistry) {
 
       // given
       var s = { id: 'FOO', x: 10, y: 10, width: 50, height: 50 };
@@ -97,7 +97,8 @@ describe('Canvas', function() {
         canvas.addShape(s);
 
         fail('expected exception');
-      }).toThrowError('shape with id FOO already added');
+      }).toThrowError('element with id FOO already exists');
+
     }));
 
 

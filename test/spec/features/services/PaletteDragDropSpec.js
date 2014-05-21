@@ -13,11 +13,23 @@ describe('PaletteDragDrop should ', function() {
 
   beforeEach(bootstrapDiagram(function() {
     mockEvents = new Events();
+
+    var listeners = {};
+
     canvas = {
-      listeners: {},
-      addListener: function(lname, listener) {
-        this.listeners[lname] = listener;
-      }};
+      getPaper: function() {
+        return {
+          node: {
+            addEventListener: function(lname, listener) {
+              listeners[lname] = listener;
+            }
+          }
+        };
+      }
+    };
+
+    canvas.listeners = listeners;
+
     pdd = new PaletteDragDrop(canvas, mockEvents, 'elementRegistry');
 
     return {
