@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "test": "grunt test"
@@ -67,7 +67,7 @@
   "dependencies": {
     "bpmn-moddle": "~0.0.1",
     "moddle": "~0.0.5",
-    "diagram-js": "~0.0.3"
+    "diagram-js": "~0.1.0"
   },
   "peerDependencies": {
     "lodash": "~2.4.0",
