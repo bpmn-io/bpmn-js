@@ -6,6 +6,35 @@ bpmn-js is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn
 > bpmn-js is in an alpha stage, expect documentation to be missing and examples to be broken.
 
 
+## Usage
+
+Get the library via [npm](http://npmjs.org)
+
+```
+npm install --save bpmn-js
+```
+
+Use it in your project
+
+```javascript
+var BpmnViewer = require('bpmn-js').Viewer;
+
+var xml; // my BPMN 2.0 xml
+var viewer = new BpmnViewer({ container: 'body' });
+
+viewer.importXML(xml, function(err) {
+
+  if (err) {
+    console.log('error rendering', err);
+  } else {
+    console.log('rendered');
+  }
+});
+```
+
+Make sure to bundle the project for the browser, e.g. by using [browserify](http://browserify.org).
+
+
 ## Resources
 
 *   [Demo](http://demo.bpmn.io)
