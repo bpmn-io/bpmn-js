@@ -43,7 +43,7 @@ describe('Viewer', function() {
 
   describe('error handling', function() {
 
-    it('should handle errors', function(done) {
+    it('should handle non-bpmn input', function(done) {
 
       var xml = 'invalid stuff';
 
@@ -52,6 +52,22 @@ describe('Viewer', function() {
       renderer.importXML(xml, function(err) {
 
         expect(err).toBeDefined();
+
+        done();
+      });
+    });
+
+
+    it('should handle invalid BPMNPlane#bpmnElement', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn', 'utf8');
+
+      var renderer = new Viewer(container);
+
+      renderer.importXML(xml, function(err) {
+
+        expect(err).toBeDefined();
+        expect(err.message).toEqual('no rootElement referenced in BPMNPlane <BPMNPlane_1>');
 
         done();
       });
