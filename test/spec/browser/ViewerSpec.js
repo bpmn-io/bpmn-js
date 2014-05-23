@@ -88,6 +88,9 @@ describe('Viewer', function() {
           expect(svg.indexOf(expectedStart)).toEqual(0);
           expect(svg.indexOf(expectedEnd)).toEqual(svg.length - expectedEnd.length);
 
+          // ensure correct rendering of SVG contents
+          expect(svg.indexOf('undefined')).toBe(-1);
+
           done();
         });
       });
