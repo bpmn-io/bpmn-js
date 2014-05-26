@@ -75,9 +75,8 @@ module.exports = function(grunt) {
     },
     browserify: {
       options: {
-        transform: [ 'brfs' ],
         browserifyOptions: {
-          builtins: [ 'fs' ],
+          builtins: false,
           commondir: false
         },
         bundleOptions: {

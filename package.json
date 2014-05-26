@@ -29,9 +29,6 @@
     }
   ],
   "license": "http://bpmn.io/license",
-  "browser": {
-    "fs": false
-  },
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-contrib-watch": "~0.5.0",
