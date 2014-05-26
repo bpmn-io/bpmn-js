@@ -1,4 +1,4 @@
-# bpmn-js - BPMN 2.0 diagrams for the web
+# bpmn-js - BPMN 2.0 for the web
 
 bpmn-js is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn.io](http://bpmn.io).
 
@@ -39,7 +39,7 @@ Make sure to bundle the project for the browser, e.g. by using [browserify](http
 
 *   [Demo](http://demo.bpmn.io)
 *   [Issues](https://github.com/bpmn-io/bpmn-js/issues)
-*   [Examples](https://github.com/bpmn-io/bpmn-js/tree/master/example)
+*   [Examples](https://github.com/bpmn-io/bpmn-js-examples)
 
 
 ## Building the Project
