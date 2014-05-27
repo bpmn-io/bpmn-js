@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                   xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+    <bpmn2:process id="Process_1" isExecutable="false">
+        <bpmn2:startEvent id="StartEvent_1">
+            <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:exclusiveGateway id="ExclusiveGateway_1" default="SequenceFlow_3">
+            <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+            <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+        </bpmn2:exclusiveGateway>
+        <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_1"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_1">
+            <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">test</bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+        <bpmn2:endEvent id="EndEvent_1">
+            <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_2"/>
+        <bpmn2:endEvent id="EndEvent_2">
+            <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+        </bpmn2:endEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+            <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+                <dc:Bounds height="36.0" width="36.0" x="534.0" y="305.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+                <dc:Bounds height="50.0" width="50.0" x="620.0" y="298.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_ExclusiveGateway_2">
+                <di:waypoint xsi:type="dc:Point" x="570.0" y="323.0"/>
+                <di:waypoint xsi:type="dc:Point" x="620.0" y="323.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+                <dc:Bounds height="36.0" width="36.0" x="744.0" y="228.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="0.0" width="0.0" x="762.0" y="269.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_EndEvent_2">
+                <di:waypoint xsi:type="dc:Point" x="645.0" y="298.0"/>
+                <di:waypoint xsi:type="dc:Point" x="645.0" y="246.0"/>
+                <di:waypoint xsi:type="dc:Point" x="707.0" y="246.0"/>
+                <di:waypoint xsi:type="dc:Point" x="744.0" y="246.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="6.0" width="6.0" x="642.0" y="273.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_2">
+                <dc:Bounds height="36.0" width="36.0" x="737.0" y="360.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="0.0" width="0.0" x="755.0" y="401.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_EndEvent_3">
+                <di:waypoint xsi:type="dc:Point" x="670.0" y="323.0"/>
+                <di:waypoint xsi:type="dc:Point" x="703.0" y="323.0"/>
+                <di:waypoint xsi:type="dc:Point" x="703.0" y="378.0"/>
+                <di:waypoint xsi:type="dc:Point" x="737.0" y="378.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="6.0" width="6.0" x="692.0" y="323.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
