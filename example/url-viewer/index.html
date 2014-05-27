@@ -43,7 +43,7 @@
   <script>
 
     ///// auto open ?url=diagram-url ///////////////////////
-    
+
     (function() {
       var str = window.location.search;
       var min = !/(?:\&|\?)debug=/.test(str);
@@ -54,7 +54,7 @@
 
   <script>
 
-    var BpmnViewer = require('bpmn/Viewer');
+    var BpmnViewer = require('bpmn-js/Viewer');
     var $ = require('jquery');
 
     var viewer = new BpmnViewer({ container: $('#js-canvas'), width: '100%', height: 600 });
@@ -71,7 +71,7 @@
       $.ajax(url, { dataType : 'text' }).done(function(xml) {
 
         viewer.importXML(xml, function(err) {
-          
+
           if (err) {
             log('error: ' + err.message);
             console.error(err);
@@ -88,7 +88,7 @@
     });
 
     ///// auto open ?url=diagram-url ///////////////////////
-    
+
     (function() {
       var str = window.location.search;
       var match = /(?:\&|\?)url=([^&]+)/.exec(str);
