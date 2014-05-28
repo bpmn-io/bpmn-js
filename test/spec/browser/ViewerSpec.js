@@ -107,6 +107,9 @@ describe('Viewer', function() {
           // ensure correct rendering of SVG contents
           expect(svg.indexOf('undefined')).toBe(-1);
 
+          // expect header to be written only once
+          expect(svg.indexOf('<svg width="100%" height="100%">')).toBe(-1);
+
           done();
         });
       });
