@@ -234,4 +234,16 @@ describe('draw/BpmnRenderer', function() {
     });
   });
 
+
+  it('should render flow markers', function(done) {
+
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/flow-markers.bpmn', 'utf8');
+
+    var renderer = new Viewer(container);
+
+    renderer.importXML(xml, function(err) {
+      done(err);
+    });
+  });
+
 });
