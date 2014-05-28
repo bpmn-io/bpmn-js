@@ -90,10 +90,10 @@ module.exports = function(grunt) {
           alias: [
             'node_modules/jquery:jquery',
             'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn/Model',
-            '<%= config.sources %>/main.js:bpmn',
-            '<%= config.sources %>/Viewer.js:bpmn/Viewer',
-            '<%= config.sources %>/Modeler.js:bpmn/Modeler'
+            'node_modules/bpmn-moddle:bpmn-moddle',
+            '<%= config.sources %>/main.js:bpmn-js',
+            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
+            '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
           ],
           watch: true,
           keepalive: true
@@ -111,10 +111,10 @@ module.exports = function(grunt) {
           alias: [
             'node_modules/jquery:jquery',
             'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn/Model',
-            '<%= config.sources %>/main.js:bpmn',
-            '<%= config.sources %>/Viewer.js:bpmn/Viewer',
-            '<%= config.sources %>/Modeler.js:bpmn/Modeler'
+            'node_modules/bpmn-moddle:bpmn-moddle',
+            '<%= config.sources %>/main.js:bpmn-js',
+            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
+            '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
           ]
         }
       },
@@ -126,9 +126,9 @@ module.exports = function(grunt) {
           alias: [
             'node_modules/jquery:jquery',
             'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn/Model',
-            '<%= config.sources %>/main.js:bpmn',
-            '<%= config.sources %>/Viewer.js:bpmn/Viewer'
+            'node_modules/bpmn-moddle:bpmn-moddle',
+            '<%= config.sources %>/main.js:bpmn-js',
+            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer'
           ]
         }
       }
