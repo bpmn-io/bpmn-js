@@ -87,52 +87,29 @@ module.exports = function(grunt) {
           detectGlobals: false,
           insertGlobalVars: [],
           debug: true
-        }
+        },
+        alias: [
+          'node_modules/jquery:jquery',
+          'node_modules/lodash:lodash',
+          'node_modules/bpmn-moddle:bpmn-moddle',
+          '<%= config.sources %>/main.js:bpmn-js',
+          '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
+          '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
+        ]
       },
       watch: {
-        options: {
-          alias: [
-            'node_modules/jquery:jquery',
-            'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn-moddle',
-            '<%= config.sources %>/main.js:bpmn-js',
-            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
-            '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
-          ],
-          watch: true
-        },
         files: {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
           '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
-        }
-      },
-      modeler: {
-        files: {
-          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
-          alias: [
-            'node_modules/jquery:jquery',
-            'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn-moddle',
-            '<%= config.sources %>/main.js:bpmn-js',
-            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
-            '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
-          ]
+          watch: true
         }
       },
-      viewer: {
+      lib: {
         files: {
+          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
           '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
-        },
-        options: {
-          alias: [
-            'node_modules/jquery:jquery',
-            'node_modules/lodash:lodash',
-            'node_modules/bpmn-moddle:bpmn-moddle',
-            '<%= config.sources %>/main.js:bpmn-js',
-            '<%= config.sources %>/Viewer.js:bpmn-js/Viewer'
-          ]
         }
       }
     },
@@ -248,7 +225,7 @@ module.exports = function(grunt) {
         tasks.push('uglify:modeler', 'uglify:viewer');
       }
 
-      return grunt.task.run([ 'browserify:modeler', 'browserify:viewer' ].concat(tasks));
+      return grunt.task.run(['browserify:lib'].concat(tasks));
     }
 
     if (target === 'samples') {
@@ -256,7 +233,7 @@ module.exports = function(grunt) {
     }
 
     if (!target || target === 'all') {
-      return grunt.task.run([ 'build:lib:' + mode, 'build:samples:' + mode ]);
+      return grunt.task.run(['build:lib:' + mode, 'build:samples:' + mode]);
     }
   });
 
