@@ -53,6 +53,7 @@ module.exports = function(grunt) {
       },
       node: [ 'test/spec/node/' ]
     },
+
     karma: {
       options: {
         configFile: '<%= config.tests %>/config/karma.unit.js',
@@ -70,9 +71,12 @@ module.exports = function(grunt) {
       },
       unit: {
         browsers: TEST_BROWSERS,
-        transform: [ 'brfs' ]
+        browserify: {
+          transform: [ 'brfs' ]
+        }
       }
     },
+
     browserify: {
       options: {
         browserifyOptions: {
@@ -95,8 +99,7 @@ module.exports = function(grunt) {
             '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
             '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
           ],
-          watch: true,
-          keepalive: true
+          watch: true
         },
         files: {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
@@ -133,6 +136,7 @@ module.exports = function(grunt) {
         }
       }
     },
+
     copy: {
       samples: {
         files: [
@@ -146,6 +150,7 @@ module.exports = function(grunt) {
         ]
       }
     },
+
     watch: {
       samples: {
         files: [ '<%= config.samples %>/**/*.*' ],
@@ -164,6 +169,7 @@ module.exports = function(grunt) {
         tasks: [ 'uglify:viewer' ]
       }
     },
+
     jsdoc: {
       dist: {
         src: [ '<%= config.sources %>/**/*.js' ],
@@ -173,10 +179,7 @@ module.exports = function(grunt) {
         }
       }
     },
-    concurrent: {
-      'lib': [ 'build:lib', 'jshint' ],
-      'build': [ 'jshint', 'build', 'jsdoc' ]
-    },
+
     connect: {
       options: {
         port: 9003,
