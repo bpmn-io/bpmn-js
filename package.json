@@ -47,5 +47,9 @@
   "dependencies": {
     "eve": "0.4.1",
     "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.2.2-browserify.tar.gz"
+  },
+  "browser": {
+    "snapsvg": "./vendor/snapsvg.js",
+    "lodash": "./vendor/lodash.js"
   }
 }

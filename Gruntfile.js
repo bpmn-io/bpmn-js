@@ -59,83 +59,25 @@ module.exports = function(grunt) {
       }
     },
     browserify: {
-      vendor: {
-        src: [ 'snapsvg', 'lodash' ],
-        dest: '<%= config.dist %>/common.js',
+      bower: {
+        files: {
+          '../bower-diagram-js/diagram.js': [ '<%= config.sources %>/**/*.js' ]
+        },
         options: {
-          debug: true,
+          external: [ 'node_modules/snapsvg', 'node_modules/lodash' ],
           alias: [
-            'snapsvg',
-            'lodash'
+            '<%= config.sources %>/Diagram.js:diagram-js'
           ]
         }
       },
-      src: {
+      standalone: {
         files: {
           '<%= config.dist %>/diagram.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
           debug: true,
-          external: [ 'snapsvg', 'lodash' ],
           alias: [
-            '<%= config.sources %>/Diagram.js:diagram'
-          ]
-        }
-      }
-    },
-    copy: {
-      samples: {
-        files: [
-          // copy sample files
-          {
-            expand: true,
-            cwd: '<%= config.samples %>/',
-            src: ['**/*.*'],
-            dest: '<%= config.dist %>/<%= config.samples %>'
-          }
-        ]
-      },
-      fonts:  {
-        files: [
-          {
-            expand: true,
-            cwd: '<%= config.fonts %>/',
-            src: ['fonts/*.woff'],
-            dest: '<%= config.dist %>'
-          }
-        ]
-      }
-    },
-    watch: {
-      sources: {
-        files: [ '<%= config.sources %>/**/*.js' ],
-        tasks: [ 'concurrent:sources']
-      },
-      samples: {
-        files: [ '<%= config.samples %>/*.{html,css,js}' ],
-        tasks: [ 'copy:samples']
-      },
-      livereload: {
-        options: {
-          livereload: '<%= connect.options.livereload %>'
-        },
-        files: [
-          '<%= config.dist %>/*.js',
-          '<%= config.dist %>/<%= config.samples %>/*.{html,css,js}'
-        ]
-      }
-    },
-    connect: {
-      options: {
-        port: 9003,
-        livereload: 35726,
-        hostname: 'localhost'
-      },
-      livereload: {
-        options: {
-          open: true,
-          base: [
-            '<%= config.dist %>'
+            '<%= config.sources %>/Diagram.js:diagram-js'
           ]
         }
       }
@@ -148,25 +90,24 @@ module.exports = function(grunt) {
           plugins: [ 'plugins/markdown' ]
         }
       }
-    },
-    concurrent: {
-      'sources': [ 'browserify:src', 'jshint' ],
-      'build': [ 'jshint', 'build', 'jsdoc' ]
     }
   });
 
   // tasks
-  
+
   grunt.registerTask('test', [ 'karma:single' ]);
-  grunt.registerTask('build', [ 'browserify', 'copy' ]);
+
+  grunt.registerTask('build', function(target) {
+    var tasks = [ 'browserify:standalone' ];
+
+    if (target === 'all') {
+      tasks.push('browserify:bower');
+    }
+
+    return grunt.task.run(tasks);
+  });
 
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
-
-  grunt.registerTask('auto-build', [
-    'concurrent:build',
-    'connect:livereload',
-    'watch'
-  ]);
 
   grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
 };
