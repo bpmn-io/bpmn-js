@@ -1,9 +1,11 @@
+'use strict';
+
+
 var EventBus = require('../../../lib/core/EventBus'),
     ElementRegistry = require('../../../lib/core/ElementRegistry');
 
 
 describe('elementRegistry', function() {
-  'use strict';
 
   var eventBus, shapes;
 
@@ -12,8 +14,9 @@ describe('elementRegistry', function() {
     shapes = new ElementRegistry(eventBus);
   });
 
+
   it('should register shape on add', function() {
-    
+
     // given
     var shape = { id: 's0' },
         gfx = { id: 'g0' };
@@ -31,8 +34,9 @@ describe('elementRegistry', function() {
     expect(shapes.getGraphicsByShape(shape.id)).toBe(gfx);
   });
 
+
   it('should unregister shape on remove', function() {
-    
+
     // given
     var shape = { id: 's0' },
         gfx = { id: 'g0' };
@@ -50,4 +54,5 @@ describe('elementRegistry', function() {
     expect(shapes.getGraphicsByShape(shape)).not.toBeDefined();
     expect(shapes.getGraphicsByShape(shape.id)).not.toBeDefined();
   });
+
 });

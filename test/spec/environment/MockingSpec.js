@@ -1,8 +1,11 @@
-var Events = require('../../../lib/core/EventBus');
+'use strict';
 
-var TestHelper = require('../../TestHelper'),
-    inject = TestHelper.inject,
-    bootstrapDiagram = TestHelper.bootstrapDiagram;
+var TestHelper = require('../../TestHelper');
+
+/* global bootstrapDiagram, inject */
+
+
+var Events = require('../../../lib/core/EventBus');
 
 
 describe('environment/Mocking', function() {
@@ -36,4 +39,5 @@ describe('environment/Mocking', function() {
 
     expect(bootstrapCalled).toBe(true);
   }));
+
 });

@@ -1,15 +1,16 @@
+'use strict';
+
 var CommandStack = require('../../../lib/core/CommandStack'),
     Events = require('../../../lib/core/EventBus');
 
-describe('CommandStack', function() {
 
-  'use strict';
+describe('CommandStack', function() {
 
   /**
    * Create a new handler with the given identifier
    */
   function handler(name) {
-    
+
     return {
       execute: function(ctx) {
         ctx.last = 'execute-' + name;
@@ -48,9 +49,9 @@ describe('CommandStack', function() {
     expect(fired).toEqual(events);
   }
 
-  function expectStack(actions, idx) { 
+  function expectStack(actions, idx) {
     expect(commandStack.getStack()).toEqual(actions);
-    expect(commandStack.getStackIndex()).toEqual(idx);    
+    expect(commandStack.getStackIndex()).toEqual(idx);
   }
 
   function action(id, ctx) {
@@ -85,7 +86,7 @@ describe('CommandStack', function() {
       commandStack.register('a', handlerA);
 
       var ctx = {};
-      
+
       // when
       commandStack.execute('a', ctx);
 
@@ -119,7 +120,7 @@ describe('CommandStack', function() {
       commandStack.register('b', handlerB);
 
       var ctx = {};
-      
+
       // when
       commandStack.execute('a', ctx);
       commandStack.execute('b', ctx);
@@ -141,7 +142,7 @@ describe('CommandStack', function() {
       commandStack.register('a', handlerA);
 
       var ctx = {};
-      
+
       // when
       commandStack.execute('a', ctx);
       commandStack.undo();
@@ -168,7 +169,7 @@ describe('CommandStack', function() {
         [ 'commandStack.revert', { id: 'a' } ],
         [ 'commandStack.changed' ]
       ]);
-      
+
     });
 
 
@@ -179,7 +180,7 @@ describe('CommandStack', function() {
       commandStack.register('b', handlerB);
 
       var ctx = {};
-      
+
       // when
       commandStack.execute('a', ctx);
       commandStack.execute('b', ctx);
@@ -215,7 +216,7 @@ describe('CommandStack', function() {
       commandStack.register('a', handlerA);
 
       var ctx = {};
-      
+
       // when
       commandStack.execute('a', ctx);
       commandStack.undo();

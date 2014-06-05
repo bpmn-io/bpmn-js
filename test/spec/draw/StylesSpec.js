@@ -1,5 +1,7 @@
-var Styles = require('../../../lib/draw/Styles'),
-    TestHelper = require('../../TestHelper');
+'use strict';
+
+
+var Styles = require('../../../lib/draw/Styles');
 
 
 describe('draw/Styles', function() {
@@ -7,9 +9,9 @@ describe('draw/Styles', function() {
   var styles = new Styles();
 
   describe('#cls', function() {
-    
+
     it('should create style with traits given', function() {
-      
+
       // given
       var expectedStyle = {
         'class': 'foo',

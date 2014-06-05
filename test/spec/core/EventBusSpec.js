@@ -1,16 +1,19 @@
+'use strict';
+
 var Events = require('../../../lib/core/EventBus');
 
 var createSpy = jasmine.createSpy;
 
+
 describe('eventBus', function() {
-  'use strict';
 
   function createEventEmitter() {
     return new Events();
   }
 
+
   it('should fire listener', function() {
-    
+
     // given
     var e = createEventEmitter();
     var listener = createSpy('listener');
@@ -24,8 +27,9 @@ describe('eventBus', function() {
     expect(listener).toHaveBeenCalled();
   });
 
+
   it('should fire typed listener', function() {
-    
+
     // given
     var e = createEventEmitter();
     var listener = createSpy('listener');
@@ -39,8 +43,9 @@ describe('eventBus', function() {
     expect(listener).toHaveBeenCalled();
   });
 
+
   it('should stopPropagation', function() {
-    
+
     // given
     var e = createEventEmitter();
     var listener1 = createSpy('listener1').and.callFake(function(event) {
@@ -59,6 +64,7 @@ describe('eventBus', function() {
     expect(listener1).toHaveBeenCalled();
     expect(listener2).not.toHaveBeenCalled();
   });
+
 
   it('should remove listeners by event type', function() {
 
@@ -79,6 +85,7 @@ describe('eventBus', function() {
     expect(listener2).not.toHaveBeenCalled();
   });
 
+
   it('should remove listener by callback', function() {
 
     // given
@@ -98,6 +105,7 @@ describe('eventBus', function() {
     expect(listener2).toHaveBeenCalled();
   });
 
+
   it('should fire event by name', function() {
 
     // given
@@ -110,6 +118,7 @@ describe('eventBus', function() {
 
     expect(listener).toHaveBeenCalled();
   });
+
 
   it('once should only fire once', function() {
 
@@ -134,10 +143,11 @@ describe('eventBus', function() {
     // should be fired again
     expect(listener).toHaveBeenCalled();
   });
+
 });
 
-describe('Events(priority) ', function() {
-  'use strict';
+
+describe('event priorities', function() {
 
   var e,
       listener1,
@@ -226,7 +236,7 @@ describe('Events(priority) ', function() {
     e.fire('foo', param);
   });
 
-  it(' user should be able to stop propagation' +
+  it('user should be able to stop propagation' +
         ' to handler with lower priority.', function() {
 
     // setup
@@ -260,4 +270,5 @@ describe('Events(priority) ', function() {
     // listener1 should not be fired.
     expect(param.value).toEqual('Target State');
   });
+
 });

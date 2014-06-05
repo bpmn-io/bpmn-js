@@ -1,15 +1,17 @@
-require('../../../lib/core/EventBus');
-require('../../../lib/features/move');
+'use strict';
 
-var TestHelper = require('../../TestHelper'),
-    inject = TestHelper.inject,
-    bootstrapDiagram = TestHelper.bootstrapDiagram;
+var TestHelper = require('../../../../TestHelper');
+
+/* global bootstrapDiagram, inject */
+
+
+var moveModule = require('../../../../../lib/features/move');
 
 
 describe('MoveShapesHandler', function() {
 
 
-  beforeEach(bootstrapDiagram({ components: [ 'moveEvents' ] }));
+  beforeEach(bootstrapDiagram({ modules: [ moveModule ] }));
 
   describe('should execute move', function() {
 
@@ -49,8 +51,9 @@ describe('MoveShapesHandler', function() {
       var gfx = elementRegistry.getGraphicsByShape(child);
       var bbox = gfx.getBBox();
 
-      expect(bbox.x).toEqual(60);
-      expect(bbox.y).toEqual(60);
+      // we have got 10px interaction box
+      expect(bbox.x).toEqual(50);
+      expect(bbox.y).toEqual(50);
     }));
 
 
@@ -73,8 +76,9 @@ describe('MoveShapesHandler', function() {
       var gfx = elementRegistry.getGraphicsByShape(child);
       var bbox = gfx.getBBox();
 
-      expect(bbox.x).toEqual(60);
-      expect(bbox.y).toEqual(60);
+      // we have got 10px interaction box
+      expect(bbox.x).toEqual(50);
+      expect(bbox.y).toEqual(50);
     }));
   });
 

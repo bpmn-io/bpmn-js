@@ -5,15 +5,14 @@ var TestHelper = require('../../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var moveModule = require('../../../../lib/features/move');
+var selectionModule = require('../../../../lib/features/selection');
 
 
-describe('features/move', function() {
-
+describe('features/selection/SelectionVisuals', function() {
 
   describe('bootstrap', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ moveModule ] }));
+    beforeEach(bootstrapDiagram({ modules: [ selectionModule ] }));
 
     it('should bootstrap diagram with component', inject(function() {
 

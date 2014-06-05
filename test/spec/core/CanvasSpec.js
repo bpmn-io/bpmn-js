@@ -1,8 +1,8 @@
+'use strict';
 
-var Events = require('../../../lib/core/EventBus');
-var TestHelper = require('../../TestHelper'),
-    inject = TestHelper.inject,
-    bootstrapDiagram = TestHelper.bootstrapDiagram;
+var TestHelper = require('../../TestHelper');
+
+/* global bootstrapDiagram, inject */
 
 var createSpy = jasmine.createSpy;
 
