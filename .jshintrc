@@ -22,7 +22,6 @@
   "node" : true,
   "debug": true,
   "strict": false,
-  "-W040": true,
   "globals": {
     "console": true,
     "require": false,
