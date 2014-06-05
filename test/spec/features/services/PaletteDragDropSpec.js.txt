@@ -1,8 +1,13 @@
+'use strict';
+
+var TestHelper = require('../../../TestHelper');
+
+/* global bootstrapDiagram, inject */
+
 var PaletteDragDrop = require('../../../../lib/features/services/PaletteDragDrop');
 var Events = require('../../../../lib/core/EventBus');
-var TestHelper = require('../../../TestHelper'),
-    inject = TestHelper.inject,
-    bootstrapDiagram = TestHelper.bootstrapDiagram;
+
+
 
 describe('PaletteDragDrop should ', function() {
   'use strict';
