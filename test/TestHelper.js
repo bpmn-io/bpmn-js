@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var Diagram = require('../lib/Diagram');
 
@@ -19,7 +21,7 @@ function options(opts) {
  * describe(function() {
  *
  *   var mockEvents;
- *   
+ *
  *   beforeEach(bootstrapDiagram(function() {
  *     mockEvents = new Events();
  *
@@ -29,7 +31,7 @@ function options(opts) {
  *   }));
  *
  * });
- * 
+ *
  * @param  {Object} (options) optional options to be passed to the diagram upon instantiation
  * @param  {Object|Function} locals  the local overrides to be used by the diagram or a function that produces them
  * @return {Function}         a function to be passed to beforeEach
@@ -78,7 +80,7 @@ function bootstrapDiagram(options, locals) {
  * describe(function() {
  *
  *   var mockEvents;
- *   
+ *
  *   beforeEach(bootstrapDiagram(...));
  *
  *   it('should provide mocked events', inject(function(events) {
@@ -86,16 +88,21 @@ function bootstrapDiagram(options, locals) {
  *   }));
  *
  * });
- * 
+ *
  * @param  {Function} fn the function to inject to
  * @return {Function} a function that can be passed to it to carry out the injection
  */
 function inject(fn) {
   return function() {
+
+    if (!DIAGRAM) {
+      throw new Error('no bootstraped diagram, ensure you created it via #bootstrapDiagram');
+    }
+
     DIAGRAM.invoke(fn);
   };
 }
 
 
-module.exports.bootstrapDiagram = bootstrapDiagram;
-module.exports.inject = inject;
+module.exports.bootstrapDiagram = (window || global).bootstrapDiagram = bootstrapDiagram;
+module.exports.inject = (window || global).inject = inject;
