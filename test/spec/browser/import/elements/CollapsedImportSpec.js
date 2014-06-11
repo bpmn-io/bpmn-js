@@ -53,8 +53,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var collapsedShape = elementRegistry.getShapeById('SubProcess_1');
-      var childShape = elementRegistry.getShapeById('IntermediateCatchEvent_1');
+      var collapsedShape = elementRegistry.getById('SubProcess_1');
+      var childShape = elementRegistry.getById('IntermediateCatchEvent_1');
 
       expect(collapsedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -65,8 +65,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var collapsedShape = elementRegistry.getShapeById('Transaction_1');
-      var childShape = elementRegistry.getShapeById('UserTask_1');
+      var collapsedShape = elementRegistry.getById('Transaction_1');
+      var childShape = elementRegistry.getById('UserTask_1');
 
       expect(collapsedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -77,8 +77,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var collapsedShape = elementRegistry.getShapeById('AdHocSubProcess_1');
-      var childShape = elementRegistry.getShapeById('StartEvent_1');
+      var collapsedShape = elementRegistry.getById('AdHocSubProcess_1');
+      var childShape = elementRegistry.getById('StartEvent_1');
 
       expect(collapsedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -89,9 +89,9 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var collapsedShape = elementRegistry.getShapeById('SubProcess_4');
-      var childShape = elementRegistry.getShapeById('SubProcess_5');
-      var nestedChildShape = elementRegistry.getShapeById('Task_3');
+      var collapsedShape = elementRegistry.getById('SubProcess_4');
+      var childShape = elementRegistry.getById('SubProcess_5');
+      var nestedChildShape = elementRegistry.getById('Task_3');
 
       expect(collapsedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -103,8 +103,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var expandedShape = elementRegistry.getShapeById('SubProcess_3');
-      var childShape = elementRegistry.getShapeById('Task_2');
+      var expandedShape = elementRegistry.getById('SubProcess_3');
+      var childShape = elementRegistry.getById('Task_2');
 
       expect(expandedShape.collapsed).toBe(false);
       expect(childShape.hidden).toBe(false);
@@ -125,8 +125,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var expandedShape = elementRegistry.getShapeById('SubProcess_1');
-      var childShape = elementRegistry.getShapeById('Task_1');
+      var expandedShape = elementRegistry.getById('SubProcess_1');
+      var childShape = elementRegistry.getById('Task_1');
 
       expect(expandedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -137,8 +137,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var expandedShape = elementRegistry.getShapeById('SubProcess_2');
-      var childShape = elementRegistry.getShapeById('StartEvent_1');
+      var expandedShape = elementRegistry.getById('SubProcess_2');
+      var childShape = elementRegistry.getById('StartEvent_1');
 
       expect(expandedShape.collapsed).toBe(false);
       expect(childShape.hidden).toBe(false);
@@ -149,8 +149,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var expandedShape = elementRegistry.getShapeById('SubProcess_4');
-      var childShape = elementRegistry.getShapeById('Task_2');
+      var expandedShape = elementRegistry.getById('SubProcess_4');
+      var childShape = elementRegistry.getById('Task_2');
 
       expect(expandedShape.collapsed).toBe(true);
       expect(childShape.hidden).toBe(true);
@@ -161,8 +161,8 @@ describe('import - collapsed container', function() {
 
       var elementRegistry = renderer.get('elementRegistry');
 
-      var expandedShape = elementRegistry.getShapeById('SubProcess_3');
-      var childShape = elementRegistry.getShapeById('StartEvent_2');
+      var expandedShape = elementRegistry.getById('SubProcess_3');
+      var childShape = elementRegistry.getById('StartEvent_2');
 
       expect(expandedShape.collapsed).toBe(false);
       expect(childShape.hidden).toBe(false);

@@ -1,4 +1,3 @@
-var logger = require('moddle').util.Logger;
 var jsondiffpatch = require('jsondiffpatch'),
     _ = require('lodash');
 
@@ -19,7 +18,7 @@ function deepEquals(actual, expected) {
   };
 
   if (!result.pass) {
-    logger.error('[to-deep-equal] elements do not equal. diff: ', compare.diff(actualClone, expectedClone), false, 4);
+    console.error('[to-deep-equal] elements do not equal. diff: ', compare.diff(actualClone, expectedClone), false, 4);
   }
 
   return result;
@@ -39,7 +38,7 @@ function addMatchers() {
 
   // DIRTY HACK DDDSZZZ
   // Remove when we got jasmin 2.x in browser AND node env
-  
+
   var old = !jasmine.addMatchers;
 
   (old ? this : jasmine).addMatchers({

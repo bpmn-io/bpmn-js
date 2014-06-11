@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 
 var Viewer = require('../../../lib/Viewer');
@@ -16,16 +18,20 @@ describe('Viewer', function() {
     document.getElementsByTagName('body')[0].appendChild(container);
   });
 
+  function createViewer(xml, done) {
+    var renderer = new Viewer({ container: container });
+
+    renderer.importXML(xml, function(err) {
+      done(err, renderer);
+    });
+  }
+
 
   it('should import simple process', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-    var renderer = new Viewer(container);
-
-    renderer.importXML(xml, function(err) {
-      done(err);
-    });
+    createViewer(xml, done);
   });
 
 
@@ -33,11 +39,7 @@ describe('Viewer', function() {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
-    var renderer = new Viewer(container);
-
-    renderer.importXML(xml, function(err) {
-      done(err);
-    });
+    createViewer(xml, done);
   });
 
 
@@ -47,9 +49,7 @@ describe('Viewer', function() {
 
       var xml = 'invalid stuff';
 
-      var renderer = new Viewer(container);
-
-      renderer.importXML(xml, function(err) {
+      createViewer(xml, function(err) {
 
         expect(err).toBeDefined();
 
@@ -62,10 +62,7 @@ describe('Viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn', 'utf8');
 
-      var renderer = new Viewer(container);
-
-      renderer.importXML(xml, function(err) {
-
+      createViewer(xml, function(err) {
         expect(err).toBeDefined();
         expect(err.message).toEqual('no rootElement referenced in BPMNPlane <BPMNPlane_1>');
 
@@ -82,9 +79,8 @@ describe('Viewer', function() {
 
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
-      var renderer = new Viewer(container);
 
-      renderer.importXML(xml, function(err) {
+      createViewer(xml, function(err, renderer) {
 
         if (err) {
           return done(err);

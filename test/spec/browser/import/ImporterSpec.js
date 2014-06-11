@@ -1,15 +1,11 @@
 'use strict';
 
-var fs = require('fs'),
-    Diagram = require('diagram-js/lib/Diagram');
+var fs = require('fs');
 
-var BpmnModel = require('bpmn-moddle');
-var Importer = require('../../../../lib/import/Importer');
-
-var bpmnModule = require('../../../../lib/di').defaultModule;
-
-require('../../../../lib/core/BpmnRegistry');
-require('../../../../lib/draw/BpmnRenderer');
+var Diagram = require('diagram-js/lib/Diagram'),
+    BpmnModel = require('bpmn-moddle'),
+    Importer = require('../../../../lib/import/Importer'),
+    Viewer = require('../../../../lib/Viewer');
 
 
 var Matchers = require('../../Matchers');
@@ -37,8 +33,7 @@ describe('import/Importer', function() {
   function createDiagram() {
     return new Diagram({
       canvas: { container: container },
-      modules: [ bpmnModule ],
-      components: [ 'bpmnRegistry' ]
+      modules: Viewer.modules
     });
   }
 
