@@ -5,7 +5,6 @@
   "scripts": {
     "test": "grunt test"
   },
-  "main": "lib/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/bpmn-js"
