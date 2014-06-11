@@ -9,6 +9,30 @@ module.exports = function(grunt) {
   // any of [ 'PhantomJS', 'Chrome', 'Firefox', 'IE']
   var TEST_BROWSERS = ((process.env.TEST_BROWSERS || '').replace(/^\s+|\s+$/, '') || 'PhantomJS').split(/\s*,\s*/g);
 
+  function bundleAlias(components) {
+
+    var alias = [];
+
+    if (components.indexOf('libs-external') >= 0) {
+      alias.push('node_modules/jquery:jquery');
+      alias.push('node_modules/lodash:lodash');
+    }
+
+    if (components.indexOf('libs-local') >= 0) {
+      alias.push('node_modules/bpmn-moddle:bpmn-moddle');
+    }
+
+    if (components.indexOf('viewer') >= 0) {
+      alias.push('index.js:bpmn-js');
+      alias.push('<%= config.sources %>/Viewer.js:bpmn-js/Viewer');
+    }
+
+    if (components.indexOf('modeler') >= 0) {
+      alias.push('<%= config.sources %>/Modeler.js:bpmn-js/Modeler');
+    }
+
+    return alias;
+  }
 
   // project configuration
   grunt.initConfig({
@@ -80,22 +104,13 @@ module.exports = function(grunt) {
     browserify: {
       options: {
         browserifyOptions: {
-          builtins: false,
-          commondir: false
+          builtins: false
         },
         bundleOptions: {
           detectGlobals: false,
           insertGlobalVars: [],
           debug: true
-        },
-        alias: [
-          'node_modules/jquery:jquery',
-          'node_modules/lodash:lodash',
-          'node_modules/bpmn-moddle:bpmn-moddle',
-          '<%= config.sources %>/main.js:bpmn-js',
-          '<%= config.sources %>/Viewer.js:bpmn-js/Viewer',
-          '<%= config.sources %>/Modeler.js:bpmn-js/Modeler'
-        ]
+        }
       },
       watch: {
         files: {
@@ -103,13 +118,38 @@ module.exports = function(grunt) {
           '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
         },
         options: {
-          watch: true
+          watch: true,
+          alias: bundleAlias([
+            'viewer',
+            'modeler',
+            'libs-external',
+            'libs-local'
+          ])
         }
       },
-      lib: {
+      standaloneViewer: {
+        files: {
+          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+        },
+        options: {
+          alias: bundleAlias([
+            'viewer',
+            'libs-external',
+            'libs-local'
+          ])
+        }
+      },
+      standaloneModeler: {
         files: {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
-          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+        },
+        options: {
+          alias: bundleAlias([
+            'viewer',
+            'modeler',
+            'libs-external',
+            'libs-local'
+          ])
         }
       }
     },
@@ -225,7 +265,7 @@ module.exports = function(grunt) {
         tasks.push('uglify:modeler', 'uglify:viewer');
       }
 
-      return grunt.task.run(['browserify:lib'].concat(tasks));
+      return grunt.task.run(['browserify:standaloneViewer', 'browserify:standaloneModeler'].concat(tasks));
     }
 
     if (target === 'samples') {
