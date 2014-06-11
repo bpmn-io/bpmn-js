@@ -4,9 +4,15 @@ var TestHelper = require('../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
+
 var createSpy = jasmine.createSpy;
 
+var Matchers = require('../../Matchers');
+
+
 describe('Canvas', function() {
+
+  beforeEach(Matchers.addDeepEquals);
 
   var container;
 
@@ -111,7 +117,7 @@ describe('Canvas', function() {
       // when
       canvas.addShape(shape);
 
-      var gfx = elementRegistry.getGraphicsByShape(shape);
+      var gfx = elementRegistry.getGraphicsByElement(shape);
 
       // then
       expect(gfx.attr('visibility')).toBe('hidden');
@@ -137,8 +143,8 @@ describe('Canvas', function() {
         commandStack.undo();
 
         // then
-        expect(elementRegistry.getShapeById('s2')).not.toBeDefined();
-        expect(elementRegistry.getShapeById('s3')).not.toBeDefined();
+        expect(elementRegistry.getById('s2')).not.toBeDefined();
+        expect(elementRegistry.getById('s3')).not.toBeDefined();
       }));
 
 
@@ -163,8 +169,8 @@ describe('Canvas', function() {
         commandStack.redo();
 
         // then
-        expect(elementRegistry.getShapeById('s2')).toEqual(s2);
-        expect(elementRegistry.getShapeById('s3')).toEqual(s3);
+        expect(elementRegistry.getById('s2')).toEqual(s2);
+        expect(elementRegistry.getById('s3')).toEqual(s3);
 
         expect(s2.parent).toEqual(s1);
         expect(s3.parent).toEqual(s1);
@@ -607,6 +613,75 @@ describe('Canvas', function() {
       });
 
     });
+
+  });
+
+
+  describe('getAbsoluteBBox', function() {
+
+    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+
+
+    it('should return abs position (default zoom)', inject(function(canvas) {
+
+      // given
+      var shape = { id: 's0', x: 10, y: 20, width: 300, height: 200 };
+      canvas.addShape(shape);
+
+      // when
+      var bbox = canvas.getAbsoluteBBox(shape);
+
+      // then
+      expect(bbox).toDeepEqual({ x: 10, y: 20, width: 300, height: 200 });
+    }));
+
+
+    it('should return abs position (moved)', inject(function(canvas) {
+
+      // given
+      var shape = { id: 's0', x: 10, y: 20, width: 300, height: 200 };
+      canvas.addShape(shape);
+
+      canvas.viewbox({ x: 50, y: 50, width: 300, height: 300 });
+
+      // when
+      var bbox = canvas.getAbsoluteBBox(shape);
+
+      // then
+      expect(bbox).toDeepEqual({ x: -40, y: -30, width: 300, height: 200 });
+    }));
+
+
+    it('should return abs position (zoomed in)', inject(function(canvas) {
+
+      // given
+      var shape = { id: 's0', x: 10, y: 20, width: 300, height: 200 };
+      canvas.addShape(shape);
+
+      canvas.viewbox({ x: 50, y: 50, width: 600, height: 600 });
+
+      // when
+      var bbox = canvas.getAbsoluteBBox(shape);
+
+      // then
+      expect(bbox).toDeepEqual({ x: -20, y: -15, width: 150, height: 100 });
+    }));
+
+
+    it('should return abs position (zoomed in)', inject(function(canvas) {
+
+      // given
+      var shape = { id: 's0', x: 10, y: 20, width: 300, height: 200 };
+      canvas.addShape(shape);
+
+      canvas.viewbox({ x: 50, y: 50, width: 150, height: 150 });
+
+      // when
+      var bbox = canvas.getAbsoluteBBox(shape);
+
+      // then
+      expect(bbox).toDeepEqual({ x: -80, y: -60, width: 600, height: 400 });
+    }));
 
   });
 

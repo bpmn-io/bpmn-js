@@ -1,6 +1,47 @@
 var _ = require('lodash');
 
 
+module.exports.addDeepEquals = function() {
+  var jsondiffpatch = require('jsondiffpatch');
+
+  var compare = jsondiffpatch.create({
+    objectHash: function (obj) {
+      return JSON.stringify(obj);
+    }
+  });
+
+  function deepEquals(actual, expected) {
+    var actualClone = _.cloneDeep(actual);
+    var expectedClone = _.cloneDeep(expected);
+
+    var result = {
+      pass: _.isEqual(actualClone, expectedClone)
+    };
+
+    var message;
+
+    if (!result.pass) {
+      message =
+        'Expected elements to equal but got diff\n' +
+        JSON.stringify(compare.diff(actualClone, expectedClone), null, '  ');
+    } else {
+      message = 'Expected elements not to equal';
+    }
+
+    result.message = message;
+
+    return result;
+  }
+
+  jasmine.addMatchers({
+    toDeepEqual: function(util) {
+      return {
+        compare: deepEquals
+      };
+    }
+  });
+};
+
 module.exports.addBBoxMatchers = function() {
 
   jasmine.addMatchers({

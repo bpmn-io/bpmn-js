@@ -25,13 +25,13 @@ describe('elementRegistry', function() {
     eventBus.fire('shape.added', { element: shape, gfx: gfx });
 
     // then
-    expect(shapes.getShapeByGraphics(gfx)).toBe(shape);
-    expect(shapes.getShapeByGraphics(gfx.id)).toBe(shape);
+    expect(shapes.getByGraphics(gfx)).toBe(shape);
+    expect(shapes.getByGraphics(gfx.id)).toBe(shape);
 
-    expect(shapes.getShapeById(shape.id)).toBe(shape);
+    expect(shapes.getById(shape.id)).toBe(shape);
 
-    expect(shapes.getGraphicsByShape(shape)).toBe(gfx);
-    expect(shapes.getGraphicsByShape(shape.id)).toBe(gfx);
+    expect(shapes.getGraphicsByElement(shape)).toBe(gfx);
+    expect(shapes.getGraphicsByElement(shape.id)).toBe(gfx);
   });
 
 
@@ -46,13 +46,13 @@ describe('elementRegistry', function() {
     eventBus.fire('shape.removed', { element: shape, gfx: gfx });
 
     // then
-    expect(shapes.getShapeByGraphics(gfx)).not.toBeDefined();
-    expect(shapes.getShapeByGraphics(gfx.id)).not.toBeDefined();
+    expect(shapes.getByGraphics(gfx)).not.toBeDefined();
+    expect(shapes.getByGraphics(gfx.id)).not.toBeDefined();
 
-    expect(shapes.getShapeById(shape.id)).not.toBeDefined();
+    expect(shapes.getById(shape.id)).not.toBeDefined();
 
-    expect(shapes.getGraphicsByShape(shape)).not.toBeDefined();
-    expect(shapes.getGraphicsByShape(shape.id)).not.toBeDefined();
+    expect(shapes.getGraphicsByElement(shape)).not.toBeDefined();
+    expect(shapes.getGraphicsByElement(shape.id)).not.toBeDefined();
   });
 
 });
