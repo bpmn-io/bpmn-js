@@ -1,23 +1,17 @@
 # bpmn-js - BPMN 2.0 for the web
 
-bpmn-js is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn.io](http://bpmn.io).
+[bpmn-js](https://github.com/bpmn-io/bpmn-js) is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn.io](http://bpmn.io).
 
 
-> bpmn-js is in an alpha stage, expect documentation to be missing and examples to be broken.
-
+> the project is still in an early stage. Documentation may be missing and examples may be broken.
 
 ## Usage
 
-Get the library via [npm](http://npmjs.org)
+Get the library via [npm](http://npmjs.org) or [bower](http://bower.io) and use it in your web applications to display [BPMN 2.0 diagrams](http://www.bpmn.org/).
 
-```
-npm install --save bpmn-js
-```
-
-Use it in your project
 
 ```javascript
-var BpmnViewer = require('bpmn-js').Viewer;
+var BpmnViewer = require('bpmn-js');
 
 var xml; // my BPMN 2.0 xml
 var viewer = new BpmnViewer({ container: 'body' });
@@ -32,7 +26,29 @@ viewer.importXML(xml, function(err) {
 });
 ```
 
-Make sure to bundle the project for the browser, e.g. by using [browserify](http://browserify.org).
+
+## Install bpmn-js
+
+### via bower
+
+```
+bower install bpmn-js
+```
+
+Make sure to include the library + all dependencies into the website.
+
+Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-bower) that shows how to use the library in web applications.
+
+
+### via npm
+
+```
+npm install --save bpmn-js
+```
+
+Make sure you use [browserify](http://browserify.org) or the like to bundle your project and bpmn-js for the browser.
+
+Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-commonjs) that shows how to use bpmn-js in node-style web applications.
 
 
 ## Resources
