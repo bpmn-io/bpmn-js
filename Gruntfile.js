@@ -59,12 +59,21 @@ module.exports = function(grunt) {
       }
     },
     browserify: {
+      browserifyOptions: {
+        builtins: false
+      },
+      bundleOptions: {
+        detectGlobals: false,
+        insertGlobalVars: []
+      },
       bower: {
         files: {
           '../bower-diagram-js/diagram.js': [ '<%= config.sources %>/**/*.js' ]
         },
         options: {
-          external: [ 'node_modules/snapsvg', 'node_modules/lodash' ],
+          transform: [
+            [ 'exposify', { expose: { snapsvg: 'Snap', 'lodash': '_' } } ]
+          ],
           alias: [
             '<%= config.sources %>/Diagram.js:diagram-js'
           ]
