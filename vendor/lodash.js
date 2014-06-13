@@ -1,1 +1,0 @@
-module.exports = window._ || require('../node_modules/lodash');

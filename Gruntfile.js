@@ -127,6 +127,33 @@ module.exports = function(grunt) {
           ])
         }
       },
+      bowerViewer: {
+        files: {
+          '../bower-bpmn-js/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+        },
+        options: {
+          bundleOptions: {
+            detectGlobals: false,
+            insertGlobalVars: [],
+            debug: false
+          },
+          transform: [
+            [ 'exposify', {
+              expose: {
+                sax: 'sax',
+                snapsvg: 'Snap',
+                lodash: '_',
+                jquery: '$',
+                'jquery-mousewheel': '$'
+              }
+            } ]
+          ],
+          alias: bundleAlias([
+            'viewer',
+            'libs-local'
+          ])
+        }
+      },
       standaloneViewer: {
         files: {
           '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
