@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       sources: 'lib',
       tests: 'test',
       dist: 'dist',
-      samples: 'example'
+      bowerDist: '../bower-bpmn-js'
     },
 
     jshint: {
@@ -129,7 +129,7 @@ module.exports = function(grunt) {
       },
       bowerViewer: {
         files: {
-          '../bower-bpmn-js/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+          '<%= config.bowerDist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
         },
         options: {
           bundleOptions: {
@@ -181,36 +181,18 @@ module.exports = function(grunt) {
       }
     },
 
-    copy: {
-      samples: {
-        files: [
-          // copy sample files
-          {
-            expand: true,
-            cwd: '<%= config.samples %>/',
-            src: ['**/*.*'],
-            dest: '<%= config.dist %>/<%= config.samples %>'
-          }
-        ]
-      }
-    },
-
     watch: {
-      samples: {
-        files: [ '<%= config.samples %>/**/*.*' ],
-        tasks: [ 'build:samples' ]
-      },
-      jasmine_node: {
-        files: [ '<%= config.sources %>/**/*.js', '<%= config.tests %>/spec/node/**/*.js' ],
-        tasks: [ 'jasmine_node' ]
-      },
-      modeler: {
+      standaloneModeler: {
         files: [ '<%= config.dist %>/bpmn.js' ],
-        tasks: [ 'uglify:modeler' ]
+        tasks: [ 'uglify:standaloneModeler' ]
       },
-      viewer: {
+      standaloneViewer: {
         files: [ '<%= config.dist %>/bpmn-viewer.js' ],
-        tasks: [ 'uglify:viewer' ]
+        tasks: [ 'uglify:standaloneViewer' ]
+      },
+      bowerViewer: {
+        files: [ '<%= config.bowerDist %>/bpmn-viewer.js' ],
+        tasks: [ 'uglify:bowerViewer' ]
       }
     },
 
@@ -224,21 +206,6 @@ module.exports = function(grunt) {
       }
     },
 
-    connect: {
-      options: {
-        port: 9003,
-        livereload: 35726,
-        hostname: 'localhost'
-      },
-      livereload: {
-        options: {
-          open: true,
-          base: [
-            '<%= config.dist %>'
-          ]
-        }
-      }
-    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
@@ -264,12 +231,17 @@ module.exports = function(grunt) {
           }
         }
       },
-      modeler: {
+      bowerViewer: {
+        files: {
+          '<%= config.bowerDist %>/bpmn-viewer.min.js': [ '<%= config.bowerDist %>/bpmn-viewer.js' ]
+        }
+      },
+      standaloneModeler: {
         files: {
           '<%= config.dist %>/bpmn.min.js': [ '<%= config.dist %>/bpmn.js' ]
         }
       },
-      viewer: {
+      standaloneViewer: {
         files: {
           '<%= config.dist %>/bpmn-viewer.min.js': [ '<%= config.dist %>/bpmn-viewer.js' ]
         }
@@ -281,32 +253,42 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
 
+  /////
+  //
+  // the main build task that bundles bpmn-js files
+  //
+  // valid executions are
+  //
+  //   * build -> build:all
+  //   * build:all -> build:lib, build:bower
+  //   * build:lib -> { packages library files as standalone bundle }
+  //   * build:lib -> { packages library files as bower bundle }
+  //
   grunt.registerTask('build', function(target, mode) {
 
     mode = mode || 'prod';
+
+    if (target === 'bower') {
+      return grunt.task.run(['browserify:bowerViewer', 'uglify:bowerViewer']);
+    }
 
     if (target === 'lib') {
       var tasks = [];
 
       if (mode !== 'dev') {
-        tasks.push('uglify:modeler', 'uglify:viewer');
+        tasks.push('uglify:standaloneModeler', 'uglify:standaloneViewer');
       }
 
       return grunt.task.run(['browserify:standaloneViewer', 'browserify:standaloneModeler'].concat(tasks));
     }
 
-    if (target === 'samples') {
-      return grunt.task.run(['copy:samples']);
-    }
-
     if (!target || target === 'all') {
-      return grunt.task.run(['build:lib:' + mode, 'build:samples:' + mode]);
+      return grunt.task.run(['build:lib:' + mode, 'build:bower' ]);
     }
   });
 
   grunt.registerTask('auto-build', [
     'browserify:watch',
-    'connect:livereload',
     'watch'
   ]);
 
