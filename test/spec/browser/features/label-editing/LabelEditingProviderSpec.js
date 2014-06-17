@@ -1,15 +1,26 @@
-'use strict'
+'use strict';
+
+var TestHelper = require('../../../TestHelper');
+
+/* global bootstrapBpmnJS, inject */
 
 var fs = require('fs');
 
-var Modeler = require('../../../../../lib/Modeler');
+var $ = require('jquery');
 
 var Matchers = require('../../../Matchers');
+
+
+var labelEditingModule = require('../../../../../lib/features/label-editing');
+
+
+var LabelUtil = require('../../../../../lib/features/label-editing/LabelUtil');
 
 
 describe('features/label-editing', function() {
 
   beforeEach(Matchers.add);
+
 
   var container;
 
@@ -19,15 +30,267 @@ describe('features/label-editing', function() {
   });
 
 
-  it('should register on dblclick', function(done) {
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');
 
-    done();
+  var testModules = [ labelEditingModule ];
+
+  beforeEach(bootstrapBpmnJS(diagramXML, { container: container, modules: testModules }));
+
+
+  describe('basics', function() {
+
+    it('should register on dblclick', inject(function(elementRegistry, directEditing, eventBus) {
+
+      // given
+      var shape = elementRegistry.getById('task-nested-embedded');
+
+      // when
+      eventBus.fire('shape.dblclick', { element: shape });
+
+      // then
+      expect(directEditing.isActive()).toBe(true);
+    }));
+
+
+    it('should cancel on ESC', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
+
+      // given
+      var shape = elementRegistry.getById('task-nested-embedded');
+      var task = bpmnRegistry.getSemantic('task-nested-embedded');
+
+      var oldName = task.name;
+
+      // activate
+      eventBus.fire('shape.dblclick', { element: shape });
+
+      // a jQuery <textarea /> element
+      var textarea = directEditing._textbox.textarea;
+
+      // when
+      // change + ESC is pressed
+      textarea.val('new value');
+      textarea.trigger($.Event('keydown', { which: 27 }));
+
+      // then
+      expect(directEditing.isActive()).toBe(false);
+      expect(task.name).toBe(oldName);
+    }));
+
   });
 
 
-  it('should save on escape', function(done) {
+  var bpmnRegistry,
+      eventBus,
+      directEditing;
 
-    done();
+
+  beforeEach(inject([ 'bpmnRegistry', 'eventBus', 'directEditing', function(_bpmnRegistry, _eventBus, _directEditing) {
+    bpmnRegistry = _bpmnRegistry;
+    eventBus = _eventBus;
+    directEditing = _directEditing;
+  }]));
+
+
+  function directEditActivate(element) {
+    if (element.waypoints) {
+      eventBus.fire('connection.dblclick', { element: element });
+    } else {
+      eventBus.fire('shape.dblclick', { element: element });
+    }
+  }
+
+  function directEditUpdate(value) {
+    directEditing._textbox.textarea.val(value);
+  }
+
+  function directEditComplete(value) {
+    directEditUpdate(value);
+    directEditing.complete();
+  }
+
+  function directEditCancel(value) {
+    directEditUpdate(value);
+    directEditing.cancel();
+  }
+
+
+  describe('command support', function() {
+
+    it('should update via command stack', function() {
+
+      // given
+      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
+      var semantic = bpmnRegistry.getSemantic('user-task');
+
+      var listenerCalled;
+
+      eventBus.on('commandStack.changed', function(e) {
+        listenerCalled = true;
+      });
+
+      // when
+      directEditActivate(diagramElement);
+      directEditComplete('BAR');
+
+      // then
+      expect(listenerCalled).toBe(true);
+    });
+
+
+    it('should undo via command stack', inject(function(commandStack) {
+
+      // given
+      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
+      var semantic = bpmnRegistry.getSemantic('user-task');
+
+      var oldLabel = LabelUtil.getLabel(semantic);
+
+      // when
+      directEditActivate(diagramElement);
+      directEditComplete('BAR');
+
+      commandStack.undo();
+
+      // then
+      var label = LabelUtil.getLabel(semantic);
+      expect(label).toBe(oldLabel);
+    }));
+
+  });
+
+
+  describe('should trigger redraw', function() {
+
+    it('on shape change', function() {
+
+      // given
+      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
+      var semantic = bpmnRegistry.getSemantic('user-task');
+
+      var listenerCalled;
+
+      eventBus.on('shape.changed', function(e) {
+        if (e.element === diagramElement) {
+          listenerCalled = true;
+        }
+      });
+
+      // when
+      directEditActivate(diagramElement);
+      directEditComplete('BAR');
+
+      // then
+      expect(listenerCalled).toBe(true);
+    });
+
+
+    it('on connection on change', function() {
+
+      // given
+      var diagramElement = bpmnRegistry.getDiagramElement('sequence-flow-no');
+      var semantic = bpmnRegistry.getSemantic('sequence-flow-no');
+
+      var listenerCalled;
+
+      eventBus.on('shape.changed', function(e) {
+        if (e.element === diagramElement.label) {
+          listenerCalled = true;
+        }
+      });
+
+      // when
+      directEditActivate(diagramElement);
+      directEditComplete('BAR');
+
+      // then
+      expect(listenerCalled).toBe(true);
+    });
+
+  });
+
+
+  describe('element support, should edit', function() {
+
+    function directEdit(elementId) {
+
+      return inject(function(bpmnRegistry, eventBus, directEditing) {
+
+        var diagramElement = bpmnRegistry.getDiagramElement(elementId);
+        var semantic = bpmnRegistry.getSemantic(elementId);
+
+        var label = LabelUtil.getLabel(semantic);
+
+
+        // when
+        directEditActivate(diagramElement);
+
+        // then
+        // expect editing to be active
+        expect(directEditing.getValue()).toBe(label);
+        expect(directEditing.isActive()).toBe(true);
+
+
+        // when
+        directEditComplete('B');
+
+        // then
+        // expect update to have happened
+        label = LabelUtil.getLabel(semantic);
+        expect(label).toBe('B');
+
+
+        // when
+        directEditActivate(diagramElement);
+        directEditCancel('C');
+
+        // expect no label update to have happened
+        label = LabelUtil.getLabel(semantic);
+        expect(label).toBe('B');
+      });
+    }
+
+
+    it('task', directEdit('user-task'));
+
+
+    it('gateway', directEdit('exclusive-gateway'));
+
+    it('gateway via label', directEdit('exclusive-gateway_label'));
+
+
+    it('event', directEdit('intermediate-throw-event'));
+
+    it('event via label', directEdit('intermediate-throw-event_label'));
+
+    it('event without label', directEdit('start-event'));
+
+
+    it('data store reference', directEdit('data-store-reference'));
+
+    it('data object reference', directEdit('data-object-reference'));
+
+
+    it('sequenceflow', directEdit('sequence-flow-yes'));
+
+    it('sequenceflow without label', directEdit('sequenceflow-unlabeled'));
+
+    it('sequenceflow via label', directEdit('sequence-flow-yes_label'));
+
+
+    it('message flow', directEdit('message-flow'));
+
+    it('message flow via label', directEdit('message-flow_label'));
+
+
+    it('pool', directEdit('expanded-pool'));
+
+    it('pool, collapsed', directEdit('collapsed-pool'));
+
+
+    it('lane with label', directEdit('nested-lane-1-2'));
+
+    it('lane without label', directEdit('nested-lane-no-label'));
+
   });
 
 });
