@@ -44,6 +44,18 @@ describe('import - labels', function() {
       });
     });
 
+
+    it('on message flows', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/collaboration-message-flows.bpmn', 'utf8');
+
+      var renderer = new Viewer(container);
+
+      renderer.importXML(xml, function(err) {
+        done(err);
+      });
+    });
+
   });
 
 
