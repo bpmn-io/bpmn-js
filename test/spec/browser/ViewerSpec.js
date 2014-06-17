@@ -73,6 +73,23 @@ describe('Viewer', function() {
   });
 
 
+  describe('dependency injection', function() {
+
+    it('should be available via di as <bpmnjs>', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+      createViewer(xml, function(err, viewer) {
+
+        expect(viewer.get('bpmnjs')).toBe(viewer);
+
+        done(err);
+      });
+    });
+
+  });
+
+
   describe('export', function() {
 
     it('should export svg', function(done) {

@@ -17,28 +17,23 @@ describe('Modeler', function() {
   });
 
 
-  it('should import simple process', function(done) {
+  function createModeler(xml, done) {
+    var modeler = new Modeler({ container: container });
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
-
-    var renderer = new Modeler(container);
-
-    renderer.importXML(xml, function(err) {
-      done(err);
+    modeler.importXML(xml, function(err) {
+      done(err, modeler);
     });
+  }
+
+  it('should import simple process', function(done) {
+    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+    createModeler(xml, done);
   });
 
 
   it('should import empty definitions', function(done) {
-
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
-
-    var renderer = new Modeler(container);
-
-    renderer.importXML(xml, function(err) {
-
-      done(err);
-    });
+    createModeler(xml, done);
   });
 
 
@@ -54,6 +49,24 @@ describe('Modeler', function() {
 
       done();
     });
+  });
+
+
+  describe('dependency injection', function() {
+
+    it('should be available via di as <bpmnjs>', function(done) {
+
+      debugger;
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+      createModeler(xml, function(err, modeler) {
+
+        expect(modeler.get('bpmnjs')).toBe(modeler);
+        done(err);
+      });
+    });
+
   });
 
 });
