@@ -99,6 +99,18 @@ describe('import - collapsed container', function() {
     });
 
 
+    it('should import collapsed with nested elements', function() {
+
+      var elementRegistry = renderer.get('elementRegistry');
+
+      var hiddenEventShape = elementRegistry.getById('StartEvent_2');
+      expect(hiddenEventShape.label.hidden).toBe(true);
+
+      var hiddenDataShape = elementRegistry.getById('DataObjectReference_1');
+      expect(hiddenDataShape.label.hidden).toBe(true);
+    });
+
+
     it('should import expanded subProcess', function() {
 
       var elementRegistry = renderer.get('elementRegistry');

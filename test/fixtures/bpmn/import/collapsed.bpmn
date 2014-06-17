@@ -18,6 +18,11 @@
         <bpmn2:task id="Task_3"/>
       </bpmn2:subProcess>
     </bpmn2:subProcess>
+    <bpmn2:subProcess id="SubProcess_2">
+      <bpmn2:dataObject id="DataObject_1" name="Data Object 1"/>
+      <bpmn2:startEvent id="StartEvent_2" name="start event"/>
+      <bpmn2:dataObjectReference id="DataObjectReference_1" name="data object" dataObjectRef="DataObject_1"/>
+    </bpmn2:subProcess>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -59,6 +64,21 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task_3">
         <dc:Bounds height="80.0" width="100.0" x="648.0" y="108.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_7" bpmnElement="SubProcess_2">
+        <dc:Bounds height="80.0" width="100.0" x="405.0" y="276.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="395.0" y="296.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="66.0" x="380.0" y="337.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_3" bpmnElement="DataObjectReference_1">
+        <dc:Bounds height="50.0" width="36.0" x="479.0" y="291.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="70.0" x="462.0" y="346.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
