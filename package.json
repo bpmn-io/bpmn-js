@@ -40,6 +40,7 @@
     "grunt-jsdoc": "~0.5.1",
     "grunt-karma": "~0.8.0",
     "grunt-release": "~0.7.0",
+    "jasmine-test-container-support": "0.0.1",
     "jsondiffpatch": "^0.1.7",
     "karma": "^0.12.12",
     "karma-bro": "~0.2.0",

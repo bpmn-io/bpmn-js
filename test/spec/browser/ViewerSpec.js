@@ -1,22 +1,27 @@
 'use strict';
 
+var Matchers = require('../Matchers'),
+    TestHelper = require('../TestHelper');
+
+/* global bootstrapBpmnJS, inject */
+
+
 var fs = require('fs');
 
 var Viewer = require('../../../lib/Viewer');
 
-var Matchers = require('../Matchers');
 
-
-describe('Viewer', function() {
+describe('viewer', function() {
 
   beforeEach(Matchers.add);
+
 
   var container;
 
   beforeEach(function() {
-    container = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(container);
+    container = jasmine.getEnv().getTestContainer();
   });
+
 
   function createViewer(xml, done) {
     var renderer = new Viewer({ container: container });

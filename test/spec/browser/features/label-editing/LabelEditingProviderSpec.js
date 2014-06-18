@@ -1,14 +1,14 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+var Matchers = require('../../../Matchers'),
+    TestHelper = require('../../../TestHelper');
 
 /* global bootstrapBpmnJS, inject */
+
 
 var fs = require('fs');
 
 var $ = require('jquery');
-
-var Matchers = require('../../../Matchers');
 
 
 var labelEditingModule = require('../../../../../lib/features/label-editing');
@@ -17,24 +17,16 @@ var labelEditingModule = require('../../../../../lib/features/label-editing');
 var LabelUtil = require('../../../../../lib/features/label-editing/LabelUtil');
 
 
-describe('features/label-editing', function() {
+describe('features - label-editing', function() {
 
   beforeEach(Matchers.add);
-
-
-  var container;
-
-  beforeEach(function() {
-    container = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(container);
-  });
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');
 
   var testModules = [ labelEditingModule ];
 
-  beforeEach(bootstrapBpmnJS(diagramXML, { container: container, modules: testModules }));
+  beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
 
   describe('basics', function() {

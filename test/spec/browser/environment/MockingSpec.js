@@ -9,7 +9,7 @@ var fs = require('fs');
 var Events = require('diagram-js/lib/core/EventBus');
 
 
-describe('environment/Mocking', function() {
+describe('environment - mocking', function() {
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 

@@ -1,5 +1,11 @@
 'use strict';
 
+var Matchers = require('../../Matchers'),
+    TestHelper = require('../../TestHelper');
+
+/* global bootstrapBpmnJS, inject */
+
+
 var fs = require('fs');
 
 var Diagram = require('diagram-js/lib/Diagram'),
@@ -8,10 +14,7 @@ var Diagram = require('diagram-js/lib/Diagram'),
     Viewer = require('../../../../lib/Viewer');
 
 
-var Matchers = require('../../Matchers');
-
-
-describe('import/Importer', function() {
+describe('import - importer', function() {
 
   var bpmnModel = BpmnModel.instance();
 
@@ -19,14 +22,13 @@ describe('import/Importer', function() {
     return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
   }
 
-  var container;
-
-
   beforeEach(Matchers.add);
 
+
+  var container;
+
   beforeEach(function() {
-    container = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(container);
+    container = jasmine.getEnv().getTestContainer();
   });
 
 

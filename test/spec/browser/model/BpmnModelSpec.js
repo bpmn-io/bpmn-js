@@ -1,6 +1,6 @@
 var BpmnModel = require('bpmn-moddle');
 
-describe('Model - browser support', function() {
+describe('model - browser support', function() {
 
   function read(xml, callback, done) {
 

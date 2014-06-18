@@ -1,19 +1,25 @@
+'use strict';
+
+var Matchers = require('../Matchers'),
+    TestHelper = require('../TestHelper');
+
+/* global bootstrapBpmnJS, inject */
+
+
 var fs = require('fs');
 
 var Modeler = require('../../../lib/Modeler');
 
-var Matchers = require('../Matchers');
 
-
-describe('Modeler', function() {
+describe('modeler', function() {
 
   beforeEach(Matchers.add);
+
 
   var container;
 
   beforeEach(function() {
-    container = document.createElement('div');
-    document.getElementsByTagName('body')[0].appendChild(container);
+    container = jasmine.getEnv().getTestContainer();
   });
 
 
@@ -24,6 +30,7 @@ describe('Modeler', function() {
       done(err, modeler);
     });
   }
+
 
   it('should import simple process', function(done) {
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
@@ -41,7 +48,7 @@ describe('Modeler', function() {
 
     var xml = 'invalid stuff';
 
-    var renderer = new Modeler(container);
+    var renderer = new Modeler({ container: container });
 
     renderer.importXML(xml, function(err) {
 
@@ -55,8 +62,6 @@ describe('Modeler', function() {
   describe('dependency injection', function() {
 
     it('should be available via di as <bpmnjs>', function(done) {
-
-      debugger;
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 

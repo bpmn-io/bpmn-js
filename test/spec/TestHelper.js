@@ -3,6 +3,10 @@
 var _ = require('lodash');
 var BpmnJS = require('../../');
 
+// enhance jasmine with test container API
+require('jasmine-test-container-support').extend(jasmine);
+
+
 var OPTIONS, BPMN_JS;
 
 function options(opts) {
@@ -40,11 +44,13 @@ function bootstrapBpmnJS(diagram, options, locals) {
 
   return function(done) {
 
+    var testContainer = jasmine.getEnv().getTestContainer();
+
     var _diagram = diagram,
         _options = options,
         _locals = locals;
 
-    if (!_locals && _.isFunction(_options)) {
+    if (_locals === undefined && _.isFunction(_options)) {
       _locals = _options;
       _options = null;
     }
@@ -57,15 +63,23 @@ function bootstrapBpmnJS(diagram, options, locals) {
       _locals = _locals();
     }
 
-    _options = _.extend({}, OPTIONS || {}, _options || {});
+    _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
 
-    var mockModule = {};
+    if (_locals) {
+      var mockModule = {};
 
-    _.forEach(_locals, function(v, k) {
-      mockModule[k] = ['value', v];
-    });
+      _.forEach(_locals, function(v, k) {
+        mockModule[k] = ['value', v];
+      });
 
-    _options.modules = _.unique([].concat(_options.modules || [], [ mockModule ]));
+      _options.modules = [].concat(_options.modules || [], [ mockModule ]);
+    }
+
+    _options.modules = _.unique(_options.modules);
+
+    if (_options.modules.length == 0) {
+      _options.modules = undefined;
+    }
 
     BPMN_JS = new BpmnJS(_options);
 
