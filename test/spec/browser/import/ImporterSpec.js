@@ -76,4 +76,29 @@ describe('import - importer', function() {
     });
   });
 
+
+  it('should clear commandStack after import', function(done) {
+
+    // given
+    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+    var diagram = createDiagram();
+
+    var commandStack = diagram.get('commandStack');
+
+    // when
+    BpmnModel.fromXML(xml, function(err, definitions) {
+      if (err) {
+        return done(err);
+      }
+
+      // when
+      Importer.importBpmnDiagram(diagram, definitions, function(err) {
+        expect(commandStack.getStack()).toEqual([]);
+
+        done(err);
+      });
+    });
+  });
+
 });
