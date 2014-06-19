@@ -21,7 +21,6 @@
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "~0.4.4",
     "grunt-browserify": "~2.1.0",
-    "grunt-contrib-connect": "~0.6.0",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-jsdoc": "~0.5.1",
