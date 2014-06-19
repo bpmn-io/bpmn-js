@@ -51,9 +51,9 @@ describe('MoveShapesHandler', function() {
       var gfx = elementRegistry.getGraphicsByElement(child);
       var bbox = gfx.getBBox();
 
-      // we have got 10px interaction box
-      expect(bbox.x).toEqual(50);
-      expect(bbox.y).toEqual(50);
+      // we have got 5px interaction box
+      expect(bbox.x).toEqual(55);
+      expect(bbox.y).toEqual(55);
     }));
 
 
@@ -76,9 +76,9 @@ describe('MoveShapesHandler', function() {
       var gfx = elementRegistry.getGraphicsByElement(child);
       var bbox = gfx.getBBox();
 
-      // we have got 10px interaction box
-      expect(bbox.x).toEqual(50);
-      expect(bbox.y).toEqual(50);
+      // we have got 5px interaction box
+      expect(bbox.x).toEqual(55);
+      expect(bbox.y).toEqual(55);
     }));
   });
 
