@@ -5,6 +5,7 @@
 
 > the project is still in an early stage. Documentation may be missing and examples may be broken.
 
+
 ## Usage
 
 Get the library via [npm](http://npmjs.org) or [bower](http://bower.io) and use it in your web applications to display [BPMN 2.0 diagrams](http://www.bpmn.org/).
@@ -56,6 +57,14 @@ Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/m
 *   [Demo](http://demo.bpmn.io)
 *   [Issues](https://github.com/bpmn-io/bpmn-js/issues)
 *   [Examples](https://github.com/bpmn-io/bpmn-js-examples)
+
+
+## Tools
+
+bpmn-js builds on top of a few additional powerful tools
+
+* [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
+* [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
 
 
 ## Building the Project
