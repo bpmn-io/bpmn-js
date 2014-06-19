@@ -24,7 +24,6 @@ module.exports = function(grunt) {
 
     if (components.indexOf('viewer') >= 0) {
       alias.push('index.js:bpmn-js');
-      alias.push('<%= config.sources %>/Viewer.js:bpmn-js/Viewer');
     }
 
     if (components.indexOf('modeler') >= 0) {
@@ -115,7 +114,7 @@ module.exports = function(grunt) {
       watch: {
         files: {
           '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
-          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
         },
         options: {
           watch: true,
@@ -129,10 +128,14 @@ module.exports = function(grunt) {
       },
       bowerViewer: {
         files: {
-          '<%= config.bowerDist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+          '<%= config.bowerDist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
         },
         options: {
+          browserifyOptions: {
+            builtins: false
+          },
           bundleOptions: {
+            standalone: 'BpmnJS',
             detectGlobals: false,
             insertGlobalVars: [],
             debug: false
@@ -147,16 +150,12 @@ module.exports = function(grunt) {
                 'jquery-mousewheel': '$'
               }
             } ]
-          ],
-          alias: bundleAlias([
-            'viewer',
-            'libs-local'
-          ])
+          ]
         }
       },
       standaloneViewer: {
         files: {
-          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/lib/Viewer.js' ]
+          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
         },
         options: {
           alias: bundleAlias([
