@@ -11,28 +11,27 @@ var fs = require('fs');
 var $ = require('jquery');
 
 
-var zoomscrollModule = require('../../../../../lib/features/zoomscroll'),
+var touchModule = require('../../../../../lib/features/touch'),
     bpmnModule = require('../../../../../lib/core');
 
 
-describe('features - zoomscroll', function() {
+describe('features - touch', function() {
 
   beforeEach(Matchers.add);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');
 
-  var testModules = [ zoomscrollModule, bpmnModule ];
+  var testModules = [ touchModule, bpmnModule ];
 
   beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(zoomScroll) {
-      expect(zoomScroll).not.toBe(null);
+    it('should bootstrap', inject(function(touchInteraction) {
+      expect(touchInteraction).not.toBe(null);
     }));
 
   });
-
 });

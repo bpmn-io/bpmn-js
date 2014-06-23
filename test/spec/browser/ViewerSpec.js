@@ -127,6 +127,7 @@ describe('viewer', function() {
 
           // expect header to be written only once
           expect(svg.indexOf('<svg width="100%" height="100%">')).toBe(-1);
+          expect(svg.indexOf('<g class="viewport"')).toBe(-1);
 
           done();
         });
