@@ -207,6 +207,25 @@ describe('Canvas', function() {
       }));
 
 
+      it('should provide default viewbox', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 50, y: 50, width: 300, height: 300 });
+
+        // when
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 300, height: 300,
+          scale: 1.0,
+          inner: { width: 300, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+
       it('should provide default viewbox / overflowing diagram', inject(function(canvas) {
 
         // given
@@ -224,12 +243,32 @@ describe('Canvas', function() {
           outer: { width: 300, height: 300 }
         });
       }));
+
+
+      it('should provide default viewbox / offset element', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 50, y: 50, width: 150, height: 150 });
+
+        // when
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 300, height: 300,
+          scale: 1.0,
+          inner: { width: 150, height: 150 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
     });
 
 
     describe('setter', function() {
 
-      it('should set new viewbox', inject(function(canvas) {
+      it('should set viewbox', inject(function(canvas) {
 
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
@@ -252,13 +291,82 @@ describe('Canvas', function() {
       }));
 
 
+      it('should set viewbox to origin', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 100, y: 100, width: 200, height: 200 });
+
+        var viewbox = { x: 100, y: 100, width: 300, height: 300 };
+
+        // when
+        canvas.viewbox(viewbox);
+
+        var changedViewbox = canvas.viewbox();
+
+        // then
+        expect(changedViewbox).toEqual({
+          x: 100, y: 100,
+          width: 300, height: 300,
+          scale: 1,
+          inner: { width: 200, height: 200 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+
+      it('should set viewbox / overflow', inject(function(canvas, eventBus) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 1200, height: 1200 });
+
+        var viewbox = { x: 100, y: 100, width: 600, height: 600 };
+
+        // when
+        canvas.viewbox(viewbox);
+
+        // then
+        var changedViewbox = canvas.viewbox();
+
+        expect(changedViewbox).toEqual({
+          x: 100, y: 100,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 1200, height: 1200 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+
+      it('should set viewbox / zoomed in', inject(function(canvas, eventBus) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        var viewbox = { x: 50, y: 50, width: 200, height: 200 };
+
+        // when
+        canvas.viewbox(viewbox);
+
+        // then
+        var changedViewbox = canvas.viewbox();
+
+        expect(changedViewbox).toEqual({
+          x: 50, y: 50,
+          width: 200, height: 200,
+          scale: 1.5,
+          inner: { width: 300, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+      }));
+
+
       it('should fire <canvas.viewbox.changed> event', inject(function(canvas, eventBus) {
 
         var changedListener = createSpy('listener');
         eventBus.on('canvas.viewbox.changed', changedListener);
 
         // given
-        canvas.addShape({ id: 's0', x: 0, y: 0, width: 1200, height: 1200 });
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
 
         var viewbox = { x: 100, y: 100, width: 600, height: 600 };
 
@@ -270,9 +378,10 @@ describe('Canvas', function() {
 
         expect(calls.count()).toEqual(1);
         expect(calls.argsFor(0)[0].viewbox).toEqual({
-          x: 100, y: 100, width: 600, height: 600,
+          x: 100, y: 100,
+          width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 1200, height: 1200 },
+          inner: { width: 300, height: 300 },
           outer: { width: 300, height: 300 }
         });
 

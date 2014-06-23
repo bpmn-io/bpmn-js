@@ -9,7 +9,7 @@ var Diagram = require('../Diagram'),
 
 /**
  * Provides bendpoint visualization, hover and interactivity.
- * 
+ *
  * @class
  *
  * @param {EventBus} events the event bus
@@ -25,7 +25,7 @@ function Bendpoints(events, shapes, canvas, commandStack) {
            Math.abs(dy) > DRAG_START_THRESHOLD;
   }
 
-  var paper;
+  var root;
 
   function makeDraggable(connection, gfx, bendpointGfx) {
 
@@ -60,16 +60,16 @@ function Bendpoints(events, shapes, canvas, commandStack) {
 
         dragCtx.dragging = true;
 
-        dragCtx.dragGroup = dragGroup = paper.group(graphics.clone()).attr('pointer-events', 'none');
+        dragCtx.dragGroup = dragGroup = root.group(graphics.clone()).attr('pointer-events', 'none');
 
         /**
          * An event indicating that a drag operation has started
          *
          * @memberOf Drag
-         * 
+         *
          * @event shape.dragstart
          * @type {Object}
-         * 
+         *
          * @property {djs.ElementDescriptor} element the shape descriptor
          * @property {Object} gfx the graphical representation of the shape
          * @property {Object} dragCtx the drag context
@@ -90,10 +90,10 @@ function Bendpoints(events, shapes, canvas, commandStack) {
          * An event indicating that a move happens during a drag operation
          *
          * @memberOf Drag
-         * 
+         *
          * @event shape.dragmove
          * @type {Object}
-         * 
+         *
          * @property {djs.ElementDescriptor} element the shape descriptor
          * @property {Object} gfx the graphical representation of the shape
          * @property {Object} dragCtx the drag context
@@ -124,10 +124,10 @@ function Bendpoints(events, shapes, canvas, commandStack) {
          * An event indicating that a drag operation has ended
          *
          * @memberOf Drag
-         * 
+         *
          * @event shape.dragstart
          * @type {Object}
-         * 
+         *
          * @property {djs.ElementDescriptor} element the shape descriptor
          * @property {Object} gfx the graphical representation of the shape
          * @property {Object} dragCtx the drag context
@@ -147,7 +147,7 @@ function Bendpoints(events, shapes, canvas, commandStack) {
 
     element.waypoints.forEach(function(p) {
 
-      var bendpointGfx = paper.circle(p.x, p.y, 10).addClass('djs-bendpoint').appendTo(gfx);
+      var bendpointGfx = root.circle(p.x, p.y, 10).addClass('djs-bendpoint').appendTo(gfx);
 
       makeDraggable(element, gfx, bendpointGfx);
     });
@@ -158,14 +158,14 @@ function Bendpoints(events, shapes, canvas, commandStack) {
   });
 
 
-  // load paper from initialized canvas
-  
+  // load root from initialized canvas
+
   events.on('canvas.init', function(event) {
-    paper = event.paper;
+    root = event.root;
   });
 
   events.on('diagram.destroy', function() {
-    paper = null;
+    root = null;
   });
 }
 
