@@ -40,7 +40,7 @@
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="324.0" y="448.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="342.0" y="489.0"/>
+          <dc:Bounds height="1.0" width="0.0" x="342.0" y="489.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_1">
