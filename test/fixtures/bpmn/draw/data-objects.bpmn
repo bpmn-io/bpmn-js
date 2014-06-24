@@ -5,7 +5,7 @@
         <extensionElements>
             <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="e6626eeb5b644dc5b053dbbab17bed34"/>
         </extensionElements>
-        <participant id="_Participant_4" name="Pool">
+        <participant id="_Participant_4" name="Pool" processRef="Process_1">
             <extensionElements>
                 <signavio:signavioMetaData metaKey="rolle" metaValue=""/>
                 <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
