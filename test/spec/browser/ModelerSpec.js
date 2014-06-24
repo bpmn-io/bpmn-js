@@ -48,14 +48,20 @@ describe('modeler', function() {
 
     var xml = 'invalid stuff';
 
-    var renderer = new Modeler({ container: container });
+    var modeler = new Modeler({ container: container });
 
-    renderer.importXML(xml, function(err) {
+    modeler.importXML(xml, function(err) {
 
       expect(err).toBeDefined();
 
       done();
     });
+  });
+
+
+  it('should create new diagram', function(done) {
+    var modeler = new Modeler({ container: container });
+    modeler.createDiagram(done);
   });
 
 
