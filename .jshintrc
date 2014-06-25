@@ -29,6 +29,7 @@
     "describe": false,
     "it": true,
     "xit": false,
+    "spyOn": true,
     "jasmine": true,
     "expect": true,
     "fail": true,

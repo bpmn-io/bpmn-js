@@ -17,6 +17,7 @@
   "author": "bpmn.io",
   "license": "MIT",
   "devDependencies": {
+    "brfs": "^1.1.1",
     "didi": "~0.0.4",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "~0.4.4",

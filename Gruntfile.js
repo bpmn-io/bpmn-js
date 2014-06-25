@@ -50,7 +50,8 @@ module.exports = function(grunt) {
 
         browserify: {
           watch: false,
-          debug: true
+          debug: true,
+          transform: [ 'brfs' ]
         }
       },
       unit: {
