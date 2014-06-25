@@ -3,6 +3,10 @@
 var _ = require('lodash');
 var Diagram = require('../lib/Diagram');
 
+// enhance jasmine with test container API
+require('jasmine-test-container-support').extend(jasmine);
+
+
 var OPTIONS, DIAGRAM;
 
 function options(opts) {
@@ -40,6 +44,8 @@ function bootstrapDiagram(options, locals) {
 
   return function() {
 
+    var testContainer = jasmine.getEnv().getTestContainer();
+
     var _options = options,
         _locals = locals;
 
@@ -56,7 +62,7 @@ function bootstrapDiagram(options, locals) {
       _locals = _locals();
     }
 
-    _options = _.extend({}, OPTIONS || {}, _options || {});
+    _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
 
     var mockModule = {};
 
