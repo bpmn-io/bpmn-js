@@ -8,28 +8,28 @@ var Matchers = require('../../../Matchers'),
 
 var fs = require('fs');
 
-
-var touchModule = require('../../../../../lib/features/touch'),
+var contextPadModule = require('../../../../../lib/features/context-pad'),
     bpmnModule = require('../../../../../lib/draw');
 
 
-describe('features - touch', function() {
+describe('features - context-pad', function() {
 
   beforeEach(Matchers.add);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');
 
-  var testModules = [ touchModule, bpmnModule ];
+  var testModules = [ contextPadModule, bpmnModule ];
 
   beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(touchInteraction) {
-      expect(touchInteraction).not.toBe(null);
+    it('should bootstrap', inject(function(contextPadProvider) {
+      expect(contextPadProvider).toBeDefined();
     }));
 
   });
+
 });
