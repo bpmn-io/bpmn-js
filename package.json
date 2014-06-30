@@ -59,6 +59,7 @@
     "didi": "~0.0.4",
     "jquery": "~2.1.0",
     "jquery-mousewheel": "~3.1.11",
-    "lodash": "~2.4.0"
+    "lodash": "~2.4.0",
+    "object-refs": "^0.1.0"
   }
 }
