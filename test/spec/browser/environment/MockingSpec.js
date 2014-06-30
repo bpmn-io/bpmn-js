@@ -8,6 +8,8 @@ var fs = require('fs');
 
 var Events = require('diagram-js/lib/core/EventBus');
 
+var Viewer = require('../../../../lib/Viewer');
+
 
 describe('environment - mocking', function() {
 
@@ -15,7 +17,9 @@ describe('environment - mocking', function() {
 
   var mockEvents, bootstrapCalled;
 
-  beforeEach(bootstrapBpmnJS(diagramXML, function() {
+  beforeEach(bootstrapBpmnJS(diagramXML, {
+    modules: Viewer.prototype._modules
+  }, function() {
     mockEvents = new Events();
 
     bootstrapCalled = true;
