@@ -75,6 +75,23 @@ describe('viewer', function() {
       });
     });
 
+
+    it('should handle missing namespace', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/error/missing-namespace.bpmn', 'utf8');
+
+      createViewer(xml, function(err) {
+        expect(err).toBeDefined();
+        expect(err.message).toEqual(
+          'unparsable content <collaboration> detected; this may indicate an invalid BPMN 2.0 diagram file\n' +
+          '\tline: 2\n' +
+          '\tcolumn: 29\n' +
+          '\tnested error: unrecognized element <collaboration>');
+
+        done();
+      });
+    });
+
   });
 
 
