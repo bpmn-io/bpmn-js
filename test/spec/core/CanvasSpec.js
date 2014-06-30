@@ -397,7 +397,7 @@ describe('Canvas', function() {
     beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
 
 
-    describe('getter', function() {
+    describe('setter', function() {
 
       it('should scroll x/y', inject(function(canvas) {
 
@@ -408,6 +408,56 @@ describe('Canvas', function() {
 
         // when
         var newScroll = canvas.scroll({ dx: 50, dy: 100 });
+
+        // then
+        expect(newScroll.x).toBe(viewbox.x + 50);
+        expect(newScroll.y).toBe(viewbox.y + 100);
+
+      }));
+
+
+      it('should fire <canvas.viewbox.changed>', inject(function(eventBus, canvas) {
+
+        var changedListener = createSpy('listener');
+        eventBus.on('canvas.viewbox.changed', changedListener);
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        var viewbox = canvas.viewbox();
+
+        // when
+        canvas.scroll({ dx: 50, dy: 100 });
+
+        // then
+        var calls = changedListener.calls;
+
+        expect(calls.count()).toEqual(1);
+
+        // expect { viewbox } event
+        var newViewbox = calls.argsFor(0)[0].viewbox;
+
+        expect(newViewbox.x).toEqual(viewbox.x - 50);
+        expect(newViewbox.y).toEqual(viewbox.y - 100);
+
+      }));
+
+    });
+
+
+    describe('getter', function() {
+
+      it('should get scroll', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 300 });
+
+        var viewbox = canvas.viewbox();
+
+        // when
+        canvas.scroll({ dx: 50, dy: 100 });
+
+        var newScroll = canvas.scroll();
 
         // then
         expect(newScroll.x).toBe(viewbox.x + 50);
