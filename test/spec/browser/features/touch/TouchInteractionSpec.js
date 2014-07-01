@@ -12,7 +12,7 @@ var $ = require('jquery');
 
 
 var touchModule = require('../../../../../lib/features/touch'),
-    bpmnModule = require('../../../../../lib/core');
+    bpmnModule = require('../../../../../lib/draw');
 
 
 describe('features - touch', function() {

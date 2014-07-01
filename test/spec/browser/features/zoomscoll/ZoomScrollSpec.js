@@ -12,7 +12,7 @@ var $ = require('jquery');
 
 
 var zoomscrollModule = require('../../../../../lib/features/zoomscroll'),
-    bpmnModule = require('../../../../../lib/core');
+    bpmnModule = require('../../../../../lib/draw');
 
 
 describe('features - zoomscroll', function() {
