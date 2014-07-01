@@ -64,25 +64,18 @@ describe('import - importer', function() {
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      var events = [];
+      var eventCount = 0;
 
       // log events
       diagram.get('eventBus').on('bpmn.element.add', function(e) {
-        events.push({ type: 'add', semantic: e.semantic.id, di: e.di.id, diagramElement: e.diagramElement.id });
+        eventCount++;
       });
 
       // when
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(events).toEqual([
-          { type: 'add', semantic: 'SubProcess_1', di: '_BPMNShape_SubProcess_2', diagramElement: 'SubProcess_1' },
-          { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_2', diagramElement: 'StartEvent_1' },
-          { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_2', diagramElement: 'Task_1' },
-          { type: 'add', semantic: 'SequenceFlow_1', di: 'BPMNEdge_SequenceFlow_1', diagramElement: 'SequenceFlow_1' },
-          { type: 'add', semantic: 'EndEvent_1', di: '_BPMNShape_EndEvent_2', diagramElement: 'EndEvent_1' },
-          { type: 'add', semantic: 'SequenceFlow_2', di: 'BPMNEdge_SequenceFlow_2', diagramElement: 'SequenceFlow_2' }
-        ]);
+        expect(eventCount).toEqual(7);
 
         done(err);
       });
@@ -102,7 +95,12 @@ describe('import - importer', function() {
 
       // log events
       diagram.get('eventBus').on('bpmn.element.add', function(e) {
-        events.push({ type: 'add', semantic: e.semantic.id, di: e.di.id, diagramElement: e.diagramElement.id });
+        events.push({
+          type: 'add',
+          semantic: e.semantic.id,
+          di: e.di.id,
+          diagramElement: e.diagramElement && e.diagramElement.id
+        });
       });
 
       // when
@@ -110,6 +108,7 @@ describe('import - importer', function() {
 
         // then
         expect(events).toEqual([
+          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: null },
           { type: 'add', semantic: 'SubProcess_1', di: '_BPMNShape_SubProcess_2', diagramElement: 'SubProcess_1' },
           { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_2', diagramElement: 'StartEvent_1' },
           { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_2', diagramElement: 'Task_1' },
@@ -132,7 +131,12 @@ describe('import - importer', function() {
 
       // log events
       diagram.get('eventBus').on('bpmn.element.add', function(e) {
-        events.push({ type: 'add', semantic: e.semantic.id, di: e.di.id, diagramElement: e.diagramElement.id });
+        events.push({
+          type: 'add',
+          semantic: e.semantic.id,
+          di: e.di.id,
+          diagramElement: e.diagramElement && e.diagramElement.id
+        });
       });
 
       // when
@@ -140,6 +144,7 @@ describe('import - importer', function() {
 
         // then
         expect(events).toEqual([
+          { type: 'add', semantic: '_Collaboration_2', di: 'BPMNPlane_1', diagramElement: null },
           { type: 'add', semantic: 'Participant_2', di: '_BPMNShape_Participant_2', diagramElement: 'Participant_2' },
           { type: 'add', semantic: 'Lane_1', di: '_BPMNShape_Lane_2', diagramElement: 'Lane_1' },
           { type: 'add', semantic: 'Lane_2', di: '_BPMNShape_Lane_3', diagramElement: 'Lane_2' },
