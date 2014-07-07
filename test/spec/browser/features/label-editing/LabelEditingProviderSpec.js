@@ -44,7 +44,7 @@ describe('features - label-editing', function() {
     }));
 
 
-    it('should cancel on ESC', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
+    it('should cancel on <ESC>', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
 
       // given
       var shape = elementRegistry.getById('task-nested-embedded');
@@ -66,6 +66,31 @@ describe('features - label-editing', function() {
       // then
       expect(directEditing.isActive()).toBe(false);
       expect(task.name).toBe(oldName);
+    }));
+
+
+    it('should submit on <canvas.click>', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
+
+      // given
+      var shape = elementRegistry.getById('task-nested-embedded');
+      var task = bpmnRegistry.getSemantic('task-nested-embedded');
+
+      // activate
+      eventBus.fire('shape.dblclick', { element: shape });
+
+      var newName = 'new value';
+
+      // a jQuery <textarea /> element
+      var textarea = directEditing._textbox.textarea;
+
+      // when
+      // change + <canvas.click>
+      textarea.val(newName);
+      eventBus.fire('canvas.click', {});
+
+      // then
+      expect(directEditing.isActive()).toBe(false);
+      expect(task.name).toBe(newName);
     }));
 
   });
