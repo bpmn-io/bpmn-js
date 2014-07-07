@@ -42,8 +42,10 @@
     "didi": "~0.0.4"
   },
   "dependencies": {
-    "lodash": "~2.4.0",
     "eve": "0.4.1",
+    "hammerjs": "^1.1.3",
+    "lodash": "~2.4.0",
+    "jquery": "~2.1.0",
     "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.2.2-browserify.tar.gz"
   }
 }
