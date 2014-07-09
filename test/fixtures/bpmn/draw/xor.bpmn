@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+        xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+        xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        expressionLanguage="http://www.w3.org/1999/XPath"
+        typeLanguage="http://www.w3.org/2001/XMLSchema"
+        xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+    <process id="sid-c741bcc9-b6f4-404a-be48-6ea42a846afa" isClosed="false" isExecutable="false" processType="None">
+        <exclusiveGateway gatewayDirection="Unspecified" id="sid-81AA9CF4-08E7-4B17-B1FF-8479FD9E24EA">
+        </exclusiveGateway>
+        <exclusiveGateway gatewayDirection="Unspecified" id="sid-84DF847F-0735-450E-99C5-A62D974448C7">
+        </exclusiveGateway>
+        <association associationDirection="None" id="sid-31ADAC7A-ED0C-4A3E-966D-1705847A10A5" targetRef="sid-84DF847F-0735-450E-99C5-A62D974448C7">
+        </association>
+        <textAnnotation id="sid-7C319B57-5406-4CBB-BB14-AB42FB8CA81C" textFormat="text/plain">
+            <text>Should be blank</text>
+        </textAnnotation>
+    </process>
+    <bpmndi:BPMNDiagram id="sid-9f60d3e0-407e-487d-ba50-585f911b8d8b">
+        <bpmndi:BPMNPlane bpmnElement="sid-c741bcc9-b6f4-404a-be48-6ea42a846afa" id="sid-bdbb97bd-653b-4a7b-b2e1-f95f74a2baf8">
+            <bpmndi:BPMNShape bpmnElement="sid-81AA9CF4-08E7-4B17-B1FF-8479FD9E24EA" id="sid-81AA9CF4-08E7-4B17-B1FF-8479FD9E24EA_gui" isMarkerVisible="true">
+                <omgdc:Bounds height="40.0" width="40.0" x="175.0" y="105.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-84DF847F-0735-450E-99C5-A62D974448C7" id="sid-84DF847F-0735-450E-99C5-A62D974448C7_gui" isMarkerVisible="false">
+                <omgdc:Bounds height="40.0" width="40.0" x="90.0" y="105.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="sid-7C319B57-5406-4CBB-BB14-AB42FB8CA81C" id="sid-7C319B57-5406-4CBB-BB14-AB42FB8CA81C_gui">
+                <omgdc:Bounds height="50.0" width="125.0" x="105.0" y="240.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-48c53a3a-3175-4b48-b1ef-a1cad607a430">
+                    <omgdc:Bounds height="12.0" width="96.85713958740234" x="109.0" y="256.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sid-31ADAC7A-ED0C-4A3E-966D-1705847A10A5" id="sid-31ADAC7A-ED0C-4A3E-966D-1705847A10A5_gui">
+                <omgdi:waypoint x="110.5" y="240.20431823652171"/>
+                <omgdi:waypoint x="110.5" y="145.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="sid-48c53a3a-3175-4b48-b1ef-a1cad607a430">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</definitions>

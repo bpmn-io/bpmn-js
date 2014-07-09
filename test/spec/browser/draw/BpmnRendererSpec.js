@@ -127,4 +127,9 @@ describe('draw - bpmn renderer', function() {
     bootstrapBpmnJS(xml)(done);
   });
 
+  it('should render xor gateways blank and with X', function(done) {
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/draw/xor.bpmn', 'utf8');
+    bootstrapBpmnJS(xml)(done);
+  });
+
 });
