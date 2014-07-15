@@ -1,6 +1,6 @@
 'use strict';
 
-var CommandStack = require('../../../lib/core/CommandStack'),
+var CommandStack = require('../../../lib/cmd/CommandStack'),
     Events = require('../../../lib/core/EventBus');
 
 

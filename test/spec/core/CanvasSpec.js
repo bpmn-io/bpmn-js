@@ -59,7 +59,7 @@ describe('Canvas', function() {
   });
 
 
-  describe('addShape', function() {
+  describe('#addShape', function() {
 
     beforeEach(defaultBootstrap);
 
@@ -123,60 +123,30 @@ describe('Canvas', function() {
       expect(gfx.attr('visibility')).toBe('hidden');
     }));
 
-
-    describe('undo / redo', function() {
-
-      it('should undo add of shape', inject(function(canvas, commandStack, elementRegistry) {
-
-        // given
-        var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
-        var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-        var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-
-        canvas
-          .addShape(s1)
-          .addShape(s2)
-          .addShape(s3);
-
-        // when
-        commandStack.undo();
-        commandStack.undo();
-
-        // then
-        expect(elementRegistry.getById('s2')).not.toBeDefined();
-        expect(elementRegistry.getById('s3')).not.toBeDefined();
-      }));
+  });
 
 
-      it('should redo add of shape', inject(function(canvas, commandStack, elementRegistry) {
+  describe('#addConnection', function() {
 
-        // given
-        var s1 = { id: 's1', x: 10, y: 20, width: 50, height: 50 };
-        var s2 = { id: 's2', x: 10, y: 20, width: 50, height: 50, parent: s1 };
-        var s3 = { id: 's3', x: 10, y: 20, width: 50, height: 50, parent: s1 };
+    beforeEach(defaultBootstrap);
 
-        canvas
-          .addShape(s1)
-          .addShape(s2)
-          .addShape(s3);
 
-        // when
-        commandStack.undo();
-        commandStack.undo();
-        commandStack.redo();
-        commandStack.undo();
-        commandStack.redo();
-        commandStack.redo();
+    it('should fire <connection.added> event', inject(function(canvas, eventBus) {
 
-        // then
-        expect(elementRegistry.getById('s2')).toEqual(s2);
-        expect(elementRegistry.getById('s3')).toEqual(s3);
+      // given
+      var listener = createSpy('listener');
 
-        expect(s2.parent).toEqual(s1);
-        expect(s3.parent).toEqual(s1);
-      }));
+      canvas.addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 });
+      canvas.addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
 
-    });
+      eventBus.on('connection.added', listener);
+
+      // when
+      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+
+      // then
+      expect(listener).toHaveBeenCalled();
+    }));
 
   });
 
