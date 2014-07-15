@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                   xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL
+                   BPMN20.xsd">
+    <bpmn2:process id="Process_1" isExecutable="false">
+
+        <!-- Even if boundary Event is before Task element it should drawn with higher z index -->
+        <bpmn2:boundaryEvent id="BoundaryEvent_1" name="Event should be drawn above the Task" attachedToRef="Task_1">
+            <bpmn2:escalationEventDefinition id="_EscalationEventDefinition_1"/>
+        </bpmn2:boundaryEvent>
+
+        <bpmn2:task id="Task_1" name="Task">
+            <bpmn2:standardLoopCharacteristics/>
+        </bpmn2:task>
+
+        <!-- Normal order should work also -->
+        <bpmn2:task id="Task_2" name="Task">
+            <bpmn2:standardLoopCharacteristics/>
+        </bpmn2:task>
+
+        <bpmn2:boundaryEvent id="BoundaryEvent_2" name="Event should be drawn above the Task" attachedToRef="Task_2">
+            <bpmn2:escalationEventDefinition id="_EscalationEventDefinition_2"/>
+        </bpmn2:boundaryEvent>
+
+        <!-- Another one -->
+
+        <bpmn2:boundaryEvent attachedToRef="Task_3" name="Event should be drawn above the Task" cancelActivity="false"
+                             id="BoundaryEvent_3" parallelMultiple="false">
+            <bpmn2:signalEventDefinition id="5555"/>
+        </bpmn2:boundaryEvent>
+
+        <bpmn2:task completionQuantity="1" id="Task_3" isForCompensation="false" startQuantity="1">
+        </bpmn2:task>
+
+
+
+
+
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+
+            <bpmndi:BPMNShape id="_BPMNShape_Task_30" bpmnElement="Task_1">
+                <dc:Bounds height="80.0" width="100.0" x="138.0" y="48.0"/>
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_1" bpmnElement="BoundaryEvent_1">
+                <dc:Bounds height="36.0" width="36.0" x="142.0" y="110.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="22.0" width="84.0" x="172.0" y="145.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+
+
+            <bpmndi:BPMNShape id="_BPMNShape_Task_31" bpmnElement="Task_2">
+                <dc:Bounds height="80.0" width="100.0" x="138.0" y="248.0"/>
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="BoundaryEvent_2">
+                <dc:Bounds height="36.0" width="36.0" x="142.0" y="310.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="22.0" width="84.0" x="172.0" y="345.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNShape id="_BPMNShape_Task_32" bpmnElement="Task_3">
+                <dc:Bounds height="80.0" width="100.0" x="138.0" y="448.0"/>
+            </bpmndi:BPMNShape>
+
+            <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_3" bpmnElement="BoundaryEvent_3">
+                <dc:Bounds height="36.0" width="36.0" x="142.0" y="510.0"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="22.0" width="84.0" x="172.0" y="545.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+
+
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

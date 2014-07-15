@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             id="sid-3c77c04a-c5e4-4b00-ad92-873ca1d8f28f"
+             name="B.2.0"
+             targetNamespace="http://www.trisotech.com/definitions/_1373638079286"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+    <collaboration id="sid-4af1c293-f0f4-49e8-bb38-f0f65c8ac107">
+        <participant id="_55bb31e8-9e62-48ea-8f0e-1a748c04bbf6" name="Pool-Testcase" processRef="WFP-6-2">
+        </participant>
+    </collaboration>
+    <process id="WFP-6-2" isClosed="false" isExecutable="false" name="Pool-Testcase 2" processType="None">
+        <extensionElements/>
+        <laneSet id="sid-ec28d4f4-3755-4416-a5f9-8c2583ced576">
+            <lane id="_3400f56a-4565-47d1-91db-0ba17b958cb2" name="Lane - Testcase">
+                <flowNodeRef>_d58753a7-d38b-49cd-914d-14e4cdaa4449</flowNodeRef>
+                <flowNodeRef>End_Event</flowNodeRef>
+                <flowNodeRef>Boundary_Event</flowNodeRef>
+            </lane>
+        </laneSet>
+        <task completionQuantity="1" id="_d58753a7-d38b-49cd-914d-14e4cdaa4449" isForCompensation="false" name="A Task" startQuantity="1" />
+
+        <endEvent id="End_Event" name="The End">
+            <incoming>sid-4F795442-BADE-4AD2-AC9A-C51F90503931</incoming>
+        </endEvent>
+
+        <boundaryEvent attachedToRef="_d58753a7-d38b-49cd-914d-14e4cdaa4449" cancelActivity="true" id="Boundary_Event" parallelMultiple="false">
+            <outgoing>sid-4F795442-BADE-4AD2-AC9A-C51F90503931</outgoing>
+            <signalEventDefinition id="sid-a736556b-1648-4b13-9d51-d1b8b302715c"/>
+        </boundaryEvent>
+
+        <sequenceFlow id="sid-4F795442-BADE-4AD2-AC9A-C51F90503931" sourceRef="Boundary_Event" targetRef="End_Event" />
+    </process>
+    <bpmndi:BPMNDiagram id="sid-af59fa1e-e6f6-442f-8b8f-10d8b342a601" name="B.2.0">
+        <bpmndi:BPMNPlane bpmnElement="sid-4af1c293-f0f4-49e8-bb38-f0f65c8ac107" id="sid-c22f3e5f-ea4d-4216-81b3-f130d759d52a">
+            <bpmndi:BPMNShape bpmnElement="_55bb31e8-9e62-48ea-8f0e-1a748c04bbf6" id="_55bb31e8-9e62-48ea-8f0e-1a748c04bbf6_gui" isHorizontal="true">
+                <omgdc:Bounds height="307.0" width="480.0" x="60.0" y="30.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-77e078a7-1f31-4117-b678-7326d5e5a6a7">
+                    <omgdc:Bounds height="84.0" width="12.000000000000014" x="65.0" y="141.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_3400f56a-4565-47d1-91db-0ba17b958cb2" id="_3400f56a-4565-47d1-91db-0ba17b958cb2_gui" isHorizontal="true">
+                <omgdc:Bounds height="307.0" width="450.0" x="90.0" y="30.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-77e078a7-1f31-4117-b678-7326d5e5a6a7">
+                    <omgdc:Bounds height="96.0" width="12.000000000000014" x="94.99999999999999" y="135.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_d58753a7-d38b-49cd-914d-14e4cdaa4449" id="_d58753a7-d38b-49cd-914d-14e4cdaa4449_gui">
+                <omgdc:Bounds height="68.0" width="83.0" x="195.0" y="105.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-77e078a7-1f31-4117-b678-7326d5e5a6a7">
+                    <omgdc:Bounds height="12.0" width="41.142852783203125" x="215.92857360839844" y="131.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="End_Event" id="End_Event_gui">
+                <omgdc:Bounds height="28.0" width="28.0" x="382.0" y="218.0"/>
+                <bpmndi:BPMNLabel labelStyle="sid-5bb14c58-e378-46dc-9d3e-8b2b6e051656">
+                    <omgdc:Bounds height="11.0" width="45.57143020629883" x="374.2142848968506" y="264.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Boundary_Event" id="Boundary_Event_gui">
+                <omgdc:Bounds height="30.0" width="30.0" x="213.60714285714286" y="158.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="sid-4F795442-BADE-4AD2-AC9A-C51F90503931" id="sid-4F795442-BADE-4AD2-AC9A-C51F90503931_gui">
+                <omgdi:waypoint x="228.58355308951846" y="188.0"/>
+                <omgdi:waypoint x="228.51435643782017" y="232.0"/>
+                <omgdi:waypoint x="382.0" y="232.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="sid-5bb14c58-e378-46dc-9d3e-8b2b6e051656">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>
+        </bpmndi:BPMNLabelStyle>
+        <bpmndi:BPMNLabelStyle id="sid-77e078a7-1f31-4117-b678-7326d5e5a6a7">
+            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</definitions>

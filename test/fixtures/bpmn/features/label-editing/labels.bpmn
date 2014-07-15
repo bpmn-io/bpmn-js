@@ -22,7 +22,6 @@
           <bpmn2:lane id="nested-lane-1-2" name="A">
             <bpmn2:flowNodeRef>call-activity</bpmn2:flowNodeRef>
             <bpmn2:flowNodeRef>user-task</bpmn2:flowNodeRef>
-            <bpmn2:flowNodeRef>boundary-event</bpmn2:flowNodeRef>
           </bpmn2:lane>
         </bpmn2:childLaneSet>
       </bpmn2:lane>

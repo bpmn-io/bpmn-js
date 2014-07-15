@@ -132,4 +132,19 @@ describe('draw - bpmn renderer', function() {
     bootstrapBpmnJS(xml)(done);
   });
 
+  it('should render boundary events with correct z-index', function(done) {
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/draw/boundary-event-z-index.bpmn', 'utf8');
+    bootstrapBpmnJS(xml)(done);
+  });
+
+  it('should render boundary events without flowNodeRef', function(done) {
+   var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn', 'utf8');
+   bootstrapBpmnJS(xml)(done);
+  });
+
+  it('should render boundary event only once if referenced incorrectly via flowNodeRef (robustness)', function(done) {
+    var xml = fs.readFileSync(__dirname + '/../../../fixtures/bpmn/draw/boundary-event-with-refnode.bpmn', 'utf8');
+    bootstrapBpmnJS(xml)(done);
+  });
+
 });
