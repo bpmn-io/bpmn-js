@@ -128,7 +128,7 @@ describe('eventBus', function() {
 
     // when
     e.once('onceEvent', listener);
-    e.fire('onceEvent', {value: 'a'});
+    e.fire('onceEvent', { value: 'a' });
     expect(listener).toHaveBeenCalled();
 
     // Should not be fired
@@ -193,12 +193,13 @@ describe('event priorities', function() {
     };
   });
 
+
   it('higher priority should fire first', function() {
 
     // setup
-    e.on('foo', listener1, 100);
-    e.on('foo', listener2, 500);
-    e.on('foo', listener3, 200);
+    e.on('foo', 100, listener1);
+    e.on('foo', 500, listener2);
+    e.on('foo', 200, listener3);
 
     // event fired with example data
     // to control the order of execution
@@ -207,14 +208,15 @@ describe('event priorities', function() {
 
     expect(param.value).toEqual('Target State');
   });
+
 
   it('higher priority should fire first and make sure' +
     'registration order does not affect anything', function() {
 
     // setup
-    e.on('foo', listener3, 200);
-    e.on('foo', listener1, 100);
-    e.on('foo', listener2, 500);
+    e.on('foo', 200, listener3);
+    e.on('foo', 100, listener1);
+    e.on('foo', 500, listener2);
 
     // event fired with example data
     // to control the order of execution
@@ -224,11 +226,12 @@ describe('event priorities', function() {
     expect(param.value).toEqual('Target State');
   });
 
+
   it('event with same priority should fire in registration order', function() {
     // setup
-    e.on('foo', listener3, 100);
-    e.on('foo', listener2, 100);
-    e.on('foo', listener1, 100);
+    e.on('foo', 100, listener3);
+    e.on('foo', 100, listener2);
+    e.on('foo', 100, listener1);
 
     // event fired with example data
     // to control the order of execution
@@ -236,13 +239,14 @@ describe('event priorities', function() {
     e.fire('foo', param);
   });
 
+
   it('user should be able to stop propagation' +
         ' to handler with lower priority.', function() {
 
     // setup
-    e.on('foo', listenerStopPropagation, 200);
-    e.on('foo', listener1, 100);
-    e.on('foo', listener2, 500);
+    e.on('foo', 200, listenerStopPropagation);
+    e.on('foo', 100, listener1);
+    e.on('foo', 500, listener2);
 
     // event fired with example data
     // to control the order of execution
@@ -254,12 +258,13 @@ describe('event priorities', function() {
     expect(param.value).toEqual('C');
   });
 
+
   it('should set default priority when not set', function() {
 
     // setup
-    e.on('foo', listener3); //Should use default of 1000
-    e.on('foo', listener1, 500);
-    e.on('foo', listener2, 5000);
+    e.on('foo', listener3); // should use default of 1000
+    e.on('foo', 500, listener1);
+    e.on('foo', 5000, listener2);
 
     // event fired with example data
     // to control the order of execution
