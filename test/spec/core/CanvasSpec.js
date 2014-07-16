@@ -125,6 +125,30 @@ describe('Canvas', function() {
 
   });
 
+  describe('#removeShape', function() {
+
+    beforeEach(defaultBootstrap);
+
+
+    it('should fire <shape.removed> event', inject(function(canvas, eventBus, elementRegistry) {
+
+      // given
+      var listener = createSpy('listener');
+      eventBus.on('shape.removed', listener);
+
+      canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+
+      // when
+      var shape = canvas.removeShape('a');
+
+      // then
+      expect(listener).toHaveBeenCalled();
+      expect(shape.parent).toBe(null);
+      expect(elementRegistry.getById('a')).not.toBeDefined();
+    }));
+
+  });
+
 
   describe('#addConnection', function() {
 
@@ -146,6 +170,35 @@ describe('Canvas', function() {
 
       // then
       expect(listener).toHaveBeenCalled();
+    }));
+
+  });
+
+
+  describe('#removeConnection', function() {
+
+    beforeEach(defaultBootstrap);
+
+
+    it('should fire <connection.removed> event', inject(function(canvas, eventBus, elementRegistry) {
+
+      // given
+      var listener = createSpy('listener');
+
+      canvas.addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 });
+      canvas.addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
+
+      eventBus.on('connection.removed', listener);
+
+      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+
+      // when
+      var connection = canvas.removeConnection('c1');
+
+      // then
+      expect(connection.parent).toBe(null);
+      expect(listener).toHaveBeenCalled();
+      expect(elementRegistry.getById('c1')).not.toBeDefined();
     }));
 
   });
