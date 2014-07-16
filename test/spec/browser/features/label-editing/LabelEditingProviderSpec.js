@@ -44,11 +44,11 @@ describe('features - label-editing', function() {
     }));
 
 
-    it('should cancel on <ESC>', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
+    it('should cancel on <ESC>', inject(function(elementRegistry, directEditing, eventBus) {
 
       // given
-      var shape = elementRegistry.getById('task-nested-embedded');
-      var task = bpmnRegistry.getSemantic('task-nested-embedded');
+      var shape = elementRegistry.getById('task-nested-embedded'),
+          task = shape.businessObject;
 
       var oldName = task.name;
 
@@ -69,11 +69,11 @@ describe('features - label-editing', function() {
     }));
 
 
-    it('should submit on <canvas.click>', inject(function(elementRegistry, bpmnRegistry, directEditing, eventBus) {
+    it('should submit on <canvas.click>', inject(function(elementRegistry, directEditing, eventBus) {
 
       // given
-      var shape = elementRegistry.getById('task-nested-embedded');
-      var task = bpmnRegistry.getSemantic('task-nested-embedded');
+      var shape = elementRegistry.getById('task-nested-embedded'),
+          task = shape.businessObject;
 
       // activate
       eventBus.fire('shape.dblclick', { element: shape });
@@ -96,13 +96,13 @@ describe('features - label-editing', function() {
   });
 
 
-  var bpmnRegistry,
+  var elementRegistry,
       eventBus,
       directEditing;
 
 
-  beforeEach(inject([ 'bpmnRegistry', 'eventBus', 'directEditing', function(_bpmnRegistry, _eventBus, _directEditing) {
-    bpmnRegistry = _bpmnRegistry;
+  beforeEach(inject([ 'elementRegistry', 'eventBus', 'directEditing', function(_elementRegistry, _eventBus, _directEditing) {
+    elementRegistry = _elementRegistry;
     eventBus = _eventBus;
     directEditing = _directEditing;
   }]));
@@ -136,8 +136,8 @@ describe('features - label-editing', function() {
     it('should update via command stack', function() {
 
       // given
-      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
-      var semantic = bpmnRegistry.getSemantic('user-task');
+      var diagramElement = elementRegistry.getById('user-task'),
+          semantic = diagramElement.businessObject;
 
       var listenerCalled;
 
@@ -157,8 +157,8 @@ describe('features - label-editing', function() {
     it('should undo via command stack', inject(function(commandStack) {
 
       // given
-      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
-      var semantic = bpmnRegistry.getSemantic('user-task');
+      var diagramElement = elementRegistry.getById('user-task'),
+          semantic = diagramElement.businessObject;
 
       var oldLabel = LabelUtil.getLabel(semantic);
 
@@ -181,8 +181,8 @@ describe('features - label-editing', function() {
     it('on shape change', function() {
 
       // given
-      var diagramElement = bpmnRegistry.getDiagramElement('user-task');
-      var semantic = bpmnRegistry.getSemantic('user-task');
+      var diagramElement = elementRegistry.getById('user-task'),
+          semantic = diagramElement.businessObject;
 
       var listenerCalled;
 
@@ -204,8 +204,8 @@ describe('features - label-editing', function() {
     it('on connection on change', function() {
 
       // given
-      var diagramElement = bpmnRegistry.getDiagramElement('sequence-flow-no');
-      var semantic = bpmnRegistry.getSemantic('sequence-flow-no');
+      var diagramElement = elementRegistry.getById('sequence-flow-no'),
+          semantic = diagramElement.businessObject;
 
       var listenerCalled;
 
@@ -230,10 +230,10 @@ describe('features - label-editing', function() {
 
     function directEdit(elementId) {
 
-      return inject(function(bpmnRegistry, eventBus, directEditing) {
+      return inject(function(elementRegistry, eventBus, directEditing) {
 
-        var diagramElement = bpmnRegistry.getDiagramElement(elementId);
-        var semantic = bpmnRegistry.getSemantic(elementId);
+        var diagramElement = elementRegistry.getById(elementId),
+            semantic = diagramElement.businessObject;
 
         var label = LabelUtil.getLabel(semantic);
 

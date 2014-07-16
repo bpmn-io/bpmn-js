@@ -59,7 +59,7 @@ describe('import - importer', function() {
 
   describe('event emitter', function() {
 
-    it('should fire <bpmn.element.add> during import', function(done) {
+    it('should fire <shape.added> during import', function(done) {
 
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
@@ -67,7 +67,7 @@ describe('import - importer', function() {
       var eventCount = 0;
 
       // log events
-      diagram.get('eventBus').on('bpmn.element.add', function(e) {
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
         eventCount++;
       });
 
@@ -94,12 +94,12 @@ describe('import - importer', function() {
       var events = [];
 
       // log events
-      diagram.get('eventBus').on('bpmn.element.add', function(e) {
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
         events.push({
           type: 'add',
-          semantic: e.semantic.id,
-          di: e.di.id,
-          diagramElement: e.diagramElement && e.diagramElement.id
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
         });
       });
 
@@ -108,7 +108,7 @@ describe('import - importer', function() {
 
         // then
         expect(events).toEqual([
-          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: null },
+          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: 'Process_1' },
           { type: 'add', semantic: 'SubProcess_1', di: '_BPMNShape_SubProcess_2', diagramElement: 'SubProcess_1' },
           { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_2', diagramElement: 'StartEvent_1' },
           { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_2', diagramElement: 'Task_1' },
@@ -130,12 +130,12 @@ describe('import - importer', function() {
       var events = [];
 
       // log events
-      diagram.get('eventBus').on('bpmn.element.add', function(e) {
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
         events.push({
           type: 'add',
-          semantic: e.semantic.id,
-          di: e.di.id,
-          diagramElement: e.diagramElement && e.diagramElement.id
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
         });
       });
 
@@ -144,7 +144,7 @@ describe('import - importer', function() {
 
         // then
         expect(events).toEqual([
-          { type: 'add', semantic: '_Collaboration_2', di: 'BPMNPlane_1', diagramElement: null },
+          { type: 'add', semantic: '_Collaboration_2', di: 'BPMNPlane_1', diagramElement: '_Collaboration_2' },
           { type: 'add', semantic: 'Participant_2', di: '_BPMNShape_Participant_2', diagramElement: 'Participant_2' },
           { type: 'add', semantic: 'Lane_1', di: '_BPMNShape_Lane_2', diagramElement: 'Lane_1' },
           { type: 'add', semantic: 'Lane_2', di: '_BPMNShape_Lane_3', diagramElement: 'Lane_2' },
@@ -160,23 +160,87 @@ describe('import - importer', function() {
 
   });
 
-  describe('command stack integration', function() {
 
-    it('should clear stack after import', function(done) {
+  describe('model wiring', function() {
 
-      // given
-      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      var commandStack = diagram.get('commandStack');
+    var elements;
+
+    beforeEach(function(done) {
+      elements = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        elements.push(e.element);
+      });
+
+      runImport(diagram, xml, done);
+    });
+
+
+    it('should wire parent child relationship', function() {
 
       // when
-      runImport(diagram, xml, function(err, warnings) {
+      var subProcessShape = elements[1];
+      var startEventShape = elements[2];
 
-        // then
-        expect(commandStack.getStack()).toEqual([]);
+      // then
+      expect(startEventShape.type).toBe('bpmn:StartEvent');
+      expect(startEventShape.parent).toBe(subProcessShape);
+    });
 
-        done(err);
-      });
+
+    it('should wire label relationship', function() {
+
+      // when
+      var startEventShape = elements[2];
+      var label = startEventShape.label;
+
+      // then
+      expect(label).toBeDefined();
+      expect(label.id).toBe(startEventShape.id + '_label');
+
+      expect(label.labelTarget).toBe(startEventShape);
+    });
+
+
+    it('should wire businessObject', function() {
+
+      // when
+      var subProcessShape = elements[1];
+      var startEventShape = elements[2];
+
+      var subProcess = subProcessShape.businessObject,
+          startEvent = startEventShape.businessObject;
+
+      // then
+      expect(subProcess).toBeDefined();
+      expect(subProcess.$instanceOf('bpmn:SubProcess')).toBe(true);
+
+      expect(startEvent).toBeDefined();
+      expect(startEvent.$instanceOf('bpmn:StartEvent')).toBe(true);
+    });
+
+
+    it('should wire di', function() {
+
+      // when
+      var subProcessShape = elements[1];
+      var startEventShape = elements[2];
+
+      var subProcess = subProcessShape.businessObject,
+          startEvent = startEventShape.businessObject;
+
+      var subProcessDi = subProcess.di,
+          startEventDi = startEvent.di;
+
+      // then
+      expect(subProcessDi).toBeDefined();
+      expect(subProcessDi.bpmnElement).toBe(subProcess);
+
+      expect(startEventDi).toBeDefined();
+      expect(startEventDi.bpmnElement).toBe(startEvent);
     });
 
   });
@@ -188,8 +252,6 @@ describe('import - importer', function() {
 
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/error/invalid-flow-element.bpmn', 'utf8');
-
-      var commandStack = diagram.get('commandStack');
 
       // when
       runImport(diagram, xml, function(err, warnings) {
