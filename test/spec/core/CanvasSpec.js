@@ -142,9 +142,10 @@ describe('Canvas', function() {
       var shape = canvas.removeShape('a');
 
       // then
-      expect(listener).toHaveBeenCalled();
-      expect(shape.parent).toBe(null);
+      expect(shape.parent).toBeFalsy();
       expect(elementRegistry.getById('a')).not.toBeDefined();
+
+      expect(listener).toHaveBeenCalled();
     }));
 
   });
@@ -196,9 +197,10 @@ describe('Canvas', function() {
       var connection = canvas.removeConnection('c1');
 
       // then
-      expect(connection.parent).toBe(null);
-      expect(listener).toHaveBeenCalled();
+      expect(connection.parent).toBeFalsy();
       expect(elementRegistry.getById('c1')).not.toBeDefined();
+
+      expect(listener).toHaveBeenCalled();
     }));
 
   });
