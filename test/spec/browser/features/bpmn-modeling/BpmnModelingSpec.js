@@ -179,6 +179,10 @@ describe('features - bpmn-modeling', function() {
           // then
           expect(connection.sourceRef).toBe(null);
           expect(connection.targetRef).toBe(null);
+
+          expect(startEvent.get('outgoing')).not.toContain(connection);
+          expect(target.get('incoming')).not.toContain(connection);
+
           expect(connection.$parent).toBe(null);
           expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
