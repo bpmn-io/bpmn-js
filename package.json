@@ -53,9 +53,9 @@
     "time-grunt": "~0.3.0"
   },
   "dependencies": {
-    "bpmn-moddle": "~0.1.0",
-    "diagram-js": "~0.2.0",
-    "diagram-js-direct-editing": "0.1.0",
+    "bpmn-moddle": "~0.2.0",
+    "diagram-js": "~0.3.0",
+    "diagram-js-direct-editing": "0.2.0",
     "didi": "~0.0.4",
     "jquery": "~2.1.0",
     "jquery-mousewheel": "~3.1.11",
