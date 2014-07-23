@@ -9,8 +9,8 @@ var _ = require('lodash');
 
 var fs = require('fs');
 
-var bpmnFactoryModule = require('../../../../../lib/features/bpmn-modeling'),
-    bpmnDrawModule = require('../../../../../lib/draw');
+var modelingModule = require('../../../../../lib/features/modeling'),
+    drawModule = require('../../../../../lib/draw');
 
 
 describe('features - bpmn-modeling', function() {
@@ -20,7 +20,7 @@ describe('features - bpmn-modeling', function() {
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
 
-  var testModules = [ bpmnFactoryModule, bpmnDrawModule ];
+  var testModules = [ modelingModule, drawModule ];
 
   beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
@@ -30,13 +30,13 @@ describe('features - bpmn-modeling', function() {
 
     describe('shape.appendNode', function() {
 
-      it('should execute', inject(function(elementRegistry, bpmnModeling) {
+      it('should execute', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
             target = targetShape.businessObject;
 
         // then
@@ -44,13 +44,13 @@ describe('features - bpmn-modeling', function() {
         expect(target.$instanceOf('bpmn:Task')).toBe(true);
       }));
 
-      it('should execute', inject(function(elementRegistry, bpmnModeling) {
+      it('should execute', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
           target = targetShape.businessObject;
 
         // then
@@ -58,7 +58,7 @@ describe('features - bpmn-modeling', function() {
         expect(target.$instanceOf('bpmn:ExclusiveGateway')).toBe(true);
       }));
 
-      it('should create DI', inject(function(elementRegistry, bpmnModeling) {
+      it('should create DI', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -68,7 +68,7 @@ describe('features - bpmn-modeling', function() {
             subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
             target = targetShape.businessObject;
 
         // then
@@ -77,7 +77,7 @@ describe('features - bpmn-modeling', function() {
       }));
 
 
-      it('should add to parent (sub process)', inject(function(elementRegistry, bpmnModeling) {
+      it('should add to parent (sub process)', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -87,14 +87,14 @@ describe('features - bpmn-modeling', function() {
             subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
             target = targetShape.businessObject;
 
         // then
         expect(subProcess.get('flowElements')).toContain(target);
       }));
 
-      it('should add to parent (sub process)', inject(function(elementRegistry, bpmnModeling) {
+      it('should add to parent (sub process)', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -104,7 +104,7 @@ describe('features - bpmn-modeling', function() {
           subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
           target = targetShape.businessObject;
 
         // then
@@ -112,7 +112,7 @@ describe('features - bpmn-modeling', function() {
       }));
 
 
-      it('should add connection', inject(function(elementRegistry, bpmnModeling) {
+      it('should add shape label', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -122,7 +122,33 @@ describe('features - bpmn-modeling', function() {
             subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+            target = targetShape.businessObject;
+
+        // then
+        expect(targetShape.label).toBeDefined();
+        expect(elementRegistry.getById(targetShape.label.id)).toBeDefined();
+
+        expect(target.di.label).toBeDefined();
+
+        expect(target.di.label.bounds.x).toBe(targetShape.label.x);
+        expect(target.di.label.bounds.y).toBe(targetShape.label.y);
+        expect(target.di.label.bounds.width).toBe(targetShape.label.width);
+        expect(target.di.label.bounds.height).toBe(targetShape.label.height);
+      }));
+
+
+      it('should add connection', inject(function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var subProcessShape = elementRegistry.getById('SubProcess_1');
+
+        var startEvent = startEventShape.businessObject,
+            subProcess = subProcessShape.businessObject;
+
+        // when
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
             target = targetShape.businessObject;
 
         var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -137,7 +163,7 @@ describe('features - bpmn-modeling', function() {
 
       describe('undo support', function() {
 
-        it('should undo add to parent', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should undo add to parent', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -146,7 +172,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
               target = targetShape.businessObject;
 
           // when
@@ -158,7 +184,7 @@ describe('features - bpmn-modeling', function() {
         }));
 
 
-        it('should undo add shape label', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should undo add shape label', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -167,7 +193,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:EndEvent'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
               target = targetShape.businessObject;
 
           var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -183,11 +209,12 @@ describe('features - bpmn-modeling', function() {
           expect(connection.$parent).toBe(null);
           expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
-          expect(elementRegistry.getById(targetShape.label.id)).not.toBeDefined();
+          expect(targetShape.label).not.toBeDefined();
+          expect(elementRegistry.getById(target.id + '_label')).not.toBeDefined();
         }));
 
 
-        it('should undo add connection', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should undo add connection', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -196,7 +223,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
               target = targetShape.businessObject;
 
           var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -220,7 +247,7 @@ describe('features - bpmn-modeling', function() {
         }));
 
 
-        it('should undo add connection label', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should undo add connection label', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -229,7 +256,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
               target = targetShape.businessObject;
 
           var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -248,7 +275,7 @@ describe('features - bpmn-modeling', function() {
           expect(elementRegistry.getById(connection.id + '_label')).not.toBeDefined();
         }));
 
-        it('should undo add to parent', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should undo add to parent', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -257,7 +284,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
             subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+          var targetShape = modeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
             target = targetShape.businessObject;
 
           // when
@@ -269,7 +296,7 @@ describe('features - bpmn-modeling', function() {
         }));
 
 
-        it('should undo/redo appending multiple shapes', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should redo appending multiple shapes', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -278,10 +305,10 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
               target = targetShape.businessObject;
 
-          var targetShape2 = bpmnModeling.appendFlowNode(targetShape, null, 'bpmn:UserTask');
+          var targetShape2 = modeling.appendFlowNode(targetShape, 'bpmn:UserTask');
 
           // when
           commandStack.undo();
@@ -303,7 +330,7 @@ describe('features - bpmn-modeling', function() {
         }));
 
 
-        it('should undo/redo add connection', inject(function(elementRegistry, bpmnModeling, commandStack) {
+        it('should redo add connection', inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -312,7 +339,7 @@ describe('features - bpmn-modeling', function() {
           var startEvent = startEventShape.businessObject,
               subProcess = subProcessShape.businessObject;
 
-          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
+          var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
               target = targetShape.businessObject;
 
           var connection = _.find(subProcess.get('flowElements'), function(e) {
