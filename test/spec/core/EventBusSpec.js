@@ -147,6 +147,57 @@ describe('eventBus', function() {
 });
 
 
+describe('error handling', function() {
+
+  it('should propagate error via <error> event', function() {
+
+    // given
+    var e = new EventBus();
+
+    var errorListener = createSpy('error-listener');
+    var failingListener = function() {
+      throw new Error('fail');
+    };
+
+    // when
+    e.on('error', errorListener);
+    e.on('fail', failingListener);
+
+    // then
+    expect(function() {
+      e.fire({ type: 'fail' });
+    }).toThrowError('fail');
+
+    expect(errorListener).toHaveBeenCalled();
+  });
+
+
+  it('should handle error in <error> event listener', function() {
+
+    // given
+    var e = new EventBus();
+
+    var errorListener = function(e) {
+      e.preventDefault();
+    };
+
+    var failingListener = function() {
+      throw new Error('fail');
+    };
+
+    // when
+    e.on('error', errorListener);
+    e.on('fail', failingListener);
+
+    // then
+    expect(function() {
+      e.fire({ type: 'fail' });
+    }).not.toThrow();
+  });
+
+});
+
+
 describe('event priorities', function() {
 
   var e,
