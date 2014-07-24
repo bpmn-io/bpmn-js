@@ -1,268 +1,488 @@
 'use strict';
 
-var CommandStack = require('../../../lib/cmd/CommandStack'),
-    Events = require('../../../lib/core/EventBus');
+var TestHelper = require('../../TestHelper');
+
+/* global bootstrapDiagram, inject */
 
 
-describe('CommandStack', function() {
+var cmdModule = require('../../../lib/cmd');
 
-  /**
-   * Create a new handler with the given identifier
-   */
-  function handler(name) {
 
-    return {
+// example commands
+
+function TracableCommand(id) {
+
+  this.execute = function(ctx) {
+    ctx.element.trace.push(id);
+  };
+
+  this.revert = function(ctx) {
+    expect(ctx.element.trace.pop()).toBe(id);
+  };
+}
+
+
+var ComplexCommand = function(commandStack) {
+
+  TracableCommand.call(this, 'complex-command');
+
+  this.preExecute = function(ctx) {
+    commandStack.execute('pre-command', { element: ctx.element });
+  };
+
+  this.postExecute = function(ctx) {
+    commandStack.execute('post-command', { element: ctx.element });
+  };
+};
+
+var PreCommand = function() {
+  TracableCommand.call(this, 'pre-command');
+};
+
+var PostCommand = function() {
+  TracableCommand.call(this, 'post-command');
+};
+
+var SimpleCommand = function() {
+  TracableCommand.call(this, 'simple-command');
+};
+
+
+describe('cmd/CommandStack', function() {
+
+  beforeEach(bootstrapDiagram({ modules: [ cmdModule ] }));
+
+
+  describe('#register', function() {
+
+    var handler = {
       execute: function(ctx) {
-        ctx.last = 'execute-' + name;
+        ctx.heho = 'HE';
       },
+
       revert: function(ctx) {
-        ctx.last = 'revert-' + name;
-      },
-      canExecute: function(ctx) {
-        ctx.last = 'can-execute-' + name;
+        ctx.heho = 'HO';
       }
     };
-  }
-
-  var handlerA = handler('A');
-  var handlerB = handler('B');
-  var handlerC = handler('C');
 
 
-  var fired;
-  var commandStack, events;
+    it('should register handler instance', inject(function(commandStack) {
+
+      // when
+      commandStack.register('heho', handler);
+
+      // then
+      expect(commandStack._getHandler('heho')).toBe(handler);
+    }));
+
+  });
 
 
-  beforeEach(function() {
-    events = new Events();
-    fired = [];
+  describe('#registerHandler', function() {
 
-    events.fire = function() {
-      fired.push(Array.prototype.slice.call(arguments));
+    var Handler = function(eventBus) {
+
+      this.execute = function(ctx) {
+        expect(eventBus).toBeDefined();
+        ctx.heho = 'HE';
+      };
+
+      this.revert = function(ctx) {
+        ctx.heho = 'HO';
+        expect(eventBus).toBeDefined();
+      };
     };
 
-    commandStack = new CommandStack(null, events);
-  });
 
-
-  function expectFired(events) {
-    expect(fired).toEqual(events);
-  }
-
-  function expectStack(actions, idx) {
-    expect(commandStack.getStack()).toEqual(actions);
-    expect(commandStack.getStackIndex()).toEqual(idx);
-  }
-
-  function action(id, ctx) {
-    return { id: id, ctx: ctx };
-  }
-
-
-  describe('register', function() {
-
-    it('should register handler', function() {
+    it('should register handler class', inject(function(commandStack) {
 
       // when
-      commandStack.register('a', handlerA);
-      commandStack.register('c', handlerC);
+      commandStack.registerHandler('heho', Handler);
 
       // then
-      var handlers_a = commandStack.getHandlers('a');
-      var handlers_c = commandStack.getHandlers('c');
+      expect(commandStack._getHandler('heho') instanceof Handler).toBe(true);
+    }));
 
-      expect(handlers_a).toEqual([ handlerA ]);
-      expect(handlers_c).toEqual([ handlerC ]);
-    });
+
+    it('should inject handler instance', inject(function(commandStack) {
+
+      // given
+      commandStack.registerHandler('heho', Handler);
+
+      var context = {};
+
+      // when
+      commandStack.execute('heho', context);
+
+      // then
+      expect(context.heho).toBe('HE');
+    }));
 
   });
 
 
-  describe('execute', function() {
+  describe('#execute', function() {
 
-    it('should put action on stack', function() {
+    it('should throw error on no command', inject(function(commandStack) {
+
+      expect(function() {
+        commandStack.execute();
+      }).toThrow();
+
+    }));
+
+
+    it('should throw error on no handler', inject(function(commandStack) {
+
+      expect(function() {
+        commandStack.execute('non-existing-command');
+      }).toThrow();
+
+    }));
+
+
+    it('should execute command', inject(function(commandStack) {
 
       // given
-      commandStack.register('a', handlerA);
+      commandStack.registerHandler('simple-command', SimpleCommand);
 
-      var ctx = {};
+      var context = { element: { trace: [] } };
 
       // when
-      commandStack.execute('a', ctx);
+      commandStack.execute('simple-command', context);
 
       // then
-      expect(ctx.last).toEqual('execute-A');
+      expect(context.element.trace).toEqual([ 'simple-command' ]);
+      expect(commandStack._stack.length).toBe(1);
+      expect(commandStack._stackIdx).toBe(0);
+    }));
 
-      expectStack([ action('a', ctx) ], 0);
-    });
+  });
 
 
-    it('should fire commandStack.(execute|changed) events', function() {
+  describe('#undo', function() {
+
+    it('should not fail if nothing to undo', inject(function(commandStack) {
+
+      expect(function() {
+        commandStack.undo();
+      }).not.toThrow();
+
+    }));
+
+
+    it('should undo command', inject(function(commandStack) {
 
       // given
+      commandStack.registerHandler('simple-command', SimpleCommand);
+
+      var context = { element: { trace: [] } };
+
+      commandStack.execute('simple-command', context);
 
       // when
-      commandStack.execute('a', {});
+      commandStack.undo();
 
       // then
-      expectFired([
-        [ 'commandStack.execute', { id: 'a' } ],
-        [ 'commandStack.changed' ]
+      expect(context.element.trace).toEqual([]);
+      expect(commandStack._stack.length).toBe(1);
+      expect(commandStack._stackIdx).toBe(-1);
+    }));
+
+  });
+
+
+  describe('#redo', function() {
+
+    it('should not fail if nothing to redo', inject(function(commandStack) {
+
+      expect(function() {
+        commandStack.redo();
+      }).not.toThrow();
+
+    }));
+
+
+    it('should redo command', inject(function(commandStack) {
+
+      // given
+      commandStack.registerHandler('simple-command', SimpleCommand);
+
+      var context = { element: { trace: [] } };
+
+      commandStack.execute('simple-command', context);
+      commandStack.undo();
+
+      // when
+      commandStack.redo();
+
+      // then
+      expect(context.element.trace).toEqual([ 'simple-command' ]);
+      expect(commandStack._stack.length).toBe(1);
+      expect(commandStack._stackIdx).toBe(0);
+    }));
+
+  });
+
+
+  describe('command context', function() {
+
+    it('should pass command context to handler', inject(function(commandStack) {
+
+      // given
+      var context = {};
+
+      commandStack.register('command', {
+
+        execute: function(ctx) {
+          expect(ctx).toBe(context);
+        },
+
+        revert: function(ctx) {
+          expect(ctx).toBe(context);
+        }
+      });
+
+      // then
+      // expect not to fail
+      commandStack.execute('command', context);
+      commandStack.undo();
+      commandStack.redo('command', context);
+    }));
+
+  });
+
+
+  describe('#preExecute / #postExecute support', function() {
+
+    var element, context;
+
+    beforeEach(inject(function(commandStack) {
+
+      element = { trace: [] };
+
+      context = {
+        element: element
+      };
+
+      commandStack.registerHandler('complex-command', ComplexCommand);
+      commandStack.registerHandler('pre-command', PreCommand);
+      commandStack.registerHandler('post-command', PostCommand);
+    }));
+
+
+    it('should invoke #preExecute and #postExecute in order', inject(function(commandStack) {
+
+      // when
+      commandStack.execute('complex-command', context);
+
+      // then
+      expect(element.trace).toEqual([
+        'pre-command',
+        'complex-command',
+        'post-command'
       ]);
+    }));
 
-    });
 
-
-    it('should put multiple actions on stack', function() {
-
-      // given
-      commandStack.register('a', handlerA);
-      commandStack.register('b', handlerB);
-
-      var ctx = {};
+    it('should group {pre,actual,post} commands on commandStack', inject(function(commandStack) {
 
       // when
-      commandStack.execute('a', ctx);
-      commandStack.execute('b', ctx);
+      commandStack.execute('complex-command', context);
+
+      var stack = commandStack._stack,
+          stackIdx = commandStack._stackIdx;
 
       // then
-      expect(ctx.last).toEqual('execute-B');
+      expect(stack.length).toBe(3);
+      expect(stackIdx).toBe(2);
 
-      expectStack([ action('a', ctx), action('b', ctx) ], 1);
-    });
+      // expect same id(s)
+      expect(stack[0].id).toEqual(stack[1].id);
+      expect(stack[2].id).toEqual(stack[1].id);
+    }));
 
-  });
 
-
-  describe('undo', function() {
-
-    it('should undo single action', function() {
-
-      // given
-      commandStack.register('a', handlerA);
-
-      var ctx = {};
+    it('should undo {pre,actual,post} commands', inject(function(commandStack) {
 
       // when
-      commandStack.execute('a', ctx);
+      commandStack.execute('complex-command', context);
       commandStack.undo();
 
+      var stack = commandStack._stack,
+          stackIdx = commandStack._stackIdx;
+
       // then
-      expect(ctx.last).toEqual('revert-A');
+      expect(stack.length).toBe(3);
+      expect(stackIdx).toBe(-1);
 
-      expectStack([ action('a', ctx) ], -1);
-    });
+      expect(element.trace).toEqual([]);
+    }));
 
 
-    it('should fire commandStack.(revert|changed) events', function() {
-
-      // given
+    it('should redo pre/post commands', inject(function(commandStack) {
 
       // when
-      commandStack.execute('a', {});
+      commandStack.execute('complex-command', context);
       commandStack.undo();
+      commandStack.redo();
+
+      var stack = commandStack._stack,
+          stackIdx = commandStack._stackIdx;
 
       // then
-      expectFired([
-        [ 'commandStack.execute', { id: 'a' } ],
-        [ 'commandStack.changed' ],
-        [ 'commandStack.revert', { id: 'a' } ],
-        [ 'commandStack.changed' ]
+      expect(stack.length).toBe(3);
+      expect(stackIdx).toBe(2);
+
+      expect(element.trace).toEqual([
+        'pre-command',
+        'complex-command',
+        'post-command'
       ]);
-
-    });
-
-
-    it('should undo multiple actions', function() {
-
-      // given
-      commandStack.register('a', handlerA);
-      commandStack.register('b', handlerB);
-
-      var ctx = {};
-
-      // when
-      commandStack.execute('a', ctx);
-      commandStack.execute('b', ctx);
-      commandStack.undo();
-      commandStack.undo();
-
-      // then
-      expect(ctx.last).toEqual('revert-A');
-
-      expectStack([ action('a', ctx), action('b', ctx) ], -1);
-    });
+    }));
 
 
-    it('should not fail if nothing to undo', function() {
+    describe('event integration', function() {
 
-      // given
+      it('should emit #preExecute and #postExecute events', inject(function(commandStack, eventBus) {
 
-      // when
-      commandStack.undo();
+        // given
+        var events = [];
 
-      // then
-      expectStack([ ], -1);
+        function logEvent(e) {
+          events.push(e.type + ' ' + e.command);
+        }
+
+        eventBus.on([
+          'commandStack.preExecute',
+          'commandStack.execute',
+          'commandStack.postExecute'
+        ], logEvent);
+
+        // when
+        commandStack.execute('complex-command', context);
+
+        // then
+        expect(events).toEqual([
+          'commandStack.preExecute complex-command',
+          'commandStack.preExecute pre-command',
+          'commandStack.execute pre-command',
+          'commandStack.postExecute pre-command',
+          'commandStack.execute complex-command',
+          'commandStack.postExecute complex-command',
+          'commandStack.preExecute post-command',
+          'commandStack.execute post-command',
+          'commandStack.postExecute post-command'
+        ]);
+      }));
+
+
+      it('should emit execute* events', inject(function(commandStack, eventBus) {
+
+        // given
+        var events = [];
+
+        function logEvent(e) {
+          events.push((e && e.command) || 'changed');
+        }
+
+        eventBus.on([ 'commandStack.execute', 'commandStack.changed' ], logEvent);
+
+        // when
+        commandStack.execute('complex-command', context);
+
+        // then
+        expect(events).toEqual([
+          'pre-command',
+          'complex-command',
+          'post-command',
+          'changed'
+        ]);
+      }));
+
+
+      it('should emit revert* events', inject(function(commandStack, eventBus) {
+
+        // given
+        var events = [];
+
+        function logEvent(e) {
+          events.push((e && e.command) || 'changed');
+        }
+
+        commandStack.execute('complex-command', context);
+
+        eventBus.on([ 'commandStack.revert', 'commandStack.changed' ], logEvent);
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(events).toEqual([
+          'post-command',
+          'complex-command',
+          'pre-command',
+          'changed'
+        ]);
+      }));
+
     });
 
   });
 
 
-  describe('redo', function() {
+  describe('dirty handling', function() {
 
-    it('should redo previously undone action', function() {
+    var OuterHandler = function(commandStack) {
 
-      // given
-      commandStack.register('a', handlerA);
+      this.execute = function(context) {
+        return context.s1;
+      };
 
-      var ctx = {};
+      this.revert = function(context) {
+        return context.s1;
+      };
 
-      // when
-      commandStack.execute('a', ctx);
-      commandStack.undo();
-      commandStack.redo();
-
-      // then
-      expect(ctx.last).toEqual('execute-A');
-
-      expectStack([ action('a', ctx) ], 0);
-    });
+      this.postExecute = function(context)  {
+        commandStack.execute('inner-command', context);
+      };
+    };
 
 
-    it('should not fail if nothing to redo', function() {
+    var InnerHandler = function() {
 
-      // given
+      this.execute = function(context) {
+        return [ context.s1, context.s2 ];
+      };
 
-      // when
-      commandStack.redo();
-
-      // then
-      expectStack([ ], -1);
-    });
-
-  });
+      this.revert = function(context) {
+        return [ context.s1, context.s2 ];
+      };
+    };
 
 
-  describe('reset', function() {
-
-    it('should clear stack', function() {
+    it('should update dirty shapes after change', inject(function(commandStack, eventBus) {
 
       // given
-      commandStack.register('a', handlerA);
+      commandStack.registerHandler('outer-command', OuterHandler);
+      commandStack.registerHandler('inner-command', InnerHandler);
 
-      commandStack.execute('a', {});
-      commandStack.execute('a', {});
-      commandStack.undo();
-      commandStack.redo();
-      commandStack.execute('a', {});
-      commandStack.undo();
+      var s1 = {}, s2 = {}, context = { s1: s1, s2: s2 };
+
+      var events = [];
+
+      function logEvent(e) {
+        events.push(e.element);
+      }
+
+      eventBus.on('element.changed', logEvent);
 
       // when
-      commandStack.clear();
+      commandStack.execute('outer-command', context);
 
       // then
-      expectStack([ ], -1);
-    });
+      expect(events).toEqual([ s1, s2 ]);
+    }));
 
   });
 
