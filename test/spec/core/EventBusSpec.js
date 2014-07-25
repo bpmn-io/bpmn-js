@@ -1,21 +1,16 @@
 'use strict';
 
-var Events = require('../../../lib/core/EventBus');
+var EventBus = require('../../../lib/core/EventBus');
 
 var createSpy = jasmine.createSpy;
 
 
-describe('eventBus', function() {
-
-  function createEventEmitter() {
-    return new Events();
-  }
-
+describe('core/EventBus', function() {
 
   it('should fire listener', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener = createSpy('listener');
 
     e.on('foo', listener);
@@ -31,7 +26,7 @@ describe('eventBus', function() {
   it('should fire typed listener', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener = createSpy('listener');
 
     e.on('foo', listener);
@@ -47,7 +42,7 @@ describe('eventBus', function() {
   it('should stopPropagation', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener1 = createSpy('listener1').and.callFake(function(event) {
       event.stopPropagation();
     });
@@ -69,7 +64,7 @@ describe('eventBus', function() {
   it('should remove listeners by event type', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener1 = createSpy('listener1');
     var listener2 = createSpy('listener2');
 
@@ -89,7 +84,7 @@ describe('eventBus', function() {
   it('should remove listener by callback', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener1 = createSpy('listener1');
     var listener2 = createSpy('listener2');
 
@@ -109,7 +104,7 @@ describe('eventBus', function() {
   it('should fire event by name', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener = createSpy('listener');
 
     // when
@@ -123,7 +118,7 @@ describe('eventBus', function() {
   it('once should only fire once', function() {
 
     // given
-    var e = createEventEmitter();
+    var e = new EventBus();
     var listener = createSpy('listener');
 
     // when
@@ -142,6 +137,22 @@ describe('eventBus', function() {
 
     // should be fired again
     expect(listener).toHaveBeenCalled();
+  });
+
+
+  it('should register to multiple events', function() {
+
+    // given
+    var e = new EventBus();
+    var listener1 = createSpy('listener1');
+
+    e.on([ 'foo', 'bar' ], listener1);
+
+    // when
+    e.fire({ type: 'foo' });
+
+    // then
+    expect(listener1).toHaveBeenCalled();
   });
 
 });
@@ -206,12 +217,9 @@ describe('event priorities', function() {
       listener3,
       listenerStopPropagation;
 
-  function createEventEmitter() {
-    return new Events();
-  }
 
   beforeEach(function() {
-    e = createEventEmitter();
+    e = new EventBus();
 
     listener1 = function(param) {
       if(param.value === 'C') {
