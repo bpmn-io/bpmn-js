@@ -20,7 +20,6 @@
   "maxlen" : 120,
   "browser" : true,
   "node" : true,
-  "debug": true,
   "strict": false,
   "globals": {
     "console": true,
