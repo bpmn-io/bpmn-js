@@ -202,5 +202,66 @@ describe('features/overlay', function() {
       canvas.zoom(4.1);
       expect(element.style.display).toEqual('none');
     }));
+
+
+    it('should add overlay to single element', inject(function(overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      expect(document.getElementById('html-ov')).toEqual(null);
+
+      // when
+
+      // add overlay to a single shape (or connection)
+      var id = overlays.addOverlay(shape, {
+        show: {
+          minZoom: 0.5
+        },
+        html: '<div class="overlay" id="html-ov"></div>'
+      });
+
+      // then
+      // expect overlay to be attached to shape
+
+      expect(id).toBeDefined();
+      expect(document.getElementById('html-ov')).toBeDefined();
+      expect(document.getElementById('html-ov')).not.toEqual(null);
+    }));
+
+    it('should remove an overlay', inject(function(overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      var id = overlays.addOverlay(shape, {
+        show: {
+          minZoom: 0.5
+        },
+        html: '<div class="overlay" id="html-ov2"></div>'
+      });
+
+
+      // when
+      overlays.removeOverlay(id);
+
+      // then
+      // expect overlay to be removed
+
+      expect(id).toBeDefined();
+      expect(document.getElementById('html-ov2')).toEqual(null);
+    }));
   });
 });
