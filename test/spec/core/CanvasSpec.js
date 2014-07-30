@@ -64,6 +64,20 @@ describe('Canvas', function() {
     beforeEach(defaultBootstrap);
 
 
+    it('should fire <shape.add> event', inject(function(canvas, eventBus) {
+
+      // given
+      var listener = createSpy('listener');
+      eventBus.on('shape.add', listener);
+
+      // when
+      canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+
+      // then
+      expect(listener).toHaveBeenCalled();
+    }));
+
+
     it('should fire <shape.added> event', inject(function(canvas, eventBus) {
 
       // given

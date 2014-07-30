@@ -15,14 +15,14 @@ describe('elementRegistry', function() {
   });
 
 
-  it('should register shape on add', function() {
+  it('should register shape on <shape.add>', function() {
 
     // given
     var shape = { id: 's0' },
         gfx = { id: 'g0' };
 
     // when
-    eventBus.fire('shape.added', { element: shape, gfx: gfx });
+    eventBus.fire('shape.add', { element: shape, gfx: gfx });
 
     // then
     expect(shapes.getByGraphics(gfx)).toBe(shape);
@@ -35,14 +35,14 @@ describe('elementRegistry', function() {
   });
 
 
-  it('should unregister shape on remove', function() {
+  it('should unregister shape on <shape.removed>', function() {
 
     // given
     var shape = { id: 's0' },
         gfx = { id: 'g0' };
 
     // when
-    eventBus.fire('shape.added', { element: shape, gfx: gfx });
+    eventBus.fire('shape.add', { element: shape, gfx: gfx });
     eventBus.fire('shape.removed', { element: shape, gfx: gfx });
 
     // then
