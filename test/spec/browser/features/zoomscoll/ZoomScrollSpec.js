@@ -17,7 +17,7 @@ var zoomscrollModule = require('../../../../../lib/features/zoomscroll'),
 
 describe('features - zoomscroll', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');

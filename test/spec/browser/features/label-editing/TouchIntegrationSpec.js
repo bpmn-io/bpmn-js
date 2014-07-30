@@ -16,7 +16,7 @@ var labelEditingModule = require('../../../../../lib/features/label-editing'),
 
 describe('direct editing - touch integration', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var container;

@@ -13,7 +13,7 @@ var modelingModule = require('../../../../../lib/features/modeling');
 
 xdescribe('features - bpmn-factory', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');

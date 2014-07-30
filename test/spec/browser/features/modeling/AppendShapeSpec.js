@@ -15,7 +15,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
 
 describe('features/modeling - append shape', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
@@ -315,13 +315,13 @@ describe('features/modeling - append shape', function() {
 
     describe('ExclusiveGateway', function() {
 
-      it('should append', inject(function(elementRegistry, bpmnModeling) {
+      it('should append', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
           target = targetShape.businessObject;
 
         // then
@@ -330,7 +330,7 @@ describe('features/modeling - append shape', function() {
       }));
 
 
-      it('should add to parent (sub process)', inject(function(elementRegistry, bpmnModeling) {
+      it('should add to parent (sub process)', inject(function(elementRegistry, modeling) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -340,7 +340,7 @@ describe('features/modeling - append shape', function() {
           subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
           target = targetShape.businessObject;
 
         // then
@@ -348,7 +348,7 @@ describe('features/modeling - append shape', function() {
       }));
 
 
-      it('should undo append', inject(function(elementRegistry, bpmnModeling, commandStack) {
+      it('should undo append', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
         var startEventShape = elementRegistry.getById('StartEvent_1');
@@ -357,7 +357,7 @@ describe('features/modeling - append shape', function() {
         var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
           target = targetShape.businessObject;
 
         // when

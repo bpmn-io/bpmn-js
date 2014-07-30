@@ -19,7 +19,7 @@ var LabelUtil = require('../../../../../lib/features/label-editing/LabelUtil');
 
 describe('features - label-editing', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');

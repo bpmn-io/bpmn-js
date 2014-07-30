@@ -13,7 +13,7 @@ var Modeler = require('../../../lib/Modeler');
 
 describe('modeler', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var container;

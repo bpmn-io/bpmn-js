@@ -11,7 +11,7 @@ var fs = require('fs');
 
 describe('import - labels', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   describe('should import embedded labels', function() {

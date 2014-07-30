@@ -11,7 +11,7 @@ var fs = require('fs');
 
 describe('draw - bpmn renderer', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   it('should render activity markers', function(done) {

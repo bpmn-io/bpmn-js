@@ -11,7 +11,7 @@ var fs = require('fs');
 
 describe('import - collapsed container', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   describe('in process', function() {

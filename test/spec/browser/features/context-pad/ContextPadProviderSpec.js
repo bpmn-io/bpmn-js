@@ -14,7 +14,7 @@ var contextPadModule = require('../../../../../lib/features/context-pad'),
 
 describe('features - context-pad', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');

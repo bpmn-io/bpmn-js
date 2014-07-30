@@ -13,7 +13,7 @@ var Viewer = require('../../../lib/Viewer');
 
 describe('viewer', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var container;

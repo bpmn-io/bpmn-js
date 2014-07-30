@@ -15,7 +15,7 @@ var touchModule = require('../../../../../lib/features/touch'),
 
 describe('features - touch', function() {
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');

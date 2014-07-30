@@ -22,7 +22,7 @@ describe('import - importer', function() {
     return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
   }
 
-  beforeEach(Matchers.add);
+  beforeEach(Matchers.addDeepEquals);
 
 
   var container;
