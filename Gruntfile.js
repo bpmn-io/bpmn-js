@@ -64,22 +64,9 @@ module.exports = function(grunt) {
       }
     },
 
-    jasmine_node: {
-      options: {
-        specNameMatcher: '.*Spec',
-        jUnit: {
-          report: true,
-          savePath : 'tmp/reports/jasmine',
-          useDotNotation: true,
-          consolidate: true
-        }
-      },
-      node: [ 'test/spec/node/' ]
-    },
-
     karma: {
       options: {
-        configFile: '<%= config.tests %>/config/karma.unit.js',
+        configFile: '<%= config.tests %>/config/karma.unit.js'
       },
       single: {
         singleRun: true,
@@ -242,7 +229,7 @@ module.exports = function(grunt) {
 
   // tasks
 
-  grunt.registerTask('test', [ 'jasmine_node', 'karma:single' ]);
+  grunt.registerTask('test', [ 'karma:single' ]);
 
   /////
   //
