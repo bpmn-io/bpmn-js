@@ -5,7 +5,7 @@ var TestHelper = require('../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var cmdModule = require('../../../lib/cmd');
+var cmdModule = require('../../../lib/command');
 
 
 // example commands
@@ -48,7 +48,7 @@ var SimpleCommand = function() {
 };
 
 
-describe('cmd/CommandStack', function() {
+describe('command/CommandStack', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ cmdModule ] }));
 
