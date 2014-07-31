@@ -44,6 +44,19 @@ describe('features - bpmn-modeling', function() {
         expect(target.$instanceOf('bpmn:Task')).toBe(true);
       }));
 
+      it('should execute', inject(function(elementRegistry, bpmnModeling) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+
+        // when
+        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+          target = targetShape.businessObject;
+
+        // then
+        expect(targetShape).toBeDefined();
+        expect(target.$instanceOf('bpmn:ExclusiveGateway')).toBe(true);
+      }));
 
       it('should create DI', inject(function(elementRegistry, bpmnModeling) {
 
@@ -76,6 +89,23 @@ describe('features - bpmn-modeling', function() {
         // when
         var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:Task'),
             target = targetShape.businessObject;
+
+        // then
+        expect(subProcess.get('flowElements')).toContain(target);
+      }));
+
+      it('should add to parent (sub process)', inject(function(elementRegistry, bpmnModeling) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var subProcessShape = elementRegistry.getById('SubProcess_1');
+
+        var startEvent = startEventShape.businessObject,
+          subProcess = subProcessShape.businessObject;
+
+        // when
+        var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+          target = targetShape.businessObject;
 
         // then
         expect(subProcess.get('flowElements')).toContain(target);
@@ -216,6 +246,26 @@ describe('features - bpmn-modeling', function() {
           expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
           expect(elementRegistry.getById(connection.id + '_label')).not.toBeDefined();
+        }));
+
+        it('should undo add to parent', inject(function(elementRegistry, bpmnModeling, commandStack) {
+
+          // given
+          var startEventShape = elementRegistry.getById('StartEvent_1');
+          var subProcessShape = elementRegistry.getById('SubProcess_1');
+
+          var startEvent = startEventShape.businessObject,
+            subProcess = subProcessShape.businessObject;
+
+          var targetShape = bpmnModeling.appendFlowNode(startEventShape, null, 'bpmn:ExclusiveGateway'),
+            target = targetShape.businessObject;
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(subProcess.get('flowElements')).not.toContain(target);
+          expect(subProcess.di.$parent.get('planeElement')).not.toContain(target.di);
         }));
 
 
