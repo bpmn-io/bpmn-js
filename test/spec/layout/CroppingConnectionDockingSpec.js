@@ -9,7 +9,7 @@ var Matchers = require('../../Matchers');
 
 
 var layoutModule = {
-  layouter: [ 'type', require('../../../lib/layout/CroppingConnectionLayouter') ]
+  layouter: [ 'type', require('../../../lib/layout/CroppingConnectionDocking') ]
 };
 
 
@@ -20,7 +20,7 @@ function mid(shape) {
   };
 }
 
-describe('features/layout/CroppingConnectionLayouter', function() {
+describe('features/layout/CroppingConnectionDocking', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ layoutModule ] }));
 
