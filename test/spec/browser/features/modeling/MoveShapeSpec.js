@@ -30,36 +30,49 @@ describe('features/modeling - move shape', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1'),
-          startEvent = startEventShape.businessObject;
+      var startEventElement = elementRegistry.getById('StartEvent_1'),
+          startEvent = startEventElement.businessObject;
+
+      var sequenceFlowElement = elementRegistry.getById('SequenceFlow_1'),
+          sequenceFlow = sequenceFlowElement.businessObject;
 
       var oldPosition = {
-        x: startEventShape.x,
-        y: startEventShape.y
+        x: startEventElement.x,
+        y: startEventElement.y
       };
 
       // when
-      modeling.moveShape(startEventShape, { dx: 0, dy: 50 });
+      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
 
       // then
       expect(startEvent.di.bounds.x).toBe(oldPosition.x);
       expect(startEvent.di.bounds.y).toBe(oldPosition.y + 50);
+
+      expect(sequenceFlowElement.waypoints).toDeepEqual([
+        { original: { x: 370, y: 310 }, x: 386, y: 302 },
+        { original: { x: 470, y: 260 }, x: 420, y: 285 }
+      ]);
+
+      expect(sequenceFlow.di.waypoint).toDeepEqual([
+        { $type: 'dc:Point', x: 386, y: 302 },
+        { $type: 'dc:Point', x: 420, y: 285 }
+      ]);
     }));
 
 
     it('should execute on label', inject(function(elementRegistry, modeling) {
 
       // given
-      var labelShape = elementRegistry.getById('StartEvent_1_label'),
-          startEvent = labelShape.businessObject;
+      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+          startEvent = labelElement.businessObject;
 
       var oldPosition = {
-        x: labelShape.x,
-        y: labelShape.y
+        x: labelElement.x,
+        y: labelElement.y
       };
 
       // when
-      modeling.moveShape(labelShape, { dx: 0, dy: 50 });
+      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
 
       // then
       expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
@@ -74,15 +87,15 @@ describe('features/modeling - move shape', function() {
     it('should undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1'),
-          startEvent = startEventShape.businessObject;
+      var startEventElement = elementRegistry.getById('StartEvent_1'),
+          startEvent = startEventElement.businessObject;
 
       var oldPosition = {
-        x: startEventShape.x,
-        y: startEventShape.y
+        x: startEventElement.x,
+        y: startEventElement.y
       };
 
-      modeling.moveShape(startEventShape, { dx: 0, dy: 50 });
+      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
 
       // when
       commandStack.undo();
@@ -96,15 +109,15 @@ describe('features/modeling - move shape', function() {
     it('should undo on label', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var labelShape = elementRegistry.getById('StartEvent_1_label'),
-          startEvent = labelShape.businessObject;
+      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+          startEvent = labelElement.businessObject;
 
       var oldPosition = {
-        x: labelShape.x,
-        y: labelShape.y
+        x: labelElement.x,
+        y: labelElement.y
       };
 
-      modeling.moveShape(labelShape, { dx: 0, dy: 50 });
+      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
 
       // when
       commandStack.undo();
@@ -112,6 +125,57 @@ describe('features/modeling - move shape', function() {
       // then
       expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
       expect(startEvent.di.label.bounds.y).toBe(oldPosition.y);
+    }));
+
+  });
+
+
+  describe('redo support', function() {
+
+    it('should redo', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var startEventElement = elementRegistry.getById('StartEvent_1'),
+          startEvent = startEventElement.businessObject;
+
+
+      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
+
+      var newPosition = {
+        x: startEventElement.x,
+        y: startEventElement.y
+      };
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(startEvent.di.bounds.x).toBe(newPosition.x);
+      expect(startEvent.di.bounds.y).toBe(newPosition.y);
+    }));
+
+
+    it('should redo on label', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+          startEvent = labelElement.businessObject;
+
+      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
+
+      var newPosition = {
+        x: labelElement.x,
+        y: labelElement.y
+      };
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(startEvent.di.label.bounds.x).toBe(newPosition.x);
+      expect(startEvent.di.label.bounds.y).toBe(newPosition.y);
     }));
 
   });
