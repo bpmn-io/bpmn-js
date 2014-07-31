@@ -135,6 +135,33 @@ describe('features/layout/CroppingConnectionDocking', function() {
     }));
 
 
+    it('should take shape x,y from shape', inject(function(layouter, canvas) {
+
+      function expectDockingPoint(connection, shape, expected) {
+        var dockingPoint = layouter.getDockingPoint(connection, shape);
+
+        canvas._paper.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
+
+        expect(dockingPoint).toDeepEqual(expected);
+      }
+
+
+      var shape = topLeft_bottomRightConnection.target;
+
+      // simulate position update
+      shape.x = shape.x + 20;
+      shape.y = shape.y + 20;
+
+
+      // vertical target docking
+      expectDockingPoint(topLeft_bottomRightConnection, shape, {
+        point : { x : 450, y : 450 },
+        actual : { x : 423, y : 423 },
+        idx : 1
+      });
+    }));
+
+
     it('should fallback if no intersection', inject(function(layouter, canvas) {
 
       function expectDockingPoint(connection, shape, expected) {
