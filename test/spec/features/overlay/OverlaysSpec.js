@@ -11,7 +11,7 @@ var _ = require('lodash'),
 var overlayModule = require('../../../../lib/features/overlays');
 
 
-describe('features/overlay', function() {
+describe('features/  overlays', function() {
 
   describe('bootstrap', function() {
 
@@ -21,56 +21,19 @@ describe('features/overlay', function() {
     it('overlay to be defined', inject(function(overlays) {
       expect(overlays).toBeDefined();
       expect(overlays.getOverlays).toBeDefined();
-      expect(overlays.addOverlayToElement).toBeDefined();
+      expect(overlays.addOverlay).toBeDefined();
       expect(overlays.removeOverlay).toBeDefined();
     }));
   });
 
 
-  describe('overlay handling', function() {
+  describe('#addOverlay()', function() {
 
     beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
 
+    it('should add \'<div>\'', inject(function(overlays, canvas) {
 
-    var overlay;
-
-    function TestOverlay() {
-      this.name = 'test-overlay';
-
-      this.attach = function(element) {
-        $(element).text('Test overlay');
-        $(element).css({
-          'background-color': '#42B415',
-          'color': 'white',
-          'border-radius': '50px',
-          'font-family': 'Arial',
-          'padding': '3px',
-          'font-size': '13px',
-          'display': 'inline-block',
-          'min-height': '16px',
-          'min-width': '16px',
-          'text-align': 'center',
-          'position': 'absolute'
-        });
-      };
-    }
-
-    beforeEach(function() {
-      overlay = new TestOverlay();
-    });
-
-
-    it('should register overlay type', inject(function(overlays) {
-      expect(_.size(overlays._overlayTypes)).toEqual(0);
-      overlays.registerOverlayType({ name: 'test-overlay' });
-
-      expect(overlays._overlayTypes['test-overlay']).toBeDefined();
-      expect(_.size(overlays._overlayTypes)).toEqual(1);
-    }));
-
-
-    it('add/remove overlay', inject(function(overlays, canvas) {
-      //Setup
+      // given
       var shape = canvas.addShape({
         id: 'test',
         x: 10,
@@ -78,53 +41,110 @@ describe('features/overlay', function() {
         width: 100,
         height: 100
       });
-      overlays.registerOverlayType(overlay);
 
-      // attach
       expect(_.size(overlays.getOverlays())).toEqual(0);
-      var overlayId = overlays.addOverlayToElement('test-overlay', shape, {text: 'Test'});
-      expect(overlayId).toBeDefined();
+      expect(document.getElementById('html-ov')).toEqual(null);
+
+      // when
+
+      // add overlay to a single shape (or connection)
+      var id = overlays.addOverlay(shape, {
+        show: {
+          minZoom: 0.5
+        },
+        html: '<div class="overlay" id="html-ov"></div>'
+      });
+
+      // then
+      // expect overlay to be attached to shape
+
+      expect(id).toBeDefined();
+      expect(document.getElementById('html-ov')).toBeDefined();
+      expect(document.getElementById('html-ov')).not.toEqual(null);
+      expect(_.size(overlays.getOverlays())).toEqual(1);
+    }));
+
+    it('should add jquery HTMLNode', inject(function(overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-jq'
+      });
+
+      expect(_.size(overlays.getOverlays())).toEqual(0);
+      expect(document.getElementById('html-jq')).toEqual(null);
+
+      // when
+
+      // add overlay to a single shape (or connection)
+      var id = overlays.addOverlay(shape, {
+        show: {
+          minZoom: 0.5
+        },
+        html: div
+      });
+
+      // then
+      // expect overlay to be attached to shape
+
+      expect(id).toBeDefined();
+      expect(document.getElementById('html-jq')).toBeDefined();
+      expect(document.getElementById('html-jq')).not.toEqual(null);
+      expect(_.size(overlays.getOverlays())).toEqual(1);
+    }));
+  });
+
+  describe('#removeOverlay()', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
+
+    it('should remove overlay', inject(function(overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test2',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      expect(_.size(overlays.getOverlays())).toEqual(0);
+      var id = overlays.addOverlay(shape, {
+        show: {
+          minZoom: 0.5
+        },
+        html: '<div class="overlay" id="html-ov2"></div>'
+      });
+      // Make it addOverlay worked
+      expect(document.getElementById('html-ov2')).toBeDefined();
+      expect(document.getElementById('html-ov2')).not.toEqual(null);
       expect(_.size(overlays.getOverlays())).toEqual(1);
 
-      // test if html exist
-      var element = document.getElementById(overlayId);
-      expect(element).toBeDefined();
-      // Remove overlay
-      overlays.removeOverlay(overlayId);
 
-      // Check if removed from list
+
+      // when
+      overlays.removeOverlay(id);
+
+      // then
+      // expect overlay to be removed
+      expect(id).toBeDefined();
+      expect(document.getElementById('html-ov2')).toEqual(null);
       expect(_.size(overlays.getOverlays())).toEqual(0);
-      // check if removed from DOM
-      element = document.getElementById(overlayId);
-      expect(!!element).toBeFalsy();
     }));
+  });
 
-    it(' should removed if shape is removed', inject(function(overlays, canvas) {
+  describe('#_setOverlayVisible', function() {
 
-      //Setup
-      var shape = canvas.addShape({
-        id: 'test',
-        x: 10,
-        y: 10,
-        width: 100,
-        height: 100
-      });
-      overlays.registerOverlayType(overlay);
-
-      // attach
-      var overlayId = overlays.addOverlayToElement('test-overlay', shape, {text: 'Test'});
-
-      // test if html exist
-      var element = document.getElementById(overlayId);
-      expect(element).toBeDefined();
-
-      // Remove overlay
-      canvas.removeShape(shape);
-
-      // check if removed from DOM
-      element = document.getElementById(overlayId);
-      expect(!!element).toBeFalsy();
-    }));
+    beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
 
     it(' should respect global min/max rules', inject(function(overlays, canvas) {
 
@@ -136,10 +156,16 @@ describe('features/overlay', function() {
         width: 100,
         height: 100
       });
-      overlays.registerOverlayType(overlay);
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-z1',
+        text:  'Test'
+      });
 
       // attach
-      var overlayId = overlays.addOverlayToElement('test-overlay', shape, {text: 'Test'});
+      var overlayId = overlays.addOverlay(shape, {
+        html: div
+      });
 
       // test if html exist
       var element = document.getElementById(overlayId);
@@ -171,11 +197,15 @@ describe('features/overlay', function() {
         width: 100,
         height: 100
       });
-      overlays.registerOverlayType(overlay);
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-z2',
+        text:  'Test'
+      });
 
       // attach
-      var overlayId = overlays.addOverlayToElement('test-overlay', shape, {
-        text: 'Test',
+      var overlayId = overlays.addOverlay(shape, {
+        html: div,
         minZoom: 0.3,
         maxZoom: 4
       });
@@ -202,66 +232,171 @@ describe('features/overlay', function() {
       canvas.zoom(4.1);
       expect(element.style.display).toEqual('none');
     }));
+  });
 
+  describe('#_setOverlayPosition', function() {
 
-    it('should add overlay to single element', inject(function(overlays, canvas) {
+    beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
 
-      // given
+    it('overlay should reflect elements position', inject(function(overlays, canvas) {
       var shape = canvas.addShape({
-        id: 'test',
-        x: 10,
-        y: 10,
-        width: 100,
-        height: 100
+        id: 'T-1',
+        x: 104,
+        y: 212,
+        width: 102,
+        height: 112
       });
 
-      expect(document.getElementById('html-ov')).toEqual(null);
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-p1',
+        text:  'Test'
+      });
 
       // when
-
-      // add overlay to a single shape (or connection)
-      var id = overlays.addOverlay(shape, {
-        show: {
-          minZoom: 0.5
-        },
-        html: '<div class="overlay" id="html-ov"></div>'
+      var overlayId = overlays.addOverlay(shape, {
+        html: div
       });
 
-      // then
-      // expect overlay to be attached to shape
+      //then
+      var element = document.getElementById(overlayId);
 
-      expect(id).toBeDefined();
-      expect(document.getElementById('html-ov')).toBeDefined();
-      expect(document.getElementById('html-ov')).not.toEqual(null);
+      var m = matrix(element.style.transform);
+      expect(m).toEqual({
+        a: 1,
+        b: 0,
+        c: 0,
+        d: 1,
+        e: 104,
+        f: 212
+      });
     }));
 
-    it('should remove an overlay', inject(function(overlays, canvas) {
-
-      // given
+    it('overlay should be translated if viewport gets translated', inject(function(overlays, canvas) {
       var shape = canvas.addShape({
-        id: 'test',
-        x: 10,
-        y: 10,
-        width: 100,
-        height: 100
+        id: 'T-2',
+        x: 108,
+        y: 220,
+        width: 102,
+        height: 112
       });
 
-      var id = overlays.addOverlay(shape, {
-        show: {
-          minZoom: 0.5
-        },
-        html: '<div class="overlay" id="html-ov2"></div>'
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-p2',
+        text:  'Test'
+      });
+
+      var overlayId = overlays.addOverlay(shape, {
+        html: div
+      });
+
+      // when
+      canvas.scroll({
+        dx: 100,
+        dy: 26
+      });
+
+      //then
+      var element = document.getElementById(overlayId);
+
+      var m = matrix(element.style.transform);
+      expect(m).toEqual({
+        a: 1,
+        b: 0,
+        c: 0,
+        d: 1,
+        e: 8,
+        f: 194
+      });
+    }));
+
+    it('overlay position should be scaled if viewport is scaled', inject(function(overlays, canvas) {
+      var shape = canvas.addShape({
+        id: 'T-3',
+        x: 108,
+        y: 220,
+        width: 102,
+        height: 112
+      });
+
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-p3',
+        text:  'Test'
+      });
+
+      var overlayId = overlays.addOverlay(shape, {
+        html: div
+      });
+
+      // when
+      canvas.zoom(10);
+
+      //then
+      var element = document.getElementById(overlayId);
+
+      var m = matrix(element.style.transform);
+      expect(m).toEqual({
+        a: 1,
+        b: 0,
+        c: 0,
+        d: 1,
+        e: 1080,
+        f: 2200
+      });
+    }));
+
+    it('overlay position should be absolute id specified', inject(function(overlays, canvas) {
+      var shape = canvas.addShape({
+        id: 'T-4',
+        x: 108,
+        y: 220,
+        width: 102,
+        height: 112
       });
 
 
       // when
-      overlays.removeOverlay(id);
+      var div = $('<div/>', {
+        class: 'overlay',
+        id:    'html-p4',
+        text:  'Test'
+      });
 
-      // then
-      // expect overlay to be removed
+      var overlayId = overlays.addOverlay(shape, {
+        html: div,
+        x: 333,
+        y: 444
+      });
 
-      expect(id).toBeDefined();
-      expect(document.getElementById('html-ov2')).toEqual(null);
+      //then
+      var element = document.getElementById(overlayId);
+
+      var m = matrix(element.style.transform);
+      expect(m).toEqual({
+        a: 1,
+        b: 0,
+        c: 0,
+        d: 1,
+        e: 333,
+        f: 444
+      });
     }));
   });
 });
+
+function matrix(transformStr) {
+  if(!transformStr || !(transformStr === 'none')) {
+    var m = transformStr.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
+
+    return {
+     a: parseFloat(m[0]),
+     b: parseFloat(m[1]),
+     c: parseFloat(m[2]),
+     d: parseFloat(m[3]),
+     e: parseFloat(m[4]),
+     f: parseFloat(m[5])
+    };
+  }
+}
