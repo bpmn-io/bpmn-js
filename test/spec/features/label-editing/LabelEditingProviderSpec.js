@@ -11,10 +11,10 @@ var fs = require('fs');
 var $ = require('jquery');
 
 
-var labelEditingModule = require('../../../../../lib/features/label-editing'),
-    bpmnModule = require('../../../../../lib/draw');
+var labelEditingModule = require('../../../../lib/features/label-editing'),
+    bpmnModule = require('../../../../lib/draw');
 
-var LabelUtil = require('../../../../../lib/features/label-editing/LabelUtil');
+var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
 
 
 describe('features - label-editing', function() {

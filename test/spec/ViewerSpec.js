@@ -8,7 +8,7 @@ var Matchers = require('../Matchers'),
 
 var fs = require('fs');
 
-var Viewer = require('../../../lib/Viewer');
+var Viewer = require('../../lib/Viewer');
 
 
 describe('viewer', function() {

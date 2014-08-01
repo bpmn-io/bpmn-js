@@ -8,7 +8,7 @@ var Matchers = require('../../../Matchers'),
 
 var fs = require('fs');
 
-var modelingModule = require('../../../../../lib/features/modeling');
+var modelingModule = require('../../../../lib/features/modeling');
 
 
 xdescribe('features - bpmn-factory', function() {

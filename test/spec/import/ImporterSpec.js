@@ -10,8 +10,8 @@ var fs = require('fs');
 
 var Diagram = require('diagram-js/lib/Diagram'),
     BpmnModel = require('bpmn-moddle'),
-    Importer = require('../../../../lib/import/Importer'),
-    Viewer = require('../../../../lib/Viewer');
+    Importer = require('../../../lib/import/Importer'),
+    Viewer = require('../../../lib/Viewer');
 
 
 describe('import - importer', function() {

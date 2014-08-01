@@ -6,15 +6,15 @@ module.exports = function(karma) {
     frameworks: [ 'browserify', 'jasmine' ],
 
     files: [
-      'test/spec/browser/**/*Spec.js',
-      'test/spec/integration/**/*Spec.js'
+      'test/spec/**/*Spec.js',
+      'test/integration/**/*Spec.js'
     ],
 
     reporters: [ 'dots' ],
 
     preprocessors: {
-      'test/spec/browser/**/*Spec.js': [ 'browserify' ],
-      'test/spec/integration/**/*Spec.js': [ 'browserify' ]
+      'test/spec/**/*Spec.js': [ 'browserify' ],
+      'test/integration/**/*Spec.js': [ 'browserify' ]
     },
 
     browsers: [ 'PhantomJS' ],

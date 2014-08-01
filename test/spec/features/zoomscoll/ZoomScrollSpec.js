@@ -8,28 +8,31 @@ var Matchers = require('../../../Matchers'),
 
 var fs = require('fs');
 
-
-var touchModule = require('../../../../../lib/features/touch'),
-    bpmnModule = require('../../../../../lib/draw');
+var $ = require('jquery');
 
 
-describe('features - touch', function() {
+var zoomscrollModule = require('../../../../lib/features/zoomscroll'),
+    bpmnModule = require('../../../../lib/draw');
+
+
+describe('features - zoomscroll', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');
 
-  var testModules = [ touchModule, bpmnModule ];
+  var testModules = [ zoomscrollModule, bpmnModule ];
 
   beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(touchInteraction) {
-      expect(touchInteraction).not.toBe(null);
+    it('should bootstrap', inject(function(zoomScroll) {
+      expect(zoomScroll).not.toBe(null);
     }));
 
   });
+
 });

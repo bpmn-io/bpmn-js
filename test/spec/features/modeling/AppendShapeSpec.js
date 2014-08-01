@@ -9,8 +9,8 @@ var _ = require('lodash');
 
 var fs = require('fs');
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    drawModule = require('../../../../../lib/draw');
+var modelingModule = require('../../../../lib/features/modeling'),
+    drawModule = require('../../../../lib/draw');
 
 
 describe('features/modeling - append shape', function() {

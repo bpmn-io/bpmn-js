@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-var BpmnJS = require('../../');
+var BpmnJS = require('../');
 
 // enhance jasmine with test container API
 require('jasmine-test-container-support').extend(jasmine);

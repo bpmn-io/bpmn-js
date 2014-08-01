@@ -8,9 +8,9 @@ var Matchers = require('../../../Matchers'),
 
 var fs = require('fs');
 
-var Modeler = require('../../../../../lib/Modeler');
+var Modeler = require('../../../../lib/Modeler');
 
-var labelEditingModule = require('../../../../../lib/features/label-editing'),
+var labelEditingModule = require('../../../../lib/features/label-editing'),
     touchModule = require('diagram-js/lib/features/touch');
 
 

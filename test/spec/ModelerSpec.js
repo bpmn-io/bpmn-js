@@ -8,7 +8,7 @@ var Matchers = require('../Matchers'),
 
 var fs = require('fs');
 
-var Modeler = require('../../../lib/Modeler');
+var Modeler = require('../../lib/Modeler');
 
 
 describe('modeler', function() {
