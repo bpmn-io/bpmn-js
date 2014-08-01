@@ -24,10 +24,10 @@ describe('viewer', function() {
 
 
   function createViewer(xml, done) {
-    var renderer = new Viewer({ container: container });
+    var viewer = new Viewer({ container: container });
 
-    renderer.importXML(xml, function(err) {
-      done(err, renderer);
+    viewer.importXML(xml, function(err) {
+      done(err, viewer);
     });
   }
 
@@ -119,14 +119,14 @@ describe('viewer', function() {
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
-      createViewer(xml, function(err, renderer) {
+      createViewer(xml, function(err, viewer) {
 
         if (err) {
           return done(err);
         }
 
         // when
-        renderer.saveSVG(function(err, svg) {
+        viewer.saveSVG(function(err, svg) {
 
           if (err) {
             return done(err);
@@ -149,6 +149,51 @@ describe('viewer', function() {
           done();
         });
       });
+    });
+
+  });
+
+  describe('configuration', function() {
+
+    var testModules = [
+      { logger: [ 'type', function() { this.called = true; } ] }
+    ];
+
+    // given
+    var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
+
+
+    it('should override default modules', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container, modules: testModules });
+
+      // when
+      viewer.importXML(xml, function(err) {
+
+        // then
+        expect(err.message).toBe('No provider for "bpmnImporter"! (Resolving: bpmnImporter)');
+        done();
+      });
+
+    });
+
+
+    it('should add module to default modules', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container, additionalModules: testModules });
+
+      // when
+      viewer.importXML(xml, function(err) {
+
+        // then
+        var logger = viewer.get('logger');
+        expect(logger.called).toBe(true);
+
+        done(err);
+      });
+
     });
 
   });
