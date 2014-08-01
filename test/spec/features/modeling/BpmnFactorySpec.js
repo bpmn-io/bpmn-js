@@ -11,7 +11,7 @@ var fs = require('fs');
 var modelingModule = require('../../../../lib/features/modeling');
 
 
-xdescribe('features - bpmn-factory', function() {
+describe('features - bpmn-factory', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
@@ -23,33 +23,29 @@ xdescribe('features - bpmn-factory', function() {
   beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
 
 
-  describe('create task', function() {
+  describe('create di', function() {
 
-    it('should create', inject(function(bpmnFactory) {
-      var result = bpmnFactory.createNode('bpmn:Task');
+    it('should create waypoints', inject(function(bpmnFactory) {
 
-      expect(result.semantic.id).toBeDefined();
-      expect(result.di.id).toBeDefined();
+      // given
+      var waypoints = [
+        { original: { x: 0, y: 0 }, x: 0, y: 0 },
+        { original: { x: 0, y: 0 }, x: 0, y: 0 }
+      ];
 
-      expect(result.di.bounds.width).toBe(100);
-      expect(result.di.bounds.height).toBe(80);
-      expect(result.di.bounds.x).toBe(-50);
-      expect(result.di.bounds.y).toBe(-40);
+      // when
+      var result = bpmnFactory.createDiWaypoints(waypoints);
+
+      // then
+      expect(result).toDeepEqual([
+        { $type: 'dc:Point', x: 0, y: 0 },
+        { $type: 'dc:Point', x: 0, y: 0 }
+      ]);
+
+      // expect original not to have been accidently serialized
+      expect(result[0].$attrs).toEqual({});
     }));
 
-
-    it('should create with position', inject(function(bpmnFactory) {
-
-      var result = bpmnFactory.createNode('bpmn:Task', { x: 100, y: 100 });
-
-      expect(result.semantic.id).toBeDefined();
-      expect(result.di.id).toBeDefined();
-
-      expect(result.di.bounds.width).toBe(100);
-      expect(result.di.bounds.height).toBe(80);
-      expect(result.di.bounds.x).toBe(50);
-      expect(result.di.bounds.y).toBe(60);
-    }));
 
   });
 
