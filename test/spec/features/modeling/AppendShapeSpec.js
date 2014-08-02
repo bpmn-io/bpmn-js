@@ -58,6 +58,11 @@ describe('features/modeling - append shape', function() {
       // then
       expect(target.di).toBeDefined();
       expect(target.di.$parent).toBe(startEvent.di.$parent);
+
+      expect(target.di.bounds.x).toBe(targetShape.x);
+      expect(target.di.bounds.y).toBe(targetShape.y);
+      expect(target.di.bounds.width).toBe(targetShape.width);
+      expect(target.di.bounds.height).toBe(targetShape.height);
     }));
 
 
