@@ -64,7 +64,7 @@ describe('features/modeling - move shape', function() {
   it('should move according to delta', inject(function(modeling) {
 
     // when
-    modeling.moveShape(childShape, { dx: -20, dy: +20 });
+    modeling.moveShape(childShape, { x: -20, y: +20 });
 
     // then
     expect(childShape.x).toBe(90);
@@ -78,7 +78,7 @@ describe('features/modeling - move shape', function() {
   it('should update parent', inject(function(modeling) {
 
     // when
-    modeling.moveShape(childShape, { dx: -20, dy: +20 }, rootShape);
+    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
 
     // then
     // update parent
@@ -89,7 +89,7 @@ describe('features/modeling - move shape', function() {
   it('should layout connections after move', inject(function(modeling) {
 
     // when
-    modeling.moveShape(childShape, { dx: -20, dy: +20 }, rootShape);
+    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
 
     // then
     // update parent
@@ -102,8 +102,8 @@ describe('features/modeling - move shape', function() {
   it('should undo', inject(function(modeling, commandStack) {
 
     // given
-    modeling.moveShape(childShape, { dx: -20, dy: +20 }, rootShape);
-    modeling.moveShape(childShape, { dx: -20, dy: +20 });
+    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
+    modeling.moveShape(childShape, { x: -20, y: +20 });
 
     // when
     commandStack.undo();
