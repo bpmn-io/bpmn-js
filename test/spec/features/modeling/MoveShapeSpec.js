@@ -42,7 +42,7 @@ describe('features/modeling - move shape', function() {
       };
 
       // when
-      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
+      modeling.moveShape(startEventElement, { x: 0, y: 50 });
 
       // then
       expect(startEvent.di.bounds.x).toBe(oldPosition.x);
@@ -72,7 +72,7 @@ describe('features/modeling - move shape', function() {
       };
 
       // when
-      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
+      modeling.moveShape(labelElement, { x: 0, y: 50 });
 
       // then
       expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
@@ -95,7 +95,7 @@ describe('features/modeling - move shape', function() {
         y: startEventElement.y
       };
 
-      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
+      modeling.moveShape(startEventElement, { x: 0, y: 50 });
 
       // when
       commandStack.undo();
@@ -117,7 +117,7 @@ describe('features/modeling - move shape', function() {
         y: labelElement.y
       };
 
-      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
+      modeling.moveShape(labelElement, { x: 0, y: 50 });
 
       // when
       commandStack.undo();
@@ -139,7 +139,7 @@ describe('features/modeling - move shape', function() {
           startEvent = startEventElement.businessObject;
 
 
-      modeling.moveShape(startEventElement, { dx: 0, dy: 50 });
+      modeling.moveShape(startEventElement, { x: 0, y: 50 });
 
       var newPosition = {
         x: startEventElement.x,
@@ -162,7 +162,7 @@ describe('features/modeling - move shape', function() {
       var labelElement = elementRegistry.getById('StartEvent_1_label'),
           startEvent = labelElement.businessObject;
 
-      modeling.moveShape(labelElement, { dx: 0, dy: 50 });
+      modeling.moveShape(labelElement, { x: 0, y: 50 });
 
       var newPosition = {
         x: labelElement.x,
