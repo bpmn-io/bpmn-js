@@ -13,6 +13,9 @@ var modelingModule = require('../../../../lib/features/modeling'),
     drawModule = require('../../../../lib/draw');
 
 
+var LabelUtil = require('../../../../lib/util/Label');
+
+
 describe('features/modeling - append shape', function() {
 
   beforeEach(Matchers.addDeepEquals);
@@ -84,30 +87,57 @@ describe('features/modeling - append shape', function() {
     }));
 
 
-    it('should add shape label', inject(function(elementRegistry, modeling, commandStack) {
+    describe('should add external label', function() {
 
-      // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      it('correctly wired and positioned', inject(function(elementRegistry, modeling, commandStack) {
 
-      var startEvent = startEventShape.businessObject,
-          subProcess = subProcessShape.businessObject;
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var subProcessShape = elementRegistry.getById('SubProcess_1');
 
-      // when
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
-          target = targetShape.businessObject;
+        var startEvent = startEventShape.businessObject,
+            subProcess = subProcessShape.businessObject;
 
-      // then
-      expect(targetShape.label).toBeDefined();
-      expect(elementRegistry.getById(targetShape.label.id)).toBeDefined();
+        // when
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+            target = targetShape.businessObject;
 
-      expect(target.di.label).toBeDefined();
+        var label = targetShape.label;
 
-      expect(target.di.label.bounds.x).toBe(targetShape.label.x);
-      expect(target.di.label.bounds.y).toBe(targetShape.label.y);
-      expect(target.di.label.bounds.width).toBe(targetShape.label.width);
-      expect(target.di.label.bounds.height).toBe(targetShape.label.height);
-    }));
+        // then
+        expect(label).toBeDefined();
+        expect(elementRegistry.getById(label.id)).toBeDefined();
+
+        expect(label.x).toBe(443);
+        expect(label.y).toBe(273);
+        expect(label.width).toBe(LabelUtil.DEFAULT_LABEL_SIZE.width);
+        expect(label.height).toBe(LabelUtil.DEFAULT_LABEL_SIZE.height);
+      }));
+
+
+      it('with di', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var subProcessShape = elementRegistry.getById('SubProcess_1');
+
+        var startEvent = startEventShape.businessObject,
+            subProcess = subProcessShape.businessObject;
+
+        // when
+        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+            target = targetShape.businessObject;
+
+        // then
+        expect(target.di.label).toBeDefined();
+
+        expect(target.di.label.bounds.x).toBe(targetShape.label.x);
+        expect(target.di.label.bounds.y).toBe(targetShape.label.y);
+        expect(target.di.label.bounds.width).toBe(targetShape.label.width);
+        expect(target.di.label.bounds.height).toBe(targetShape.label.height);
+      }));
+
+    });
 
 
     it('should add connection', inject(function(elementRegistry, modeling) {
