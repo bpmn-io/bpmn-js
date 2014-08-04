@@ -1,10 +1,12 @@
-var BpmnModel = require('bpmn-moddle');
+var BpmnModdle = require('bpmn-moddle');
 
 describe('model - browser support', function() {
 
+  var moddle = new BpmnModdle();
+
   function read(xml, callback, done) {
 
-    BpmnModel.fromXML(xml, 'bpmn:Definitions', function(err, definitions) {
+    moddle.fromXML(xml, 'bpmn:Definitions', function(err, definitions) {
 
       if (err) {
         done(err);
@@ -14,6 +16,7 @@ describe('model - browser support', function() {
       }
     });
   }
+
 
   it('should parse simple xml', function(done) {
 

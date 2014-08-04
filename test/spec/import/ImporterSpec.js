@@ -9,17 +9,17 @@ var Matchers = require('../../Matchers'),
 var fs = require('fs');
 
 var Diagram = require('diagram-js/lib/Diagram'),
-    BpmnModel = require('bpmn-moddle'),
+    BpmnModdle = require('bpmn-moddle'),
     Importer = require('../../../lib/import/Importer'),
     Viewer = require('../../../lib/Viewer');
 
 
 describe('import - importer', function() {
 
-  var bpmnModel = BpmnModel.instance();
+  var moddle = new BpmnModdle();
 
   function read(xml, opts, callback) {
-    return BpmnModel.fromXML(xml, 'bpmn:Definitions', opts, callback);
+    return moddle.fromXML(xml, 'bpmn:Definitions', opts, callback);
   }
 
   beforeEach(Matchers.addDeepEquals);
@@ -47,7 +47,7 @@ describe('import - importer', function() {
 
 
   function runImport(diagram, xml, done) {
-    BpmnModel.fromXML(xml, function(err, definitions) {
+    moddle.fromXML(xml, function(err, definitions) {
       if (err) {
         return done(err);
       }
