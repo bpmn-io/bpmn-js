@@ -4,7 +4,7 @@
              xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              expressionLanguage="http://www.w3.org/1999/XPath"
-             id="task-types"
+             id="task-types-diagram"
              typeLanguage="http://www.w3.org/2001/XMLSchema"
              xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
     <process id="task-types" isClosed="false" isExecutable="false" processType="None">
