@@ -121,6 +121,7 @@ module.exports = function(grunt) {
           },
           transform: [
             [ 'exposify', {
+              global: true,
               expose: {
                 sax: 'sax',
                 snapsvg: 'Snap',
