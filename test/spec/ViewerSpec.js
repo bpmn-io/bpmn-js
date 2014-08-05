@@ -48,6 +48,45 @@ describe('viewer', function() {
   });
 
 
+  describe('import events', function() {
+
+    iit('should fire <import.*> events', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
+
+      var events = [];
+
+      viewer.on('import.start', function() {
+        events.push('import.start');
+      });
+
+      viewer.on('import.success', function() {
+        events.push('import.success');
+      });
+
+      viewer.on('import.error', function() {
+        events.push('import.error');
+      });
+
+      // when
+      viewer.importXML(xml, function(err) {
+
+        // then
+        expect(events).toEqual([
+          'import.start',
+          'import.success'
+        ]);
+
+        done(err);
+      });
+    });
+
+  });
+
+
   describe('error handling', function() {
 
     it('should handle non-bpmn input', function(done) {
