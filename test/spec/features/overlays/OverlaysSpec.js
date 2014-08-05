@@ -171,6 +171,35 @@ describe('features/overlays', function() {
 
       expect(document.getElementById('html-ov2')).toEqual(null);
     }));
+
+
+    it('should remove automatically on <*.remove>', inject(function(eventBus, overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      var id = overlays.add(shape, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay" id="html-ov1"></div>'
+      });
+
+      // when
+      eventBus.fire('shape.remove', { element: shape });
+
+      // then
+      expect(overlays.get(id)).toBe(undefined);
+      expect(document.getElementById('html-ov1')).toBe(null);
+    }));
+
   });
 
 
