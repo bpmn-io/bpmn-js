@@ -348,6 +348,58 @@ describe('features/modeling - append shape', function() {
 
   describe('bpmn element support', function() {
 
+    describe('TextAnnotation', function() {
+
+      it('should wire connection source + target', inject(function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+
+        // when
+        var targetShape = modeling.appendTextAnnotation(startEventShape, 'bpmn:TextAnnotation'),
+            target = targetShape.businessObject;
+
+        var connectingConnection = _.find(targetShape.incoming, function(c) {
+          return c.target === targetShape;
+        });
+
+        var connecting = connectingConnection.businessObject;
+
+        // then
+        expect(targetShape).toBeDefined();
+        expect(target.$instanceOf('bpmn:TextAnnotation')).toBe(true);
+
+        expect(connecting.$instanceOf('bpmn:Association')).toBe(true);
+        expect(connecting.sourceRef).toBe(startEventShape.businessObject);
+        expect(connecting.targetRef).toBe(target);
+      }));
+
+
+      it('should undo wire connection source + target', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventShape = elementRegistry.getById('StartEvent_1');
+
+        var targetShape = modeling.appendTextAnnotation(startEventShape, 'bpmn:TextAnnotation'),
+            target = targetShape.businessObject;
+
+        var connectingConnection = _.find(targetShape.incoming, function(c) {
+          return c.target === targetShape;
+        });
+
+        var connecting = connectingConnection.businessObject;
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(connecting.sourceRef).toBe(null);
+        expect(connecting.targetRef).toBe(null);
+      }));
+
+    });
+
+
     describe('ExclusiveGateway', function() {
 
       it('should append', inject(function(elementRegistry, modeling) {
