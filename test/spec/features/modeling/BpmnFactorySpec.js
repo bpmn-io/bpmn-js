@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapModeler, inject */
 
 
 var fs = require('fs');
@@ -20,7 +20,7 @@ describe('features - bpmn-factory', function() {
 
   var testModules = [ modelingModule ];
 
-  beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
   describe('create di', function() {

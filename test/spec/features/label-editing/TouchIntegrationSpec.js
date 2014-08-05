@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapViewer, inject */
 
 
 var fs = require('fs');
@@ -47,7 +47,7 @@ describe('direct editing - touch integration', function() {
 
     var testModules = [ labelEditingModule, touchModule ];
 
-    beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
     it('should work via dbltap (manual test)', function() { });
   });

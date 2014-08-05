@@ -1,7 +1,9 @@
 'use strict';
 
 var _ = require('lodash');
-var BpmnJS = require('../lib/Modeler');
+
+var Modeler = require('../lib/Modeler'),
+    Viewer = require('../lib/Viewer');
 
 // enhance jasmine with test container API
 require('jasmine-test-container-support').extend(jasmine);
@@ -17,8 +19,53 @@ function options(opts) {
   OPTIONS = opts;
 }
 
+
+function bootstrapBpmnJS(BpmnJS, options, locals) {
+
+  var testContainer = jasmine.getEnv().getTestContainer();
+
+  var _options = options,
+      _locals = locals;
+
+  if (_locals === undefined && _.isFunction(_options)) {
+    _locals = _options;
+    _options = null;
+  }
+
+  if (_.isFunction(_options)) {
+    _options = _options();
+  }
+
+  if (_.isFunction(_locals)) {
+    _locals = _locals();
+  }
+
+  _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
+
+  if (_locals) {
+    var mockModule = {};
+
+    _.forEach(_locals, function(v, k) {
+      mockModule[k] = ['value', v];
+    });
+
+    _options.modules = [].concat(_options.modules || [], [ mockModule ]);
+  }
+
+  _options.modules = _.unique(_options.modules);
+
+  if (!_options.modules.length) {
+    _options.modules = undefined;
+  }
+
+  BPMN_JS = new BpmnJS(_options);
+
+  return BPMN_JS;
+}
+
+
 /**
- * Bootstrap BpmnJS given the specified options and a number of locals (i.e. services)
+ * Bootstrap the Modeler given the specified options and a number of locals (i.e. services)
  *
  * @example
  *
@@ -26,7 +73,7 @@ function options(opts) {
  *
  *   var mockEvents;
  *
- *   beforeEach(bootstrapBpmnJS(function() {
+ *   beforeEach(bootstrapModeler('some-xml', function() {
  *     mockEvents = new Events();
  *
  *     return {
@@ -36,62 +83,24 @@ function options(opts) {
  *
  * });
  *
+ * @param  {String} xml document to display
  * @param  {Object} (options) optional options to be passed to the diagram upon instantiation
  * @param  {Object|Function} locals  the local overrides to be used by the diagram or a function that produces them
  * @return {Function}         a function to be passed to beforeEach
  */
-function bootstrapBpmnJS(diagram, options, locals) {
+function bootstrapModeler(diagram, options, locals) {
 
   return function(done) {
-
-    var testContainer = jasmine.getEnv().getTestContainer();
-
-    var _diagram = diagram,
-        _options = options,
-        _locals = locals;
-
-    if (_locals === undefined && _.isFunction(_options)) {
-      _locals = _options;
-      _options = null;
-    }
-
-    if (_.isFunction(_options)) {
-      _options = _options();
-    }
-
-    if (_.isFunction(_locals)) {
-      _locals = _locals();
-    }
-
-    _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
-
-    if (_locals) {
-      var mockModule = {};
-
-      _.forEach(_locals, function(v, k) {
-        mockModule[k] = ['value', v];
-      });
-
-      _options.modules = [].concat(_options.modules || [], [ mockModule ]);
-    }
-
-    _options.modules = _.unique(_options.modules);
-
-    if (_options.modules.length == 0) {
-      _options.modules = undefined;
-    }
-
-    BPMN_JS = new BpmnJS(_options);
+    // bootstrap
+    var modeler = bootstrapBpmnJS(Modeler, options, locals);
 
     // import diagram
-    BPMN_JS.importXML(_diagram, done);
+    modeler.importXML(diagram, done);
   };
 }
 
 /**
- * Injects services of an instantiated diagram into the argument.
- *
- * Use it in conjunction with {@link #bootstrapBpmnJS}.
+ * Bootstrap the Viewer given the specified options and a number of locals (i.e. services)
  *
  * @example
  *
@@ -99,7 +108,45 @@ function bootstrapBpmnJS(diagram, options, locals) {
  *
  *   var mockEvents;
  *
- *   beforeEach(bootstrapBpmnJS(...));
+ *   beforeEach(bootstrapViewer('some-xml', function() {
+ *     mockEvents = new Events();
+ *
+ *     return {
+ *       events: mockEvents
+ *     };
+ *   }));
+ *
+ * });
+ *
+ * @param  {String} xml document to display
+ * @param  {Object} (options) optional options to be passed to the diagram upon instantiation
+ * @param  {Object|Function} locals  the local overrides to be used by the diagram or a function that produces them
+ * @return {Function}         a function to be passed to beforeEach
+ */
+function bootstrapViewer(diagram, options, locals) {
+
+  return function(done) {
+    // bootstrap
+    var viewer = bootstrapBpmnJS(Viewer, options, locals);
+
+    // import diagram
+    viewer.importXML(diagram, done);
+  };
+}
+
+
+/**
+ * Injects services of an instantiated diagram into the argument.
+ *
+ * Use it in conjunction with {@link #bootstrapModeler} or {@link #bootstrapViewer}.
+ *
+ * @example
+ *
+ * describe(function() {
+ *
+ *   var mockEvents;
+ *
+ *   beforeEach(bootstrapViewer(...));
  *
  *   it('should provide mocked events', inject(function(events) {
  *     expect(events).toBe(mockEvents);
@@ -114,7 +161,7 @@ function inject(fn) {
   return function() {
 
     if (!BPMN_JS) {
-      throw new Error('no bootstraped bpmn-js instance, ensure you created it via #bootstrapBpmnJS');
+      throw new Error('no bootstraped bpmn-js instance, ensure you created it via #boostrap(Modeler|Viewer)');
     }
 
     BPMN_JS.invoke(fn);
@@ -122,5 +169,6 @@ function inject(fn) {
 }
 
 
-module.exports.bootstrapBpmnJS = (window || global).bootstrapBpmnJS = bootstrapBpmnJS;
+module.exports.bootstrapModeler = (window || global).bootstrapModeler = bootstrapModeler;
+module.exports.bootstrapViewer = (window || global).bootstrapViewer = bootstrapViewer;
 module.exports.inject = (window || global).inject = inject;

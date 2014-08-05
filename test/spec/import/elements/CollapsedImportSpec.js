@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapViewer, inject */
 
 
 var fs = require('fs');
@@ -18,7 +18,7 @@ describe('import - collapsed container', function() {
 
     var diagramXML = fs.readFileSync('test/fixtures/bpmn/import/collapsed.bpmn', 'utf8');
 
-    beforeEach(bootstrapBpmnJS(diagramXML));
+    beforeEach(bootstrapViewer(diagramXML));
 
 
     it('should import collapsed subProcess', inject(function(elementRegistry) {
@@ -83,7 +83,7 @@ describe('import - collapsed container', function() {
 
     var diagramXML = fs.readFileSync('test/fixtures/bpmn/import/collapsed-collaboration.bpmn', 'utf8');
 
-    beforeEach(bootstrapBpmnJS(diagramXML));
+    beforeEach(bootstrapViewer(diagramXML));
 
 
     it('should import collapsed subProcess in pool', inject(function(elementRegistry) {

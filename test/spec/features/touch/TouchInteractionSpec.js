@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapViewer, inject */
 
 
 var fs = require('fs');
@@ -22,7 +22,7 @@ describe('features - touch', function() {
 
   var testModules = [ touchModule, bpmnModule ];
 
-  beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {

@@ -3,8 +3,6 @@
 var Matchers = require('../../Matchers'),
     TestHelper = require('../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
-
 
 var fs = require('fs');
 

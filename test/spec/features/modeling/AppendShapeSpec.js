@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapModeler, inject */
 
 var _ = require('lodash');
 
@@ -25,7 +25,7 @@ describe('features/modeling - append shape', function() {
 
   var testModules = [ drawModule, modelingModule ];
 
-  beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
   describe('shape handling', function() {

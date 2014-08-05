@@ -2,7 +2,7 @@
 
 var TestHelper = require('../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapViewer, inject */
 
 var fs = require('fs');
 
@@ -17,7 +17,7 @@ describe('environment - mocking', function() {
 
   var mockEvents, bootstrapCalled;
 
-  beforeEach(bootstrapBpmnJS(diagramXML, {
+  beforeEach(bootstrapViewer(diagramXML, {
     modules: Viewer.prototype._modules
   }, function() {
     mockEvents = new Events();

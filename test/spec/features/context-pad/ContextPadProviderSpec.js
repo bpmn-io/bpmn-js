@@ -3,7 +3,7 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-/* global bootstrapBpmnJS, inject */
+/* global bootstrapViewer, inject */
 
 
 var fs = require('fs');
@@ -21,7 +21,7 @@ describe('features - context-pad', function() {
 
   var testModules = [ contextPadModule, bpmnModule ];
 
-  beforeEach(bootstrapBpmnJS(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
