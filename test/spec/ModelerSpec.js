@@ -42,6 +42,45 @@ describe('modeler', function() {
   });
 
 
+  describe('overlay support', function() {
+
+    it('should allow to add overlays', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+      createModeler(xml, function(err, viewer) {
+
+        // when
+        var overlays = viewer.get('overlays'),
+            elementRegistry = viewer.get('elementRegistry');
+
+        // then
+        expect(overlays).toBeDefined();
+        expect(elementRegistry).toBeDefined();
+
+        // given
+        var subProcessShape = elementRegistry.getById('SubProcess_1');
+
+        // when
+        overlays.add('SubProcess_1', {
+          position: {
+            bottom: 0,
+            right: 0
+          },
+          html: '<div style="max-width: 50px">YUP GREAT STUFF!</div>'
+        });
+
+        // then
+        expect(overlays.get({ element: 'SubProcess_1' }).length).toBe(1);
+
+        done(err);
+      });
+
+    });
+
+  });
+
+
   it('should handle errors', function(done) {
 
     var xml = 'invalid stuff';
