@@ -33,6 +33,34 @@ module.exports = function(grunt) {
     return alias;
   }
 
+
+  function extractSourceMap(file) {
+    var content = grunt.file.read(file, { encoding: 'utf-8' });
+
+    var match = /\/\/# sourceMappingURL=data:application\/json;base64,(.*)/.exec(content);
+
+    if (match) {
+      var b = new Buffer(match[1] + '==', 'base64');
+      var s = b.toString();
+
+      s = s.replace(/\\\\/g, '/'); // convert \\ -> /
+
+      var dir = __dirname;
+
+      var dirPattern = dir.replace(/\\/g, '/').replace(/\./g, '\\.') + '/';
+
+      var pattern = new RegExp(dirPattern, 'g');
+
+      s = s.replace(pattern, '');
+
+      grunt.file.write('tmp/sourceMap.json', s, { encoding: 'utf-8' });
+
+      return 'tmp/sourceMap.json';
+    } else {
+      return null;
+    }
+  }
+
   // project configuration
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -194,20 +222,7 @@ module.exports = function(grunt) {
         sourceMap: true,
         sourceMapIncludeSources: true,
         sourceMapIn: function(file) {
-          var content = grunt.file.read(file, { encoding: 'utf-8' });
-
-          var match = /\/\/# sourceMappingURL=data:application\/json;base64,(.*)/.exec(content);
-
-          if (match) {
-            var b = new Buffer(match[1] + '==', 'base64');
-            var s = b.toString();
-
-            grunt.file.write('tmp/sourceMap.json', s, { encoding: 'utf-8' });
-
-            return 'tmp/sourceMap.json';
-          } else {
-            return null;
-          }
+          return extractSourceMap(file);
         }
       },
       bowerViewer: {
