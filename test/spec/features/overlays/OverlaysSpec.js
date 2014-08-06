@@ -431,28 +431,28 @@ describe('features/overlays', function() {
       });
 
       // when zoom in visibility range
-      canvas.zoom(0.6);
+      canvas.zoom(0.7);
 
       // then
       expect(isVisible(html)).toBe(true);
 
 
       // when zoom below visibility range
-      canvas.zoom(0.4);
+      canvas.zoom(0.6);
 
       // then
       expect(isVisible(html)).toBe(false);
 
 
       // when zoom in visibility range
-      canvas.zoom(1.0);
+      canvas.zoom(3.0);
 
       // then
       expect(isVisible(html)).toBe(true);
 
 
       // when zoom above visibility range
-      canvas.zoom(5.0);
+      canvas.zoom(6.0);
 
       // then
       expect(isVisible(html)).toBe(false);
