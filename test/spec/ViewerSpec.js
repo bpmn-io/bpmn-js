@@ -192,6 +192,29 @@ describe('viewer', function() {
 
   describe('export', function() {
 
+    function currentTime() {
+      return new Date().getTime();
+    }
+
+    function isValid(svg) {
+      var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
+      var expectedEnd = '</svg>';
+
+      expect(svg.indexOf(expectedStart)).toEqual(0);
+      expect(svg.indexOf(expectedEnd)).toEqual(svg.length - expectedEnd.length);
+
+      // ensure correct rendering of SVG contents
+      expect(svg.indexOf('undefined')).toBe(-1);
+
+      // expect header to be written only once
+      expect(svg.indexOf('<svg width="100%" height="100%">')).toBe(-1);
+      expect(svg.indexOf('<g class="viewport"')).toBe(-1);
+
+      // FIXME(nre): make matcher
+      return true;
+    }
+
+
     it('should export svg', function(done) {
 
       // given
@@ -210,19 +233,40 @@ describe('viewer', function() {
             return done(err);
           }
 
-          var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
-          var expectedEnd = '</svg>';
+          // then
+          expect(isValid(svg)).toBe(true);
+
+          done();
+        });
+      });
+    });
+
+
+    it('should export complex svg', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf8');
+
+      createViewer(xml, function(err, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        var time = currentTime();
+
+        // when
+        viewer.saveSVG(function(err, svg) {
+
+          if (err) {
+            return done(err);
+          }
 
           // then
-          expect(svg.indexOf(expectedStart)).toEqual(0);
-          expect(svg.indexOf(expectedEnd)).toEqual(svg.length - expectedEnd.length);
+          expect(isValid(svg)).toBe(true);
 
-          // ensure correct rendering of SVG contents
-          expect(svg.indexOf('undefined')).toBe(-1);
-
-          // expect header to be written only once
-          expect(svg.indexOf('<svg width="100%" height="100%">')).toBe(-1);
-          expect(svg.indexOf('<g class="viewport"')).toBe(-1);
+          // no svg export should take more than 500ms
+          expect(currentTime() - time).toBeLessThan(500);
 
           done();
         });
