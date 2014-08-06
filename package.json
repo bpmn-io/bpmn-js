@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "test": "grunt test"
