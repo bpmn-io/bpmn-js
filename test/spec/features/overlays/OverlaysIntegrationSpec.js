@@ -8,12 +8,16 @@ var TestHelper = require('../../../TestHelper');
 var $ = require('jquery');
 
 var overlayModule = require('../../../../lib/features/overlays'),
-    modelingModule = require('../../../../lib/features/modeling');
+    modelingModule = require('../../../../lib/features/modeling'),
+    moveModule = require('../../../../lib/features/move');
+
+
+var Event = require('../../../Event');
 
 
 describe('features/overlay', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ overlayModule, modelingModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ overlayModule, modelingModule, moveModule ] }));
 
 
   describe('modeling integration', function() {
@@ -85,6 +89,82 @@ describe('features/overlay', function() {
       });
 
     }));
+
+  });
+
+
+  describe('drag integration', function() {
+
+    it('should add <djs-dragging> marker class', inject(function(canvas, dragSupport, overlays) {
+
+      // given
+      var parent = canvas.addShape({
+        id: 'parent',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100,
+        children: []
+      });
+
+      var child = canvas.addShape({
+        id: 'child',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      }, parent);
+
+      var draggable = dragSupport.get(parent);
+
+      var parentOverlayContainer = overlays._getOverlayContainer(parent);
+      var childOverlayContainer = overlays._getOverlayContainer(child);
+
+      // when
+      draggable.dragStart(10, 10, new Event());
+      draggable.dragMove(20, 20, 30, 30, new Event());
+
+      // then
+      expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(true);
+      expect(childOverlayContainer.html.hasClass('djs-dragging')).toBe(true);
+    }));
+
+
+    it('should remove <djs-dragging> marker class on end', inject(function(canvas, dragSupport, overlays) {
+
+      // given
+      var parent = canvas.addShape({
+        id: 'parent',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100,
+        children: []
+      });
+
+      var child = canvas.addShape({
+        id: 'child',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      }, parent);
+
+      var draggable = dragSupport.get(parent);
+
+      var parentOverlayContainer = overlays._getOverlayContainer(parent);
+      var childOverlayContainer = overlays._getOverlayContainer(child);
+
+      // when
+      draggable.dragStart(10, 10, new Event());
+      draggable.dragMove(20, 20, 30, 30, new Event());
+      draggable.dragEnd(30, 30, new Event());
+
+      // then
+      expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(false);
+      expect(childOverlayContainer.html.hasClass('djs-dragging')).toBe(false);
+    }));
+
   });
 
 });
