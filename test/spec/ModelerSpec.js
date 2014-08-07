@@ -50,16 +50,14 @@ describe('modeler', function() {
 
       createModeler(xml, function(err, viewer) {
 
-        // when
+        // given
         var overlays = viewer.get('overlays'),
             elementRegistry = viewer.get('elementRegistry');
 
-        // then
+        // assume
         expect(overlays).toBeDefined();
         expect(elementRegistry).toBeDefined();
 
-        // given
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
 
         // when
         overlays.add('SubProcess_1', {
@@ -70,8 +68,17 @@ describe('modeler', function() {
           html: '<div style="max-width: 50px">YUP GREAT STUFF!</div>'
         });
 
+        overlays.add('StartEvent_1', {
+          position: {
+            top: 0,
+            left: 0
+          },
+          html: '<div style="max-width: 50px">YUP GREAT STUFF!</div>'
+        });
+
         // then
         expect(overlays.get({ element: 'SubProcess_1' }).length).toBe(1);
+        expect(overlays.get({ element: 'StartEvent_1' }).length).toBe(1);
 
         done(err);
       });
