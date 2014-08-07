@@ -222,28 +222,28 @@ describe('event priorities', function() {
     e = new EventBus();
 
     listener1 = function(param) {
-      if(param.value === 'C') {
+      if (param.value === 'C') {
         param.value = 'Target State';
       } else {
         param.value = '';
       }
     };
     listener2 = function(param) {
-      if(param.value === 'A') {
+      if (param.value === 'A') {
         param.value = 'B';
       } else {
         param.value = '';
       }
     };
     listener3 = function(param) {
-      if(param.value === 'B') {
+      if (param.value === 'B') {
         param.value = 'C';
       } else {
         param.value = '';
       }
     };
     listenerStopPropagation = function(param) {
-      if(param.value === 'B') {
+      if (param.value === 'B') {
         param.value = 'C';
         param.propagationStopped = true;
       } else {
@@ -253,7 +253,7 @@ describe('event priorities', function() {
   });
 
 
-  it('higher priority should fire first', function() {
+  it('should fire highes priority first', function() {
 
     // setup
     e.on('foo', 100, listener1);
@@ -262,15 +262,14 @@ describe('event priorities', function() {
 
     // event fired with example data
     // to control the order of execution
-    var param = {value: 'A'};
+    var param = { value: 'A' };
     e.fire('foo', param);
 
     expect(param.value).toEqual('Target State');
   });
 
 
-  it('higher priority should fire first and make sure' +
-    'registration order does not affect anything', function() {
+  it('should fire highest first (independent from registration order)', function() {
 
     // setup
     e.on('foo', 200, listener3);
@@ -279,14 +278,14 @@ describe('event priorities', function() {
 
     // event fired with example data
     // to control the order of execution
-    var param = {value: 'A'};
+    var param = { value: 'A' };
     e.fire('foo', param);
 
     expect(param.value).toEqual('Target State');
   });
 
 
-  it('event with same priority should fire in registration order', function() {
+  it('should fire same priority in registration order', function() {
     // setup
     e.on('foo', 100, listener3);
     e.on('foo', 100, listener2);
@@ -294,13 +293,12 @@ describe('event priorities', function() {
 
     // event fired with example data
     // to control the order of execution
-    var param = {value: 'A'};
+    var param = { value: 'A' };
     e.fire('foo', param);
   });
 
 
-  it('user should be able to stop propagation' +
-        ' to handler with lower priority.', function() {
+  it('should stop propagation to lower priority handlers', function() {
 
     // setup
     e.on('foo', 200, listenerStopPropagation);
@@ -309,7 +307,7 @@ describe('event priorities', function() {
 
     // event fired with example data
     // to control the order of execution
-    var param = {value: 'A'};
+    var param = { value: 'A' };
     e.fire('foo', param);
 
     // After second listener propagation should be stopped
@@ -318,7 +316,7 @@ describe('event priorities', function() {
   });
 
 
-  it('should set default priority when not set', function() {
+  it('should default to 1000 if non is specified', function() {
 
     // setup
     e.on('foo', listener3); // should use default of 1000
@@ -327,7 +325,7 @@ describe('event priorities', function() {
 
     // event fired with example data
     // to control the order of execution
-    var param = {value: 'A'};
+    var param = { value: 'A' };
     e.fire('foo', param);
 
     // After second listener propagation should be stopped
