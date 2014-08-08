@@ -3,9 +3,12 @@
 var _ = require('lodash');
 var Diagram = require('../lib/Diagram');
 
-// enhance jasmine with test container API
-require('jasmine-test-container-support').extend(jasmine);
-
+try {
+  // enhance jasmine with test container API
+  require('jasmine-test-container-support').extend(jasmine);
+} catch (e) {
+  // no test container :-(
+}
 
 var OPTIONS, DIAGRAM;
 
@@ -44,7 +47,14 @@ function bootstrapDiagram(options, locals) {
 
   return function() {
 
-    var testContainer = jasmine.getEnv().getTestContainer();
+    var testContainer;
+
+    try {
+      testContainer = jasmine.getEnv().getTestContainer();
+    } catch (e) {
+      testContainer = document.createElement('div');
+      document.body.appendChild(testContainer);
+    }
 
     var _options = options,
         _locals = locals;
