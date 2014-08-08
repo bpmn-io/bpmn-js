@@ -88,6 +88,34 @@ describe('modeler', function() {
   });
 
 
+  describe('cli support', function() {
+
+    it('should ship with cli', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+      createModeler(xml, function(err, viewer) {
+
+        // given
+        var cli = viewer.get('cli');
+
+        // assume
+        expect(cli).toBeDefined();
+
+        // when
+        var subProcessShape = cli.element('SubProcess_1');
+
+        // then
+        expect(subProcessShape.id).toEqual('SubProcess_1');
+
+        done(err);
+      });
+
+    });
+
+  });
+
+
   it('should handle errors', function(done) {
 
     var xml = 'invalid stuff';

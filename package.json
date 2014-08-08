@@ -49,17 +49,22 @@
     "karma-jasmine": "https://github.com/Nikku/karma-jasmine/archive/jasmine-v2.0.0-latest-1.tar.gz",
     "karma-phantomjs-launcher": "^0.1.2",
     "load-grunt-tasks": "^0.3.0",
-    "time-grunt": "^0.3.2"
+    "time-grunt": "^0.3.2",
+    "diagram-js": "~0.4.0"
   },
   "dependencies": {
     "bpmn-moddle": "~0.3.0",
-    "diagram-js": "~0.4.0",
     "diagram-js-direct-editing": "0.3.0",
     "didi": "~0.0.4",
     "jquery": "~2.1.0",
     "jquery-mousewheel": "~3.1.11",
     "lodash": "~2.4.0",
     "object-refs": "^0.1.0",
-    "ids": "0.0.3"
+    "ids": "0.0.3",
+    "bpmn-js": "^0.4.1",
+    "bpmn-js-cli": "^0.1.1"
+  },
+  "peerDependencies": {
+    "diagram-js": "~0.4.0"
   }
 }
