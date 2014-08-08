@@ -8,6 +8,7 @@ var TestHelper = require('../../../TestHelper');
 var $ = require('jquery');
 
 var overlayModule = require('../../../../lib/features/overlays'),
+    selectionModule = require('../../../../lib/features/selection'),
     modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move');
 
@@ -17,7 +18,7 @@ var Event = require('../../../Event');
 
 describe('features/overlay', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ overlayModule, modelingModule, moveModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ overlayModule, selectionModule, modelingModule, moveModule ] }));
 
 
   describe('modeling integration', function() {
@@ -88,6 +89,53 @@ describe('features/overlay', function() {
         left: 50
       });
 
+    }));
+
+  });
+
+
+  describe('selection/hover integration', function() {
+
+    it('should add selection/hover markers', inject(function(selection, canvas, overlays) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'shape',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      });
+
+      var overlayContainer = overlays._getOverlayContainer(shape);
+
+      // when
+      selection.select(shape);
+
+      // then
+      expect(overlayContainer.html.hasClass('selected')).toBe(true);
+    }));
+
+
+    it('should remove selection/hover markers', inject(function(selection, canvas, overlays) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'shape',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      });
+
+      var overlayContainer = overlays._getOverlayContainer(shape);
+
+      // when
+      selection.select(shape);
+      selection.select(null);
+
+      // then
+      expect(overlayContainer.html.hasClass('selected')).toBe(false);
     }));
 
   });
