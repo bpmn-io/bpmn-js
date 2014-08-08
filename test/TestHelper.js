@@ -5,9 +5,12 @@ var _ = require('lodash');
 var Modeler = require('../lib/Modeler'),
     Viewer = require('../lib/Viewer');
 
-// enhance jasmine with test container API
-require('jasmine-test-container-support').extend(jasmine);
-
+try {
+  // enhance jasmine with test container API
+  require('jasmine-test-container-support').extend(jasmine);
+} catch (e) {
+  // no test container :-(
+}
 
 var OPTIONS, BPMN_JS;
 
@@ -22,7 +25,14 @@ function options(opts) {
 
 function bootstrapBpmnJS(BpmnJS, options, locals) {
 
-  var testContainer = jasmine.getEnv().getTestContainer();
+  var testContainer;
+
+  try {
+    testContainer = jasmine.getEnv().getTestContainer();
+  } catch (e) {
+    testContainer = document.createElement('div');
+    document.body.appendChild(testContainer);
+  }
 
   var _options = options,
       _locals = locals;
