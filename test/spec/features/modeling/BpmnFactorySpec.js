@@ -22,6 +22,20 @@ describe('features - bpmn-factory', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
+  describe('create element', function() {
+     it('element should be created', inject(function(bpmnFactory) {
+       var task = bpmnFactory.create('bpmn:Task');
+       expect(task).toBeDefined();
+       expect(task.$type).toEqual('bpmn:Task');
+     }));
+
+    it('element id should have semantic prefix', inject(function(bpmnFactory) {
+      var task = bpmnFactory.create('bpmn:ServiceTask');
+      expect(task.$type).toEqual('bpmn:ServiceTask');
+      expect(task.id).toMatch(/^ServiceTask_/g);
+    }));
+  });
+
 
   describe('create di', function() {
 
@@ -45,8 +59,6 @@ describe('features - bpmn-factory', function() {
       // expect original not to have been accidently serialized
       expect(result[0].$attrs).toEqual({});
     }));
-
-
   });
 
 });
