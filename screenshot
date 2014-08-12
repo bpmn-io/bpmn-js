@@ -1,0 +1,10 @@
+#!/bin/bash
+
+xwd -screen > screenshot.xwd
+
+gimp &
+sleep 3
+gimp screenshot.xwd
+
+sleep 10
+rm screenshot.xwd

@@ -90,6 +90,18 @@
 
 
 /**
+ * snapping
+ */
+.djs-snap-line {
+  stroke: rgba(255, 195, 66);
+  stroke: rgba(255, 195, 66, 0.75);
+  stroke-linecap: round;
+  stroke-width: 2px;
+  pointer-events: none;
+}
+
+
+/**
  * context-pad
  */
 .djs-overlay-context-pad {
