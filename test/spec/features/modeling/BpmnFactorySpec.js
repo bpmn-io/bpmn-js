@@ -22,18 +22,32 @@ describe('features - bpmn-factory', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-  describe('create element', function() {
-     it('element should be created', inject(function(bpmnFactory) {
-       var task = bpmnFactory.create('bpmn:Task');
-       expect(task).toBeDefined();
-       expect(task.$type).toEqual('bpmn:Task');
-     }));
 
-    it('element id should have semantic prefix', inject(function(bpmnFactory) {
+  describe('create element', function() {
+
+    it('should return instance', inject(function(bpmnFactory) {
+
+      var task = bpmnFactory.create('bpmn:Task');
+      expect(task).toBeDefined();
+      expect(task.$type).toEqual('bpmn:Task');
+    }));
+
+
+    it('should assign id (with semantic prefix)', inject(function(bpmnFactory) {
       var task = bpmnFactory.create('bpmn:ServiceTask');
+
       expect(task.$type).toEqual('bpmn:ServiceTask');
       expect(task.id).toMatch(/^ServiceTask_/g);
     }));
+
+
+    it('should assign id (with semantic prefix)', inject(function(bpmnFactory) {
+      var plane = bpmnFactory.create('bpmndi:BPMNPlane');
+
+      expect(plane.$type).toEqual('bpmndi:BPMNPlane');
+      expect(plane.id).toMatch(/^BPMNPlane_/g);
+    }));
+
   });
 
 
