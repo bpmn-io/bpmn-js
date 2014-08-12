@@ -60,7 +60,7 @@ describe('modeler', function() {
 
 
         // when
-        overlays.add('SubProcess_1', {
+        overlays.add('SubProcess_1', 'badge', {
           position: {
             bottom: 0,
             right: 0
@@ -68,7 +68,7 @@ describe('modeler', function() {
           html: '<div style="max-width: 50px">YUP GREAT STUFF!</div>'
         });
 
-        overlays.add('StartEvent_1', {
+        overlays.add('StartEvent_1', 'badge', {
           position: {
             top: 0,
             left: 0
@@ -77,8 +77,8 @@ describe('modeler', function() {
         });
 
         // then
-        expect(overlays.get({ element: 'SubProcess_1' }).length).toBe(1);
-        expect(overlays.get({ element: 'StartEvent_1' }).length).toBe(1);
+        expect(overlays.get({ element: 'SubProcess_1', type: 'badge' }).length).toBe(1);
+        expect(overlays.get({ element: 'StartEvent_1', type: 'badge' }).length).toBe(1);
 
         done(err);
       });
