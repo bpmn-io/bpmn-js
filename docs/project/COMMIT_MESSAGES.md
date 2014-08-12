@@ -7,7 +7,7 @@ The goal is to achive better readability of the projects commit log and eventual
 ```plain
 feat(context-pad): add delete button
 fix(modeling): assign valid semantic ids
-fix(viewer): correctly fire imported event
+fix(Viewer): correctly fire imported event
 fix(core): handle missing BPMNPlane during import
 ```
 
@@ -45,6 +45,7 @@ Consider the following hints when writing commit messages
    * `viewer` commit changes viewer code
    * `context-pad` commit alters context pad
    * `modeling/BpmnFactory` commit fixes a specific bug in the `BpmnFactory` (use in rare important cases only)
+   * use lower case for modules, camelCase for files (according to file names)
 
 * beware of public api (everything that has been blogged about on [bpmn.io](http://bpmn.io/blog))
 
