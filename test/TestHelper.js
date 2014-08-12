@@ -122,3 +122,31 @@ function inject(fn) {
 
 module.exports.bootstrapDiagram = (window || global).bootstrapDiagram = bootstrapDiagram;
 module.exports.inject = (window || global).inject = inject;
+
+
+function insertCSS(name, css) {
+  if (document.querySelector('[data-css-file="' + name + '"]')) {
+    return;
+  }
+
+  var head = document.head || document.getElementsByTagName('head')[0],
+      style = document.createElement('style');
+      style.setAttribute('data-css-file', name);
+
+  style.type = 'text/css';
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+
+  head.appendChild(style);
+}
+
+module.exports.insertCSS = insertCSS;
+
+
+var fs = require('fs');
+
+// insert diagram.css
+insertCSS('diagram.css', fs.readFileSync(__dirname + '/../assets/diagram.css', 'utf-8'));

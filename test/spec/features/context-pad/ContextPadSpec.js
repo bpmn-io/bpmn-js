@@ -23,6 +23,7 @@ describe('features/context-pad', function() {
 
     beforeEach(bootstrapDiagram({ modules: [ contextPadModule, initPadModule ] }));
 
+
     it('should bootstrap diagram with component', inject(function(canvas, contextPad) {
 
       canvas.addShape({ id: 's1', width: 100, height: 100, x: 10, y: 10 });

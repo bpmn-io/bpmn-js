@@ -48,39 +48,81 @@
   pointer-events: none !important;
 }
 
+.djs-dragging .djs-context-pad,
+.djs-dragging .djs-outline {
+  visibility: hidden !important;
+}
+
 /**
- * hit shape styles
+ * no pointer events for visual
  */
-.djs-hit {
+.djs-visual,
+.djs-outline {
+  pointer-events: none;
+}
+
+/**
+ * all pointer events for hit shape
+ */
+.djs-shape .djs-hit {
   pointer-events: all;
+}
+
+.djs-connection .djs-hit {
+  pointer-events: stroke;
 }
 
 /**
  * shape / connection basic styles
  */
-.djs-shape .djs-visual { }
-
 .djs-connection .djs-visual {
   stroke-width: 2px;
   fill: none;
-}
-
-.djs-connection .djs-bendpoint {
-  visibility: hidden;
-}
-
-.djs-connection:hover .djs-bendpoint {
-  visibility: visible;
-}
-
-.djs-connection .djs-bendpoint:hover {
-  stroke: #CCC;
-  stroke-width: 1px;
-  fill: yellow;
 }
 
 .djs-cursor-grabbing {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: grabbing;
+}
+
+
+/**
+ * context-pad
+ */
+.djs-overlay-context-pad {
+  width: 65px;
+}
+
+.djs-context-pad {
+  padding-left: 7px;
+  position: absolute;
+  display: none;
+}
+
+.djs-context-pad .entry {
+  width: 25px;
+  height: 25px;
+
+  background: #9C9C9C;
+  border: solid 1px #D0D0D0;
+
+  text-align: center;
+  line-height: 25px;
+  vertical-align: bottom;
+
+  display: inline-block;
+}
+
+.djs-context-pad .entry img {
+  margin-bottom: -4px;
+}
+
+.djs-context-pad .entry:hover {
+  background: #D0D0D0;
+}
+
+.djs-context-pad:hover,
+.djs-context-pad.open {
+  display: block;
 }
