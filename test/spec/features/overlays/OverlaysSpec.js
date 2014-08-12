@@ -173,6 +173,44 @@ describe('features/overlays', function() {
     }));
 
 
+    it('should remove multiple by filter', inject(function(overlays, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'shape',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      overlays.add(shape, 'badge', {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: highlight('<div class="badge">1</div>')
+      });
+
+      overlays.add(shape, 'badge', {
+        position: {
+          right: 0,
+          top: 0
+        },
+        html: highlight('<div class="badge">2</div>')
+      });
+
+      // when
+      overlays.remove({ element: shape, type: 'badge' });
+
+      // then
+      expect(overlays.get({ element: shape, type: 'badge' }).length).toBe(0);
+      expect(overlays.get({ element: shape }).length).toBe(0);
+
+      expect(overlays._getOverlayContainer(shape, true).html.text()).toBe('');
+    }));
+
+
     it('should remove automatically on <*.remove>', inject(function(eventBus, overlays, canvas) {
 
       // given
