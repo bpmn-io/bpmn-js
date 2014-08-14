@@ -275,7 +275,7 @@ describe('features/overlays', function() {
         html: createOverlay()
       };
 
-      overlay1.id = overlays.add(shape1, overlay1);
+      overlay1.id = overlays.add(shape1, 'badge', overlay1);
 
 
       overlay2 = {
@@ -303,20 +303,30 @@ describe('features/overlays', function() {
     it('should return overlays by element', inject(function(overlays) {
 
       // when
-      var shape1overlays = overlays.get({ element: shape1 });
+      var filteredOverlays = overlays.get({ element: shape1 });
 
       // then
-      expect(shape1overlays.length).toBe(2);
+      expect(filteredOverlays.length).toBe(2);
     }));
 
 
     it('should return overlays by element + type', inject(function(overlays) {
 
       // when
-      var shape2overlays = overlays.get({ element: shape2, type: 'badge' });
+      var filteredOverlays = overlays.get({ element: shape2, type: 'badge' });
 
       // then
-      expect(shape2overlays.length).toBe(1);
+      expect(filteredOverlays.length).toBe(1);
+    }));
+
+
+    it('should return overlays by type', inject(function(overlays) {
+
+      // when
+      var filteredOverlays = overlays.get({ type: 'badge' });
+
+      // then
+      expect(filteredOverlays.length).toBe(2);
     }));
 
   });
