@@ -62,7 +62,7 @@
     "object-refs": "^0.1.0",
     "ids": "0.0.3",
     "bpmn-js": "^0.4.1",
-    "bpmn-js-cli": "^0.1.1"
+    "bpmn-js-cli": "^0.1.2"
   },
   "peerDependencies": {
     "diagram-js": "~0.4.0"
