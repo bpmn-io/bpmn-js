@@ -273,6 +273,54 @@ describe('viewer', function() {
       });
     });
 
+    it('should remove outer-makers on export', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf8');
+      function appendTestRect(svgDoc) {
+        var rect = document.createElementNS(svgDoc.namespaceURI, 'rect');
+        rect.setAttribute('class', 'outer-bound-marker');
+        rect.setAttribute('width', 500);
+        rect.setAttribute('height', 500);
+        rect.setAttribute('x', 10000);
+        rect.setAttribute('y', 10000);
+        svgDoc.appendChild(rect);
+      }
+
+      createViewer(xml, function(err, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        var svgDoc = viewer.container.childNodes[1].childNodes[1];
+
+
+
+        appendTestRect(svgDoc);
+        appendTestRect(svgDoc);
+
+        expect(svgDoc.querySelectorAll('.outer-bound-marker')).toBeDefined();
+
+        // when
+        viewer.saveSVG(function(err, svg) {
+
+          if (err) {
+            return done(err);
+          }
+
+          var svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svgDoc.innerHTML = svg;
+
+          // then
+          expect(isValid(svg)).toBe(true);
+          expect(svgDoc.querySelector('.outer-bound-marker')).toBeNull();
+
+          done();
+        });
+      });
+    });
+
   });
 
   describe('configuration', function() {
