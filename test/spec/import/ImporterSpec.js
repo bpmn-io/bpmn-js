@@ -260,6 +260,24 @@ describe('import - importer', function() {
       });
     });
 
+    it('should extend missing attribute with default value', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures//bpmn/draw/gateway-type-default.bpmn', 'utf8');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        var elementRegistry = diagram.get('elementRegistry');
+
+        var element = elementRegistry.getById('GATEWAY_1');
+
+        expect(element.businessObject.eventGatewayType).toEqual('Exclusive');
+
+        done();
+      });
+    })
+
   });
 
 });

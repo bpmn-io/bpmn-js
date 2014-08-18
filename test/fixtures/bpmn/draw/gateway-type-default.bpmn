@@ -1,0 +1,45 @@
+<?xml version="1.0"encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             exporter="Signavio Process Editor, http://www.signavio.com"
+             exporterVersion="8.1.1"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             id="sid-cfb874bb-23ca-47b0-ac68-b7b1cb824b1f"
+             targetNamespace="http://www.signavio.com/bpmn20"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="sid-7c34ae8d-0b83-4c60-8872-200ac8efdf58" isClosed="false" isExecutable="false" processType="None">
+      <eventBasedGateway id="GATEWAY_1" instantiate="false" />
+      <eventBasedGateway id="GATEWAY_2" instantiate="true" />
+      <association id="sid-6C4D9725-F0A9-4083-A1AA-CD509BF75178" sourceRef="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C" targetRef="GATEWAY_1" />
+      <textAnnotation id="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C" textFormat="text/plain">
+         <text>Should rendered as event based Gateway</text>
+      </textAnnotation>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-a323de14-b068-49b3-a252-669822cdf78c">
+      <bpmndi:BPMNPlane bpmnElement="sid-7c34ae8d-0b83-4c60-8872-200ac8efdf58" id="sid-8b686f77-8ed1-419f-823f-2527a66f1584">
+         <bpmndi:BPMNShape bpmnElement="GATEWAY_1" id="GATEWAY_1_gui">
+            <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="165.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="GATEWAY_2" id="GATEWAY_1_gui">
+            <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="270.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C" id="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C_gui">
+            <omgdc:Bounds height="60.0" width="150.0" x="250.0" y="50.0"/>
+            <bpmndi:BPMNLabel labelStyle="sid-037a9b94-ff1f-48d5-a96a-c382c162b8fc">
+               <omgdc:Bounds height="48.0" width="72.0" x="254.0" y="48.0"/>
+            </bpmndi:BPMNLabel>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="sid-6C4D9725-F0A9-4083-A1AA-CD509BF75178" id="sid-6C4D9725-F0A9-4083-A1AA-CD509BF75178_gui">
+            <omgdi:waypoint x="250.0" y="75.70229007633588"/>
+            <omgdi:waypoint x="197.542600896861" y="165.0"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+      <bpmndi:BPMNLabelStyle id="sid-037a9b94-ff1f-48d5-a96a-c382c162b8fc">
+         <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>
+      </bpmndi:BPMNLabelStyle>
+   </bpmndi:BPMNDiagram>
+</definitions>

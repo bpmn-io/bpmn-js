@@ -147,4 +147,9 @@ describe('draw - bpmn renderer', function() {
     bootstrapViewer(xml)(done);
   });
 
+  it('should render gateway event if attribute is missing in XML', function(done) {
+    var xml = fs.readFileSync(__dirname + '/../../fixtures/bpmn/draw/gateway-type-default.bpmn', 'utf8');
+    bootstrapViewer(xml)(done);
+  });
+
 });
