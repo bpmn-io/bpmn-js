@@ -24,7 +24,7 @@
          <bpmndi:BPMNShape bpmnElement="GATEWAY_1" id="GATEWAY_1_gui">
             <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="165.0"/>
          </bpmndi:BPMNShape>
-         <bpmndi:BPMNShape bpmnElement="GATEWAY_2" id="GATEWAY_1_gui">
+         <bpmndi:BPMNShape bpmnElement="GATEWAY_2" id="GATEWAY_2_gui">
             <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="270.0"/>
          </bpmndi:BPMNShape>
          <bpmndi:BPMNShape bpmnElement="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C" id="sid-67ACF9D3-B43E-42A8-A98F-162B6D89B75C_gui">
