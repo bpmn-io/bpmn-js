@@ -18,51 +18,56 @@ echo setup diagram-js
 
 cd $base/diagram-js
 npm install > /dev/null
+npm link
 
 
 echo setup moddle
 
 cd $base/moddle
 npm install > /dev/null
+npm link
 
 
 echo setup moddle-xml
 
 cd $base/moddle-xml
-mkdir node_modules
-ln -s $base/moddle node_modules/moddle
+npm link moddle
 npm install > /dev/null
+npm link
 
 
 echo setup bpmn-moddle
 
 cd $base/bpmn-moddle
-mkdir node_modules
-ln -s $base/moddle node_modules/moddle
-ln -s $base/moddle-xml node_modules/moddle-xml
+npm link moddle-xml
+npm link moddle
 npm install > /dev/null
+npm link
+
 
 echo setup diagram-js-direct-editing
 
 cd $base/diagram-js-direct-editing
-mkdir node_modules
-ln -s $base/diagram-js node_modules/diagram-js
+npm link diagram-js
 npm install > /dev/null
+npm link
+
 
 echo setup ids
 
 cd $base/ids
 npm install > /dev/null
+npm link
+
 
 echo setup bpmn-js
 
 cd $base/bpmn-js
-mkdir node_modules
-ln -s $base/moddle node_modules/moddle
-ln -s $base/bpmn-moddle node_modules/bpmn-moddle
-ln -s $base/diagram-js node_modules/diagram-js
-ln -s $base/diagram-js-direct-editing node_modules/diagram-js-direct-editing
-ln -s $base/ids node_modules/ids
+npm link bpmn-moddle
+npm link diagram-js
+npm link diagram-js-direct-editing
+npm link ids
 npm install > /dev/null
+npm link
 
 echo all done.
