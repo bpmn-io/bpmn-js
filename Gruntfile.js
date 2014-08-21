@@ -59,39 +59,7 @@ module.exports = function(grunt) {
         debug: true
       }
     },
-    browserify: {
-      browserifyOptions: {
-        builtins: false
-      },
-      bundleOptions: {
-        detectGlobals: false,
-        insertGlobalVars: []
-      },
-      bower: {
-        files: {
-          '../bower-diagram-js/diagram.js': [ '<%= config.sources %>/**/*.js' ]
-        },
-        options: {
-          transform: [
-            [ 'exposify', { expose: { snapsvg: 'Snap', 'lodash': '_' } } ]
-          ],
-          alias: [
-            '<%= config.sources %>/Diagram.js:diagram-js'
-          ]
-        }
-      },
-      standalone: {
-        files: {
-          '<%= config.dist %>/diagram.js': [ '<%= config.sources %>/**/*.js' ]
-        },
-        options: {
-          debug: true,
-          alias: [
-            '<%= config.sources %>/Diagram.js:diagram-js'
-          ]
-        }
-      }
-    },
+
     jsdoc: {
       dist: {
         src: [ '<%= config.sources %>/**/*.js' ],
@@ -107,17 +75,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [ 'karma:single' ]);
 
-  grunt.registerTask('build', function(target) {
-    var tasks = [ 'browserify:standalone' ];
-
-    if (target === 'all') {
-      tasks.push('browserify:bower');
-    }
-
-    return grunt.task.run(tasks);
-  });
-
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
+  grunt.registerTask('default', [ 'jshint', 'test', 'jsdoc' ]);
 };
