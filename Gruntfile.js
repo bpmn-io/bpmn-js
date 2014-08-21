@@ -9,30 +9,6 @@ module.exports = function(grunt) {
   // any of [ 'PhantomJS', 'Chrome', 'Firefox', 'IE']
   var TEST_BROWSERS = ((process.env.TEST_BROWSERS || '').replace(/^\s+|\s+$/, '') || 'PhantomJS').split(/\s*,\s*/g);
 
-  function bundleAlias(components) {
-
-    var alias = [];
-
-    if (components.indexOf('libs-external') >= 0) {
-      alias.push('node_modules/jquery:jquery');
-      alias.push('node_modules/lodash:lodash');
-    }
-
-    if (components.indexOf('libs-local') >= 0) {
-      alias.push('node_modules/bpmn-moddle:bpmn-moddle');
-    }
-
-    if (components.indexOf('viewer') >= 0) {
-      alias.push('index.js:bpmn-js');
-    }
-
-    if (components.indexOf('modeler') >= 0) {
-      alias.push('<%= config.sources %>/Modeler.js:bpmn-js/Modeler');
-    }
-
-    return alias;
-  }
-
 
   function extractSourceMap(file) {
     var content = grunt.file.read(file, { encoding: 'utf-8' });
@@ -76,9 +52,6 @@ module.exports = function(grunt) {
       src: [
         ['<%=config.sources %>']
       ],
-      gruntfile: [
-        'Gruntfile.js'
-      ],
       options: {
         jshintrc: true
       }
@@ -118,21 +91,6 @@ module.exports = function(grunt) {
           debug: true
         }
       },
-      watch: {
-        files: {
-          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
-          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
-        },
-        options: {
-          watch: true,
-          alias: bundleAlias([
-            'viewer',
-            'modeler',
-            'libs-external',
-            'libs-local'
-          ])
-        }
-      },
       bowerViewer: {
         files: {
           '<%= config.bowerDist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
@@ -160,46 +118,6 @@ module.exports = function(grunt) {
             } ]
           ]
         }
-      },
-      standaloneViewer: {
-        files: {
-          '<%= config.dist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
-        },
-        options: {
-          alias: bundleAlias([
-            'viewer',
-            'libs-external',
-            'libs-local'
-          ])
-        }
-      },
-      standaloneModeler: {
-        files: {
-          '<%= config.dist %>/bpmn.js': [ '<%= config.sources %>/**/*.js' ],
-        },
-        options: {
-          alias: bundleAlias([
-            'viewer',
-            'modeler',
-            'libs-external',
-            'libs-local'
-          ])
-        }
-      }
-    },
-
-    watch: {
-      standaloneModeler: {
-        files: [ '<%= config.dist %>/bpmn.js' ],
-        tasks: [ 'uglify:standaloneModeler' ]
-      },
-      standaloneViewer: {
-        files: [ '<%= config.dist %>/bpmn-viewer.js' ],
-        tasks: [ 'uglify:standaloneViewer' ]
-      },
-      bowerViewer: {
-        files: [ '<%= config.bowerDist %>/bpmn-viewer.js' ],
-        tasks: [ 'uglify:bowerViewer' ]
       }
     },
 
@@ -229,16 +147,6 @@ module.exports = function(grunt) {
         files: {
           '<%= config.bowerDist %>/bpmn-viewer.min.js': [ '<%= config.bowerDist %>/bpmn-viewer.js' ]
         }
-      },
-      standaloneModeler: {
-        files: {
-          '<%= config.dist %>/bpmn.min.js': [ '<%= config.dist %>/bpmn.js' ]
-        }
-      },
-      standaloneViewer: {
-        files: {
-          '<%= config.dist %>/bpmn-viewer.min.js': [ '<%= config.dist %>/bpmn-viewer.js' ]
-        }
       }
     }
   });
@@ -254,37 +162,19 @@ module.exports = function(grunt) {
   // valid executions are
   //
   //   * build -> build:all
-  //   * build:all -> build:lib, build:bower
-  //   * build:lib -> { packages library files as standalone bundle }
-  //   * build:lib -> { packages library files as bower bundle }
+  //   * build:all -> build:bower
+  //   * build:bower
   //
-  grunt.registerTask('build', function(target, mode) {
-
-    mode = mode || 'prod';
+  grunt.registerTask('build', function(target) {
 
     if (target === 'bower') {
-      return grunt.task.run(['browserify:bowerViewer', 'uglify:bowerViewer']);
-    }
-
-    if (target === 'lib') {
-      var tasks = [];
-
-      if (mode !== 'dev') {
-        tasks.push('uglify:standaloneModeler', 'uglify:standaloneViewer');
-      }
-
-      return grunt.task.run(['browserify:standaloneViewer', 'browserify:standaloneModeler'].concat(tasks));
+      return grunt.task.run([ 'browserify:bowerViewer', 'uglify:bowerViewer' ]);
     }
 
     if (!target || target === 'all') {
-      return grunt.task.run(['build:lib:' + mode, 'build:bower' ]);
+      return grunt.task.run([ 'build:bower' ]);
     }
   });
-
-  grunt.registerTask('auto-build', [
-    'browserify:watch',
-    'watch'
-  ]);
 
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
