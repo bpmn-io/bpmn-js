@@ -20,6 +20,7 @@ function mid(shape) {
   };
 }
 
+
 describe('features/layout/CroppingConnectionDocking', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ layoutModule ] }));
@@ -33,6 +34,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       topLeft_bottomLeftConnection,
       bottomLeft_bottomRightConnection,
       topLeft_bottomRightConnection,
+      topLeft_bottomRightFreeStyleConnection,
       unconnectedConnection;
 
   beforeEach(inject(function(canvas) {
@@ -68,6 +70,13 @@ describe('features/layout/CroppingConnectionDocking', function() {
     topLeft_bottomLeftConnection = createConnection('c-topLeft-bottomLeft', topLeftShape, bottomLeftShape);
     topLeft_bottomRightConnection = createConnection('c-topLeft-bottomRight', topLeftShape, bottomRightShape);
     bottomLeft_bottomRightConnection = createConnection('c-bottomLeft-bottomRight', bottomLeftShape, bottomRightShape);
+
+    topLeft_bottomRightFreeStyleConnection = canvas.addConnection({
+      id: 'c-freestyle',
+      waypoints: [ mid(topLeftShape), { x: 250, y: 250 }, { x: 350, y: 250 }, { x: 350, y: 350 }, mid(bottomRightShape) ],
+      source: topLeftShape,
+      target: bottomRightShape
+    });
 
     unconnectedConnection = canvas.addConnection({
       id: 'c-unconnected',
@@ -209,6 +218,16 @@ describe('features/layout/CroppingConnectionDocking', function() {
         { x: 197, y: 197, original: topLeft_bottomRightConnection.waypoints[0] },
         { x: 403, y: 403, original: topLeft_bottomRightConnection.waypoints[1] }
       ]);
+
+
+      expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).toDeepEqual([
+        { x: 197, y: 197, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
+        topLeft_bottomRightFreeStyleConnection.waypoints[1],
+        topLeft_bottomRightFreeStyleConnection.waypoints[2],
+        topLeft_bottomRightFreeStyleConnection.waypoints[3],
+        { x: 403, y: 403, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
+      ]);
+
 
       // unconnected connection
       expect(layouter.getCroppedWaypoints(unconnectedConnection)).toDeepEqual([
