@@ -5,7 +5,7 @@ This document describes the necessary steps to setup a `bpmn-js` development env
 
 ## TLDR;
 
-On Linux/Unix? [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html) ready? Check out the small setup script below.
+On Linux/Unix? [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html) ready? Check out the [setup script section](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md#setup-via-script) below.
 
 
 ## Manual Steps
@@ -73,7 +73,7 @@ Execute `grunt` on any of the projects. Things should be nice.
 
 ## Setup via Script
 
-The whole setup can be automated through the following script.
+The whole setup can be automated through setup scripts for [Linux](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/setup.sh) and [Windows](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.bat). 
 
 ```bash
 #!/bin/bash
