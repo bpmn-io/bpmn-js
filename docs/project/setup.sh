@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###
+# Setup script to be executed in a bpmn.io project root (some empty folder chosen by YOU)
+###
+
 base=`pwd`
 
 echo cloning repositories
@@ -14,6 +18,7 @@ git clone git@github.com:bpmn-io/bpmn-moddle.git > /dev/null
 git clone git@github.com:bpmn-io/ids.git > /dev/null
 
 echo done.
+
 
 echo setup diagram-js
 
