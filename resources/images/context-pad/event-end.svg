@@ -13,8 +13,8 @@
    height="20"
    id="svg3795"
    version="1.1"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="event-end.svg"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="event-end.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -27,17 +27,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="26.214075"
-     inkscape:cx="1.66375"
-     inkscape:cy="10.158739"
+     inkscape:zoom="28.45"
+     inkscape:cx="10"
+     inkscape:cy="10"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
-     inkscape:window-width="1323"
-     inkscape:window-height="859"
-     inkscape:window-x="62"
-     inkscape:window-y="42"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="956"
+     inkscape:window-height="1041"
+     inkscape:window-x="3520"
+     inkscape:window-y="37"
+     inkscape:window-maximized="0"
+     borderlayer="true" />
   <metadata
      id="metadata4">
     <rdf:RDF>
@@ -46,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,16 +55,17 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-1032.3622)">
+     transform="translate(0,-1032.3622)"
+     style="opacity:1">
     <path
        sodipodi:type="arc"
-       style="fill:#ffffff;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.78295898;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="path4313"
        sodipodi:cx="10.089999"
        sodipodi:cy="9.9862957"
        sodipodi:rx="9.0981655"
        sodipodi:ry="9.0981655"
-       d="m 19.188165,9.9862957 c 0,5.0247783 -4.073388,9.0981653 -9.098166,9.0981653 -5.0247779,0 -9.09816531,-4.073387 -9.09816531,-9.0981653 0,-5.0247781 4.07338741,-9.09816551 9.09816531,-9.09816551 5.024778,0 9.098166,4.07338741 9.098166,9.09816551 z"
-       transform="matrix(0.96493709,0,0,0.96493709,0.26378553,1032.7261)" />
+       d="m 19.188165,9.9862957 a 9.0981655,9.0981655 0 1 1 -18.19633131,0 9.0981655,9.0981655 0 1 1 18.19633131,0 z"
+       transform="matrix(0.88182203,0,0,0.88182203,1.1024165,1033.5561)" />
   </g>
 </svg>
