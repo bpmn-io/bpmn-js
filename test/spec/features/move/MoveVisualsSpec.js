@@ -8,7 +8,7 @@ var TestHelper = require('../../../TestHelper');
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move');
 
-var Event = require('../../../Event');
+var MockEvent = require('../../../Event');
 
 
 describe('features/move', function() {
@@ -72,8 +72,8 @@ describe('features/move', function() {
       expect(draggable).toBeDefined();
 
       // when
-      draggable.dragStart(10, 10, new Event());
-      draggable.dragMove(20, 20, 30, 30, new Event());
+      draggable.dragStart(10, 10, new MockEvent());
+      draggable.dragMove(20, 20, 30, 30, new MockEvent());
 
       // then
       expect(elementRegistry.getGraphicsByElement(childShape).hasClass('djs-dragging')).toBe(true);
@@ -88,8 +88,8 @@ describe('features/move', function() {
       expect(draggable).toBeDefined();
 
       // when
-      draggable.dragStart(10, 10, new Event());
-      draggable.dragMove(20, 20, 30, 30, new Event());
+      draggable.dragStart(10, 10, new MockEvent());
+      draggable.dragMove(20, 20, 30, 30, new MockEvent());
 
       // then
       expect(elementRegistry.getGraphicsByElement(childShape2).hasClass('djs-dragging')).toBe(true);
@@ -104,9 +104,9 @@ describe('features/move', function() {
       expect(draggable).toBeDefined();
 
       // when
-      draggable.dragStart(10, 10, new Event());
-      draggable.dragMove(20, 20, 30, 30, new Event());
-      draggable.dragEnd(30, 30, new Event());
+      draggable.dragStart(10, 10, new MockEvent());
+      draggable.dragMove(20, 20, 30, 30, new MockEvent());
+      draggable.dragEnd(30, 30, new MockEvent());
 
       // then
       expect(elementRegistry.getGraphicsByElement(childShape2).hasClass('djs-dragging')).toBe(false);
