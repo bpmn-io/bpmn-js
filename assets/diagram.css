@@ -95,23 +95,20 @@
 }
 
 .djs-context-pad {
-  padding-left: 7px;
   position: absolute;
+  padding-left: 2px;
   display: none;
 }
 
 .djs-context-pad .entry {
-  width: 25px;
-  height: 25px;
-
-  background: #9C9C9C;
-  border: solid 1px #D0D0D0;
-
+  width: 20px;
+  height: 20px;
   text-align: center;
-  line-height: 25px;
-  vertical-align: bottom;
-
+  vertical-align: baseline;
   display: inline-block;
+  border-radius: 5px;
+  padding: 1px;
+  margin: 0 1px 1px 0;
 }
 
 .djs-context-pad .entry img {
@@ -119,7 +116,7 @@
 }
 
 .djs-context-pad .entry:hover {
-  background: #D0D0D0;
+  background: rgb(255, 252, 176);
 }
 
 .djs-context-pad:hover,
