@@ -58,14 +58,18 @@ describe('features/modeling - create connection', function() {
 
       // expect cropped connection
       expect(sequenceFlowConnection.waypoints).toDeepEqual([
-        { original: { x: 242, y: 376 }, x: 292, y: 370 },
-        { original: { x: 553, y: 341 }, x: 531, y: 344 }
+        { original: { x: 242, y: 376 }, x: 292, y: 376},
+        { x: 410, y: 376 },
+        { x: 410, y: 341 },
+        { original: { x: 553, y: 341 }, x: 528, y: 341}
       ]);
 
       // expect cropped waypoints in di
       expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 292, y: 370 },
-        { $type: 'dc:Point', x: 531, y: 344 }
+        { $type: 'dc:Point', x: 292, y: 376 },
+        { $type: 'dc:Point', x: 410, y: 376 },
+        { $type: 'dc:Point', x: 410, y: 341 },
+        { $type: 'dc:Point', x: 528, y: 341 }
       ]);
     }));
 
@@ -121,6 +125,9 @@ describe('features/modeling - create connection', function() {
 
       var sequenceFlow = sequenceFlowConnection.businessObject;
 
+      var newWaypoints = sequenceFlowConnection.waypoints,
+          newDiWaypoints = sequenceFlow.di.waypoint;
+
       // when
       commandStack.undo();
       commandStack.redo();
@@ -136,16 +143,10 @@ describe('features/modeling - create connection', function() {
       expect(sequenceFlow.di.$parent.planeElement).toContain(sequenceFlow.di);
 
       // expect cropped connection
-      expect(sequenceFlowConnection.waypoints).toDeepEqual([
-        { original: { x: 242, y: 376 }, x: 292, y: 370 },
-        { original: { x: 553, y: 341 }, x: 531, y: 344 }
-      ]);
+      expect(sequenceFlowConnection.waypoints).toDeepEqual(newWaypoints);
 
       // expect cropped waypoints in di
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 292, y: 370 },
-        { $type: 'dc:Point', x: 531, y: 344 }
-      ]);
+      expect(sequenceFlow.di.waypoint).toDeepEqual(newDiWaypoints);
     }));
 
   });

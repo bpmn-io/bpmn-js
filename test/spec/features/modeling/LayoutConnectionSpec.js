@@ -33,7 +33,6 @@ describe('features/modeling - layout connection', function() {
       var sequenceFlowConnection = elementRegistry.getById('SequenceFlow_1'),
           sequenceFlow = sequenceFlowConnection.businessObject;
 
-
       // when
       modeling.layoutConnection(sequenceFlowConnection);
 
@@ -41,14 +40,18 @@ describe('features/modeling - layout connection', function() {
 
       // expect cropped connection
       expect(sequenceFlowConnection.waypoints).toDeepEqual([
-        { original: { x: 553, y: 341 }, x: 571, y: 348 },
-        { original: { x: 782, y: 436 }, x: 732, y: 415 }
+        { original: { x: 553, y: 341 }, x: 578, y: 341 },
+        { x: 655, y: 341 },
+        { x: 655, y: 436 },
+        { original: { x: 782, y: 436 }, x: 732, y: 436 }
       ]);
 
       // expect cropped waypoints in di
       expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 571, y: 348 },
-        { $type: 'dc:Point', x: 732, y: 415 }
+        { $type: 'dc:Point', x: 578, y: 341 },
+        { $type: 'dc:Point', x: 655, y: 341 },
+        { $type: 'dc:Point', x: 655, y: 436 },
+        { $type: 'dc:Point', x: 732, y: 436 }
       ]);
     }));
 

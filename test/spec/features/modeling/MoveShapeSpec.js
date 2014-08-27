@@ -48,14 +48,19 @@ describe('features/modeling - move shape', function() {
       expect(startEvent.di.bounds.x).toBe(oldPosition.x);
       expect(startEvent.di.bounds.y).toBe(oldPosition.y + 50);
 
+      // expect flow layout
       expect(sequenceFlowElement.waypoints).toDeepEqual([
-        { original: { x: 370, y: 310 }, x: 386, y: 302 },
-        { original: { x: 470, y: 260 }, x: 420, y: 285 }
+        { original: { x: 370, y: 310 }, x: 388, y: 310 },
+        { x: 404, y: 310 },
+        { x: 404, y: 260 },
+        { original: { x: 470, y: 260 }, x: 420, y: 260 }
       ]);
 
       expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 386, y: 302 },
-        { $type: 'dc:Point', x: 420, y: 285 }
+        { $type: 'dc:Point', x: 388, y: 310 },
+        { $type: 'dc:Point', x: 404, y: 310 },
+        { $type: 'dc:Point', x: 404, y: 260 },
+        { $type: 'dc:Point', x: 420, y: 260 }
       ]);
     }));
 
