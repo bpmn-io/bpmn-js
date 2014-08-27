@@ -11,7 +11,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 var MockEvent = require('../../../Event');
 
 
-describe('features/move', function() {
+describe('features/move - MoveVisuals', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, moveModule ] }));
 
