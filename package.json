@@ -11,6 +11,7 @@
   },
   "keywords": [
     "bpmn",
+    "bpmn-js",
     "toolkit",
     "web modeler",
     "modeler",
@@ -56,7 +57,6 @@
     "diagram-js-direct-editing": "^0.3.0",
     "didi": "^0.0.4",
     "jquery": "^2.1.0",
-    "jquery-mousewheel": "^3.1.11",
     "lodash": "^2.4.0",
     "object-refs": "^0.1.0",
     "ids": "^0.0.3",
