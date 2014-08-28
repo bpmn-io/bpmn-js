@@ -186,6 +186,8 @@ describe('import - importer', function() {
       // then
       expect(startEventShape.type).toBe('bpmn:StartEvent');
       expect(startEventShape.parent).toBe(subProcessShape);
+
+      expect(subProcessShape.children.length).toBe(5);
     });
 
 
