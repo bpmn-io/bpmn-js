@@ -95,6 +95,8 @@ describe('features/modeling - append shape', function() {
 
       // then
       expect(connection).toBeDefined();
+      expect(connection.parent).toBe(newShape.parent);
+
       expect(elementRegistry.getGraphicsByElement(connection)).toBeDefined();
     }));
 
@@ -119,8 +121,13 @@ describe('features/modeling - append shape', function() {
 
     it('should pass custom attributes connection', inject(function(modeling) {
 
+      // given
+      var connectionProperties = {
+        attrs: { custom: true }
+      };
+
       // when
-      var newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 }, null, { custom: true });
+      var newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 }, null, connectionProperties);
       var newConnection = newShape.incoming[0];
 
       // then
