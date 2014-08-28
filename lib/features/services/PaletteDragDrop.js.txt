@@ -1,7 +1,7 @@
 'use strict';
 
 var Diagram = require('../../Diagram'),
-    ShapeUtil = require('../../util/ShapeUtil');
+    Elements = require('../../util/Elements');
 
 var _ = require('lodash');
 
