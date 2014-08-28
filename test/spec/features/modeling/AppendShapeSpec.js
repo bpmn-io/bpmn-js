@@ -40,74 +40,93 @@ describe('features/modeling - append shape', function() {
   }));
 
 
-  var newShape;
+  describe('basic handling', function() {
 
-  beforeEach(inject(function(modeling) {
+    var newShape;
 
-    // add new shape
-    newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 });
-  }));
+    beforeEach(inject(function(modeling) {
 
-
-  it('should return shape', inject(function() {
-
-    // when
-    // shape added
-
-    // then
-    expect(newShape).toBeDefined();
-  }));
+      // add new shape
+      newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 });
+    }));
 
 
-  it('should position new shape at mid', inject(function() {
+    it('should return shape', inject(function() {
 
-    // when
-    // shape added
+      // when
+      // shape added
 
-    // then
-    expect(newShape).toBeDefined();
-
-    expect(newShape.x + newShape.width / 2).toBe(200);
-    expect(newShape.y + newShape.height / 2).toBe(200);
-  }));
+      // then
+      expect(newShape).toBeDefined();
+    }));
 
 
-  it('should render shape', inject(function(elementRegistry) {
+    it('should position new shape at mid', inject(function() {
 
-    // when
-    // shape added
+      // when
+      // shape added
 
-    // then
-    expect(elementRegistry.getGraphicsByElement(newShape)).toBeDefined();
-  }));
+      // then
+      expect(newShape).toBeDefined();
 
-
-  it('should add connection', inject(function(elementRegistry) {
-
-    // when
-    // shape added
-
-    var connection = _.find(newShape.incoming, function(c) {
-      return c.source === childShape;
-    });
-
-    // then
-    expect(connection).toBeDefined();
-    expect(elementRegistry.getGraphicsByElement(connection)).toBeDefined();
-  }));
+      expect(newShape.x + newShape.width / 2).toBe(200);
+      expect(newShape.y + newShape.height / 2).toBe(200);
+    }));
 
 
-  it('should undo', inject(function(commandStack, elementRegistry) {
+    it('should render shape', inject(function(elementRegistry) {
 
-    // given
-    // shape added
+      // when
+      // shape added
 
-    // when
-    commandStack.undo();
+      // then
+      expect(elementRegistry.getGraphicsByElement(newShape)).toBeDefined();
+    }));
 
-    // then
-    expect(newShape.parent).toBe(null);
-    expect(elementRegistry.getGraphicsByElement(newShape)).not.toBeDefined();
-  }));
+
+    it('should add connection', inject(function(elementRegistry) {
+
+      // when
+      // shape added
+
+      var connection = _.find(newShape.incoming, function(c) {
+        return c.source === childShape;
+      });
+
+      // then
+      expect(connection).toBeDefined();
+      expect(elementRegistry.getGraphicsByElement(connection)).toBeDefined();
+    }));
+
+
+    it('should undo', inject(function(commandStack, elementRegistry) {
+
+      // given
+      // shape added
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(newShape.parent).toBe(null);
+      expect(elementRegistry.getGraphicsByElement(newShape)).not.toBeDefined();
+    }));
+
+  });
+
+
+  describe('customization', function() {
+
+    it('should pass custom attributes connection', inject(function(modeling) {
+
+      // when
+      var newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 }, null, { custom: true });
+      var newConnection = newShape.incoming[0];
+
+      // then
+      expect(newConnection.custom).toBe(true);
+    }));
+
+  });
 
 });
