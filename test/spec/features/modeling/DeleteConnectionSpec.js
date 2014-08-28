@@ -80,6 +80,7 @@ describe('features/modeling - remove connection', function() {
 
     // then
     expect(label.parent).toBeNull();
+    expect(connection.label).toBeNull();
   }));
 
 
@@ -93,6 +94,7 @@ describe('features/modeling - remove connection', function() {
 
     // then
     expect(label.parent).toBe(parentShape);
+    expect(connection.label).toBe(label);
   }));
 
 
@@ -107,6 +109,7 @@ describe('features/modeling - remove connection', function() {
 
     // then
     expect(label.parent).toBeNull();
+    expect(connection.label).toBeNull();
   }));
 
 
