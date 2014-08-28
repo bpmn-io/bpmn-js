@@ -137,6 +137,31 @@ describe('Canvas', function() {
       expect(gfx.attr('visibility')).toBe('hidden');
     }));
 
+
+    it('should wire parent child relationship', inject(function(elementFactory, canvas) {
+
+      // given
+      var parentShape = elementFactory.createShape({
+        id: 'parent',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      var childShape = elementFactory.createShape({
+        id: 'child',
+        x: 110, y: 110, width: 100, height: 100
+      });
+
+      // when
+      canvas.addShape(parentShape);
+      canvas.addShape(childShape, parentShape);
+
+      // then
+      expect(parentShape.children).toEqual([ childShape ]);
+      expect(childShape.parent).toBe(parentShape);
+
+      expect(parentShape.parent).not.toBeDefined();
+    }));
+
   });
 
   describe('#removeShape', function() {
@@ -160,6 +185,31 @@ describe('Canvas', function() {
       expect(elementRegistry.getById('a')).not.toBeDefined();
 
       expect(listener).toHaveBeenCalled();
+    }));
+
+
+    it('should unwire parent child relationship', inject(function(elementFactory, canvas) {
+
+      // given
+      var parentShape = elementFactory.createShape({
+        id: 'parent',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      var childShape = elementFactory.createShape({
+        id: 'child',
+        x: 110, y: 110, width: 100, height: 100
+      });
+
+      canvas.addShape(parentShape);
+      canvas.addShape(childShape, parentShape);
+
+      // when
+      canvas.removeShape(childShape);
+
+      // then
+      expect(parentShape.children).toEqual([]);
+      expect(childShape.parent).toBe(null);
     }));
 
   });
