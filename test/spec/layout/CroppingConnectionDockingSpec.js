@@ -35,6 +35,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       bottomLeft_bottomRightConnection,
       topLeft_bottomRightConnection,
       topLeft_bottomRightFreeStyleConnection,
+      backAndForthConnection,
       unconnectedConnection;
 
   beforeEach(inject(function(canvas) {
@@ -74,6 +75,13 @@ describe('features/layout/CroppingConnectionDocking', function() {
     topLeft_bottomRightFreeStyleConnection = canvas.addConnection({
       id: 'c-freestyle',
       waypoints: [ mid(topLeftShape), { x: 250, y: 250 }, { x: 350, y: 250 }, { x: 350, y: 350 }, mid(bottomRightShape) ],
+      source: topLeftShape,
+      target: bottomRightShape
+    });
+
+    backAndForthConnection = canvas.addConnection({
+      id: 'c-backandforth',
+      waypoints: [ mid(topLeftShape), { x: 300, y: 150 }, { x: 300, y: 200 }, mid(topLeftShape), mid(bottomRightShape) ],
       source: topLeftShape,
       target: bottomRightShape
     });
@@ -219,6 +227,14 @@ describe('features/layout/CroppingConnectionDocking', function() {
         { x: 403, y: 403, original: topLeft_bottomRightConnection.waypoints[1] }
       ]);
 
+      expect(layouter.getCroppedWaypoints(backAndForthConnection)).toDeepEqual([
+        { x: 200, y: 150, original: backAndForthConnection.waypoints[0] },
+        backAndForthConnection.waypoints[1],
+        backAndForthConnection.waypoints[2],
+        backAndForthConnection.waypoints[3],
+        { x: 403, y: 403, original: backAndForthConnection.waypoints[4] }
+      ]);
+
 
       expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).toDeepEqual([
         { x: 197, y: 197, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
@@ -227,7 +243,6 @@ describe('features/layout/CroppingConnectionDocking', function() {
         topLeft_bottomRightFreeStyleConnection.waypoints[3],
         { x: 403, y: 403, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
       ]);
-
 
       // unconnected connection
       expect(layouter.getCroppedWaypoints(unconnectedConnection)).toDeepEqual([
