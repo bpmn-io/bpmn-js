@@ -71,6 +71,45 @@ describe('features/modeling - remove connection', function() {
   }));
 
 
+  it('should remove label', inject(function(modeling) {
+
+    var label = modeling.createLabel(connection, { x: 160, y: 145 });
+
+    // when
+    modeling.removeConnection(connection);
+
+    // then
+    expect(label.parent).toBeNull();
+  }));
+
+
+  it('should undo remove label', inject(function(modeling, commandStack) {
+
+    var label = modeling.createLabel(connection, { x: 160, y: 145 });
+
+    // when
+    modeling.removeConnection(connection);
+    commandStack.undo();
+
+    // then
+    expect(label.parent).toBe(parentShape);
+  }));
+
+
+  it('should redo remove label', inject(function(modeling, commandStack) {
+
+    var label = modeling.createLabel(connection, { x: 160, y: 145 });
+
+    // when
+    modeling.removeConnection(connection);
+    commandStack.undo();
+    commandStack.redo();
+
+    // then
+    expect(label.parent).toBeNull();
+  }));
+
+
   it('should clean up incoming/outgoing on connected shapes ', inject(function(modeling, elementRegistry) {
 
     // when
