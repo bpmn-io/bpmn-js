@@ -13,6 +13,7 @@ git clone git@github.com:bpmn-io/diagram-js-direct-editing.git
 git clone git@github.com:bpmn-io/moddle.git
 git clone git@github.com:bpmn-io/moddle-xml.git
 git clone git@github.com:bpmn-io/bpmn-js.git
+git clone git@github.com:bpmn-io/bpmn-js-integration.git
 git clone git@github.com:bpmn-io/bpmn-js-cli.git
 git clone git@github.com:bpmn-io/bpmn-moddle.git
 git clone git@github.com:bpmn-io/ids.git
@@ -87,6 +88,15 @@ npm link
 # deferred link cli (circular dev dependency)
 cd $base/bpmn-js
 npm link bpmn-js-cli
+
+
+echo setup bpmn-js-integration
+
+cd $base/bpmn-js-integration
+npm install
+npm link bpmn-js
+npm link bpmn-js-cli
+npm link bpmn-moddle
 
 cd $base
 
