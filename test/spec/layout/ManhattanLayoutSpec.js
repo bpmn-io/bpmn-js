@@ -234,6 +234,289 @@ describe('layout/ManhattanLayout', function() {
 
     });
 
+  });
+
+
+  describe('#repairConnection', function() {
+
+    function moved(bounds, delta) {
+      return {
+        x: bounds.x + (delta.x || 0),
+        y: bounds.y + (delta.y || 0),
+        width: bounds.width,
+        height: bounds.height
+      };
+    }
+
+    function connect(start, end, a, b) {
+      return ManhattanLayout.connectRectangles(start, end, a, b);
+    }
+
+    function repair(start, end, a, b, waypoints) {
+      return ManhattanLayout.repairConnection(start, end, a, b, waypoints);
+    }
+
+
+    describe('relayout', function() {
+
+      it('should relayout if no bendpoints', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(200, 400, 100, 100);
+
+        var waypoints = [];
+
+        // when
+        var repaired = repair(start, end, waypoints);
+
+        // then
+        expect(repaired).toEqual([
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { x: 150, y: 300 },
+          { x: 250, y: 300 },
+          { original: { x: 250, y: 450 }, x: 250, y: 400 }
+        ]);
+      });
+
+
+      it('should relayout if bendpoints overlapped', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(100, 400, 100, 100);
+
+        var waypoints = [
+          { x: 150, y: 150 },
+          { x: 250, y: 150 },
+          { original: { x: 250, y: 450 }, x: 250, y: 400 }
+        ];
+
+        // when
+        var repaired = repair(start, end, waypoints);
+
+        // then
+        expect(repaired).toEqual([
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { original: { x: 150, y: 450 }, x: 150, y: 400 }
+        ]);
+      });
+
+    });
+
+
+    describe('bendpoint removal', function() {
+
+      it('should remove overlapping bendpoints', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(200, 400, 100, 100),
+            newEnd = moved(end, { x: 50, y: -100 }); // move on second bendpoint
+
+        var waypoints = [
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { x: 150, y: 300 },
+          { x: 250, y: 300 },
+          { original: { x: 250, y: 450 }, x: 250, y: 400 }
+        ];
+
+        // when
+        var repaired = repair(start, newEnd, waypoints);
+
+        // then
+        expect(repaired).toEqual([
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { x: 150, y: 350 },
+          { x: 300, y: 350 }
+        ]);
+      });
+
+
+      it('should remove all from overlapping bendpoint', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(200, 400, 100, 100),
+            newEnd = moved(end, { x: 50, y: -100 }); // move on second bendpoint
+
+        var waypoints = [
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { x: 150, y: 300 },
+          // <custom garbage bendpoints>
+          { x: 250, y: 300 },
+          { x: 150, y: 300 },
+          // </custom garbage bendpoints>
+          { x: 250, y: 300 },
+          { original: { x: 250, y: 450 }, x: 250, y: 400 }
+        ];
+
+        // when
+        var repaired = repair(start, newEnd, waypoints);
+
+        // then
+        expect(repaired).toEqual([
+          { original: { x: 150, y: 150 }, x: 150, y: 200 },
+          { x: 150, y: 350 },
+          { x: 300, y: 350 }
+        ]);
+      });
+
+    });
+
+
+    describe('bendpoint adjustment', function() {
+
+      describe('misc', function() {
+
+        it('should adjust single bendpoints', function() {
+
+          // given
+          var start = rect(50, 100, 100, 100),
+              end = rect(200, 400, 100, 100),
+              newStart = moved(start, { x: 50 });
+
+          var waypoints = [
+            { x: 100, y: 150 },
+            { x: 250, y: 150 },
+            { original: { x: 250, y: 450 }, x: 250, y: 400 }
+          ];
+
+          // when
+          var repaired = repair(newStart, end, waypoints);
+
+          // then
+          expect(repaired).toEqual([
+            { x: 150, y: 150 },
+            { x: 250, y: 150 },
+            { original: { x: 250, y: 450 }, x: 250, y: 400 }
+          ]);
+        });
+
+
+        it('should not layout free flow', function() {
+
+          // given
+          var start = rect(100, 100, 100, 100),
+              end = rect(200, 400, 100, 100),
+              newEnd = moved(end, { x: 100, y: 50 });
+
+          var waypoints = [
+            { original: { x: 150, y: 150 }, x: 150, y: 200 },
+            { x: 150, y: 300 },
+            // diagonal connection
+            { x: 250, y: 450 }
+          ];
+
+          // when
+          var repaired = repair(start, newEnd, waypoints);
+
+          // then
+          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 350, y: 500 } ]));
+        });
+
+      });
+
+
+      describe('repair start', function() {
+
+        var start = rect(100, 100, 100, 100),
+            end = rect(200, 400, 100, 100);
+
+
+        it('should repair move x', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newStart = moved(start, { x: 50 });
+
+          // when
+          var repaired = repair(newStart, end, waypoints);
+
+          // then
+          expect(repaired).toEqual([ { x: 200, y: 150 }, { x: 200, y: 300 } ].concat(waypoints.slice(2)));
+        });
+
+
+        it('should repair move y', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newStart = moved(start, { y: 50 });
+
+          // when
+          var repaired = repair(newStart, end, waypoints);
+
+          // then
+          expect(repaired).toEqual([ { x: 150, y: 200 }, { x: 150, y: 300 } ].concat(waypoints.slice(2)));
+        });
+
+
+        it('should repair move x,y', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newStart = moved(start, { x: 100, y: -50 });
+
+          // when
+          var repaired = repair(newStart, end, waypoints);
+
+          // then
+          expect(repaired).toEqual([ { x: 250, y: 100 }, { x: 250, y: 300 } ].concat(waypoints.slice(2)));
+        });
+
+      });
+
+
+      describe('repair end', function() {
+
+        var start = rect(100, 100, 100, 100),
+            end = rect(150, 400, 100, 100);
+
+        it('should repair move x', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newEnd = moved(end, { x: 50 });
+
+          // when
+          var repaired = repair(start, newEnd, waypoints);
+
+          // then
+          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 250, y: 300 }, { x: 250, y: 450 } ]));
+        });
+
+
+        it('should repair move y', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newEnd = moved(end, { y: 50 });
+
+          // when
+          var repaired = repair(start, newEnd, waypoints);
+
+          // then
+          expect(repaired).toEqual(waypoints.slice(0, 3).concat([ { x: 200, y: 500 } ]));
+        });
+
+
+        it('should repair move x,y', function() {
+
+          // given
+          var waypoints = connect(start, end),
+              newEnd = moved(end, { x: 100, y: -50 });
+
+          // when
+          var repaired = repair(start, newEnd, waypoints);
+
+          // then
+          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 300, y: 300 }, { x: 300, y: 400 } ]));
+        });
+
+      });
+
+    });
 
   });
 
