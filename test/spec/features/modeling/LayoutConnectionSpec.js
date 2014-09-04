@@ -38,20 +38,20 @@ describe('features/modeling - layout connection', function() {
 
       // then
 
-      // expect cropped connection
+      // expect cropped, repaired connection
       expect(sequenceFlowConnection.waypoints).toDeepEqual([
         { original: { x: 553, y: 341 }, x: 578, y: 341 },
-        { x: 655, y: 341 },
-        { x: 655, y: 436 },
-        { original: { x: 782, y: 436 }, x: 732, y: 436 }
+        { x: 934, y: 341 },
+        { x: 934, y: 436 },
+        { original: { x: 832, y: 436 }, x: 832, y: 436 }
       ]);
 
       // expect cropped waypoints in di
       expect(sequenceFlow.di.waypoint).toDeepEqual([
         { $type: 'dc:Point', x: 578, y: 341 },
-        { $type: 'dc:Point', x: 655, y: 341 },
-        { $type: 'dc:Point', x: 655, y: 436 },
-        { $type: 'dc:Point', x: 732, y: 436 }
+        { $type: 'dc:Point', x: 934, y: 341 },
+        { $type: 'dc:Point', x: 934, y: 436 },
+        { $type: 'dc:Point', x: 832, y: 436 }
       ]);
     }));
 
