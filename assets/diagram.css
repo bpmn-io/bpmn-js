@@ -91,13 +91,17 @@
  * context-pad
  */
 .djs-overlay-context-pad {
-  width: 65px;
+  width: 72px;
 }
 
 .djs-context-pad {
   position: absolute;
-  padding-left: 2px;
   display: none;
+  padding: 1px;
+  background: #ffffff;
+  -moz-box-shadow: 10px 0 20px 10px #ffffff;
+  -webkit-box-shadow: 10px 0 20px 10px #ffffff;
+  box-shadow: 10px 0 20px 10px #ffffff;
 }
 
 .djs-context-pad .entry {
