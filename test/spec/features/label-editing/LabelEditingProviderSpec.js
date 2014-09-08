@@ -136,8 +136,7 @@ describe('features - label-editing', function() {
     it('should update via command stack', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task'),
-          semantic = diagramElement.businessObject;
+      var diagramElement = elementRegistry.getById('user-task');
 
       var listenerCalled;
 
@@ -157,10 +156,9 @@ describe('features - label-editing', function() {
     it('should undo via command stack', inject(function(commandStack) {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task'),
-          semantic = diagramElement.businessObject;
+      var diagramElement = elementRegistry.getById('user-task');
 
-      var oldLabel = LabelUtil.getLabel(semantic);
+      var oldLabel = LabelUtil.getLabel(diagramElement);
 
       // when
       directEditActivate(diagramElement);
@@ -169,7 +167,7 @@ describe('features - label-editing', function() {
       commandStack.undo();
 
       // then
-      var label = LabelUtil.getLabel(semantic);
+      var label = LabelUtil.getLabel(diagramElement);
       expect(label).toBe(oldLabel);
     }));
 
@@ -181,8 +179,7 @@ describe('features - label-editing', function() {
     it('on shape change', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task'),
-          semantic = diagramElement.businessObject;
+      var diagramElement = elementRegistry.getById('user-task');
 
       var listenerCalled;
 
@@ -204,8 +201,7 @@ describe('features - label-editing', function() {
     it('on connection on change', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('sequence-flow-no'),
-          semantic = diagramElement.businessObject;
+      var diagramElement = elementRegistry.getById('sequence-flow-no');
 
       var listenerCalled;
 
@@ -232,10 +228,9 @@ describe('features - label-editing', function() {
 
       return inject(function(elementRegistry, eventBus, directEditing) {
 
-        var diagramElement = elementRegistry.getById(elementId),
-            semantic = diagramElement.businessObject;
+        var diagramElement = elementRegistry.getById(elementId);
 
-        var label = LabelUtil.getLabel(semantic);
+        var label = LabelUtil.getLabel(diagramElement);
 
 
         // when
@@ -252,7 +247,7 @@ describe('features - label-editing', function() {
 
         // then
         // expect update to have happened
-        label = LabelUtil.getLabel(semantic);
+        label = LabelUtil.getLabel(diagramElement);
         expect(label).toBe('B');
 
 
@@ -261,7 +256,7 @@ describe('features - label-editing', function() {
         directEditCancel('C');
 
         // expect no label update to have happened
-        label = LabelUtil.getLabel(semantic);
+        label = LabelUtil.getLabel(diagramElement);
         expect(label).toBe('B');
       });
     }
