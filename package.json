@@ -38,11 +38,11 @@
   },
   "dependencies": {
     "didi": "^0.0.4",
-    "eve": "0.4.1",
+    "eve": "^0.4.2",
     "lodash": "^2.4.0",
     "jquery": "^2.1.0",
     "jquery-mousewheel": "^3.1.11",
-    "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.2.2-browserify.tar.gz",
+    "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz",
     "hammerjs": "^2.0.1",
     "object-refs": "^0.1.0"
   }

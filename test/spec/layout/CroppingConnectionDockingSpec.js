@@ -139,14 +139,14 @@ describe('features/layout/CroppingConnectionDocking', function() {
       // diagonal source docking
       expectDockingPoint(topLeft_bottomRightConnection, topLeft_bottomRightConnection.source, {
         point : { x : 150, y : 150 },
-        actual : { x : 197, y : 197 },
+        actual : { x : 195, y : 195 },
         idx : 0
       });
 
       // vertical target docking
       expectDockingPoint(topLeft_bottomRightConnection, topLeft_bottomRightConnection.target, {
         point : { x : 450, y : 450 },
-        actual : { x : 403, y : 403 },
+        actual : { x : 405, y : 405 },
         idx : 1
       });
     }));
@@ -173,7 +173,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       // vertical target docking
       expectDockingPoint(topLeft_bottomRightConnection, shape, {
         point : { x : 450, y : 450 },
-        actual : { x : 423, y : 423 },
+        actual : { x : 425, y : 425 },
         idx : 1
       });
     }));
@@ -223,8 +223,8 @@ describe('features/layout/CroppingConnectionDocking', function() {
       ]);
 
       expect(layouter.getCroppedWaypoints(topLeft_bottomRightConnection)).toDeepEqual([
-        { x: 197, y: 197, original: topLeft_bottomRightConnection.waypoints[0] },
-        { x: 403, y: 403, original: topLeft_bottomRightConnection.waypoints[1] }
+        { x: 195, y: 195, original: topLeft_bottomRightConnection.waypoints[0] },
+        { x: 405, y: 405, original: topLeft_bottomRightConnection.waypoints[1] }
       ]);
 
       expect(layouter.getCroppedWaypoints(backAndForthConnection)).toDeepEqual([
@@ -232,16 +232,16 @@ describe('features/layout/CroppingConnectionDocking', function() {
         backAndForthConnection.waypoints[1],
         backAndForthConnection.waypoints[2],
         backAndForthConnection.waypoints[3],
-        { x: 403, y: 403, original: backAndForthConnection.waypoints[4] }
+        { x: 405, y: 405, original: backAndForthConnection.waypoints[4] }
       ]);
 
 
       expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).toDeepEqual([
-        { x: 197, y: 197, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
+        { x: 195, y: 195, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
         topLeft_bottomRightFreeStyleConnection.waypoints[1],
         topLeft_bottomRightFreeStyleConnection.waypoints[2],
         topLeft_bottomRightFreeStyleConnection.waypoints[3],
-        { x: 403, y: 403, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
+        { x: 405, y: 405, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
       ]);
 
       // unconnected connection

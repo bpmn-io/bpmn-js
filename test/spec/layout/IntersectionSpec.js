@@ -30,8 +30,8 @@ describe('intersection', function() {
     });
 
     expect(intersections.length).toBe(1);
-    expect(Math.abs(intersections[0].x - point.x) < 0.1).toBe(true);
-    expect(Math.abs(intersections[0].y - point.y) < 0.1).toBe(true);
+    expect(Math.abs(intersections[0].x - point.x) < 0.5).toBe(true);
+    expect(Math.abs(intersections[0].y - point.y) < 0.5).toBe(true);
   }
 
   function expectIntersection(a, b, point) {
