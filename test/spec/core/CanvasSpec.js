@@ -146,7 +146,7 @@ describe('Canvas', function() {
       var gfx = elementRegistry.getGraphicsByElement(shape);
 
       // then
-      expect(gfx.attr('visibility')).toBe('hidden');
+      expect(gfx.attr('display')).toBe('none');
     }));
 
 
