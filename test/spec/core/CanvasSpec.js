@@ -92,6 +92,18 @@ describe('Canvas', function() {
     }));
 
 
+    it('should add shape to registry', inject(function(canvas, elementRegistry) {
+
+      var shape = { id: 'a', x: 10, y: 20, width: 50, height: 50 };
+
+      // when
+      canvas.addShape(shape);
+
+      // then
+      expect(elementRegistry.getById('a')).toBe(shape);
+    }));
+
+
     it('should fail when shape#id is not set', inject(function(canvas) {
 
       // given
@@ -185,6 +197,19 @@ describe('Canvas', function() {
       expect(elementRegistry.getById('a')).not.toBeDefined();
 
       expect(listener).toHaveBeenCalled();
+    }));
+
+
+    it('should remove shape from registry', inject(function(canvas, elementRegistry) {
+
+      // given
+      canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+
+      // when
+      canvas.removeShape('a');
+
+      // then
+      expect(elementRegistry.getById('a')).toBeFalsy();
     }));
 
 
