@@ -3,10 +3,10 @@ var _ = require('lodash');
 var Matchers = require('../../Matchers');
 
 var Snap = require('../../../lib/draw/Snap'),
-    LabelUtil = require('../../../lib/util/LabelUtil');
+    TextUtil = require('../../../lib/util/TextUtil');
 
 
-describe('LabelUtil', function() {
+describe('TextUtil', function() {
 
   var container;
 
@@ -16,7 +16,7 @@ describe('LabelUtil', function() {
     style: { fontSize: '11pt' }
   };
 
-  var labelUtil = new LabelUtil(options);
+  var labelUtil = new TextUtil(options);
 
   beforeEach(Matchers.addBBoxMatchers);
 
