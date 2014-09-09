@@ -123,7 +123,6 @@
   background: rgb(255, 252, 176);
 }
 
-.djs-context-pad:hover,
 .djs-context-pad.open {
   display: block;
 }
