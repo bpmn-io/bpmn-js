@@ -206,6 +206,25 @@ describe('error handling', function() {
     }).not.toThrow();
   });
 
+
+  it('should throw error without <error> event listener', function() {
+
+    // given
+    var e = new EventBus();
+
+    var failingListener = function() {
+      throw new Error('fail');
+    };
+
+    // when
+    e.on('fail', failingListener);
+
+    // then
+    expect(function() {
+      e.fire({ type: 'fail' });
+    }).toThrow();
+  });
+
 });
 
 
