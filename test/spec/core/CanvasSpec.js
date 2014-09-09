@@ -17,8 +17,8 @@ describe('Canvas', function() {
   var container;
 
   var defaultBootstrap = bootstrapDiagram(function() {
-    container = document.createElement('div');
-    document.body.appendChild(container);
+
+    container = jasmine.getEnv().getTestContainer();
 
     return {
       canvas: {
