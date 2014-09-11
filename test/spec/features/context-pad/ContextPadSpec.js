@@ -5,6 +5,9 @@ var TestHelper = require('../../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
+var $ = require('jquery');
+
+
 var contextPadModule = require('../../../../lib/features/context-pad');
 
 var providerModule = {
@@ -142,6 +145,85 @@ describe('features/context-pad', function() {
       // then
       expect(!!contextPad.isOpen()).toBe(false);
     }));
+
+  });
+
+
+  describe('event handling', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ contextPadModule, providerModule ] }));
+
+    function createEvent(eventType, target) {
+      return $.Event(eventType, { target: target });
+    }
+
+
+    it('should handle click event', inject(function(canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+
+      contextPad.open(shape);
+
+      var pad = contextPad.getPad(shape),
+          html = pad.html,
+          target = html.find('[data-action="action.c"]');
+
+      var event = createEvent('click', target);
+
+      // when
+      contextPad.trigger(event.type, event);
+
+      // then
+      expect(event.__handled).toBeTruthy();
+    }));
+
+
+    it('should prevent unhandled events', inject(function(canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+      contextPad.open(shape);
+
+      var pad = contextPad.getPad(shape),
+          html = pad.html,
+          target = html.find('[data-action="action.c"]');
+
+      var event = createEvent('dragstart', target);
+
+      // when
+      contextPad.trigger(event.type, event);
+
+      // then
+      expect(event.isDefaultPrevented()).toBeTruthy();
+    }));
+
+
+    it('should handle drag event', inject(function(canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', type: 'drag', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+      contextPad.open(shape);
+
+      var pad = contextPad.getPad(shape),
+          html = pad.html,
+          target = html.find('[data-action="action.dragstart"]');
+
+      var event = createEvent('dragstart', target);
+
+      // when
+      contextPad.trigger(event.type, event);
+
+      // then
+      expect(event.__handled).toBeTruthy();
+    }));
+
   });
 
 });
