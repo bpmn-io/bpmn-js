@@ -22,12 +22,14 @@
   stroke-width: 1px;
 }
 
-.djs-group.drop-ok .djs-visual {
-  fill: green;
+.djs-group.connect-ok .djs-visual > :nth-child(1),
+.djs-group.drop-ok .djs-visual > :nth-child(1) {
+  fill: #90DD5F /* light-green */!important;
 }
 
-.djs-group.drop-not-ok .djs-visual {
-  fill: red;
+.djs-group.connect-not-ok .djs-visual > :nth-child(1),
+.djs-group.drop-not-ok .djs-visual > :nth-child(1) {
+  fill: #E56283 /* light-red */ !important;
 }
 
 /**
@@ -98,10 +100,6 @@
   position: absolute;
   display: none;
   padding: 1px;
-  background: #ffffff;
-  -moz-box-shadow: 10px 0 20px 10px #ffffff;
-  -webkit-box-shadow: 10px 0 20px 10px #ffffff;
-  box-shadow: 10px 0 20px 10px #ffffff;
 }
 
 .djs-context-pad .entry {
