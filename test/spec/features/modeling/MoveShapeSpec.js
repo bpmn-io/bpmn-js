@@ -84,6 +84,28 @@ describe('features/modeling - move shape', function() {
       expect(startEvent.di.label.bounds.y).toBe(oldPosition.y + 50);
     }));
 
+
+    it('should move label with element', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startEventElement = elementRegistry.getById('StartEvent_1'),
+          startEvent = startEventElement.businessObject;
+
+      var label = startEventElement.label;
+
+      var labelPosition = {
+        x: label.x,
+        y: label.y
+      };
+
+      // when
+      modeling.moveShape(startEventElement, { x: 40, y: -80 });
+
+      // then
+      expect(label.x).toBe(labelPosition.x + 40);
+      expect(label.y).toBe(labelPosition.y - 80);
+    }));
+
   });
 
 
