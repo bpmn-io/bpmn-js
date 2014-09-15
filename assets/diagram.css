@@ -52,7 +52,7 @@
 
 .djs-dragging .djs-context-pad,
 .djs-dragging .djs-outline {
-  visibility: hidden !important;
+  display: none !important;
 }
 
 /**
