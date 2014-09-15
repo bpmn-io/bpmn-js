@@ -109,7 +109,7 @@ describe('features/modeling - append shape', function() {
         expect(elementRegistry.getById(label.id)).toBeDefined();
 
         expect(label.x).toBe(443);
-        expect(label.y).toBe(273);
+        expect(label.y).toBe(278);
         expect(label.width).toBe(LabelUtil.DEFAULT_LABEL_SIZE.width);
         expect(label.height).toBe(LabelUtil.DEFAULT_LABEL_SIZE.height);
       }));
