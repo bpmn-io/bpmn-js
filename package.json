@@ -1,6 +1,6 @@
 {
   "name": "diagram-js",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "A modeling framework for the web",
   "scripts": {
     "test": "grunt test"
