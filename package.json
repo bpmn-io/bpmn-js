@@ -31,7 +31,7 @@
   "license": "http://bpmn.io/license",
   "devDependencies": {
     "brfs": "^1.2.0",
-    "diagram-js": "^0.5.0",
+    "diagram-js": "^0.5.1",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
     "grunt-browserify": "^2.1.2",
@@ -63,6 +63,6 @@
     "bpmn-js-cli": "^0.2.0"
   },
   "peerDependencies": {
-    "diagram-js": "^0.5.0"
+    "diagram-js": "^0.5.1"
   }
 }
