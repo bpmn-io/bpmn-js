@@ -31,7 +31,7 @@
   "license": "http://bpmn.io/license",
   "devDependencies": {
     "brfs": "^1.2.0",
-    "diagram-js": "^0.4.0",
+    "diagram-js": "^0.5.0",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
     "grunt-browserify": "^2.1.2",
@@ -53,16 +53,16 @@
     "time-grunt": "^0.3.2"
   },
   "dependencies": {
-    "bpmn-moddle": "^0.3.0",
-    "diagram-js-direct-editing": "^0.3.0",
+    "bpmn-moddle": "^0.4.0",
+    "diagram-js-direct-editing": "^0.4.0",
     "didi": "^0.0.4",
     "jquery": "^2.1.0",
     "lodash": "^2.4.0",
     "object-refs": "^0.1.0",
-    "ids": "^0.0.3",
-    "bpmn-js-cli": "^0.1.1"
+    "ids": "^0.1.0",
+    "bpmn-js-cli": "^0.2.0"
   },
   "peerDependencies": {
-    "diagram-js": "^0.4.0"
+    "diagram-js": "^0.5.0"
   }
 }
