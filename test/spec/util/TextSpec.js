@@ -73,6 +73,24 @@ describe('Text', function() {
     });
 
 
+    it('should create text on hidden element', function() {
+
+      // given
+      var label = 'I am a label';
+
+      // render on invisible element
+      container.attr('display', 'none');
+
+      // when
+      var text = createText(container, label, { box: { width: 150, height: 100 }});
+
+      // make visible (for bounds check)
+      container.attr('display', '');
+
+      expect(text).toBeDefined();
+      expect(text).toFitBBox({ x: 35, y: 0, width: 80, height: 30 });
+    });
+
     describe('should line break', function() {
 
       it('at word boundary', function() {
