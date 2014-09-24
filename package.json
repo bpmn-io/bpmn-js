@@ -30,7 +30,7 @@
   ],
   "license": "http://bpmn.io/license",
   "devDependencies": {
-    "brfs": "^1.2.0",
+    "brfs": "~1.0.2",
     "diagram-js": "^0.5.1",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
