@@ -61,6 +61,97 @@ describe('core/EventBus', function() {
   });
 
 
+  describe('default action', function() {
+
+    it('should allow if no listeners', function() {
+
+      // given
+      var eventBus = new EventBus();
+
+      // when
+      var defaultPrevented = !eventBus.fire('foo');
+
+      // then
+      expect(defaultPrevented).toBe(false);
+    });
+
+
+    it('should allow with listeners', function() {
+
+      // given
+      var eventBus = new EventBus();
+
+      eventBus.on('foo', function(event) { });
+
+      // when
+      var defaultPrevented = !eventBus.fire('foo');
+
+      // then
+      expect(defaultPrevented).toBe(false);
+    });
+
+
+    it('should prevent on Event#preventDefault', function() {
+
+      // given
+      var eventBus = new EventBus();
+
+      eventBus.on('foo', function(event) {
+        event.preventDefault();
+      });
+
+      // when
+      var defaultPrevented = !eventBus.fire('foo');
+
+      // then
+      expect(defaultPrevented).toBe(true);
+    });
+
+
+    it('should prevent on listener returning false', function() {
+
+      // given
+      var eventBus = new EventBus();
+
+      eventBus.on('foo', function(event) {
+        return false;
+      });
+
+      // when
+      var defaultPrevented = !eventBus.fire('foo');
+
+      // then
+      expect(defaultPrevented).toBe(true);
+    });
+
+
+    it('should not stop propagation to other listeners', function() {
+
+      // given
+      var eventBus = new EventBus();
+
+      var listener1 = createSpy('listener1').and.callFake(function(event) {
+        return false;
+      });
+
+      var listener2 = createSpy('listener2');
+
+      eventBus.on('foo', listener1);
+      eventBus.on('foo', listener2);
+
+      // when
+      var defaultPrevented = !eventBus.fire('foo');
+
+      // then
+      expect(defaultPrevented).toBe(true);
+
+      expect(listener1).toHaveBeenCalled();
+      expect(listener2).toHaveBeenCalled();
+    });
+
+  });
+
+
   it('should remove listeners by event type', function() {
 
     // given
