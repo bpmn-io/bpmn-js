@@ -160,6 +160,108 @@ describe('command/CommandStack', function() {
   });
 
 
+  describe('#canExecute', function() {
+
+    it('should reject unhandled', inject(function(commandStack) {
+
+      // when
+      var canExecute = commandStack.canExecute('non-existing-command');
+
+      // then
+      expect(canExecute).toBe(false);
+    }));
+
+
+    describe('should forward to handler', function() {
+
+      function testCanExecute(commandStack, accept) {
+
+        // given
+        commandStack.register('command', {
+          canExecute: function(context) {
+            return (context.canExecute = accept);
+          }
+        });
+
+        var context = { };
+
+        // when
+        var canExecute = commandStack.canExecute('command', context);
+
+        // then
+        expect(canExecute).toBe(accept);
+        expect(context.canExecute).toBe(accept);
+      }
+
+
+      it('accepting', inject(function(commandStack) {
+        testCanExecute(commandStack, true);
+      }));
+
+
+      it('rejecting', inject(function(commandStack) {
+        testCanExecute(commandStack, false);
+      }));
+
+    });
+
+
+    describe('should integrate with eventBus', function() {
+
+      it('events having precedence', inject(function(eventBus, commandStack) {
+
+        // given
+        eventBus.on('commandStack.command.canExecute', function(event) {
+          return (event.context.listenerCanExecute = false);
+        });
+
+        commandStack.register('command', {
+          canExecute: function(context) {
+            return (context.commandCanExecute = true);
+          }
+        });
+
+        var context = { };
+
+        // when
+        var canExecute = commandStack.canExecute('command', context);
+
+        // then
+        expect(canExecute).toBe(false);
+        expect(context.listenerCanExecute).toBe(false);
+        expect(context.commandCanExecute).not.toBeDefined();
+      }));
+
+
+      it('rejecting in command', inject(function(eventBus, commandStack) {
+
+        // given
+        eventBus.on('commandStack.command.canExecute', function(event) {
+          return (event.context.listenerCanExecute = true);
+        });
+
+        commandStack.register('command', {
+          canExecute: function(context) {
+            return (context.commandCanExecute = false);
+          }
+        });
+
+        var context = { };
+
+        // when
+        var canExecute = commandStack.canExecute('command', context);
+
+        // then
+        expect(canExecute).toBe(false);
+        expect(context.listenerCanExecute).toBe(true);
+        expect(context.commandCanExecute).toBe(false);
+      }));
+
+    });
+
+  });
+
+
   describe('#undo', function() {
 
     it('should not fail if nothing to undo', inject(function(commandStack) {
