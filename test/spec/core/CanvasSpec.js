@@ -648,10 +648,10 @@ describe('Canvas', function() {
       }));
 
 
-      it('should zoom fit-viewport', inject(function(canvas) {
+      it('should zoom fit-viewport (horizontally)', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 300 });
 
         // when
         var zoom = canvas.zoom('fit-viewport');
@@ -664,7 +664,30 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 600, height: 600 },
+          inner: { width: 600, height: 300 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
+      it('should zoom fit-viewport (vertically)', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 600 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(0.5);
+
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 300, height: 600 },
           outer: { width: 300, height: 300 }
         });
 
