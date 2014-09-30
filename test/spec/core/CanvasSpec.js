@@ -315,30 +315,10 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
-          inner: { width: 300, height: 300 },
+          inner: { width: 300, height: 300, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
       }));
-
-
-      it('should provide default viewbox', inject(function(canvas) {
-
-        // given
-        canvas.addShape({ id: 's0', x: 50, y: 50, width: 300, height: 300 });
-
-        // when
-        var viewbox = canvas.viewbox();
-
-        // then
-        expect(viewbox).toEqual({
-          x: 0, y: 0,
-          width: 300, height: 300,
-          scale: 1.0,
-          inner: { width: 300, height: 300 },
-          outer: { width: 300, height: 300 }
-        });
-      }));
-
 
       it('should provide default viewbox / overflowing diagram', inject(function(canvas) {
 
@@ -353,7 +333,7 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
-          inner: { width: 600, height: 600 },
+          inner: { width: 600, height: 600, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -362,7 +342,7 @@ describe('Canvas', function() {
       it('should provide default viewbox / offset element', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 50, y: 50, width: 150, height: 150 });
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 150, height: 100 });
 
         // when
         var viewbox = canvas.viewbox();
@@ -372,7 +352,7 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
-          inner: { width: 150, height: 150 },
+          inner: { width: 150, height: 100, x: 50, y: 100 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -399,7 +379,7 @@ describe('Canvas', function() {
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 300, height: 300 },
+          inner: { width: 300, height: 300, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -422,7 +402,7 @@ describe('Canvas', function() {
           x: 100, y: 100,
           width: 300, height: 300,
           scale: 1,
-          inner: { width: 200, height: 200 },
+          inner: { width: 200, height: 200, x: 100, y: 100 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -445,7 +425,7 @@ describe('Canvas', function() {
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 1200, height: 1200 },
+          inner: { width: 1200, height: 1200, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -468,7 +448,7 @@ describe('Canvas', function() {
           x: 50, y: 50,
           width: 200, height: 200,
           scale: 1.5,
-          inner: { width: 300, height: 300 },
+          inner: { width: 300, height: 300, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
       }));
@@ -495,7 +475,7 @@ describe('Canvas', function() {
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 300, height: 300 },
+          inner: { width: 300, height: 300, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
 
@@ -651,7 +631,7 @@ describe('Canvas', function() {
       it('should zoom fit-viewport (horizontally)', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 300 });
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 550, height: 200 });
 
         // when
         var zoom = canvas.zoom('fit-viewport');
@@ -664,7 +644,7 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 600, height: 300 },
+          inner: { width: 550, height: 200, x: 50, y: 100 },
           outer: { width: 300, height: 300 }
         });
 
@@ -674,7 +654,7 @@ describe('Canvas', function() {
       it('should zoom fit-viewport (vertically)', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 0, y: 0, width: 300, height: 600 });
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 250, height: 500 });
 
         // when
         var zoom = canvas.zoom('fit-viewport');
@@ -687,7 +667,7 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 300, height: 600 },
+          inner: { width: 250, height: 500, x: 50, y: 100 },
           outer: { width: 300, height: 300 }
         });
 
@@ -713,7 +693,7 @@ describe('Canvas', function() {
           x: 0, y: 0,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 600, height: 600 },
+          inner: { width: 600, height: 600, x: 0, y: 0 },
           outer: { width: 300, height: 300 }
         });
 
@@ -756,7 +736,7 @@ describe('Canvas', function() {
             x: -150, y: -150,
             width: 600, height: 600,
             scale: 0.5,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
@@ -779,7 +759,7 @@ describe('Canvas', function() {
             x: -100, y: -100,
             width: 600, height: 600,
             scale: 0.5,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
@@ -806,7 +786,7 @@ describe('Canvas', function() {
             width: 600,
             height: 600,
             scale: 0.5,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
@@ -831,7 +811,7 @@ describe('Canvas', function() {
             width: 150,
             height: 150,
             scale: 2.0,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
@@ -856,7 +836,7 @@ describe('Canvas', function() {
             width: 150,
             height: 150,
             scale: 2.0,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
@@ -880,7 +860,7 @@ describe('Canvas', function() {
             width: 150,
             height: 150,
             scale: 2.0,
-            inner: { width: 300, height: 300 },
+            inner: { width: 300, height: 300, x: 0, y: 0 },
             outer: { width: 300, height: 300 }
           });
 
