@@ -10,6 +10,7 @@ var $ = require('jquery');
 var overlayModule = require('../../../../lib/features/overlays'),
     selectionModule = require('../../../../lib/features/selection'),
     modelingModule = require('../../../../lib/features/modeling'),
+    resizeModule = require('../../../../lib/features/resize'),
     moveModule = require('../../../../lib/features/move');
 
 
@@ -18,7 +19,13 @@ var Event = require('../../../Event');
 
 describe('features/overlay', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ overlayModule, selectionModule, modelingModule, moveModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [
+    overlayModule,
+    selectionModule,
+    modelingModule,
+    moveModule,
+    resizeModule
+  ] }));
 
 
   describe('modeling integration', function() {
@@ -86,6 +93,87 @@ describe('features/overlay', function() {
       // then
       expect(html.parent().parent().position()).toEqual({
         top: 50,
+        left: 50
+      });
+
+    }));
+
+    iit('should update on shape.resize', inject(function(modeling, canvas, overlays, resize) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      });
+
+      var html = $('<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>');
+
+      // add overlay to a single shape (or connection)
+      overlays.add(shape, {
+        html: html,
+        position: {
+          top:  10,
+          left: 10
+        }
+      });
+
+      // when
+      resize.resizeShape(shape, {
+        direction: 'ne',
+        delta: {
+          x: 0,
+          y: 15
+        }
+      });
+
+      // then
+      expect(html.parent().parent().position()).toEqual({
+        top:  35,
+        left: 50
+      });
+
+    }));
+
+
+    iit('should update on shape.resize undo', inject(function(modeling, canvas, overlays, commandStack, resize) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100
+      });
+
+      var html = $('<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>');
+
+      // add overlay to a single shape (or connection)
+      overlays.add(shape, {
+        html: html,
+        position: {
+          top:  10,
+          left: 10
+        }
+      });
+
+      resize.resizeShape(shape, {
+        direction: 'ne',
+        delta: {
+          x: 0,
+          y: 15
+        }
+      });
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(html.parent().parent().position()).toEqual({
+        top:  50,
         left: 50
       });
 
