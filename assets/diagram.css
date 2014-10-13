@@ -33,6 +33,19 @@
 }
 
 /**
+ * Resize styles
+ */
+ .djs-resize {
+   opacity: 0.8;
+ }
+
+ .djs-resize-overlay {
+   fill: white;
+   fill-opacity: 0.8;
+ }
+
+
+/**
  * drag styles
  */
 .djs-dragger {

@@ -42,7 +42,7 @@ describe('features/resize', function() {
       eventBus.on('shape.resized', listener);
 
       // when
-      resize.resizeShape(c1Shape, {width: 207, height:208});
+      resize.resizeShape(c1Shape, {delta: {x: 0, y: 0}});
 
       // then
       expect(listener).toHaveBeenCalled();
@@ -60,7 +60,7 @@ describe('features/resize', function() {
       canvas.addShape(c1Shape);
 
       // when
-      resize.resizeShape(c1Shape, {width: 207, height:208});
+      resize.resizeShape(c1Shape, {delta: {x: -107, y: -108}});
 
       var updatedShape = elementRegistry.getById('c1');
 

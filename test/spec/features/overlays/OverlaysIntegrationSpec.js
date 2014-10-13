@@ -98,7 +98,7 @@ describe('features/overlay', function() {
 
     }));
 
-    iit('should update on shape.resize', inject(function(modeling, canvas, overlays, resize) {
+    it('should update on shape.resize', inject(function(modeling, canvas, overlays, resize) {
 
       // given
       var shape = canvas.addShape({
@@ -138,7 +138,7 @@ describe('features/overlay', function() {
     }));
 
 
-    iit('should update on shape.resize undo', inject(function(modeling, canvas, overlays, commandStack, resize) {
+    it('should update on shape.resize undo', inject(function(modeling, canvas, overlays, commandStack, resize) {
 
       // given
       var shape = canvas.addShape({
