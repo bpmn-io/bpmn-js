@@ -1,0 +1,6 @@
+{
+  "elements": [
+    "bpmn:Task",
+    "bpmn:SubProcess"
+  ]
+}
