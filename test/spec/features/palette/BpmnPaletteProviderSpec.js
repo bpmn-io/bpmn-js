@@ -32,7 +32,7 @@ describe('palette', function() {
     });
   }
 
-  iit('should should draw palette', function(done) {
+  it('should should draw palette', function(done) {
 
     var modeler = new Modeler({ container: container });
     modeler.createDiagram(function(err) {
