@@ -341,7 +341,7 @@ describe('features/resize', function() {
       // then
       var selectedShape = elementRegistry.getGraphicsByElement(c1Shape);
 
-      var resizeAnchors = selectedShape.selectAll('.resize');
+      var resizeAnchors = selectedShape.selectAll('.djs-resizer');
 
       expect(resizeAnchors.length).toBe(4);
     }));
