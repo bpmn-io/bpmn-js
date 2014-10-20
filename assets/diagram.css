@@ -35,15 +35,22 @@
 /**
  * Resize styles
  */
- .djs-resize {
-   opacity: 0.8;
- }
-
- .djs-resize-overlay {
+.djs-shape > .djs-resize-overlay {
    fill: white;
    fill-opacity: 0.8;
  }
 
+.djs-shape.djs-resizing > .djs-outline {
+  visibility: hidden !important;
+}
+
+.djs-shape.djs-resizing > .djs-resizer {
+  visibility: hidden;
+}
+
+.djs-dragger > .djs-resizer {
+  visibility: hidden;
+}
 
 /**
  * drag styles
