@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+   xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" 
+   xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   expressionLanguage="http://www.w3.org/1999/XPath" 
+   id="sid-9462d855-17c5-4105-aa19-c6a95cc4e3be" 
+   typeLanguage="http://www.w3.org/2001/XMLSchema" 
+   xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="sid-294f3941-0297-48ea-b5d2-24c576587517" isClosed="false" isExecutable="false" processType="None">
+      <subProcess completionQuantity="1" id="ID_subprocess_1" isForCompensation="false" startQuantity="1" triggeredByEvent="false">
+      </subProcess>
+      <task completionQuantity="1" id="ID_task_1" isForCompensation="false" startQuantity="1">
+         <outgoing>ID_sequenceflow_1</outgoing>
+      </task>
+      <sequenceFlow id="ID_sequenceflow_1" sourceRef="ID_task_1" targetRef="ID_task_1">
+      </sequenceFlow>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-fb46a8c1-9a89-400f-a5c5-e4057ab1d29a">
+      <bpmndi:BPMNPlane bpmnElement="sid-294f3941-0297-48ea-b5d2-24c576587517" id="sid-c2b161f4-5768-409e-8532-a7037b200d5d">
+         <bpmndi:BPMNShape bpmnElement="ID_subprocess_1" id="ID_subprocess_1_gui" isExpanded="true">
+            <omgdc:Bounds height="353.0" width="392.0" x="58.0" y="60.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="ID_task_1" id="ID_task_1_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="510.0" y="225.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="ID_sequenceflow_1" id="ID_sequenceflow_1_gui">
+            <omgdi:waypoint x="560.0" y="305.0"/>
+            <omgdi:waypoint x="560.0" y="364.0"/>
+            <omgdi:waypoint x="836.0" y="364.0"/>
+            <omgdi:waypoint x="836.0" y="265.0"/>
+            <omgdi:waypoint x="610.0" y="265.0"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>

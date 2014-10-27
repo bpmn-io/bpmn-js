@@ -31,5 +31,4 @@ describe('features - context-pad', function() {
     }));
 
   });
-
 });

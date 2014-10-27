@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+  xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  expressionLanguage="http://www.w3.org/1999/XPath"
+  targetNamespace="http://www.signavio.com/bpmn20"
+  typeLanguage="http://www.w3.org/2001/XMLSchema"
+  xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+
+   <process id="sid-a4cd48b2-5b11-4c1a-b7f7-ada3058503ee" isClosed="false" isExecutable="false" processType="None">
+      <task completionQuantity="1" id="ID_Task_1" isForCompensation="false" startQuantity="1">
+         <outgoing>ID_Sequenceflow_1</outgoing>
+      </task>
+      <task completionQuantity="1" id="ID_Task_2" isForCompensation="false" startQuantity="1">
+         <incoming>ID_Sequenceflow_1</incoming>
+      </task>
+      <subProcess completionQuantity="1" id="ID_SubProcess_1" isForCompensation="false" startQuantity="1" triggeredByEvent="false">
+      </subProcess>
+      <sequenceFlow id="ID_Sequenceflow_1" sourceRef="ID_Task_1" targetRef="ID_Task_2">
+      </sequenceFlow>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-fc24e517-57a5-49e4-8688-13200425c940">
+      <bpmndi:BPMNPlane bpmnElement="sid-a4cd48b2-5b11-4c1a-b7f7-ada3058503ee" id="sid-dd68914a-715b-49b8-b74a-29880342d6df">
+         <bpmndi:BPMNShape bpmnElement="ID_Task_1" id="ID_Task_1_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="105.0" y="90.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="ID_Task_2" id="ID_Task_2_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="345.0" y="90.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="ID_SubProcess_1" id="ID_SubProcess_1_gui" isExpanded="true">
+            <omgdc:Bounds height="219.0" width="432.0" x="60.0" y="215.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="ID_Sequenceflow_1" id="ID_Sequenceflow_1_gui">
+            <omgdi:waypoint x="205.0" y="130.0"/>
+            <omgdi:waypoint x="345.0" y="130.0"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>

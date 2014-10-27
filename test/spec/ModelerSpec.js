@@ -146,6 +146,7 @@ describe('modeler', function() {
       createModeler(xml, function(err, modeler) {
 
         expect(modeler.get('bpmnjs')).toBe(modeler);
+
         done(err);
       });
     });
