@@ -51,8 +51,8 @@ describe('features/modeling - resize shape', function() {
     modeling.resizeShape(shape2, { width: 124, height: 202 });
 
     // then
-   expect(shape2.width).toBe(124);
-   expect(shape2.height).toBe(202);
+    expect(shape2.width).toBe(124);
+    expect(shape2.height).toBe(202);
   }));
 
 

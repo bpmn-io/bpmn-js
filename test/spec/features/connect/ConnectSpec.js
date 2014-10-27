@@ -6,6 +6,7 @@ var TestHelper = require('../../../TestHelper');
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
+    rulesModule = require('../../../../lib/features/rules'),
     connectModule = require('../../../../lib/features/connect');
 
 var MockEvent = require('../../../Event');
@@ -64,10 +65,14 @@ describe('features/connect', function() {
     }));
 
 
-    it('should not connect if rejected', inject(function(connect, modeling) {
+    it('should not connect if rejected', inject(function(connect, rules) {
 
       // assume
-      expect(modeling.canConnect(shape1child, shape2)).toBeFalsy();
+      var context = {
+        source: shape1child,
+        target: shape2
+      };
+      expect(rules.can('connect', context)).toBeFalsy();
 
       // when
       connect.start(new MockEvent(), shape1child);

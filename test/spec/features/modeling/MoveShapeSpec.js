@@ -21,7 +21,7 @@ describe('features/modeling - move shape', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, parentShape, childShape, childShape2, connection;
+  var rootShape, parentShape, parentShape2, childShape, childShape2, connection;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -35,6 +35,13 @@ describe('features/modeling - move shape', function() {
     });
 
     canvas.addShape(parentShape, rootShape);
+
+    parentShape2 = elementFactory.createShape({
+      id: 'parent2',
+      x: 500, y: 500, width: 300, height: 300
+    });
+
+    canvas.addShape(parentShape2, rootShape);
 
     childShape = elementFactory.createShape({
       id: 'child',
@@ -74,6 +81,22 @@ describe('features/modeling - move shape', function() {
     expect(childShape.parent).toBe(parentShape);
   }));
 
+  it('should move multiple shapes according to delta', inject(function(modeling) {
+
+    // when
+    modeling.moveShapes([childShape, childShape2], { x: -20, y: +20 });
+
+    // then
+    expect(childShape.x).toBe(90);
+    expect(childShape.y).toBe(130);
+
+    expect(childShape2.x).toBe(180);
+    expect(childShape2.y).toBe(130);
+
+    // keep old parent
+    expect(childShape.parent).toBe(parentShape);
+  }));
+
 
   it('should update parent', inject(function(modeling) {
 
@@ -89,7 +112,7 @@ describe('features/modeling - move shape', function() {
   it('should layout connections after move', inject(function(modeling) {
 
     // when
-    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
+    modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
 
     // then
     // update parent
@@ -118,11 +141,24 @@ describe('features/modeling - move shape', function() {
     commandStack.undo();
 
     // then
-
     expect(childShape.x).toBe(110);
     expect(childShape.y).toBe(110);
 
     expect(childShape.parent).toBe(parentShape);
   }));
+
+
+  describe('drop', function() {
+
+    it('should drop', inject(function(modeling) {
+
+      // when
+      modeling.moveShapes([childShape, childShape2], { x: 450, y: 400 }, parentShape2);
+
+      // then
+      expect(childShape.parent).toBe(parentShape2);
+      expect(childShape2.parent).toBe(parentShape2);
+    }));
+  });
 
 });

@@ -107,7 +107,7 @@ describe('features/modeling - #removeShape', function() {
   }));
 
 
-  it('ensure revert works'), inject(function(modeling, elementRegistry, commandStack) {
+  it('ensure revert works', inject(function(modeling, elementRegistry, commandStack) {
 
     // when
     modeling.removeShape(childShape);
@@ -118,7 +118,7 @@ describe('features/modeling - #removeShape', function() {
     // then
     expect(childShape.parent).toBe(parentShape);
     expect(connection.parent).toBe(parentShape);
-  });
+  }));
 
   it('should remove label', inject(function(modeling) {
 
