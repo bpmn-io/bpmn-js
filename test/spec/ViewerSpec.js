@@ -26,8 +26,8 @@ describe('viewer', function() {
   function createViewer(xml, done) {
     var viewer = new Viewer({ container: container });
 
-    viewer.importXML(xml, function(err) {
-      done(err, viewer);
+    viewer.importXML(xml, function(err, warnings) {
+      done(err, warnings, viewer);
     });
   }
 
@@ -93,7 +93,7 @@ describe('viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      createViewer(xml, function(err, viewer) {
+      createViewer(xml, function(err, warnings, viewer) {
 
         // when
         var overlays = viewer.get('overlays'),
@@ -145,9 +145,13 @@ describe('viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn', 'utf8');
 
-      createViewer(xml, function(err) {
-        expect(err).toBeDefined();
-        expect(err.message).toEqual('no rootElement referenced in BPMNPlane <BPMNPlane_1>');
+      createViewer(xml, function(err, warnings) {
+
+        expect(err).not.toBeDefined();
+        expect(warnings.length).toBe(2);
+
+        expect(warnings[0].message).toEqual('no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />');
+        expect(warnings[1].message).toEqual('correcting missing bpmnElement on <bpmndi:BPMNPlane id="BPMNPlane_1" /> to <bpmn:Process id="Process_1" />');
 
         done();
       });
@@ -179,7 +183,7 @@ describe('viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      createViewer(xml, function(err, viewer) {
+      createViewer(xml, function(err, warnings, viewer) {
 
         expect(viewer.get('bpmnjs')).toBe(viewer);
 
@@ -220,7 +224,7 @@ describe('viewer', function() {
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
-      createViewer(xml, function(err, viewer) {
+      createViewer(xml, function(err, warnings, viewer) {
 
         if (err) {
           return done(err);
@@ -247,7 +251,7 @@ describe('viewer', function() {
       // given
       var xml = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf8');
 
-      createViewer(xml, function(err, viewer) {
+      createViewer(xml, function(err, warnings, viewer) {
 
         if (err) {
           return done(err);
@@ -287,7 +291,7 @@ describe('viewer', function() {
         svgDoc.appendChild(rect);
       }
 
-      createViewer(xml, function(err, viewer) {
+      createViewer(xml, function(err, warnings, viewer) {
 
         if (err) {
           return done(err);
