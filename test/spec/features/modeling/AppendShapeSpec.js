@@ -10,7 +10,7 @@ var _ = require('lodash');
 var fs = require('fs');
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    drawModule = require('../../../../lib/draw');
+    coreModule = require('../../../../lib/core');
 
 
 var LabelUtil = require('../../../../lib/util/Label');
@@ -23,7 +23,7 @@ describe('features/modeling - append shape', function() {
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
 
-  var testModules = [ drawModule, modelingModule ];
+  var testModules = [ coreModule, modelingModule ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 

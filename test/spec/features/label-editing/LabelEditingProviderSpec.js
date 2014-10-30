@@ -12,7 +12,7 @@ var $ = require('jquery');
 
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
-    bpmnModule = require('../../../../lib/draw');
+    coreModule = require('../../../../lib/core');
 
 var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
 
@@ -24,7 +24,7 @@ describe('features - label-editing', function() {
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');
 
-  var testModules = [ labelEditingModule, bpmnModule ];
+  var testModules = [ labelEditingModule, coreModule ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 

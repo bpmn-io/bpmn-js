@@ -1,23 +1,15 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
-/* global bootstrapViewer, inject */
+
+var Modeler = require('../../../../lib/Modeler');
 
 
 var fs = require('fs');
 
-var Modeler = require('../../../../lib/Modeler');
-
-var labelEditingModule = require('../../../../lib/features/label-editing'),
-    touchModule = require('diagram-js/lib/features/touch');
-
 
 describe('direct editing - touch integration', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var container;
 
@@ -41,15 +33,9 @@ describe('direct editing - touch integration', function() {
   });
 
 
-  describe('event integration', function() {
-
-    var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');
-
-    var testModules = [ labelEditingModule, touchModule ];
-
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
-
-    it('should work via dbltap (manual test)', function() { });
+  it('should edit labels via double tap (manual test)', function(done) {
+    var xml = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf8');
+    createModeler(xml, done);
   });
 
 });

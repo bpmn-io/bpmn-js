@@ -9,7 +9,7 @@ var Matchers = require('../../../Matchers'),
 var fs = require('fs');
 
 var contextPadModule = require('../../../../lib/features/context-pad'),
-    bpmnModule = require('../../../../lib/draw');
+    bpmnModule = require('../../../../lib/core');
 
 
 describe('features - context-pad', function() {

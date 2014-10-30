@@ -8,7 +8,8 @@ var Matchers = require('../../../Matchers'),
 
 var fs = require('fs');
 
-var modelingModule = require('../../../../lib/features/modeling');
+var modelingModule = require('../../../../lib/features/modeling'),
+    coreModule = require('../../../../lib/core');
 
 
 describe('features - bpmn-factory', function() {
@@ -18,7 +19,7 @@ describe('features - bpmn-factory', function() {
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
 
-  var testModules = [ modelingModule ];
+  var testModules = [ modelingModule, coreModule ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 

@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../Matchers'),
-    TestHelper = require('../../TestHelper');
+var TestHelper = require('../../TestHelper');
 
 
 var fs = require('fs');
@@ -19,8 +18,6 @@ describe('import - importer', function() {
   function read(xml, opts, callback) {
     return moddle.fromXML(xml, 'bpmn:Definitions', opts, callback);
   }
-
-  beforeEach(Matchers.addDeepEquals);
 
 
   var container;
