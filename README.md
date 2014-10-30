@@ -1,32 +1,28 @@
-# diagram.js
+# diagram-js
 
-`diagram.js` is a toolbox for displaying and modifying diagrams on the web.
+> The project is in an early development stage.
+> For the time being, please refer to our [comprehensive test suite](https://github.com/bpmn-io/diagram-js/tree/master/test/spec) or [bpmn-js](https://github.com/bpmn-io/bpmn-js) for usage examples.
+
+[diagram-js](https://github.com/bpmn-io/diagram-js) is a toolbox for displaying and modifying diagrams on the web.
 
 
-## Setup
+## Development
 
-To get the development setup ready execute 
+To get the development setup ready execute
 
 ```
 npm install
-bower install
 ```
 
 
-## Develop
+### Building the Project
 
-Execute `grunt auto-build` to run the development setup including automatic rebuild and live reload.
-
-The task serves the project files on [localhost:9003](http://localhost:9003). Browse to the [example](http://localhost:9003/example/) directory to view the examples.
-
-
-### Execute Tests
-
-To execute tests, run `grunt auto-test`.
+Execute `grunt auto-test` to run the test suite in watch mode.
+Expose an environment variable `TEST_BROWSERS=(Chrome|Firefox|IE)` to execute the tests in a non-headless browser.
 
 
-## Package
+### Package
 
-Simply execute `grunt`.
+Execute `grunt` to lint and test the project and to generate (preliminary) documentation.
 
-Building the library includes testing, packaging and generating documentation. The final artifacts will be generated to `doc/` (documentation) and `build/` (modules) respectively.
+We do not generate any build artifacts. Instead required parts of the library are intended to be bundled by modelers / viewers built on top of it.
