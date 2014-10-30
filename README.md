@@ -1,7 +1,8 @@
-# diagram-js
-
 > The project is in an early development stage.
 > For the time being, please refer to our [comprehensive test suite](https://github.com/bpmn-io/diagram-js/tree/master/test/spec) or [bpmn-js](https://github.com/bpmn-io/bpmn-js) for usage examples.
+
+
+# diagram-js
 
 [diagram-js](https://github.com/bpmn-io/diagram-js) is a toolbox for displaying and modifying diagrams on the web.
 
