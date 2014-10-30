@@ -13,6 +13,9 @@
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="a sequence flow" sourceRef="StartEvent_1" targetRef="IntermediateThrowEvent_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="a gateway"/>
     <bpmn2:dataObjectReference id="DataObjectReference_1" name="a data object&#xD;&#xA;reference" dataObjectRef="DataObject_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="Loan Request&#xD;&#xA;Approved">
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:dataStore id="DataStore_1" name="Data Store 1"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -56,6 +59,12 @@
           <dc:Bounds height="22.0" width="99.0" x="432.0" y="317.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="252.0" y="215.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="44.0" width="119.0" x="211.0" y="256.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

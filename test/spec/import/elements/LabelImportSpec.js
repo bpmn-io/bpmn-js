@@ -1,17 +1,21 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
 
+var _ = require('lodash');
+
 var fs = require('fs');
 
 
-describe('import - labels', function() {
+function bounds(element) {
+  return _.pick(element, [ 'x', 'y', 'width', 'height' ]);
+}
 
-  beforeEach(Matchers.addDeepEquals);
+
+describe('import - labels', function() {
 
 
   describe('should import embedded labels', function() {
@@ -40,7 +44,28 @@ describe('import - labels', function() {
 
     it('with di', function(done) {
       var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/external.bpmn', 'utf8');
-      bootstrapViewer(xml)(done);
+
+      // given
+      bootstrapViewer(xml)(function(err) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // when
+        inject(function(elementRegistry) {
+
+          var endEvent = elementRegistry.getById('EndEvent_1'),
+              sequenceFlow = elementRegistry.getById('SequenceFlow_1');
+
+          // then
+          expect(bounds(endEvent.label)).toEqual({ x: 211, y: 256, width: 119, height: 44 });
+          expect(bounds(sequenceFlow.label)).toEqual({ x: 432, y: 317, width: 99, height: 22 });
+
+          done();
+        })();
+
+      });
     });
 
 
