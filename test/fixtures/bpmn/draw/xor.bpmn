@@ -13,7 +13,7 @@
         </exclusiveGateway>
         <exclusiveGateway gatewayDirection="Unspecified" id="sid-84DF847F-0735-450E-99C5-A62D974448C7">
         </exclusiveGateway>
-        <association associationDirection="None" id="sid-31ADAC7A-ED0C-4A3E-966D-1705847A10A5" targetRef="sid-84DF847F-0735-450E-99C5-A62D974448C7">
+        <association associationDirection="None" id="sid-31ADAC7A-ED0C-4A3E-966D-1705847A10A5" sourceRef="sid-84DF847F-0735-450E-99C5-A62D974448C7" targetRef="sid-84DF847F-0735-450E-99C5-A62D974448C7">
         </association>
         <textAnnotation id="sid-7C319B57-5406-4CBB-BB14-AB42FB8CA81C" textFormat="text/plain">
             <text>Should be blank</text>

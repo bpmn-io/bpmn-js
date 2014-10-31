@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.9.1" targetNamespace="http://www.signavio.com/bpmn20">
+  <process id="sid-c8371393-9f09-410b-bd7f-b4838b26f391" isExecutable="false">
+    <task id="sid-8F82DC6C-AE16-41F6-9271-229FC57C00F4" name="">
+    </task>
+    <association id="Association_1" sourceRef="sid-8F82DC6C-AE16-41F6-9271-229FC57C00F4" targetRef="sid-A6E3D7E7-B739-4B08-993E-B5CB5F61C69F">
+    </association>
+    <textAnnotation id="sid-A6E3D7E7-B739-4B08-993E-B5CB5F61C69F">
+      <text>annotation</text>
+    </textAnnotation>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-e568f3a9-31ad-4c0c-ab27-ac45c863f186">
+    <bpmndi:BPMNPlane id="sid-e5d306ed-2f42-4263-95b7-d9c187b0d06f" bpmnElement="sid-c8371393-9f09-410b-bd7f-b4838b26f391">
+      <bpmndi:BPMNShape id="sid-8F82DC6C-AE16-41F6-9271-229FC57C00F4_gui" bpmnElement="sid-8F82DC6C-AE16-41F6-9271-229FC57C00F4">
+        <omgdc:Bounds height="80.0" width="100.0" x="110.0" y="15.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-8b9b9c8e-9479-44ac-bdc1-f690e425822c">
+          <omgdc:Bounds height="12.0" width="82.285706" x="118.85715" y="47.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-A6E3D7E7-B739-4B08-993E-B5CB5F61C69F_gui" bpmnElement="sid-A6E3D7E7-B739-4B08-993E-B5CB5F61C69F">
+        <omgdc:Bounds height="31.0" width="100.0" x="115.0" y="131.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-08f9dfb8-726a-42d1-b3b6-5a0a9dfcc22e">
+          <omgdc:Bounds height="12.0" width="60.0" x="119.0" y="138.38"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1_gui" bpmnElement="Association_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="141.0" y="95.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="123.0" y="131.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="sid-08f9dfb8-726a-42d1-b3b6-5a0a9dfcc22e">
+      <omgdc:Font name="Arial" size="11.0"/>
+    </bpmndi:BPMNLabelStyle>
+    <bpmndi:BPMNLabelStyle id="sid-8b9b9c8e-9479-44ac-bdc1-f690e425822c">
+      <omgdc:Font name="Arial" size="12.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</definitions>

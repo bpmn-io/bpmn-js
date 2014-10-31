@@ -17,7 +17,7 @@ describe('features - context-pad', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf-8');
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
 
   var testModules = [ contextPadModule, bpmnModule ];
 

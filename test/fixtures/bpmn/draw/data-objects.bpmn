@@ -1,249 +1,266 @@
-<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.8.1" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-c3c12b6b-ce2f-456c-b55a-3ce4f22db48b" targetNamespace="http://bpmn.io/schema/bpmn" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
-    <dataStore capacity="0" id="sid-09f814b1-f9a1-45c7-8ce0-65a0ab69fddc" isUnlimited="false" name="Data Store 2"/>
-    <dataStore capacity="0" id="sid-770aebf4-15fc-4ade-919f-d9558181997b" isUnlimited="false" name="Data Store"/>
-    <collaboration id="sid-efcaf392-1a95-40dc-be12-8a12c80ec1e5">
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-c3c12b6b-ce2f-456c-b55a-3ce4f22db48b" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.8.1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <dataStore id="sid-09f814b1-f9a1-45c7-8ce0-65a0ab69fddc" isUnlimited="false" name="Data Store 2"/>
+  <dataStore id="sid-770aebf4-15fc-4ade-919f-d9558181997b" isUnlimited="false" name="Data Store"/>
+  <collaboration id="sid-efcaf392-1a95-40dc-be12-8a12c80ec1e5">
+    <extensionElements>
+      <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="e6626eeb5b644dc5b053dbbab17bed34"/>
+    </extensionElements>
+    <participant id="_Participant_4" name="Pool" processRef="Process_1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="rolle" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+      </extensionElements>
+    </participant>
+    <participant id="Participant_1" name="Pool">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="rolle" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+      </extensionElements>
+    </participant>
+  </collaboration>
+  <process id="Process_1" isExecutable="false">
+    <ioSpecification id="sid-f47d8b56-ccb9-463e-97e1-d63887eab92c">
+      <dataInput id="DataInput_1">
         <extensionElements>
-            <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="e6626eeb5b644dc5b053dbbab17bed34"/>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+          <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
         </extensionElements>
-        <participant id="_Participant_4" name="Pool" processRef="Process_1">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="rolle" metaValue=""/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-            </extensionElements>
-        </participant>
-        <participant id="Participant_1" name="Pool">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="rolle" metaValue=""/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-            </extensionElements>
-        </participant>
-    </collaboration>
-    <process id="Process_1" isClosed="false" isExecutable="false" processType="None">
-        <ioSpecification id="sid-f47d8b56-ccb9-463e-97e1-d63887eab92c">
-            <dataInput id="DataInput_1" isCollection="false">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                    <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
-                </extensionElements>
-            </dataInput>
-            <dataInput id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF" isCollection="true">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-            </dataInput>
-            <dataOutput id="DataOutput_1" isCollection="false">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                    <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
-                </extensionElements>
-            </dataOutput>
-            <dataOutput id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510" isCollection="true">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-            </dataOutput>
-            <inputSet id="sid-8c0a0c80-098c-4972-bac0-8cc303d82bfd">
-                <dataInputRefs>DataInput_1</dataInputRefs>
-                <dataInputRefs>sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF</dataInputRefs>
-            </inputSet>
-            <outputSet id="sid-60cf6782-0fff-4304-882d-7d2b33336aed">
-                <dataOutputRefs>DataOutput_1</dataOutputRefs>
-                <dataOutputRefs>sid-16646BD1-38D3-499A-95A6-42A75D8D2510</dataOutputRefs>
-            </outputSet>
-        </ioSpecification>
-        <dataObject id="sid-b71dc346-6ba3-481d-9ea6-03c3fe207b3f" isCollection="false" name="Data Object"/>
-        <dataObject id="sid-01513038-3f29-47f0-b464-9047955bf45d" isCollection="true"/>
-        <task completionQuantity="1" id="Task_1" isForCompensation="false" startQuantity="1">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
-                <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
-                <signavio:signavioMetaData metaKey="documentationlink" metaValue=""/>
-                <signavio:signavioMetaData metaKey="test" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
-                <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
-                <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
-                <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
-                <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
-            </extensionElements>
-            <ioSpecification id="sid-25be8f24-f1fe-4fcb-a120-6b46fbd41d43">
-                <dataInput id="sid-b4a08214-9dd4-40ad-8f82-4620ee384231"/>
-                <dataOutput id="sid-b4a589fa-6809-485d-ac79-9906084551f5"/>
-                <dataOutput id="sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc"/>
-                <inputSet id="sid-bff296e6-46b4-4c63-9def-f68cdf80510d" name="DefaultInputSet">
-                    <dataInputRefs>sid-b4a08214-9dd4-40ad-8f82-4620ee384231</dataInputRefs>
-                    <outputSetRefs>sid-6c061a84-a3f2-4b69-93a5-8a3cafa27437</outputSetRefs>
-                </inputSet>
-                <outputSet id="sid-6c061a84-a3f2-4b69-93a5-8a3cafa27437" name="DefaultOutputSet">
-                    <dataOutputRefs>sid-b4a589fa-6809-485d-ac79-9906084551f5</dataOutputRefs>
-                    <dataOutputRefs>sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc</dataOutputRefs>
-                    <inputSetRefs>sid-bff296e6-46b4-4c63-9def-f68cdf80510d</inputSetRefs>
-                </outputSet>
-            </ioSpecification>
-            <dataInputAssociation id="DataInputAssociation_3">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-                <sourceRef>DataObjectReference_1</sourceRef>
-                <targetRef>sid-b4a08214-9dd4-40ad-8f82-4620ee384231</targetRef>
-            </dataInputAssociation>
-            <dataOutputAssociation id="DataOutputAssociation_1">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-                <sourceRef>Task_1</sourceRef>
-                <targetRef>_DataStoreReference_2</targetRef>
-            </dataOutputAssociation>
-            <dataOutputAssociation id="DataOutputAssociation_2">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-                <sourceRef>sid-b4a589fa-6809-485d-ac79-9906084551f5</sourceRef>
-                <targetRef>DataOutput_1</targetRef>
-            </dataOutputAssociation>
-            <dataOutputAssociation id="DataOutputAssociation_3">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-                <sourceRef>sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc</sourceRef>
-                <targetRef>DataObjectReference_1</targetRef>
-            </dataOutputAssociation>
-        </task>
-        <task completionQuantity="1" id="Task_2" isForCompensation="false" startQuantity="1">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
-                <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
-                <signavio:signavioMetaData metaKey="documentationlink" metaValue=""/>
-                <signavio:signavioMetaData metaKey="test" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
-                <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
-                <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
-                <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
-                <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
-                <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
-            </extensionElements>
-            <dataInputAssociation id="DataInputAssociation_1">
-                <extensionElements>
-                    <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                </extensionElements>
-                <sourceRef>_DataStoreReference_2</sourceRef>
-                <targetRef>Task_2</targetRef>
-            </dataInputAssociation>
-        </task>
-        <dataObjectReference dataObjectRef="sid-b71dc346-6ba3-481d-9ea6-03c3fe207b3f" id="DataObjectReference_1" name="Data Object">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                <signavio:signavioLabel align="left" ref="text_name" valign="top" x="-19.0" y="55.0"/>
-            </extensionElements>
-        </dataObjectReference>
-        <dataStoreReference dataStoreRef="sid-770aebf4-15fc-4ade-919f-d9558181997b" id="_DataStoreReference_2" name="Data Store">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                <signavio:signavioLabel align="left" ref="text_name" x="-2.499500000000012" y="60.5865"/>
-            </extensionElements>
-        </dataStoreReference>
-        <dataStoreReference dataStoreRef="sid-09f814b1-f9a1-45c7-8ce0-65a0ab69fddc" id="_DataStoreReference_3" name="Data Store 2">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-                <signavio:signavioLabel align="left" ref="text_name" x="-7.499500000000012" y="60.5865"/>
-            </extensionElements>
-        </dataStoreReference>
-        <dataObjectReference dataObjectRef="sid-01513038-3f29-47f0-b464-9047955bf45d" id="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5">
-            <extensionElements>
-                <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
-                <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
-            </extensionElements>
-        </dataObjectReference>
-    </process>
-    <bpmndi:BPMNDiagram id="sid-2afc2606-c2da-428e-a6df-1d046a82ed57">
-        <bpmndi:BPMNPlane bpmnElement="sid-efcaf392-1a95-40dc-be12-8a12c80ec1e5" id="sid-646a8f8e-d900-4b7d-8b7f-48364e1f53ce">
-            <bpmndi:BPMNShape bpmnElement="_Participant_4" id="_Participant_4_gui" isHorizontal="true">
-                <omgdc:Bounds height="277.0" width="529.0" x="132.0" y="60.0"/>
-                <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-                    <omgdc:Bounds height="24.85714340209961" width="12.0" x="138.0" y="186.0714282989502"/>
-                </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Participant_1" id="Participant_1_gui" isHorizontal="true">
-                <omgdc:Bounds height="165.0" width="600.0" x="888.0" y="28.0"/>
-                <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-                    <omgdc:Bounds height="24.85714340209961" width="12.0" x="894.0" y="98.0714282989502"/>
-                </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Task_1" id="Task_1_gui">
-                <omgdc:Bounds height="80.0" width="100.0" x="516.0" y="216.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="Task_2" id="Task_2_gui">
-                <omgdc:Bounds height="80.0" width="100.0" x="1029.0" y="68.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="DataObjectReference_1" id="DataObjectReference_1_gui">
-                <omgdc:Bounds height="50.0" width="36.0" x="396.0" y="231.0"/>
-                <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-                    <omgdc:Bounds height="36.0" width="34.28571319580078" x="377.0" y="286.0"/>
-                </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="_DataStoreReference_2" id="_DataStoreReference_2_gui">
-                <omgdc:Bounds height="60.173" width="62.000999999999976" x="755.4995" y="66.4135"/>
-                <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-                    <omgdc:Bounds height="12.0" width="66.0" x="752.9995" y="126.99949853515625"/>
-                </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="_DataStoreReference_3" id="_DataStoreReference_3_gui">
-                <omgdc:Bounds height="60.173" width="62.000999999999976" x="202.4995" y="72.4135"/>
-                <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-                    <omgdc:Bounds height="12.0" width="78.0" x="194.9995" y="132.99949853515625"/>
-                </bpmndi:BPMNLabel>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5" id="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5_gui">
-                <omgdc:Bounds height="97.0" width="88.0" x="263.0" y="382.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="DataInput_1" id="DataInput_1_gui">
-                <omgdc:Bounds height="50.0" width="36.0" x="355.0" y="84.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF" id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF_gui">
-                <omgdc:Bounds height="97.0" width="88.0" x="420.0" y="382.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="DataOutput_1" id="DataOutput_1_gui">
-                <omgdc:Bounds height="50.0" width="36.0" x="480.0" y="84.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="sid-16646BD1-38D3-499A-95A6-42A75D8D2510" id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510_gui">
-                <omgdc:Bounds height="97.0" width="88.0" x="624.0" y="382.0"/>
-            </bpmndi:BPMNShape>
-            <bpmndi:BPMNEdge bpmnElement="DataInputAssociation_3" id="DataInputAssociation_3_gui">
-                <omgdi:waypoint x="432.0" y="244.0"/>
-                <omgdi:waypoint x="478.0" y="215.0"/>
-                <omgdi:waypoint x="516.0" y="233.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="DataInputAssociation_1" id="DataInputAssociation_1_gui">
-                <omgdi:waypoint x="817.5005" y="97.71445257731959"/>
-                <omgdi:waypoint x="1029.0" y="106.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="DataOutputAssociation_1" id="DataOutputAssociation_1_gui">
-                <omgdi:waypoint x="616.0" y="220.0"/>
-                <omgdi:waypoint x="755.4995" y="118.95490762463342"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="DataOutputAssociation_2" id="DataOutputAssociation_2_gui">
-                <omgdi:waypoint x="547.0" y="216.0"/>
-                <omgdi:waypoint x="510.0" y="134.0"/>
-            </bpmndi:BPMNEdge>
-            <bpmndi:BPMNEdge bpmnElement="DataOutputAssociation_3" id="DataOutputAssociation_3_gui">
-                <omgdi:waypoint x="516.0" y="277.0"/>
-                <omgdi:waypoint x="471.0" y="296.0"/>
-                <omgdi:waypoint x="432.0" y="269.0"/>
-            </bpmndi:BPMNEdge>
-        </bpmndi:BPMNPlane>
-        <bpmndi:BPMNLabelStyle id="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
-            <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
-        </bpmndi:BPMNLabelStyle>
-    </bpmndi:BPMNDiagram>
+      </dataInput>
+      <dataInput id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF" isCollection="true">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+      </dataInput>
+      <dataOutput id="DataOutput_1">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+          <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
+        </extensionElements>
+      </dataOutput>
+      <dataOutput id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510" isCollection="true">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+      </dataOutput>
+      <inputSet id="sid-8c0a0c80-098c-4972-bac0-8cc303d82bfd">
+        <dataInputRefs>DataInput_1</dataInputRefs>
+        <dataInputRefs>sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF</dataInputRefs>
+      </inputSet>
+      <outputSet id="sid-60cf6782-0fff-4304-882d-7d2b33336aed">
+        <dataOutputRefs>DataOutput_1</dataOutputRefs>
+        <dataOutputRefs>sid-16646BD1-38D3-499A-95A6-42A75D8D2510</dataOutputRefs>
+      </outputSet>
+    </ioSpecification>
+    <dataObject id="sid-b71dc346-6ba3-481d-9ea6-03c3fe207b3f" name="Data Object"/>
+    <dataObject id="sid-01513038-3f29-47f0-b464-9047955bf45d" isCollection="true"/>
+    <task id="Task_1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue=""/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+      </extensionElements>
+      <ioSpecification id="sid-25be8f24-f1fe-4fcb-a120-6b46fbd41d43">
+        <dataInput id="sid-b4a08214-9dd4-40ad-8f82-4620ee384231"/>
+        <dataOutput id="sid-b4a589fa-6809-485d-ac79-9906084551f5"/>
+        <dataOutput id="sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc"/>
+        <inputSet id="sid-bff296e6-46b4-4c63-9def-f68cdf80510d" name="DefaultInputSet">
+          <dataInputRefs>sid-b4a08214-9dd4-40ad-8f82-4620ee384231</dataInputRefs>
+          <outputSetRefs>sid-6c061a84-a3f2-4b69-93a5-8a3cafa27437</outputSetRefs>
+          <outputSetRefs>sid-6c061a84-a3f2-4b69-93a5-8a3cafa27437</outputSetRefs>
+        </inputSet>
+        <outputSet id="sid-6c061a84-a3f2-4b69-93a5-8a3cafa27437" name="DefaultOutputSet">
+          <dataOutputRefs>sid-b4a589fa-6809-485d-ac79-9906084551f5</dataOutputRefs>
+          <dataOutputRefs>sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc</dataOutputRefs>
+          <inputSetRefs>sid-bff296e6-46b4-4c63-9def-f68cdf80510d</inputSetRefs>
+          <inputSetRefs>sid-bff296e6-46b4-4c63-9def-f68cdf80510d</inputSetRefs>
+        </outputSet>
+      </ioSpecification>
+      <dataInputAssociation id="DataInputAssociation_3">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+        <sourceRef>DataObjectReference_1</sourceRef>
+        <targetRef>sid-b4a08214-9dd4-40ad-8f82-4620ee384231</targetRef>
+      </dataInputAssociation>
+      <dataInputAssociation id="DataInputAssociation_2">
+        <sourceRef>sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF</sourceRef>
+      </dataInputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_1">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+        <targetRef>_DataStoreReference_2</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_2">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+        <sourceRef>sid-b4a589fa-6809-485d-ac79-9906084551f5</sourceRef>
+        <targetRef>DataOutput_1</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_3">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+        <sourceRef>sid-d5968987-50e5-4e42-9a3e-e8e3f6cc53bc</sourceRef>
+        <targetRef>DataObjectReference_1</targetRef>
+      </dataOutputAssociation>
+      <dataOutputAssociation id="DataOutputAssociation_5">
+        <targetRef>sid-16646BD1-38D3-499A-95A6-42A75D8D2510</targetRef>
+      </dataOutputAssociation>
+    </task>
+    <task id="Task_2">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue=""/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+      </extensionElements>
+      <dataInputAssociation id="DataInputAssociation_1">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        </extensionElements>
+        <sourceRef>_DataStoreReference_2</sourceRef>
+      </dataInputAssociation>
+    </task>
+    <dataObjectReference id="DataObjectReference_1" name="Data Object" dataObjectRef="sid-b71dc346-6ba3-481d-9ea6-03c3fe207b3f">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        <signavio:signavioLabel align="left" ref="text_name" valign="top" x="-19.0" y="55.0"/>
+      </extensionElements>
+    </dataObjectReference>
+    <dataStoreReference id="_DataStoreReference_2" name="Data Store" dataStoreRef="sid-770aebf4-15fc-4ade-919f-d9558181997b">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        <signavio:signavioLabel align="left" ref="text_name" x="-2.499500000000012" y="60.5865"/>
+      </extensionElements>
+    </dataStoreReference>
+    <dataStoreReference id="_DataStoreReference_3" name="Data Store 2" dataStoreRef="sid-09f814b1-f9a1-45c7-8ce0-65a0ab69fddc">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+        <signavio:signavioLabel align="left" ref="text_name" x="-7.499500000000012" y="60.5865"/>
+      </extensionElements>
+    </dataStoreReference>
+    <dataObjectReference id="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5" dataObjectRef="sid-01513038-3f29-47f0-b464-9047955bf45d">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+      </extensionElements>
+    </dataObjectReference>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-2afc2606-c2da-428e-a6df-1d046a82ed57">
+    <bpmndi:BPMNPlane id="sid-646a8f8e-d900-4b7d-8b7f-48364e1f53ce" bpmnElement="sid-efcaf392-1a95-40dc-be12-8a12c80ec1e5">
+      <bpmndi:BPMNShape id="_Participant_4_gui" bpmnElement="_Participant_4" isHorizontal="true">
+        <omgdc:Bounds height="277.0" width="529.0" x="132.0" y="60.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+          <omgdc:Bounds height="24.857143" width="12.0" x="138.0" y="186.07143"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1_gui" bpmnElement="Participant_1" isHorizontal="true">
+        <omgdc:Bounds height="165.0" width="600.0" x="888.0" y="28.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+          <omgdc:Bounds height="24.857143" width="12.0" x="894.0" y="98.07143"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1_gui" bpmnElement="Task_1">
+        <omgdc:Bounds height="80.0" width="100.0" x="516.0" y="216.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_2_gui" bpmnElement="Task_2">
+        <omgdc:Bounds height="80.0" width="100.0" x="1029.0" y="68.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_1_gui" bpmnElement="DataObjectReference_1">
+        <omgdc:Bounds height="50.0" width="36.0" x="396.0" y="231.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+          <omgdc:Bounds height="36.0" width="34.285713" x="377.0" y="286.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_DataStoreReference_2_gui" bpmnElement="_DataStoreReference_2">
+        <omgdc:Bounds height="60.173" width="62.001" x="755.4995" y="66.4135"/>
+        <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+          <omgdc:Bounds height="12.0" width="66.0" x="752.9995" y="126.9995"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_DataStoreReference_3_gui" bpmnElement="_DataStoreReference_3">
+        <omgdc:Bounds height="60.173" width="62.001" x="202.4995" y="72.4135"/>
+        <bpmndi:BPMNLabel labelStyle="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+          <omgdc:Bounds height="12.0" width="78.0" x="194.9995" y="132.9995"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5_gui" bpmnElement="sid-0B5F3253-68A7-4985-9E5F-EAA734C583B5">
+        <omgdc:Bounds height="97.0" width="88.0" x="263.0" y="382.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput_1_gui" bpmnElement="DataInput_1">
+        <omgdc:Bounds height="50.0" width="36.0" x="355.0" y="84.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF_gui" bpmnElement="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF">
+        <omgdc:Bounds height="97.0" width="88.0" x="420.0" y="382.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataOutput_1_gui" bpmnElement="DataOutput_1">
+        <omgdc:Bounds height="50.0" width="36.0" x="480.0" y="84.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510_gui" bpmnElement="sid-16646BD1-38D3-499A-95A6-42A75D8D2510">
+        <omgdc:Bounds height="97.0" width="88.0" x="624.0" y="382.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_3_gui" bpmnElement="DataInputAssociation_3">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="432.0" y="244.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="478.0" y="215.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="516.0" y="233.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1_gui" bpmnElement="DataInputAssociation_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="817.5005" y="97.714455"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1029.0" y="106.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1_gui" bpmnElement="DataOutputAssociation_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="616.0" y="220.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="755.4995" y="118.95491"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_2_gui" bpmnElement="DataOutputAssociation_2">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="547.0" y="216.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="510.0" y="134.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_3_gui" bpmnElement="DataOutputAssociation_3">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="516.0" y="277.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="471.0" y="296.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="432.0" y="269.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation_2" bpmnElement="DataOutputAssociation_5" sourceElement="Task_1_gui" targetElement="sid-16646BD1-38D3-499A-95A6-42A75D8D2510_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="572.0" y="296.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="581.0" y="361.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="624.0" y="395.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation_1" bpmnElement="DataInputAssociation_2" sourceElement="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF_gui" targetElement="Task_1_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="508.0" y="397.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="557.0" y="360.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="563.0" y="296.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="sid-80896269-9188-4a42-8603-3ff45af4c1f8">
+      <omgdc:Font name="Arial" size="12.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
 </definitions>

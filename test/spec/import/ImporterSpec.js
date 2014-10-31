@@ -152,7 +152,6 @@ describe('import - importer', function() {
         done(err);
       });
     });
-
   });
 
 
@@ -275,7 +274,27 @@ describe('import - importer', function() {
 
         done();
       });
-    })
+    });
+
+  });
+
+
+  describe('integration', function() {
+
+    it('should import complex', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf8');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        // then
+        expect(warnings.length).toBe(0);
+
+        done(err);
+      });
+    });
 
   });
 
