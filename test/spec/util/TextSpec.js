@@ -15,7 +15,7 @@ describe('Text', function() {
   var options = {
     size: { width: 100 },
     padding: 0,
-    style: { fontSize: '11pt' }
+    style: { fontSize: '14px' }
   };
 
   var textUtil = new TextUtil(options);
@@ -175,7 +175,7 @@ describe('Text', function() {
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
         expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 5, y: 0, width: 140, height: 100 });
+        expect(text).toFitBBox({ x: 5, y: 0, width: 150, height: 100 });
       });
     });
 
