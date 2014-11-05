@@ -131,22 +131,18 @@
 .djs-context-pad {
   position: absolute;
   display: none;
-  padding: 1px;
 }
 
 .djs-context-pad .entry {
   width: 20px;
   height: 20px;
   text-align: center;
-  vertical-align: baseline;
   display: inline-block;
-  border-radius: 5px;
-  padding: 1px;
+  border-radius: 3px;
+  font-size: 20px;
   margin: 0 1px 1px 0;
-}
 
-.djs-context-pad .entry img {
-  margin-bottom: -4px;
+  cursor: default;
 }
 
 .djs-context-pad .entry:hover {
