@@ -1,6 +1,7 @@
 /**
  * outline styles
  */
+
 .djs-outline {
   fill: none;
   visibility: hidden;
@@ -120,6 +121,63 @@
   pointer-events: none;
 }
 
+/**
+ * palette
+ */
+
+.djs-palette {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+
+  background: #EEE;
+  border: solid 1px #666;
+
+  overflow: hidden;
+}
+
+.djs-palette {
+  border-radius: 10px 10px;
+}
+
+.djs-palette .entry {
+  width: 46px;
+  height: 46px;
+
+  margin: 2px;
+}
+
+.djs-palette .djs-palette-toggle {
+  width: 50px;
+  height: 50px;
+
+  cursor: pointer;
+}
+
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
+  color: #333;
+  font-size: 30px;
+
+  line-height: 50px;
+  text-align: center;
+}
+
+.djs-palette.open .djs-palette-toggle {
+  height: 10px;
+}
+
+.djs-palette:not(.open) .djs-palette-entries {
+  display: none;
+}
+
+.djs-palette .djs-palette-toggle:hover {
+  background: #666;
+}
+
+.djs-palette .entry:hover {
+  color: rgb(255, 116, 0);
+}
 
 /**
  * context-pad

@@ -3,42 +3,43 @@
 /* global bootstrapDiagram, inject */
 
 var TestHelper    = require('../../../TestHelper'),
-    palleteModule = require('../../../../lib/features/palette'),
+    paletteModule = require('../../../../lib/features/palette'),
     $             = require('jquery');
+
+
+function Provider(entries) {
+  this.getPaletteEntries = function() {
+    return entries || {};
+  };
+}
+
 
 describe('features/palette', function() {
 
   describe('bootstrap', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ palleteModule ] }));
-
-    function Provider() {
-      this.getPaletteEntries = function() {
-        return {};
-      };
-    }
+    beforeEach(bootstrapDiagram({ modules: [ paletteModule ] }));
 
 
     it('should attach palette to diagram', inject(function(canvas, palette) {
 
       // when
-      var provider = new Provider();
-
-      palette.registerProvider(provider);
+      palette.registerProvider(new Provider());
 
       // then
       var container = canvas.getContainer();
 
-      var paletteArray = $(container).children('.diagram-palette');
+      var paletteArray = $(container).children('.djs-palette');
 
       expect(paletteArray.length).toBe(1);
     }));
+
 
     it('should not attach palette to diagram without provider', inject(function(canvas, palette) {
 
       var container = canvas.getContainer();
 
-      var paletteArray = $(container).children('.diagram-palette');
+      var paletteArray = $(container).children('.djs-palette');
 
       expect(paletteArray.length).toBe(0);
     }));
@@ -48,14 +49,7 @@ describe('features/palette', function() {
 
   describe('providers', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ palleteModule ] }));
-
-
-    function Provider(entries) {
-      this.getPaletteEntries = function() {
-        return entries || {};
-      };
-    }
+    beforeEach(bootstrapDiagram({ modules: [ paletteModule ] }));
 
 
     it('should register provider', inject(function(palette) {
@@ -90,17 +84,33 @@ describe('features/palette', function() {
       expect(provider.getPaletteEntries).toHaveBeenCalled();
     }));
 
+
     it('should add palette entries', inject(function(canvas, palette) {
 
       // given
       var entries  = {
         'entryA': {
-          alt: 'A'
+          alt: 'A',
+          className: 'FOO',
+          action: function() {
+            console.log('click entryA', arguments);
+          }
         },
         'entryB': {
-          alt: 'B'
+          alt: 'B',
+          imageUrl: 'http://placehold.it/40x40',
+          action: {
+            click: function() {
+              console.log('click entryB');
+            },
+            dragstart: function(event) {
+              console.log('dragstart entryB');
+              event.preventDefault();
+            }
+          }
         }
       };
+
       var provider = new Provider(entries);
 
       // when
@@ -113,51 +123,59 @@ describe('features/palette', function() {
       expect(pEntries.entryB).toBeDefined();
 
       // then DOM should contain entries
-      var entryA = $(palette.getPaletteContainer()).find('[data-action="entryA"]');
+      var entryA = $(palette._container).find('[data-action="entryA"]');
       expect(entryA.length).toBe(1);
+      expect(entryA.is('.FOO')).toBe(true);
 
-      var entryB = $(palette.getPaletteContainer()).find('[data-action="entryB"]');
+      var entryB = $(palette._container).find('[data-action="entryB"]');
       expect(entryB.length).toBe(1);
+      expect(entryB.find('img').length).toBe(1);
     }));
   });
 
 
   describe('lifecycle', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ palleteModule ] }));
+    beforeEach(bootstrapDiagram({ modules: [ paletteModule ] }));
 
-    it('should be closed', inject(function(canvas, palette) {
-
-      // then
-      var hasClass = $(palette.getPaletteContainer()).hasClass('open');
-
-      expect(palette.isOpen()).toBe(false);
-      expect(hasClass).toBe(false);
+    beforeEach(inject(function(palette) {
+      palette.registerProvider(new Provider());
     }));
 
-    it('should open', inject(function(canvas, palette) {
+    function expectOpen(palette, open) {
+      expect(palette.isOpen()).toBe(open);
+      expect(palette._container.is('.open')).toBe(open);
+    }
 
-      var paletteContainer = $(palette.getPaletteContainer());
-
-      // when
-      palette.open();
+    it('should be opened (default)', inject(function(canvas, palette) {
 
       // then
-      var hasClass = $(palette.getPaletteContainer()).hasClass('open');
-      expect(!!palette.isOpen()).toBe(true);
-      expect(hasClass).toBe(true);
+      expectOpen(palette, true);
     }));
 
-    it('should been closed', inject(function(canvas, palette) {
+
+    it('should close', inject(function(canvas, palette) {
+
+      var paletteContainer = $(palette._container);
 
       // when
-      palette.open();
       palette.close();
 
       // then
-      var hasClass = $(palette.getPaletteContainer()).hasClass('open');
-      expect(!!palette.isOpen()).toBe(false);
-      expect(hasClass).toBe(false);
+      expectOpen(palette, false);
     }));
+
+
+    it('should been opened', inject(function(canvas, palette) {
+
+      // when
+      palette.close();
+      palette.open();
+
+      // then
+      expectOpen(palette, true);
+    }));
+
   });
+
 });
