@@ -34,7 +34,7 @@ describe('features - label-editing', function() {
     it('should register on dblclick', inject(function(elementRegistry, directEditing, eventBus) {
 
       // given
-      var shape = elementRegistry.getById('task-nested-embedded');
+      var shape = elementRegistry.get('task-nested-embedded');
 
       // when
       eventBus.fire('shape.dblclick', { element: shape });
@@ -47,7 +47,7 @@ describe('features - label-editing', function() {
     it('should cancel on <ESC>', inject(function(elementRegistry, directEditing, eventBus) {
 
       // given
-      var shape = elementRegistry.getById('task-nested-embedded'),
+      var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
 
       var oldName = task.name;
@@ -72,7 +72,7 @@ describe('features - label-editing', function() {
     it('should submit on <canvas.click>', inject(function(elementRegistry, directEditing, eventBus) {
 
       // given
-      var shape = elementRegistry.getById('task-nested-embedded'),
+      var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
 
       // activate
@@ -136,7 +136,7 @@ describe('features - label-editing', function() {
     it('should update via command stack', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task');
+      var diagramElement = elementRegistry.get('user-task');
 
       var listenerCalled;
 
@@ -156,7 +156,7 @@ describe('features - label-editing', function() {
     it('should undo via command stack', inject(function(commandStack) {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task');
+      var diagramElement = elementRegistry.get('user-task');
 
       var oldLabel = LabelUtil.getLabel(diagramElement);
 
@@ -179,7 +179,7 @@ describe('features - label-editing', function() {
     it('on shape change', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('user-task');
+      var diagramElement = elementRegistry.get('user-task');
 
       var listenerCalled;
 
@@ -201,7 +201,7 @@ describe('features - label-editing', function() {
     it('on connection on change', function() {
 
       // given
-      var diagramElement = elementRegistry.getById('sequence-flow-no');
+      var diagramElement = elementRegistry.get('sequence-flow-no');
 
       var listenerCalled;
 
@@ -228,7 +228,7 @@ describe('features - label-editing', function() {
 
       return inject(function(elementRegistry, eventBus, directEditing) {
 
-        var diagramElement = elementRegistry.getById(elementId);
+        var diagramElement = elementRegistry.get(elementId);
 
         var label = LabelUtil.getLabel(diagramElement);
 

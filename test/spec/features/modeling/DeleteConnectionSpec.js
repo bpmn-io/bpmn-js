@@ -30,7 +30,7 @@ describe('features/modeling - #removeConnection', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var sequenceFlowShape = elementRegistry.getById('SequenceFlow_2'),
+      var sequenceFlowShape = elementRegistry.get('SequenceFlow_2'),
           sequenceFlow = sequenceFlowShape.businessObject;
 
       // when
@@ -47,7 +47,7 @@ describe('features/modeling - #removeConnection', function() {
     it('should undo', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var sequenceFlowShape = elementRegistry.getById('SequenceFlow_2'),
+      var sequenceFlowShape = elementRegistry.get('SequenceFlow_2'),
           sequenceFlow = sequenceFlowShape.businessObject,
           parent = sequenceFlow.$parent;
 
@@ -66,7 +66,7 @@ describe('features/modeling - #removeConnection', function() {
     it('redo', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var sequenceFlowShape = elementRegistry.getById('SequenceFlow_2'),
+      var sequenceFlowShape = elementRegistry.get('SequenceFlow_2'),
           sequenceFlow = sequenceFlowShape.businessObject,
           parent = sequenceFlow.$parent;
 

@@ -55,8 +55,8 @@ describe('import - labels', function() {
         // when
         inject(function(elementRegistry) {
 
-          var endEvent = elementRegistry.getById('EndEvent_1'),
-              sequenceFlow = elementRegistry.getById('SequenceFlow_1');
+          var endEvent = elementRegistry.get('EndEvent_1'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
           // then
           expect(bounds(endEvent.label)).toEqual({ x: 211, y: 256, width: 119, height: 44 });

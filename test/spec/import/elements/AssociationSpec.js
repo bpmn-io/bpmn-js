@@ -28,7 +28,7 @@ describe('import - associations', function() {
         // when
         inject(function(elementRegistry) {
 
-          var association = elementRegistry.getById('Association_1');
+          var association = elementRegistry.get('Association_1');
 
           // then
           expect(association).toBeDefined();
@@ -54,7 +54,7 @@ describe('import - associations', function() {
         // when
         inject(function(elementRegistry) {
 
-          var association = elementRegistry.getById('Association_1');
+          var association = elementRegistry.get('Association_1');
 
           // then
           expect(association).toBeDefined();
@@ -84,8 +84,8 @@ describe('import - associations', function() {
         // when
         inject(function(elementRegistry) {
 
-          var dataInputAssociation = elementRegistry.getById('DataInputAssociation_1');
-          var dataOutputAssociation = elementRegistry.getById('DataOutputAssociation_1');
+          var dataInputAssociation = elementRegistry.get('DataInputAssociation_1');
+          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
 
           // then
           expect(dataInputAssociation).toBeDefined();
@@ -112,8 +112,8 @@ describe('import - associations', function() {
         // when
         inject(function(elementRegistry) {
 
-          var dataInputAssociation = elementRegistry.getById('DataInputAssociation_1');
-          var dataOutputAssociation = elementRegistry.getById('DataOutputAssociation_1');
+          var dataInputAssociation = elementRegistry.get('DataInputAssociation_1');
+          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
 
           // then
           expect(dataInputAssociation).toBeDefined();

@@ -30,7 +30,7 @@ describe('features/modeling - #removeShape', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject;
 
       // when
@@ -47,7 +47,7 @@ describe('features/modeling - #removeShape', function() {
     it('should undo', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject,
           parent = task.$parent;
 
@@ -66,7 +66,7 @@ describe('features/modeling - #removeShape', function() {
     it('redo', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject,
           parent = task.$parent;
 

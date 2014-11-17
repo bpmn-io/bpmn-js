@@ -33,7 +33,7 @@ describe('features/modeling - append shape', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
 
       // when
       var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
@@ -48,8 +48,8 @@ describe('features/modeling - append shape', function() {
     it('should create DI', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -72,8 +72,8 @@ describe('features/modeling - append shape', function() {
     it('should add to parent (sub process)', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -92,8 +92,8 @@ describe('features/modeling - append shape', function() {
       it('correctly wired and positioned', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
+        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         var startEvent = startEventShape.businessObject,
             subProcess = subProcessShape.businessObject;
@@ -106,7 +106,7 @@ describe('features/modeling - append shape', function() {
 
         // then
         expect(label).toBeDefined();
-        expect(elementRegistry.getById(label.id)).toBeDefined();
+        expect(elementRegistry.get(label.id)).toBeDefined();
 
         expect(label.x).toBe(443);
         expect(label.y).toBe(278);
@@ -118,8 +118,8 @@ describe('features/modeling - append shape', function() {
       it('with di', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
+        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         var startEvent = startEventShape.businessObject,
             subProcess = subProcessShape.businessObject;
@@ -143,8 +143,8 @@ describe('features/modeling - append shape', function() {
     it('should add connection', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -170,8 +170,8 @@ describe('features/modeling - append shape', function() {
     it('should undo add to parent', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -191,8 +191,8 @@ describe('features/modeling - append shape', function() {
     it('should undo add shape label', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -214,15 +214,15 @@ describe('features/modeling - append shape', function() {
       expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
       expect(targetShape.label).not.toBeDefined();
-      expect(elementRegistry.getById(target.id + '_label')).not.toBeDefined();
+      expect(elementRegistry.get(target.id + '_label')).not.toBeDefined();
     }));
 
 
     it('should undo add connection', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -247,15 +247,15 @@ describe('features/modeling - append shape', function() {
       expect(connection.$parent).toBe(null);
       expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
-      expect(elementRegistry.getById(targetShape.id)).not.toBeDefined();
+      expect(elementRegistry.get(targetShape.id)).not.toBeDefined();
     }));
 
 
     it('should undo add connection label', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -276,15 +276,15 @@ describe('features/modeling - append shape', function() {
       expect(connection.$parent).toBe(null);
       expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
 
-      expect(elementRegistry.getById(connection.id + '_label')).not.toBeDefined();
+      expect(elementRegistry.get(connection.id + '_label')).not.toBeDefined();
     }));
 
 
     it('should redo appending multiple shapes', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -310,15 +310,15 @@ describe('features/modeling - append shape', function() {
 
       // then
       expect(targetShape2.parent).toBe(null);
-      expect(elementRegistry.getById(targetShape2.id)).not.toBeDefined();
+      expect(elementRegistry.get(targetShape2.id)).not.toBeDefined();
     }));
 
 
     it('should redo add connection', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
-      var startEventShape = elementRegistry.getById('StartEvent_1');
-      var subProcessShape = elementRegistry.getById('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_1');
+      var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -353,7 +353,7 @@ describe('features/modeling - append shape', function() {
       it('should wire connection source + target', inject(function(elementRegistry, modeling) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
 
         // when
         var targetShape = modeling.appendTextAnnotation(startEventShape, 'bpmn:TextAnnotation'),
@@ -378,7 +378,7 @@ describe('features/modeling - append shape', function() {
       it('should undo wire connection source + target', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
 
         var targetShape = modeling.appendTextAnnotation(startEventShape, 'bpmn:TextAnnotation'),
             target = targetShape.businessObject;
@@ -405,7 +405,7 @@ describe('features/modeling - append shape', function() {
       it('should append', inject(function(elementRegistry, modeling) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
 
         // when
         var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
@@ -420,8 +420,8 @@ describe('features/modeling - append shape', function() {
       it('should add to parent (sub process)', inject(function(elementRegistry, modeling) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
+        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
@@ -438,8 +438,8 @@ describe('features/modeling - append shape', function() {
       it('should undo append', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventShape = elementRegistry.getById('StartEvent_1');
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
+        var startEventShape = elementRegistry.get('StartEvent_1');
+        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;

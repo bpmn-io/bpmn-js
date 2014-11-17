@@ -104,7 +104,7 @@ describe('viewer', function() {
         expect(elementRegistry).toBeDefined();
 
         // given
-        var subProcessShape = elementRegistry.getById('SubProcess_1');
+        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         // when
         overlays.add('SubProcess_1', {

@@ -268,7 +268,7 @@ describe('import - importer', function() {
 
         var elementRegistry = diagram.get('elementRegistry');
 
-        var element = elementRegistry.getById('GATEWAY_1');
+        var element = elementRegistry.get('GATEWAY_1');
 
         expect(element.businessObject.eventGatewayType).toEqual('Exclusive');
 

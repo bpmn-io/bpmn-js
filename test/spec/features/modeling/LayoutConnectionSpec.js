@@ -30,7 +30,7 @@ describe('features/modeling - layout connection', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var sequenceFlowConnection = elementRegistry.getById('SequenceFlow_1'),
+      var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
           sequenceFlow = sequenceFlowConnection.businessObject;
 
       // when
@@ -63,7 +63,7 @@ describe('features/modeling - layout connection', function() {
     it('should undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var sequenceFlowConnection = elementRegistry.getById('SequenceFlow_1'),
+      var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
           sequenceFlow = sequenceFlowConnection.businessObject;
 
       var oldWaypoints = sequenceFlowConnection.waypoints,
@@ -87,7 +87,7 @@ describe('features/modeling - layout connection', function() {
     it('should redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var sequenceFlowConnection = elementRegistry.getById('SequenceFlow_1'),
+      var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
           sequenceFlow = sequenceFlowConnection.businessObject;
 
       modeling.layoutConnection(sequenceFlowConnection);

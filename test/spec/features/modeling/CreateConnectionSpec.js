@@ -30,9 +30,9 @@ describe('features/modeling - create connection', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject,
-          gatewayShape = elementRegistry.getById('Gateway_1'),
+          gatewayShape = elementRegistry.get('Gateway_1'),
           gateway = gatewayShape.businessObject;
 
 
@@ -81,9 +81,9 @@ describe('features/modeling - create connection', function() {
     it('should undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject,
-          gatewayShape = elementRegistry.getById('Gateway_1'),
+          gatewayShape = elementRegistry.get('Gateway_1'),
           gateway = gatewayShape.businessObject;
 
 
@@ -113,9 +113,9 @@ describe('features/modeling - create connection', function() {
     it('should redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var taskShape = elementRegistry.getById('Task_1'),
+      var taskShape = elementRegistry.get('Task_1'),
           task = taskShape.businessObject,
-          gatewayShape = elementRegistry.getById('Gateway_1'),
+          gatewayShape = elementRegistry.get('Gateway_1'),
           gateway = gatewayShape.businessObject;
 
 

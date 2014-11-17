@@ -30,10 +30,10 @@ describe('features/modeling - move shape', function() {
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventElement = elementRegistry.getById('StartEvent_1'),
+      var startEventElement = elementRegistry.get('StartEvent_1'),
           startEvent = startEventElement.businessObject;
 
-      var sequenceFlowElement = elementRegistry.getById('SequenceFlow_1'),
+      var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
           sequenceFlow = sequenceFlowElement.businessObject;
 
       var oldPosition = {
@@ -68,7 +68,7 @@ describe('features/modeling - move shape', function() {
     it('should execute on label', inject(function(elementRegistry, modeling) {
 
       // given
-      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+      var labelElement = elementRegistry.get('StartEvent_1_label'),
           startEvent = labelElement.businessObject;
 
       var oldPosition = {
@@ -88,7 +88,7 @@ describe('features/modeling - move shape', function() {
     it('should move label with element', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventElement = elementRegistry.getById('StartEvent_1'),
+      var startEventElement = elementRegistry.get('StartEvent_1'),
           startEvent = startEventElement.businessObject;
 
       var label = startEventElement.label;
@@ -114,7 +114,7 @@ describe('features/modeling - move shape', function() {
     it('should undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var startEventElement = elementRegistry.getById('StartEvent_1'),
+      var startEventElement = elementRegistry.get('StartEvent_1'),
           startEvent = startEventElement.businessObject;
 
       var oldPosition = {
@@ -136,7 +136,7 @@ describe('features/modeling - move shape', function() {
     it('should undo on label', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+      var labelElement = elementRegistry.get('StartEvent_1_label'),
           startEvent = labelElement.businessObject;
 
       var oldPosition = {
@@ -162,7 +162,7 @@ describe('features/modeling - move shape', function() {
     it('should redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var startEventElement = elementRegistry.getById('StartEvent_1'),
+      var startEventElement = elementRegistry.get('StartEvent_1'),
           startEvent = startEventElement.businessObject;
 
 
@@ -186,7 +186,7 @@ describe('features/modeling - move shape', function() {
     it('should redo on label', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var labelElement = elementRegistry.getById('StartEvent_1_label'),
+      var labelElement = elementRegistry.get('StartEvent_1_label'),
           startEvent = labelElement.businessObject;
 
       modeling.moveShape(labelElement, { x: 0, y: 50 });
