@@ -62,7 +62,7 @@ describe('features/resize', function() {
       // when
       resize.resizeShape(c1Shape, {delta: {x: -107, y: -108}});
 
-      var updatedShape = elementRegistry.getById('c1');
+      var updatedShape = elementRegistry.get('c1');
 
       // then
       expect(updatedShape.height).toBe(208);
@@ -94,7 +94,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(85);
@@ -124,7 +124,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(115);
@@ -155,7 +155,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(85);
@@ -185,7 +185,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(115);
@@ -216,7 +216,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(85);
@@ -246,7 +246,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(115);
@@ -277,7 +277,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(85);
@@ -308,7 +308,7 @@ describe('features/resize', function() {
         }
       });
 
-      var updatedShape1 = elementRegistry.getById('c1');
+      var updatedShape1 = elementRegistry.get('c1');
 
       // then
       expect(updatedShape1.height).toBe(115);
@@ -339,7 +339,7 @@ describe('features/resize', function() {
       selection.select(c1Shape, false);
 
       // then
-      var selectedShape = elementRegistry.getGraphicsByElement(c1Shape);
+      var selectedShape = elementRegistry.getGraphics(c1Shape);
 
       var resizeAnchors = selectedShape.selectAll('.djs-resizer');
 
@@ -363,7 +363,7 @@ describe('features/resize', function() {
       selection.deselect(c1Shape, false);
 
       // then
-      var selectedShape = elementRegistry.getGraphicsByElement(c1Shape);
+      var selectedShape = elementRegistry.getGraphics(c1Shape);
 
       var resizeAnchors = selectedShape.selectAll('.resize');
 

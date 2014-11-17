@@ -80,7 +80,7 @@ describe('features/modeling - append shape', function() {
       // shape added
 
       // then
-      expect(elementRegistry.getGraphicsByElement(newShape)).toBeDefined();
+      expect(elementRegistry.getGraphics(newShape)).toBeDefined();
     }));
 
 
@@ -97,7 +97,7 @@ describe('features/modeling - append shape', function() {
       expect(connection).toBeDefined();
       expect(connection.parent).toBe(newShape.parent);
 
-      expect(elementRegistry.getGraphicsByElement(connection)).toBeDefined();
+      expect(elementRegistry.getGraphics(connection)).toBeDefined();
     }));
 
 
@@ -111,7 +111,7 @@ describe('features/modeling - append shape', function() {
 
       // then
       expect(newShape.parent).toBe(null);
-      expect(elementRegistry.getGraphicsByElement(newShape)).not.toBeDefined();
+      expect(elementRegistry.getGraphics(newShape)).not.toBeDefined();
     }));
 
   });

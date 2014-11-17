@@ -76,8 +76,8 @@ describe('features/move - MoveVisuals', function() {
       draggable.dragMove(20, 20, 30, 30, new MockEvent());
 
       // then
-      expect(elementRegistry.getGraphicsByElement(childShape).hasClass('djs-dragging')).toBe(true);
-      expect(elementRegistry.getGraphicsByElement(connection).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(true);
     }));
 
 
@@ -92,8 +92,8 @@ describe('features/move - MoveVisuals', function() {
       draggable.dragMove(20, 20, 30, 30, new MockEvent());
 
       // then
-      expect(elementRegistry.getGraphicsByElement(childShape2).hasClass('djs-dragging')).toBe(true);
-      expect(elementRegistry.getGraphicsByElement(connection).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(true);
     }));
 
 
@@ -109,8 +109,8 @@ describe('features/move - MoveVisuals', function() {
       draggable.dragEnd(30, 30, new MockEvent());
 
       // then
-      expect(elementRegistry.getGraphicsByElement(childShape2).hasClass('djs-dragging')).toBe(false);
-      expect(elementRegistry.getGraphicsByElement(connection).hasClass('djs-dragging')).toBe(false);
+      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(false);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(false);
     }));
 
   });

@@ -85,7 +85,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphicsByElement(newLabel)).toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).toBeDefined();
     }));
 
 
@@ -113,7 +113,7 @@ describe('features/modeling - create label', function() {
       expect(newLabel.labelTarget).toBeFalsy();
       expect(childShape.label).toBeFalsy();
 
-      expect(elementRegistry.getGraphicsByElement(newLabel)).not.toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).not.toBeDefined();
     }));
 
   });
@@ -146,7 +146,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphicsByElement(newLabel)).toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).toBeDefined();
     }));
 
 
@@ -174,7 +174,7 @@ describe('features/modeling - create label', function() {
       expect(newLabel.labelTarget).toBeFalsy();
       expect(connection.label).toBeFalsy();
 
-      expect(elementRegistry.getGraphicsByElement(newLabel)).not.toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).not.toBeDefined();
     }));
 
   });

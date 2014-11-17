@@ -14,6 +14,7 @@ describe('Canvas', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
+
   var container;
 
   var defaultBootstrap = bootstrapDiagram(function() {
@@ -100,7 +101,7 @@ describe('Canvas', function() {
       canvas.addShape(shape);
 
       // then
-      expect(elementRegistry.getById('a')).toBe(shape);
+      expect(elementRegistry.get('a')).toBe(shape);
     }));
 
 
@@ -143,7 +144,7 @@ describe('Canvas', function() {
       // when
       canvas.addShape(shape);
 
-      var gfx = elementRegistry.getGraphicsByElement(shape);
+      var gfx = elementRegistry.getGraphics(shape);
 
       // then
       expect(gfx.attr('display')).toBe('none');
@@ -194,7 +195,7 @@ describe('Canvas', function() {
 
       // then
       expect(shape.parent).toBeFalsy();
-      expect(elementRegistry.getById('a')).not.toBeDefined();
+      expect(elementRegistry.get('a')).not.toBeDefined();
 
       expect(listener).toHaveBeenCalled();
     }));
@@ -209,7 +210,7 @@ describe('Canvas', function() {
       canvas.removeShape('a');
 
       // then
-      expect(elementRegistry.getById('a')).toBeFalsy();
+      expect(elementRegistry.get('a')).toBeFalsy();
     }));
 
 
@@ -287,7 +288,7 @@ describe('Canvas', function() {
 
       // then
       expect(connection.parent).toBeFalsy();
-      expect(elementRegistry.getById('c1')).not.toBeDefined();
+      expect(elementRegistry.get('c1')).not.toBeDefined();
 
       expect(listener).toHaveBeenCalled();
     }));
