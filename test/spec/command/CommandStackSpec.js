@@ -588,4 +588,80 @@ describe('command/CommandStack', function() {
 
   });
 
+
+  describe('stack information ', function() {
+
+    var Handler = function(eventBus) {
+
+      this.execute = function(ctx) {
+        expect(eventBus).toBeDefined();
+        ctx.heho = 'HE';
+      };
+
+      this.revert = function(ctx) {
+        ctx.heho = 'HO';
+        expect(eventBus).toBeDefined();
+      };
+    };
+
+
+    describe('stack information #canUndo', function() {
+
+      it('should return true', inject(function(commandStack) {
+
+        // given
+        commandStack.registerHandler('heho', Handler);
+
+        var context = {};
+
+        // when
+        commandStack.execute('heho', context);
+
+        // then
+        expect(commandStack.canUndo()).toBeTruthy();
+      }));
+
+
+      it('should return false', inject(function(commandStack) {
+
+        // then
+        expect(commandStack.canUndo()).toBeFalsy();
+      }));
+    });
+
+    describe('stack information #canRedo', function() {
+
+      it('should return true', inject(function(commandStack) {
+
+        // given
+        commandStack.registerHandler('heho', Handler);
+
+        var context = {};
+
+        // when
+        commandStack.execute('heho', context);
+        commandStack.undo();
+
+        // then
+        expect(commandStack.canRedo()).toBeTruthy();
+      }));
+
+
+      it('should return false', inject(function(commandStack) {
+
+        // given
+        commandStack.registerHandler('heho', Handler);
+
+        var context = {};
+
+        // when
+        commandStack.execute('heho', context);
+
+        // then
+        expect(commandStack.canRedo()).toBeFalsy();
+      }));
+    });
+
+  });
+
 });
