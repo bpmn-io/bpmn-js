@@ -56,6 +56,8 @@ function bootstrapDiagram(options, locals) {
       document.body.appendChild(testContainer);
     }
 
+    testContainer.classList.add('test-container');
+
     var _options = options,
         _locals = locals;
 
@@ -72,7 +74,7 @@ function bootstrapDiagram(options, locals) {
       _locals = _locals();
     }
 
-    _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
+    _options = _.extend({ canvas: { container: testContainer } }, OPTIONS || {}, _options || {});
 
     var mockModule = {};
 
