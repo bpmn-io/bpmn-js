@@ -62,6 +62,8 @@ function bootstrapBpmnJS(BpmnJS, options, locals) {
     document.body.appendChild(testContainer);
   }
 
+  testContainer.classList.add('test-container');
+
   var _options = options,
       _locals = locals;
 
@@ -78,7 +80,7 @@ function bootstrapBpmnJS(BpmnJS, options, locals) {
     _locals = _locals();
   }
 
-  _options = _.extend({ container: testContainer }, OPTIONS || {}, _options || {});
+  _options = _.extend({ container: testContainer, width: '100%', height: '100%' }, OPTIONS || {}, _options || {});
 
   if (_locals) {
     var mockModule = {};
