@@ -21,7 +21,7 @@ describe('features/modeling - append shape', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf-8');
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
 

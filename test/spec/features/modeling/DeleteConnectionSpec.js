@@ -18,7 +18,7 @@ describe('features/modeling - #removeConnection', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf-8');
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
 

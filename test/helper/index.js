@@ -24,7 +24,7 @@
  * var fs = require('fs');
  *
  * // insert diagram.css
- * TestHelper.insertCSS('diagram.css', fs.readFileSync('some-css.css', 'utf-8'));
+ * TestHelper.insertCSS('diagram.css', fs.readFileSync('some-css.css', 'utf8'));
  * ```
  */
 

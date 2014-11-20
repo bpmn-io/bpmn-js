@@ -22,7 +22,7 @@ describe('features - label-editing', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf-8');
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf8');
 
   var testModules = [ labelEditingModule, coreModule ];
 
