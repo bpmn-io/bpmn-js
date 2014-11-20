@@ -21,7 +21,7 @@ describe('features/modeling - move connection', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, sourceShape, targetShape, connection;
+  var rootShape, sourceShape, targetShape, otherShape, connection;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -43,6 +43,12 @@ describe('features/modeling - move connection', function() {
 
     canvas.addShape(targetShape, rootShape);
 
+    otherShape = elementFactory.createShape({
+      id: 'other',
+      x: 300, y: 100, width: 200, height: 200
+    });
+
+    canvas.addShape(otherShape, rootShape);
 
     connection = elementFactory.createConnection({
       id: 'connection',
@@ -58,19 +64,21 @@ describe('features/modeling - move connection', function() {
   it('should move', inject(function(modeling) {
 
     // when
-    modeling.moveConnection(connection, { x: 20, y: 10 });
+    modeling.moveConnection(connection, { x: 20, y: 10 }, otherShape);
 
     // then
     expect(connection.waypoints).toDeepEqual([
       { x: 170, y: 160, original: { x: 20, y: 10 } }, { x: 170, y: 210 }, { x: 370, y: 160 }
     ]);
+
+    expect(connection.parent).toBe(otherShape);
   }));
 
 
   it('should undo', inject(function(modeling, commandStack) {
 
     // given
-    modeling.moveConnection(connection, { x: 20, y: 10 });
+    modeling.moveConnection(connection, { x: 20, y: 10 }, otherShape);
 
     // when
     commandStack.undo();
@@ -79,13 +87,15 @@ describe('features/modeling - move connection', function() {
     expect(connection.waypoints).toDeepEqual([
       { x: 150, y: 150, original: { x: 0, y: 0 } }, { x: 150, y: 200 }, { x: 350, y: 150 }
     ]);
+
+    expect(connection.parent).toBe(rootShape);
   }));
 
 
   it('should redo', inject(function(modeling, commandStack) {
 
     // given
-    modeling.moveConnection(connection, { x: 20, y: 10 });
+    modeling.moveConnection(connection, { x: 20, y: 10 }, otherShape);
 
     // when
     commandStack.undo();
@@ -95,6 +105,8 @@ describe('features/modeling - move connection', function() {
     expect(connection.waypoints).toDeepEqual([
       { x: 170, y: 160, original: { x: 20, y: 10 } }, { x: 170, y: 210 }, { x: 370, y: 160 }
     ]);
+
+    expect(connection.parent).toBe(otherShape);
   }));
 
 });
