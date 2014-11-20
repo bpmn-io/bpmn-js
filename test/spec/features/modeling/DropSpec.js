@@ -10,7 +10,7 @@ var TestHelper = require('../../../TestHelper');
 var modelingModule = require('../../../../lib/features/modeling');
 
 
-describe('features/drop - Drop', function() {
+describe('features/modeling - move shape - drop', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
@@ -131,5 +131,7 @@ describe('features/drop - Drop', function() {
       expect(shape2.parent).toBe(parent2);
       expect(parent2.parent).toBe(parent3);
     }));
+
   });
+
 });

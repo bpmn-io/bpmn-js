@@ -6,7 +6,7 @@ var TestHelper = require('../../../TestHelper');
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    rulesModule = require('../../../../lib/features/rules'),
+    rulesModule = require('./rules'),
     connectModule = require('../../../../lib/features/connect');
 
 var MockEvent = require('../../../Event');
@@ -14,7 +14,7 @@ var MockEvent = require('../../../Event');
 
 describe('features/connect', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, connectModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, connectModule, rulesModule ] }));
 
 
   var rootShape, shape1, shape2, shape1child;
@@ -72,7 +72,8 @@ describe('features/connect', function() {
         source: shape1child,
         target: shape2
       };
-      expect(rules.can('connect', context)).toBeFalsy();
+
+      expect(rules.allowed('connection.create', context)).toBeFalsy();
 
       // when
       connect.start(new MockEvent(), shape1child);

@@ -6,14 +6,15 @@ var TestHelper = require('../../../TestHelper');
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    moveModule = require('../../../../lib/features/move');
+    moveModule = require('../../../../lib/features/move'),
+    rulesModule = require('./rules');
 
 var MockEvent = require('../../../Event');
 
 
 describe('features/move - MoveVisuals', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, moveModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, moveModule, rulesModule ] }));
 
 
   var rootShape, parentShape, childShape, childShape2, connection;
@@ -111,6 +112,56 @@ describe('features/move - MoveVisuals', function() {
       // then
       expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(false);
       expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(false);
+    }));
+
+  });
+
+
+  describe('drop markup', function() {
+
+    it('should indicate drop allowed', inject(function(dragSupport, eventBus, elementRegistry) {
+
+      // given
+      var draggable = dragSupport.get(childShape);
+
+      // when
+      draggable.dragStart(10, 10, new MockEvent());
+      draggable.dragMove(7, 7, 7, 7, new MockEvent());
+
+      eventBus.fire('shape.hover', {
+        element: parentShape,
+        gfx: elementRegistry.getGraphics(parentShape)
+      });
+
+      draggable.dragMove(1, 1, 1, 1, new MockEvent());
+
+      expect(dragSupport.getDragContext().canExecute).toBe(true);
+
+      // then
+      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).toBe(true);
+    }));
+
+
+    it('should indicate drop not allowed', inject(function(dragSupport, eventBus, elementRegistry) {
+
+      // given
+      var draggable = dragSupport.get(childShape);
+
+      // when
+      draggable.dragStart(10, 10, new MockEvent());
+      draggable.dragMove(7, 7, 7, 7, new MockEvent());
+
+      eventBus.fire('shape.hover', {
+        element: childShape,
+        gfx: elementRegistry.getGraphics(childShape)
+      });
+
+      draggable.dragMove(1, 1, 1, 1, new MockEvent());
+
+      expect(dragSupport.getDragContext().canExecute).toBe(false);
+
+      // then
+      expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).toBe(true);
     }));
 
   });

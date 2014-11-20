@@ -14,10 +14,10 @@ var overlayModule = require('../../../../lib/features/overlays'),
     moveModule = require('../../../../lib/features/move');
 
 
-var Event = require('../../../Event');
+var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds,
+    Event = require('../../../Event');
 
-
-describe('features/overlay', function() {
+describe('features/overlay - integration', function() {
 
   beforeEach(bootstrapDiagram({ modules: [
     overlayModule,
@@ -98,7 +98,8 @@ describe('features/overlay', function() {
 
     }));
 
-    it('should update on shape.resize', inject(function(modeling, canvas, overlays, resize) {
+
+    it('should update on shape.resize', inject(function(modeling, canvas, overlays) {
 
       // given
       var shape = canvas.addShape({
@@ -121,13 +122,7 @@ describe('features/overlay', function() {
       });
 
       // when
-      resize.resizeShape(shape, {
-        direction: 'ne',
-        delta: {
-          x: 0,
-          y: 15
-        }
-      });
+      modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: 0, y: -15 }));
 
       // then
       expect(html.parent().parent().position()).toEqual({
@@ -160,13 +155,7 @@ describe('features/overlay', function() {
         }
       });
 
-      resize.resizeShape(shape, {
-        direction: 'ne',
-        delta: {
-          x: 0,
-          y: 15
-        }
-      });
+      modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: 0, y: -15 }));
 
       // when
       commandStack.undo();

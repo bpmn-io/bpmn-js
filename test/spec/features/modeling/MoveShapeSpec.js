@@ -68,84 +68,138 @@ describe('features/modeling - move shape', function() {
   }));
 
 
-  it('should move according to delta', inject(function(modeling) {
+  describe('move single', function() {
 
-    // when
-    modeling.moveShape(childShape, { x: -20, y: +20 });
+    it('should move according to delta', inject(function(modeling) {
 
-    // then
-    expect(childShape.x).toBe(90);
-    expect(childShape.y).toBe(130);
+      // when
+      modeling.moveShape(childShape, { x: -20, y: +20 });
 
-    // keep old parent
-    expect(childShape.parent).toBe(parentShape);
-  }));
+      // then
+      expect(childShape.x).toBe(90);
+      expect(childShape.y).toBe(130);
 
-  it('should move multiple shapes according to delta', inject(function(modeling) {
-
-    // when
-    modeling.moveShapes([childShape, childShape2], { x: -20, y: +20 });
-
-    // then
-    expect(childShape.x).toBe(90);
-    expect(childShape.y).toBe(130);
-
-    expect(childShape2.x).toBe(180);
-    expect(childShape2.y).toBe(130);
-
-    // keep old parent
-    expect(childShape.parent).toBe(parentShape);
-  }));
+      // keep old parent
+      expect(childShape.parent).toBe(parentShape);
+    }));
 
 
-  it('should update parent', inject(function(modeling) {
+    it('should update parent', inject(function(modeling) {
 
-    // when
-    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
+      // when
+      modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
 
-    // then
-    // update parent
-    expect(childShape.parent).toBe(rootShape);
-  }));
-
-
-  it('should layout connections after move', inject(function(modeling) {
-
-    // when
-    modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
-
-    // then
-    // update parent
-    expect(connection.waypoints).toDeepEqual([
-      { x : 140, y : 180 }, { x : 250, y : 160 }
-    ]);
-  }));
+      // then
+      // update parent
+      expect(childShape.parent).toBe(rootShape);
+    }));
 
 
-  it('should undo', inject(function(modeling, commandStack) {
+    it('should layout connections after move', inject(function(modeling) {
 
-    // given
-    modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
-    modeling.moveShape(childShape, { x: -20, y: +20 });
+      // when
+      modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
 
-    // when
-    commandStack.undo();
+      // then
+      // update parent
+      expect(connection.waypoints).toDeepEqual([
+        { x : 140, y : 180 }, { x : 250, y : 160 }
+      ]);
+    }));
 
-    // then
-    expect(childShape.x).toBe(90);
-    expect(childShape.y).toBe(130);
 
-    expect(childShape.parent).toBe(rootShape);
+    it('should undo', inject(function(modeling, commandStack) {
 
-    // when
-    commandStack.undo();
+      // given
+      modeling.moveShape(childShape, { x: -20, y: +20 }, rootShape);
+      modeling.moveShape(childShape, { x: -20, y: +20 });
 
-    // then
-    expect(childShape.x).toBe(110);
-    expect(childShape.y).toBe(110);
+      // when
+      commandStack.undo();
 
-    expect(childShape.parent).toBe(parentShape);
-  }));
+      // then
+      expect(childShape.x).toBe(90);
+      expect(childShape.y).toBe(130);
+
+      expect(childShape.parent).toBe(rootShape);
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(childShape.x).toBe(110);
+      expect(childShape.y).toBe(110);
+
+      expect(childShape.parent).toBe(parentShape);
+    }));
+
+  });
+
+
+  describe('move multiple', function() {
+
+    it('should move according to delta', inject(function(modeling) {
+
+      // when
+      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+
+      // then
+      expect(childShape.x).toBe(90);
+      expect(childShape.y).toBe(130);
+
+      expect(childShape2.x).toBe(180);
+      expect(childShape2.y).toBe(130);
+
+      // update parent(s)
+      expect(childShape.parent).toBe(parentShape2);
+      expect(childShape2.parent).toBe(parentShape2);
+    }));
+
+
+    function containment(element) {
+      return _.pick(element, [ 'x', 'y', 'parent' ]);
+    }
+
+    it('should undo', inject(function(modeling, commandStack) {
+
+      var oldContainment = containment(childShape),
+          oldContainment2 = containment(childShape2);
+
+      // given
+      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveShapes([ childShape ], { x: 40, y: 40 }, parentShape);
+
+      // when
+      commandStack.undo();
+      commandStack.undo();
+
+      // then
+      expect(containment(childShape)).toEqual(oldContainment);
+      expect(containment(childShape2)).toEqual(oldContainment2);
+    }));
+
+
+    it('should redo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveShapes([ childShape ], { x: 40, y: 40 }, parentShape);
+
+      var newContainment = containment(childShape),
+          newContainment2 = containment(childShape2);
+
+      // when
+      commandStack.undo();
+      commandStack.undo();
+      commandStack.redo();
+      commandStack.redo();
+
+      // then
+      expect(containment(childShape)).toEqual(newContainment);
+      expect(containment(childShape2)).toEqual(newContainment2);
+    }));
+
+  });
 
 
   describe('drop', function() {
