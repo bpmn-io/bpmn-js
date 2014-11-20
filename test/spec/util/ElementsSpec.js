@@ -106,4 +106,9 @@ describe('util/Elements', function() {
 
   });
 
+
+  describe('getClosure', function() {
+    it('should test getClosure');
+  });
+
 });
