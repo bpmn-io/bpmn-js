@@ -66,8 +66,8 @@
   opacity: 0.3;
 }
 
-.djs-shape.djs-dragging,
-.djs-connection.djs-dragging {
+.djs-dragging,
+.djs-dragging > * {
   pointer-events: none !important;
 }
 
