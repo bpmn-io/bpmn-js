@@ -471,10 +471,10 @@ describe('command/CommandStack', function() {
           'commandStack.execute pre-command',
           'commandStack.postExecute pre-command',
           'commandStack.execute complex-command',
-          'commandStack.postExecute complex-command',
           'commandStack.preExecute post-command',
           'commandStack.execute post-command',
-          'commandStack.postExecute post-command'
+          'commandStack.postExecute post-command',
+          'commandStack.postExecute complex-command'
         ]);
       }));
 
