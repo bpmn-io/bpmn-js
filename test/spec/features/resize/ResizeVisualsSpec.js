@@ -74,7 +74,7 @@ describe('features/resize - visuals', function() {
       resize.start(shape, 'se');
 
       // then
-      var frames = canvas.getLayer().selectAll('.djs-resize-overlay');
+      var frames = canvas.getDefaultLayer().selectAll('.djs-resize-overlay');
 
       expect(frames.length).toBe(1);
     }));
@@ -87,7 +87,7 @@ describe('features/resize - visuals', function() {
       resize.update({ x: 100, y: 200 });
 
       // then
-      var frame = canvas.getLayer().select('.djs-resize-overlay');
+      var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
       var bbox = frame.getBBox();
 
@@ -108,7 +108,7 @@ describe('features/resize - visuals', function() {
       resize.finish();
 
       // then
-      var frame = canvas.getLayer().select('.djs-resize-overlay');
+      var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
       expect(frame).toBe(null);
     }));
@@ -148,7 +148,7 @@ describe('features/resize - visuals', function() {
         resize.update({ x: -99, y: -99 });
 
         // then
-        var frame = canvas.getLayer().select('.djs-resize-overlay');
+        var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
         expect(frame.hasClass('resize-not-ok')).toBe(true);
 

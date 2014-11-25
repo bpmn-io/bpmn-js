@@ -103,7 +103,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       function expectDockingPoint(connection, shape, expected) {
         var dockingPoint = layouter.getDockingPoint(connection, shape);
 
-        canvas._paper.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
+        canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
         expect(dockingPoint).toDeepEqual(expected);
       }
@@ -157,7 +157,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       function expectDockingPoint(connection, shape, expected) {
         var dockingPoint = layouter.getDockingPoint(connection, shape);
 
-        canvas._paper.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
+        canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
         expect(dockingPoint).toDeepEqual(expected);
       }
@@ -184,7 +184,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       function expectDockingPoint(connection, shape, expected) {
         var dockingPoint = layouter.getDockingPoint(connection, shape);
 
-        canvas._paper.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
+        canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
         expect(dockingPoint).toDeepEqual(expected);
       }
