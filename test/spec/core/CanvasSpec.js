@@ -171,11 +171,10 @@ describe('Canvas', function() {
       // then
       expect(parentShape.children).toEqual([ childShape ]);
       expect(childShape.parent).toBe(parentShape);
-
-      expect(parentShape.parent).not.toBeDefined();
     }));
 
   });
+
 
   describe('#removeShape', function() {
 
@@ -291,6 +290,104 @@ describe('Canvas', function() {
       expect(elementRegistry.get('c1')).not.toBeDefined();
 
       expect(listener).toHaveBeenCalled();
+    }));
+
+  });
+
+
+  describe('root element(s)', function() {
+
+    beforeEach(defaultBootstrap);
+
+
+    it('should always return root element', inject(function(canvas) {
+      expect(canvas.getRootElement()).toBeDefined();
+    }));
+
+
+    it('should have implicit root element', inject(function(canvas) {
+
+      // when
+      var a = canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+      var root = canvas.getRootElement();
+
+      // then
+      expect(a.parent).toBe(root);
+    }));
+
+
+    it('should allow setting root element', inject(function(canvas, elementRegistry) {
+
+      var rootElement = { id: 'XXXX' };
+
+      // when
+      var setRootElement = canvas.setRootElement(rootElement);
+
+      // then
+      expect(canvas.getRootElement()).toBe(rootElement);
+
+      // new root element is registered
+      expect(elementRegistry.get('XXXX')).toBeDefined();
+      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas.getDefaultLayer());
+
+      // root element is returned from setter?
+      expect(setRootElement).toBe(rootElement);
+    }));
+
+
+    it('should only update root element with override flag', inject(function(canvas) {
+
+      var rootElement = { id: 'oldRoot' },
+          newRootElement = { id: 'newRoot' };
+
+      // when
+      canvas.setRootElement(rootElement);
+
+      // then
+      expect(function() {
+        canvas.setRootElement(newRootElement);
+      }).toThrow();
+
+      // but when
+      canvas.setRootElement(newRootElement, true);
+
+      // then
+      expect(canvas.getRootElement()).toBe(newRootElement);
+    }));
+
+
+    it('should use explicitly defined root element', inject(function(canvas, elementRegistry) {
+
+      // given
+      var rootElement = canvas.setRootElement({ id: 'XXXX' });
+
+      // when
+      var shape = canvas.addShape({ id: 'child', width: 100, height: 100, x: 10, y: 10 }, elementRegistry.get('XXXX'));
+
+      // then
+      expect(shape.parent).toBe(rootElement);
+    }));
+
+  });
+
+
+  describe('update behavior', function() {
+
+    beforeEach(defaultBootstrap);
+
+    var a, b, c;
+
+    beforeEach(inject(function(canvas) {
+      a = canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+      b = canvas.addShape({ id: 'b', x: 20, y: 30, width: 50, height: 50 });
+      c = canvas.addShape({ id: 'c', x: 30, y: 40, width: 50, height: 50 });
+    }));
+
+    it('should update shape z-index', inject(function(canvas, eventBus) {
+
+      // when
+
+      // then
     }));
 
   });
@@ -894,7 +991,7 @@ describe('Canvas', function() {
   });
 
 
-  describe('getAbsoluteBBox', function() {
+  describe('#getAbsoluteBBox', function() {
 
     beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
 

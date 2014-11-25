@@ -108,7 +108,8 @@ describe('ElementRegistry', function() {
       });
 
       // then
-      expect(elements.length).toBe(2);
+      // two shapes + root
+      expect(elements.length).toBe(3);
     }));
 
 
