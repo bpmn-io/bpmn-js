@@ -173,6 +173,25 @@ describe('import - importer', function() {
     });
 
 
+    it('should wire root element', function() {
+
+      // given
+      var canvas = diagram.get('canvas');
+
+      // when
+      var root = elements[0];
+      var anyChild = elements[1];
+
+      // assume
+      expect(root.businessObject.$instanceOf('bpmn:Process')).toBe(true);
+      expect(anyChild.parent).toBe(root);
+
+      // then
+      expect(canvas.getRootElement()).toBe(root);
+      expect(canvas.getGraphics('Process_1')).toBe(canvas._svg);
+    });
+
+
     it('should wire parent child relationship', function() {
 
       // when
