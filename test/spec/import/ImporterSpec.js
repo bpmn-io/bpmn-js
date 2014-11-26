@@ -277,6 +277,23 @@ describe('import - importer', function() {
       });
     });
 
+
+    it('should import multiple dis', function(done) {
+
+      // given
+      var xml = fs.readFileSync('test/fixtures/bpmn/error/multiple-dis.bpmn', 'utf8');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        expect(warnings.length).toBe(1);
+        expect(warnings[0].message).toBe('multiple DI elements defined for <bpmn:InclusiveGateway id="InclusiveGateway_1" />');
+
+        done(err);
+      });
+    });
+
+
     it('should extend missing attribute with default value', function(done) {
 
       // given
