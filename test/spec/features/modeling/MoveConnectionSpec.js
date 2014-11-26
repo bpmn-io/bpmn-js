@@ -29,6 +29,8 @@ describe('features/modeling - move connection', function() {
       id: 'root'
     });
 
+    canvas.setRootElement(rootShape);
+
     sourceShape = elementFactory.createShape({
       id: 'source',
       x: 100, y: 100, width: 100, height: 100

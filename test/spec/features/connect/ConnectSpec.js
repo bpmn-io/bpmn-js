@@ -25,6 +25,8 @@ describe('features/connect', function() {
       id: 'root'
     });
 
+    canvas.setRootElement(rootShape);
+
     shape1 = elementFactory.createShape({
       id: 's1',
       x: 100, y: 100, width: 300, height: 300

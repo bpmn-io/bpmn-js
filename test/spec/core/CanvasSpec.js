@@ -301,7 +301,13 @@ describe('Canvas', function() {
 
 
     it('should always return root element', inject(function(canvas) {
+      // when
+      // accessing root element for the first time
       expect(canvas.getRootElement()).toBeDefined();
+
+      // expect
+      // the canvas to be correctly wired
+      expect(canvas._svg.attr('data-element-id')).toBe('__implicitroot');
     }));
 
 
@@ -328,7 +334,7 @@ describe('Canvas', function() {
 
       // new root element is registered
       expect(elementRegistry.get('XXXX')).toBeDefined();
-      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas.getDefaultLayer());
+      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas._svg);
 
       // root element is returned from setter?
       expect(setRootElement).toBe(rootElement);

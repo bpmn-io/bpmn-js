@@ -1,5 +1,3 @@
-'use strict';
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
@@ -24,6 +22,8 @@ describe('features/move - MoveVisuals', function() {
     rootShape = elementFactory.createRoot({
       id: 'root'
     });
+
+    canvas.setRootElement(rootShape);
 
     parentShape = elementFactory.createShape({
       id: 'parent',
@@ -128,7 +128,7 @@ describe('features/move - MoveVisuals', function() {
       draggable.dragStart(10, 10, new MockEvent());
       draggable.dragMove(7, 7, 7, 7, new MockEvent());
 
-      eventBus.fire('shape.hover', {
+      eventBus.fire('element.hover', {
         element: parentShape,
         gfx: elementRegistry.getGraphics(parentShape)
       });
@@ -151,7 +151,7 @@ describe('features/move - MoveVisuals', function() {
       draggable.dragStart(10, 10, new MockEvent());
       draggable.dragMove(7, 7, 7, 7, new MockEvent());
 
-      eventBus.fire('shape.hover', {
+      eventBus.fire('element.hover', {
         element: childShape,
         gfx: elementRegistry.getGraphics(childShape)
       });

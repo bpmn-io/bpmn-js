@@ -1,21 +1,17 @@
-'use strict';
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    snappingModule = require('../../../../lib/features/snapping'),
-    moveModule = require('../../../../lib/features/move');
+var interactionEventsModule = require('../../../../lib/features/interaction-events');
 
 
-describe('features/snapping', function() {
+describe('features/interaction-events', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, snappingModule, moveModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ interactionEventsModule ] }));
 
 
-  var rootShape, parentShape, childShape, childShape2, label, connection;
+  var rootShape, parentShape, childShape, childShape2, connection;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -46,14 +42,6 @@ describe('features/snapping', function() {
 
     canvas.addShape(childShape2, parentShape);
 
-    label = elementFactory.createLabel({
-      id: 'label1',
-      x: 250, y: 110, width: 40, height: 40,
-      hidden: true
-    });
-
-    canvas.addShape(label, parentShape);
-
     connection = elementFactory.createConnection({
       id: 'connection',
       waypoints: [ { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 } ],
@@ -68,6 +56,24 @@ describe('features/snapping', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap diagram with component', inject(function() {}));
+
+  });
+
+
+  describe('event emitting', function() {
+
+    it('should emit element.(click|hover|out|dblclick) events', inject(function(eventBus) {
+
+      // FIXME(nre): automate this test
+      // we could mock raw dom events via custom events and ensure our correct synthetic events fire
+
+      [ 'hover', 'out', 'click', 'dblclick' ].forEach(function(type) {
+        eventBus.on('element.' + type, function(event) {
+          console.log(type, event);
+        });
+      });
+
+    }));
 
   });
 

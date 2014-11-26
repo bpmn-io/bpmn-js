@@ -23,6 +23,8 @@ describe('features/modeling - move shape - drop', function() {
       id: 'root'
     });
 
+    canvas.setRootElement(rootShape);
+
     // parents
     parent1 = elementFactory.createShape({
       id: 'parent1',

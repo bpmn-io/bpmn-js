@@ -29,6 +29,8 @@ describe('features/modeling - remove connection', function() {
       id: 'root'
     });
 
+    canvas.setRootElement(rootShape);
+
     parentShape = elementFactory.createShape({
       id: 'parent',
       x: 100, y: 100, width: 300, height: 300
