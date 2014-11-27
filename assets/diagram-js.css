@@ -148,14 +148,10 @@
   left: 30px;
   top: 30px;
 
-  background: #EEE;
-  border: solid 1px #666;
+  background: #F0F0F0;
+  border: solid 1px #AAA;
 
   overflow: hidden;
-}
-
-.djs-palette {
-  border-radius: 10px 10px;
 }
 
 .djs-palette .entry {
