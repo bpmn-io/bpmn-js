@@ -25,9 +25,9 @@ describe('features/modeling - move shape', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  describe('shape handling', function() {
+  describe('shape', function() {
 
-    it('should execute', inject(function(elementRegistry, modeling) {
+    it('should move', inject(function(elementRegistry, modeling) {
 
       // given
       var startEventElement = elementRegistry.get('StartEvent_1'),
@@ -65,7 +65,7 @@ describe('features/modeling - move shape', function() {
     }));
 
 
-    it('should execute on label', inject(function(elementRegistry, modeling) {
+    it('should move label', inject(function(elementRegistry, modeling) {
 
       // given
       var labelElement = elementRegistry.get('StartEvent_1_label'),
@@ -82,6 +82,28 @@ describe('features/modeling - move shape', function() {
       // then
       expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
       expect(startEvent.di.label.bounds.y).toBe(oldPosition.y + 50);
+    }));
+
+
+    it('should move label to new parent', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startEventElement = elementRegistry.get('StartEvent_1'),
+          labelElement = elementRegistry.get('StartEvent_1_label'),
+          processElement = elementRegistry.get('Process_1'),
+          subProcessElement = elementRegistry.get('SubProcess_1'),
+          startEvent = labelElement.businessObject,
+          subProcess = subProcessElement.businessObject;
+
+      // when
+      modeling.moveShape(labelElement, { x: 0, y: 50 }, processElement);
+
+      // then
+      expect(labelElement.parent).toBe(processElement);
+
+      // expect actual element + businessObject to be unchanged
+      expect(startEventElement.parent).toBe(subProcessElement);
+      expect(startEvent.$parent).toBe(subProcess);
     }));
 
 
