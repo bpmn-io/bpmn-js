@@ -23,14 +23,29 @@
   stroke-width: 1px;
 }
 
-.djs-group.connect-ok .djs-visual > :nth-child(1),
-.djs-group.drop-ok .djs-visual > :nth-child(1) {
-  fill: #90DD5F /* light-green */!important;
+.djs-shape.connect-ok .djs-visual > :nth-child(1),
+.djs-shape.drop-ok .djs-visual > :nth-child(1) {
+  fill: #90DD5F /* light-green */ !important;
 }
 
-.djs-group.connect-not-ok .djs-visual > :nth-child(1),
-.djs-group.drop-not-ok .djs-visual > :nth-child(1) {
+.djs-shape.connect-not-ok .djs-visual > :nth-child(1),
+.djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
   fill: #E56283 /* light-red */ !important;
+}
+
+.djs-connection.connect-ok .djs-visual > :nth-child(1),
+.djs-connection.drop-ok .djs-visual > :nth-child(1) {
+  stroke: #90DD5F /* light-green */ !important;
+}
+
+.djs-connection.connect-not-ok .djs-visual > :nth-child(1),
+.djs-connection.drop-not-ok .djs-visual > :nth-child(1) {
+  stroke: #E56283 /* light-red */ !important;
+}
+
+.drop-not-ok,
+.connect-not-ok {
+  cursor: not-allowed;
 }
 
 /**
