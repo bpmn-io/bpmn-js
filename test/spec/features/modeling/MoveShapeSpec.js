@@ -107,7 +107,110 @@ describe('features/modeling - move shape', function() {
     }));
 
 
-    it('should move label with element', inject(function(elementRegistry, modeling) {
+    describe('undo support', function() {
+
+      it('should undo', inject(function(elementRegistry, commandStack, modeling) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEvent = startEventElement.businessObject;
+
+        var oldPosition = {
+          x: startEventElement.x,
+          y: startEventElement.y
+        };
+
+        modeling.moveShape(startEventElement, { x: 0, y: 50 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(startEvent.di.bounds.x).toBe(oldPosition.x);
+        expect(startEvent.di.bounds.y).toBe(oldPosition.y);
+      }));
+
+
+      it('should undo on label', inject(function(elementRegistry, commandStack, modeling) {
+
+        // given
+        var labelElement = elementRegistry.get('StartEvent_1_label'),
+            startEvent = labelElement.businessObject;
+
+        var oldPosition = {
+          x: labelElement.x,
+          y: labelElement.y
+        };
+
+        modeling.moveShape(labelElement, { x: 0, y: 50 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
+        expect(startEvent.di.label.bounds.y).toBe(oldPosition.y);
+      }));
+
+    });
+
+
+    describe('redo support', function() {
+
+      it('should redo', inject(function(elementRegistry, commandStack, modeling) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEvent = startEventElement.businessObject;
+
+
+        modeling.moveShape(startEventElement, { x: 0, y: 50 });
+
+        var newPosition = {
+          x: startEventElement.x,
+          y: startEventElement.y
+        };
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(startEvent.di.bounds.x).toBe(newPosition.x);
+        expect(startEvent.di.bounds.y).toBe(newPosition.y);
+      }));
+
+
+      it('should redo on label', inject(function(elementRegistry, commandStack, modeling) {
+
+        // given
+        var labelElement = elementRegistry.get('StartEvent_1_label'),
+            startEvent = labelElement.businessObject;
+
+        modeling.moveShape(labelElement, { x: 0, y: 50 });
+
+        var newPosition = {
+          x: labelElement.x,
+          y: labelElement.y
+        };
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(startEvent.di.label.bounds.x).toBe(newPosition.x);
+        expect(startEvent.di.label.bounds.y).toBe(newPosition.y);
+      }));
+
+    });
+
+  });
+
+
+  describe('label suport', function() {
+
+    it('should move label with shape', inject(function(elementRegistry, modeling) {
 
       // given
       var startEventElement = elementRegistry.get('StartEvent_1'),
@@ -121,110 +224,34 @@ describe('features/modeling - move shape', function() {
       };
 
       // when
-      modeling.moveShape(startEventElement, { x: 40, y: -80 });
+      modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
 
       // then
       expect(label.x).toBe(labelPosition.x + 40);
       expect(label.y).toBe(labelPosition.y - 80);
     }));
 
-  });
 
-
-  describe('undo support', function() {
-
-    it('should undo', inject(function(elementRegistry, commandStack, modeling) {
+    it('should move label with connection', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventElement = elementRegistry.get('StartEvent_1'),
-          startEvent = startEventElement.businessObject;
+      var startEventElement = elementRegistry.get('StartEvent_2'),
+          startEvent = startEventElement.businessObject,
+          subProcessElement = elementRegistry.get('SubProcess_1'),
+          subProcess = startEventElement.businessObject,
+          flowLabel = elementRegistry.get('SequenceFlow_3_label');
 
-      var oldPosition = {
-        x: startEventElement.x,
-        y: startEventElement.y
-      };
-
-      modeling.moveShape(startEventElement, { x: 0, y: 50 });
-
-      // when
-      commandStack.undo();
-
-      // then
-      expect(startEvent.di.bounds.x).toBe(oldPosition.x);
-      expect(startEvent.di.bounds.y).toBe(oldPosition.y);
-    }));
-
-
-    it('should undo on label', inject(function(elementRegistry, commandStack, modeling) {
-
-      // given
-      var labelElement = elementRegistry.get('StartEvent_1_label'),
-          startEvent = labelElement.businessObject;
-
-      var oldPosition = {
-        x: labelElement.x,
-        y: labelElement.y
-      };
-
-      modeling.moveShape(labelElement, { x: 0, y: 50 });
-
-      // when
-      commandStack.undo();
-
-      // then
-      expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
-      expect(startEvent.di.label.bounds.y).toBe(oldPosition.y);
-    }));
-
-  });
-
-
-  describe('redo support', function() {
-
-    it('should redo', inject(function(elementRegistry, commandStack, modeling) {
-
-      // given
-      var startEventElement = elementRegistry.get('StartEvent_1'),
-          startEvent = startEventElement.businessObject;
-
-
-      modeling.moveShape(startEventElement, { x: 0, y: 50 });
-
-      var newPosition = {
-        x: startEventElement.x,
-        y: startEventElement.y
+      var labelPosition = {
+        x: flowLabel.x,
+        y: flowLabel.y
       };
 
       // when
-      commandStack.undo();
-      commandStack.redo();
+      modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
 
       // then
-      expect(startEvent.di.bounds.x).toBe(newPosition.x);
-      expect(startEvent.di.bounds.y).toBe(newPosition.y);
-    }));
-
-
-    it('should redo on label', inject(function(elementRegistry, commandStack, modeling) {
-
-      // given
-      var labelElement = elementRegistry.get('StartEvent_1_label'),
-          startEvent = labelElement.businessObject;
-
-      modeling.moveShape(labelElement, { x: 0, y: 50 });
-
-      var newPosition = {
-        x: labelElement.x,
-        y: labelElement.y
-      };
-
-      // when
-      commandStack.undo();
-      commandStack.redo();
-
-      // then
-      expect(startEvent.di.label.bounds.x).toBe(newPosition.x);
-      expect(startEvent.di.label.bounds.y).toBe(newPosition.y);
+      expect(flowLabel.x).toBe(labelPosition.x + 40);
+      expect(flowLabel.y).toBe(labelPosition.y - 80);
     }));
 
   });
