@@ -254,6 +254,114 @@ describe('features/modeling - move shape', function() {
       expect(flowLabel.y).toBe(labelPosition.y - 80);
     }));
 
+
+    describe('undo', function() {
+
+      it('should undo label with shape', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEvent = startEventElement.businessObject;
+
+        var label = startEventElement.label;
+
+        var labelPosition = {
+          x: label.x,
+          y: label.y
+        };
+
+        modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(label.x).toBe(labelPosition.x);
+        expect(label.y).toBe(labelPosition.y);
+      }));
+
+
+      it('should move label with connection', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_2'),
+            startEvent = startEventElement.businessObject,
+            subProcessElement = elementRegistry.get('SubProcess_1'),
+            subProcess = startEventElement.businessObject,
+            flowLabel = elementRegistry.get('SequenceFlow_3_label');
+
+        var labelPosition = {
+          x: flowLabel.x,
+          y: flowLabel.y
+        };
+
+        modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(flowLabel.x).toBe(labelPosition.x);
+        expect(flowLabel.y).toBe(labelPosition.y);
+      }));
+
+    });
+
+
+    describe('redo', function() {
+
+      it('should redo move label with shape', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEvent = startEventElement.businessObject;
+
+        var label = startEventElement.label;
+
+        var labelPosition = {
+          x: label.x,
+          y: label.y
+        };
+
+        modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(label.x).toBe(labelPosition.x + 40);
+        expect(label.y).toBe(labelPosition.y - 80);
+      }));
+
+
+      it('should redo move label with connection', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_2'),
+            startEvent = startEventElement.businessObject,
+            subProcessElement = elementRegistry.get('SubProcess_1'),
+            subProcess = startEventElement.businessObject,
+            flowLabel = elementRegistry.get('SequenceFlow_3_label');
+
+        var labelPosition = {
+          x: flowLabel.x,
+          y: flowLabel.y
+        };
+
+        modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(flowLabel.x).toBe(labelPosition.x + 40);
+        expect(flowLabel.y).toBe(labelPosition.y - 80);
+      }));
+
+    });
+
   });
 
 });
