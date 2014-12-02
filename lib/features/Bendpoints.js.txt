@@ -134,7 +134,7 @@ function Bendpoints(events, shapes, canvas, commandStack) {
          */
         events.fire('bendpoint.dragend', event);
 
-        if (!event.isDefaultPrevented()) {
+        if (!event.defaultPrevented) {
           commandStack.execute('movebendpoint', { event: event });
         }
       }
