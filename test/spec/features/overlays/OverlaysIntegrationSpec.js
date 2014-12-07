@@ -286,7 +286,7 @@ describe('features/overlay - integration', function() {
       // when
       move.start(Event.create({ x: 10, y: 10 }), parent);
       dragging.move(Event.create({ x: 30, y: 30 }));
-      dragging.end(Event.create({ x: 30, y: 30 }));
+      dragging.end();
 
       // then
       expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(false);

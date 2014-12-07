@@ -67,7 +67,7 @@ describe('features/connect', function() {
       dragging.move(Event.create({ x: 40, y: 30 }));
 
       dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
-      dragging.end(Event.create({ x: 10, y: 10 }));
+      dragging.end();
 
       var newConnection = shape1.outgoing[0];
 
@@ -92,7 +92,7 @@ describe('features/connect', function() {
 
       dragging.move(Event.create({ x: 40, y: 30 }));
       dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
-      dragging.end(Event.create({ x: 10, y: 10 }));
+      dragging.end();
 
       // then
       expect(shape1child.outgoing.length).toBe(0);

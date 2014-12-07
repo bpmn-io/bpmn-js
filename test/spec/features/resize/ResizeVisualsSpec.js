@@ -1,6 +1,5 @@
-'use strict';
-
-var TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper'),
+    Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject, iit */
 
@@ -68,10 +67,11 @@ describe('features/resize - visuals', function() {
 
   describe('frame', function() {
 
-    it('should show during resize', inject(function(canvas, resize) {
+    it('should show during resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(shape, 'se');
+      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
 
       // then
       var frames = canvas.getDefaultLayer().selectAll('.djs-resize-overlay');
@@ -80,11 +80,12 @@ describe('features/resize - visuals', function() {
     }));
 
 
-    it('should update during resize', inject(function(canvas, resize) {
+    it('should update during resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(shape, 'se');
-      resize.update({ x: 100, y: 200 });
+      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
+      dragging.move(Events.create(canvas._svg, { x: 100, y: 200 }));
 
       // then
       var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
@@ -100,12 +101,12 @@ describe('features/resize - visuals', function() {
     }));
 
 
-    it('should hide after resize', inject(function(canvas, resize) {
+    it('should hide after resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(shape, 'se');
-      resize.update({ x: 100, y: 200 });
-      resize.finish();
+      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: 100, y: 200 }));
+      dragging.end();
 
       // then
       var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
@@ -114,6 +115,7 @@ describe('features/resize - visuals', function() {
     }));
 
   });
+
 
   describe('rule integration', function() {
 
@@ -141,11 +143,11 @@ describe('features/resize - visuals', function() {
 
     describe('live check, rejecting', function() {
 
-      it('should indicate resize not allowed', inject(function(canvas, resize) {
+      it('should indicate resize not allowed', inject(function(canvas, resize, dragging) {
 
         // when resize to small
-        resize.start(shape, 'se');
-        resize.update({ x: -99, y: -99 });
+        resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+        dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
 
         // then
         var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
@@ -154,19 +156,19 @@ describe('features/resize - visuals', function() {
 
 
         // when resize big enough
-        resize.update({ x: -50, y: -50 });
+        dragging.move(Events.create(canvas._svg, { x: -50, y: -50 }));
 
         // then
         expect(frame.hasClass('resize-not-ok')).toBe(false);
       }));
 
 
-      it('should not perform actual resize operation', inject(function(canvas, resize) {
+      it('should not perform actual resize operation', inject(function(canvas, dragging, resize) {
 
         // when
-        resize.start(shape, 'se');
-        resize.update({ x: -99, y: -99 });
-        resize.finish();
+        resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+        dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
+        dragging.end();
 
         // then
         // no change happened

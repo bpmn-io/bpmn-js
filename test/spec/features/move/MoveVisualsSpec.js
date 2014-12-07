@@ -108,7 +108,7 @@ describe('features/move - MoveVisuals', function() {
 
       // when
       dragging.move(Event.create({ x: 30, y: 30 }));
-      dragging.end(Event.create({ x: 30, y: 30 }));
+      dragging.end();
 
       // then
       expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(false);
