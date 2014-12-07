@@ -36,7 +36,7 @@ describe('features/modeling - append shape', function() {
       var startEventShape = elementRegistry.get('StartEvent_1');
 
       // when
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       // then
@@ -55,7 +55,7 @@ describe('features/modeling - append shape', function() {
           subProcess = subProcessShape.businessObject;
 
       // when
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       // then
@@ -79,7 +79,7 @@ describe('features/modeling - append shape', function() {
           subProcess = subProcessShape.businessObject;
 
       // when
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       // then
@@ -99,7 +99,7 @@ describe('features/modeling - append shape', function() {
             subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' }),
             target = targetShape.businessObject;
 
         var label = targetShape.label;
@@ -108,7 +108,7 @@ describe('features/modeling - append shape', function() {
         expect(label).toBeDefined();
         expect(elementRegistry.get(label.id)).toBeDefined();
 
-        expect(label.x).toBe(443);
+        expect(label.x).toBe(441);
         expect(label.y).toBe(278);
         expect(label.width).toBe(LabelUtil.DEFAULT_LABEL_SIZE.width);
         expect(label.height).toBe(LabelUtil.DEFAULT_LABEL_SIZE.height);
@@ -125,7 +125,7 @@ describe('features/modeling - append shape', function() {
             subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' }),
             target = targetShape.businessObject;
 
         // then
@@ -150,7 +150,7 @@ describe('features/modeling - append shape', function() {
           subProcess = subProcessShape.businessObject;
 
       // when
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -176,7 +176,7 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       // when
@@ -197,7 +197,7 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:EndEvent'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' }),
           target = targetShape.businessObject;
 
       var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -227,7 +227,7 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -260,7 +260,7 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -289,10 +289,10 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
-      var targetShape2 = modeling.appendFlowNode(targetShape, 'bpmn:UserTask');
+      var targetShape2 = modeling.appendShape(targetShape, { type: 'bpmn:UserTask' });
 
       // when
       commandStack.undo();
@@ -323,7 +323,7 @@ describe('features/modeling - append shape', function() {
       var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-      var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:Task'),
+      var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
       var connection = _.find(subProcess.get('flowElements'), function(e) {
@@ -356,7 +356,7 @@ describe('features/modeling - append shape', function() {
         var startEventShape = elementRegistry.get('StartEvent_1');
 
         // when
-        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:ExclusiveGateway' }),
           target = targetShape.businessObject;
 
         // then
@@ -375,7 +375,7 @@ describe('features/modeling - append shape', function() {
           subProcess = subProcessShape.businessObject;
 
         // when
-        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:ExclusiveGateway' }),
           target = targetShape.businessObject;
 
         // then
@@ -392,7 +392,7 @@ describe('features/modeling - append shape', function() {
         var startEvent = startEventShape.businessObject,
           subProcess = subProcessShape.businessObject;
 
-        var targetShape = modeling.appendFlowNode(startEventShape, 'bpmn:ExclusiveGateway'),
+        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:ExclusiveGateway' }),
           target = targetShape.businessObject;
 
         // when

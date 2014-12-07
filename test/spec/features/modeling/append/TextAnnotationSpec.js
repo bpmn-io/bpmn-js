@@ -16,7 +16,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
 var LabelUtil = require('../../../../../lib/util/Label');
 
 
-ddescribe('features/modeling - append text-annotation', function() {
+describe('features/modeling - append text-annotation', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
@@ -39,7 +39,7 @@ ddescribe('features/modeling - append text-annotation', function() {
           process = elementRegistry.get('Participant_1').businessObject.processRef;
 
       // when
-      var annotationShape = modeling.appendTextAnnotation(eventShape, 'bpmn:TextAnnotation'),
+      var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
       var connectingConnection = _.find(annotationShape.incoming, function(c) {
@@ -71,7 +71,7 @@ ddescribe('features/modeling - append text-annotation', function() {
       var eventShape = elementRegistry.get('IntermediateThrowEvent_1');
 
       // when
-      var annotationShape = modeling.appendTextAnnotation(eventShape, 'bpmn:TextAnnotation'),
+      var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
       var connectingConnection = _.find(annotationShape.incoming, function(c) {
@@ -104,7 +104,7 @@ ddescribe('features/modeling - append text-annotation', function() {
       var eventShape = elementRegistry.get('IntermediateCatchEvent_1'),
           process = elementRegistry.get('Participant_1').businessObject.processRef;
 
-      var annotationShape = modeling.appendTextAnnotation(eventShape, 'bpmn:TextAnnotation'),
+      var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
       var connectingConnection = _.find(annotationShape.incoming, function(c) {
