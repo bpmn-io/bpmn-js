@@ -49,7 +49,7 @@ describe('features/modeling - append shape', function() {
     beforeEach(inject(function(modeling) {
 
       // add new shape
-      newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 });
+      newShape = modeling.appendShape(childShape, { id: 'appended', width: 50, height: 50 }, { x: 200, y: 200 });
     }));
 
 
@@ -125,7 +125,7 @@ describe('features/modeling - append shape', function() {
 
       // given
       var connectionProperties = {
-        attrs: { custom: true }
+        custom: true
       };
 
       // when

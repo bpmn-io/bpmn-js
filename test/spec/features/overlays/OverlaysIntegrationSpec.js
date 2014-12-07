@@ -1,6 +1,5 @@
-'use strict';
-
-var TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper'),
+    Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
@@ -14,8 +13,7 @@ var overlayModule = require('../../../../lib/features/overlays'),
     moveModule = require('../../../../lib/features/move');
 
 
-var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds,
-    Event = require('../../../Event');
+var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds;
 
 describe('features/overlay - integration', function() {
 
@@ -26,6 +24,15 @@ describe('features/overlay - integration', function() {
     moveModule,
     resizeModule
   ] }));
+
+
+  var Event;
+
+  beforeEach(inject(function(canvas, dragging) {
+    Event = Events.target(canvas._svg);
+
+    dragging.setOptions({ manual: true });
+  }));
 
 
   describe('modeling integration', function() {
@@ -220,7 +227,7 @@ describe('features/overlay - integration', function() {
 
   describe('drag integration', function() {
 
-    it('should add <djs-dragging> marker class', inject(function(canvas, dragSupport, overlays) {
+    it('should add <djs-dragging> marker class', inject(function(canvas, move, dragging, overlays) {
 
       // given
       var parent = canvas.addShape({
@@ -240,14 +247,12 @@ describe('features/overlay - integration', function() {
         height: 100
       }, parent);
 
-      var draggable = dragSupport.get(parent);
-
       var parentOverlayContainer = overlays._getOverlayContainer(parent);
       var childOverlayContainer = overlays._getOverlayContainer(child);
 
       // when
-      draggable.dragStart(10, 10, new Event());
-      draggable.dragMove(20, 20, 30, 30, new Event());
+      move.start(Event.create({ x: 10, y: 10 }), parent);
+      dragging.move(Event.create({ x: 20, y: 30 }));
 
       // then
       expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(true);
@@ -255,7 +260,7 @@ describe('features/overlay - integration', function() {
     }));
 
 
-    it('should remove <djs-dragging> marker class on end', inject(function(canvas, dragSupport, overlays) {
+    it('should remove <djs-dragging> marker class on end', inject(function(canvas, move, dragging, overlays) {
 
       // given
       var parent = canvas.addShape({
@@ -275,15 +280,13 @@ describe('features/overlay - integration', function() {
         height: 100
       }, parent);
 
-      var draggable = dragSupport.get(parent);
-
       var parentOverlayContainer = overlays._getOverlayContainer(parent);
       var childOverlayContainer = overlays._getOverlayContainer(child);
 
       // when
-      draggable.dragStart(10, 10, new Event());
-      draggable.dragMove(20, 20, 30, 30, new Event());
-      draggable.dragEnd(30, 30, new Event());
+      move.start(Event.create({ x: 10, y: 10 }), parent);
+      dragging.move(Event.create({ x: 30, y: 30 }));
+      dragging.end(Event.create({ x: 30, y: 30 }));
 
       // then
       expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(false);

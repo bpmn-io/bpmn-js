@@ -1,6 +1,5 @@
-'use strict';
-
-var TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper'),
+    Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
@@ -9,12 +8,19 @@ var modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules'),
     connectModule = require('../../../../lib/features/connect');
 
-var MockEvent = require('../../../Event');
-
 
 describe('features/connect', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, connectModule, rulesModule ] }));
+
+
+  var Event;
+
+  beforeEach(inject(function(canvas, dragging) {
+    Event = Events.target(canvas._svg);
+
+    dragging.setOptions({ manual: true });
+  }));
 
 
   var rootShape, shape1, shape2, shape1child;
@@ -53,11 +59,15 @@ describe('features/connect', function() {
 
   describe('behavior', function() {
 
-    it('should connect if allowed', inject(function(connect) {
+    it('should connect if allowed', inject(function(connect, dragging) {
 
       // when
-      connect.start(new MockEvent(), shape1);
-      connect.finish(new MockEvent(), shape2);
+      connect.start(Event.create({ x: 0, y: 0 }), shape1);
+
+      dragging.move(Event.create({ x: 40, y: 30 }));
+
+      dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
+      dragging.end(Event.create({ x: 10, y: 10 }));
 
       var newConnection = shape1.outgoing[0];
 
@@ -67,7 +77,7 @@ describe('features/connect', function() {
     }));
 
 
-    it('should not connect if rejected', inject(function(connect, rules) {
+    it('should not connect if rejected', inject(function(connect, rules, dragging) {
 
       // assume
       var context = {
@@ -78,31 +88,15 @@ describe('features/connect', function() {
       expect(rules.allowed('connection.create', context)).toBeFalsy();
 
       // when
-      connect.start(new MockEvent(), shape1child);
-      connect.finish(new MockEvent(), shape2);
+      connect.start(Event.create({ x: 0, y: 0 }), shape1child);
+
+      dragging.move(Event.create({ x: 40, y: 30 }));
+      dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
+      dragging.end(Event.create({ x: 10, y: 10 }));
 
       // then
       expect(shape1child.outgoing.length).toBe(0);
       expect(shape2.incoming.length).toBe(0);
-    }));
-
-
-    it('should expose state', inject(function(connect) {
-
-      // assume
-      expect(connect.active()).toBeFalsy();
-
-      // when
-      connect.start(new MockEvent(), shape1);
-
-      // then
-      expect(connect.active()).toBeDefined();
-
-      // when
-      connect.cancel();
-
-      // then
-      expect(connect.active()).toBeFalsy();
     }));
 
   });

@@ -1,11 +1,9 @@
-'use strict';
+var TestHelper = require('../../../TestHelper'),
+    Events = require('../../../util/Events');
 
-var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
-
-var $ = require('jquery');
 
 
 var contextPadModule = require('../../../../lib/features/context-pad');
@@ -153,28 +151,22 @@ describe('features/context-pad', function() {
 
     beforeEach(bootstrapDiagram({ modules: [ contextPadModule, providerModule ] }));
 
-    function createEvent(eventType, target) {
-      return $.Event(eventType, { target: target });
-    }
-
 
     it('should handle click event', inject(function(canvas, contextPad) {
 
       // given
-      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
-
-      canvas.addShape(shape);
+      var shape = canvas.addShape({ id: 's1', width: 100, height: 100, x: 10, y: 10 });
 
       contextPad.open(shape);
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.c"]');
+          target = html.find('[data-action="action.c"]').get(0);
 
-      var event = createEvent('click', target);
+      var event = Events.create(target, { x: 0, y: 0 });
 
       // when
-      contextPad.trigger(event.type, event);
+      contextPad.trigger('click', event);
 
       // then
       expect(event.__handled).toBeTruthy();
@@ -184,41 +176,39 @@ describe('features/context-pad', function() {
     it('should prevent unhandled events', inject(function(canvas, contextPad) {
 
       // given
-      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+      var shape = canvas.addShape({ id: 's1', width: 100, height: 100, x: 10, y: 10 });
 
-      canvas.addShape(shape);
       contextPad.open(shape);
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.c"]');
+          target = html.find('[data-action="action.c"]').get(0);
 
-      var event = createEvent('dragstart', target);
+      var event = Events.create(target, { x: 0, y: 0 });
 
       // when
-      contextPad.trigger(event.type, event);
+      contextPad.trigger('dragstart', event);
 
       // then
-      expect(event.isDefaultPrevented()).toBeTruthy();
+      expect(event.defaultPrevented).toBeTruthy();
     }));
 
 
     it('should handle drag event', inject(function(canvas, contextPad) {
 
       // given
-      var shape = { id: 's1', type: 'drag', width: 100, height: 100, x: 10, y: 10 };
+      var shape = canvas.addShape({ id: 's1', width: 100, height: 100, x: 10, y: 10, type: 'drag' });
 
-      canvas.addShape(shape);
       contextPad.open(shape);
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.dragstart"]');
+          target = html.find('[data-action="action.dragstart"]').get(0);
 
-      var event = createEvent('dragstart', target);
+      var event = Events.create(target, { x: 0, y: 0 });
 
       // when
-      contextPad.trigger(event.type, event);
+      contextPad.trigger('dragstart', event);
 
       // then
       expect(event.__handled).toBeTruthy();
