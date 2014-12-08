@@ -9,8 +9,8 @@ function create(target, point, data) {
 
   data = _.extend({
     target: target,
-    x: point.x,
-    y: point.y,
+    clientX: point.x,
+    clientY: point.y,
     offsetX: point.x,
     offsetY: point.y
   }, data || {});
