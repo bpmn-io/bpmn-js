@@ -190,7 +190,6 @@ describe('import - importer', function() {
 
       // then
       expect(canvas.getRootElement()).toBe(root);
-      expect(canvas.getGraphics('Process_1')).toBe(canvas._svg);
     });
 
 
