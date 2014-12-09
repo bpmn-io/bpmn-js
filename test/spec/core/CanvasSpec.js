@@ -334,7 +334,7 @@ describe('Canvas', function() {
 
       // new root element is registered
       expect(elementRegistry.get('XXXX')).toBeDefined();
-      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas._svg);
+      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas.getDefaultLayer());
 
       // root element is returned from setter?
       expect(setRootElement).toBe(rootElement);

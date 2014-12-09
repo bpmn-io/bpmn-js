@@ -574,16 +574,16 @@ describe('command/CommandStack', function() {
       var events = [];
 
       function logEvent(e) {
-        events.push(e.element);
+        events.push(e.elements);
       }
 
-      eventBus.on('element.changed', logEvent);
+      eventBus.on('elements.changed', logEvent);
 
       // when
       commandStack.execute('outer-command', context);
 
       // then
-      expect(events).toEqual([ s1, s2 ]);
+      expect(events).toEqual([ [ s1, s2 ] ]);
     }));
 
   });
