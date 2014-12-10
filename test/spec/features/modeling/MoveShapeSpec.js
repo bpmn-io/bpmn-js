@@ -12,6 +12,9 @@ var _ = require('lodash');
 
 var modelingModule = require('../../../../lib/features/modeling');
 
+function containment(element) {
+  return _.pick(element, [ 'x', 'y', 'parent' ]);
+}
 
 describe('features/modeling - move shape', function() {
 
@@ -158,10 +161,6 @@ describe('features/modeling - move shape', function() {
     }));
 
 
-    function containment(element) {
-      return _.pick(element, [ 'x', 'y', 'parent' ]);
-    }
-
     it('should undo', inject(function(modeling, commandStack) {
 
       var oldContainment = containment(childShape),
@@ -199,6 +198,77 @@ describe('features/modeling - move shape', function() {
       // then
       expect(containment(childShape)).toEqual(newContainment);
       expect(containment(childShape2)).toEqual(newContainment2);
+    }));
+
+  });
+
+
+  describe('move children with container', function() {
+
+    it('should move according to delta', inject(function(modeling) {
+
+      // when
+      modeling.moveShapes([ parentShape ], { x: -20, y: +20 }, parentShape2);
+
+      // then
+      expect(childShape.x).toBe(90);
+      expect(childShape.y).toBe(130);
+
+      expect(childShape2.x).toBe(180);
+      expect(childShape2.y).toBe(130);
+
+      // update parent(s)
+      expect(childShape.parent).toBe(parentShape);
+      expect(childShape2.parent).toBe(parentShape);
+
+      expect(childShape.parent).toEqual(parentShape);
+      expect(childShape2.parent).toEqual(parentShape);
+
+      expect(parentShape.children.length).toBe(3);
+    }));
+
+
+    it('should undo', inject(function(modeling, commandStack) {
+
+      // given
+      var oldContainment = containment(childShape);
+      var oldContainment2 = containment(childShape2);
+
+      modeling.moveShapes([ parentShape ], { x: -20, y: 20 }, parentShape2);
+      modeling.moveShapes([ parentShape ], { x: 40, y: -20 });
+
+      // when
+      commandStack.undo();
+      commandStack.undo();
+
+      // then
+      expect(containment(childShape)).toEqual(oldContainment);
+      expect(containment(childShape2)).toEqual(oldContainment2);
+
+      expect(parentShape.children.length).toBe(3);
+    }));
+
+
+    it('should redo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.moveShapes([ parentShape ], { x: -20, y: 20 }, parentShape2);
+      modeling.moveShapes([ parentShape ], { x: 40, y: -20 });
+
+      var newContainment = containment(childShape),
+          newContainment2 = containment(childShape2);
+
+      // when
+      commandStack.undo();
+      commandStack.undo();
+      commandStack.redo();
+      commandStack.redo();
+
+      // then
+      expect(containment(childShape)).toEqual(newContainment);
+      expect(containment(childShape2)).toEqual(newContainment2);
+
+      expect(parentShape.children.length).toBe(3);
     }));
 
   });
