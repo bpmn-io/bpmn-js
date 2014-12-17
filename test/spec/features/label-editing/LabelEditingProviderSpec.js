@@ -37,7 +37,7 @@ describe('features - label-editing', function() {
       var shape = elementRegistry.get('task-nested-embedded');
 
       // when
-      eventBus.fire('shape.dblclick', { element: shape });
+      eventBus.fire('element.dblclick', { element: shape });
 
       // then
       expect(directEditing.isActive()).toBe(true);
@@ -53,7 +53,7 @@ describe('features - label-editing', function() {
       var oldName = task.name;
 
       // activate
-      eventBus.fire('shape.dblclick', { element: shape });
+      eventBus.fire('element.dblclick', { element: shape });
 
       // a jQuery <textarea /> element
       var textarea = directEditing._textbox.textarea;
@@ -69,14 +69,14 @@ describe('features - label-editing', function() {
     }));
 
 
-    it('should submit on <canvas.click>', inject(function(elementRegistry, directEditing, eventBus) {
+    it('should submit on root element click', inject(function(elementRegistry, directEditing, canvas, eventBus) {
 
       // given
       var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
 
       // activate
-      eventBus.fire('shape.dblclick', { element: shape });
+      eventBus.fire('element.dblclick', { element: shape });
 
       var newName = 'new value';
 
@@ -86,7 +86,7 @@ describe('features - label-editing', function() {
       // when
       // change + <canvas.click>
       textarea.val(newName);
-      eventBus.fire('canvas.click', {});
+      eventBus.fire('element.click', { element: canvas.getRootElement() });
 
       // then
       expect(directEditing.isActive()).toBe(false);
@@ -110,9 +110,9 @@ describe('features - label-editing', function() {
 
   function directEditActivate(element) {
     if (element.waypoints) {
-      eventBus.fire('connection.dblclick', { element: element });
+      eventBus.fire('element.dblclick', { element: element });
     } else {
-      eventBus.fire('shape.dblclick', { element: element });
+      eventBus.fire('element.dblclick', { element: element });
     }
   }
 
@@ -183,7 +183,7 @@ describe('features - label-editing', function() {
 
       var listenerCalled;
 
-      eventBus.on('shape.changed', function(e) {
+      eventBus.on('element.changed', function(e) {
         if (e.element === diagramElement) {
           listenerCalled = true;
         }
@@ -205,7 +205,7 @@ describe('features - label-editing', function() {
 
       var listenerCalled;
 
-      eventBus.on('shape.changed', function(e) {
+      eventBus.on('element.changed', function(e) {
         if (e.element === diagramElement.label) {
           listenerCalled = true;
         }
