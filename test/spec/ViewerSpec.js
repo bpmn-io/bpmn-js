@@ -11,7 +11,7 @@ var fs = require('fs');
 var Viewer = require('../../lib/Viewer');
 
 
-describe('viewer', function() {
+describe('Viewer', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
@@ -327,7 +327,8 @@ describe('viewer', function() {
 
   });
 
-  describe('configuration', function() {
+
+  describe('creation', function() {
 
     var testModules = [
       { logger: [ 'type', function() { this.called = true; } ] }
@@ -336,11 +337,17 @@ describe('viewer', function() {
     // given
     var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
 
+    var viewer;
+
+    afterEach(function() {
+      viewer.destroy();
+    });
+
 
     it('should override default modules', function(done) {
 
       // given
-      var viewer = new Viewer({ container: container, modules: testModules });
+      viewer = new Viewer({ container: container, modules: testModules });
 
       // when
       viewer.importXML(xml, function(err) {
@@ -356,7 +363,7 @@ describe('viewer', function() {
     it('should add module to default modules', function(done) {
 
       // given
-      var viewer = new Viewer({ container: container, additionalModules: testModules });
+      viewer = new Viewer({ container: container, additionalModules: testModules });
 
       // when
       viewer.importXML(xml, function(err) {
@@ -368,6 +375,46 @@ describe('viewer', function() {
         done(err);
       });
 
+    });
+
+
+    it('should use custom size and position', function() {
+
+      // when
+      viewer = new Viewer({
+        container: container,
+        width: 200,
+        height: 100,
+        position: 'fixed'
+      });
+
+      var container = viewer.container;
+
+      // then
+      expect(container.style.position).toBe('fixed');
+      expect(container.style.width).toBe('200px');
+      expect(container.style.height).toBe('100px');
+    });
+
+  });
+
+
+  describe('#destroy', function() {
+
+    it('should remove traces in document tree', function() {
+
+      // given
+      var viewer = new Viewer({
+        container: container
+      });
+
+      var container = viewer.container;
+
+      // when
+      viewer.destroy();
+
+      // then
+      expect(container.parentNode).toBeFalsy();
     });
 
   });

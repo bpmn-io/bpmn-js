@@ -9,7 +9,7 @@ var fs = require('fs');
 var Modeler = require('../../lib/Modeler');
 
 
-describe('modeler', function() {
+describe('Modeler', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
