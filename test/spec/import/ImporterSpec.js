@@ -332,7 +332,58 @@ describe('import - importer', function() {
         done(err);
       });
     });
-
   });
 
+  describe('position', function() {
+
+    var xml1 = fs.readFileSync('test/fixtures/bpmn/import/position/position-testcase.bpmn', 'utf8');
+    var xml2 = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+    it('should round shape\'s x and y coordinates', function(done) {
+
+      // given
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml1, function(err, warnings) {
+
+        //round up
+        expect(events.ID_End.x).toBe(Math.round(340.6));
+        expect(events.ID_End.y).toBe(Math.round(136.6));
+
+        //round down
+        expect(events.ID_Start.x).toBe(Math.round(120.4));
+        expect(events.ID_Start.y).toBe(Math.round(135.4));
+
+        done(err);
+      });
+    });
+
+    it('should round shape\'s height and width', function(done) {
+
+      // given
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml1, function(err, warnings) {
+
+        //round down
+        expect(events.ID_Start.height).toBe(Math.round(30.4));
+        expect(events.ID_Start.width).toBe(Math.round(30.4));
+
+        done(err);
+      });
+    });
+
+  });
 });

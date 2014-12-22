@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+   xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+   xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   exporter="Signavio Process Editor, http://www.signavio.com"
+   expressionLanguage="http://www.w3.org/1999/XPath"
+   typeLanguage="http://www.w3.org/2001/XMLSchema"
+   xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="ID_Process" isClosed="false" isExecutable="false" processType="None">
+      <startEvent id="ID_Start" name="Start">
+         <outgoing>ID_Flow_1</outgoing>
+      </startEvent>
+      <task completionQuantity="1" id="ID_Task" isForCompensation="false" startQuantity="1" name="Task">
+         <incoming>ID_Flow_1</incoming>
+         <outgoing>ID_Flow_2</outgoing>
+      </task>
+      <endEvent id="ID_End">
+         <incoming>ID_Flow_2</incoming>
+      </endEvent>
+      <sequenceFlow id="ID_Flow_1" sourceRef="ID_Start" targetRef="ID_Task">
+      </sequenceFlow>
+      <sequenceFlow id="ID_Flow_2" sourceRef="ID_Task" targetRef="ID_End">
+      </sequenceFlow>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-c84fe9a1-fd97-4781-869b-cf6e0e201897">
+      <bpmndi:BPMNPlane bpmnElement="ID_Process" id="sid-0876fbd9-fd46-4ba4-b587-3df596a7ba82">
+         <bpmndi:BPMNShape bpmnElement="ID_Start" id="ID_Start_gui">
+            <omgdc:Bounds height="30.4" width="30.4" x="120.4" y="135.4"/>
+            <bpmndi:BPMNLabel labelStyle="sid-794da868-7723-4248-8b91-33757c986477">
+               <omgdc:Bounds height="12.6" width="28" x="100.4" y="155.4"/>
+            </bpmndi:BPMNLabel>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="ID_Task" id="ID_Task_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="195.0" y="110.0"/>
+            <bpmndi:BPMNLabel labelStyle="sid-794da868-7723-4248-8b91-33757c986477">
+               <omgdc:Bounds height="12.0" width="28" x="230" y="142.0"/>
+            </bpmndi:BPMNLabel>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="ID_End" id="ID_End_gui">
+            <omgdc:Bounds height="28.0" width="28.0" x="340.6" y="136.6"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="ID_Flow_1" id="ID_Flow_1_gui">
+            <omgdi:waypoint x="150.0" y="150.0"/>
+            <omgdi:waypoint x="195.0" y="150.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="ID_Flow_2" id="ID_Flow_2_gui">
+            <omgdi:waypoint x="295.0" y="150.0"/>
+            <omgdi:waypoint x="340.0" y="150.5"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+      <bpmndi:BPMNLabelStyle id="sid-794da868-7723-4248-8b91-33757c986477">
+         <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="12.0"/>
+      </bpmndi:BPMNLabelStyle>
+   </bpmndi:BPMNDiagram>
+</definitions>
