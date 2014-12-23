@@ -25,7 +25,7 @@
     "grunt-karma": "^0.8.0",
     "grunt-release": "^0.7.0",
     "jasmine-test-container-support": "^0.1.2",
-    "jsondiffpatch": "^0.1.7",
+    "jsondiffpatch": "^0.1.26",
     "karma": "^0.12.8",
     "karma-browserify": "^2.0.0",
     "karma-chrome-launcher": "^0.1.2",
