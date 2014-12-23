@@ -20,12 +20,24 @@ describe('Dragging', function() {
 
   describe('behavior', function() {
 
-    var Event;
-
-    beforeEach(inject(function(canvas, dragging) {
-      Event = Events.target(canvas._svg);
-
+    beforeEach(inject(function(dragging) {
       dragging.setOptions({ manual: true });
+    }));
+
+    var createEvent;
+
+    beforeEach(inject(function(canvas) {
+
+      var Event = Events.target(canvas._svg);
+
+      createEvent = function(data) {
+
+        var clientRect = canvas._container.getBoundingClientRect();
+        data.x += clientRect.left;
+        data.y += clientRect.top;
+
+        return Event.create(data);
+      };
     }));
 
 
@@ -54,14 +66,13 @@ describe('Dragging', function() {
     it('should cancel original event on activate', inject(function(dragging) {
 
       // given
-      var event = Event.create({ x: 10, y: 10 });
+      var event = createEvent({ x: 10, y: 10 });
 
       // when
       dragging.activate(event, 'foo');
 
       // then
       expect(event.defaultPrevented).toBe(true);
-      expect(event.propagationStopped).toBe(true);
     }));
 
 
@@ -71,7 +82,7 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(Event.create({ x: 10, y: 10 }), 'foo', {
+      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', {
         data: { foo: 'BAR' }
       });
 
@@ -84,15 +95,17 @@ describe('Dragging', function() {
     }));
 
 
-    it('should fire life-cycle events', inject(function(dragging) {
+    it('should fire life-cycle events', inject(function(dragging, canvas) {
 
       // given
       var events = recordEvents('foo');
 
+      debugger;
+
       // when
-      dragging.activate(Event.create({ x: 10, y: 10 }), 'foo');
-      dragging.move(Event.create({ x: 30, y: 20 }));
-      dragging.move(Event.create({ x: 5, y: 10 }));
+      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo');
+      dragging.move(createEvent({ x: 30, y: 20 }));
+      dragging.move(createEvent({ x: 5, y: 10 }));
 
       dragging.cancel();
 
@@ -114,11 +127,11 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // a is active
-      dragging.activate(Event.create({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
+      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
 
       // when
       // activate b
-      dragging.activate(Event.create({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
+      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
 
       // then
       expect(events.map(raw)).toEqual([

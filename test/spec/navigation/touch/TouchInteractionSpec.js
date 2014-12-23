@@ -14,10 +14,6 @@ describe('navigation/touch', function() {
 
 
   describe('bootstrap', function() {
-
-    it('should bootstrap', inject(function(touchInteraction) {
-      expect(touchInteraction).not.toBe(null);
-    }));
-
+    it('should bootstrap', inject(function() {}));
   });
 });

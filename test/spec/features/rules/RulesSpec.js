@@ -2,7 +2,7 @@
 
 var TestHelper = require('../../../TestHelper');
 
-/* global bootstrapDiagram, inject, iit */
+/* global bootstrapDiagram, inject */
 
 var rulesModule = require('./rules'),
     modelingModule = require('../../../../lib/features/modeling');

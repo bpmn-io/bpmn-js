@@ -1,7 +1,7 @@
 var TestHelper = require('../../../TestHelper'),
     Events = require('../../../util/Events');
 
-/* global bootstrapDiagram, inject, iit */
+/* global bootstrapDiagram, inject */
 
 var _ = require('lodash');
 
