@@ -10,16 +10,17 @@
 .djs-element.hover .djs-outline,
 .djs-element.selected .djs-outline {
   visibility: visible;
-  stroke-dasharray: 2,4;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 3,3;
 }
 
 .djs-element.selected .djs-outline {
-  stroke: blue;
+  stroke: #8888FF;
   stroke-width: 1px;
 }
 
 .djs-element.hover .djs-outline {
-  stroke: red;
+  stroke: #FF8888;
   stroke-width: 1px;
 }
 
