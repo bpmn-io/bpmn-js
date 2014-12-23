@@ -399,6 +399,29 @@ describe('features/overlays', function() {
 
     }));
 
+    it('should position top left of shape', inject(function(overlays, canvas) {
+
+      var html = createOverlay();
+
+      var connection = canvas.addConnection({ id: 'select1', waypoints: [ { x: 10, y: 10 }, {x: 110, y: 10} ]});
+
+      // when
+      overlays.add(connection, {
+        position: {
+          left: 100,
+          top: 0
+        },
+        html: html
+      });
+
+      // then
+      expect(position(html)).toEqual({
+        top: 0,
+        left: 100
+      });
+
+    }));
+
 
     it('should position bottom right of shape', inject(function(overlays) {
 
