@@ -84,9 +84,9 @@ describe('features - label-editing', function() {
       var textarea = directEditing._textbox.textarea;
 
       // when
-      // change + <canvas.click>
+      // change + <element.mousedown>
       textarea.val(newName);
-      eventBus.fire('element.click', { element: canvas.getRootElement() });
+      eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
 
       // then
       expect(directEditing.isActive()).toBe(false);
