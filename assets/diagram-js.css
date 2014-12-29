@@ -64,12 +64,14 @@
 
 .djs-resizer-hit {
   fill: none;
+  pointer-events: all;
 }
 
 .djs-resizer-visual {
   fill: white;
   stroke-width: 1px;
   stroke: black;
+  shape-rendering: crispEdges;
 }
 
 .djs-resizer-nw, .djs-resizer-se {
