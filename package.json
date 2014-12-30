@@ -59,8 +59,7 @@
     "jquery": "^2.1.0",
     "lodash": "^2.4.0",
     "object-refs": "^0.1.0",
-    "ids": "^0.1.0",
-    "bpmn-js-cli": "^0.4.0"
+    "ids": "^0.1.0"
   },
   "peerDependencies": {
     "diagram-js": "^0.7.0"
