@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<semantic:definitions id="_1373649948794" name="A.4.0" targetNamespace="http://www.trisotech.com/definitions/_1373649948794" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <semantic:process isExecutable="false" id="WFP-6-1">
+        <semantic:task completionQuantity="1" isForCompensation="false" startQuantity="1" name="Task 1" id="_ab851300-b5de-4ad3-bbec-215553757fc8">
+        </semantic:task>
+        <semantic:task completionQuantity="1" isForCompensation="false" startQuantity="1" name="Task 2" id="_80d1f02b-f39c-45c2-b731-43df75d81779">
+        </semantic:task>
+    </semantic:process>
+    <semantic:process isExecutable="false" id="WFP-6-2">
+        <semantic:laneSet id="ls_1373649949139">
+            <semantic:lane name="Lane 1" id="_17bebb0f-f31e-475a-b1b1-76fcc2da172b">
+                <semantic:flowNodeRef>_1c347d0d-750b-4c09-980d-6877caae409b</semantic:flowNodeRef>
+                <semantic:flowNodeRef>_6fed62c8-8241-4a1d-ae67-266fda7dcead</semantic:flowNodeRef>
+            </semantic:lane>
+        </semantic:laneSet>
+        <semantic:task completionQuantity="1" isForCompensation="false" startQuantity="1" name="Task 5" id="_1c347d0d-750b-4c09-980d-6877caae409b">
+        </semantic:task>
+        <semantic:task completionQuantity="1" isForCompensation="false" startQuantity="1" name="Task 3" id="_6fed62c8-8241-4a1d-ae67-266fda7dcead">
+        </semantic:task>
+    </semantic:process>
+    <semantic:message id="Message_1373649949207"/>
+    <semantic:message id="Message_1373649949208"/>
+    <semantic:collaboration id="C1373649949206">
+        <semantic:participant name="Pool" processRef="WFP-6-1" id="_046bff4f-cea3-4512-a6b1-30517fb29f2c"/>
+        <semantic:messageFlow messageRef="Message_1373649949207" name="Message Flow 1" sourceRef="_ab851300-b5de-4ad3-bbec-215553757fc8" targetRef="_6fed62c8-8241-4a1d-ae67-266fda7dcead" id="_b467921a-ef7b-44c5-bf78-fd624c400d17"/>
+        <semantic:messageFlow messageRef="Message_1373649949208" name="Message Flow 2" sourceRef="_1c347d0d-750b-4c09-980d-6877caae409b" targetRef="_80d1f02b-f39c-45c2-b731-43df75d81779" id="_c311cc87-677e-47a4-bdb1-8744c4ec3147"/>
+    </semantic:collaboration>
+    <bpmndi:BPMNDiagram documentation="" id="Trisotech_Visio-_6" name="A.4.0" resolution="96.00000267028808">
+        <bpmndi:BPMNPlane bpmnElement="C1373649949206">
+            <bpmndi:BPMNShape bpmnElement="_046bff4f-cea3-4512-a6b1-30517fb29f2c" isHorizontal="true" id="S1373649949185__046bff4f-cea3-4512-a6b1-30517fb29f2c">
+                <dc:Bounds height="144.0" width="888.0" x="72.0" y="120.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="24.316811814750004" width="12.804751171874997" x="76.0" y="179.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_17bebb0f-f31e-475a-b1b1-76fcc2da172b" isHorizontal="true" id="S1373649949187__17bebb0f-f31e-475a-b1b1-76fcc2da172b">
+                <dc:Bounds height="203.0" width="885.0" x="75.0" y="301.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="35.5928127913125" width="12.804751171874997" x="75.0" y="384.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_ab851300-b5de-4ad3-bbec-215553757fc8" id="S1373649949189__ab851300-b5de-4ad3-bbec-215553757fc8">
+                <dc:Bounds height="68.0" width="83.0" x="199.0" y="158.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="72.48293963254594" x="204.33333333333334" y="185.58187638256646"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_80d1f02b-f39c-45c2-b731-43df75d81779" id="S1373649949190__80d1f02b-f39c-45c2-b731-43df75d81779">
+                <dc:Bounds height="68.0" width="83.0" x="758.0" y="158.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="72.48293963254594" x="763.3333333333334" y="185.58187638256646"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_1c347d0d-750b-4c09-980d-6877caae409b" id="S1373649949193__1c347d0d-750b-4c09-980d-6877caae409b">
+                <dc:Bounds height="68.0" width="83.0" x="758.0" y="366.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="72.48293963254594" x="763.3333333333334" y="393.5818763825664"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="_6fed62c8-8241-4a1d-ae67-266fda7dcead" id="S1373649949200__6fed62c8-8241-4a1d-ae67-266fda7dcead">
+                <dc:Bounds height="68.0" width="83.0" x="198.0" y="368.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="72.48293963254594" x="203.33333333333334" y="395.5818763825664"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="_b467921a-ef7b-44c5-bf78-fd624c400d17" id="E1373649949209__b467921a-ef7b-44c5-bf78-fd624c400d17">
+                <di:waypoint x="241.0" y="226.0"/>
+                <di:waypoint x="240.0" y="368.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="94.93333333333335" x="186.32394750656172" y="305.5818763825664"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="_c311cc87-677e-47a4-bdb1-8744c4ec3147" id="E1373649949219__c311cc87-677e-47a4-bdb1-8744c4ec3147">
+                <di:waypoint x="800.0" y="366.0"/>
+                <di:waypoint x="800.0" y="226.0"/>
+                <bpmndi:BPMNLabel labelStyle="LS1373649949186">
+                    <dc:Bounds height="12.804751171875008" width="94.93333333333335" x="750.5935286089239" y="307.8152520579301"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</semantic:definitions>
