@@ -241,14 +241,15 @@
   height: 20px;
   text-align: center;
   display: inline-block;
-  border-radius: 3px;
   font-size: 20px;
   margin: 0 2px 2px 0;
 
+  border-radius: 3px;
+
   cursor: default;
 
-  background-color: rgba(255,255,255, 0.75);
-  box-shadow: 0 0 2px 1px rgba(255,255,255, 0.75);
+  background-color: rgba(255,255,255, 0.85);
+  box-shadow: 0 0 2px 1px rgba(255,255,255, 0.85);
 
   pointer-events: all;
 }
