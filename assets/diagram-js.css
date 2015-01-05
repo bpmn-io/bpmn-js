@@ -71,7 +71,6 @@
   fill: white;
   stroke-width: 1px;
   stroke: black;
-  shape-rendering: crispEdges;
 }
 
 .djs-resizer-nw, .djs-resizer-se {
@@ -234,6 +233,7 @@
 .djs-context-pad {
   position: absolute;
   display: none;
+  pointer-events: none;
 }
 
 .djs-context-pad .entry {
@@ -243,9 +243,18 @@
   display: inline-block;
   border-radius: 3px;
   font-size: 20px;
-  margin: 0 1px 1px 0;
+  margin: 0 2px 2px 0;
 
   cursor: default;
+
+  background-color: rgba(255,255,255, 0.75);
+  box-shadow: 0 0 2px 1px rgba(255,255,255, 0.75);
+
+  pointer-events: all;
+}
+
+.djs-context-pad .entry:before {
+  vertical-align: top;
 }
 
 .djs-context-pad .entry:hover {
