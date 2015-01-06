@@ -100,8 +100,6 @@ describe('Dragging', function() {
       // given
       var events = recordEvents('foo');
 
-      debugger;
-
       // when
       dragging.activate(createEvent({ x: 10, y: 10 }), 'foo');
       dragging.move(createEvent({ x: 30, y: 20 }));

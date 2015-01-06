@@ -162,7 +162,7 @@
  * snapping
  */
 .djs-snap-line {
-  stroke: rgba(255, 195, 66);
+  stroke: rgb(255, 195, 66);
   stroke: rgba(255, 195, 66, 0.50);
   stroke-linecap: round;
   stroke-width: 2px;

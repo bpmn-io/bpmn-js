@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Diagram = require('../../lib/Diagram');
+var Dom    = require('../../lib/util/Dom');
 
 try {
   // enhance jasmine with test container API
@@ -146,3 +147,33 @@ function insertCSS(name, css) {
 }
 
 module.exports.insertCSS = insertCSS;
+
+
+function domMockInstall() {
+
+  Dom._on = Dom.on;
+  Dom._off = Dom.off;
+
+  Dom.on = function(element, type, fn, useCapture) {
+    element.$$listenerCount = (element.$$listenerCount || 0) + 1;
+    Dom._on(element, type, fn, useCapture);
+  };
+
+  Dom.off = function(element, type, fn, useCapture) {
+    element.$$listenerCount = (element.$$listenerCount || 0) -1;
+    Dom._off(element, type, fn, useCapture);
+  };
+}
+
+function domMockUninstall() {
+
+  Dom.on = Dom._on;
+  Dom.off = Dom._off;
+}
+
+var DomMocking = {
+  install: domMockInstall,
+  uninstall: domMockUninstall
+};
+
+module.exports.DomMocking = DomMocking;

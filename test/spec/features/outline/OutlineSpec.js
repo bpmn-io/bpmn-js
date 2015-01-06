@@ -5,15 +5,12 @@ var TestHelper = require('../../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var selectionModule = require('../../../../lib/features/selection'),
-    graphicsModule = require('../../../../lib/features/selection'),
-    canvasModule = require('../../../../lib/features/selection');
-
+var selectionModule = require('../../../../lib/features/selection');
 
 
 describe('features/outline/Outline', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ selectionModule, graphicsModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ selectionModule ] }));
 
   describe('select', function() {
 
