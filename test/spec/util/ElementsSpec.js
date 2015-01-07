@@ -111,4 +111,112 @@ describe('util/Elements', function() {
     it('should test getClosure');
   });
 
+  describe('#getBBox', function() {
+
+    var shape1 = {
+      id: 'shape1',
+      x: 100,
+      y: 100,
+      height: 10,
+      width: 10
+    };
+
+    var shape2 = {
+      id: 'shape2',
+      x: 120,
+      y: 100,
+      height: 30,
+      width:  40
+    };
+
+    var shape3 = {
+      id: 'shape3',
+      x: -10,
+      y: -10,
+      height: 20,
+      width:  20
+    };
+
+    var connection1 = {
+      id: 'connection1',
+      waypoints: [ { x: 110, y: 105 }, {x: 120, y: 115} ]
+    };
+
+
+    it('should return bbox for element', function() {
+
+      //given
+      var elements = shape2;
+
+      var bbox = Elements.getBBox(elements);
+
+      expect(bbox).toEqual({
+        x: 120,
+        y: 100,
+        height: 30,
+        width:  40
+      });
+    });
+
+    it('should return bbox for connection', function() {
+
+      //given
+      var elements = connection1;
+
+      var bbox = Elements.getBBox(elements);
+
+      expect(bbox).toEqual({
+        x: 110,
+        y: 105,
+        height: 10,
+        width:  10
+      });
+    });
+
+    it('should return bbox for elements', function() {
+
+      //given
+      var elements = [shape1, shape2, connection1];
+
+      var bbox = Elements.getBBox(elements);
+
+      expect(bbox).toEqual({
+        x: 100,
+        y: 100,
+        height: 30,
+        width:  60
+      });
+    });
+
+    it('should return bbox for elements at negative x,y', function() {
+
+      //given
+      var elements = [shape1, shape2, shape3, connection1];
+
+      var bbox = Elements.getBBox(elements);
+
+      expect(bbox).toEqual({
+        x: -10,
+        y: -10,
+        height: 140,
+        width:  170
+      });
+    });
+
+    it('should return bbox for elements with a connection at the bbox border', function() {
+
+      //given
+      var elements = [shape1, connection1];
+
+      var bbox = Elements.getBBox(elements);
+
+      expect(bbox).toEqual({
+        x: 100,
+        y: 100,
+        height: 15,
+        width:  20
+      });
+    });
+  });
+
 });

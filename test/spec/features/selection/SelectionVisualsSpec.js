@@ -6,6 +6,7 @@ var TestHelper = require('../../../TestHelper');
 
 
 var selectionModule = require('../../../../lib/features/selection');
+var overlayModule = require('../../../../lib/features/overlays');
 
 
 describe('features/selection/SelectionVisuals', function() {
@@ -19,5 +20,4 @@ describe('features/selection/SelectionVisuals', function() {
     }));
 
   });
-
 });
