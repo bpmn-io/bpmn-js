@@ -200,17 +200,18 @@
   overflow: hidden;
 }
 
-.djs-palette .entry {
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
   width: 46px;
   height: 46px;
+  line-height: 46px;
+}
 
-  margin: 2px;
+.djs-palette .entry:before {
+  vertical-align: middle;
 }
 
 .djs-palette .djs-palette-toggle {
-  width: 50px;
-  height: 50px;
-
   cursor: pointer;
 }
 
@@ -219,7 +220,6 @@
   color: #333;
   font-size: 30px;
 
-  line-height: 50px;
   text-align: center;
 }
 
@@ -282,7 +282,74 @@
   display: block;
 }
 
+/**
+ * touch
+ */
+
 .djs-shape,
 .djs-connection {
   touch-action: none;
+}
+
+.djs-bendpoint {
+  display: none;
+}
+
+/**
+ * bendpoints
+ */
+.djs-bendpoint .djs-visual {
+  pointer-events: none;
+  fill: rgba(255, 255, 121, 0.8);
+  stroke-width: 1px;
+  stroke-opacity: 0.5;
+  stroke: black;
+}
+
+.djs-bendpoint:hover,
+.djs-bendpoints.hover .djs-bendpoint,
+.djs-bendpoints.selected .djs-bendpoint {
+  display: block;
+}
+
+.djs-bendpoints:not(.hover) .floating {
+  display: none;
+}
+
+.djs-bendpoint:hover .djs-visual,
+.djs-bendpoint.floating .djs-visual {
+  fill: yellow;
+}
+
+.djs-bendpoint.floating .djs-hit {
+  pointer-events: none;
+}
+
+.djs-bendpoint .djs-hit {
+  pointer-events: all;
+  fill: none;
+}
+
+.djs-updating,
+.djs-updating > * {
+  pointer-events: none !important;
+}
+
+.djs-updating .djs-context-pad,
+.djs-updating .djs-outline,
+.djs-updating .djs-bendpoint,
+.connect-ok .djs-bendpoint,
+.connect-not-ok .djs-bendpoint,
+.drop-ok .djs-bendpoint,
+.drop-not-ok .djs-bendpoint {
+  display: none !important;
+}
+
+.djs-bendpoint.djs-dragging {
+  display: block;
+  opacity: 1.0;
+}
+
+.djs-bendpoint.djs-dragging .djs-visual {
+  fill: yellow;
 }

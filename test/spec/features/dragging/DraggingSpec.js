@@ -27,17 +27,7 @@ describe('Dragging', function() {
     var createEvent;
 
     beforeEach(inject(function(canvas) {
-
-      var Event = Events.target(canvas._svg);
-
-      createEvent = function(data) {
-
-        var clientRect = canvas._container.getBoundingClientRect();
-        data.x += clientRect.left;
-        data.y += clientRect.top;
-
-        return Event.create(data);
-      };
+      createEvent = Events.scopedCreate(canvas);
     }));
 
 

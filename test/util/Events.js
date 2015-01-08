@@ -33,3 +33,19 @@ function target(element) {
 }
 
 module.exports.target = target;
+
+function scopedCreate(canvas) {
+
+  var E = target(canvas._svg);
+
+  return function(data) {
+
+    var clientRect = canvas._container.getBoundingClientRect();
+    data.x += clientRect.left;
+    data.y += clientRect.top;
+
+    return E.create(data);
+  };
+}
+
+module.exports.scopedCreate = scopedCreate;
