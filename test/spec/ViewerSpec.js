@@ -1,10 +1,6 @@
 'use strict';
 
-var Matchers = require('../Matchers'),
-    TestHelper = require('../TestHelper');
-
-/* global bootstrapViewer, inject */
-
+var TestHelper = require('../TestHelper');
 
 var fs = require('fs');
 
@@ -12,9 +8,6 @@ var Viewer = require('../../lib/Viewer');
 
 
 describe('Viewer', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var container;
 
