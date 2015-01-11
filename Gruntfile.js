@@ -9,43 +9,15 @@ module.exports = function(grunt) {
   // any of [ 'PhantomJS', 'Chrome', 'Firefox', 'IE']
   var TEST_BROWSERS = ((process.env.TEST_BROWSERS || '').replace(/^\s+|\s+$/, '') || 'PhantomJS').split(/\s*,\s*/g);
 
-
-  function extractSourceMap(file) {
-    var content = grunt.file.read(file, { encoding: 'utf-8' });
-
-    var match = /\/\/# sourceMappingURL=data:application\/json;base64,(.*)/.exec(content);
-
-    if (match) {
-      var b = new Buffer(match[1] + '==', 'base64');
-      var s = b.toString();
-
-      s = s.replace(/\\\\/g, '/'); // convert \\ -> /
-
-      var dir = __dirname;
-
-      var dirPattern = dir.replace(/\\/g, '/').replace(/\./g, '\\.') + '/';
-
-      var pattern = new RegExp(dirPattern, 'g');
-
-      s = s.replace(pattern, '');
-
-      grunt.file.write('tmp/sourceMap.json', s, { encoding: 'utf-8' });
-
-      return 'tmp/sourceMap.json';
-    } else {
-      return null;
-    }
-  }
-
   // project configuration
   grunt.initConfig({
+
     pkg: grunt.file.readJSON('package.json'),
 
     config: {
       sources: 'lib',
       tests: 'test',
-      dist: 'dist',
-      bowerDist: '../bower-bpmn-js'
+      dist: '../bower-bpmn-js'
     },
 
     jshint: {
@@ -80,47 +52,6 @@ module.exports = function(grunt) {
       }
     },
 
-    browserify: {
-      options: {
-        browserifyOptions: {
-          builtins: false
-        },
-        bundleOptions: {
-          detectGlobals: false,
-          insertGlobalVars: [],
-          debug: true
-        }
-      },
-      bowerViewer: {
-        files: {
-          '<%= config.bowerDist %>/bpmn-viewer.js': [ '<%= config.sources %>/Viewer.js' ]
-        },
-        options: {
-          browserifyOptions: {
-            builtins: false
-          },
-          bundleOptions: {
-            standalone: 'BpmnJS',
-            detectGlobals: false,
-            insertGlobalVars: [],
-            debug: false
-          },
-          transform: [
-            [ 'exposify', {
-              global: true,
-              expose: {
-                sax: 'sax',
-                snapsvg: 'Snap',
-                lodash: '_',
-                jquery: '$',
-                'jquery-mousewheel': '$'
-              }
-            } ]
-          ]
-        }
-      }
-    },
-
     jsdoc: {
       dist: {
         src: [ '<%= config.sources %>/**/*.js' ],
@@ -131,52 +62,49 @@ module.exports = function(grunt) {
       }
     },
 
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> - ' +
-                'http://bpmn.io/license - ' +
-                'https://github.com/bpmn-io/bpmn-js */',
-        sourceMap: true,
-        sourceMapIncludeSources: true,
-        sourceMapIn: function(file) {
-          return extractSourceMap(file);
-        }
+    bundle: {
+      viewer: {
+        name: 'bpmn-viewer',
+        src: '<%= config.sources %>/Viewer.js',
+        dest: '<%= config.dist %>'
       },
-      bowerViewer: {
-        files: {
-          '<%= config.bowerDist %>/bpmn-viewer.min.js': [ '<%= config.bowerDist %>/bpmn-viewer.js' ]
-        }
+      navigated_viewer: {
+        name: 'bpmn-navigated-viewer',
+        src: '<%= config.sources %>/NavigatedViewer.js',
+        dest: '<%= config.dist %>'
+      },
+      modeler: {
+        name: 'bpmn-modeler',
+        src: '<%= config.sources %>/Modeler.js',
+        dest: '<%= config.dist %>'
+      }
+    },
+
+    copy: {
+      bpmn_js: {
+        files: [
+          { expand: true, cwd: 'assets', src: [ '**' ], dest: '<%= config.dist %>/assets' }
+        ]
+      },
+
+      diagram_js: {
+        files: [
+          { expand: true, cwd: 'node_modules/diagram-js/assets', src: [ '**' ], dest: '<%= config.dist %>/assets' }
+        ]
       }
     }
   });
+
+  grunt.loadTasks('tasks');
+
 
   // tasks
 
   grunt.registerTask('test', [ 'karma:single' ]);
 
-  /////
-  //
-  // the main build task that bundles bpmn-js files
-  //
-  // valid executions are
-  //
-  //   * build -> build:all
-  //   * build:all -> build:bower
-  //   * build:bower
-  //
-  grunt.registerTask('build', function(target) {
-
-    if (target === 'bower') {
-      return grunt.task.run([ 'browserify:bowerViewer', 'uglify:bowerViewer' ]);
-    }
-
-    if (!target || target === 'all') {
-      return grunt.task.run([ 'build:bower' ]);
-    }
-  });
-
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
+
+  grunt.registerTask('build', [ 'bundle', 'copy' ]);
 
   grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
 };

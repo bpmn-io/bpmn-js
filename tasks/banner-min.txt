@@ -1,0 +1,1 @@
+/*! <%= pkg.name %> - <%= config.variant %> v<%= pkg.version %> | (c) 2014, 2015 camunda Services GmbH | bpmn.io/license */

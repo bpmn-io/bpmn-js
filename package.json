@@ -31,12 +31,14 @@
   "license": "http://bpmn.io/license",
   "devDependencies": {
     "brfs": "^1.2.0",
+    "browserify": "^8.1.0",
+    "bundle-collapser": "^1.1.1",
+    "derequire": "^1.2.0",
     "diagram-js": "^0.7.0",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
-    "grunt-browserify": "^2.1.2",
+    "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.7.2",
-    "grunt-contrib-uglify": "https://github.com/gruntjs/grunt-contrib-uglify/archive/master.tar.gz",
     "grunt-jsdoc": "^0.5.1",
     "grunt-karma": "^0.8.0",
     "grunt-release": "^0.7.0",
@@ -50,7 +52,9 @@
     "karma-jasmine": "https://github.com/Nikku/karma-jasmine/archive/jasmine-v2.0.0-latest-1.tar.gz",
     "karma-phantomjs-launcher": "^0.1.2",
     "load-grunt-tasks": "^0.3.0",
-    "time-grunt": "^0.3.2"
+    "source-map-concat": "^0.4.0",
+    "time-grunt": "^0.3.2",
+    "uglify-js": "^2.4.16"
   },
   "dependencies": {
     "bpmn-moddle": "^0.4.0",
