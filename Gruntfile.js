@@ -66,17 +66,17 @@ module.exports = function(grunt) {
       viewer: {
         name: 'bpmn-viewer',
         src: '<%= config.sources %>/Viewer.js',
-        dest: '<%= config.dist %>'
+        dest: '<%= config.dist %>/dist'
       },
       navigated_viewer: {
         name: 'bpmn-navigated-viewer',
         src: '<%= config.sources %>/NavigatedViewer.js',
-        dest: '<%= config.dist %>'
+        dest: '<%= config.dist %>/dist'
       },
       modeler: {
         name: 'bpmn-modeler',
         src: '<%= config.sources %>/Modeler.js',
-        dest: '<%= config.dist %>'
+        dest: '<%= config.dist %>/dist'
       }
     },
 
