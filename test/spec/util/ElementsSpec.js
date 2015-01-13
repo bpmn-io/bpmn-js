@@ -218,5 +218,4 @@ describe('util/Elements', function() {
       });
     });
   });
-
 });
