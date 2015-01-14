@@ -83,6 +83,37 @@ describe('Modeler', function() {
   });
 
 
+  describe('bendpoint editing support', function() {
+
+    var Events = require('diagram-js/test/util/Events');
+
+    it('should allow to edit bendpoints', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+      createModeler(xml, function(err, viewer) {
+
+        // given
+        var bendpointMove = viewer.get('bendpointMove'),
+            dragging = viewer.get('dragging'),
+            elementRegistry = viewer.get('elementRegistry'),
+            createEvent = Events.scopedCreate(viewer.get('canvas'));
+
+        // assume
+        expect(bendpointMove).toBeDefined();
+
+        // when
+        bendpointMove.start(createEvent({ x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
+        dragging.move(createEvent({ x: 200, y: 200 }));
+
+        done(err);
+      });
+
+    });
+
+  });
+
+
   it('should handle errors', function(done) {
 
     var xml = 'invalid stuff';
