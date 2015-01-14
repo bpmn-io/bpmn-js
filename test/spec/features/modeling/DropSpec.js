@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -14,9 +13,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 
 describe('features/move - drop', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/drop/drop.bpmn', 'utf8');
   var diagramXML2 = fs.readFileSync('test/fixtures/bpmn/features/drop/recursive-task.bpmn', 'utf8');
