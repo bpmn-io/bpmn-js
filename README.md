@@ -4,10 +4,12 @@
 
 # diagram-js
 
-[diagram-js](https://github.com/bpmn-io/diagram-js) is a toolbox for displaying and modifying diagrams on the web.
+[![Build Status](https://travis-ci.org/bpmn-io/diagram-js.svg?branch=master)](https://travis-ci.org/bpmn-io/diagram-js)
+
+A toolbox for displaying and modifying diagrams on the web.
 
 
-## Development
+## Hacking the Project
 
 To get the development setup ready execute
 
@@ -16,9 +18,10 @@ npm install
 ```
 
 
-### Building the Project
+### Testing
 
 Execute `grunt auto-test` to run the test suite in watch mode.
+
 Expose an environment variable `TEST_BROWSERS=(Chrome|Firefox|IE)` to execute the tests in a non-headless browser.
 
 
@@ -26,4 +29,9 @@ Expose an environment variable `TEST_BROWSERS=(Chrome|Firefox|IE)` to execute th
 
 Execute `grunt` to lint and test the project and to generate (preliminary) documentation.
 
-We do not generate any build artifacts. Instead required parts of the library are intended to be bundled by modelers / viewers built on top of it.
+We do not generate any build artifacts. Required parts of the library should be bundled by modelers / viewers as needed instead.
+
+
+## License
+
+MIT
