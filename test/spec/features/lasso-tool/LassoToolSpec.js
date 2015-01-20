@@ -1,5 +1,8 @@
 'use strict';
 
+require('../../../TestHelper');
+
+var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
@@ -79,6 +82,21 @@ describe('features/lasso-tool', function() {
       expect(selectedElements[0]).toBe(childShape2);
       expect(selectedElements[1]).toBe(childShape3);
     }));
+  });
+
+
+  describe('visuals', function() {
+
+    it('should show resize box', inject(function(lassoTool, canvas, dragging) {
+
+      // when
+      lassoTool.activate(Events.create(canvas._svg, { x: 100, y: 100 }));
+      dragging.move(Events.create(canvas._svg, { x: 200, y: 300 }));
+
+      // then
+      expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).toBeDefined();
+    }));
+
   });
 
 });
