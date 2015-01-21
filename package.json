@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "test": "grunt test"
@@ -34,7 +34,7 @@
     "browserify": "^8.1.0",
     "bundle-collapser": "^1.1.1",
     "derequire": "^1.2.0",
-    "diagram-js": "^0.7.0",
+    "diagram-js": "^0.8.0",
     "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
     "grunt-contrib-copy": "^0.7.0",
@@ -57,8 +57,8 @@
     "uglify-js": "^2.4.16"
   },
   "dependencies": {
-    "bpmn-moddle": "^0.4.0",
-    "diagram-js-direct-editing": "^0.6.0",
+    "bpmn-moddle": "^0.5.0",
+    "diagram-js-direct-editing": "^0.7.0",
     "didi": "^0.0.4",
     "jquery": "^2.1.0",
     "lodash": "^2.4.0",
@@ -66,6 +66,6 @@
     "ids": "^0.1.0"
   },
   "peerDependencies": {
-    "diagram-js": "^0.7.0"
+    "diagram-js": "^0.8.0"
   }
 }
