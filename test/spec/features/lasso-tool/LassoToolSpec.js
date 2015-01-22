@@ -87,14 +87,37 @@ describe('features/lasso-tool', function() {
 
   describe('visuals', function() {
 
-    it('should show resize box', inject(function(lassoTool, canvas, dragging) {
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+    var createEvent;
+
+    beforeEach(inject(function(canvas) {
+      createEvent = Events.scopedCreate(canvas);
+    }));
+
+
+    it('should show lasso box', inject(function(lassoTool, canvas, dragging) {
 
       // when
-      lassoTool.activate(Events.create(canvas._svg, { x: 100, y: 100 }));
-      dragging.move(Events.create(canvas._svg, { x: 200, y: 300 }));
+      lassoTool.activate(createEvent({ x: 100, y: 100 }));
+      dragging.move(createEvent({ x: 200, y: 300 }));
 
       // then
       expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).toBeDefined();
+    }));
+
+
+    it('should select after lasso', inject(function(lassoTool, dragging, selection, elementRegistry) {
+
+      // when
+      lassoTool.activate(createEvent({ x: 100, y: 100 }));
+      dragging.move(createEvent({ x: 200, y: 300 }));
+      dragging.end();
+
+      // then
+      expect(selection.get()).toEqual([ elementRegistry.get('child') ]);
     }));
 
   });
