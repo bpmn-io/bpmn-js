@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     config: {
       sources: 'lib',
       tests: 'test',
-      dist: '../bower-bpmn-js'
+      dist: '../bower-bpmn-js/dist'
     },
 
     jshint: {
@@ -66,17 +66,17 @@ module.exports = function(grunt) {
       viewer: {
         name: 'bpmn-viewer',
         src: '<%= config.sources %>/Viewer.js',
-        dest: '<%= config.dist %>/dist'
+        dest: '<%= config.dist %>'
       },
       navigated_viewer: {
         name: 'bpmn-navigated-viewer',
         src: '<%= config.sources %>/NavigatedViewer.js',
-        dest: '<%= config.dist %>/dist'
+        dest: '<%= config.dist %>'
       },
       modeler: {
         name: 'bpmn-modeler',
         src: '<%= config.sources %>/Modeler.js',
-        dest: '<%= config.dist %>/dist'
+        dest: '<%= config.dist %>'
       }
     },
 
