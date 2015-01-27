@@ -23,7 +23,7 @@ describe('features/selection/SelectionVisuals', function() {
   });
 
 
-  ddescribe('selection box', function() {
+  describe('selection box', function() {
 
     var shape, shape2, connection;
 
