@@ -1,7 +1,8 @@
+'use strict';
+
 var browserify = require('browserify'),
-    derequire = require('derequire'),
+    derequire = require('browserify-derequire'),
     UglifyJS = require('uglify-js'),
-    exposify = require('exposify'),
     collapse = require('bundle-collapser/plugin'),
     concat = require('source-map-concat'),
     fs = require('fs'),
@@ -10,15 +11,6 @@ var browserify = require('browserify'),
 
 var BANNER = fs.readFileSync(__dirname + '/banner.txt', 'utf8'),
     BANNER_MIN = fs.readFileSync(__dirname + '/banner-min.txt', 'utf8');
-
-var EXTERNALS = {
-  sax: 'sax',
-  snapsvg: 'Snap',
-  lodash: '_',
-  hammerjs: 'Hammer',
-  jquery: '$',
-  'jquery-mousewheel': '$'
-};
 
 
 function extractSourceMap(content) {
@@ -64,6 +56,24 @@ function uglify(bundle, preamble) {
 }
 
 
+function Timer() {
+  this.reset();
+}
+
+Timer.prototype.done = function(message) {
+  console.log(message, '[' + (this.now() - this.start) + 'ms]');
+  this.reset();
+};
+
+Timer.prototype.reset = function() {
+  this.start = this.now();
+};
+
+Timer.prototype.now = function() {
+  return new Date().getTime();
+};
+
+
 module.exports = function(grunt) {
 
   grunt.registerMultiTask('bundle', function(target) {
@@ -78,29 +88,33 @@ module.exports = function(grunt) {
     var done = this.async();
 
     var browserifyOptions = {
-      builtins: false,
       standalone: 'BpmnJS',
-      detectGlobals: false,
-      insertGlobalVars: [],
-      debug: true
+      debug: true,
+      builtins: false,
+      insertGlobalVars: {
+        process: function () {
+            return 'undefined';
+        },
+        Buffer: function () {
+            return 'undefined';
+        }
+      }
     };
 
-    var exposifyOptions = {
-      global: true,
-      expose: EXTERNALS
-    };
+    var timer = new Timer();
 
     var targetFileBase = path.join(dest, variant);
 
     var banner = grunt.template.process(BANNER, grunt.config.get()),
         bannerMin = grunt.template.process(BANNER_MIN, grunt.config.get());
 
-
     browserify(browserifyOptions)
-      .transform(exposify, exposifyOptions)
+      .plugin(derequire)
       .plugin(collapse)
       .add(src)
       .bundle(function(err, result) {
+
+        timer.done('bundled');
 
         if (err) {
           return done(err);
@@ -108,13 +122,17 @@ module.exports = function(grunt) {
 
         var bundled, minified;
 
-        bundled = extractSourceMap(derequire(result.toString('utf8')));
+        bundled = extractSourceMap(result.toString('utf8'));
+
+        timer.done('extracted source map');
 
         try {
           minified = uglify(bundled, bannerMin);
         } catch (e) {
           return done(e);
         }
+
+        timer.done('minified');
 
         var bannerBundled;
 
@@ -128,10 +146,14 @@ module.exports = function(grunt) {
           throw e;
         }
 
+        timer.done('added banner');
+
         grunt.file.write(targetFileBase + '.js', bannerBundled.code, 'utf8');
         grunt.file.write(targetFileBase + '.js.map', bannerBundled.map, 'utf8');
 
         grunt.file.write(targetFileBase + '.min.js', minified.code, 'utf8');
+
+        timer.done('all saved');
 
         done();
       });

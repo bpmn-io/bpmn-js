@@ -32,10 +32,9 @@
   "devDependencies": {
     "brfs": "^1.2.0",
     "browserify": "^8.1.0",
+    "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
-    "derequire": "^1.2.0",
     "diagram-js": "^0.8.0",
-    "exposify": "https://github.com/Nikku/exposify/archive/v0.2.0-transform-arguments-0.tar.gz",
     "grunt": "^0.4.4",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.7.2",
