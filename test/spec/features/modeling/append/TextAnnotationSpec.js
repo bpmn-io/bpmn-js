@@ -5,7 +5,7 @@ var Matchers = require('../../../../Matchers'),
 
 /* global bootstrapModeler, inject */
 
-var _ = require('lodash');
+var find = require('lodash/collection/find');
 
 var fs = require('fs');
 
@@ -42,7 +42,7 @@ describe('features/modeling - append text-annotation', function() {
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
-      var connectingConnection = _.find(annotationShape.incoming, function(c) {
+      var connectingConnection = find(annotationShape.incoming, function(c) {
         return c.target === annotationShape;
       });
 
@@ -74,7 +74,7 @@ describe('features/modeling - append text-annotation', function() {
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
-      var connectingConnection = _.find(annotationShape.incoming, function(c) {
+      var connectingConnection = find(annotationShape.incoming, function(c) {
         return c.target === annotationShape;
       });
 
@@ -107,7 +107,7 @@ describe('features/modeling - append text-annotation', function() {
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
 
-      var connectingConnection = _.find(annotationShape.incoming, function(c) {
+      var connectingConnection = find(annotationShape.incoming, function(c) {
         return c.target === annotationShape;
       });
 

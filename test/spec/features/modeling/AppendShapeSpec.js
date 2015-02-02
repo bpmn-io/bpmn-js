@@ -4,7 +4,7 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var _ = require('lodash');
+var find = require('lodash/collection/find');
 
 var fs = require('fs');
 
@@ -149,7 +149,7 @@ describe('features/modeling - append shape', function() {
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
-      var connection = _.find(subProcess.get('flowElements'), function(e) {
+      var connection = find(subProcess.get('flowElements'), function(e) {
         return e.sourceRef === startEvent && e.targetRef === target;
       });
 
@@ -196,7 +196,7 @@ describe('features/modeling - append shape', function() {
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' }),
           target = targetShape.businessObject;
 
-      var connection = _.find(subProcess.get('flowElements'), function(e) {
+      var connection = find(subProcess.get('flowElements'), function(e) {
         return e.sourceRef === startEvent && e.targetRef === target;
       });
 
@@ -226,7 +226,7 @@ describe('features/modeling - append shape', function() {
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
-      var connection = _.find(subProcess.get('flowElements'), function(e) {
+      var connection = find(subProcess.get('flowElements'), function(e) {
         return e.sourceRef === startEvent && e.targetRef === target;
       });
 
@@ -259,7 +259,7 @@ describe('features/modeling - append shape', function() {
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
-      var connection = _.find(subProcess.get('flowElements'), function(e) {
+      var connection = find(subProcess.get('flowElements'), function(e) {
         return e.sourceRef === startEvent && e.targetRef === target;
       });
 
@@ -322,7 +322,7 @@ describe('features/modeling - append shape', function() {
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
           target = targetShape.businessObject;
 
-      var connection = _.find(subProcess.get('flowElements'), function(e) {
+      var connection = find(subProcess.get('flowElements'), function(e) {
         return e.sourceRef === startEvent && e.targetRef === target;
       });
 

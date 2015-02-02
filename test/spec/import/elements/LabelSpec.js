@@ -4,14 +4,13 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
-
-var _ = require('lodash');
+var pick = require('lodash/object/pick');
 
 var fs = require('fs');
 
 
 function bounds(element) {
-  return _.pick(element, [ 'x', 'y', 'width', 'height' ]);
+  return pick(element, [ 'x', 'y', 'width', 'height' ]);
 }
 
 

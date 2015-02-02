@@ -1,9 +1,11 @@
+'use strict';
+
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
-  /* global Buffer,process*/
+  /* global process */
 
   // configures browsers to run test against
   // any of [ 'PhantomJS', 'Chrome', 'Firefox', 'IE']

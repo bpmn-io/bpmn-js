@@ -60,10 +60,10 @@
     "bpmn-moddle": "^0.5.0",
     "diagram-js-direct-editing": "^0.7.0",
     "didi": "^0.0.4",
+    "ids": "^0.1.0",
     "jquery": "^2.1.0",
-    "lodash": "^2.4.0",
-    "object-refs": "^0.1.0",
-    "ids": "^0.1.0"
+    "lodash": "^3.0.1",
+    "object-refs": "^0.1.0"
   },
   "peerDependencies": {
     "diagram-js": "^0.8.0"

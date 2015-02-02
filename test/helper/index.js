@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A helper file that may be used in test cases for bpmn-js and extensions.
  *
@@ -28,7 +26,10 @@
  * ```
  */
 
-var _ = require('lodash');
+var unique = require('lodash/array/unique'),
+    isFunction = require('lodash/lang/isFunction'),
+    assign = require('lodash/object/assign'),
+    forEach = require('lodash/collection/forEach');
 
 var Modeler = require('../../lib/Modeler'),
     Viewer = require('../../lib/Viewer');
@@ -43,7 +44,7 @@ try {
 var OPTIONS, BPMN_JS;
 
 function options(opts) {
-  if (_.isFunction(opts)) {
+  if (isFunction(opts)) {
     opts = opts();
   }
 
@@ -67,32 +68,32 @@ function bootstrapBpmnJS(BpmnJS, options, locals) {
   var _options = options,
       _locals = locals;
 
-  if (_locals === undefined && _.isFunction(_options)) {
+  if (_locals === undefined && isFunction(_options)) {
     _locals = _options;
     _options = null;
   }
 
-  if (_.isFunction(_options)) {
+  if (isFunction(_options)) {
     _options = _options();
   }
 
-  if (_.isFunction(_locals)) {
+  if (isFunction(_locals)) {
     _locals = _locals();
   }
 
-  _options = _.extend({ container: testContainer, width: '100%', height: '100%' }, OPTIONS || {}, _options || {});
+  _options = assign({ container: testContainer, width: '100%', height: '100%' }, OPTIONS || {}, _options || {});
 
   if (_locals) {
     var mockModule = {};
 
-    _.forEach(_locals, function(v, k) {
+    forEach(_locals, function(v, k) {
       mockModule[k] = ['value', v];
     });
 
     _options.modules = [].concat(_options.modules || [], [ mockModule ]);
   }
 
-  _options.modules = _.unique(_options.modules);
+  _options.modules = unique(_options.modules);
 
   if (!_options.modules.length) {
     _options.modules = undefined;
