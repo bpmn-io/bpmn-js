@@ -1,4 +1,6 @@
-var _ = require('lodash');
+var cloneDeep = require('lodash/lang/cloneDeep'),
+    isEqual = require('lodash/lang/isEqual'),
+    pick = require('lodash/object/pick');
 
 
 module.exports.addDeepEquals = function() {
@@ -11,11 +13,11 @@ module.exports.addDeepEquals = function() {
   });
 
   function deepEquals(actual, expected) {
-    var actualClone = _.cloneDeep(actual);
-    var expectedClone = _.cloneDeep(expected);
+    var actualClone = cloneDeep(actual);
+    var expectedClone = cloneDeep(expected);
 
     var result = {
-      pass: _.isEqual(actualClone, expectedClone)
+      pass: isEqual(actualClone, expectedClone)
     };
 
     var message;
@@ -64,7 +66,7 @@ module.exports.addBBoxMatchers = function() {
 
           if (!pass) {
             message = 'Expected element#' + actual.id + ' with bbox ' +
-                                    jasmine.pp(_.pick(actualBBox, ['x', 'y', 'width', 'height'])) + ' to fit ' +
+                                    jasmine.pp(pick(actualBBox, ['x', 'y', 'width', 'height'])) + ' to fit ' +
                                     jasmine.pp(expected);
           }
 

@@ -1,5 +1,3 @@
-'use strict';
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
@@ -7,13 +5,12 @@ var TestHelper = require('../../../TestHelper');
 
 var Matchers = require('../../../Matchers');
 
-
-var _ = require('lodash');
+var pick = require('lodash/object/pick');
 
 var modelingModule = require('../../../../lib/features/modeling');
 
 function containment(element) {
-  return _.pick(element, [ 'x', 'y', 'parent' ]);
+  return pick(element, [ 'x', 'y', 'parent' ]);
 }
 
 describe('features/modeling - move shape', function() {

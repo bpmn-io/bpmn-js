@@ -1,6 +1,4 @@
-'use strict';
-
-var _ = require('lodash');
+var assign = require('lodash/object/assign');
 
 var Matchers = require('../../Matchers');
 
@@ -49,7 +47,7 @@ describe('Text', function() {
 
 
   function createText(container, label, options) {
-    var box = _.extend({}, { width: 150, height: 50 }, options.box || {});
+    var box = assign({}, { width: 150, height: 50 }, options.box || {});
 
     drawRect(box.width, box.height);
 

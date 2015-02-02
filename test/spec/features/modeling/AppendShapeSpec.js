@@ -1,11 +1,8 @@
-'use strict';
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
-
-var _ = require('lodash');
+var find = require('lodash/collection/find');
 
 var modelingModule = require('../../../../lib/features/modeling');
 
@@ -91,7 +88,7 @@ describe('features/modeling - append shape', function() {
       // when
       // shape added
 
-      var connection = _.find(newShape.incoming, function(c) {
+      var connection = find(newShape.incoming, function(c) {
         return c.source === childShape;
       });
 

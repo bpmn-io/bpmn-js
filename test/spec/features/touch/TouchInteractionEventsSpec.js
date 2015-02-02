@@ -1,11 +1,8 @@
-'use strict';
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
-
-var _ = require('lodash');
+var forEach = require('lodash/collection/forEach');
 
 
 var touchInteractionModule = require('../../../../lib/features/touch');
@@ -33,7 +30,7 @@ describe('features/touch', function() {
         'canvas.tap'
       ];
 
-      _.forEach(touchEvents, function(eventName) {
+      forEach(touchEvents, function(eventName) {
         eventBus.on(eventName, function(e) {
           console.log(eventName, e);
         });

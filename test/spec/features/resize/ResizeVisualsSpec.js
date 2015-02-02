@@ -3,7 +3,7 @@ var TestHelper = require('../../../TestHelper'),
 
 /* global bootstrapDiagram, inject */
 
-var _ = require('lodash');
+var pick = require('lodash/object/pick');
 
 var resizeModule = require('../../../../lib/features/resize'),
     rulesModule = require('./rules'),
@@ -11,7 +11,7 @@ var resizeModule = require('../../../../lib/features/resize'),
 
 
 function bounds(b) {
-  return _.pick(b, [ 'x', 'y', 'width', 'height' ]);
+  return pick(b, [ 'x', 'y', 'width', 'height' ]);
 }
 
 describe('features/resize - visuals', function() {

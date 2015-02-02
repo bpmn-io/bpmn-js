@@ -1,13 +1,12 @@
 'use strict';
 
-var _ = require('lodash');
-
 var TestHelper = require('../../TestHelper');
-
-var Elements = require('../../../lib/util/Elements');
 
 /* global bootstrapDiagram, inject */
 
+var keys = require('lodash/object/keys');
+
+var Elements = require('../../../lib/util/Elements');
 
 var modelingModule = require('../../../lib/features/modeling');
 
@@ -126,7 +125,7 @@ describe('util/Elements', function() {
       var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
       // then
-      var ids = _.keys(filteredElements);
+      var ids = keys(filteredElements);
       expect(ids).toEqual([ 'shape4', 'connection3', 'connection2a', 'connection2b' ]);
     }));
 
@@ -141,7 +140,7 @@ describe('util/Elements', function() {
       var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
       // then
-      var ids = _.keys(filteredElements);
+      var ids = keys(filteredElements);
       expect(ids).toEqual([ 'shape3a', 'shape3b', 'connection2a', 'connection2b' ]);
     }));
 
@@ -157,7 +156,7 @@ describe('util/Elements', function() {
       var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
       // then
-      var ids = _.keys(filteredElements);
+      var ids = keys(filteredElements);
       expect(ids).toEqual([ 'shape3b', 'connection2b' ]);
     }));
 
@@ -175,7 +174,7 @@ describe('util/Elements', function() {
       var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
       // then
-      var ids = _.keys(filteredElements);
+      var ids = keys(filteredElements);
       expect(ids).toEqual([
         'shape1',
         'shape2',
@@ -205,7 +204,7 @@ describe('util/Elements', function() {
         var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
         // then
-        var ids = _.keys(filteredElements);
+        var ids = keys(filteredElements);
         expect(ids).toEqual([
           'shape1',
           'shape2',
@@ -245,7 +244,7 @@ describe('util/Elements', function() {
         var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
         // then
-        var ids = _.keys(filteredElements);
+        var ids = keys(filteredElements);
         expect(ids).toEqual([
           'shape1',
           'shape0'
@@ -266,7 +265,7 @@ describe('util/Elements', function() {
         var filteredElements = Elements.getEnclosedElements(elements, bbox);
 
         // then
-        var ids = _.keys(filteredElements);
+        var ids = keys(filteredElements);
         expect(ids).toEqual([ 'connection3' ]);
       }));
     });

@@ -1,8 +1,10 @@
-'use strict';
+var unique = require('lodash/array/unique'),
+    isFunction = require('lodash/lang/isFunction'),
+    assign = require('lodash/object/assign'),
+    forEach = require('lodash/collection/forEach');
 
-var _ = require('lodash');
-var Diagram = require('../../lib/Diagram');
-var Dom    = require('../../lib/util/Dom');
+var Diagram = require('../../lib/Diagram'),
+    Dom    = require('../../lib/util/Dom');
 
 try {
   // enhance jasmine with test container API
@@ -12,14 +14,6 @@ try {
 }
 
 var OPTIONS, DIAGRAM;
-
-function options(opts) {
-  if (_.isFunction(opts)) {
-    opts = opts();
-  }
-
-  OPTIONS = opts;
-}
 
 /**
  * Bootstrap the diagram given the specified options and a number of locals (i.e. services)
@@ -62,28 +56,28 @@ function bootstrapDiagram(options, locals) {
     var _options = options,
         _locals = locals;
 
-    if (!_locals && _.isFunction(_options)) {
+    if (!_locals && isFunction(_options)) {
       _locals = _options;
       _options = null;
     }
 
-    if (_.isFunction(_options)) {
+    if (isFunction(_options)) {
       _options = _options();
     }
 
-    if (_.isFunction(_locals)) {
+    if (isFunction(_locals)) {
       _locals = _locals();
     }
 
-    _options = _.extend({ canvas: { container: testContainer } }, OPTIONS || {}, _options || {});
+    _options = assign({ canvas: { container: testContainer } }, OPTIONS || {}, _options || {});
 
     var mockModule = {};
 
-    _.forEach(_locals, function(v, k) {
+    forEach(_locals, function(v, k) {
       mockModule[k] = ['value', v];
     });
 
-    _options.modules = _.unique([].concat(_options.modules || [], [ mockModule ]));
+    _options.modules = unique([].concat(_options.modules || [], [ mockModule ]));
 
     DIAGRAM = new Diagram(_options);
   };

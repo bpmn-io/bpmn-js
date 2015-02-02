@@ -3,6 +3,7 @@
   "node": true,
   "maxlen": 120,
   "unused": "vars",
+  "strict": true,
   "globals": {
     "describe": false,
     "it": false,

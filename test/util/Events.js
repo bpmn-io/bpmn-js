@@ -1,4 +1,4 @@
-var _ = require('lodash');
+var assign = require('lodash/object/assign');
 
 var EventBus = require('../../lib/core/EventBus');
 
@@ -7,7 +7,7 @@ function create(target, point, data) {
   // unwrap snapsvg gfx
   target = target.node || target;
 
-  data = _.extend({
+  data = assign({
     target: target,
     clientX: point.x,
     clientY: point.y,

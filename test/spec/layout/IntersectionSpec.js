@@ -1,8 +1,6 @@
-'use strict';
+var forEach = require('lodash/collection/forEach');
 
 var Snap = require('snapsvg');
-
-var _ = require('lodash');
 
 
 describe('intersection', function() {
@@ -25,7 +23,7 @@ describe('intersection', function() {
   function expectPathIntersection(aPath, bPath, point) {
     var intersections = Snap.path.intersection(aPath, bPath);
 
-    _.forEach(intersections, function(i) {
+    forEach(intersections, function(i) {
       paper.circle(i.x, i.y, 4);
     });
 

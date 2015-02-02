@@ -1,10 +1,10 @@
-var _ = require('lodash');
-
 var TestHelper = require('../../../TestHelper'),
     Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
+var assign = require('lodash/object/assign'),
+    omit = require('lodash/object/omit');
 
 var dragModule = require('../../../../lib/features/dragging');
 
@@ -39,7 +39,7 @@ describe('Dragging', function() {
 
         [ 'start', 'move', 'end', 'hover', 'out', 'cancel', 'cleanup', 'activate' ].forEach(function(type) {
           eventBus.on(prefix + '.' + type, function(e) {
-            events.push(_.extend({}, e));
+            events.push(assign({}, e));
           });
         });
 
@@ -49,7 +49,7 @@ describe('Dragging', function() {
 
 
     function raw(e) {
-      return _.omit(e, [ 'originalEvent' ]);
+      return omit(e, [ 'originalEvent' ]);
     }
 
 
