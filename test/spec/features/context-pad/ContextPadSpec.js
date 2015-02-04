@@ -1,7 +1,8 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+
+var Events = require('../../../util/Events');
+
 
 
 /* global bootstrapDiagram, inject */

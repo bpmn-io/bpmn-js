@@ -1,9 +1,9 @@
 'use strict';
 
+
 require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
-
 
 var forEach = require('lodash/collection/forEach'),
     assign = require('lodash/object/assign'),

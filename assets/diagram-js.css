@@ -353,3 +353,15 @@
 .djs-bendpoint.djs-dragging .djs-visual {
   fill: yellow;
 }
+
+.popup-menu-entry {
+  font-size: 20px;
+  height: 22px;
+}
+
+.popup-menu-entry > span {
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  margin-left: 5px;
+  vertical-align: 1px;
+}
