@@ -3,9 +3,10 @@
 /* global bootstrapDiagram, inject */
 
 var TestHelper    = require('../../../TestHelper'),
-    paletteModule = require('../../../../lib/features/palette'),
-    $             = require('jquery');
+    paletteModule = require('../../../../lib/features/palette');
 
+var domQuery = require('min-dom/lib/query'),
+    domClasses = require('min-dom/lib/classes');
 
 function Provider(entries) {
   this.getPaletteEntries = function() {
@@ -29,7 +30,7 @@ describe('features/palette', function() {
       // then
       var container = canvas.getContainer();
 
-      var paletteArray = $(container).children('.djs-palette');
+      var paletteArray = domQuery.all('.djs-palette', container);
 
       expect(paletteArray.length).toBe(1);
     }));
@@ -39,7 +40,7 @@ describe('features/palette', function() {
 
       var container = canvas.getContainer();
 
-      var paletteArray = $(container).children('.djs-palette');
+      var paletteArray = domQuery.all('.djs-palette', container);
 
       expect(paletteArray.length).toBe(0);
     }));
@@ -123,14 +124,15 @@ describe('features/palette', function() {
       expect(pEntries.entryB).toBeDefined();
 
       // then DOM should contain entries
-      var entryA = $(palette._container).find('[data-action="entryA"]');
-      expect(entryA.length).toBe(1);
-      expect(entryA.is('.FOO')).toBe(true);
+      var entryA = domQuery('[data-action="entryA"]', palette._container);
+      expect(entryA).toBeTruthy();
+      expect(domClasses(entryA).has('FOO')).toBe(true);
 
-      var entryB = $(palette._container).find('[data-action="entryB"]');
-      expect(entryB.length).toBe(1);
-      expect(entryB.find('img').length).toBe(1);
+      var entryB = domQuery('[data-action="entryB"]', palette._container);
+      expect(entryB).toBeTruthy();
+      expect(domQuery('img', entryB)).toBeTruthy();
     }));
+
   });
 
 
@@ -144,7 +146,7 @@ describe('features/palette', function() {
 
     function expectOpen(palette, open) {
       expect(palette.isOpen()).toBe(open);
-      expect(palette._container.is('.open')).toBe(open);
+      expect(domClasses(palette._container).has('open')).toBe(open);
     }
 
     it('should be opened (default)', inject(function(canvas, palette) {
@@ -155,8 +157,6 @@ describe('features/palette', function() {
 
 
     it('should close', inject(function(canvas, palette) {
-
-      var paletteContainer = $(palette._container);
 
       // when
       palette.close();

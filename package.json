@@ -25,6 +25,7 @@
     "grunt-karma": "^0.8.0",
     "grunt-release": "^0.7.0",
     "jasmine-test-container-support": "^0.1.2",
+    "jquery": "^2.1.0",
     "jsondiffpatch": "^0.1.26",
     "karma": "^0.12.8",
     "karma-browserify": "^2.0.0",
@@ -40,9 +41,8 @@
     "didi": "^0.0.4",
     "eve": "^0.4.2",
     "hammerjs": "^2.0.1",
-    "jquery": "^2.1.0",
-    "jquery-mousewheel": "^3.1.11",
     "lodash": "^3.0.1",
+    "min-dom": "^0.1.1",
     "object-refs": "^0.1.0",
     "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
   }

@@ -1,3 +1,5 @@
+'use strict';
+
 var assign = require('lodash/object/assign');
 
 var EventBus = require('../../lib/core/EventBus');

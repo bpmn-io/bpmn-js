@@ -1,38 +1,46 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
-var _ = require('lodash'),
-    $ = require('jquery');
 
+var forEach = require('lodash/collection/forEach'),
+    assign = require('lodash/object/assign'),
+    domify = require('min-dom/lib/domify');
 
 var overlayModule = require('../../../../lib/features/overlays');
 
 
 function asMatrix(transformStr) {
-  if (!transformStr || transformStr !== 'none') {
+  if (transformStr && transformStr !== 'none') {
     var m = transformStr.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
 
     return {
-     a: parseFloat(m[0]),
-     b: parseFloat(m[1]),
-     c: parseFloat(m[2]),
-     d: parseFloat(m[3]),
-     e: parseFloat(m[4]),
-     f: parseFloat(m[5])
+      a: parseFloat(m[0]),
+      b: parseFloat(m[1]),
+      c: parseFloat(m[2]),
+      d: parseFloat(m[3]),
+      e: parseFloat(m[4]),
+      f: parseFloat(m[5])
     };
   }
 }
 
+function isVisible(element) {
+  return window.getComputedStyle(element).display !== 'none';
+}
+
 function highlight(element) {
-  return $(element).css({ background: 'fuchsia', minWidth: 10, minHeight: 10 });
+  assign(element.style, { background: 'fuchsia', minWidth: '10px', minHeight: '10px' });
+  return element;
 }
 
 
 function createOverlay() {
-  return highlight('<div>TEST<br/>TEST</div>').css({ width: 40, height: 40 });
+  var element = highlight(domify('<div>TEST<br/>TEST</div>'));
+  assign(element.style, { width: 40, height: 40 });
+  return element;
 }
 
 
@@ -84,7 +92,7 @@ describe('features/overlays', function() {
     }));
 
 
-    it('should add jquery overlay', inject(function(overlays, canvas) {
+    it('should add element overlay', inject(function(overlays, canvas) {
 
       // given
       var shape = canvas.addShape({
@@ -101,11 +109,16 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight($('<div id="html-jq" class="overlay" />'))
+        html: highlight(domify('<div id="html-jq" class="overlay" />'))
       });
 
       // then
-      expect(overlays.get(id)).toBeDefined();
+      var overlay = overlays.get(id);
+
+      expect(overlay).toBeDefined();
+      expect(isVisible(overlays._overlayRoot)).toBeTruthy();
+      expect(isVisible(overlay.html)).toBeTruthy();
+
       expect(document.getElementById('html-jq')).toBeDefined();
     }));
 
@@ -113,7 +126,7 @@ describe('features/overlays', function() {
     it('should add overlay on shape (by id)', inject(function(overlays, canvas) {
 
       // given
-      var shape = canvas.addShape({
+      canvas.addShape({
         id: 'test',
         x: 10,
         y: 10,
@@ -127,7 +140,7 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight($('<div id="html-id" class="overlay" />'))
+        html: highlight(domify('<div id="html-id" class="overlay" />'))
       });
 
       // then
@@ -159,7 +172,7 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight('<div class="overlay" id="html-ov2"></div>')
+        html: highlight(domify('<div class="overlay" id="html-ov2"></div>'))
       });
 
       // when
@@ -189,7 +202,7 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight('<div class="badge">1</div>')
+        html: highlight(domify('<div class="badge">1</div>'))
       });
 
       overlays.add(shape, 'badge', {
@@ -197,7 +210,7 @@ describe('features/overlays', function() {
           right: 0,
           top: 0
         },
-        html: highlight('<div class="badge">2</div>')
+        html: highlight(domify('<div class="badge">2</div>'))
       });
 
       // when
@@ -207,7 +220,7 @@ describe('features/overlays', function() {
       expect(overlays.get({ element: shape, type: 'badge' }).length).toBe(0);
       expect(overlays.get({ element: shape }).length).toBe(0);
 
-      expect(overlays._getOverlayContainer(shape, true).html.text()).toBe('');
+      expect(overlays._getOverlayContainer(shape, true).html.textContent).toBe('');
     }));
 
 
@@ -352,7 +365,19 @@ describe('features/overlays', function() {
 
 
     function position(overlayHtml) {
-      return overlayHtml.parent().position();
+      var parent = overlayHtml.parentNode;
+
+      var result = {};
+
+      forEach([ 'left', 'right', 'top', 'bottom' ], function(pos) {
+        var p = parseInt(parent.style[pos]);
+
+        if (!isNaN(p)) {
+          result[pos] = p;
+        }
+      });
+
+      return result;
     }
 
 
@@ -487,7 +512,7 @@ describe('features/overlays', function() {
 
 
     function isVisible(element) {
-      return !element.parent().is(':hidden');
+      return element.parentNode.style.display !== 'none';
     }
 
 
@@ -496,7 +521,7 @@ describe('features/overlays', function() {
       // given
       var html = createOverlay();
 
-      var id = overlays.add(shape, {
+      overlays.add(shape, {
         html: html,
         position: { left: 20, bottom: 0 }
       });
@@ -535,7 +560,7 @@ describe('features/overlays', function() {
       // given
       var html = createOverlay();
 
-      var id = overlays.add(shape, {
+      overlays.add(shape, {
         html: html,
         position: { left: 20, bottom: 0 },
         show: {
@@ -619,7 +644,7 @@ describe('features/overlays', function() {
 
 
     function transformMatrix(element) {
-      return asMatrix(element.css('transform'));
+      return asMatrix(element.style.transform);
     }
 
 

@@ -1,10 +1,12 @@
+'use strict';
+
 var unique = require('lodash/array/unique'),
     isFunction = require('lodash/lang/isFunction'),
     assign = require('lodash/object/assign'),
     forEach = require('lodash/collection/forEach');
 
 var Diagram = require('../../lib/Diagram'),
-    Dom    = require('../../lib/util/Dom');
+    domEvent = require('min-dom/lib/event');
 
 try {
   // enhance jasmine with test container API
@@ -143,31 +145,28 @@ function insertCSS(name, css) {
 module.exports.insertCSS = insertCSS;
 
 
-function domMockInstall() {
+function DomEventTracker() {
 
-  Dom._on = Dom.on;
-  Dom._off = Dom.off;
+  this.install = function() {
 
-  Dom.on = function(element, type, fn, useCapture) {
-    element.$$listenerCount = (element.$$listenerCount || 0) + 1;
-    Dom._on(element, type, fn, useCapture);
+    domEvent.__bind = domEvent.bind;
+    domEvent.__unbind = domEvent.__unbind || domEvent.unbind;
+
+    domEvent.bind = function(el, type, fn, capture) {
+      el.$$listenerCount = (el.$$listenerCount || 0) + 1;
+      return domEvent.__bind(el, type, fn, capture);
+    };
+
+    domEvent.unbind = function(el, type, fn, capture) {
+      el.$$listenerCount = (el.$$listenerCount || 0) -1;
+      return domEvent.__unbind(el, type, fn, capture);
+    };
   };
 
-  Dom.off = function(element, type, fn, useCapture) {
-    element.$$listenerCount = (element.$$listenerCount || 0) -1;
-    Dom._off(element, type, fn, useCapture);
+  this.uninstall = function() {
+    domEvent.bind = domEvent.__bind;
+    domEvent.unbind = domEvent.__unbind;
   };
 }
 
-function domMockUninstall() {
-
-  Dom.on = Dom._on;
-  Dom.off = Dom._off;
-}
-
-var DomMocking = {
-  install: domMockInstall,
-  uninstall: domMockUninstall
-};
-
-module.exports.DomMocking = DomMocking;
+module.exports.DomMocking = new DomEventTracker();

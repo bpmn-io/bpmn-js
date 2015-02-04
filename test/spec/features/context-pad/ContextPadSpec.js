@@ -1,10 +1,12 @@
+'use strict';
+
 var TestHelper = require('../../../TestHelper'),
     Events = require('../../../util/Events');
 
 
 /* global bootstrapDiagram, inject */
 
-
+var domQuery = require('min-dom/lib/query');
 
 var contextPadModule = require('../../../../lib/features/context-pad');
 
@@ -161,7 +163,7 @@ describe('features/context-pad', function() {
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.c"]').get(0);
+          target = domQuery('[data-action="action.c"]', html);
 
       var event = Events.create(target, { x: 0, y: 0 });
 
@@ -182,7 +184,7 @@ describe('features/context-pad', function() {
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.c"]').get(0);
+          target = domQuery('[data-action="action.c"]', html);
 
       var event = Events.create(target, { x: 0, y: 0 });
 
@@ -203,7 +205,7 @@ describe('features/context-pad', function() {
 
       var pad = contextPad.getPad(shape),
           html = pad.html,
-          target = html.find('[data-action="action.dragstart"]').get(0);
+          target = domQuery('[data-action="action.dragstart"]', html);
 
       var event = Events.create(target, { x: 0, y: 0 });
 

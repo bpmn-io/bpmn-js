@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -16,7 +16,18 @@ describe('navigation/touch', function() {
 
     beforeEach(bootstrapDiagram({ modules: [ touchModule ] }));
 
-    it('should bootstrap', inject(function() { }));
+    it('should bootstrap', inject(function(canvas) {
+
+      canvas.addShape({
+        id: 'test',
+        width: 100,
+        height: 100,
+        x: 100,
+        y: 100
+      });
+
+    }));
+
   });
 
 
@@ -24,9 +35,9 @@ describe('navigation/touch', function() {
 
     describe('contextPad', function() {
 
-      beforeEach(bootstrapDiagram({ modules: [ touchModule, contextPadModule ] }));
+      beforeEach(bootstrapDiagram({ modules: [ contextPadModule, touchModule ] }));
 
-      it('should integrate with contextPad.create', inject(function(canvas) {
+      it('should integrate with contextPad.create', inject(function(canvas, contextPad) {
 
         canvas.addShape({
           id: 'test',
@@ -38,13 +49,12 @@ describe('navigation/touch', function() {
       }));
 
     });
-
 
     describe('palette', function() {
 
-      beforeEach(bootstrapDiagram({ modules: [ touchModule, paletteModule ] }));
+      beforeEach(bootstrapDiagram({ modules: [ paletteModule, touchModule ] }));
 
-      it('should integrate with palette.create', inject(function(canvas) {
+      it('should integrate with palette.create', inject(function(canvas, palette) {
 
         canvas.addShape({
           id: 'test',
@@ -57,6 +67,7 @@ describe('navigation/touch', function() {
       }));
 
     });
+
   });
 
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -15,7 +15,16 @@ describe('navigation/zoomscroll', function() {
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(zoomScroll) {
+    it('should bootstrap', inject(function(zoomScroll, canvas) {
+
+      canvas.addShape({
+        id: 'test',
+        width: 100,
+        height: 100,
+        x: 100,
+        y: 100
+      });
+
       expect(zoomScroll).not.toBe(null);
     }));
 

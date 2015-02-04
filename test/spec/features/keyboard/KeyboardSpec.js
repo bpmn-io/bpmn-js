@@ -1,6 +1,6 @@
-var TestHelper = require('../../../TestHelper'),
-    Events     = require('../../../util/Events');
+'use strict';
 
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -36,6 +36,7 @@ describe('features/keyboard', function() {
       testContainer.appendChild(testDiv);
     });
 
+
     it('should bind keyboard events to node', inject(function(keyboard) {
       // Actually three listeners are set
       var STANDARD_LISTENER_COUNT = 1;
@@ -56,9 +57,6 @@ describe('features/keyboard', function() {
 
 
     it('should not fail to execute unbind if bins was not called before', inject(function(keyboard) {
-
-      var testContainer = jasmine.getEnv().getTestContainer();
-
       keyboard.unbind();
     }));
 

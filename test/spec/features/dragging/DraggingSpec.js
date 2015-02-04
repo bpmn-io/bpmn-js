@@ -1,7 +1,11 @@
-var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+'use strict';
+
+require('../../../TestHelper');
+
+var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
+
 
 var assign = require('lodash/object/assign'),
     omit = require('lodash/object/omit');

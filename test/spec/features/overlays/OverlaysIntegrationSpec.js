@@ -1,10 +1,15 @@
-var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+'use strict';
+
+require('../../../TestHelper');
+
+var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
 
-var $ = require('jquery');
+var domClasses = require('min-dom/lib/classes'),
+    domQuery = require('min-dom/lib/query'),
+    $ = require('jquery');
 
 var overlayModule = require('../../../../lib/features/overlays'),
     selectionModule = require('../../../../lib/features/selection'),
@@ -48,11 +53,9 @@ describe('features/overlay - integration', function() {
         height: 100
       });
 
-      var html = $('<div style="width: 40px; height: 40px">TEST<br/>TEST</div>');
-
       // add overlay to a single shape (or connection)
       overlays.add(shape, {
-        html: html,
+        html: '<div style="width: 40px; height: 40px">TEST<br/>TEST</div>',
         position: {
           top: 0,
           left: 0
@@ -63,11 +66,10 @@ describe('features/overlay - integration', function() {
       modeling.moveShape(shape, { x: -20, y: +20 });
 
       // then
-      expect(html.parent().parent().position()).toEqual({
-        top: 70,
-        left: 30
-      });
+      var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
+      expect(parseInt(html.style.top)).toBe(70);
+      expect(parseInt(html.style.left)).toBe(30);
     }));
 
 
@@ -82,11 +84,9 @@ describe('features/overlay - integration', function() {
         height: 100
       });
 
-      var html = $('<div style="width: 40px; height: 40px">TEST<br/>TEST</div>');
-
       // add overlay to a single shape (or connection)
       overlays.add(shape, {
-        html: html,
+        html: '<div style="width: 40px; height: 40px">TEST<br/>TEST</div>',
         position: {
           top: 0,
           left: 0
@@ -98,11 +98,10 @@ describe('features/overlay - integration', function() {
       commandStack.undo();
 
       // then
-      expect(html.parent().parent().position()).toEqual({
-        top: 50,
-        left: 50
-      });
+      var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
+      expect(parseInt(html.style.top)).toBe(50);
+      expect(parseInt(html.style.left)).toBe(50);
     }));
 
 
@@ -117,11 +116,9 @@ describe('features/overlay - integration', function() {
         height: 100
       });
 
-      var html = $('<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>');
-
       // add overlay to a single shape (or connection)
       overlays.add(shape, {
-        html: html,
+        html: '<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>',
         position: {
           top:  10,
           left: 10
@@ -129,13 +126,13 @@ describe('features/overlay - integration', function() {
       });
 
       // when
-      modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: 0, y: -15 }));
+      modeling.resizeShape(shape, resizeBounds(shape, 'nw', { x: 5, y: -15 }));
 
       // then
-      expect(html.parent().parent().position()).toEqual({
-        top:  35,
-        left: 50
-      });
+      var html = domQuery('.djs-overlays-test', canvas.getContainer());
+
+      expect(parseInt(html.style.top)).toBe(35);
+      expect(parseInt(html.style.left)).toBe(55);
 
     }));
 
@@ -151,28 +148,25 @@ describe('features/overlay - integration', function() {
         height: 100
       });
 
-      var html = $('<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>');
-
       // add overlay to a single shape (or connection)
       overlays.add(shape, {
-        html: html,
+        html: '<div style="width: 40px; height: 40px;">TEST<br/>TEST</div>',
         position: {
           top:  10,
           left: 10
         }
       });
 
-      modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: 0, y: -15 }));
+      modeling.resizeShape(shape, resizeBounds(shape, 'nw', { x: 5, y: -15 }));
 
       // when
       commandStack.undo();
 
       // then
-      expect(html.parent().parent().position()).toEqual({
-        top:  50,
-        left: 50
-      });
+      var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
+      expect(parseInt(html.style.top)).toBe(50);
+      expect(parseInt(html.style.left)).toBe(50);
     }));
 
   });
@@ -197,7 +191,7 @@ describe('features/overlay - integration', function() {
       selection.select(shape);
 
       // then
-      expect(overlayContainer.html.hasClass('selected')).toBe(true);
+      expect(domClasses(overlayContainer.html).has('selected')).toBe(true);
     }));
 
 
@@ -219,7 +213,7 @@ describe('features/overlay - integration', function() {
       selection.select(null);
 
       // then
-      expect(overlayContainer.html.hasClass('selected')).toBe(false);
+      expect(domClasses(overlayContainer.html).has('selected')).toBe(false);
     }));
 
   });
@@ -255,8 +249,8 @@ describe('features/overlay - integration', function() {
       dragging.move(Event.create({ x: 20, y: 30 }));
 
       // then
-      expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(true);
-      expect(childOverlayContainer.html.hasClass('djs-dragging')).toBe(true);
+      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).toBe(true);
+      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).toBe(true);
     }));
 
 
@@ -289,8 +283,41 @@ describe('features/overlay - integration', function() {
       dragging.end();
 
       // then
-      expect(parentOverlayContainer.html.hasClass('djs-dragging')).toBe(false);
-      expect(childOverlayContainer.html.hasClass('djs-dragging')).toBe(false);
+      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).toBe(false);
+      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).toBe(false);
+    }));
+
+  });
+
+
+  describe('jquery support', function() {
+
+    it('should allow to pass jquery element as overlay', inject(function(canvas, overlays) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100,
+        children: []
+      });
+
+      var $element = $('<div id="FOO">');
+
+
+      // add overlay to a single shape (or connection)
+      overlays.add(shape, {
+        html: $element,
+        position: {
+          top:  10,
+          left: 10
+        }
+      });
+
+      // then
+      expect($element.parent().length).toBe(1);
     }));
 
   });
