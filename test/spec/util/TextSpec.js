@@ -1,8 +1,10 @@
+'use strict';
+
 var assign = require('lodash/object/assign');
 
 var Matchers = require('../../Matchers');
 
-var Snap = require('../../../lib/draw/Snap'),
+var Snap = require('../../../vendor/snapsvg'),
     TextUtil = require('../../../lib/util/Text');
 
 

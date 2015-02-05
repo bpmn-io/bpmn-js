@@ -1,8 +1,8 @@
 'use strict';
 
-var Snap = require('snapsvg');
+var snapsvg = module.exports = require('snapsvg');
 
-Snap.plugin(function(Snap, Element) {
+snapsvg.plugin(function(Snap, Element) {
 
   /*\
    * Element.children
@@ -27,7 +27,7 @@ Snap.plugin(function(Snap, Element) {
  *
  * Extends snapsvg with methods to add and remove classes
  */
-Snap.plugin(function (Snap, Element, Paper, global) {
+snapsvg.plugin(function (Snap, Element, Paper, global) {
 
   function split(str) {
     return str.split(/\s+/);
@@ -135,7 +135,7 @@ Snap.plugin(function (Snap, Element, Paper, global) {
  *
  * Extends snapsvg with methods to translate elements
  */
-Snap.plugin(function (Snap, Element, Paper, global) {
+snapsvg.plugin(function (Snap, Element, Paper, global) {
 
   /*
    * @method snapsvg.Element#translate
@@ -164,7 +164,7 @@ Snap.plugin(function (Snap, Element, Paper, global) {
  *
  * Create an svg element without attaching it to the dom
  */
-Snap.plugin(function(Snap) {
+snapsvg.plugin(function(Snap) {
 
   Snap.create = function(name, attrs) {
     return Snap._.wrap(Snap._.$(name, attrs));
@@ -178,7 +178,7 @@ Snap.plugin(function(Snap) {
  * Extends snap.svg with a method to create a SVG element
  * at a specific position in the DOM.
  */
-Snap.plugin(function(Snap, Element, Paper, global) {
+snapsvg.plugin(function(Snap, Element, Paper, global) {
 
   /*
    * @method snapsvg.createSnapAt
