@@ -1,10 +1,11 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
+
 
 var Modeler = require('../../../../lib/Modeler');
 
-var $ = require('jquery');
+var domQuery = require('min-dom/lib/query');
 
 
 describe('palette', function() {
@@ -28,10 +29,10 @@ describe('palette', function() {
       expect(provider).toBeTruthy();
 
       // when
-      var paletteElement = $(container).find('.djs-palette');
+      var paletteElement = domQuery('.djs-palette', container);
 
       // then
-      expect(paletteElement.find('.entry').length).toBe(7);
+      expect(domQuery.all('.entry', paletteElement).length).toBe(7);
 
       done(err);
     });

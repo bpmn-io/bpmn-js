@@ -381,12 +381,10 @@ describe('Viewer', function() {
         position: 'fixed'
       });
 
-      var container = viewer.container;
-
       // then
-      expect(container.style.position).toBe('fixed');
-      expect(container.style.width).toBe('200px');
-      expect(container.style.height).toBe('100px');
+      expect(viewer.container.style.position).toBe('fixed');
+      expect(viewer.container.style.width).toBe('200px');
+      expect(viewer.container.style.height).toBe('100px');
     });
 
   });
@@ -401,13 +399,11 @@ describe('Viewer', function() {
         container: container
       });
 
-      var container = viewer.container;
-
       // when
       viewer.destroy();
 
       // then
-      expect(container.parentNode).toBeFalsy();
+      expect(viewer.container.parentNode).toBeFalsy();
     });
 
   });

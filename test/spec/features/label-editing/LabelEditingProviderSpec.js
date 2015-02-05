@@ -1,14 +1,11 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
 
 var fs = require('fs');
-
-var $ = require('jquery');
 
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
@@ -17,10 +14,21 @@ var labelEditingModule = require('../../../../lib/features/label-editing'),
 var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
 
 
+function triggerKeyEvent(element, event, code) {
+  var e = document.createEvent('Events');
+
+  if (e.initEvent) {
+    e.initEvent(event, true, true);
+  }
+
+  e.keyCode = code;
+  e.which = code;
+
+  return element.dispatchEvent(e);
+}
+
+
 describe('features - label-editing', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf8');
 
@@ -55,13 +63,13 @@ describe('features - label-editing', function() {
       // activate
       eventBus.fire('element.dblclick', { element: shape });
 
-      // a jQuery <textarea /> element
+      // a <textarea /> element
       var textarea = directEditing._textbox.textarea;
 
       // when
       // change + ESC is pressed
-      textarea.val('new value');
-      textarea.trigger($.Event('keydown', { which: 27 }));
+      textarea.value = 'new value';
+      triggerKeyEvent(textarea, 'keydown', 27);
 
       // then
       expect(directEditing.isActive()).toBe(false);
@@ -80,12 +88,13 @@ describe('features - label-editing', function() {
 
       var newName = 'new value';
 
-      // a jQuery <textarea /> element
+      // a <textarea /> element
       var textarea = directEditing._textbox.textarea;
 
       // when
       // change + <element.mousedown>
-      textarea.val(newName);
+      textarea.value = newName;
+
       eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
 
       // then
@@ -117,7 +126,7 @@ describe('features - label-editing', function() {
   }
 
   function directEditUpdate(value) {
-    directEditing._textbox.textarea.val(value);
+    directEditing._textbox.textarea.value = value;
   }
 
   function directEditComplete(value) {
