@@ -1,6 +1,5 @@
 'use strict';
 
-var TestHelper = require('../TestHelper');
 
 var fs = require('fs');
 

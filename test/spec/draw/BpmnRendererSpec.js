@@ -1,9 +1,6 @@
 'use strict';
 
-var Matchers = require('../../Matchers'),
-    TestHelper = require('../../TestHelper');
-
-/* global bootstrapViewer, inject */
+var Matchers = require('../../Matchers');
 
 
 var fs = require('fs');
