@@ -92,6 +92,20 @@ describe('features/context-pad', function() {
     beforeEach(bootstrapDiagram({ modules: [ contextPadModule, providerModule ] }));
 
 
+    function expectEntries(contextPad, element, entries) {
+
+      var pad = contextPad.getPad(element),
+          html = pad.html;
+
+      entries.forEach(function(e) {
+        var entry = domQuery('[data-action="' + e + '"]', html);
+        expect(entry).not.toBe(null);
+      });
+
+      expect(domQuery.all('.entry', html).length).toBe(entries.length);
+    }
+
+
     it('should open', inject(function(canvas, contextPad) {
 
       // given
@@ -104,7 +118,7 @@ describe('features/context-pad', function() {
       contextPad.open(shape);
 
       // then
-      expect(!!contextPad.isOpen()).toBe(true);
+      expect(contextPad.isOpen()).toBeTruthy();
     }));
 
 
@@ -117,15 +131,25 @@ describe('features/context-pad', function() {
       canvas.addShape(shapeA);
       canvas.addShape(shapeB);
 
-      // when
+      // when (1)
       contextPad.open(shapeA);
+
+      // then (1)
+      expectEntries(contextPad, shapeA, [ 'action.a', 'action.b' ]);
+
+
+      // when (2)
       contextPad.open(shapeB);
+
+      // then (2)
+      expectEntries(contextPad, shapeB, [ 'action.c', 'action.no-image' ]);
+
+      // when (3)
       contextPad.open(shapeA);
       contextPad.close();
 
-      // then
-      expect(!!contextPad.isOpen()).toBe(false);
-
+      // then (3)
+      expect(contextPad.isOpen()).toBeFalsy();
     }));
 
 
@@ -144,6 +168,25 @@ describe('features/context-pad', function() {
 
       // then
       expect(!!contextPad.isOpen()).toBe(false);
+    }));
+
+
+    it('should reopen, resetting entries', inject(function(canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+
+
+      contextPad.open(shape);
+      contextPad.close();
+
+      // when
+      contextPad.open(shape);
+
+      // then
+      expectEntries(contextPad, shape, [ 'action.c', 'action.no-image' ]);
     }));
 
   });
