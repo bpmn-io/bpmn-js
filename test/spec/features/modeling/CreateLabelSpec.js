@@ -5,8 +5,6 @@ var TestHelper = require('../../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var _ = require('lodash');
-
 var modelingModule = require('../../../../lib/features/modeling');
 
 

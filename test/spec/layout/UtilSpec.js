@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
-
 var LayoutUtil = require('../../../lib/layout/Util');
 
 

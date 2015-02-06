@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('lodash');
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */

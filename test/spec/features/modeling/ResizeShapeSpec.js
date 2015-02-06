@@ -8,8 +8,6 @@ var TestHelper = require('../../../TestHelper');
 var Matchers = require('../../../Matchers');
 
 
-var _ = require('lodash');
-
 var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds;
 
 var modelingModule = require('../../../../lib/features/modeling');
