@@ -1,0 +1,224 @@
+{
+  "name": "Camunda",
+  "uri": "http://activiti.org/bpmn",
+  "prefix": "camunda",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "AsyncCapable",
+      "isAbstract": true,
+      "extends": [
+        "bpmn:Activity",
+        "bpmn:Gateway",
+        "bpmn:Event"
+      ],
+      "properties": [
+        {
+          "name": "asyncBefore",
+          "isAttr": true,
+          "type": "Boolean",
+          "default": false
+        },
+        {
+          "name": "asyncAfter",
+          "isAttr": true,
+          "type": "Boolean",
+          "default": false
+        }
+      ]
+    },
+    {
+      "name": "Assignable",
+      "extends": [ "bpmn:UserTask" ],
+      "properties": [
+        {
+          "name": "assignee",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Calling",
+      "extends": [ "bpmn:CallActivity" ],
+      "properties": [
+        {
+          "name": "calledElementBinding",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "calledElementVersion",
+          "isAttr": true,
+          "type": "Integer"
+        }
+      ]
+    },
+    {
+      "name": "ServiceTaskLike",
+      "extends": [
+        "bpmn:ServiceTask",
+        "bpmn:BusinessRuleTask",
+        "bpmn:SendTask",
+        "bpmn:MessageEventDefinition"
+      ],
+      "properties": [
+        {
+          "name": "expression",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "javaDelegate",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "delegateExpression",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Connector",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "inputOutput",
+          "type": "InputOutput"
+        },
+        {
+          "name": "connectorId",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "InputOutput",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "inputOutput",
+          "type": "InputOutput"
+        },
+        {
+          "name": "connectorId",
+          "type": "String"
+        },
+        {
+          "name": "inputParameters",
+          "isMany": true,
+          "type": "InputParameter"
+        },
+        {
+          "name": "outputParameters",
+          "isMany": true,
+          "type": "OutputParameter"
+        }
+      ]
+    },
+    {
+      "name": "InputOutputParameter",
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "isBody": true,
+          "type": "String"
+        },
+        {
+          "name": "definition",
+          "type": "InputOutputParameterDefinition"
+        }
+      ]
+    },
+    {
+      "name": "InputOutputParameterDefinition",
+      "isAbstract": true
+    },
+    {
+      "name": "List",
+      "superClass": [ "InputOutputParameterDefinition" ],
+      "properties": [
+        {
+          "name": "items",
+          "isMany": true,
+          "type": "InputOutputParameterDefinition"
+        }
+      ]
+    },
+    {
+      "name": "Map",
+      "superClass": [ "InputOutputParameterDefinition" ],
+      "properties": [
+        {
+          "name": "entries",
+          "isMany": true,
+          "type": "Entry"
+        }
+      ]
+    },
+    {
+      "name": "Entry",
+      "properties": [
+        {
+          "name": "key",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "type": "InputOutputParameterDefinition"
+        }
+      ]
+    },
+    {
+      "name": "Value",
+      "superClass": [ "InputOutputParameterDefinition" ],
+      "properties": [
+        {
+          "name": "value",
+          "isBody": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "Script",
+      "superClass": [ "InputOutputParameterDefinition" ],
+      "properties": [
+        {
+          "name": "scriptLanguage",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "source",
+          "isBody": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "InputParameter",
+      "superClass": [ "InputOutputParameter" ]
+    },
+    {
+      "name": "OutputParameter",
+      "superClass": [ "InputOutputParameter" ]
+    }
+  ],
+  "emumerations": [ ]
+}

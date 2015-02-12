@@ -1,6 +1,7 @@
 'use strict';
 
-var TestHelper = require('../TestHelper');
+require('../TestHelper');
+
 
 var fs = require('fs');
 
@@ -95,9 +96,6 @@ describe('Viewer', function() {
         // then
         expect(overlays).toBeDefined();
         expect(elementRegistry).toBeDefined();
-
-        // given
-        var subProcessShape = elementRegistry.get('SubProcess_1');
 
         // when
         overlays.add('SubProcess_1', {
@@ -270,6 +268,7 @@ describe('Viewer', function() {
       });
     });
 
+
     it('should remove outer-makers on export', function(done) {
 
       // given
@@ -385,6 +384,48 @@ describe('Viewer', function() {
       expect(viewer.container.style.position).toBe('fixed');
       expect(viewer.container.style.width).toBe('200px');
       expect(viewer.container.style.height).toBe('100px');
+    });
+
+
+    var camundaPackage = require('../fixtures/json/model/camunda');
+
+    it('should provide custom moddle extensions', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/extension/camunda.bpmn', 'utf8');
+
+      // given
+      viewer = new Viewer({
+        container: container,
+        moddleExtensions: {
+          camunda: camundaPackage
+        }
+      });
+
+      // when
+      viewer.importXML(xml, function(err, warnings) {
+
+        var elementRegistry = viewer.get('elementRegistry');
+
+        var taskShape = elementRegistry.get('send'),
+            sendTask = taskShape.businessObject;
+
+        // then
+        expect(sendTask).toBeDefined();
+
+        var extensionElements = sendTask.extensionElements;
+
+        // receive task should be moddle extended
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).toBeTruthy();
+
+        // extension elements should provide typed element
+        expect(extensionElements).toBeTruthy();
+
+        expect(extensionElements.values.length).toBe(1);
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).toBeTruthy();
+
+        done(err);
+      });
+
     });
 
   });
