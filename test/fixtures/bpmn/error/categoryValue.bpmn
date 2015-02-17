@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="8.4.1" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-73c85f47-caf7-49f4-81c2-ccd9c46beedb" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <categoryValue id="sid-afd7e63e-916e-4bd0-a9f0-98cbff749193" value="group with label"/>
+  <process id="sid-d21bd22a-e617-4562-9cbd-2546073c1cf1" isExecutable="false" processType="None">
+    <extensionElements>
+      <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="a97a57cd8c4145d09f902344a2f6eec7"/>
+    </extensionElements>
+    <group categoryValueRef="sid-afd7e63e-916e-4bd0-a9f0-98cbff749193" id="sid-1FB8E9C5-D54C-4FCA-A2B2-256090EC79DF">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
+      </extensionElements>
+    </group>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-73344385-3bbb-419c-ad69-a9db64e271c7">
+    <bpmndi:BPMNPlane bpmnElement="sid-d21bd22a-e617-4562-9cbd-2546073c1cf1" id="sid-def820ae-1226-4abe-9eb0-7b5543824627">
+      <bpmndi:BPMNShape bpmnElement="sid-1FB8E9C5-D54C-4FCA-A2B2-256090EC79DF" id="sid-1FB8E9C5-D54C-4FCA-A2B2-256090EC79DF_gui">
+        <omgdc:Bounds height="234.0" width="346.0" x="180.0" y="135.0"/>
+        <bpmndi:BPMNLabel labelStyle="sid-41bec41f-8420-426c-bf18-f704a8dd71d2">
+          <omgdc:Bounds height="12.0" width="96.0" x="184.0" y="137.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="sid-41bec41f-8420-426c-bf18-f704a8dd71d2">
+      <omgdc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</definitions>

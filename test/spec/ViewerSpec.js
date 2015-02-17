@@ -119,13 +119,37 @@ describe('Viewer', function() {
 
   describe('error handling', function() {
 
+
+    function expectMessage(e, expectedMessage) {
+
+      expect(e).toBeDefined();
+
+      if (expectedMessage instanceof RegExp) {
+        expect(e.message).toMatch(expectedMessage);
+      } else {
+        expect(e.message).toEqual(expectedMessage);
+      }
+    }
+
+    function expectWarnings(warnings, expected) {
+
+      expect(warnings.length).toBe(expected.length);
+
+      warnings.forEach(function(w, idx) {
+        expectMessage(w, expected[idx]);
+      });
+    }
+
+
     it('should handle non-bpmn input', function(done) {
 
       var xml = 'invalid stuff';
 
       createViewer(xml, function(err) {
 
-        expect(err).toBeDefined();
+        expect(err).toBeTruthy();
+
+        expectMessage(err, /Text data outside of root node./);
 
         done();
       });
@@ -136,13 +160,39 @@ describe('Viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn', 'utf8');
 
+      // when
       createViewer(xml, function(err, warnings) {
 
-        expect(err).not.toBeDefined();
-        expect(warnings.length).toBe(2);
+        // then
+        expect(err).toBeFalsy();
 
-        expect(warnings[0].message).toEqual('no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />');
-        expect(warnings[1].message).toEqual('correcting missing bpmnElement on <bpmndi:BPMNPlane id="BPMNPlane_1" /> to <bpmn:Process id="Process_1" />');
+        expectWarnings(warnings, [
+          'unresolved reference <Collaboration_2>',
+          'no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />',
+          'correcting missing bpmnElement ' +
+            'on <bpmndi:BPMNPlane id="BPMNPlane_1" /> ' +
+            'to <bpmn:Process id="Process_1" />'
+        ]);
+
+        done();
+      });
+    });
+
+
+    it('should handle invalid namespaced element', function(done) {
+
+      var xml = fs.readFileSync('test/fixtures/bpmn/error/categoryValue.bpmn', 'utf8');
+
+      // when
+      createViewer(xml, function(err, warnings) {
+
+        // then
+        expect(err).toBeFalsy();
+
+        expectWarnings(warnings, [
+          /unparsable content <categoryValue> detected/,
+          'unresolved reference <sid-afd7e63e-916e-4bd0-a9f0-98cbff749193>'
+        ]);
 
         done();
       });
@@ -153,13 +203,19 @@ describe('Viewer', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/error/missing-namespace.bpmn', 'utf8');
 
-      createViewer(xml, function(err) {
-        expect(err).toBeDefined();
-        expect(err.message).toEqual(
-          'unparsable content <collaboration> detected; this may indicate an invalid BPMN 2.0 diagram file\n' +
-          '\tline: 2\n' +
-          '\tcolumn: 29\n' +
-          '\tnested error: unrecognized element <collaboration>');
+      // when
+      createViewer(xml, function(err, warnings) {
+
+        // then
+        expect(err).toBeFalsy();
+
+        expectWarnings(warnings, [
+          /unparsable content <collaboration> detected/,
+          'unresolved reference <Participant_1>',
+          'no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />',
+          'no bpmnElement referenced in <bpmndi:BPMNShape id="BPMNShape_Participant_1" />',
+          'no process or collaboration present to display'
+        ]);
 
         done();
       });

@@ -15,11 +15,6 @@ describe('import - importer', function() {
 
   var moddle = new BpmnModdle();
 
-  function read(xml, opts, callback) {
-    return moddle.fromXML(xml, 'bpmn:Definitions', opts, callback);
-  }
-
-
   var container;
 
   beforeEach(function() {
@@ -287,8 +282,11 @@ describe('import - importer', function() {
       // when
       runImport(diagram, xml, function(err, warnings) {
 
+        var expectedMessage =
+          'multiple DI elements defined for <bpmn:InclusiveGateway id="InclusiveGateway_1" />';
+
         expect(warnings.length).toBe(1);
-        expect(warnings[0].message).toBe('multiple DI elements defined for <bpmn:InclusiveGateway id="InclusiveGateway_1" />');
+        expect(warnings[0].message).toBe(expectedMessage);
 
         done(err);
       });
@@ -353,10 +351,10 @@ describe('import - importer', function() {
     });
   });
 
+
   describe('position', function() {
 
     var xml1 = fs.readFileSync('test/fixtures/bpmn/import/position/position-testcase.bpmn', 'utf8');
-    var xml2 = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
     it('should round shape\'s x and y coordinates', function(done) {
 
@@ -383,6 +381,7 @@ describe('import - importer', function() {
       });
     });
 
+
     it('should round shape\'s height and width', function(done) {
 
       // given
@@ -405,4 +404,5 @@ describe('import - importer', function() {
     });
 
   });
+
 });
