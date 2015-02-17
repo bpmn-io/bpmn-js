@@ -42,6 +42,32 @@ describe('Viewer', function() {
   });
 
 
+  it('should re-import simple process', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+    // given
+    createViewer(xml, function(err, warnings, viewer) {
+
+      if (err) {
+        return done(err);
+      }
+
+      // when
+      // mimic re-import of same diagram
+      viewer.importXML(xml, function(err, warnings) {
+
+        // then
+        expect(err).toBeFalsy();
+        expect(warnings.length).toBe(0);
+
+        done();
+      });
+
+    });
+  });
+
+
   describe('import events', function() {
 
     it('should fire <import.*> events', function(done) {

@@ -19,8 +19,8 @@ describe('Modeler', function() {
   function createModeler(xml, done) {
     var modeler = new Modeler({ container: container });
 
-    modeler.importXML(xml, function(err) {
-      done(err, modeler);
+    modeler.importXML(xml, function(err, warnings) {
+      done(err, warnings, modeler);
     });
   }
 
@@ -37,13 +37,42 @@ describe('Modeler', function() {
   });
 
 
+  iit('should re-import simple process', function(done) {
+
+    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+
+    // given
+    createModeler(xml, function(err, warnings, modeler) {
+
+      if (err) {
+        return done(err);
+      }
+
+      // when
+      // mimic re-import of same diagram
+      modeler.importXML(xml, function(err, warnings) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(warnings.length).toBe(0);
+
+        done();
+      });
+
+    });
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      createModeler(xml, function(err, viewer) {
+      createModeler(xml, function(err, warnings, viewer) {
 
         // given
         var overlays = viewer.get('overlays'),
@@ -91,7 +120,7 @@ describe('Modeler', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      createModeler(xml, function(err, viewer) {
+      createModeler(xml, function(err, warnings, viewer) {
 
         // given
         var bendpointMove = viewer.get('bendpointMove'),
@@ -141,7 +170,7 @@ describe('Modeler', function() {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
-      createModeler(xml, function(err, modeler) {
+      createModeler(xml, function(err, warnings, modeler) {
 
         expect(modeler.get('bpmnjs')).toBe(modeler);
 
