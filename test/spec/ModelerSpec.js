@@ -37,7 +37,7 @@ describe('Modeler', function() {
   });
 
 
-  iit('should re-import simple process', function(done) {
+  it('should re-import simple process', function(done) {
 
     var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
