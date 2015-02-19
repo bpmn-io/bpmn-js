@@ -1,0 +1,9 @@
+language: node_js
+node_js: '0.10'
+
+script:
+  - grunt
+
+before_install:
+  - npm install -g grunt-cli wiredeps
+  - wiredeps --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
