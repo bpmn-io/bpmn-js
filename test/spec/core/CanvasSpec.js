@@ -5,6 +5,8 @@ var TestHelper = require('../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
+var merge = require('lodash/object/merge');
+
 var createSpy = jasmine.createSpy;
 
 var Matchers = require('../../Matchers');
@@ -14,24 +16,22 @@ describe('Canvas', function() {
 
   beforeEach(Matchers.addDeepEquals);
 
-
   var container;
 
-  var defaultBootstrap = bootstrapDiagram(function() {
+  /**
+   * Create a diagram with the given options
+   */
+  function createDiagram(options) {
 
-    container = jasmine.getEnv().getTestContainer();
-
-    return {
-      canvas: {
-        container: container
-      }
-    };
-  }, {});
-
+    return bootstrapDiagram(function() {
+      container = jasmine.getEnv().getTestContainer();
+      return merge({ canvas: { container: container } }, options);
+    }, {});
+  }
 
   describe('initialize', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
     it('should create <svg> element', inject(function() {
 
@@ -46,7 +46,7 @@ describe('Canvas', function() {
 
   describe('destroy', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
     it('should remove created elements', inject(function(eventBus) {
 
@@ -62,7 +62,7 @@ describe('Canvas', function() {
 
   describe('#addShape', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
 
     it('should fire <shape.add> event', inject(function(canvas, eventBus) {
@@ -178,7 +178,7 @@ describe('Canvas', function() {
 
   describe('#removeShape', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
 
     it('should fire <shape.removed> event', inject(function(canvas, eventBus, elementRegistry) {
@@ -242,7 +242,7 @@ describe('Canvas', function() {
 
   describe('#addConnection', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
 
     it('should fire <connection.added> event', inject(function(canvas, eventBus) {
@@ -267,7 +267,7 @@ describe('Canvas', function() {
 
   describe('#removeConnection', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
 
     it('should fire <connection.removed> event', inject(function(canvas, eventBus, elementRegistry) {
@@ -297,7 +297,7 @@ describe('Canvas', function() {
 
   describe('root element(s)', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
 
     it('should always return root element', inject(function(canvas) {
@@ -379,7 +379,7 @@ describe('Canvas', function() {
 
   describe('update behavior', function() {
 
-    beforeEach(defaultBootstrap);
+    beforeEach(createDiagram());
 
     var a, b, c;
 
@@ -401,7 +401,7 @@ describe('Canvas', function() {
 
   describe('viewbox', function() {
 
-    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
     describe('getter', function() {
@@ -512,6 +512,29 @@ describe('Canvas', function() {
       }));
 
 
+      it('should set viewbox / negative coordinates', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: -50, y: -50, width: 600, height: 600 });
+
+        // when
+        // set viewbox to inner viewbox
+        canvas.viewbox(canvas.viewbox().inner);
+
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: -50, y: -50,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 600, height: 600, x: -50, y: -50 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
       it('should set viewbox / overflow', inject(function(canvas, eventBus) {
 
         // given
@@ -592,7 +615,7 @@ describe('Canvas', function() {
 
   describe('scroll', function() {
 
-    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
     describe('setter', function() {
@@ -670,7 +693,7 @@ describe('Canvas', function() {
 
   describe('zoom', function() {
 
-    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
     describe('getter', function() {
@@ -735,7 +758,7 @@ describe('Canvas', function() {
       it('should zoom fit-viewport (horizontally)', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 50, y: 100, width: 550, height: 200 });
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 600, height: 200 });
 
         // when
         var zoom = canvas.zoom('fit-viewport');
@@ -745,10 +768,10 @@ describe('Canvas', function() {
         expect(zoom).toEqual(0.5);
 
         expect(viewbox).toEqual({
-          x: 0, y: 0,
+          x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 550, height: 200, x: 50, y: 100 },
+          inner: { width: 600, height: 200, x: 50, y: 100 },
           outer: { width: 300, height: 300 }
         });
 
@@ -758,7 +781,7 @@ describe('Canvas', function() {
       it('should zoom fit-viewport (vertically)', inject(function(canvas) {
 
         // given
-        canvas.addShape({ id: 's0', x: 50, y: 100, width: 250, height: 500 });
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 250, height: 600 });
 
         // when
         var zoom = canvas.zoom('fit-viewport');
@@ -768,10 +791,10 @@ describe('Canvas', function() {
         expect(zoom).toEqual(0.5);
 
         expect(viewbox).toEqual({
-          x: 0, y: 0,
+          x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
-          inner: { width: 250, height: 500, x: 50, y: 100 },
+          inner: { width: 250, height: 600, x: 50, y: 100 },
           outer: { width: 300, height: 300 }
         });
 
@@ -798,6 +821,28 @@ describe('Canvas', function() {
           width: 600, height: 600,
           scale: 0.5,
           inner: { width: 600, height: 600, x: 0, y: 0 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
+      it('should zoom fit-viewport, negative coordinates', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: -50, y: -50, width: 600, height: 600 });
+
+        // when
+        canvas.zoom('fit-viewport');
+
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(viewbox).toEqual({
+          x: -50, y: -50,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 600, height: 600, x: -50, y: -50 },
           outer: { width: 300, height: 300 }
         });
 
@@ -999,7 +1044,7 @@ describe('Canvas', function() {
 
   describe('#getAbsoluteBBox', function() {
 
-    beforeEach(bootstrapDiagram({ canvas: { width: 300, height: 300 } }));
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
     it('should return abs position (default zoom)', inject(function(canvas) {
