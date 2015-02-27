@@ -1156,4 +1156,93 @@ describe('Canvas', function() {
 
   });
 
+
+  describe('markers', function() {
+
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
+
+
+    var shape, gfx;
+
+    beforeEach(inject(function(canvas) {
+      shape = canvas.addShape({ id: 's0', x: 10, y: 20, width: 300, height: 200 });
+      gfx = canvas.getGraphics(shape);
+    }));
+
+
+    it('should add', inject(function(canvas) {
+
+      // when
+      canvas.addMarker(shape, 'foo');
+
+      // then
+      expect(canvas.hasMarker(shape, 'foo')).toBe(true);
+      expect(gfx.hasClass('foo')).toBe(true);
+    }));
+
+
+    it('should remove', inject(function(canvas) {
+
+      // given
+      canvas.addMarker(shape, 'foo');
+
+      // when
+      canvas.removeMarker(shape, 'foo');
+
+      // then
+      expect(canvas.hasMarker(shape, 'foo')).toBe(false);
+      expect(gfx.hasClass('foo')).toBe(false);
+    }));
+
+
+    it('should toggle', inject(function(canvas) {
+
+      // when
+      canvas.toggleMarker(shape, 'foo');
+
+      // then
+      expect(canvas.hasMarker(shape, 'foo')).toBe(true);
+      expect(gfx.hasClass('foo')).toBe(true);
+
+      // but when
+      canvas.toggleMarker(shape, 'foo');
+
+      // then
+      expect(canvas.hasMarker(shape, 'foo')).toBe(false);
+      expect(gfx.hasClass('foo')).toBe(false);
+
+    }));
+
+
+    describe('eventBus integration', function() {
+
+      var capturedEvents;
+
+      beforeEach(inject(function(eventBus) {
+
+        capturedEvents = [];
+
+        eventBus.on('element.marker.update', function(event) {
+          capturedEvents.push([ event.element, event.marker, event.add ]);
+        });
+      }));
+
+
+      it('should fire element.marker.update', inject(function(canvas) {
+
+        canvas.addMarker(shape, 'bar');
+        canvas.removeMarker(shape, 'foo');
+        canvas.toggleMarker(shape, 'bar');
+
+        expect(capturedEvents).toEqual([
+          [ shape, 'bar', true ],
+          [ shape, 'foo', false ],
+          [ shape, 'bar', false ]
+        ]);
+      }));
+
+    });
+
+  });
+
 });
