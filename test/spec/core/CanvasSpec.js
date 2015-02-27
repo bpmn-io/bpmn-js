@@ -801,6 +801,52 @@ describe('Canvas', function() {
       }));
 
 
+      it('should zoom fit-viewport / no scale up / align origin', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 50, height: 50 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(1);
+
+        expect(viewbox).toEqual({
+          x: 0, y: 0,
+          width: 300, height: 300,
+          scale: 1,
+          inner: { width: 50, height: 50, x: 50, y: 100 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
+      it('should zoom fit-viewport / no scale up / negative coordinates', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: -50, y: -100, width: 50, height: 50 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(1);
+
+        expect(viewbox).toEqual({
+          x: -50, y: -100,
+          width: 300, height: 300,
+          scale: 1,
+          inner: { width: 50, height: 50, x: -50, y: -100 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+
       it('should zoom fit-viewport / scroll into view', inject(function(canvas) {
 
         // given
