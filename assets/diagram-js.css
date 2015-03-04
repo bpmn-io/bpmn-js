@@ -360,6 +360,10 @@
   background-color: rgba(255,255,255, 0.85);
 }
 
+.popup-menu-entry:hover {
+  background: rgb(255, 252, 176);
+}
+
 .popup-menu-entry > span {
   font-size: 14px;
   font-family: Arial, sans-serif;
