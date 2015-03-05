@@ -22,6 +22,7 @@ describe('features/ModelingRules', function() {
   var sequenceXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
   var eventGatewaysEdgeXML =
       fs.readFileSync('test/fixtures/bpmn/features/rules/event-based-gateway-outgoing-edge.bpmn', 'utf8');
+  var linkEventXML = fs.readFileSync('test/fixtures/bpmn/features/rules/link-event.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule, rulesModule ];
 
@@ -187,5 +188,94 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(false);
     }));
 
+  });
+
+
+
+  describe('catch link events', function() {
+
+    beforeEach(bootstrapModeler(linkEventXML, { modules: testModules }));
+
+    it('should not have incoming sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+      // given
+      var catchEvent   = elementRegistry.get('IntermediateCatchEvent'),
+          incomingTask = elementRegistry.get('Task_incoming');
+
+
+      // when
+      var allowed = rules.allowed('connection.create', {
+        connection: null,
+        source: incomingTask,
+        target: catchEvent
+      });
+
+      // then
+      // connection should not be allowed
+      expect(allowed).toBe(false);
+    }));
+
+    it('should be allowed to have outgoing sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+      // given
+      var catchEvent   = elementRegistry.get('IntermediateCatchEvent'),
+          outgoingTask = elementRegistry.get('Task_outgoing');
+
+      // when
+      var allowed = rules.allowed('connection.create', {
+        connection: null,
+        source: catchEvent,
+        target: outgoingTask
+      });
+
+      // then
+      // connection should not be allowed
+      expect(allowed).toBe(true);
+    }));
+  });
+
+
+
+  describe('throwing link events', function() {
+
+    beforeEach(bootstrapModeler(linkEventXML, { modules: testModules }));
+
+    it('should not have outgoing sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+      // given
+      var catchEvent   = elementRegistry.get('IntermediateThrowEvent'),
+          outgoingTask = elementRegistry.get('Task_outgoing');
+
+
+      // when
+      var allowed = rules.allowed('connection.create', {
+        connection: null,
+        source: catchEvent,
+        target: outgoingTask
+      });
+
+      // then
+      // connection should not be allowed
+      expect(allowed).toBe(false);
+    }));
+
+    it('should be allowed to have incoming sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+      // given
+      var catchEvent   = elementRegistry.get('IntermediateThrowEvent'),
+          incomingTask = elementRegistry.get('Task_incoming');
+
+
+      // when
+      var allowed = rules.allowed('connection.create', {
+        connection: null,
+        source: incomingTask,
+        target: catchEvent
+      });
+
+      // then
+      // connection should not be allowed
+      expect(allowed).toBe(true);
+    }));
   });
 });

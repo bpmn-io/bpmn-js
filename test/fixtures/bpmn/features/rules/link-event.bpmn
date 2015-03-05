@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:task id="Task_incoming" />
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent" name="">
+      <bpmn:linkEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent" name="">
+      <bpmn:linkEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:task id="Task_outgoing" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Task_incoming_di" bpmnElement="Task_incoming">
+        <dc:Bounds x="224" y="176" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_di" bpmnElement="IntermediateCatchEvent">
+        <dc:Bounds x="512" y="128" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="485" y="164" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_di" bpmnElement="IntermediateThrowEvent">
+        <dc:Bounds x="512" y="247" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="485" y="283" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_outgoing_di" bpmnElement="Task_outgoing">
+        <dc:Bounds x="713" y="176" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
