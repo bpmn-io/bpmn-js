@@ -27,7 +27,7 @@ describe('features/popup', function() {
     it('should return popup instance', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('popup-menu', {
         x: 100,
         y: 100
       }, [
@@ -39,10 +39,33 @@ describe('features/popup', function() {
       expect(popup).toBeDefined();
     }));
 
+    it('should return popup instance', inject(function(popupMenu) {
+
+      // when
+      var popup = popupMenu.open('popup-menu', {
+        x: 100,
+        y: 100
+      }, [
+        {label: 'Entry 1'},
+        {label: 'Entry 2'}
+      ]);
+
+      var popup2 = popupMenu.open('popup-menu', {
+        x: 200,
+        y: 200
+      }, [
+        {label: 'Entry 1'},
+        {label: 'Entry 2'}
+      ]);
+
+      // then
+      expect(popup).toBe(popup2);
+    }));
+
     it('should attach popup to html', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('popup-menu', {
         x: 100,
         y: 100
       }, [
@@ -62,7 +85,7 @@ describe('features/popup', function() {
     it('should add entries to menu', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('popup-menu', {
         x: 100,
         y: 100
       }, [
@@ -84,7 +107,7 @@ describe('features/popup', function() {
     it('should add action-id to entry', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('popup-menu', {
         x: 100,
         y: 100
       }, [
@@ -116,7 +139,7 @@ describe('features/popup', function() {
     it('should remove DOM', inject(function(popupMenu) {
 
       // given
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('popup-menu', {
         x: 100,
         y: 100,
       }, [
@@ -150,7 +173,7 @@ describe('features/popup', function() {
       it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
 
         // given
-        var popup = popupMenu.open({
+        var popup = popupMenu.open('popup-menu', {
           x: 100,
           y: 100
         }, [
@@ -173,7 +196,7 @@ describe('features/popup', function() {
       it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
 
         // given
-        var popup = popupMenu.open({
+        var popup = popupMenu.open('popup-menu', {
           x: 100,
           y: 100
         }, [
@@ -203,16 +226,13 @@ describe('features/popup', function() {
     it('should standard class to entry', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('test-popup', {
         x: 100,
         y: 100
       }, [
           {id: 'id1', label: 'Entry 1'},
           {id: 'id2', label: 'Entry 2'}
-        ],
-        {
-          className: 'test-popup'
-        }
+        ]
       );
 
       // then
@@ -223,17 +243,14 @@ describe('features/popup', function() {
     it('should custom class to entry if specfied', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('test-popup', {
         x: 100,
         y: 100
       }, [
           {id: 'id1', label: 'Entry 1'},
           {id: 'id2', label: 'Entry 2 - special', className: 'special-entry'},
           {id: 'id2', label: 'Entry 3'}
-        ],
-        {
-          className: 'test-popup'
-        }
+        ]
       );
 
       // then
@@ -244,17 +261,14 @@ describe('features/popup', function() {
     it('should add optional style attribute', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({
+      var popup = popupMenu.open('test-popup', {
         x: 100,
         y: 100
       }, [
           {id: 'id1', label: 'Entry 1'},
           {id: 'id2', label: 'Entry 2', className: 'special-entry', style:'color: rgb(222,67,157)'},
           {id: 'id2', label: 'Entry 3'}
-        ],
-        {
-          className: 'test-popup'
-        }
+        ]
       );
 
       // then
