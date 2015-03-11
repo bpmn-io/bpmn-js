@@ -282,6 +282,35 @@
   display: block;
 }
 
+.djs-popup {
+  background: #F9F9F9;
+  border: solid 1px #CCC;
+  box-shadow: 1px 1px 2px 2px #EEE;
+}
+
+.djs-popup-entry {
+  font-size: 20px;
+  line-height: 20px;
+  padding: 2px 10px 2px 5px;
+  background-color: rgba(255,255,255, 0.85);
+  white-space: nowrap;
+}
+
+.djs-popup-entry:hover {
+  background: rgb(255, 252, 176);
+}
+
+.djs-popup-entry > span {
+  font-size: 14px;
+  margin-left: 5px;
+
+  vertical-align: middle;
+}
+
+.djs-popup-entry:before {
+  vertical-align: middle;
+}
+
 /**
  * touch
  */
@@ -352,21 +381,4 @@
 
 .djs-bendpoint.djs-dragging .djs-visual {
   fill: yellow;
-}
-
-.popup-menu-entry {
-  font-size: 20px;
-  height: 22px;
-  background-color: rgba(255,255,255, 0.85);
-}
-
-.popup-menu-entry:hover {
-  background: rgb(255, 252, 176);
-}
-
-.popup-menu-entry > span {
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  margin-left: 5px;
-  vertical-align: 1px;
 }
