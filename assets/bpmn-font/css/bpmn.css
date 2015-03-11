@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'bpmn';
+  src: url('../font/bpmn.eot?59469839');
+  src: url('../font/bpmn.eot?59469839#iefix') format('embedded-opentype'),
+       url('../font/bpmn.woff?59469839') format('woff'),
+       url('../font/bpmn.ttf?59469839') format('truetype'),
+       url('../font/bpmn.svg?59469839#bpmn') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'bpmn';
+    src: url('../font/bpmn.svg?59469839#bpmn') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "bpmn";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+     
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon-screw-wrench:before { content: '\e800'; } /* '' */
+.icon-trash:before { content: '\e801'; } /* '' */
+.icon-gateway-parallel:before { content: '\e802'; } /* '' */
+.icon-intermediate-event-catch-cancel:before { content: '\e803'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-message:before { content: '\e804'; } /* '' */
+.icon-start-event-compensation:before { content: '\e805'; } /* '' */
+.icon-start-event-non-interrupting-parallel-multiple:before { content: '\e806'; } /* '' */
+.icon-loop-marker:before { content: '\e807'; } /* '' */
+.icon-user-task:before { content: '\e808'; } /* '' */
+.icon-business-rule:before { content: '\e809'; } /* '' */
+.icon-parallel-mi-marker:before { content: '\e80a'; } /* '' */
+.icon-start-event-non-interrupting-signal:before { content: '\e80b'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-timer:before { content: '\e80c'; } /* '' */
+.icon-intermediate-event-catch-parallel-multiple:before { content: '\e80d'; } /* '' */
+.icon-intermediate-event-catch-compensation:before { content: '\e80e'; } /* '' */
+.icon-gateway-xor:before { content: '\e80f'; } /* '' */
+.icon-connection:before { content: '\e810'; } /* '' */
+.icon-end-event-cancel:before { content: '\e811'; } /* '' */
+.icon-intermediate-event-catch-condition:before { content: '\e812'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-parallel-multiple:before { content: '\e813'; } /* '' */
+.icon-start-event-condition:before { content: '\e814'; } /* '' */
+.icon-start-event-non-interrupting-timer:before { content: '\e815'; } /* '' */
+.icon-sequential-mi-marker-kopie:before { content: '\e816'; } /* '' */
+.icon-manual:before { content: '\e817'; } /* '' */
+.icon-receive:before { content: '\e818'; } /* '' */
+.icon-sub-process-marker:before { content: '\e819'; } /* '' */
+.icon-start-event-parallel-multiple:before { content: '\e81a'; } /* '' */
+.icon-start-event-error:before { content: '\e81b'; } /* '' */
+.icon-intermediate-event-catch-signal:before { content: '\e81c'; } /* '' */
+.icon-intermediate-event-catch-error:before { content: '\e81d'; } /* '' */
+.icon-end-event-compensation:before { content: '\e81e'; } /* '' */
+.icon-subprocess-collapsed:before { content: '\e81f'; } /* '' */
+.icon-subprocess-expanded:before { content: '\e820'; } /* '' */
+.icon-task:before { content: '\e821'; } /* '' */
+.icon-end-event-error:before { content: '\e822'; } /* '' */
+.icon-intermediate-event-catch-escalation:before { content: '\e823'; } /* '' */
+.icon-intermediate-event-catch-timer:before { content: '\e824'; } /* '' */
+.icon-start-event-escalation:before { content: '\e825'; } /* '' */
+.icon-start-event-signal:before { content: '\e826'; } /* '' */
+.icon-business-rule-task:before { content: '\e827'; } /* '' */
+.icon-script:before { content: '\e828'; } /* '' */
+.icon-send:before { content: '\e829'; } /* '' */
+.icon-call-activity:before { content: '\e82a'; } /* '' */
+.icon-start-event-timer:before { content: '\e82b'; } /* '' */
+.icon-start-event-message:before { content: '\e82c'; } /* '' */
+.icon-intermediate-event-none:before { content: '\e82d'; } /* '' */
+.icon-intermediate-event-catch-link:before { content: '\e82e'; } /* '' */
+.icon-end-event-escalation:before { content: '\e82f'; } /* '' */
+.icon-text-annotation:before { content: '\e830'; } /* '' */
+.icon-bpmn-io:before { content: '\e831'; } /* '' */
+.icon-gateway-complex:before { content: '\e832'; } /* '' */
+.icon-gateway-eventbased:before { content: '\e833'; } /* '' */
+.icon-gateway-none:before { content: '\e834'; } /* '' */
+.icon-gateway-or:before { content: '\e835'; } /* '' */
+.icon-end-event-terminate:before { content: '\e836'; } /* '' */
+.icon-end-event-signal:before { content: '\e837'; } /* '' */
+.icon-end-event-none:before { content: '\e838'; } /* '' */
+.icon-end-event-multiple:before { content: '\e839'; } /* '' */
+.icon-end-event-message:before { content: '\e83a'; } /* '' */
+.icon-end-event-link:before { content: '\e83b'; } /* '' */
+.icon-intermediate-event-catch-message:before { content: '\e83c'; } /* '' */
+.icon-intermediate-event-throw-compensation:before { content: '\e83d'; } /* '' */
+.icon-start-event-multiple:before { content: '\e83e'; } /* '' */
+.icon-data-input:before { content: '\e83f'; } /* '' */
+.icon-manual-task:before { content: '\e840'; } /* '' */
+.icon-service:before { content: '\e841'; } /* '' */
+.icon-user:before { content: '\e842'; } /* '' */
+.icon-receive-task:before { content: '\e843'; } /* '' */
+.icon-data-object:before { content: '\e844'; } /* '' */
+.icon-start-event-none:before { content: '\e845'; } /* '' */
+.icon-intermediate-event-throw-escalation:before { content: '\e846'; } /* '' */
+.icon-intermediate-event-catch-multiple:before { content: '\e847'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-escalation:before { content: '\e848'; } /* '' */
+.icon-intermediate-event-throw-link:before { content: '\e849'; } /* '' */
+.icon-start-event-non-interrupting-condition:before { content: '\e84a'; } /* '' */
+.icon-data-output:before { content: '\e84b'; } /* '' */
+.icon-script-task:before { content: '\e84c'; } /* '' */
+.icon-send-task:before { content: '\e84d'; } /* '' */
+.icon-data-store:before { content: '\e84e'; } /* '' */
+.icon-start-event-non-interrupting-escalation:before { content: '\e84f'; } /* '' */
+.icon-intermediate-event-throw-message:before { content: '\e850'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-multiple:before { content: '\e851'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-signal:before { content: '\e852'; } /* '' */
+.icon-intermediate-event-throw-multiple:before { content: '\e853'; } /* '' */
+.icon-start-event-non-interrupting-message:before { content: '\e854'; } /* '' */
+.icon-ad-hoc-marker:before { content: '\e855'; } /* '' */
+.icon-service-task:before { content: '\e856'; } /* '' */
+.icon-task-none:before { content: '\e857'; } /* '' */
+.icon-compensation-marker:before { content: '\e858'; } /* '' */
+.icon-start-event-non-interrupting-multiple:before { content: '\e859'; } /* '' */
+.icon-intermediate-event-throw-signal:before { content: '\e85a'; } /* '' */
+.icon-intermediate-event-catch-non-interrupting-condition:before { content: '\e85b'; } /* '' */
