@@ -253,12 +253,12 @@
 }
 
 .djs-context-pad .entry {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   text-align: center;
   display: inline-block;
-  font-size: 20px;
-  margin: 0 4px 4px 0;
+  font-size: 22px;
+  margin: 0 2px 2px 0;
 
   border-radius: 3px;
 
