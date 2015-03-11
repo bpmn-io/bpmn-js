@@ -4,8 +4,6 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var _ = require('lodash');
-
 var fs = require('fs');
 
 var modelingModule = require('../../../../lib/features/modeling'),
@@ -16,7 +14,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/replace', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/bpmn-replace/01_replace.bpmn', 'utf8');
+  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/replace/01_replace.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule, replaceModule ];
 
@@ -25,7 +23,7 @@ describe('features/replace', function() {
 
   describe('should replace', function() {
 
-    it('task', inject(function(elementRegistry, modeling, replace) {
+    it('task', inject(function(elementRegistry, modeling, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -34,7 +32,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       var businessObject = newElement.businessObject;
@@ -44,7 +42,7 @@ describe('features/replace', function() {
     }));
 
 
-    it('gateway', inject(function(elementRegistry, modeling, replace) {
+    it('gateway', inject(function(elementRegistry, modeling, bpmnReplace) {
 
       // given
       var gateway = elementRegistry.get('ExclusiveGateway_1');
@@ -53,7 +51,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(gateway, newElementData);
+      var newElement = bpmnReplace.replaceElement(gateway, newElementData);
 
 
       // then
@@ -68,7 +66,7 @@ describe('features/replace', function() {
 
   describe('position and size', function() {
 
-    it('should keep position', inject(function(elementRegistry, replace) {
+    it('should keep position', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -77,7 +75,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       expect(newElement.x).toBe(346);
@@ -89,7 +87,7 @@ describe('features/replace', function() {
 
   describe('label', function() {
 
-    it('should keep copy label', inject(function(elementRegistry, replace) {
+    it('should keep copy label', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -99,7 +97,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       expect(newElement.businessObject.name).toBe('Task Caption');
@@ -107,9 +105,10 @@ describe('features/replace', function() {
 
   });
 
+
   describe('undo support', function() {
 
-    it('should undo replace', inject(function(elementRegistry, modeling, replace, commandStack) {
+    it('should undo replace', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -117,7 +116,7 @@ describe('features/replace', function() {
         type: 'bpmn:UserTask'
       };
 
-      replace.replaceElement(task, newElementData);
+      bpmnReplace.replaceElement(task, newElementData);
 
       // when
       commandStack.undo();
@@ -131,7 +130,7 @@ describe('features/replace', function() {
     }));
 
 
-    it('should redo replace', inject(function(elementRegistry, modeling, replace, commandStack, eventBus) {
+    it('should redo replace', inject(function(elementRegistry, modeling, bpmnReplace, commandStack, eventBus) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -142,8 +141,8 @@ describe('features/replace', function() {
         type: 'bpmn:ServiceTask'
       };
 
-      var usertask = replace.replaceElement(task, newElementData);
-      var servicetask = replace.replaceElement(usertask, newElementData2);
+      var usertask = bpmnReplace.replaceElement(task, newElementData);
+      var servicetask = bpmnReplace.replaceElement(usertask, newElementData2);
 
       commandStack.undo();
       commandStack.undo();
@@ -164,7 +163,7 @@ describe('features/replace', function() {
 
   describe('connection handling', function() {
 
-    it('should reconnect valid connections', inject(function(elementRegistry, modeling, replace) {
+    it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -173,7 +172,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       var incoming = newElement.incoming[0],
@@ -189,7 +188,7 @@ describe('features/replace', function() {
     }));
 
 
-    it('should remove invalid incomming connections', inject(function(elementRegistry, modeling, replace) {
+    it('should remove invalid incomming connections', inject(function(elementRegistry, modeling, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('StartEvent_1');
@@ -198,7 +197,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       var incoming = newElement.incoming[0],
@@ -209,7 +208,8 @@ describe('features/replace', function() {
       expect(outgoing).toBeUndefined();
     }));
 
-    it('should remove invalid outgoing connections', inject(function(elementRegistry, modeling, replace) {
+
+    it('should remove invalid outgoing connections', inject(function(elementRegistry, modeling, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('EndEvent_1');
@@ -218,7 +218,7 @@ describe('features/replace', function() {
       };
 
       // when
-      var newElement = replace.replaceElement(task, newElementData);
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
       var incoming = newElement.incoming[0],
@@ -232,14 +232,15 @@ describe('features/replace', function() {
 
     describe('undo support', function() {
 
-      it('should reconnect valid connections', inject(function(elementRegistry, modeling, replace, commandStack) {
+      it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
 
         // given
         var task = elementRegistry.get('Task_1');
         var newElementData =  {
           type: 'bpmn:UserTask'
         };
-        var newElement = replace.replaceElement(task, newElementData);
+
+        bpmnReplace.replaceElement(task, newElementData);
 
         // when
         commandStack.undo();
@@ -258,15 +259,17 @@ describe('features/replace', function() {
         expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
+
       it('should remove invalid incoming connections', inject(function(elementRegistry,
-        modeling, replace, commandStack) {
+        modeling, bpmnReplace, commandStack) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
         var newElementData =  {
           type: 'bpmn:EndEvent'
         };
-        var newElement = replace.replaceElement(startEvent, newElementData);
+
+        bpmnReplace.replaceElement(startEvent, newElementData);
 
         // when
         commandStack.undo();
@@ -285,14 +288,15 @@ describe('features/replace', function() {
 
 
       it('should remove invalid outgoing connections', inject(function(elementRegistry,
-         modeling, replace, commandStack) {
+         modeling, bpmnReplace, commandStack) {
 
         // given
         var endEvent = elementRegistry.get('EndEvent_1');
         var newElementData =  {
           type: 'bpmn:StartEvent'
         };
-        var newElement = replace.replaceElement(endEvent, newElementData);
+
+        bpmnReplace.replaceElement(endEvent, newElementData);
 
         // when
         commandStack.undo();
@@ -311,17 +315,17 @@ describe('features/replace', function() {
 
     });
 
+
     describe('redo support', function() {
 
-
-      it('should reconnect valid connections', inject(function(elementRegistry, modeling, replace, commandStack) {
+      it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
 
         // given
         var task = elementRegistry.get('Task_1');
         var newElementData =  {
           type: 'bpmn:UserTask'
         };
-        var newElement = replace.replaceElement(task, newElementData);
+        var newElement = bpmnReplace.replaceElement(task, newElementData);
 
         // when
         commandStack.undo();
@@ -342,14 +346,14 @@ describe('features/replace', function() {
 
 
       it('should remove invalid incoming connections', inject(function(elementRegistry,
-        modeling, replace, commandStack) {
+        modeling, bpmnReplace, commandStack) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
         var newElementData =  {
           type: 'bpmn:EndEvent'
         };
-        var newElement = replace.replaceElement(startEvent, newElementData);
+        var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
 
         // when
         commandStack.undo();
@@ -366,14 +370,14 @@ describe('features/replace', function() {
 
 
       it('should remove invalid outgoing connections', inject(function(elementRegistry,
-        modeling, replace, commandStack) {
+        modeling, bpmnReplace, commandStack) {
 
         // given
         var endEvent = elementRegistry.get('EndEvent_1');
         var newElementData =  {
           type: 'bpmn:StartEvent'
         };
-        var newElement = replace.replaceElement(endEvent, newElementData);
+        var newElement = bpmnReplace.replaceElement(endEvent, newElementData);
 
         // when
         commandStack.undo();
@@ -387,6 +391,7 @@ describe('features/replace', function() {
         expect(incoming).toBeUndefined();
         expect(outgoing).toBeUndefined();
       }));
+
     });
 
   });
