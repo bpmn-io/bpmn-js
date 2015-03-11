@@ -194,9 +194,6 @@
   left: 30px;
   top: 30px;
 
-  background: #F0F0F0;
-  border: solid 1px #AAA;
-
   overflow: hidden;
 }
 
@@ -282,12 +279,6 @@
   display: block;
 }
 
-.djs-popup {
-  background: #F9F9F9;
-  border: solid 1px #CCC;
-  box-shadow: 1px 1px 2px 2px #EEE;
-}
-
 .djs-popup-entry {
   font-size: 20px;
   line-height: 20px;
@@ -309,6 +300,16 @@
 
 .djs-popup-entry:before {
   vertical-align: middle;
+}
+
+/**
+ * popup / palette styles
+ */
+.djs-popup, .djs-palette {
+  background: #FAFAFA;
+  border: solid 1px #CCC;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 /**
