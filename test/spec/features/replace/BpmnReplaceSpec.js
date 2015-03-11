@@ -85,6 +85,26 @@ describe('features/replace', function() {
   });
 
 
+  describe('selection', function() {
+
+    it('should select after replace', inject(function(elementRegistry, selection, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var newElementData =  {
+        type: 'bpmn:UserTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      expect(selection.get()).toContain(newElement);
+    }));
+
+  });
+
+
   describe('label', function() {
 
     it('should keep copy label', inject(function(elementRegistry, bpmnReplace) {
