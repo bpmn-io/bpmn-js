@@ -42,7 +42,7 @@
     "eve": "^0.4.2",
     "hammerjs": "^2.0.1",
     "lodash": "^3.0.1",
-    "min-dom": "^0.1.1",
+    "min-dom": "^0.2.0",
     "object-refs": "^0.1.0",
     "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
   }
