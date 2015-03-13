@@ -872,6 +872,74 @@ describe('Canvas', function() {
 
       }));
 
+      it('should zoom fit-viewport / no scale up / center position', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 0, y: 0, width: 50, height: 50 });
+
+        // scroll somewhere to change viewbox (x, y)
+        canvas.zoom(2.0, { x: 200, y: 200 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(1);
+
+        expect(viewbox).toEqual({
+          x: -125, y: -125,
+          width: 300, height: 300,
+          scale: 1,
+          inner: { width: 50, height: 50, x: 0, y: 0 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+      it('should zoom fit-viewport / scale horizontally / center position', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 600, height: 200 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(0.5);
+
+        expect(viewbox).toEqual({
+          x: 50, y: -100,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 600, height: 200, x: 50, y: 100 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
+
+      it('should zoom fit-viewport / scale vertically / center position', inject(function(canvas) {
+
+        // given
+        canvas.addShape({ id: 's0', x: 50, y: 100, width: 250, height: 600 });
+
+        // when
+        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var viewbox = canvas.viewbox();
+
+        // then
+        expect(zoom).toEqual(0.5);
+
+        expect(viewbox).toEqual({
+          x: -125, y: 100,
+          width: 600, height: 600,
+          scale: 0.5,
+          inner: { width: 250, height: 600, x: 50, y: 100 },
+          outer: { width: 300, height: 300 }
+        });
+
+      }));
 
       it('should zoom fit-viewport, negative coordinates', inject(function(canvas) {
 
