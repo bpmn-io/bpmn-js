@@ -44,7 +44,7 @@
     "jasmine-test-container-support": "^0.1.2",
     "jsondiffpatch": "^0.1.26",
     "karma": "^0.12.12",
-    "karma-browserify": "^2.0.0",
+    "karma-browserify": "^4.0.0",
     "karma-chrome-launcher": "^0.1.2",
     "karma-firefox-launcher": "^0.1.3",
     "karma-ie-launcher": "^0.1.4",
