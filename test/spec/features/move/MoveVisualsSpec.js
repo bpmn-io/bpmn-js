@@ -21,6 +21,10 @@ describe('features/move - MoveVisuals', function() {
     dragging.setOptions({ manual: true });
   }));
 
+  afterEach(inject(function(dragging) {
+    dragging.setOptions({ manual: false });
+  }));
+
 
   var rootShape, parentShape, childShape, childShape2, connection;
 
@@ -161,6 +165,20 @@ describe('features/move - MoveVisuals', function() {
       expect(ctx.data.context.canExecute).toBe(false);
 
       expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).toBe(true);
+    }));
+
+  });
+
+
+  describe('integration', function() {
+
+    it('should not click on drag end', inject(function(eventBus) {
+
+      // after dragging we should not see any
+      // clicks dispatched by the modeler
+      eventBus.on('element.click', function(e) {
+        console.log('element click', e);
+      });
     }));
 
   });
