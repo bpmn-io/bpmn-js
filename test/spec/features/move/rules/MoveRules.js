@@ -1,14 +1,18 @@
+'use strict';
+
+var inherits = require('inherits');
+
 var RuleProvider = require('../../../../../lib/features/rules/RuleProvider');
 
 function MoveRules(eventBus) {
   RuleProvider.call(this, eventBus);
 }
 
-MoveRules.$inject = ['eventBus'];
+MoveRules.$inject = [ 'eventBus' ];
+
+inherits(MoveRules, RuleProvider);
 
 module.exports = MoveRules;
-
-MoveRules.prototype = Object.create(RuleProvider.prototype);
 
 
 MoveRules.prototype.init = function() {

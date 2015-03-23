@@ -1,3 +1,7 @@
+'use strict';
+
+var inherits = require('inherits');
+
 var RuleProvider = require('../../../../../lib/features/rules/RuleProvider');
 
 function ConnectRules(eventBus) {
@@ -6,9 +10,10 @@ function ConnectRules(eventBus) {
 
 ConnectRules.$inject = ['eventBus'];
 
+inherits(ConnectRules, RuleProvider);
+
 module.exports = ConnectRules;
 
-ConnectRules.prototype = Object.create(RuleProvider.prototype);
 
 
 ConnectRules.prototype.init = function() {

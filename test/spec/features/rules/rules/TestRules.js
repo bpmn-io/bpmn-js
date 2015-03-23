@@ -1,14 +1,18 @@
+'use strict';
+
+var inherits = require('inherits');
+
 var RuleProvider = require('../../../../../lib/features/rules/RuleProvider');
 
 function ResizeRules(eventBus) {
   RuleProvider.call(this, eventBus);
 }
 
-ResizeRules.$inject = ['eventBus'];
+ResizeRules.$inject = [ 'eventBus' ];
+
+inherits(ResizeRules, RuleProvider);
 
 module.exports = ResizeRules;
-
-ResizeRules.prototype = Object.create(RuleProvider.prototype);
 
 
 ResizeRules.prototype.init = function() {
