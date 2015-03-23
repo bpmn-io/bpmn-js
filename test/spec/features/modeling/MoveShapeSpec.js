@@ -1,4 +1,4 @@
-var TestHelper = require('../../../TestHelper');
+'use strict';
 
 /* global bootstrapDiagram, inject */
 
@@ -157,6 +157,26 @@ describe('features/modeling - move shape', function() {
       expect(childShape2.parent).toBe(parentShape2);
     }));
 
+    // See https://github.com/bpmn-io/bpmn-js/issues/200
+    // If a connection is moved without moving the source
+    // and target shape the connection should be relayouted
+    // instead of beeing moved
+    it('should not move connection after move', inject(function(canvas, modeling, elementFactory) {
+
+      // given
+      modeling.removeShape(childShape);
+      modeling.removeShape(childShape2);
+
+      var s1 = modeling.createShape({id:'s1', width: 100, height: 100},{x:170, y:200}, rootShape);
+      modeling.appendShape(s1, {id:'s2', width: 100, height: 100},{x:330, y:200}, rootShape);
+      var c1 = s1.outgoing[0];
+
+      // when
+      modeling.moveShapes([ s1, c1 ], { x: 0, y: +100 }, rootShape);
+
+      // then
+      expect(c1.waypoints[1]).toEqual({ x : 330, y : 200 });
+    }));
 
     it('should undo', inject(function(modeling, commandStack) {
 
@@ -283,5 +303,4 @@ describe('features/modeling - move shape', function() {
       expect(childShape2.parent).toBe(parentShape2);
     }));
   });
-
 });
