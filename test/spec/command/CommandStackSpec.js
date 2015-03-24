@@ -21,8 +21,11 @@ function TracableCommand(id) {
   };
 }
 
+function SimpleCommand() {
+  TracableCommand.call(this, 'simple-command');
+}
 
-var ComplexCommand = function(commandStack) {
+function ComplexCommand(commandStack) {
 
   TracableCommand.call(this, 'complex-command');
 
@@ -33,19 +36,15 @@ var ComplexCommand = function(commandStack) {
   this.postExecute = function(ctx) {
     commandStack.execute('post-command', { element: ctx.element });
   };
-};
+}
 
-var PreCommand = function() {
+function PreCommand() {
   TracableCommand.call(this, 'pre-command');
-};
+}
 
-var PostCommand = function() {
+function PostCommand() {
   TracableCommand.call(this, 'post-command');
-};
-
-var SimpleCommand = function() {
-  TracableCommand.call(this, 'simple-command');
-};
+}
 
 
 describe('command/CommandStack', function() {
