@@ -1,3 +1,5 @@
+'use strict';
+
 var TestHelper = require('../../../TestHelper'),
     Events = require('../../../util/Events');
 
@@ -70,7 +72,7 @@ describe('features/resize - visuals', function() {
     it('should show during resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
       dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
 
       // then
@@ -83,7 +85,7 @@ describe('features/resize - visuals', function() {
     it('should update during resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
       dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
       dragging.move(Events.create(canvas._svg, { x: 100, y: 200 }));
 
@@ -104,7 +106,7 @@ describe('features/resize - visuals', function() {
     it('should hide after resize', inject(function(canvas, resize, dragging) {
 
       // when
-      resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
       dragging.move(Events.create(canvas._svg, { x: 100, y: 200 }));
       dragging.end();
 
@@ -146,7 +148,7 @@ describe('features/resize - visuals', function() {
       it('should indicate resize not allowed', inject(function(canvas, resize, dragging) {
 
         // when resize to small
-        resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+        resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
         dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
 
         // then
@@ -166,7 +168,7 @@ describe('features/resize - visuals', function() {
       it('should not perform actual resize operation', inject(function(canvas, dragging, resize) {
 
         // when
-        resize.start(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+        resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
         dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
         dragging.end();
 
