@@ -1,11 +1,8 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-TestHelper = require('../../../TestHelper');
+var Matchers = require('../../../Matchers');
 
 /* global bootstrapModeler, inject */
-
-var _ = require('lodash');
 
 var fs = require('fs');
 
@@ -23,6 +20,7 @@ describe('features/ModelingRules', function() {
   var eventGatewaysEdgeXML =
       fs.readFileSync('test/fixtures/bpmn/features/rules/event-based-gateway-outgoing-edge.bpmn', 'utf8');
   var linkEventXML = fs.readFileSync('test/fixtures/bpmn/features/rules/link-event.bpmn', 'utf8');
+  var textAnnotationXML = fs.readFileSync('test/fixtures/bpmn/features/rules/text-annotation-association.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule, rulesModule ];
 
@@ -275,6 +273,28 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
+      expect(allowed).toBe(true);
+    }));
+  });
+
+  describe('Association', function() {
+
+    beforeEach(bootstrapModeler(textAnnotationXML, { modules: testModules }));
+
+    it('should allow drop on process', inject(function(elementRegistry, rules) {
+
+      // given
+      var association = elementRegistry.get('Association_1'),
+          parent = elementRegistry.get('Process_1');
+
+      // when
+      var allowed = rules.allowed('shapes.move', {
+        connection: null,
+        shapes: [ association ],
+        newParent: parent
+      });
+
+      // then
       expect(allowed).toBe(true);
     }));
   });
