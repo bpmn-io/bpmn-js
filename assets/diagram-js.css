@@ -186,6 +186,18 @@
 }
 
 /**
+ * snapping
+ */
+.djs-crosshair {
+  stroke: #555;
+  stroke-linecap: round;
+  stroke-width: 1px;
+  pointer-events: none;
+  shape-rendering: optimizeSpeed;
+  stroke-dasharray: 5, 5;
+}
+
+/**
  * palette
  */
 

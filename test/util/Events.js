@@ -28,8 +28,8 @@ module.exports.create = create;
 
 function target(element) {
   return {
-    create: function(point, offset) {
-      return create(element, point, offset);
+    create: function(point, data) {
+      return create(element, point, data);
     }
   };
 }
@@ -40,13 +40,13 @@ function scopedCreate(canvas) {
 
   var E = target(canvas._svg);
 
-  return function(data) {
+  return function(point, data) {
 
     var clientRect = canvas._container.getBoundingClientRect();
-    data.x += clientRect.left;
-    data.y += clientRect.top;
+    point.x += clientRect.left;
+    point.y += clientRect.top;
 
-    return E.create(data);
+    return E.create(point, data);
   };
 }
 
