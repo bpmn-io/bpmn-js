@@ -1225,6 +1225,48 @@ describe('Canvas', function() {
   });
 
 
+  describe('#getGraphics', function() {
+
+    beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
+
+    var shape;
+
+    beforeEach(inject(function(canvas) {
+      shape = canvas.addShape({ id: 'shape', x: 100, y: 100, width: 100, height: 100 });
+    }));
+
+
+    it('should return primary graphics for shape', inject(function(canvas) {
+
+      // when
+      var gfx = canvas.getGraphics(shape),
+          secondaryGfx = canvas.getGraphics(shape, true);
+
+      // then
+      expect(gfx).toBeDefined();
+      expect(secondaryGfx).not.toBeDefined();
+    }));
+
+
+    it('should return primary + secondary graphics for root', inject(function(canvas) {
+
+      var root = canvas.getRootElement();
+
+      // when
+      var gfx = canvas.getGraphics(root),
+          secondaryGfx = canvas.getGraphics(root, true);
+
+      // then
+      expect(gfx).toBeDefined();
+      expect(gfx.type).toBe('g');
+
+      expect(secondaryGfx).toBeDefined();
+      expect(secondaryGfx.type).toBe('svg');
+    }));
+
+  });
+
+
   describe('markers', function() {
 
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));

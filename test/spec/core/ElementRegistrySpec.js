@@ -61,6 +61,16 @@ describe('ElementRegistry', function() {
       expect(gfx).toBeDefined();
     }));
 
+
+    it('should get secondary by element', inject(function(elementRegistry, canvas) {
+
+      // when
+      var secondaryGfx = elementRegistry.getGraphics(canvas.getRootElement(), true);
+
+      // then
+      expect(secondaryGfx).toBeDefined();
+    }));
+
   });
 
 
