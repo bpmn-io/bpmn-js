@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 
@@ -19,66 +17,182 @@ describe('features/modeling - layout connection', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, sourceShape, targetShape, connection;
+  describe('layout waypoints', function() {
 
-  beforeEach(inject(function(elementFactory, canvas) {
+    var rootShape, sourceShape, targetShape, connection;
 
-    rootShape = elementFactory.createRoot({
-      id: 'root'
+    beforeEach(inject(function(elementFactory, canvas) {
+
+      rootShape = elementFactory.createRoot({
+        id: 'root'
+      });
+
+      canvas.setRootElement(rootShape);
+
+      sourceShape = elementFactory.createShape({
+        id: 'source',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(sourceShape);
+
+      targetShape = elementFactory.createShape({
+        id: 'target',
+        x: 300, y: 300, width: 100, height: 100
+      });
+
+      canvas.addShape(targetShape);
+
+
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [ { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 } ],
+        source: sourceShape,
+        target: targetShape
+      });
+
+      canvas.addConnection(connection);
+    }));
+
+
+    it('should execute', inject(function(modeling) {
+
+      // when
+      modeling.layoutConnection(connection);
+
+      // then
+      expect(connection.waypoints).toDeepEqual([
+        { x: 150, y: 150 }, { x: 350, y: 350 }
+      ]);
+    }));
+
+
+    it('should undo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.layoutConnection(connection);
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(connection.waypoints).toDeepEqual([
+        { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 }
+      ]);
+    }));
+  });
+
+
+  describe('correct z-order', function() {
+
+    var container1, container2, sourceShape, targetShape, connection;
+
+    beforeEach(inject(function(elementFactory, canvas) {
+
+      sourceShape = elementFactory.createShape({
+        id: 'source',
+        x: 10, y: 10, width: 50, height: 50
+      });
+
+      canvas.addShape(sourceShape);
+
+      targetShape = elementFactory.createShape({
+        id: 'target',
+        x: 200, y: 10, width: 50, height: 50
+      });
+
+      canvas.addShape(targetShape);
+
+
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [ { x: 35, y: 35 }, { x: 225, y: 35 } ],
+        source: sourceShape,
+        target: targetShape
+      });
+
+      canvas.addConnection(connection);
+
+      container1 = elementFactory.createShape({
+        id: 'container1',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      canvas.addShape(container1);
+
+      container2 = elementFactory.createShape({
+        id: 'container2',
+        x: 120, y: 120, width: 200, height: 200
+      });
+
+      canvas.addShape(container2, container1);
+    }));
+
+
+    describe('send to front after moving target to nested child', function() {
+
+      it('should execute', inject(function(modeling) {
+
+        // when
+        modeling.moveShape(targetShape, { x: 0, y: 200 }, container2);
+
+        // then
+        var childArr = connection.parent.children;
+
+        expect(childArr).toEqual([
+          sourceShape,
+          container1,
+          connection
+        ]);
+      }));
+
+
+      it('should undo', inject(function(modeling, commandStack) {
+
+        // given
+        modeling.moveShape(targetShape, { x: 0, y: 200 }, container2);
+
+        // when
+        commandStack.undo();
+
+        // then
+        var childArr = connection.parent.children;
+
+        expect(childArr).toEqual([
+          sourceShape,
+          targetShape,
+          connection,
+          container1
+        ]);
+      }));
+
     });
 
-    canvas.setRootElement(rootShape);
 
-    sourceShape = elementFactory.createShape({
-      id: 'source',
-      x: 100, y: 100, width: 100, height: 100
-    });
+    it('should leave unchanged if already in front', inject(function(canvas, modeling) {
 
-    canvas.addShape(sourceShape, rootShape);
+      // given
+      var connection2 = canvas.addConnection({
+        id: 'connection2',
+        waypoints: [ { x: 60, y: 60 }, { x: 150, y: 150 }, { x: 200, y: 60 } ],
+        source: sourceShape,
+        target: targetShape
+      });
 
-    targetShape = elementFactory.createShape({
-      id: 'target',
-      x: 300, y: 300, width: 100, height: 100
-    });
+      // when
+      modeling.moveShape(targetShape, { x: 0, y: 200 }, container2);
 
-    canvas.addShape(targetShape, rootShape);
+      // then
+      var childArr = connection2.parent.children;
 
+      expect(childArr).toEqual([
+        sourceShape,
+        container1,
+        connection,
+        connection2
+      ]);
+    }));
 
-    connection = elementFactory.createConnection({
-      id: 'connection',
-      waypoints: [ { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 } ],
-      source: sourceShape,
-      target: targetShape
-    });
-
-    canvas.addConnection(connection, rootShape);
-  }));
-
-
-  it('should layout', inject(function(modeling) {
-
-    // when
-    modeling.layoutConnection(connection);
-
-    // then
-    expect(connection.waypoints).toDeepEqual([
-      { x: 150, y: 150 }, { x: 350, y: 350 }
-    ]);
-  }));
-
-
-  it('should undo', inject(function(modeling, commandStack) {
-
-    // given
-    modeling.layoutConnection(connection);
-
-    // when
-    commandStack.undo();
-
-    // then
-    expect(connection.waypoints).toDeepEqual([
-      { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 }
-    ]);
-  }));
+  });
 
 });
