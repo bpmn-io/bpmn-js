@@ -1291,6 +1291,20 @@ describe('Canvas', function() {
     }));
 
 
+    it('should add to secondary gfx', inject(function(canvas) {
+
+      var root = canvas.getRootElement(),
+          svgGfx = canvas.getGraphics(root, true);
+
+      // when
+      canvas.addMarker(root, 'foo');
+
+      // then
+      expect(canvas.hasMarker(root, 'foo')).toBe(true);
+      expect(svgGfx.hasClass('foo')).toBe(true);
+    }));
+
+
     it('should remove', inject(function(canvas) {
 
       // given
