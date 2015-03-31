@@ -32,7 +32,7 @@ describe('palette', function() {
       var paletteElement = domQuery('.djs-palette', container);
 
       // then
-      expect(domQuery.all('.entry', paletteElement).length).toBe(7);
+      expect(domQuery.all('.entry', paletteElement).length).toBe(8);
 
       done(err);
     });
