@@ -4,8 +4,6 @@ var TestHelper = require('../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
-var fs = require('fs');
-
 var Events = require('diagram-js/lib/core/EventBus');
 
 var Viewer = require('../../../lib/Viewer');
@@ -13,7 +11,7 @@ var Viewer = require('../../../lib/Viewer');
 
 describe('environment - mocking', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+  var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
   var mockEvents, bootstrapCalled;
 

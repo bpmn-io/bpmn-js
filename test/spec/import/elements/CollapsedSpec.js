@@ -1,22 +1,15 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
 
-var fs = require('fs');
-
-
 describe('import - collapsed container', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   describe('in process', function() {
 
-    var diagramXML = fs.readFileSync('test/fixtures/bpmn/import/collapsed.bpmn', 'utf8');
+    var diagramXML = require('../../../fixtures/bpmn/import/collapsed.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML));
 
@@ -81,7 +74,7 @@ describe('import - collapsed container', function() {
 
   describe('in collaboration', function() {
 
-    var diagramXML = fs.readFileSync('test/fixtures/bpmn/import/collapsed-collaboration.bpmn', 'utf8');
+    var diagramXML = require('../../../fixtures/bpmn/import/collapsed-collaboration.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML));
 
@@ -122,4 +115,5 @@ describe('import - collapsed container', function() {
     }));
 
   });
+
 });

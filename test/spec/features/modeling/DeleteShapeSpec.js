@@ -2,12 +2,7 @@
 
 /* global bootstrapModeler, inject */
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
-
-var _ = require('lodash');
-
-var fs = require('fs');
+var TestHelper = require('../../../TestHelper');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
@@ -15,10 +10,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - #removeShape', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -67,8 +59,7 @@ describe('features/modeling - #removeShape', function() {
 
       // given
       var taskShape = elementRegistry.get('Task_1'),
-          task = taskShape.businessObject,
-          parent = task.$parent;
+          task = taskShape.businessObject;
 
       // when
       modeling.removeShape(taskShape);

@@ -30,7 +30,6 @@
   ],
   "license": "http://bpmn.io/license",
   "devDependencies": {
-    "brfs": "^1.2.0",
     "browserify": "^8.1.0",
     "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
@@ -52,6 +51,7 @@
     "karma-phantomjs-launcher": "^0.1.2",
     "load-grunt-tasks": "^0.3.0",
     "source-map-concat": "^0.4.0",
+    "stringify": "^3.1.0",
     "time-grunt": "^0.3.2",
     "uglify-js": "^2.4.16"
   },

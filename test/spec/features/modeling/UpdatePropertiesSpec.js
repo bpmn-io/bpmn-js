@@ -5,17 +5,13 @@ var TestHelper = require('../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 
-var _ = require('lodash');
-
-var fs = require('fs');
-
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
 
 describe('features/modeling - update properties', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/conditions.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/conditions.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 

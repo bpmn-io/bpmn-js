@@ -6,8 +6,6 @@ var TestHelper = require('../../../TestHelper');
 
 var pick = require('lodash/object/pick');
 
-var fs = require('fs');
-
 
 function bounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
@@ -16,23 +14,22 @@ function bounds(element) {
 
 describe('import - labels', function() {
 
-
   describe('should import embedded labels', function() {
 
     it('on flow nodes', function(done) {
-      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/embedded.bpmn', 'utf8');
+      var xml = require('../../../fixtures/bpmn/import/labels/embedded.bpmn');
       bootstrapViewer(xml)(done);
     });
 
 
     it('on pools and lanes', function(done) {
-      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/collaboration.bpmn', 'utf8');
+      var xml = require('../../../fixtures/bpmn/import/labels/collaboration.bpmn');
       bootstrapViewer(xml)(done);
     });
 
 
     it('on message flows', function(done) {
-      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/collaboration-message-flows.bpmn', 'utf8');
+      var xml = require('../../../fixtures/bpmn/import/labels/collaboration-message-flows.bpmn');
       bootstrapViewer(xml)(done);
     });
 
@@ -42,7 +39,7 @@ describe('import - labels', function() {
   describe('should import external labels', function() {
 
     it('with di', function(done) {
-      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/external.bpmn', 'utf8');
+      var xml = require('../../../fixtures/bpmn/import/labels/external.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -69,7 +66,7 @@ describe('import - labels', function() {
 
 
     it('without di', function(done) {
-      var xml = fs.readFileSync('test/fixtures/bpmn/import/labels/external-no-di.bpmn', 'utf8');
+      var xml = require('../../../fixtures/bpmn/import/labels/external-no-di.bpmn');
       bootstrapViewer(xml)(done);
     });
 

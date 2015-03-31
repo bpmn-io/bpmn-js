@@ -5,9 +5,6 @@ require('../../../TestHelper');
 /* global bootstrapViewer, inject */
 
 
-var fs = require('fs');
-
-
 var labelEditingModule = require('../../../../lib/features/label-editing'),
     coreModule = require('../../../../lib/core');
 
@@ -30,7 +27,7 @@ function triggerKeyEvent(element, event, code) {
 
 describe('features - label-editing', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/label-editing/labels.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
 
   var testModules = [ labelEditingModule, coreModule ];
 

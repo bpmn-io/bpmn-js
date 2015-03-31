@@ -5,9 +5,6 @@ var Matchers = require('../../../Matchers'),
 
 /* global bootstrapModeler, inject */
 
-var _ = require('lodash');
-
-var fs = require('fs');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
@@ -18,7 +15,7 @@ describe('features/modeling - layout connection', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 

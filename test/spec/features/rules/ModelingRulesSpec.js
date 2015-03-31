@@ -1,10 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers');
-
 /* global bootstrapModeler, inject */
-
-var fs = require('fs');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('../../../../lib/features/modeling/rules'),
@@ -13,14 +9,11 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/ModelingRules', function() {
 
-  beforeEach(Matchers.addDeepEquals);
+  var sequenceXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
+  var eventGatewaysEdgeXML = require('../../../fixtures/bpmn/features/rules/event-based-gateway-outgoing-edge.bpmn');
+  var linkEventXML = require('../../../fixtures/bpmn/features/rules/link-event.bpmn');
+  var textAnnotationXML = require('../../../fixtures/bpmn/features/rules/text-annotation-association.bpmn');
 
-
-  var sequenceXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
-  var eventGatewaysEdgeXML =
-      fs.readFileSync('test/fixtures/bpmn/features/rules/event-based-gateway-outgoing-edge.bpmn', 'utf8');
-  var linkEventXML = fs.readFileSync('test/fixtures/bpmn/features/rules/link-event.bpmn', 'utf8');
-  var textAnnotationXML = fs.readFileSync('test/fixtures/bpmn/features/rules/text-annotation-association.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule, rulesModule ];
 
@@ -49,11 +42,13 @@ describe('features/ModelingRules', function() {
     }));
   });
 
+
   describe('eventbased gateway', function() {
 
     beforeEach(bootstrapModeler(eventGatewaysEdgeXML, { modules: testModules }));
 
-    it('should allow catching message intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+    it('should allow catching message intermediate event on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -72,7 +67,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(true);
     }));
 
-    it('should allow catching timer intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should allow catching timer intermediate event on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -91,7 +88,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(true);
     }));
 
-    it('should allow catching condition intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should allow catching condition intermediate event on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -110,7 +109,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(true);
     }));
 
-    it('should allow catching signal intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should allow catching signal intermediate event on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -129,7 +130,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(true);
     }));
 
-    it('should allow receive task on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should allow receive task on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -148,7 +151,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(true);
     }));
 
-    it('should not allow throw event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should not allow throw event on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -167,7 +172,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(false);
     }));
 
-    it('should not allow task on outgoing edges', inject(function(elementRegistry, modeling, rules) {
+
+    it('should not allow task on outgoing edges',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var eventGateway = elementRegistry.get('EventBasedGateway_1'),
@@ -187,7 +194,6 @@ describe('features/ModelingRules', function() {
     }));
 
   });
-
 
 
   describe('catch link events', function() {
@@ -213,7 +219,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(false);
     }));
 
-    it('should be allowed to have outgoing sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+    it('should be allowed to have outgoing sequence flows ',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var catchEvent   = elementRegistry.get('IntermediateCatchEvent'),
@@ -230,15 +238,15 @@ describe('features/ModelingRules', function() {
       // connection should not be allowed
       expect(allowed).toBe(true);
     }));
-  });
 
+  });
 
 
   describe('throwing link events', function() {
 
     beforeEach(bootstrapModeler(linkEventXML, { modules: testModules }));
 
-    it('should not have outgoing sequence flows ', inject(function(elementRegistry, modeling, rules) {
+    it('should not have outgoing sequence flows', inject(function(elementRegistry, modeling, rules) {
 
       // given
       var catchEvent   = elementRegistry.get('IntermediateThrowEvent'),
@@ -257,7 +265,9 @@ describe('features/ModelingRules', function() {
       expect(allowed).toBe(false);
     }));
 
-    it('should be allowed to have incoming sequence flows ', inject(function(elementRegistry, modeling, rules) {
+
+    it('should be allowed to have incoming sequence flows ',
+      inject(function(elementRegistry, modeling, rules) {
 
       // given
       var catchEvent   = elementRegistry.get('IntermediateThrowEvent'),
@@ -275,7 +285,9 @@ describe('features/ModelingRules', function() {
       // connection should not be allowed
       expect(allowed).toBe(true);
     }));
+
   });
+
 
   describe('Association', function() {
 
@@ -297,5 +309,7 @@ describe('features/ModelingRules', function() {
       // then
       expect(allowed).toBe(true);
     }));
+
   });
+
 });

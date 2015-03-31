@@ -1,8 +1,6 @@
 'use strict';
 
 
-var fs = require('fs');
-
 var Modeler = require('../../lib/Modeler');
 
 
@@ -25,20 +23,20 @@ describe('Modeler', function() {
 
 
   it('should import simple process', function(done) {
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+    var xml = require('../fixtures/bpmn/simple.bpmn');
     createModeler(xml, done);
   });
 
 
   it('should import empty definitions', function(done) {
-    var xml = fs.readFileSync('test/fixtures/bpmn/empty-definitions.bpmn', 'utf8');
+    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
     createModeler(xml, done);
   });
 
 
   it('should re-import simple process', function(done) {
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // given
     createModeler(xml, function(err, warnings, modeler) {
@@ -69,7 +67,7 @@ describe('Modeler', function() {
 
     it('should allow to add overlays', function(done) {
 
-      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       createModeler(xml, function(err, warnings, viewer) {
 
@@ -117,7 +115,7 @@ describe('Modeler', function() {
 
     it('should allow to edit bendpoints', function(done) {
 
-      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       createModeler(xml, function(err, warnings, viewer) {
 
@@ -167,7 +165,7 @@ describe('Modeler', function() {
 
     it('should be available via di as <bpmnjs>', function(done) {
 
-      var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       createModeler(xml, function(err, warnings, modeler) {
 

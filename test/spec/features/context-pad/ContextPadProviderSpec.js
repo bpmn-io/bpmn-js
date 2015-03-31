@@ -1,12 +1,9 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
-
-var fs = require('fs');
 
 var contextPadModule = require('../../../../lib/features/context-pad'),
     bpmnModule = require('../../../../lib/core'),
@@ -16,10 +13,7 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
 
 describe('features - context-pad', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [ contextPadModule, bpmnModule, popupModule, replaceModule ];
 

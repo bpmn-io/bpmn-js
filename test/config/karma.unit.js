@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(karma) {
   karma.set({
 
@@ -27,7 +29,7 @@ module.exports = function(karma) {
     // browserify configuration
     browserify: {
       debug: true,
-      transform: [ 'brfs' ]
+      transform: [ [ 'stringify', { global: true, extensions: [ '.bpmn', '.xml', '.css' ] } ] ]
     }
   });
 };

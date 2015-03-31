@@ -44,9 +44,7 @@ describe('bpmn-moddle', function() {
 
     it('should parse complex xml', function(done) {
 
-      var fs = require('fs');
-
-      var xml = fs.readFileSync('test/fixtures/bpmn/complex.bpmn', 'utf8');
+      var xml = require('../../fixtures/bpmn/complex.bpmn');
 
       var start = new Date().getTime();
 

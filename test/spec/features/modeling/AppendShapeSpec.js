@@ -6,8 +6,6 @@ var TestHelper = require('../../../TestHelper');
 
 var find = require('lodash/collection/find');
 
-var fs = require('fs');
-
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
@@ -17,7 +15,7 @@ var LabelUtil = require('../../../../lib/util/Label');
 
 describe('features/modeling - append shape', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 

@@ -5,10 +5,6 @@
 var Matchers = require('../../../Matchers'),
     TestHelper = require('../../../TestHelper');
 
-var _ = require('lodash');
-
-var fs = require('fs');
-
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
@@ -18,7 +14,7 @@ describe('features/modeling - #removeConnection', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -67,8 +63,7 @@ describe('features/modeling - #removeConnection', function() {
 
       // given
       var sequenceFlowShape = elementRegistry.get('SequenceFlow_2'),
-          sequenceFlow = sequenceFlowShape.businessObject,
-          parent = sequenceFlow.$parent;
+          sequenceFlow = sequenceFlowShape.businessObject;
 
       // when
       modeling.removeConnection(sequenceFlowShape);

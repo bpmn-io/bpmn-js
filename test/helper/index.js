@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * A helper file that may be used in test cases for bpmn-js and extensions.
  *
@@ -42,14 +44,6 @@ try {
 }
 
 var OPTIONS, BPMN_JS;
-
-function options(opts) {
-  if (isFunction(opts)) {
-    opts = opts();
-  }
-
-  OPTIONS = opts;
-}
 
 
 function bootstrapBpmnJS(BpmnJS, options, locals) {

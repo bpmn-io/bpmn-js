@@ -4,8 +4,6 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var fs = require('fs');
-
 var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
     coreModule = require('../../../../lib/core');
@@ -14,7 +12,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/replace', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/replace/association-gateways.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/features/replace/association-gateways.bpmn');
 
   var testModules = [ coreModule, modelingModule, replaceModule ];
 

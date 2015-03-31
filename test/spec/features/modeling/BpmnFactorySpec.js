@@ -6,8 +6,6 @@ var Matchers = require('../../../Matchers'),
 /* global bootstrapModeler, inject */
 
 
-var fs = require('fs');
-
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
@@ -17,7 +15,7 @@ describe('features - bpmn-factory', function() {
   beforeEach(Matchers.addDeepEquals);
 
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [ modelingModule, coreModule ];
 

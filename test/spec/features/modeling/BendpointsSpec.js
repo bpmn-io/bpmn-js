@@ -4,9 +4,6 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var _ = require('lodash');
-
-var fs = require('fs');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     bendpointsModule = require('diagram-js/lib/features/bendpoints'),
@@ -15,7 +12,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/bendpoints', function() {
 
-  var diagramXML = fs.readFileSync('test/fixtures/bpmn/features/drop/drop.bpmn', 'utf8');
+  var diagramXML = require('../../../fixtures/bpmn/features/drop/drop.bpmn');
 
   var testModules = [ coreModule, bendpointsModule, modelingModule ];
 

@@ -2,8 +2,6 @@
 
 var TestHelper = require('../TestHelper');
 
-var fs = require('fs');
-
 var NavigatedViewer = require('../../lib/NavigatedViewer');
 
 
@@ -26,18 +24,17 @@ describe('NavigatedViewer', function() {
 
 
   it('should import simple process', function(done) {
-
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
-
+    var xml = require('../fixtures/bpmn/simple.bpmn');
     createViewer(xml, done);
   });
 
 
   describe('navigation features', function() {
 
-    var xml = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
+    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should include zoomScroll', function(done) {
+
       createViewer(xml, function(err, warnings, viewer) {
         expect(viewer.get('zoomScroll')).toBeDefined();
 
