@@ -2,9 +2,23 @@
 
 We love you to contribute to this project by filing bugs, helping others on the [issue tracker](https://github.com/bpmn-io/bpmn-js/issues), by contributing features/bug fixes through pull requests or by helping out in our [forums](https://forum.bpmn.io/).
 
-## How to start with bpmn-js
 
-The bpmn-js runs on top of the diagram-js master branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
+## Creating issues
+
+We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication.
+When using the issue tracker,
+
+* Be descriptive when creating an issue (what, where, when and how does a problem pop up)?
+* Attach steps to reproduce (if applicable)
+* Attach code samples, configuration options or stack traces that may indicate a problem
+* Be helpful and respect others when commenting
+
+Create a pull request if you would like to have an in-depth discussion about some piece of code.
+
+
+## Setting up the project locally
+
+The project development runs on top of the [diagram-js](https://github.com/bpmn-io/diagram-js) master branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
     
     mkdir bpmn.io
     cd bpmn.io
@@ -21,17 +35,6 @@ The bpmn-js runs on top of the diagram-js master branch. The following code snip
     // Running the test suite with every file change
     TEST_BROWSERS=(Chrome|Firefox|IE) grunt auto-test
 
-## Working with issues
-
-We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication.
-When using the issue tracker,
-
-* Be descriptive when creating an issue (what, where, when and how does a problem pop up)?
-* Attach steps to reproduce (if applicable)
-* Attach code samples, configuration options or stack traces that may indicate a problem
-* Be helpful and respect others when commenting
-
-Create a pull request if you would like to have an in-depth discussion about some piece of code.
 
 ## Creating pull requests
 
