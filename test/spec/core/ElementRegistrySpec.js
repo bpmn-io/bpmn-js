@@ -137,4 +137,25 @@ describe('ElementRegistry', function() {
 
   });
 
+  describe('forEach', function() {
+
+    it('should iterate over all', inject(function(elementRegistry) {
+
+      // when
+      var elements = [];
+      
+      elementRegistry.forEach(function(element, gfx) {
+        elements.push(element);
+        // assume we get element and gfx as params
+        expect(element).toBeDefined();
+        expect(gfx).toBeDefined();
+      });
+
+      // then
+      // two shapes + root
+      expect(elements.length).toBe(3);
+    }));
+
+  });
+
 });
