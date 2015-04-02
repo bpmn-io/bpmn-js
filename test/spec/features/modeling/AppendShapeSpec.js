@@ -1,3 +1,5 @@
+'use strict';
+
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
@@ -56,7 +58,7 @@ describe('features/modeling - append shape', function() {
       // shape added
 
       // then
-      expect(newShape).toBeDefined();
+      expect(newShape).to.be.defined;
     }));
 
 
@@ -66,10 +68,10 @@ describe('features/modeling - append shape', function() {
       // shape added
 
       // then
-      expect(newShape).toBeDefined();
+      expect(newShape).to.be.defined;
 
-      expect(newShape.x + newShape.width / 2).toBe(200);
-      expect(newShape.y + newShape.height / 2).toBe(200);
+      expect(newShape.x + newShape.width / 2).to.equal(200);
+      expect(newShape.y + newShape.height / 2).to.equal(200);
     }));
 
 
@@ -79,7 +81,7 @@ describe('features/modeling - append shape', function() {
       // shape added
 
       // then
-      expect(elementRegistry.getGraphics(newShape)).toBeDefined();
+      expect(elementRegistry.getGraphics(newShape)).to.be.defined;
     }));
 
 
@@ -93,10 +95,10 @@ describe('features/modeling - append shape', function() {
       });
 
       // then
-      expect(connection).toBeDefined();
-      expect(connection.parent).toBe(newShape.parent);
+      expect(connection).to.be.defined;
+      expect(connection.parent).to.equal(newShape.parent);
 
-      expect(elementRegistry.getGraphics(connection)).toBeDefined();
+      expect(elementRegistry.getGraphics(connection)).to.be.defined;
     }));
 
 
@@ -109,8 +111,8 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(newShape.parent).toBe(null);
-      expect(elementRegistry.getGraphics(newShape)).not.toBeDefined();
+      expect(newShape.parent).to.be.null;
+      expect(elementRegistry.getGraphics(newShape)).to.not.be.defined;
     }));
 
   });
@@ -130,7 +132,7 @@ describe('features/modeling - append shape', function() {
       var newConnection = newShape.incoming[0];
 
       // then
-      expect(newConnection.custom).toBe(true);
+      expect(newConnection.custom).to.be.true;
     }));
 
   });

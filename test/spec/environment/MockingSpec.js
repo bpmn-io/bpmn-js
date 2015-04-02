@@ -30,14 +30,14 @@ describe('environment/Mocking', function() {
 
   it('should use spy', inject(function(eventBus) {
 
-    expect(eventBus).toEqual(mockEvents);
-    expect(bootstrapCalled).toBe(true);
+    expect(eventBus).to.equal(mockEvents);
+    expect(bootstrapCalled).to.equal(true);
   }));
 
 
   it('should reparse bootstrap code', inject(function(eventBus) {
 
-    expect(bootstrapCalled).toBe(true);
+    expect(bootstrapCalled).to.equal(true);
   }));
 
 });

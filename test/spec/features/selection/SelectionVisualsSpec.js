@@ -1,7 +1,5 @@
 'use strict';
 
-require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 
@@ -63,7 +61,7 @@ describe('features/selection/SelectionVisuals', function() {
       var gfx = canvas.getGraphics(connection),
           outline = gfx.select('.djs-outline');
 
-      expect(outline).toBeDefined();
+      expect(outline).to.be.defined;
     }));
 
   });

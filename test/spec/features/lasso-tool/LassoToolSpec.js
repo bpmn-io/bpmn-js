@@ -78,9 +78,9 @@ describe('features/lasso-tool', function() {
       // then
       var selectedElements = selection.get();
 
-      expect(selectedElements.length).toBe(2);
-      expect(selectedElements[0]).toBe(childShape2);
-      expect(selectedElements[1]).toBe(childShape3);
+      expect(selectedElements.length).to.equal(2);
+      expect(selectedElements[0]).to.equal(childShape2);
+      expect(selectedElements[1]).to.equal(childShape3);
     }));
   });
 
@@ -105,7 +105,7 @@ describe('features/lasso-tool', function() {
       dragging.move(createEvent({ x: 200, y: 300 }));
 
       // then
-      expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).toBeDefined();
+      expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).to.be.defined;
     }));
 
 
@@ -117,7 +117,7 @@ describe('features/lasso-tool', function() {
       dragging.end();
 
       // then
-      expect(selection.get()).toEqual([ elementRegistry.get('child') ]);
+      expect(selection.get()).to.eql([ elementRegistry.get('child') ]);
     }));
 
   });

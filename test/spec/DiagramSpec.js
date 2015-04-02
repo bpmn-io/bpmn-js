@@ -43,7 +43,7 @@ describe('diagram', function() {
       });
 
       // then
-      expect(diagram.destroy).toBeDefined();
+      expect(diagram.destroy).to.be.an('function');
     });
 
 
@@ -62,7 +62,7 @@ describe('diagram', function() {
         });
 
         // then
-        expect(diagram.get('canvas')).toBeDefined();
+        expect(diagram.get('canvas')).to.be.an('object');
       });
 
 

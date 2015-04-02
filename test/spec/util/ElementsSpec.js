@@ -60,8 +60,8 @@ describe('util/Elements', function() {
       // when
       var result = Elements.selfAndDirectChildren([shapeA]);
 
-      expect(result.length).toBe(4);
-      expect(result).toEqual([ a ].concat(a.children));
+      expect(result.length).to.equal(4);
+      expect(result).to.eql([ a ].concat(a.children));
     });
 
 
@@ -70,8 +70,8 @@ describe('util/Elements', function() {
       // when
       var result = Elements.selfAndDirectChildren([shapeB]);
 
-      expect(result.length).toBe(1);
-      expect(result).toEqual([ shapeB ]);
+      expect(result.length).to.equal(1);
+      expect(result).to.eql([ shapeB ]);
     });
 
 
@@ -84,8 +84,8 @@ describe('util/Elements', function() {
       // when
       var result = Elements.selfAndDirectChildren([ a, child ]);
 
-      expect(result.length).toBe(6);
-      expect(ids(result)).toEqual(ids([ a ].concat(a.children).concat(child.children)));
+      expect(result.length).to.equal(6);
+      expect(ids(result)).to.eql(ids([ a ].concat(a.children).concat(child.children)));
     });
   });
 
@@ -101,7 +101,7 @@ describe('util/Elements', function() {
       // when
       var result = Elements.selfAndAllChildren([ a, d ]);
 
-      expect(result.length).toBe(14);
+      expect(result.length).to.equal(14);
     });
 
   });
@@ -150,7 +150,7 @@ describe('util/Elements', function() {
 
       var bbox = Elements.getBBox(elements);
 
-      expect(bbox).toEqual({
+      expect(bbox).to.eql({
         x: 120,
         y: 100,
         height: 30,
@@ -165,7 +165,7 @@ describe('util/Elements', function() {
 
       var bbox = Elements.getBBox(elements);
 
-      expect(bbox).toEqual({
+      expect(bbox).to.eql({
         x: 110,
         y: 105,
         height: 10,
@@ -180,7 +180,7 @@ describe('util/Elements', function() {
 
       var bbox = Elements.getBBox(elements);
 
-      expect(bbox).toEqual({
+      expect(bbox).to.eql({
         x: 100,
         y: 100,
         height: 30,
@@ -195,7 +195,7 @@ describe('util/Elements', function() {
 
       var bbox = Elements.getBBox(elements);
 
-      expect(bbox).toEqual({
+      expect(bbox).to.eql({
         x: -10,
         y: -10,
         height: 140,
@@ -210,7 +210,7 @@ describe('util/Elements', function() {
 
       var bbox = Elements.getBBox(elements);
 
-      expect(bbox).toEqual({
+      expect(bbox).to.eql({
         x: 100,
         y: 100,
         height: 15,

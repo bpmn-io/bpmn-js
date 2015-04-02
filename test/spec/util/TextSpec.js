@@ -2,7 +2,7 @@
 
 var assign = require('lodash/object/assign');
 
-var Matchers = require('../../Matchers');
+var toFitBBox = require('../../Matchers').toFitBBox;
 
 var Snap = require('../../../vendor/snapsvg'),
     TextUtil = require('../../../lib/util/Text');
@@ -22,7 +22,7 @@ describe('Text', function() {
 
   beforeEach(function() {
 
-    var testContainer = jasmine.getEnv().getTestContainer();
+    var testContainer = this.currentTest.__test_container_support__.testContentContainer;
 
     var parent = document.createElement('div');
     parent.style.width = '200px';
@@ -45,8 +45,6 @@ describe('Text', function() {
   }
 
 
-  beforeEach(Matchers.addBBoxMatchers);
-
 
   function createText(container, label, options) {
     var box = assign({}, { width: 150, height: 50 }, options.box || {});
@@ -68,8 +66,8 @@ describe('Text', function() {
       // when
       var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-      expect(text).toBeDefined();
-      expect(text).toFitBBox({ x: 35, y: 0, width: 80, height: 30 });
+      expect(text).to.be.defined;
+      expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
     });
 
 
@@ -87,8 +85,8 @@ describe('Text', function() {
       // make visible (for bounds check)
       container.attr('display', '');
 
-      expect(text).toBeDefined();
-      expect(text).toFitBBox({ x: 35, y: 0, width: 80, height: 30 });
+      expect(text).to.be.defined;
+      expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
     });
 
     describe('should line break', function() {
@@ -101,8 +99,8 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 160, height: 70 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
       });
 
 
@@ -114,8 +112,8 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 150, height: 70 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
       });
 
 
@@ -127,8 +125,8 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 150, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
       });
 
 
@@ -144,8 +142,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: -40, width: 100, height: 190 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: -40, width: 100, height: 190 })).to.be.true;
       });
 
 
@@ -161,8 +159,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
 
@@ -174,8 +172,8 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 5, y: 0, width: 150, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 5, y: 0, width: 150, height: 100 })).to.be.true;
       });
     });
 
@@ -194,8 +192,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
 
@@ -211,8 +209,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: -10, width: 100, height: 130 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: -10, width: 100, height: 130 })).to.be.true;
       });
 
 
@@ -228,8 +226,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: -30, width: 100, height: 180 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: -30, width: 100, height: 180 })).to.be.true;
       });
 
 
@@ -245,8 +243,8 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: -30, width: 100, height: 180 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: -30, width: 100, height: 180 })).to.be.true;
       });
     });
 
@@ -272,8 +270,8 @@ describe('Text', function() {
           align: 'center-middle'
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
 
@@ -295,8 +293,8 @@ describe('Text', function() {
           align: 'center-top'
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
 
@@ -318,8 +316,8 @@ describe('Text', function() {
           align: 'center-top'
         });
 
-        expect(text).toBeDefined();
-        expect(text).toFitBBox({ x: 0, y: 0, width: 100, height: 100 });
+        expect(text).to.be.defined;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
     });

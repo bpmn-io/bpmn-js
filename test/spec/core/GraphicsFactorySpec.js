@@ -8,15 +8,14 @@ describe('GraphicsFactory', function() {
 
   var container;
 
-  function createDiagram(options) {
+  function createDiagram(self, options) {
 
     return bootstrapDiagram(function() {
-      container = jasmine.getEnv().getTestContainer();
+      container = self.tests[0].__testcontainer__;
       return merge({ canvas: { container: container } }, options);
     }, {});
   }
-
-  beforeEach(createDiagram());
+  beforeEach(createDiagram(this));
 
   it('should not fail on update root shape', inject(function(canvas, graphicsFactory, elementRegistry) {
 

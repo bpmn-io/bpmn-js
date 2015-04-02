@@ -1,5 +1,6 @@
-var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+'use strict';
+
+var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
@@ -86,8 +87,8 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(Event.create({ x: 20, y: 20 }));
 
       // then
-      expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).toBe(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).to.equal(true);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
     }));
 
 
@@ -100,8 +101,8 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(Event.create({ x: 20, y: 20 }));
 
       // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(true);
+      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(true);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
     }));
 
 
@@ -115,8 +116,8 @@ describe('features/move - MoveVisuals', function() {
       dragging.end();
 
       // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).toBe(false);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).toBe(false);
+      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(false);
+      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(false);
     }));
 
   });
@@ -140,9 +141,9 @@ describe('features/move - MoveVisuals', function() {
 
       // then
       var ctx = dragging.active();
-      expect(ctx.data.context.canExecute).toBe(true);
+      expect(ctx.data.context.canExecute).to.equal(true);
 
-      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).toBe(true);
+      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).to.equal(true);
     }));
 
 
@@ -162,9 +163,9 @@ describe('features/move - MoveVisuals', function() {
 
       // then
       var ctx = dragging.active();
-      expect(ctx.data.context.canExecute).toBe(false);
+      expect(ctx.data.context.canExecute).to.equal(false);
 
-      expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).toBe(true);
+      expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).to.equal(true);
     }));
 
   });

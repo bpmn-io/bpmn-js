@@ -1,3 +1,5 @@
+'use strict';
+
 var forEach = require('lodash/collection/forEach');
 
 var Snap = require('snapsvg');
@@ -8,7 +10,7 @@ describe('intersection', function() {
   var paper;
 
   beforeEach(function() {
-    var testContainer = jasmine.getEnv().getTestContainer();
+    var testContainer = this.currentTest.__test_container_support__.testContentContainer;
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '100%');
@@ -27,9 +29,9 @@ describe('intersection', function() {
       paper.circle(i.x, i.y, 4);
     });
 
-    expect(intersections.length).toBe(1);
-    expect(Math.abs(intersections[0].x - point.x) < 0.5).toBe(true);
-    expect(Math.abs(intersections[0].y - point.y) < 0.5).toBe(true);
+    expect(intersections.length).to.equal(1);
+    expect(Math.abs(intersections[0].x - point.x) < 0.5).to.equal(true);
+    expect(Math.abs(intersections[0].y - point.y) < 0.5).to.equal(true);
   }
 
   function expectIntersection(a, b, point) {

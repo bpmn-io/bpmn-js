@@ -69,8 +69,8 @@ describe('features/overlay - integration', function() {
       // then
       var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
-      expect(parseInt(html.style.top)).toBe(70);
-      expect(parseInt(html.style.left)).toBe(30);
+      expect(parseInt(html.style.top)).to.equal(70);
+      expect(parseInt(html.style.left)).to.equal(30);
     }));
 
 
@@ -101,8 +101,8 @@ describe('features/overlay - integration', function() {
       // then
       var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
-      expect(parseInt(html.style.top)).toBe(50);
-      expect(parseInt(html.style.left)).toBe(50);
+      expect(parseInt(html.style.top)).to.equal(50);
+      expect(parseInt(html.style.left)).to.equal(50);
     }));
 
 
@@ -132,8 +132,8 @@ describe('features/overlay - integration', function() {
       // then
       var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
-      expect(parseInt(html.style.top)).toBe(35);
-      expect(parseInt(html.style.left)).toBe(55);
+      expect(parseInt(html.style.top)).to.equal(35);
+      expect(parseInt(html.style.left)).to.equal(55);
 
     }));
 
@@ -166,8 +166,8 @@ describe('features/overlay - integration', function() {
       // then
       var html = domQuery('.djs-overlays-test', canvas.getContainer());
 
-      expect(parseInt(html.style.top)).toBe(50);
-      expect(parseInt(html.style.left)).toBe(50);
+      expect(parseInt(html.style.top)).to.equal(50);
+      expect(parseInt(html.style.left)).to.equal(50);
     }));
 
   });
@@ -192,7 +192,7 @@ describe('features/overlay - integration', function() {
       selection.select(shape);
 
       // then
-      expect(domClasses(overlayContainer.html).has('selected')).toBe(true);
+      expect(domClasses(overlayContainer.html).has('selected')).to.be.true;
     }));
 
 
@@ -214,7 +214,7 @@ describe('features/overlay - integration', function() {
       selection.select(null);
 
       // then
-      expect(domClasses(overlayContainer.html).has('selected')).toBe(false);
+      expect(domClasses(overlayContainer.html).has('selected')).to.be.false;
     }));
 
   });
@@ -250,8 +250,8 @@ describe('features/overlay - integration', function() {
       dragging.move(Event.create({ x: 20, y: 30 }));
 
       // then
-      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).toBe(true);
-      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).toBe(true);
+      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).to.be.true;
+      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).to.be.true;
     }));
 
 
@@ -284,8 +284,8 @@ describe('features/overlay - integration', function() {
       dragging.end();
 
       // then
-      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).toBe(false);
-      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).toBe(false);
+      expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).to.be.false;
+      expect(domClasses(childOverlayContainer.html).has('djs-dragging')).to.be.false;
     }));
 
   });
@@ -318,7 +318,7 @@ describe('features/overlay - integration', function() {
       });
 
       // then
-      expect($element.parent().length).toBe(1);
+      expect($element.parent().length).to.equal(1);
     }));
 
   });

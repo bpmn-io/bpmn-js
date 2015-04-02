@@ -126,7 +126,7 @@ describe('util/Elements', function() {
 
       // then
       var ids = keys(filteredElements);
-      expect(ids).toEqual([ 'shape4', 'connection3', 'connection2a', 'connection2b' ]);
+      expect(ids).to.eql([ 'shape4', 'connection3', 'connection2a', 'connection2b' ]);
     }));
 
     it('should return elements south of y', inject(function() {
@@ -141,7 +141,7 @@ describe('util/Elements', function() {
 
       // then
       var ids = keys(filteredElements);
-      expect(ids).toEqual([ 'shape3a', 'shape3b', 'connection2a', 'connection2b' ]);
+      expect(ids).to.eql([ 'shape3a', 'shape3b', 'connection2a', 'connection2b' ]);
     }));
 
     it('should return elements east of x and south of y', inject(function() {
@@ -157,7 +157,7 @@ describe('util/Elements', function() {
 
       // then
       var ids = keys(filteredElements);
-      expect(ids).toEqual([ 'shape3b', 'connection2b' ]);
+      expect(ids).to.eql([ 'shape3b', 'connection2b' ]);
     }));
 
     it('should return elements within the bbox', inject(function() {
@@ -175,7 +175,7 @@ describe('util/Elements', function() {
 
       // then
       var ids = keys(filteredElements);
-      expect(ids).toEqual([
+      expect(ids).to.eql([
         'shape1',
         'shape2',
         'shape3',
@@ -205,7 +205,7 @@ describe('util/Elements', function() {
 
         // then
         var ids = keys(filteredElements);
-        expect(ids).toEqual([
+        expect(ids).to.eql([
           'shape1',
           'shape2',
           'shape3',
@@ -245,7 +245,7 @@ describe('util/Elements', function() {
 
         // then
         var ids = keys(filteredElements);
-        expect(ids).toEqual([
+        expect(ids).to.eql([
           'shape1',
           'shape0'
         ]);
@@ -266,7 +266,7 @@ describe('util/Elements', function() {
 
         // then
         var ids = keys(filteredElements);
-        expect(ids).toEqual([ 'connection3' ]);
+        expect(ids).to.eql([ 'connection3' ]);
       }));
     });
   });

@@ -33,8 +33,8 @@ describe('features/outline/Outline', function() {
       var outline = gfx.select('.djs-outline');
 
 
-      expect(outline).toBeTruthy(); // OUTLINE EXISTS
-      expect(gfx.hasClass('selected')).toBeTruthy(); // Outline class is set
+      expect(outline).to.be.defined; // OUTLINE EXISTS
+      expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
 
     it('should add outline to connection', inject(function(selection, canvas, elementRegistry) {
@@ -49,8 +49,8 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).toBeTruthy(); // OUTLINE EXISTS
-      expect(gfx.hasClass('selected')).toBeTruthy(); // Outline class is set
+      expect(outline).to.be.defined; // OUTLINE EXISTS
+      expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
 
   });
@@ -76,8 +76,8 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(shape);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).toBeTruthy(); // OUTLINE box is not removed
-      expect(gfx.hasClass('selected')).toBeFalsy(); // Outline class is not set
+      expect(outline).to.be.defined; // OUTLINE box is not removed
+      expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
 
     it('should remove outline class from connection', inject(function(selection, canvas, elementRegistry) {
@@ -93,8 +93,8 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).toBeTruthy(); // OUTLINE box is not removed
-      expect(gfx.hasClass('selected')).toBeFalsy(); // Outline class is not set
+      expect(outline).to.be.defined; // OUTLINE box is not removed
+      expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
   });
 

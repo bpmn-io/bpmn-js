@@ -1,20 +1,11 @@
 'use strict';
 
-var TestHelper = require('../../TestHelper');
 
-/* global bootstrapDiagram, inject */
-
+/* global bootstrapDiagram, inject, sinon */
 
 var merge = require('lodash/object/merge');
 
-var createSpy = jasmine.createSpy;
-
-var Matchers = require('../../Matchers');
-
-
 describe('Canvas', function() {
-
-  beforeEach(Matchers.addDeepEquals);
 
   var container;
 
@@ -24,13 +15,15 @@ describe('Canvas', function() {
   function createDiagram(options) {
 
     return bootstrapDiagram(function() {
-      container = jasmine.getEnv().getTestContainer();
       return merge({ canvas: { container: container } }, options);
     }, {});
   }
 
   describe('initialize', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
     it('should create <svg> element', inject(function() {
@@ -38,7 +31,7 @@ describe('Canvas', function() {
       // then
       var svg = container.querySelector('svg');
 
-      expect(svg).not.toEqual(null);
+      expect(svg).not.to.be.null;
     }));
 
   });
@@ -46,15 +39,18 @@ describe('Canvas', function() {
 
   describe('destroy', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
-    it('should remove created elements', inject(function(eventBus) {
+    it('should remove created elements', inject(function(eventBus, canvas) {
 
       // when
       eventBus.fire('diagram.destroy');
 
       // then
-      expect(container.childNodes.length).toBe(0);
+      expect(container.childNodes.length).to.equal(0);
     }));
 
   });
@@ -62,34 +58,37 @@ describe('Canvas', function() {
 
   describe('#addShape', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
 
     it('should fire <shape.add> event', inject(function(canvas, eventBus) {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
       eventBus.on('shape.add', listener);
 
       // when
       canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
 
       // then
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     }));
 
 
     it('should fire <shape.added> event', inject(function(canvas, eventBus) {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
       eventBus.on('shape.added', listener);
 
       // when
       canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
 
       // then
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     }));
 
 
@@ -101,7 +100,7 @@ describe('Canvas', function() {
       canvas.addShape(shape);
 
       // then
-      expect(elementRegistry.get('a')).toBe(shape);
+      expect(elementRegistry.get('a')).to.equal(shape);
     }));
 
 
@@ -115,8 +114,8 @@ describe('Canvas', function() {
         // when
         canvas.addShape(s);
 
-        fail('expected exception');
-      }).toThrowError('element must have an id');
+        throw ('expected exception');
+      }).to.throw('element must have an id');
     }));
 
 
@@ -130,8 +129,8 @@ describe('Canvas', function() {
         canvas.addShape(s);
         canvas.addShape(s);
 
-        fail('expected exception');
-      }).toThrowError('element with id FOO already exists');
+        throw ('expected exception');
+      }).to.throw('element with id FOO already exists');
 
     }));
 
@@ -147,7 +146,7 @@ describe('Canvas', function() {
       var gfx = elementRegistry.getGraphics(shape);
 
       // then
-      expect(gfx.attr('display')).toBe('none');
+      expect(gfx.attr('display')).to.equal('none');
     }));
 
 
@@ -169,8 +168,8 @@ describe('Canvas', function() {
       canvas.addShape(childShape, parentShape);
 
       // then
-      expect(parentShape.children).toEqual([ childShape ]);
-      expect(childShape.parent).toBe(parentShape);
+      expect(parentShape.children).to.contain( childShape );
+      expect(childShape.parent).to.equal(parentShape);
     }));
 
   });
@@ -178,13 +177,15 @@ describe('Canvas', function() {
 
   describe('#removeShape', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
-
 
     it('should fire <shape.removed> event', inject(function(canvas, eventBus, elementRegistry) {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
       eventBus.on('shape.removed', listener);
 
       canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
@@ -193,10 +194,10 @@ describe('Canvas', function() {
       var shape = canvas.removeShape('a');
 
       // then
-      expect(shape.parent).toBeFalsy();
-      expect(elementRegistry.get('a')).not.toBeDefined();
+      expect(shape.parent).to.be.null;
+      expect(elementRegistry.get('a')).to.be.undefined;
 
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     }));
 
 
@@ -209,7 +210,7 @@ describe('Canvas', function() {
       canvas.removeShape('a');
 
       // then
-      expect(elementRegistry.get('a')).toBeFalsy();
+      expect(elementRegistry.get('a')).to.be.undefined;
     }));
 
 
@@ -233,8 +234,8 @@ describe('Canvas', function() {
       canvas.removeShape(childShape);
 
       // then
-      expect(parentShape.children).toEqual([]);
-      expect(childShape.parent).toBe(null);
+      expect(parentShape.children).to.be.empty;
+      expect(childShape.parent).to.be.null;
     }));
 
   });
@@ -242,13 +243,16 @@ describe('Canvas', function() {
 
   describe('#addConnection', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
 
     it('should fire <connection.added> event', inject(function(canvas, eventBus) {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
 
       canvas.addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 });
       canvas.addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
@@ -259,7 +263,7 @@ describe('Canvas', function() {
       canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
 
       // then
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     }));
 
   });
@@ -267,13 +271,16 @@ describe('Canvas', function() {
 
   describe('#removeConnection', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
 
     it('should fire <connection.removed> event', inject(function(canvas, eventBus, elementRegistry) {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
 
       canvas.addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 });
       canvas.addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
@@ -286,10 +293,10 @@ describe('Canvas', function() {
       var connection = canvas.removeConnection('c1');
 
       // then
-      expect(connection.parent).toBeFalsy();
-      expect(elementRegistry.get('c1')).not.toBeDefined();
+      expect(connection.parent).to.be.null;
+      expect(elementRegistry.get('c1')).to.not.be.defined;
 
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     }));
 
   });
@@ -297,17 +304,20 @@ describe('Canvas', function() {
 
   describe('root element(s)', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
 
     it('should always return root element', inject(function(canvas) {
       // when
       // accessing root element for the first time
-      expect(canvas.getRootElement()).toBeDefined();
+      expect(canvas.getRootElement()).to.be.defined;
 
       // expect
       // the canvas to be correctly wired
-      expect(canvas._svg.attr('data-element-id')).toBe('__implicitroot');
+      expect(canvas._svg.attr('data-element-id')).to.equal('__implicitroot');
     }));
 
 
@@ -318,7 +328,7 @@ describe('Canvas', function() {
       var root = canvas.getRootElement();
 
       // then
-      expect(a.parent).toBe(root);
+      expect(a.parent).to.equal(root);
     }));
 
 
@@ -330,14 +340,14 @@ describe('Canvas', function() {
       var setRootElement = canvas.setRootElement(rootElement);
 
       // then
-      expect(canvas.getRootElement()).toBe(rootElement);
+      expect(canvas.getRootElement()).to.equal(rootElement);
 
       // new root element is registered
-      expect(elementRegistry.get('XXXX')).toBeDefined();
-      expect(elementRegistry.getGraphics('XXXX')).toBe(canvas.getDefaultLayer());
+      expect(elementRegistry.get('XXXX')).to.be.defined;
+      expect(elementRegistry.getGraphics('XXXX')).to.equal(canvas.getDefaultLayer());
 
       // root element is returned from setter?
-      expect(setRootElement).toBe(rootElement);
+      expect(setRootElement).to.equal(rootElement);
     }));
 
 
@@ -352,13 +362,13 @@ describe('Canvas', function() {
       // then
       expect(function() {
         canvas.setRootElement(newRootElement);
-      }).toThrow();
+      }).to.throw;
 
       // but when
       canvas.setRootElement(newRootElement, true);
 
       // then
-      expect(canvas.getRootElement()).toBe(newRootElement);
+      expect(canvas.getRootElement()).to.equal(newRootElement);
     }));
 
 
@@ -371,7 +381,7 @@ describe('Canvas', function() {
       var shape = canvas.addShape({ id: 'child', width: 100, height: 100, x: 10, y: 10 }, elementRegistry.get('XXXX'));
 
       // then
-      expect(shape.parent).toBe(rootElement);
+      expect(shape.parent).to.equal(rootElement);
     }));
 
   });
@@ -379,6 +389,9 @@ describe('Canvas', function() {
 
   describe('update behavior', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram());
 
     var a, b, c;
@@ -401,6 +414,9 @@ describe('Canvas', function() {
 
   describe('viewbox', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -415,7 +431,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
@@ -433,7 +449,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
@@ -452,7 +468,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1.0,
@@ -479,7 +495,7 @@ describe('Canvas', function() {
         var changedViewbox = canvas.viewbox();
 
         // then
-        expect(changedViewbox).toEqual({
+        expect(changedViewbox).to.eql({
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -502,7 +518,7 @@ describe('Canvas', function() {
         var changedViewbox = canvas.viewbox();
 
         // then
-        expect(changedViewbox).toEqual({
+        expect(changedViewbox).to.eql({
           x: 100, y: 100,
           width: 300, height: 300,
           scale: 1,
@@ -524,7 +540,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: -50, y: -50,
           width: 600, height: 600,
           scale: 0.5,
@@ -548,7 +564,7 @@ describe('Canvas', function() {
         // then
         var changedViewbox = canvas.viewbox();
 
-        expect(changedViewbox).toEqual({
+        expect(changedViewbox).to.eql({
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -571,7 +587,7 @@ describe('Canvas', function() {
         // then
         var changedViewbox = canvas.viewbox();
 
-        expect(changedViewbox).toEqual({
+        expect(changedViewbox).to.eql({
           x: 50, y: 50,
           width: 200, height: 200,
           scale: 1.5,
@@ -583,7 +599,7 @@ describe('Canvas', function() {
 
       it('should fire <canvas.viewbox.changed> event', inject(function(canvas, eventBus) {
 
-        var changedListener = createSpy('listener');
+        var changedListener = sinon.spy();
         eventBus.on('canvas.viewbox.changed', changedListener);
 
         // given
@@ -595,10 +611,10 @@ describe('Canvas', function() {
         canvas.viewbox(viewbox);
 
         // then
-        var calls = changedListener.calls;
+        var calls = changedListener.callCount;
 
-        expect(calls.count()).toEqual(1);
-        expect(calls.argsFor(0)[0].viewbox).toEqual({
+        expect(calls).to.equal(1);
+        expect(changedListener.getCall(0).args[0].viewbox).to.eql({
           x: 100, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -615,6 +631,9 @@ describe('Canvas', function() {
 
   describe('scroll', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -631,15 +650,15 @@ describe('Canvas', function() {
         var newScroll = canvas.scroll({ dx: 50, dy: 100 });
 
         // then
-        expect(newScroll.x).toBe(viewbox.x + 50);
-        expect(newScroll.y).toBe(viewbox.y + 100);
+        expect(newScroll.x).to.equal(viewbox.x + 50);
+        expect(newScroll.y).to.equal(viewbox.y + 100);
 
       }));
 
 
       it('should fire <canvas.viewbox.changed>', inject(function(eventBus, canvas) {
 
-        var changedListener = createSpy('listener');
+        var changedListener = sinon.spy();
         eventBus.on('canvas.viewbox.changed', changedListener);
 
         // given
@@ -651,15 +670,15 @@ describe('Canvas', function() {
         canvas.scroll({ dx: 50, dy: 100 });
 
         // then
-        var calls = changedListener.calls;
+        var calls = changedListener.callCount;
 
-        expect(calls.count()).toEqual(1);
+        expect(calls).to.equal(1);
 
         // expect { viewbox } event
-        var newViewbox = calls.argsFor(0)[0].viewbox;
+        var newViewbox = changedListener.getCall(0).args[0].viewbox;
 
-        expect(newViewbox.x).toEqual(viewbox.x - 50);
-        expect(newViewbox.y).toEqual(viewbox.y - 100);
+        expect(newViewbox.x).to.equal(viewbox.x - 50);
+        expect(newViewbox.y).to.equal(viewbox.y - 100);
 
       }));
 
@@ -681,8 +700,8 @@ describe('Canvas', function() {
         var newScroll = canvas.scroll();
 
         // then
-        expect(newScroll.x).toBe(viewbox.x + 50);
-        expect(newScroll.y).toBe(viewbox.y + 100);
+        expect(newScroll.x).to.equal(viewbox.x + 50);
+        expect(newScroll.y).to.equal(viewbox.y + 100);
 
       }));
 
@@ -693,6 +712,9 @@ describe('Canvas', function() {
 
   describe('zoom', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -707,7 +729,7 @@ describe('Canvas', function() {
         var zoom = canvas.zoom();
 
         // then
-        expect(zoom).toEqual(1.0);
+        expect(zoom).to.equal(1.0);
       }));
 
 
@@ -720,7 +742,7 @@ describe('Canvas', function() {
         var zoom = canvas.zoom();
 
         // then
-        expect(zoom).toEqual(1.0);
+        expect(zoom).to.equal(1.0);
       }));
 
 
@@ -734,7 +756,7 @@ describe('Canvas', function() {
         var zoom = canvas.zoom();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
       }));
 
     });
@@ -751,7 +773,7 @@ describe('Canvas', function() {
         var zoom = canvas.zoom(0.5);
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
       }));
 
 
@@ -765,9 +787,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -788,9 +810,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -811,9 +833,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(1);
+        expect(zoom).to.equal(1);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 0, y: 0,
           width: 300, height: 300,
           scale: 1,
@@ -834,9 +856,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(1);
+        expect(zoom).to.equal(1);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: -50, y: -100,
           width: 300, height: 300,
           scale: 1,
@@ -860,9 +882,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 0, y: 0,
           width: 600, height: 600,
           scale: 0.5,
@@ -885,9 +907,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(1);
+        expect(zoom).to.equal(1);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: -125, y: -125,
           width: 300, height: 300,
           scale: 1,
@@ -907,9 +929,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: 50, y: -100,
           width: 600, height: 600,
           scale: 0.5,
@@ -929,9 +951,9 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(zoom).toEqual(0.5);
+        expect(zoom).to.equal(0.5);
 
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: -125, y: 100,
           width: 600, height: 600,
           scale: 0.5,
@@ -952,7 +974,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual({
+        expect(viewbox).to.eql({
           x: -50, y: -50,
           width: 600, height: 600,
           scale: 0.5,
@@ -977,7 +999,7 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).toEqual(originalViewbox);
+        expect(viewbox).to.eql(originalViewbox);
       }));
 
 
@@ -993,9 +1015,9 @@ describe('Canvas', function() {
           var viewbox = canvas.viewbox();
 
           // then
-          expect(zoom).toEqual(0.5);
+          expect(zoom).to.equal(0.5);
 
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: -150, y: -150,
             width: 600, height: 600,
             scale: 0.5,
@@ -1016,9 +1038,9 @@ describe('Canvas', function() {
           var viewbox = canvas.viewbox();
 
           // then
-          expect(zoom).toEqual(0.5);
+          expect(zoom).to.equal(0.5);
 
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: -100, y: -100,
             width: 600, height: 600,
             scale: 0.5,
@@ -1040,10 +1062,10 @@ describe('Canvas', function() {
           var zoom = canvas.zoom(0.5, { x: 150, y: 150 });
           var viewbox = canvas.viewbox();
 
-          expect(zoom).toEqual(0.5);
+          expect(zoom).to.equal(0.5);
 
           // then
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: -150,
             y: -150,
             width: 600,
@@ -1065,10 +1087,10 @@ describe('Canvas', function() {
           var zoom = canvas.zoom(2.0, { x: 150, y: 150 });
           var viewbox = canvas.viewbox();
 
-          expect(zoom).toEqual(2.0);
+          expect(zoom).to.equal(2.0);
 
           // then
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: 75,
             y: 75,
             width: 150,
@@ -1090,10 +1112,10 @@ describe('Canvas', function() {
           var zoom = canvas.zoom(2.0, { x: 100, y: 150 });
           var viewbox = canvas.viewbox();
 
-          expect(zoom).toEqual(2.0);
+          expect(zoom).to.equal(2.0);
 
           // then
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: 50,
             y: 75,
             width: 150,
@@ -1114,10 +1136,10 @@ describe('Canvas', function() {
           var zoom = canvas.zoom(2.0, { x: 150, y: 200 });
           var viewbox = canvas.viewbox();
 
-          expect(zoom).toEqual(2.0);
+          expect(zoom).to.equal(2.0);
 
           // then
-          expect(viewbox).toEqual({
+          expect(viewbox).to.eql({
             x: 75,
             y: 100,
             width: 150,
@@ -1145,8 +1167,8 @@ describe('Canvas', function() {
           var viewbox = canvas.viewbox();
 
           // then
-          expect(viewbox.x).toEqual(-150);
-          expect(viewbox.y).toEqual(-150);
+          expect(viewbox.x).to.equal(-150);
+          expect(viewbox.y).to.equal(-150);
         }));
 
       });
@@ -1158,6 +1180,9 @@ describe('Canvas', function() {
 
   describe('#getAbsoluteBBox', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -1171,7 +1196,7 @@ describe('Canvas', function() {
       var bbox = canvas.getAbsoluteBBox(shape);
 
       // then
-      expect(bbox).toDeepEqual({ x: 10, y: 20, width: 300, height: 200 });
+      expect(bbox).to.eql({ x: 10, y: 20, width: 300, height: 200 });
     }));
 
 
@@ -1187,7 +1212,7 @@ describe('Canvas', function() {
       var bbox = canvas.getAbsoluteBBox(shape);
 
       // then
-      expect(bbox).toDeepEqual({ x: -40, y: -30, width: 300, height: 200 });
+      expect(bbox).to.eql({ x: -40, y: -30, width: 300, height: 200 });
     }));
 
 
@@ -1203,7 +1228,7 @@ describe('Canvas', function() {
       var bbox = canvas.getAbsoluteBBox(shape);
 
       // then
-      expect(bbox).toDeepEqual({ x: -20, y: -15, width: 150, height: 100 });
+      expect(bbox).to.eql({ x: -20, y: -15, width: 150, height: 100 });
     }));
 
 
@@ -1219,7 +1244,7 @@ describe('Canvas', function() {
       var bbox = canvas.getAbsoluteBBox(shape);
 
       // then
-      expect(bbox).toDeepEqual({ x: -80, y: -60, width: 600, height: 400 });
+      expect(bbox).to.eql({ x: -80, y: -60, width: 600, height: 400 });
     }));
 
   });
@@ -1227,6 +1252,9 @@ describe('Canvas', function() {
 
   describe('#getGraphics', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
     var shape;
@@ -1243,8 +1271,8 @@ describe('Canvas', function() {
           secondaryGfx = canvas.getGraphics(shape, true);
 
       // then
-      expect(gfx).toBeDefined();
-      expect(secondaryGfx).not.toBeDefined();
+      expect(gfx).to.be.defined;
+      expect(secondaryGfx).to.not.be.defined;
     }));
 
 
@@ -1257,11 +1285,11 @@ describe('Canvas', function() {
           secondaryGfx = canvas.getGraphics(root, true);
 
       // then
-      expect(gfx).toBeDefined();
-      expect(gfx.type).toBe('g');
+      expect(gfx).to.be.defined;
+      expect(gfx.type).to.equal('g');
 
-      expect(secondaryGfx).toBeDefined();
-      expect(secondaryGfx.type).toBe('svg');
+      expect(secondaryGfx).to.be.defined;
+      expect(secondaryGfx.type).to.equal('svg');
     }));
 
   });
@@ -1269,6 +1297,9 @@ describe('Canvas', function() {
 
   describe('markers', function() {
 
+    beforeEach(function() {
+      container = this.currentTest.__test_container_support__.testContentContainer;
+    });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -1286,8 +1317,8 @@ describe('Canvas', function() {
       canvas.addMarker(shape, 'foo');
 
       // then
-      expect(canvas.hasMarker(shape, 'foo')).toBe(true);
-      expect(gfx.hasClass('foo')).toBe(true);
+      expect(canvas.hasMarker(shape, 'foo')).to.be.true;
+      expect(gfx.hasClass('foo')).to.be.true;
     }));
 
 
@@ -1300,8 +1331,8 @@ describe('Canvas', function() {
       canvas.addMarker(root, 'foo');
 
       // then
-      expect(canvas.hasMarker(root, 'foo')).toBe(true);
-      expect(svgGfx.hasClass('foo')).toBe(true);
+      expect(canvas.hasMarker(root, 'foo')).to.be.true;
+      expect(svgGfx.hasClass('foo')).to.be.true;
     }));
 
 
@@ -1314,8 +1345,8 @@ describe('Canvas', function() {
       canvas.removeMarker(shape, 'foo');
 
       // then
-      expect(canvas.hasMarker(shape, 'foo')).toBe(false);
-      expect(gfx.hasClass('foo')).toBe(false);
+      expect(canvas.hasMarker(shape, 'foo')).to.be.false;
+      expect(gfx.hasClass('foo')).to.be.false;
     }));
 
 
@@ -1325,15 +1356,15 @@ describe('Canvas', function() {
       canvas.toggleMarker(shape, 'foo');
 
       // then
-      expect(canvas.hasMarker(shape, 'foo')).toBe(true);
-      expect(gfx.hasClass('foo')).toBe(true);
+      expect(canvas.hasMarker(shape, 'foo')).to.be.true;
+      expect(gfx.hasClass('foo')).to.be.true;
 
       // but when
       canvas.toggleMarker(shape, 'foo');
 
       // then
-      expect(canvas.hasMarker(shape, 'foo')).toBe(false);
-      expect(gfx.hasClass('foo')).toBe(false);
+      expect(canvas.hasMarker(shape, 'foo')).to.be.false;
+      expect(gfx.hasClass('foo')).to.be.false;
 
     }));
 
@@ -1358,7 +1389,7 @@ describe('Canvas', function() {
         canvas.removeMarker(shape, 'foo');
         canvas.toggleMarker(shape, 'bar');
 
-        expect(capturedEvents).toEqual([
+        expect(capturedEvents).to.eql([
           [ shape, 'bar', true ],
           [ shape, 'foo', false ],
           [ shape, 'bar', false ]

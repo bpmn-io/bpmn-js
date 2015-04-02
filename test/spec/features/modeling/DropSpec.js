@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 
@@ -13,7 +11,7 @@ describe('features/modeling - move shape - drop', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, parent1, parent2, parent3, shape1, shape2, shape3, connection;
+  var rootShape, parent1, parent2, parent3, shape1, shape2, shape3;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -86,7 +84,7 @@ describe('features/modeling - move shape - drop', function() {
       modeling.moveShape(shape1, { x: 5, y: 50 }, parent1);
 
       // then
-      expect(shape1.parent).toBe(parent1);
+      expect(shape1.parent).to.equal(parent1);
     }));
 
 
@@ -98,8 +96,8 @@ describe('features/modeling - move shape - drop', function() {
       modeling.moveShapes([shape1, shape2], { x: 5, y: 50 }, parent1);
 
       // then
-      expect(shape1.parent).toBe(parent1);
-      expect(shape2.parent).toBe(parent1);
+      expect(shape1.parent).to.equal(parent1);
+      expect(shape2.parent).to.equal(parent1);
     }));
 
 
@@ -113,8 +111,8 @@ describe('features/modeling - move shape - drop', function() {
       modeling.moveShapes([shape1, shape2], { x: 180, y: 0 }, parent3);
 
       // then
-      expect(shape1.parent).toBe(parent3);
-      expect(shape2.parent).toBe(parent3);
+      expect(shape1.parent).to.equal(parent3);
+      expect(shape2.parent).to.equal(parent3);
     }));
 
 
@@ -127,9 +125,9 @@ describe('features/modeling - move shape - drop', function() {
       modeling.moveShape(parent2, { x: 115, y: 25 }, parent3);
 
       // then
-      expect(shape1.parent).toBe(parent2);
-      expect(shape2.parent).toBe(parent2);
-      expect(parent2.parent).toBe(parent3);
+      expect(shape1.parent).to.equal(parent2);
+      expect(shape2.parent).to.equal(parent2);
+      expect(parent2.parent).to.equal(parent3);
     }));
 
   });

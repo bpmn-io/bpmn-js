@@ -17,7 +17,7 @@ describe('layout/Util', function() {
       var r = rect(100, 100, 100, 200);
 
       // then
-      expect(LayoutUtil.getMidPoint(r)).toEqual({ x: 150, y: 200 });
+      expect(LayoutUtil.getMidPoint(r)).to.eql({ x: 150, y: 200 });
     });
 
   });
@@ -34,7 +34,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(100, 0, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('top');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('top');
     });
 
 
@@ -43,7 +43,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(200, 0, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('top-right');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('top-right');
     });
 
 
@@ -52,7 +52,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(200, 100, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('right');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('right');
     });
 
 
@@ -61,7 +61,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(200, 200, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('bottom-right');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('bottom-right');
     });
 
 
@@ -70,7 +70,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(100, 200, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('bottom');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('bottom');
     });
 
 
@@ -79,7 +79,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(0, 200, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('bottom-left');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('bottom-left');
     });
 
 
@@ -88,7 +88,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(0, 100, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('left');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('left');
     });
 
 
@@ -97,7 +97,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(0, 0, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('top-left');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('top-left');
     });
 
 
@@ -106,7 +106,7 @@ describe('layout/Util', function() {
       // given
       var b = rect(120, 120, 100, 100);
 
-      expect(LayoutUtil.getOrientation(b, a)).toBe('intersect');
+      expect(LayoutUtil.getOrientation(b, a)).to.equal('intersect');
     });
 
   });

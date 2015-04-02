@@ -94,7 +94,7 @@ describe('features/bendpoints', function() {
 
       // then
       // 3 visible + 1 invisible bendpoint are shown
-      expect(layer.node.querySelectorAll('.djs-bendpoint').length).toBe(4);
+      expect(layer.node.querySelectorAll('.djs-bendpoint').length).to.equal(4);
     }));
 
 
@@ -108,7 +108,7 @@ describe('features/bendpoints', function() {
 
       // then
       // 3 visible + 1 invisible bendpoint are shown
-      expect(layer.node.querySelectorAll('.djs-bendpoint').length).toBe(4);
+      expect(layer.node.querySelectorAll('.djs-bendpoint').length).to.equal(4);
     }));
 
   });

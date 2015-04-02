@@ -12,9 +12,9 @@ describe('util/IdGenerator', function() {
     var foos = new IdGenerator('foo');
 
     // then
-    expect(foos.next()).toMatch(/^foo-(\d+)-1$/);
-    expect(foos.next()).toMatch(/^foo-(\d+)-2$/);
-    expect(foos.next()).toMatch(/^foo-(\d+)-3$/);
+    expect(foos.next()).to.match(/^foo-(\d+)-1$/);
+    expect(foos.next()).to.match(/^foo-(\d+)-2$/);
+    expect(foos.next()).to.match(/^foo-(\d+)-3$/);
   });
 
 
@@ -24,11 +24,11 @@ describe('util/IdGenerator', function() {
     var foos = new IdGenerator();
 
     // then
-    expect(foos._prefix).toBeDefined();
+    expect(foos._prefix).to.be.defined;
 
-    expect(foos.next()).toMatch(/^(\d+)-1$/);
-    expect(foos.next()).toMatch(/^(\d+)-2$/);
-    expect(foos.next()).toMatch(/^(\d+)-3$/);
+    expect(foos.next()).to.match(/^(\d+)-1$/);
+    expect(foos.next()).to.match(/^(\d+)-2$/);
+    expect(foos.next()).to.match(/^(\d+)-3$/);
 
   });
 

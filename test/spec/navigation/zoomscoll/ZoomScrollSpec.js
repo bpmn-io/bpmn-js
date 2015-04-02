@@ -25,7 +25,7 @@ describe('navigation/zoomscroll', function() {
         y: 100
       });
 
-      expect(zoomScroll).not.toBe(null);
+      expect(zoomScroll).to.not.be.null;
     }));
 
   });

@@ -3,16 +3,10 @@
 /* global bootstrapDiagram, inject */
 
 
-var Matchers = require('../../../Matchers');
-
-
 var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - layout connection', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
@@ -61,7 +55,7 @@ describe('features/modeling - layout connection', function() {
       modeling.layoutConnection(connection);
 
       // then
-      expect(connection.waypoints).toDeepEqual([
+      expect(connection.waypoints).to.eql([
         { x: 150, y: 150 }, { x: 350, y: 350 }
       ]);
     }));
@@ -76,7 +70,7 @@ describe('features/modeling - layout connection', function() {
       commandStack.undo();
 
       // then
-      expect(connection.waypoints).toDeepEqual([
+      expect(connection.waypoints).to.eql([
         { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 }
       ]);
     }));
@@ -139,11 +133,9 @@ describe('features/modeling - layout connection', function() {
         // then
         var childArr = connection.parent.children;
 
-        expect(childArr).toEqual([
-          sourceShape,
-          container1,
-          connection
-        ]);
+        expect(childArr[0]).to.equal(sourceShape);
+        expect(childArr[1]).to.equal(container1);
+        expect(childArr[2]).to.equal(connection);
       }));
 
 
@@ -158,12 +150,10 @@ describe('features/modeling - layout connection', function() {
         // then
         var childArr = connection.parent.children;
 
-        expect(childArr).toEqual([
-          sourceShape,
-          targetShape,
-          connection,
-          container1
-        ]);
+        expect(childArr[0]).to.equal(sourceShape);
+        expect(childArr[1]).to.equal(targetShape);
+        expect(childArr[2]).to.equal(connection);
+        expect(childArr[3]).to.equal(container1);
       }));
 
     });
@@ -185,12 +175,11 @@ describe('features/modeling - layout connection', function() {
       // then
       var childArr = connection2.parent.children;
 
-      expect(childArr).toEqual([
-        sourceShape,
-        container1,
-        connection,
-        connection2
-      ]);
+      expect(childArr[0]).to.equal(sourceShape);
+      expect(childArr[1]).to.equal(container1);
+      expect(childArr[2]).to.equal(connection);
+      expect(childArr[3]).to.equal(connection2);
+
     }));
 
   });

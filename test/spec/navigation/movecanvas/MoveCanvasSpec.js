@@ -26,7 +26,7 @@ describe('navigation/movecanvas', function() {
         y: 100
       });
 
-      expect(moveCanvas).not.toBe(null);
+      expect(moveCanvas).not.to.be.null;
     }));
 
   });

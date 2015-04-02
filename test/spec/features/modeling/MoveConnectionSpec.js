@@ -1,20 +1,13 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
-
-
-var Matchers = require('../../../Matchers');
 
 
 var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - move connection', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
@@ -67,11 +60,11 @@ describe('features/modeling - move connection', function() {
     modeling.moveConnection(connection, { x: 20, y: 10 }, otherShape);
 
     // then
-    expect(connection.waypoints).toDeepEqual([
+    expect(connection.waypoints).to.eql([
       { x: 170, y: 160, original: { x: 20, y: 10 } }, { x: 170, y: 210 }, { x: 370, y: 160 }
     ]);
 
-    expect(connection.parent).toBe(otherShape);
+    expect(connection.parent).to.equal(otherShape);
   }));
 
 
@@ -84,11 +77,11 @@ describe('features/modeling - move connection', function() {
     commandStack.undo();
 
     // then
-    expect(connection.waypoints).toDeepEqual([
+    expect(connection.waypoints).to.eql([
       { x: 150, y: 150, original: { x: 0, y: 0 } }, { x: 150, y: 200 }, { x: 350, y: 150 }
     ]);
 
-    expect(connection.parent).toBe(rootShape);
+    expect(connection.parent).to.equal(rootShape);
   }));
 
 
@@ -102,11 +95,11 @@ describe('features/modeling - move connection', function() {
     commandStack.redo();
 
     // then
-    expect(connection.waypoints).toDeepEqual([
+    expect(connection.waypoints).to.eql([
       { x: 170, y: 160, original: { x: 20, y: 10 } }, { x: 170, y: 210 }, { x: 370, y: 160 }
     ]);
 
-    expect(connection.parent).toBe(otherShape);
+    expect(connection.parent).to.equal(otherShape);
   }));
 
 });

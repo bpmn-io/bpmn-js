@@ -8,14 +8,8 @@ var unique = require('lodash/array/unique'),
 var Diagram = require('../../lib/Diagram'),
     domEvent = require('min-dom/lib/event');
 
-try {
-  // enhance jasmine with test container API
-  require('jasmine-test-container-support').extend(jasmine);
-} catch (e) {
-  // no test container :-(
-}
-
 var OPTIONS, DIAGRAM;
+
 
 /**
  * Bootstrap the diagram given the specified options and a number of locals (i.e. services)
@@ -46,14 +40,7 @@ function bootstrapDiagram(options, locals) {
 
     var testContainer;
 
-    try {
-      testContainer = jasmine.getEnv().getTestContainer();
-    } catch (e) {
-      testContainer = document.createElement('div');
-      document.body.appendChild(testContainer);
-    }
-
-    testContainer.classList.add('test-container');
+    testContainer = this.currentTest.__test_container_support__.testContentContainer;
 
     var _options = options,
         _locals = locals;

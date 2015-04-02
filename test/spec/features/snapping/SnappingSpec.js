@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 

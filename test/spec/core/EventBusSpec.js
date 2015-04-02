@@ -1,7 +1,9 @@
+'use strict';
+
 var EventBus = require('../../../lib/core/EventBus');
 
-var createSpy = jasmine.createSpy;
 
+/*global sinon*/
 
 describe('core/EventBus', function() {
 
@@ -17,7 +19,7 @@ describe('core/EventBus', function() {
     it('should fire listener', function() {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();//createSpy('listener');
 
       eventBus.on('foo', listener);
 
@@ -25,14 +27,14 @@ describe('core/EventBus', function() {
       eventBus.fire('foo', {});
 
       // then
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     });
 
 
     it('should fire typed listener', function() {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
 
       eventBus.on('foo', listener);
 
@@ -40,18 +42,18 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     });
 
 
     it('should stopPropagation', function() {
 
       // given
-      var listener1 = createSpy('listener1').and.callFake(function(event) {
+      var listener1 = sinon.spy(function(event){
         event.stopPropagation();
       });
 
-      var listener2 = createSpy('listener2');
+      var listener2 = sinon.spy();
 
       eventBus.on('foo', listener1);
       eventBus.on('foo', listener2);
@@ -60,8 +62,8 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener1).toHaveBeenCalled();
-      expect(listener2).not.toHaveBeenCalled();
+      expect(listener1).to.have.been.called;
+      expect(listener2).to.not.have.been.called;
     });
 
 
@@ -73,7 +75,7 @@ describe('core/EventBus', function() {
         var defaultPrevented = !eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).toBe(false);
+        expect(defaultPrevented).to.equal(false);
       });
 
 
@@ -86,7 +88,7 @@ describe('core/EventBus', function() {
         var defaultPrevented = !eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).toBe(false);
+        expect(defaultPrevented).to.equal(false);
       });
 
 
@@ -101,7 +103,7 @@ describe('core/EventBus', function() {
         var defaultPrevented = !eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).toBe(true);
+        expect(defaultPrevented).to.equal(true);
       });
 
 
@@ -116,18 +118,18 @@ describe('core/EventBus', function() {
         var defaultPrevented = !eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).toBe(true);
+        expect(defaultPrevented).to.equal(true);
       });
 
 
       it('should not stop propagation to other listeners', function() {
 
         // given
-        var listener1 = createSpy('listener1').and.callFake(function(event) {
+        var listener1 = sinon.spy(function(event){
           return false;
         });
 
-        var listener2 = createSpy('listener2');
+        var listener2 = sinon.spy();
 
         eventBus.on('foo', listener1);
         eventBus.on('foo', listener2);
@@ -136,10 +138,10 @@ describe('core/EventBus', function() {
         var defaultPrevented = !eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).toBe(true);
+        expect(defaultPrevented).to.equal(true);
 
-        expect(listener1).toHaveBeenCalled();
-        expect(listener2).toHaveBeenCalled();
+        expect(listener1).to.have.been.called;
+        expect(listener2).to.have.been.called;
       });
 
     });
@@ -148,8 +150,8 @@ describe('core/EventBus', function() {
     it('should remove listeners by event type', function() {
 
       // given
-      var listener1 = createSpy('listener1');
-      var listener2 = createSpy('listener2');
+      var listener1 = sinon.spy();
+      var listener2 = sinon.spy();
 
       eventBus.on('foo', listener1);
       eventBus.on('foo', listener2);
@@ -159,16 +161,16 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener1).not.toHaveBeenCalled();
-      expect(listener2).not.toHaveBeenCalled();
+      expect(listener1).to.not.have.been.called
+      expect(listener2).to.not.have.been.called;
     });
 
 
     it('should remove listener by callback', function() {
 
       // given
-      var listener1 = createSpy('listener1');
-      var listener2 = createSpy('listener2');
+      var listener1 = sinon.spy();
+      var listener2 = sinon.spy();
 
       eventBus.on('foo', listener1);
       eventBus.on('foo', listener2);
@@ -178,52 +180,52 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener1).not.toHaveBeenCalled();
-      expect(listener2).toHaveBeenCalled();
+      expect(listener1).to.not.have.been.called;
+      expect(listener2).to.have.been.called;
     });
 
 
     it('should fire event by name', function() {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
 
       // when
       eventBus.on('foo', listener);
       eventBus.fire('foo');
 
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     });
 
 
     it('once should only fire once', function() {
 
       // given
-      var listener = createSpy('listener');
+      var listener = sinon.spy();
 
       // when
       eventBus.once('onceEvent', listener);
       eventBus.fire('onceEvent', { value: 'a' });
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
 
       // Should not be fired
-      listener.calls.reset(); // Reset the count
+      listener.reset(); // Reset the count
       eventBus.fire('onceEvent');
-      expect(listener).not.toHaveBeenCalled();
+      expect(listener).to.not.have.been.called;
 
       // register again a listener
       eventBus.once('onceEvent', listener);
       eventBus.fire('onceEvent');
 
       // should be fired again
-      expect(listener).toHaveBeenCalled();
+      expect(listener).to.have.been.called;
     });
 
 
     it('should register to multiple events', function() {
 
       // given
-      var listener1 = createSpy('listener1');
+      var listener1 = sinon.spy();
 
       eventBus.on([ 'foo', 'bar' ], listener1);
 
@@ -231,7 +233,7 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener1).toHaveBeenCalled();
+      expect(listener1).to.have.been.called;
     });
 
   });
@@ -242,7 +244,7 @@ describe('core/EventBus', function() {
     it('should propagate error via <error> event', function() {
 
       // given
-      var errorListener = createSpy('error-listener');
+      var errorListener = sinon.spy();
       var failingListener = function() {
         throw new Error('fail');
       };
@@ -254,9 +256,9 @@ describe('core/EventBus', function() {
       // then
       expect(function() {
         eventBus.fire({ type: 'fail' });
-      }).toThrowError('fail');
+      }).to.throw('fail');
 
-      expect(errorListener).toHaveBeenCalled();
+      expect(errorListener).to.have.been.called;
     });
 
 
@@ -278,7 +280,7 @@ describe('core/EventBus', function() {
       // then
       expect(function() {
         eventBus.fire({ type: 'fail' });
-      }).not.toThrow();
+      }).to.not.throw();
     });
 
 
@@ -295,7 +297,7 @@ describe('core/EventBus', function() {
       // then
       expect(function() {
         eventBus.fire({ type: 'fail' });
-      }).toThrow();
+      }).to.throw();
     });
 
   });
@@ -359,7 +361,7 @@ describe('core/EventBus', function() {
       var param = { data: { value: 'A' } };
       eventBus.fire('foo', param);
 
-      expect(param.data.value).toEqual('Target State');
+      expect(param.data.value).to.equal('Target State');
     });
 
 
@@ -375,7 +377,7 @@ describe('core/EventBus', function() {
       var param = { data: { value: 'A' } };
       eventBus.fire('foo', param);
 
-      expect(param.data.value).toEqual('Target State');
+      expect(param.data.value).to.equal('Target State');
     });
 
 
@@ -407,7 +409,7 @@ describe('core/EventBus', function() {
 
       // After second listener propagation should be stopped
       // listener1 should not be fired.
-      expect(param.data.value).toEqual('C');
+      expect(param.data.value).to.equal('C');
     });
 
 
@@ -425,7 +427,7 @@ describe('core/EventBus', function() {
 
       // After second listener propagation should be stopped
       // listener1 should not be fired.
-      expect(param.data.value).toEqual('Target State');
+      expect(param.data.value).to.equal('Target State');
     });
 
   });

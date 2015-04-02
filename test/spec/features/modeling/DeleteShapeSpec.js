@@ -1,19 +1,12 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
-
-
-var Matchers = require('../../../Matchers');
 
 
 var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - #removeShape', function() {
-
-  beforeEach(Matchers.addDeepEquals);
 
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
@@ -67,10 +60,10 @@ describe('features/modeling - #removeShape', function() {
     modeling.removeShape(childShape);
 
     // then
-    expect(elementRegistry.get(childShape.id)).not.toBeDefined();
+    expect(elementRegistry.get(childShape.id)).to.not.be.defined;
 
-    expect(childShape.parent).toBeNull();
-    expect(parentShape.children).not.toContain(childShape);
+    expect(childShape.parent).to.be.null;
+    expect(parentShape.children).to.not.contain(childShape);
   }));
 
 
@@ -80,7 +73,7 @@ describe('features/modeling - #removeShape', function() {
     modeling.removeShape(childShape2);
 
     // then
-    expect(connection.parent).toBeNull();
+    expect(connection.parent).to.be.null;
   }));
 
 
@@ -90,7 +83,7 @@ describe('features/modeling - #removeShape', function() {
     modeling.removeShape(childShape);
 
     // then
-    expect(connection.parent).toBeNull();
+    expect(connection.parent).to.be.null;
   }));
 
 
@@ -100,10 +93,10 @@ describe('features/modeling - #removeShape', function() {
     modeling.removeShape(parentShape);
 
     // then
-    expect(parentShape.parent).toBeNull();
-    expect(childShape.parent).toBeNull();
-    expect(childShape2.parent).toBeNull();
-    expect(connection.parent).toBeNull();
+    expect(parentShape.parent).to.be.null;
+    expect(childShape.parent).to.be.null;
+    expect(childShape2.parent).to.be.null;
+    expect(connection.parent).to.be.null;
   }));
 
 
@@ -116,8 +109,8 @@ describe('features/modeling - #removeShape', function() {
     commandStack.undo();
 
     // then
-    expect(childShape.parent).toBe(parentShape);
-    expect(connection.parent).toBe(parentShape);
+    expect(childShape.parent).to.equal(parentShape);
+    expect(connection.parent).to.equal(parentShape);
   }));
 
   it('should remove label', inject(function(modeling) {
@@ -128,8 +121,8 @@ describe('features/modeling - #removeShape', function() {
     modeling.removeShape(childShape);
 
     // then
-    expect(label.parent).toBeNull();
-    expect(childShape.label).toBeNull();
+    expect(label.parent).to.be.null;
+    expect(childShape.label).to.be.null;
   }));
 
 
@@ -142,8 +135,8 @@ describe('features/modeling - #removeShape', function() {
     commandStack.undo();
 
     // then
-    expect(label.parent).toBe(parentShape);
-    expect(childShape.label).toBe(label);
+    expect(label.parent).to.equal(parentShape);
+    expect(childShape.label).to.equal(label);
   }));
 
 
@@ -157,8 +150,8 @@ describe('features/modeling - #removeShape', function() {
     commandStack.redo();
 
     // then
-    expect(label.parent).toBeNull();
-    expect(childShape.label).toBeNull();
+    expect(label.parent).to.be.null;
+    expect(childShape.label).to.be.null;
   }));
 
 });

@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 
@@ -43,7 +41,7 @@ describe('features/selection/Selections', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap diagram with component', inject(function(selection) {
-      expect(selection).toBeDefined();
+      expect(selection).to.be.defined;
     }));
   });
 
@@ -55,7 +53,7 @@ describe('features/selection/Selections', function() {
 
       //then
       var selectedElements = selection.get();
-      expect(selectedElements[0]).toBe(shape1);
+      expect(selectedElements[0]).to.equal(shape1);
     }));
 
     it('should add connection to selection', inject(function(selection) {
@@ -65,7 +63,7 @@ describe('features/selection/Selections', function() {
 
       //then
       var selectedElements = selection.get();
-      expect(selectedElements[0]).toBe(connection1);
+      expect(selectedElements[0]).to.equal(connection1);
     }));
 
     it('should add multiple elements to selection', inject(function(selection) {
@@ -76,8 +74,8 @@ describe('features/selection/Selections', function() {
 
       //then
       var selectedElements = selection.get();
-      expect(selectedElements[0]).toBe(shape2);
-      expect(selectedElements[1]).toBe(connection1);
+      expect(selectedElements[0]).to.equal(shape2);
+      expect(selectedElements[1]).to.equal(connection1);
     }));
   });
 
@@ -89,8 +87,8 @@ describe('features/selection/Selections', function() {
 
       selection.deselect(shape2);
       var selectedElements = selection.get();
-      expect(selectedElements[0]).toBe(connection1);
-      expect(selectedElements.length).toBe(1);
+      expect(selectedElements[0]).to.equal(connection1);
+      expect(selectedElements.length).to.equal(1);
     }));
 
     it('should remove all elements from selection', inject(function(selection) {
@@ -99,13 +97,13 @@ describe('features/selection/Selections', function() {
 
       selection.select();
       var selectedElements = selection.get();
-      expect(selectedElements.length).toBe(0);
+      expect(selectedElements.length).to.equal(0);
     }));
 
     it('should not fail on empty selection', inject(function(selection) {
       selection.select();
       var selectedElements = selection.get();
-      expect(selectedElements.length).toBe(0);
+      expect(selectedElements.length).to.equal(0);
     }));
   });
 });

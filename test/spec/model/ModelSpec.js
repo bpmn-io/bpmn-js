@@ -17,9 +17,9 @@ describe('model', function() {
     });
 
     // then
-    expect(connection.waypoints).toBe(waypoints);
+    expect(connection.waypoints).to.equal(waypoints);
 
-    expect(connection instanceof Model.Connection).toBe(true);
+    expect(connection instanceof Model.Connection).to.equal(true);
   });
 
 
@@ -37,12 +37,12 @@ describe('model', function() {
     });
 
     // then
-    expect(shape.x).toBe(x);
-    expect(shape.y).toBe(y);
-    expect(shape.width).toBe(width);
-    expect(shape.height).toBe(height);
+    expect(shape.x).to.equal(x);
+    expect(shape.y).to.equal(y);
+    expect(shape.width).to.equal(width);
+    expect(shape.height).to.equal(height);
 
-    expect(shape instanceof Model.Shape).toBe(true);
+    expect(shape instanceof Model.Shape).to.equal(true);
   });
 
 
@@ -62,19 +62,19 @@ describe('model', function() {
     // then
 
     // expect parent to be wired
-    expect(parentShape.children).toContain(shape1);
-    expect(parentShape.children).toContain(shape2);
-    expect(parentShape.children).toContain(shape1Label);
-    expect(parentShape.children).toContain(connection);
-    expect(parentShape.children).toContain(connectionLabel);
+    expect(parentShape.children).to.contain(shape1);
+    expect(parentShape.children).to.contain(shape2);
+    expect(parentShape.children).to.contain(shape1Label);
+    expect(parentShape.children).to.contain(connection);
+    expect(parentShape.children).to.contain(connectionLabel);
 
     // expect labels to be wired
-    expect(shape1.label).toBe(shape1Label);
-    expect(connection.label).toBe(connectionLabel);
+    expect(shape1.label).to.equal(shape1Label);
+    expect(connection.label).to.equal(connectionLabel);
 
     // expect outgoing / incoming to be wired
-    expect(shape1.outgoing).toContain(connection);
-    expect(shape2.incoming).toContain(connection);
+    expect(shape1.outgoing).to.contain(connection);
+    expect(shape2.incoming).to.contain(connection);
   });
 
 });

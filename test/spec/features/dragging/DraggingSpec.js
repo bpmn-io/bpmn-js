@@ -66,7 +66,7 @@ describe('Dragging', function() {
       dragging.activate(event, 'foo');
 
       // then
-      expect(event.defaultPrevented).toBe(true);
+      expect(event.defaultPrevented).to.be.true;
     }));
 
 
@@ -81,9 +81,9 @@ describe('Dragging', function() {
       });
 
       // then
-      expect(events.length).toBe(1);
+      expect(events.length).to.equal(1);
 
-      expect(events).toEqual([
+      expect(events).to.eql([
         { foo: 'BAR', type: 'foo.activate' }
       ]);
     }));
@@ -102,7 +102,7 @@ describe('Dragging', function() {
       dragging.cancel();
 
       // then
-      expect(events.map(raw)).toEqual([
+      expect(events.map(raw)).to.eql([
         { type: 'foo.activate' },
         { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
@@ -126,7 +126,7 @@ describe('Dragging', function() {
       dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
 
       // then
-      expect(events.map(raw)).toEqual([
+      expect(events.map(raw)).to.eql([
         { element: 'a', type: 'foo.activate' },
         { element: 'a', type: 'foo.cleanup' },
         { element: 'b', type: 'foo.activate' }

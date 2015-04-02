@@ -54,7 +54,7 @@ describe('features/Replace', function() {
 
       // then
       var replacementShape = elementRegistry.get('replacement');
-      expect(replacementShape).toBeDefined();
+      expect(replacementShape).to.be.defined;
     }));
 
     it('should delete old shape', inject(function(elementFactory, replace, elementRegistry) {
@@ -70,7 +70,7 @@ describe('features/Replace', function() {
       replace.replaceElement(originalShape, replacement);
 
       // then
-      expect(originalShape.parent).toBeNull();
+      expect(originalShape.parent).to.be.null;
     }));
 
     it('should return new shape', inject(function(elementRegistry, replace) {
@@ -86,8 +86,8 @@ describe('features/Replace', function() {
       var newShape = replace.replaceElement(originalShape, replacement);
 
       // then
-      expect(newShape).toBeDefined();
-      expect(newShape.id).toBe('replacement');
+      expect(newShape).to.be.defined;
+      expect(newShape.id).to.equal('replacement');
     }));
 
     it('should add correct attributes to new shape', inject(function(elementFactory, replace, elementRegistry) {
@@ -104,10 +104,10 @@ describe('features/Replace', function() {
 
       // then
       var replacementShape = elementRegistry.get('replacement');
-      expect(replacementShape.x).toBe(110);
-      expect(replacementShape.y).toBe(110);
-      expect(replacementShape.width).toBe(200);
-      expect(replacementShape.height).toBe(200);
+      expect(replacementShape.x).to.equal(110);
+      expect(replacementShape.y).to.equal(110);
+      expect(replacementShape.width).to.equal(200);
+      expect(replacementShape.height).to.equal(200);
     }));
   });
 
@@ -150,7 +150,7 @@ describe('features/Replace', function() {
       var replacedShape = replace.replaceElement(sourceShape, replacement);
 
       // then
-      expect(replacedShape.outgoing[0]).toBeDefined();
+      expect(replacedShape.outgoing[0]).to.be.defined;
     }));
 
 
@@ -167,7 +167,7 @@ describe('features/Replace', function() {
       var replacedShape = replace.replaceElement(targetShape, replacement);
 
       // then
-      expect(replacedShape.incoming[0]).toBeDefined();
+      expect(replacedShape.incoming[0]).to.be.defined;
     }));
   });
 
@@ -189,7 +189,7 @@ describe('features/Replace', function() {
 
       // then
       var shape = elementRegistry.get('originalShape');
-      expect(shape.width).toBe(100);
+      expect(shape.width).to.equal(100);
 
     }));
 
@@ -221,7 +221,7 @@ describe('features/Replace', function() {
 
       // then
       var redoShape = elementRegistry.get('replacement2');
-      expect(redoShape.width).toBe(280);
+      expect(redoShape.width).to.equal(280);
     }));
   });
 

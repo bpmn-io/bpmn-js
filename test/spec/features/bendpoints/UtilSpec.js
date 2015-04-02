@@ -1,3 +1,5 @@
+'use strict';
+
 var Util = require('../../../../lib/features/bendpoints/Util');
 
 
@@ -16,51 +18,51 @@ describe('features/bendpoints - Util', function() {
     it('should match start point', function() {
       var intersection = Util.getApproxIntersection(waypoints, waypoints[0]);
 
-      expect(intersection.bendpoint).toBe(true);
-      expect(intersection.index).toBe(0);
-      expect(intersection.point).toEqual(waypoints[0]);
+      expect(intersection.bendpoint).to.be.true;
+      expect(intersection.index).to.equal(0);
+      expect(intersection.point).to.equal(waypoints[0]);
     });
 
 
     it('should fuzzy match start point', function() {
       var intersection = Util.getApproxIntersection(waypoints, { x: 7, y: -7 });
 
-      expect(intersection.bendpoint).toBe(true);
-      expect(intersection.index).toBe(0);
-      expect(intersection.point).toEqual(waypoints[0]);
+      expect(intersection.bendpoint).to.be.true;
+      expect(intersection.index).to.equal(0);
+      expect(intersection.point).to.equal(waypoints[0]);
     });
 
 
     it('should not match start point', function() {
       var intersection = Util.getApproxIntersection(waypoints, { x: 10, y: -10 });
 
-      expect(intersection).toBeFalsy();
+      expect(intersection).to.be.null;
     });
 
 
     it('should fuzzy match intermediate waypoint', function() {
       var intersection = Util.getApproxIntersection(waypoints, { x: 55, y: 45 });
 
-      expect(intersection.bendpoint).toBeTruthy();
-      expect(intersection.index).toBe(1);
+      expect(intersection.bendpoint).to.be.true;
+      expect(intersection.index).to.equal(1);
     });
 
 
     it('should fuzzy match inbetween point', function() {
       var intersection = Util.getApproxIntersection(waypoints, { x: 24.5, y: 25.5 });
 
-      expect(intersection.bendpoint).toBeFalsy();
-      expect(intersection.index).toBe(1);
-      expect(intersection.point).toEqual({ x: 25, y: 25 });
+      expect(intersection.bendpoint).to.not.be.defined;
+      expect(intersection.index).to.equal(1);
+      expect(intersection.point).to.eql({ x: 25, y: 25 });
     });
 
 
     it('should fuzzy match end point', function() {
       var intersection = Util.getApproxIntersection(waypoints, { x: 105, y: 95 });
 
-      expect(intersection.bendpoint).toBe(true);
-      expect(intersection.index).toBe(3);
-      expect(intersection.point).toEqual(waypoints[waypoints.length - 1]);
+      expect(intersection.bendpoint).to.be.true;
+      expect(intersection.index).to.equal(3);
+      expect(intersection.point).to.eql(waypoints[waypoints.length - 1]);
     });
 
   });

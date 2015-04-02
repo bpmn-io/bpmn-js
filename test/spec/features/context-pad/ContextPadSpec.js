@@ -5,7 +5,7 @@ var Events = require('../../../util/Events');
 
 
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 var domQuery = require('min-dom/lib/query');
 
@@ -35,7 +35,7 @@ describe('features/context-pad', function() {
       canvas.addShape({ id: 's2', width: 50, height: 50, x: 200, y: 10 });
       canvas.addShape({ id: 's3', width: 150, height: 150, x: 300, y: 300 });
 
-      expect(contextPad).toBeDefined();
+      expect(contextPad).to.be.defined;
     }));
 
   });
@@ -62,7 +62,7 @@ describe('features/context-pad', function() {
       contextPad.registerProvider(provider);
 
       // then
-      expect(contextPad._providers).toEqual([ provider ]);
+      expect(contextPad._providers).to.eql([ provider ]);
     }));
 
 
@@ -73,16 +73,16 @@ describe('features/context-pad', function() {
 
       contextPad.registerProvider(provider);
 
-      spyOn(provider, 'getContextPadEntries');
+      sinon.spy(provider, 'getContextPadEntries');
 
       // when
       var entries = contextPad.getEntries('FOO');
 
       // then
-      expect(entries).toEqual({});
+      expect(entries).to.eql({});
 
       // pass over providers
-      expect(provider.getContextPadEntries).toHaveBeenCalledWith('FOO');
+      expect(provider.getContextPadEntries).to.have.been.calledWith('FOO');
     }));
 
   });
@@ -100,10 +100,10 @@ describe('features/context-pad', function() {
 
       entries.forEach(function(e) {
         var entry = domQuery('[data-action="' + e + '"]', html);
-        expect(entry).not.toBe(null);
+        expect(entry).not.to.be.null;
       });
 
-      expect(domQuery.all('.entry', html).length).toBe(entries.length);
+      expect(domQuery.all('.entry', html).length).to.equal(entries.length);
     }
 
 
@@ -119,7 +119,7 @@ describe('features/context-pad', function() {
       contextPad.open(shape);
 
       // then
-      expect(contextPad.isOpen()).toBeTruthy();
+      expect(contextPad.isOpen()).to.be.true;
     }));
 
 
@@ -150,7 +150,7 @@ describe('features/context-pad', function() {
       contextPad.close();
 
       // then (3)
-      expect(contextPad.isOpen()).toBeFalsy();
+      expect(contextPad.isOpen()).to.be.false;
     }));
 
 
@@ -168,7 +168,7 @@ describe('features/context-pad', function() {
       contextPad.close();
 
       // then
-      expect(!!contextPad.isOpen()).toBe(false);
+      expect(!!contextPad.isOpen()).to.be.false;
     }));
 
 
@@ -215,7 +215,7 @@ describe('features/context-pad', function() {
       contextPad.trigger('click', event);
 
       // then
-      expect(event.__handled).toBeTruthy();
+      expect(event.__handled).to.be.true;
     }));
 
 
@@ -236,7 +236,7 @@ describe('features/context-pad', function() {
       contextPad.trigger('dragstart', event);
 
       // then
-      expect(event.defaultPrevented).toBeTruthy();
+      expect(event.defaultPrevented).to.be.true;
     }));
 
 
@@ -257,7 +257,7 @@ describe('features/context-pad', function() {
       contextPad.trigger('dragstart', event);
 
       // then
-      expect(event.__handled).toBeTruthy();
+      expect(event.__handled).to.be.true;
     }));
 
   });

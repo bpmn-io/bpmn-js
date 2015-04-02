@@ -1,8 +1,6 @@
 'use strict';
 
 
-require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 var forEach = require('lodash/collection/forEach'),
@@ -52,10 +50,10 @@ describe('features/overlays', function() {
 
 
     it('overlay to be defined', inject(function(overlays) {
-      expect(overlays).toBeDefined();
-      expect(overlays.get).toBeDefined();
-      expect(overlays.add).toBeDefined();
-      expect(overlays.remove).toBeDefined();
+      expect(overlays).to.be.defined;
+      expect(overlays.get).to.be.defined;
+      expect(overlays.add).to.be.defined;
+      expect(overlays.remove).to.be.defined;
     }));
   });
 
@@ -86,9 +84,9 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(id).toBeDefined();
-      expect(overlays.get(id)).toBeDefined();
-      expect(document.getElementById('html-ov')).toBeDefined();
+      expect(id).to.be.defined;
+      expect(overlays.get(id)).to.be.defined;
+      expect(document.getElementById('html-ov')).to.be.defined;
     }));
 
 
@@ -115,11 +113,11 @@ describe('features/overlays', function() {
       // then
       var overlay = overlays.get(id);
 
-      expect(overlay).toBeDefined();
-      expect(isVisible(overlays._overlayRoot)).toBeTruthy();
-      expect(isVisible(overlay.html)).toBeTruthy();
+      expect(overlay).to.be.defined;
+      expect(isVisible(overlays._overlayRoot)).to.be.true;
+      expect(isVisible(overlay.html)).to.be.true;
 
-      expect(document.getElementById('html-jq')).toBeDefined();
+      expect(document.getElementById('html-jq')).to.be.defined;
     }));
 
 
@@ -144,8 +142,8 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(overlays.get(id)).toBeDefined();
-      expect(document.getElementById('html-id')).toBeDefined();
+      expect(overlays.get(id)).to.be.defined;
+      expect(document.getElementById('html-id')).to.be.defined;
     }));
 
   });
@@ -179,10 +177,10 @@ describe('features/overlays', function() {
       overlays.remove(id);
 
       // then
-      expect(overlays.get(id)).not.toBeDefined();
-      expect(overlays.get({ element: shape }).length).toBe(0);
+      expect(overlays.get(id)).to.not.be.defined;
+      expect(overlays.get({ element: shape }).length).to.equal(0);
 
-      expect(document.getElementById('html-ov2')).toEqual(null);
+      expect(document.getElementById('html-ov2')).to.be.null;
     }));
 
 
@@ -217,10 +215,10 @@ describe('features/overlays', function() {
       overlays.remove({ element: shape, type: 'badge' });
 
       // then
-      expect(overlays.get({ element: shape, type: 'badge' }).length).toBe(0);
-      expect(overlays.get({ element: shape }).length).toBe(0);
+      expect(overlays.get({ element: shape, type: 'badge' }).length).to.equal(0);
+      expect(overlays.get({ element: shape }).length).to.equal(0);
 
-      expect(overlays._getOverlayContainer(shape, true).html.textContent).toBe('');
+      expect(overlays._getOverlayContainer(shape, true).html.textContent).to.equal('');
     }));
 
 
@@ -247,8 +245,8 @@ describe('features/overlays', function() {
       eventBus.fire('shape.remove', { element: shape });
 
       // then
-      expect(overlays.get(id)).toBe(undefined);
-      expect(document.getElementById('html-ov1')).toBe(null);
+      expect(overlays.get(id)).to.be.undefined;
+      expect(document.getElementById('html-ov1')).to.be.null;
     }));
 
   });
@@ -319,7 +317,7 @@ describe('features/overlays', function() {
       var filteredOverlays = overlays.get({ element: shape1 });
 
       // then
-      expect(filteredOverlays.length).toBe(2);
+      expect(filteredOverlays.length).to.equal(2);
     }));
 
 
@@ -329,7 +327,7 @@ describe('features/overlays', function() {
       var filteredOverlays = overlays.get({ element: shape2, type: 'badge' });
 
       // then
-      expect(filteredOverlays.length).toBe(1);
+      expect(filteredOverlays.length).to.equal(1);
     }));
 
 
@@ -339,7 +337,7 @@ describe('features/overlays', function() {
       var filteredOverlays = overlays.get({ type: 'badge' });
 
       // then
-      expect(filteredOverlays.length).toBe(2);
+      expect(filteredOverlays.length).to.equal(2);
     }));
 
   });
@@ -395,7 +393,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(position(html)).toEqual({
+      expect(position(html)).to.eql({
         top: 40,
         left: 40
       });
@@ -417,7 +415,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(position(html)).toEqual({
+      expect(position(html)).to.eql({
         top: 60,
         left: 40
       });
@@ -440,7 +438,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(position(html)).toEqual({
+      expect(position(html)).to.eql({
         top: 0,
         left: 100
       });
@@ -462,7 +460,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(position(html)).toEqual({
+      expect(position(html)).to.eql({
         top: 60,
         left: 60
       });
@@ -483,7 +481,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(position(html)).toEqual({
+      expect(position(html)).to.eql({
         top: 40,
         left: 60
       });
@@ -530,28 +528,28 @@ describe('features/overlays', function() {
       canvas.zoom(0.7);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
 
       // when zoom below visibility range
       canvas.zoom(0.6);
 
       // then
-      expect(isVisible(html)).toBe(false);
+      expect(isVisible(html)).to.be.false;
 
 
       // when zoom in visibility range
       canvas.zoom(3.0);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
 
       // when zoom above visibility range
       canvas.zoom(6.0);
 
       // then
-      expect(isVisible(html)).toBe(false);
+      expect(isVisible(html)).to.be.false;
     }));
 
 
@@ -574,41 +572,41 @@ describe('features/overlays', function() {
       canvas.zoom(0.6);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
 
       // when zoom on visibility range border
       canvas.zoom(0.3);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
 
       // when zoom below visibility range
       canvas.zoom(0.2);
 
       // then
-      expect(isVisible(html)).toBe(false);
+      expect(isVisible(html)).to.be.false;
 
 
       // when zoom in visibility range
       canvas.zoom(3);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
 
       // when zoom on visibility range border
       canvas.zoom(4.0);
 
       // then
-      expect(isVisible(html)).toBe(true);
+      expect(isVisible(html)).to.be.true;
 
       // when zoom above visibility range
       canvas.zoom(4.1);
 
       // then
-      expect(isVisible(html)).toBe(false);
+      expect(isVisible(html)).to.be.false;
     }));
 
   });
@@ -653,7 +651,7 @@ describe('features/overlays', function() {
       // diagram got newly created
 
       // then
-      expect(transformMatrix(overlays._overlayRoot)).toBe(undefined);
+      expect(transformMatrix(overlays._overlayRoot)).to.be.undefined;
     }));
 
 
@@ -666,7 +664,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(transformMatrix(overlays._overlayRoot)).toEqual({ a : 1, b : 0, c : 0, d : 1, e : 100, f : 50 });
+      expect(transformMatrix(overlays._overlayRoot)).to.eql({ a : 1, b : 0, c : 0, d : 1, e : 100, f : 50 });
     }));
 
 
@@ -676,7 +674,7 @@ describe('features/overlays', function() {
       canvas.zoom(2);
 
       // then
-      expect(transformMatrix(overlays._overlayRoot)).toEqual({ a : 2, b : 0, c : 0, d : 2, e : 0, f : 0 });
+      expect(transformMatrix(overlays._overlayRoot)).to.eql({ a : 2, b : 0, c : 0, d : 2, e : 0, f : 0 });
     }));
 
 
@@ -686,7 +684,7 @@ describe('features/overlays', function() {
       canvas.zoom(2, { x: 300, y: 300 });
 
       // then
-      expect(transformMatrix(overlays._overlayRoot)).toEqual({ a : 2, b : 0, c : 0, d : 2, e : -300, f : -300 });
+      expect(transformMatrix(overlays._overlayRoot)).to.eql({ a : 2, b : 0, c : 0, d : 2, e : -300, f : -300 });
     }));
 
   });

@@ -22,7 +22,7 @@ describe('draw/Styles', function() {
       var style = styles.cls('foo', [ 'no-fill' ]);
 
       // then
-      expect(style).toEqual(expectedStyle);
+      expect(style).to.eql(expectedStyle);
     });
 
 
@@ -38,7 +38,7 @@ describe('draw/Styles', function() {
       var style = styles.cls('foo', { fill: 'none' });
 
       // then
-      expect(style).toEqual(expectedStyle);
+      expect(style).to.eql(expectedStyle);
     });
 
   });

@@ -14,8 +14,8 @@ describe('features/popup', function() {
 
 
     it('overlay to be defined', inject(function(popupMenu) {
-      expect(popupMenu).toBeDefined();
-      expect(popupMenu.open).toBeDefined();
+      expect(popupMenu).to.be.defined;
+      expect(popupMenu.open).to.be.defined;
     }));
   });
 
@@ -36,7 +36,7 @@ describe('features/popup', function() {
       ]);
 
       // then
-      expect(popup).toBeDefined();
+      expect(popup).to.be.defined;
     }));
 
     it('should return popup instance', inject(function(popupMenu) {
@@ -59,7 +59,7 @@ describe('features/popup', function() {
       ]);
 
       // then
-      expect(popup).toBe(popup2);
+      expect(popup).to.equal(popup2);
     }));
 
     it('should attach popup to html', inject(function(popupMenu) {
@@ -79,7 +79,7 @@ describe('features/popup', function() {
       var popuphtml = popup._container;
 
       // then
-      expect(popuphtml.querySelector('.test-popup')).toBeDefined();
+      expect(popuphtml.querySelector('.test-popup')).to.be.defined;
     }));
 
     it('should add entries to menu', inject(function(popupMenu) {
@@ -101,7 +101,7 @@ describe('features/popup', function() {
 
       // then
       var element = popuphtml.querySelector('.firstEntry');
-      expect(element.textContent).toBe('Entry 1');
+      expect(element.textContent).to.equal('Entry 1');
     }));
 
     it('should add action-id to entry', inject(function(popupMenu) {
@@ -126,9 +126,9 @@ describe('features/popup', function() {
       var entry2 = parent.childNodes[1];
       var entry3 = parent.childNodes[2];
 
-      expect(entry1.getAttribute('data-action')).toBe('save');
-      expect(entry2.getAttribute('data-action')).toBe('load');
-      expect(entry3.getAttribute('data-action')).toBe('undo');
+      expect(entry1.getAttribute('data-action')).to.equal('save');
+      expect(entry2.getAttribute('data-action')).to.equal('load');
+      expect(entry3.getAttribute('data-action')).to.equal('undo');
     }));
   });
 
@@ -157,7 +157,7 @@ describe('features/popup', function() {
       // then
       var removed = popup._container.parentNode === null;
 
-      expect(removed).toBeTruthy();
+      expect(removed).to.be.true;
     }));
   });
 
@@ -190,7 +190,7 @@ describe('features/popup', function() {
 
         // then
         var removed = popup._container.parentNode === null;
-        expect(removed).toBeTruthy();
+        expect(removed).to.be.true;
       }));
 
       it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
@@ -213,7 +213,7 @@ describe('features/popup', function() {
 
         // then
         var removed = popup._container.parentNode === null;
-        expect(removed).toBeTruthy();
+        expect(removed).to.be.true;
       }));
     });
   });
@@ -237,7 +237,7 @@ describe('features/popup', function() {
 
       // then
       var elements = popup._container.querySelectorAll('.entry');
-      expect(elements.length).toBe(2);
+      expect(elements.length).to.equal(2);
     }));
 
     it('should custom class to entry if specfied', inject(function(popupMenu) {
@@ -255,7 +255,7 @@ describe('features/popup', function() {
 
       // then
       var element = popup._container.querySelector('.special-entry');
-      expect(element.textContent).toBe('Entry 2 - special');
+      expect(element.textContent).to.equal('Entry 2 - special');
     }));
 
     it('should add optional style attribute', inject(function(popupMenu) {
@@ -273,7 +273,7 @@ describe('features/popup', function() {
 
       // then
       var element = popup._container.querySelector('.special-entry');
-      expect(element.getAttribute('style')).toBe('color: rgb(222,67,157)');
+      expect(element.getAttribute('style')).to.equal('color: rgb(222,67,157)');
     }));
   });
 });

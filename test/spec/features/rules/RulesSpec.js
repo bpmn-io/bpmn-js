@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
 
 var rulesModule = require('./rules'),
@@ -54,10 +52,10 @@ describe('features/rules', function() {
       var unspecifiedResult = rules.allowed('shape.resize', { shape: unspecifiedShape });
 
       // then
-      expect(resizableResult).toBe(true);
-      expect(nonResizableResult).toBe(false);
-      expect(ignoreResult).toBe(null);
-      expect(unspecifiedResult).toBe(true);
+      expect(resizableResult).to.be.true;
+      expect(nonResizableResult).to.be.false;
+      expect(ignoreResult).to.be.null;
+      expect(unspecifiedResult).to.be.true;
     }));
 
   });
@@ -71,7 +69,7 @@ describe('features/rules', function() {
       var result = rules.allowed('unregistered.action', { shape: resizableShape });
 
       // then
-      expect(result).toBe(false);
+      expect(result).to.be.false;
     }));
 
   });

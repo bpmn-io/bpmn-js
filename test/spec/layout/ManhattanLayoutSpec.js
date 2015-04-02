@@ -19,7 +19,7 @@ function expectConnection(connection, expected) {
   var len = Math.max(connection.length, expected.length);
 
   for (var i = 0; i < len; i++) {
-    expect(connection[i]).toEqual(expected[i]);
+    expect(connection[i]).to.eql(expected[i]);
   }
 }
 
@@ -124,7 +124,7 @@ describe('layout/ManhattanLayout', function() {
 
         expect(function() {
           ManhattanLayout.connectPoints(a, b, 'x:y');
-        }).toThrowError(/unknown directions: <x:y>/);
+        }).to.throw(/unknown directions: <x:y>/);
 
       });
 
@@ -271,7 +271,7 @@ describe('layout/ManhattanLayout', function() {
         var repaired = repair(start, end, waypoints);
 
         // then
-        expect(repaired).toEqual([
+        expect(repaired).to.eql([
           { original: { x: 150, y: 150 }, x: 150, y: 200 },
           { x: 150, y: 300 },
           { x: 250, y: 300 },
@@ -296,7 +296,7 @@ describe('layout/ManhattanLayout', function() {
         var repaired = repair(start, end, waypoints);
 
         // then
-        expect(repaired).toEqual([
+        expect(repaired).to.eql([
           { original: { x: 150, y: 150 }, x: 150, y: 200 },
           { original: { x: 150, y: 450 }, x: 150, y: 400 }
         ]);
@@ -325,7 +325,7 @@ describe('layout/ManhattanLayout', function() {
         var repaired = repair(start, newEnd, waypoints);
 
         // then
-        expect(repaired).toEqual([
+        expect(repaired).to.eql([
           { original: { x: 150, y: 150 }, x: 150, y: 200 },
           { x: 150, y: 350 },
           { x: 300, y: 350 }
@@ -355,7 +355,7 @@ describe('layout/ManhattanLayout', function() {
         var repaired = repair(start, newEnd, waypoints);
 
         // then
-        expect(repaired).toEqual([
+        expect(repaired).to.eql([
           { original: { x: 150, y: 150 }, x: 150, y: 200 },
           { x: 150, y: 350 },
           { x: 300, y: 350 }
@@ -386,7 +386,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(newStart, end, waypoints);
 
           // then
-          expect(repaired).toEqual([
+          expect(repaired).to.eql([
             { x: 150, y: 150 },
             { x: 250, y: 150 },
             { original: { x: 250, y: 450 }, x: 250, y: 400 }
@@ -412,7 +412,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(start, newEnd, waypoints);
 
           // then
-          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 350, y: 500 } ]));
+          expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 350, y: 500 } ]));
         });
 
       });
@@ -434,7 +434,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(newStart, end, waypoints);
 
           // then
-          expect(repaired).toEqual([ { x: 200, y: 150 }, { x: 200, y: 300 } ].concat(waypoints.slice(2)));
+          expect(repaired).to.eql([ { x: 200, y: 150 }, { x: 200, y: 300 } ].concat(waypoints.slice(2)));
         });
 
 
@@ -448,7 +448,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(newStart, end, waypoints);
 
           // then
-          expect(repaired).toEqual([ { x: 150, y: 200 }, { x: 150, y: 300 } ].concat(waypoints.slice(2)));
+          expect(repaired).to.eql([ { x: 150, y: 200 }, { x: 150, y: 300 } ].concat(waypoints.slice(2)));
         });
 
 
@@ -462,7 +462,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(newStart, end, waypoints);
 
           // then
-          expect(repaired).toEqual([ { x: 250, y: 100 }, { x: 250, y: 300 } ].concat(waypoints.slice(2)));
+          expect(repaired).to.eql([ { x: 250, y: 100 }, { x: 250, y: 300 } ].concat(waypoints.slice(2)));
         });
 
       });
@@ -483,7 +483,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(start, newEnd, waypoints);
 
           // then
-          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 250, y: 300 }, { x: 250, y: 450 } ]));
+          expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 250, y: 300 }, { x: 250, y: 450 } ]));
         });
 
 
@@ -497,7 +497,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(start, newEnd, waypoints);
 
           // then
-          expect(repaired).toEqual(waypoints.slice(0, 3).concat([ { x: 200, y: 500 } ]));
+          expect(repaired).to.eql(waypoints.slice(0, 3).concat([ { x: 200, y: 500 } ]));
         });
 
 
@@ -511,7 +511,7 @@ describe('layout/ManhattanLayout', function() {
           var repaired = repair(start, newEnd, waypoints);
 
           // then
-          expect(repaired).toEqual(waypoints.slice(0, 2).concat([ { x: 300, y: 300 }, { x: 300, y: 400 } ]));
+          expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 300, y: 300 }, { x: 300, y: 400 } ]));
         });
 
       });

@@ -15,7 +15,7 @@ describe('features/keyboard', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, keyboardModule, selectionModule ] }));
 
   it('should bootstrap diagram with keyboard', inject(function(keyboard) {
-    expect(keyboard).toBeDefined();
+    expect(keyboard).to.be.defined;
   }));
 
 
@@ -29,7 +29,7 @@ describe('features/keyboard', function() {
 
     beforeEach(function() {
 
-      var testContainer = jasmine.getEnv().getTestContainer();
+      var testContainer = this.currentTest.__test_container_support__.testContentContainer;
 
       testDiv = document.createElement('div');
       testDiv.setAttribute('class', 'testClass');
@@ -43,7 +43,7 @@ describe('features/keyboard', function() {
 
       keyboard.bind(testDiv);
 
-      expect(testDiv.$$listenerCount).toBe(STANDARD_LISTENER_COUNT);
+      expect(testDiv.$$listenerCount).to.equal(STANDARD_LISTENER_COUNT);
     }));
 
 
@@ -52,7 +52,7 @@ describe('features/keyboard', function() {
       keyboard.bind(testDiv);
       keyboard.unbind();
 
-      expect(testDiv.$$listenerCount).toBe(0);
+      expect(testDiv.$$listenerCount).to.equal(0);
     }));
 
 
@@ -66,7 +66,7 @@ describe('features/keyboard', function() {
       keyboard.bind(testDiv);
       var binding = keyboard.getBinding();
 
-      expect(binding).toBe(testDiv);
+      expect(binding).to.equal(testDiv);
     }));
 
 

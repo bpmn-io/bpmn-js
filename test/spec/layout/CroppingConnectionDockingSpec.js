@@ -1,11 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../TestHelper');
-
 /* global bootstrapDiagram, inject */
-
-
-var Matchers = require('../../Matchers');
 
 
 var layoutModule = {
@@ -24,9 +19,6 @@ function mid(shape) {
 describe('features/layout/CroppingConnectionDocking', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ layoutModule ] }));
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var topLeftShape,
       bottomRightShape,
@@ -105,7 +97,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
-        expect(dockingPoint).toDeepEqual(expected);
+        expect(dockingPoint).to.eql(expected);
       }
 
       // vertical source docking
@@ -159,7 +151,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
-        expect(dockingPoint).toDeepEqual(expected);
+        expect(dockingPoint).to.eql(expected);
       }
 
 
@@ -186,7 +178,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
-        expect(dockingPoint).toDeepEqual(expected);
+        expect(dockingPoint).to.eql(expected);
       }
 
       // non intersecting (source)
@@ -212,22 +204,22 @@ describe('features/layout/CroppingConnectionDocking', function() {
     it('should crop connection', inject(function(layouter) {
 
       // vertical connection
-      expect(layouter.getCroppedWaypoints(topLeft_bottomLeftConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(topLeft_bottomLeftConnection)).to.eql([
         { x: 150, y: 200, original: topLeft_bottomLeftConnection.waypoints[0] },
         { x: 150, y: 400, original: topLeft_bottomLeftConnection.waypoints[1]  }
       ]);
 
-      expect(layouter.getCroppedWaypoints(bottomLeft_bottomRightConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(bottomLeft_bottomRightConnection)).to.eql([
         { x: 200, y: 450, original: bottomLeft_bottomRightConnection.waypoints[0] },
         { x: 400, y: 450, original: bottomLeft_bottomRightConnection.waypoints[1] }
       ]);
 
-      expect(layouter.getCroppedWaypoints(topLeft_bottomRightConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(topLeft_bottomRightConnection)).to.eql([
         { x: 195, y: 195, original: topLeft_bottomRightConnection.waypoints[0] },
         { x: 405, y: 405, original: topLeft_bottomRightConnection.waypoints[1] }
       ]);
 
-      expect(layouter.getCroppedWaypoints(backAndForthConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(backAndForthConnection)).to.eql([
         { x: 200, y: 150, original: backAndForthConnection.waypoints[0] },
         backAndForthConnection.waypoints[1],
         backAndForthConnection.waypoints[2],
@@ -236,7 +228,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       ]);
 
 
-      expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).to.eql([
         { x: 195, y: 195, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
         topLeft_bottomRightFreeStyleConnection.waypoints[1],
         topLeft_bottomRightFreeStyleConnection.waypoints[2],
@@ -245,7 +237,7 @@ describe('features/layout/CroppingConnectionDocking', function() {
       ]);
 
       // unconnected connection
-      expect(layouter.getCroppedWaypoints(unconnectedConnection)).toDeepEqual([
+      expect(layouter.getCroppedWaypoints(unconnectedConnection)).to.eql([
         { x: 130, y: 210, original: unconnectedConnection.waypoints[0] },
         { x: 130, y: 390, original: unconnectedConnection.waypoints[1] }
       ]);

@@ -79,15 +79,15 @@ describe('command/CommandInterceptor', function() {
     }));
 
     function traceCommand(e) {
-      expect(e).toBeDefined();
+      expect(e).to.be.defined;
 
       e.context.element.trace.push(e.command);
     }
 
     function traceUnwrappedCommand(context, command, event) {
-      expect(context).toBeDefined();
-      expect(command).toBeDefined();
-      expect(event).toBeDefined();
+      expect(context).to.be.defined;
+      expect(command).to.be.defined;
+      expect(event).to.be.defined;
 
       context.element.trace.push(command);
     }
@@ -106,7 +106,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command',
           'pre-command'
         ]);
@@ -123,7 +123,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command',
           'pre-command'
         ]);
@@ -142,7 +142,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -158,7 +158,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
 
@@ -180,7 +180,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -201,7 +201,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.canExecute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -222,7 +222,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -243,7 +243,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('pre-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -267,7 +267,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.undo();
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -290,7 +290,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.undo();
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -310,7 +310,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('simple-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));
@@ -326,7 +326,7 @@ describe('command/CommandInterceptor', function() {
         commandStack.execute('simple-command', context);
 
         // then
-        expect(element.trace).toEqual([
+        expect(element.trace).to.eql([
           'simple-command'
         ]);
       }));

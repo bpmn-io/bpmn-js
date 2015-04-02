@@ -1,11 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
-
-
-var Matchers = require('../../../Matchers');
 
 
 var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds;
@@ -14,8 +9,6 @@ var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - resize shape', function() {
-
-  beforeEach(Matchers.addDeepEquals);
 
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
@@ -55,8 +48,8 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape2, { width: 124, height: 202 });
 
       // then
-      expect(shape2.width).toBe(124);
-      expect(shape2.height).toBe(202);
+      expect(shape2.width).to.equal(124);
+      expect(shape2.height).to.equal(202);
     }));
 
 
@@ -70,15 +63,15 @@ describe('features/modeling - resize shape', function() {
       commandStack.undo();
 
       // then
-      expect(shape2.width).toBe(124);
-      expect(shape2.height).toBe(202);
+      expect(shape2.width).to.equal(124);
+      expect(shape2.height).to.equal(202);
 
       // when
       commandStack.undo();
 
       // then
-      expect(shape2.width).toBe(100);
-      expect(shape2.height).toBe(100);
+      expect(shape2.width).to.equal(100);
+      expect(shape2.height).to.equal(100);
     }));
 
 
@@ -95,15 +88,15 @@ describe('features/modeling - resize shape', function() {
       commandStack.redo();
 
       // then
-      expect(shape2.width).toBe(124);
-      expect(shape2.height).toBe(202);
+      expect(shape2.width).to.equal(124);
+      expect(shape2.height).to.equal(202);
 
       // when
       commandStack.redo();
 
       // then
-      expect(shape2.width).toBe(999);
-      expect(shape2.height).toBe(999);
+      expect(shape2.width).to.equal(999);
+      expect(shape2.height).to.equal(999);
     }));
 
   });
@@ -125,11 +118,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'sw', { x: 5, y: -15 }));
 
       // then
-      expect(shape.height).toBe(85);
-      expect(shape.width).toBe(95);
+      expect(shape.height).to.equal(85);
+      expect(shape.width).to.equal(95);
 
-      expect(shape.x).toBe(105); // move right
-      expect(shape.y).toBe(100); // stay the same
+      expect(shape.x).to.equal(105); // move right
+      expect(shape.y).to.equal(100); // stay the same
     }));
 
 
@@ -147,11 +140,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'sw', { x: -5, y: 15 }));
 
       // then
-      expect(shape.height).toBe(115);
-      expect(shape.width).toBe(105);
+      expect(shape.height).to.equal(115);
+      expect(shape.width).to.equal(105);
 
-      expect(shape.x).toBe(95);  // move left
-      expect(shape.y).toBe(100); // stay the same
+      expect(shape.x).to.equal(95);  // move left
+      expect(shape.y).to.equal(100); // stay the same
     }));
 
 
@@ -169,11 +162,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'nw', { x: 5, y: 15 }));
 
       // then
-      expect(shape.height).toBe(85);
-      expect(shape.width).toBe(95);
+      expect(shape.height).to.equal(85);
+      expect(shape.width).to.equal(95);
 
-      expect(shape.x).toBe(105); // move right
-      expect(shape.y).toBe(115); // move down
+      expect(shape.x).to.equal(105); // move right
+      expect(shape.y).to.equal(115); // move down
     }));
 
 
@@ -191,11 +184,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'nw', { x: -5, y: -15 }));
 
       // then
-      expect(shape.height).toBe(115);
-      expect(shape.width).toBe(105);
+      expect(shape.height).to.equal(115);
+      expect(shape.width).to.equal(105);
 
-      expect(shape.x).toBe(95); // move left
-      expect(shape.y).toBe(85); // move up
+      expect(shape.x).to.equal(95); // move left
+      expect(shape.y).to.equal(85); // move up
     }));
 
 
@@ -213,11 +206,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: -5, y: 15 }));
 
       // then
-      expect(shape.height).toBe(85);
-      expect(shape.width).toBe(95);
+      expect(shape.height).to.equal(85);
+      expect(shape.width).to.equal(95);
 
-      expect(shape.x).toBe(100);
-      expect(shape.y).toBe(115);
+      expect(shape.x).to.equal(100);
+      expect(shape.y).to.equal(115);
     }));
 
 
@@ -235,11 +228,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'ne', { x: 5, y: -15 }));
 
       // then
-      expect(shape.height).toBe(115);
-      expect(shape.width).toBe(105);
+      expect(shape.height).to.equal(115);
+      expect(shape.width).to.equal(105);
 
-      expect(shape.x).toBe(100);
-      expect(shape.y).toBe(85);
+      expect(shape.x).to.equal(100);
+      expect(shape.y).to.equal(85);
     }));
 
 
@@ -257,11 +250,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'se', { x: -5, y: -15 }));
 
       // then
-      expect(shape.height).toBe(85);
-      expect(shape.width).toBe(95);
+      expect(shape.height).to.equal(85);
+      expect(shape.width).to.equal(95);
 
-      expect(shape.x).toBe(100);
-      expect(shape.y).toBe(100);
+      expect(shape.x).to.equal(100);
+      expect(shape.y).to.equal(100);
     }));
 
 
@@ -279,11 +272,11 @@ describe('features/modeling - resize shape', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'se', { x: 5, y: 15 }));
 
       // then
-      expect(shape.height).toBe(115);
-      expect(shape.width).toBe(105);
+      expect(shape.height).to.equal(115);
+      expect(shape.width).to.equal(105);
 
-      expect(shape.x).toBe(100);
-      expect(shape.y).toBe(100);
+      expect(shape.x).to.equal(100);
+      expect(shape.y).to.equal(100);
     }));
 
   });

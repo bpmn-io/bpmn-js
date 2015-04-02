@@ -1,19 +1,12 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
-
-
-var Matchers = require('../../../Matchers');
 
 
 var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - remove connection', function() {
-
-  beforeEach(Matchers.addDeepEquals);
 
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
@@ -67,7 +60,7 @@ describe('features/modeling - remove connection', function() {
     modeling.removeConnection(connection);
 
     // then
-    expect(connection.parent).toBeNull();
+    expect(connection.parent).to.be.null;
   }));
 
 
@@ -79,8 +72,8 @@ describe('features/modeling - remove connection', function() {
     modeling.removeConnection(connection);
 
     // then
-    expect(label.parent).toBeNull();
-    expect(connection.label).toBeNull();
+    expect(label.parent).to.be.null;
+    expect(connection.label).to.be.null;
   }));
 
 
@@ -93,8 +86,8 @@ describe('features/modeling - remove connection', function() {
     commandStack.undo();
 
     // then
-    expect(label.parent).toBe(parentShape);
-    expect(connection.label).toBe(label);
+    expect(label.parent).to.equal(parentShape);
+    expect(connection.label).to.equal(label);
   }));
 
 
@@ -108,8 +101,8 @@ describe('features/modeling - remove connection', function() {
     commandStack.redo();
 
     // then
-    expect(label.parent).toBeNull();
-    expect(connection.label).toBeNull();
+    expect(label.parent).to.be.null;
+    expect(connection.label).to.be.null;
   }));
 
 
@@ -119,11 +112,11 @@ describe('features/modeling - remove connection', function() {
     modeling.removeConnection(connection);
 
     // then
-    expect(childShape.outgoing).not.toContain(connection);
-    expect(connection.source).toBeNull();
+    expect(childShape.outgoing).to.not.contain(connection);
+    expect(connection.source).to.be.null;
 
-    expect(childShape2.incoming).not.toContain(connection);
-    expect(connection.target).toBeNull();
+    expect(childShape2.incoming).to.not.contain(connection);
+    expect(connection.target).to.be.null;
   }));
 
 
@@ -138,7 +131,7 @@ describe('features/modeling - remove connection', function() {
       commandStack.undo();
 
       // then
-      expect(connection.parent).toBe(parentShape);
+      expect(connection.parent).to.equal(parentShape);
     }));
 
 
@@ -151,11 +144,11 @@ describe('features/modeling - remove connection', function() {
       commandStack.undo();
 
       // then
-      expect(childShape.outgoing).toContain(connection);
-      expect(connection.source).toBe(childShape);
+      expect(childShape.outgoing).to.contain(connection);
+      expect(connection.source).to.equal(childShape);
 
-      expect(childShape2.incoming).toContain(connection);
-      expect(connection.target).toBe(childShape2);
+      expect(childShape2.incoming).to.contain(connection);
+      expect(connection.target).to.equal(childShape2);
     }));
 
 
@@ -170,8 +163,8 @@ describe('features/modeling - remove connection', function() {
       commandStack.undo();
 
       // then
-      expect(childShape.outgoing).toContain(connection);
-      expect(childShape2.incoming).toContain(connection);
+      expect(childShape.outgoing).to.contain(connection);
+      expect(childShape2.incoming).to.contain(connection);
     }));
   });
 });

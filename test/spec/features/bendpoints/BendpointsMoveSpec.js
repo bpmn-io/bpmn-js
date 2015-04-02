@@ -93,7 +93,7 @@ describe('features/bendpoints - move', function() {
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
-      expect(bendpoint).toBeDefined();
+      expect(bendpoint).to.be.defined;
     }));
 
 
@@ -108,7 +108,7 @@ describe('features/bendpoints - move', function() {
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
-      expect(bendpoint).toBeDefined();
+      expect(bendpoint).to.be.defined;
     }));
 
 
@@ -126,7 +126,7 @@ describe('features/bendpoints - move', function() {
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
-      expect(bendpoint).toBeFalsy();
+      expect(bendpoint).to.be.null;
     }));
 
 
@@ -150,7 +150,7 @@ describe('features/bendpoints - move', function() {
       var hoverNodes = canvas._svg.node.querySelectorAll('.connect-hover, .connect-ok, .connect-not-ok');
 
       // connect-hover indicator
-      expect(hoverNodes.length).toBe(1);
+      expect(hoverNodes.length).to.equal(1);
     }));
 
   });
@@ -169,8 +169,8 @@ describe('features/bendpoints - move', function() {
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-ok');
 
-      expect(hoverNode).toBeDefined();
-      expect(hoverNode.getAttribute('data-element-id')).toBe(shape2.id);
+      expect(hoverNode).to.be.defined;
+      expect(hoverNode.getAttribute('data-element-id')).to.equal(shape2.id);
     }));
 
 
@@ -185,8 +185,8 @@ describe('features/bendpoints - move', function() {
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-not-ok');
 
-      expect(hoverNode).toBeDefined();
-      expect(hoverNode.getAttribute('data-element-id')).toBe(shape3.id);
+      expect(hoverNode).to.be.defined;
+      expect(hoverNode.getAttribute('data-element-id')).to.equal(shape3.id);
     }));
 
   });
@@ -204,7 +204,7 @@ describe('features/bendpoints - move', function() {
       dragging.end();
 
       // then
-      expect(connection.waypoints[1]).toEqual({ x: 530, y: 420 });
+      expect(connection.waypoints[1]).to.eql({ x: 530, y: 420 });
     }));
 
 
@@ -219,7 +219,7 @@ describe('features/bendpoints - move', function() {
       dragging.end();
 
       // then
-      expect(connection.waypoints[2]).toEqual({ x: 530, y: 120 });
+      expect(connection.waypoints[2]).to.eql({ x: 530, y: 120 });
     }));
 
 
@@ -234,7 +234,7 @@ describe('features/bendpoints - move', function() {
       dragging.end();
 
       // then
-      expect(connection.waypoints[0]).toEqual({ x: 230, y: 120 });
+      expect(connection.waypoints[0]).to.eql({ x: 230, y: 120 });
     }));
 
   });

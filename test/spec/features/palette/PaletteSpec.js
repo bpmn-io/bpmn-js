@@ -2,8 +2,7 @@
 
 /* global bootstrapDiagram, inject */
 
-var TestHelper    = require('../../../TestHelper'),
-    paletteModule = require('../../../../lib/features/palette');
+var paletteModule = require('../../../../lib/features/palette');
 
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes');
@@ -32,7 +31,7 @@ describe('features/palette', function() {
 
       var paletteArray = domQuery.all('.djs-palette', container);
 
-      expect(paletteArray.length).toBe(1);
+      expect(paletteArray.length).to.equal(1);
     }));
 
 
@@ -42,7 +41,7 @@ describe('features/palette', function() {
 
       var paletteArray = domQuery.all('.djs-palette', container);
 
-      expect(paletteArray.length).toBe(0);
+      expect(paletteArray.length).to.equal(0);
     }));
 
   });
@@ -62,7 +61,7 @@ describe('features/palette', function() {
       palette.registerProvider(provider);
 
       // then
-      expect(palette._providers).toEqual([ provider ]);
+      expect(palette._providers).to.eql([ provider ]);
     }));
 
 
@@ -73,16 +72,16 @@ describe('features/palette', function() {
 
       palette.registerProvider(provider);
 
-      spyOn(provider, 'getPaletteEntries');
+      sinon.spy(provider, 'getPaletteEntries');
 
       // when
       var entries = palette.getEntries();
 
       // then
-      expect(entries).toEqual({});
+      expect(entries).to.eql({});
 
       // pass over providers
-      expect(provider.getPaletteEntries).toHaveBeenCalled();
+      expect(provider.getPaletteEntries).to.have.been.called;
     }));
 
 
@@ -120,17 +119,17 @@ describe('features/palette', function() {
 
       // then data structure should set
       var pEntries = palette.getEntries();
-      expect(pEntries.entryA).toBeDefined();
-      expect(pEntries.entryB).toBeDefined();
+      expect(pEntries.entryA).to.be.defined;
+      expect(pEntries.entryB).to.be.defined;
 
       // then DOM should contain entries
       var entryA = domQuery('[data-action="entryA"]', palette._container);
-      expect(entryA).toBeTruthy();
-      expect(domClasses(entryA).has('FOO')).toBe(true);
+      expect(entryA).to.be.defined;
+      expect(domClasses(entryA).has('FOO')).to.be.true;
 
       var entryB = domQuery('[data-action="entryB"]', palette._container);
-      expect(entryB).toBeTruthy();
-      expect(domQuery('img', entryB)).toBeTruthy();
+      expect(entryB).to.be.defined;
+      expect(domQuery('img', entryB)).to.be.defined;
     }));
 
   });
@@ -145,8 +144,8 @@ describe('features/palette', function() {
     }));
 
     function expectOpen(palette, open) {
-      expect(palette.isOpen()).toBe(open);
-      expect(domClasses(palette._container).has('open')).toBe(open);
+      expect(palette.isOpen()).to.equal(open);
+      expect(domClasses(palette._container).has('open')).to.equal(open);
     }
 
     it('should be opened (default)', inject(function(canvas, palette) {

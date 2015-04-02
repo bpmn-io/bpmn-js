@@ -1,3 +1,5 @@
+'use strict';
+
 var TestHelper = require('../../../TestHelper'),
     Events = require('../../../util/Events');
 
@@ -72,8 +74,8 @@ describe('features/connect', function() {
       var newConnection = shape1.outgoing[0];
 
       // then
-      expect(newConnection).toBeDefined();
-      expect(newConnection.target).toBe(shape2);
+      expect(newConnection).not.to.be.undefined;
+      expect(newConnection.target).to.equal(shape2);
     }));
 
 
@@ -85,7 +87,7 @@ describe('features/connect', function() {
         target: shape2
       };
 
-      expect(rules.allowed('connection.create', context)).toBeFalsy();
+      expect(rules.allowed('connection.create', context)).to.be.false;
 
       // when
       connect.start(Event.create({ x: 0, y: 0 }), shape1child);
@@ -95,8 +97,8 @@ describe('features/connect', function() {
       dragging.end();
 
       // then
-      expect(shape1child.outgoing.length).toBe(0);
-      expect(shape2.incoming.length).toBe(0);
+      expect(shape1child.outgoing.length).to.equal(0);
+      expect(shape2.incoming.length).to.equal(0);
     }));
 
   });

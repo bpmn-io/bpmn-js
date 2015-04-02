@@ -74,8 +74,8 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel).toBeDefined();
-      expect(newLabel.parent).toBe(parentShape);
+      expect(newLabel).to.be.defined;
+      expect(newLabel.parent).to.equal(parentShape);
     }));
 
 
@@ -85,7 +85,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphics(newLabel)).toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).to.be.defined;
     }));
 
 
@@ -95,8 +95,8 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel.labelTarget).toBe(childShape);
-      expect(childShape.label).toBe(newLabel);
+      expect(newLabel.labelTarget).to.equal(childShape);
+      expect(childShape.label).to.equal(newLabel);
     }));
 
 
@@ -109,11 +109,11 @@ describe('features/modeling - create label', function() {
       commandStack.undo();
 
       // then
-      expect(newLabel.parent).toBeFalsy();
-      expect(newLabel.labelTarget).toBeFalsy();
-      expect(childShape.label).toBeFalsy();
+      expect(newLabel.parent).to.be.null;
+      expect(newLabel.labelTarget).to.be.null;
+      expect(childShape.label).to.be.undefined;
 
-      expect(elementRegistry.getGraphics(newLabel)).not.toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).to.not.be.defined;
     }));
 
   });
@@ -136,7 +136,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel).toBeDefined();
+      expect(newLabel).to.be.defined;
     }));
 
 
@@ -146,7 +146,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphics(newLabel)).toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).to.be.defined;
     }));
 
 
@@ -156,8 +156,8 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel.labelTarget).toBe(connection);
-      expect(connection.label).toBe(newLabel);
+      expect(newLabel.labelTarget).to.equal(connection);
+      expect(connection.label).to.equal(newLabel);
     }));
 
 
@@ -170,11 +170,11 @@ describe('features/modeling - create label', function() {
       commandStack.undo();
 
       // then
-      expect(newLabel.parent).toBeFalsy();
-      expect(newLabel.labelTarget).toBeFalsy();
-      expect(connection.label).toBeFalsy();
+      expect(newLabel.parent).to.be.null;
+      expect(newLabel.labelTarget).to.be.null;
+      expect(connection.label).to.be.undefined;
 
-      expect(elementRegistry.getGraphics(newLabel)).not.toBeDefined();
+      expect(elementRegistry.getGraphics(newLabel)).to.not.be.defined;
     }));
 
   });

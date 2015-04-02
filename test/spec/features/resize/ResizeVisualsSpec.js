@@ -1,7 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
@@ -45,7 +44,7 @@ describe('features/resize - visuals', function() {
       // then
       var resizeAnchors = gfx.selectAll('.djs-resizer');
 
-      expect(resizeAnchors.length).toBe(4);
+      expect(resizeAnchors.length).to.equal(4);
     }));
 
 
@@ -58,7 +57,7 @@ describe('features/resize - visuals', function() {
       // then
       var resizeAnchors = gfx.selectAll('.resize');
 
-      expect(resizeAnchors.length).toBe(0);
+      expect(resizeAnchors.length).to.equal(0);
     }));
 
 
@@ -78,7 +77,7 @@ describe('features/resize - visuals', function() {
       // then
       var frames = canvas.getDefaultLayer().selectAll('.djs-resize-overlay');
 
-      expect(frames.length).toBe(1);
+      expect(frames.length).to.equal(1);
     }));
 
 
@@ -94,7 +93,7 @@ describe('features/resize - visuals', function() {
 
       var bbox = frame.getBBox();
 
-      expect(bounds(bbox)).toEqual({
+      expect(bounds(bbox)).to.eql({
         x: 100,
         y: 100,
         width: 200,
@@ -113,7 +112,7 @@ describe('features/resize - visuals', function() {
       // then
       var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
-      expect(frame).toBe(null);
+      expect(frame).to.be.null;
     }));
 
   });
@@ -139,7 +138,7 @@ describe('features/resize - visuals', function() {
       // then
       var resizeAnchors = gfx.selectAll('.resize');
 
-      expect(resizeAnchors.length).toBe(0);
+      expect(resizeAnchors.length).to.equal(0);
     }));
 
 
@@ -154,14 +153,14 @@ describe('features/resize - visuals', function() {
         // then
         var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
-        expect(frame.hasClass('resize-not-ok')).toBe(true);
+        expect(frame.hasClass('resize-not-ok')).to.equal(true);
 
 
         // when resize big enough
         dragging.move(Events.create(canvas._svg, { x: -50, y: -50 }));
 
         // then
-        expect(frame.hasClass('resize-not-ok')).toBe(false);
+        expect(frame.hasClass('resize-not-ok')).to.equal(false);
       }));
 
 
@@ -174,8 +173,8 @@ describe('features/resize - visuals', function() {
 
         // then
         // no change happened
-        expect(shape.width).toBe(100);
-        expect(shape.height).toBe(100);
+        expect(shape.width).to.equal(100);
+        expect(shape.height).to.equal(100);
       }));
 
     });
