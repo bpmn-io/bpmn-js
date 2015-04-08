@@ -193,7 +193,9 @@
   position: absolute;
   left: 20px;
   top: 20px;
+}
 
+.djs-palette:not(.open) {
   overflow: hidden;
 }
 
