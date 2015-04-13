@@ -85,6 +85,20 @@ describe('features/modeling - update properties', function() {
       expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
     }));
 
+
+    it('updating id', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.updateProperties(flowConnection, { id: 'FOO_BAR' });
+
+      // then
+      expect(flowConnection.businessObject.id).toBe('FOO_BAR');
+      expect(flowConnection.id).toBe('FOO_BAR');
+    }));
+
   });
 
 
@@ -137,6 +151,21 @@ describe('features/modeling - update properties', function() {
 
       // flow got updated, too
       expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
+    }));
+
+
+    it('updating id', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.updateProperties(flowConnection, { id: 'FOO_BAR' });
+      commandStack.undo();
+
+      // then
+      expect(flowConnection.businessObject.id).toBe('SequenceFlow_1');
+      expect(flowConnection.id).toBe('SequenceFlow_1');
     }));
 
   });
