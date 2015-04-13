@@ -3,7 +3,7 @@
 /* global bootstrapDiagram, inject */
 
 
-var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds;
+var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeBounds;
 
 var modelingModule = require('../../../../lib/features/modeling');
 

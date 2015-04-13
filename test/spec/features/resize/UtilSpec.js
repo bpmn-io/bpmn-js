@@ -1,9 +1,9 @@
 'use strict';
 
-var ResizeUtil = require('../../../../lib/features/resize/Util');
+var ResizeUtil = require('../../../../lib/features/resize/ResizeUtil');
 
 
-describe('resize/Util', function() {
+describe('resize/ResizeUtil', function() {
 
 
   describe('resizeBounds', function() {

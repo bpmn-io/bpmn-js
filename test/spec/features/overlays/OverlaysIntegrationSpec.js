@@ -19,7 +19,7 @@ var overlayModule = require('../../../../lib/features/overlays'),
     moveModule = require('../../../../lib/features/move');
 
 
-var resizeBounds = require('../../../../lib/features/resize/Util').resizeBounds;
+var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeBounds;
 
 describe('features/overlay - integration', function() {
 
