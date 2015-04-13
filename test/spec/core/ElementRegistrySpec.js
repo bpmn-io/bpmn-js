@@ -25,8 +25,8 @@ describe('ElementRegistry', function() {
       var shape = elementRegistry.get('3'),
           gfx = elementRegistry.getGraphics(shape);
 
-      expect(shape).to.be.defined;
-      expect(gfx).to.be.defined;
+      expect(shape).to.exist;
+      expect(gfx).to.exist;
     }));
 
   });
@@ -43,8 +43,61 @@ describe('ElementRegistry', function() {
       var shape = elementRegistry.get('1'),
           gfx = elementRegistry.getGraphics('1');
 
-      expect(shape).to.not.be.defined;
-      expect(gfx).to.not.be.defined;
+      expect(shape).not.to.exist;
+      expect(gfx).not.to.exist;
+    }));
+
+  });
+
+
+  describe('updateId', function() {
+
+    it('should update id', inject(function(elementRegistry, canvas) {
+
+      // given
+      var oldId = '1',
+          newId = '56';
+
+      var shape = elementRegistry.get(oldId);
+
+      // when
+      elementRegistry.updateId(shape, newId);
+
+      // then
+      var shapeByOldId = elementRegistry.get(oldId),
+          gfxByOldId = elementRegistry.getGraphics(oldId);
+
+      var shapeByNewId = elementRegistry.get(newId),
+          gfxByNewId = elementRegistry.getGraphics(newId);
+
+      expect(shapeByOldId).not.to.exist;
+      expect(gfxByOldId).not.to.exist;
+
+      expect(shapeByNewId).to.exist;
+      expect(gfxByNewId).to.exist;
+    }));
+
+
+    it('should update by id', inject(function(elementRegistry, canvas) {
+
+      // given
+      var oldId = '1',
+          newId = '56';
+
+      elementRegistry.updateId(oldId, newId);
+
+      // then
+      var shapeByOldId = elementRegistry.get(oldId),
+          gfxByOldId = elementRegistry.getGraphics(oldId);
+
+      var shapeByNewId = elementRegistry.get(newId),
+          gfxByNewId = elementRegistry.getGraphics(newId);
+
+      expect(shapeByOldId).not.to.exist;
+      expect(gfxByOldId).not.to.exist;
+
+      expect(shapeByNewId).to.exist;
+      expect(gfxByNewId).to.exist;
     }));
 
   });
@@ -58,7 +111,7 @@ describe('ElementRegistry', function() {
       var gfx = elementRegistry.getGraphics('1');
 
       // then
-      expect(gfx).to.be.defined;
+      expect(gfx).to.exist;
     }));
 
 
@@ -68,7 +121,7 @@ describe('ElementRegistry', function() {
       var secondaryGfx = elementRegistry.getGraphics(canvas.getRootElement(), true);
 
       // then
-      expect(secondaryGfx).to.be.defined;
+      expect(secondaryGfx).to.exist;
     }));
 
   });
@@ -82,7 +135,7 @@ describe('ElementRegistry', function() {
       var shape = elementRegistry.get('1');
 
       // then
-      expect(shape).to.be.defined;
+      expect(shape).to.exist;
       expect(shape.id).to.equal('1');
     }));
 
@@ -96,7 +149,7 @@ describe('ElementRegistry', function() {
       var shape = elementRegistry.get(gfx);
 
       // then
-      expect(shape).to.be.defined;
+      expect(shape).to.exist;
       expect(shape.id).to.equal('1');
     }));
 
@@ -111,8 +164,8 @@ describe('ElementRegistry', function() {
       var elements = elementRegistry.filter(function(element, gfx) {
 
         // assume we get element and gfx as params
-        expect(element).to.be.defined;
-        expect(gfx).to.be.defined;
+        expect(element).to.exist;
+        expect(gfx).to.exist;
 
         return true;
       });
@@ -147,8 +200,8 @@ describe('ElementRegistry', function() {
       elementRegistry.forEach(function(element, gfx) {
         elements.push(element);
         // assume we get element and gfx as params
-        expect(element).to.be.defined;
-        expect(gfx).to.be.defined;
+        expect(element).to.exist;
+        expect(gfx).to.exist;
       });
 
       // then
