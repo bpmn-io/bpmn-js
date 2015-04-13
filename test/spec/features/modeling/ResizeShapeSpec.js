@@ -24,7 +24,7 @@ describe('features/modeling - resize shape', function() {
         id: 'root'
       });
 
-    canvas.setRootElement(rootShape);
+      canvas.setRootElement(rootShape);
 
       shape1 = elementFactory.createShape({
         id: 'shape1',

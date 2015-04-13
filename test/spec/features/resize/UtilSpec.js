@@ -113,4 +113,51 @@ describe('resize/Util', function() {
     });
 
   });
+
+
+  describe('ensureMinBounds', function() {
+
+    var minBounds = {
+      x: 100, y: 100,
+      width: 300, height: 300
+    };
+
+
+    it('should ensure minimum bounds when changing height and width', function() {
+
+      // given
+      var currentBounds = {
+        x: 100, y: 100,
+        width: 250, height: 250
+      };
+
+      var newBounds = ResizeUtil.ensureMinBounds(currentBounds, minBounds);
+
+      // then
+      expect(newBounds).to.deep.equal({
+        x: 100, y: 100,
+        width: 300, height: 300
+      });
+    });
+
+
+    it('should ensure minimum bounds when changing x and y', function() {
+
+      // given
+      var currentBounds = {
+        x: 150, y: 150,
+        width: 400, height: 400
+      };
+
+      var newBounds = ResizeUtil.ensureMinBounds(currentBounds, minBounds);
+
+      // then
+      expect(newBounds).to.deep.equal({
+        x: 100, y: 100,
+        width: 450, height: 450
+      });
+    });
+
+  });
+
 });

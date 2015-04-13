@@ -181,4 +181,106 @@ describe('features/resize - visuals', function() {
 
   });
 
+
+  describe('containers', function() {
+
+    var parentShape, childShape, childShape2, connection;
+
+    beforeEach(inject(function(elementFactory, canvas, elementRegistry, modeling) {
+
+      parentShape = elementFactory.createShape({
+        id: 'parent',
+        resizable: true,
+        x: 50, y: 50,
+        width: 450, height: 450
+      });
+
+      canvas.addShape(parentShape);
+
+      childShape = elementFactory.createShape({
+        id: 'child',
+        resizable: true,
+        x: 100, y: 100,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(childShape, parentShape);
+
+      childShape2 = elementFactory.createShape({
+        id: 'child2',
+        x: 300, y: 300,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(childShape2, parentShape);
+
+      connection = elementFactory.createShape({
+        id: 'connection',
+        waypoints: [
+          { x: 150, y: 150},
+          { x: 350, y: 350}
+        ],
+        source: childShape,
+        target: childShape2
+      });
+
+      canvas.addConnection(connection, parentShape);
+    }));
+
+
+    it('should not resize beyond the minimum boundaries box from "se"', inject(function(resize, dragging, canvas) {
+
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 500, y: 500 }), parentShape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: 250, y: 250 }));
+      dragging.end();
+
+      var resizedBounds = pick(parentShape, ['x', 'y', 'width', 'height']);
+
+      // then
+      expect(resizedBounds).to.deep.equal({
+        x: 50, y: 50,
+        width: 370, height: 370
+      });
+
+    }));
+
+
+    it('should not resize beyond the minimum boundaries box from "nw"', inject(function(resize, dragging, canvas) {
+
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 50, y: 50 }), parentShape, 'nw');
+      dragging.move(Events.create(canvas._svg, { x: 250, y: 250 }));
+      dragging.end();
+
+      var resizedBounds = pick(parentShape, ['x', 'y', 'width', 'height']);
+
+      // then
+      expect(resizedBounds).to.eql({
+        x: 80, y: 80,
+        width: 420, height: 420
+      });
+
+    }));
+
+
+    it('should not limit resize if no children', inject(function(resize, dragging, canvas) {
+
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 100, y: 100 }), childShape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
+      dragging.end();
+
+      var resizedBounds = pick(childShape, ['x', 'y', 'width', 'height']);
+
+      // then
+      expect(resizedBounds).to.eql({
+        x: 100, y: 100,
+        width: 20, height: 20
+      });
+
+    }));
+
+  });
+
 });
