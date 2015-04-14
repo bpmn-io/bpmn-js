@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bpmn';
-  src: url('../font/bpmn.eot?59469839');
-  src: url('../font/bpmn.eot?59469839#iefix') format('embedded-opentype'),
-       url('../font/bpmn.woff?59469839') format('woff'),
-       url('../font/bpmn.ttf?59469839') format('truetype'),
-       url('../font/bpmn.svg?59469839#bpmn') format('svg');
+  src: url('../font/bpmn.eot?37618458');
+  src: url('../font/bpmn.eot?37618458#iefix') format('embedded-opentype'),
+       url('../font/bpmn.woff?37618458') format('woff'),
+       url('../font/bpmn.ttf?37618458') format('truetype'),
+       url('../font/bpmn.svg?37618458#bpmn') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'bpmn';
-    src: url('../font/bpmn.svg?59469839#bpmn') format('svg');
+    src: url('../font/bpmn.svg?37618458#bpmn') format('svg');
   }
 }
 */
@@ -35,7 +35,7 @@
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
   text-transform: none;
-     
+ 
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
  
@@ -45,6 +45,10 @@
  
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
  
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
@@ -142,3 +146,7 @@
 .icon-start-event-non-interrupting-multiple:before { content: '\e859'; } /* '' */
 .icon-intermediate-event-throw-signal:before { content: '\e85a'; } /* '' */
 .icon-intermediate-event-catch-non-interrupting-condition:before { content: '\e85b'; } /* '' */
+.icon-participant:before { content: '\e85c'; } /* '' */
+.icon-edit-default:before { content: '\e85d'; } /* '' */
+.icon-edit-navigation:before { content: '\e85e'; } /* '' */
+.icon-edit-space-tool:before { content: '\e85f'; } /* '' */
