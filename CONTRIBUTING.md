@@ -6,7 +6,7 @@ We love you to contribute to this project by filing bugs, helping others on the 
 ## Creating issues
 
 We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication.
-When using the issue tracker,
+When using the issue tracker:
 
 * Be descriptive when creating an issue (what, where, when and how does a problem pop up)?
 * Attach steps to reproduce (if applicable)
