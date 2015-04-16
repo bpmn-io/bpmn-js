@@ -5,6 +5,8 @@ var unique = require('lodash/array/unique'),
     assign = require('lodash/object/assign'),
     forEach = require('lodash/collection/forEach');
 
+var TestContainer = require('mocha-test-container-support');
+
 var Diagram = require('../../lib/Diagram'),
     domEvent = require('min-dom/lib/event');
 
@@ -40,19 +42,21 @@ function bootstrapDiagram(options, locals) {
 
     var testContainer;
 
+
     // Make sure the test container is an optional dependency and we fall back
     // to an empty <div> if it does not exist.
     //
     // This is needed if other libraries rely on this helper for testing
     // while not adding the mocha-test-container-support as a dependency.
     try {
-      testContainer = this.currentTest.__test_container_support__.testContentContainer;
+      testContainer = TestContainer.get(this);
     } catch (e) {
       testContainer = document.createElement('div');
       document.body.appendChild(testContainer);
     }
 
     testContainer.classList.add('test-container');
+
 
     var _options = options,
         _locals = locals;

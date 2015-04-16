@@ -37,7 +37,7 @@
     "karma-phantomjs-launcher": "^0.1.2",
     "karma-sinon-chai": "~0.3.0",
     "load-grunt-tasks": "^0.3.0",
-    "mocha-test-container-support": "~0.0.1",
+    "mocha-test-container-support": "~0.1.0",
     "sinon": "~1.14.1",
     "sinon-chai": "~2.7.0",
     "time-grunt": "^0.3.0"

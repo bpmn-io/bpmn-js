@@ -4,6 +4,7 @@
 /* global bootstrapDiagram, inject, sinon */
 
 var merge = require('lodash/object/merge');
+var TestContainer = require('mocha-test-container-support');
 
 describe('Canvas', function() {
 
@@ -22,7 +23,7 @@ describe('Canvas', function() {
   describe('initialize', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -40,7 +41,7 @@ describe('Canvas', function() {
   describe('destroy', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -59,7 +60,7 @@ describe('Canvas', function() {
   describe('#addShape', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -178,7 +179,7 @@ describe('Canvas', function() {
   describe('#removeShape', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -244,7 +245,7 @@ describe('Canvas', function() {
   describe('#addConnection', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -272,7 +273,7 @@ describe('Canvas', function() {
   describe('#removeConnection', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -305,7 +306,7 @@ describe('Canvas', function() {
   describe('root element(s)', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -390,7 +391,7 @@ describe('Canvas', function() {
   describe('update behavior', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram());
 
@@ -415,7 +416,7 @@ describe('Canvas', function() {
   describe('viewbox', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -632,7 +633,7 @@ describe('Canvas', function() {
   describe('scroll', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -713,7 +714,7 @@ describe('Canvas', function() {
   describe('zoom', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -1181,7 +1182,7 @@ describe('Canvas', function() {
   describe('#getAbsoluteBBox', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -1253,7 +1254,7 @@ describe('Canvas', function() {
   describe('#getGraphics', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
@@ -1298,7 +1299,7 @@ describe('Canvas', function() {
   describe('markers', function() {
 
     beforeEach(function() {
-      container = this.currentTest.__test_container_support__.testContentContainer;
+      container = TestContainer.get(this);
     });
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 

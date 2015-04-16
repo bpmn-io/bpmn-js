@@ -7,6 +7,7 @@ var toFitBBox = require('../../Matchers').toFitBBox;
 var Snap = require('../../../vendor/snapsvg'),
     TextUtil = require('../../../lib/util/Text');
 
+var TestContainer = require('mocha-test-container-support');
 
 describe('Text', function() {
 
@@ -22,7 +23,7 @@ describe('Text', function() {
 
   beforeEach(function() {
 
-    var testContainer = this.currentTest.__test_container_support__.testContentContainer;
+    var testContainer = TestContainer.get(this);
 
     var parent = document.createElement('div');
     parent.style.width = '200px';

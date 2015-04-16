@@ -4,13 +4,14 @@ var forEach = require('lodash/collection/forEach');
 
 var Snap = require('snapsvg');
 
+var TestContainer = require('mocha-test-container-support');
 
 describe('intersection', function() {
 
   var paper;
 
   beforeEach(function() {
-    var testContainer = this.currentTest.__test_container_support__.testContentContainer;
+    var testContainer = TestContainer.get(this);
 
     var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '100%');
