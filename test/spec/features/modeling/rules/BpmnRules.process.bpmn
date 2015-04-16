@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_biH3sOTeEeS2YerRfpjPrw" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="Process" isExecutable="false">
+    <bpmn2:startEvent id="StartEvent_None"/>
+    <bpmn2:subProcess id="EventSubProcess" triggeredByEvent="true">
+      <bpmn2:startEvent id="StartEvent_Message_in_EventSubProcess">
+        <bpmn2:messageEventDefinition id="MessageEventDefinition_1"/>
+      </bpmn2:startEvent>
+    </bpmn2:subProcess>
+    <bpmn2:task id="Task"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Link">
+      <bpmn2:linkEventDefinition id="_LinkEventDefinition_2"/>
+    </bpmn2:intermediateThrowEvent>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Link">
+      <bpmn2:linkEventDefinition id="_LinkEventDefinition_3"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:subProcess id="SubProcess">
+      <bpmn2:endEvent id="EndEvent_in_SubProcess"/>
+    </bpmn2:subProcess>
+    <bpmn2:endEvent id="EndEvent_None"/>
+    <bpmn2:textAnnotation id="TextAnnotation"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="_BPMNDiagram_2">
+    <bpmndi:BPMNPlane id="_BPMNPlane_2" bpmnElement="Process">
+      <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task">
+        <dc:Bounds height="80.0" width="100.0" x="172.0" y="147.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_None">
+        <dc:Bounds height="36.0" width="36.0" x="65.0" y="169.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="83.0" y="210.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_4" bpmnElement="EventSubProcess" isExpanded="true">
+        <dc:Bounds height="169.0" width="313.0" x="132.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_5" bpmnElement="StartEvent_Message_in_EventSubProcess">
+        <dc:Bounds height="36.0" width="36.0" x="171.0" y="419.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="189.0" y="460.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_3" bpmnElement="IntermediateThrowEvent_Link">
+        <dc:Bounds height="36.0" width="36.0" x="336.0" y="168.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="354.0" y="209.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_2" bpmnElement="IntermediateCatchEvent_Link">
+        <dc:Bounds height="36.0" width="36.0" x="425.0" y="168.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="443.0" y="209.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_5" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds height="169.0" width="205.0" x="516.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_2" bpmnElement="TextAnnotation">
+        <dc:Bounds height="85.0" width="85.0" x="576.0" y="36.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_in_SubProcess">
+        <dc:Bounds height="36.0" width="36.0" x="639.0" y="451.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_6" bpmnElement="EndEvent_None">
+        <dc:Bounds height="36.0" width="36.0" x="516.0" y="168.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="534.0" y="209.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

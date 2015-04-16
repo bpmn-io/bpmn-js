@@ -28,6 +28,12 @@ describe('Modeler', function() {
   });
 
 
+  it('should import collaboration', function(done) {
+    var xml = require('../fixtures/bpmn/collaboration-message-flows.bpmn');
+    createModeler(xml, done);
+  });
+
+
   it('should import empty definitions', function(done) {
     var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
     createModeler(xml, done);

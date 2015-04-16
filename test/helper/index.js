@@ -209,6 +209,16 @@ module.exports.bootstrapViewer = (window || global).bootstrapViewer = bootstrapV
 module.exports.inject = (window || global).inject = inject;
 
 
+/**
+ * Returns the current active BpmnJS instance.
+ *
+ * @return {BpmnJS}
+ */
+module.exports.getBpmnJS = function() {
+  return BPMN_JS;
+};
+
+
 function insertCSS(name, css) {
   if (document.querySelector('[data-css-file="' + name + '"]')) {
     return;

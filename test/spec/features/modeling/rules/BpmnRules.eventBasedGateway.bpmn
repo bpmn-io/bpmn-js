@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_e9eVgOdVEeSyFtFBe7wX5g" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="Process" isExecutable="false">
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Message">
+      <bpmn2:messageEventDefinition id="_MessageEventDefinition_3"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Message">
+      <bpmn2:messageEventDefinition id="_MessageEventDefinition_4"/>
+    </bpmn2:intermediateThrowEvent>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Signal">
+      <bpmn2:signalEventDefinition id="_SignalEventDefinition_2"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Condition">
+      <bpmn2:conditionalEventDefinition id="_ConditionalEventDefinition_2"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Timer">
+      <bpmn2:timerEventDefinition id="_TimerEventDefinition_2"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent"/>
+    <bpmn2:receiveTask id="ReceiveTask"/>
+    <bpmn2:parallelGateway id="ParallelGateway"/>
+    <bpmn2:task id="Task_None"/>
+    <bpmn2:eventBasedGateway id="EventBasedGateway"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
+      <bpmndi:BPMNShape id="_BPMNShape_EventBasedGateway_2" bpmnElement="EventBasedGateway">
+        <dc:Bounds height="50.0" width="50.0" x="269.0" y="204.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="294.0" y="259.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_3" bpmnElement="IntermediateCatchEvent_Message">
+        <dc:Bounds height="36.0" width="36.0" x="433.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="451.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_4" bpmnElement="IntermediateThrowEvent_Message">
+        <dc:Bounds height="36.0" width="36.0" x="433.0" y="288.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="451.0" y="329.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_10" bpmnElement="ReceiveTask">
+        <dc:Bounds height="80.0" width="100.0" x="401.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ParallelGateway_2" bpmnElement="ParallelGateway">
+        <dc:Bounds height="50.0" width="50.0" x="425.0" y="472.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="450.0" y="527.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_4" bpmnElement="IntermediateCatchEvent_Signal">
+        <dc:Bounds height="36.0" width="36.0" x="529.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="547.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_5" bpmnElement="IntermediateCatchEvent_Condition">
+        <dc:Bounds height="36.0" width="36.0" x="624.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="642.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_6" bpmnElement="IntermediateCatchEvent_Timer">
+        <dc:Bounds height="36.0" width="36.0" x="711.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="729.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_7" bpmnElement="IntermediateCatchEvent">
+        <dc:Bounds height="36.0" width="36.0" x="804.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="822.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_11" bpmnElement="Task_None">
+        <dc:Bounds height="80.0" width="100.0" x="547.0" y="360.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
