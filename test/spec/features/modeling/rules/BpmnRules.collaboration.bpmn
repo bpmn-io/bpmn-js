@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_biH3sOTeEeS2YerRfpjPrw" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:collaboration id="Collaboration">
+    <bpmn2:participant id="Participant" name="Pool" processRef="Process"/>
+    <bpmn2:participant id="OtherParticipant" name="Pool" processRef="OtherProcess"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process" isExecutable="false">
+    <bpmn2:subProcess id="SubProcess">
+      <bpmn2:task id="Task_in_SubProcess"/>
+      <bpmn2:endEvent id="EndEvent_in_SubProcess"/>
+    </bpmn2:subProcess>
+    <bpmn2:startEvent id="StartEvent_None"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Message">
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1"/>
+    </bpmn2:intermediateThrowEvent>
+    <bpmn2:endEvent id="EndEvent_None"/>
+    <bpmn2:textAnnotation id="TextAnnotation_Global"/>
+  </bpmn2:process>
+  <bpmn2:process id="OtherProcess" isExecutable="false">
+    <bpmn2:task id="Task_in_OtherParticipant"/>
+    <bpmn2:textAnnotation id="TextAnnotation_OtherParticipant"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_3" bpmnElement="Participant" isHorizontal="true">
+        <dc:Bounds height="265.0" width="697.0" x="72.0" y="48.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_3" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds height="205.0" width="248.0" x="468.0" y="72.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_in_SubProcess">
+        <dc:Bounds height="80.0" width="100.0" x="493.0" y="95.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_None">
+        <dc:Bounds height="36.0" width="36.0" x="144.0" y="157.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="162.0" y="198.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_in_SubProcess">
+        <dc:Bounds height="36.0" width="36.0" x="660.0" y="117.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="678.0" y="158.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_4" bpmnElement="OtherParticipant" isHorizontal="true">
+        <dc:Bounds height="157.0" width="697.0" x="72.0" y="432.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_7" bpmnElement="Task_in_OtherParticipant">
+        <dc:Bounds height="80.0" width="100.0" x="408.0" y="465.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_2" bpmnElement="IntermediateThrowEvent_Message">
+        <dc:Bounds height="36.0" width="36.0" x="264.0" y="157.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="282.0" y="198.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_None">
+        <dc:Bounds height="36.0" width="36.0" x="373.0" y="156.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_3" bpmnElement="TextAnnotation_OtherParticipant">
+        <dc:Bounds height="88.0" width="103.0" x="162.0" y="465.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_4" bpmnElement="TextAnnotation_Global">
+        <dc:Bounds height="88.0" width="96.0" x="900.0" y="180.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
