@@ -221,5 +221,7 @@ describe('features/modeling - create/remove space', function() {
       expect(task.di.bounds.x).toBe(taskOldPos.x + 50);
       expect(task.di.bounds.y).toBe(taskOldPos.y);
     }));
+
   });
+
 });
