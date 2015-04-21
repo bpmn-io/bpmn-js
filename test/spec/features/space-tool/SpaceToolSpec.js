@@ -383,18 +383,13 @@ describe('features/space-tool', function() {
       canvas.addConnection(connection2);
     }));
 
-    var Event;
-
-    beforeEach(inject(function(canvas, dragging) {
-      Event = Events.target(canvas._svg);
-
-      dragging.setOptions({ manual: true });
-    }));
 
     var createEvent;
 
-    beforeEach(inject(function(canvas) {
+    beforeEach(inject(function(canvas, dragging) {
       createEvent = Events.scopedCreate(canvas);
+
+      dragging.setOptions({ manual: true });
     }));
 
 
@@ -437,8 +432,10 @@ describe('features/space-tool', function() {
       expect(childShape2.x).to.equal(450); // changes
       expect(childShape2.y).to.equal(275);
 
-      expect(connection.waypoints[0]).to.eql({ x: 250, y: 200});
-      expect(connection.waypoints[1]).to.eql({ x: 475, y: 300}); // changes
+      expect(connection.waypoints).to.eql([
+        { x: 250, y: 200 },
+        { x: 475, y: 300 }    // changes
+      ]);
 
       expect(parentShape2.x).to.equal(925); // changes
       expect(parentShape2.y).to.equal(200);
@@ -451,8 +448,10 @@ describe('features/space-tool', function() {
       expect(childShape4.x).to.equal(935); // changes
       expect(childShape4.y).to.equal(290);
 
-      expect(connection2.waypoints[0]).to.eql({ x: 1140, y: 235}); // changes
-      expect(connection2.waypoints[1]).to.eql({ x: 960, y: 315}); // changes
+      expect(connection2.waypoints).to.eql([
+        { x: 1140, y: 235, original: { x: 1140, y: 235 } },  // changes
+        { x: 960, y: 315, original: { x: 960, y: 315 } }     // changes
+      ]);
     }));
 
 
