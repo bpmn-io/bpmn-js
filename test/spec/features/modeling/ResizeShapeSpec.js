@@ -7,16 +7,20 @@ var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeB
 
 var modelingModule = require('../../../../lib/features/modeling');
 
+var layoutModule = {
+  connectionDocking: [ 'type', require('../../../../lib/layout/CroppingConnectionDocking') ]
+};
+
 
 describe('features/modeling - resize shape', function() {
 
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, layoutModule ] }));
 
 
   describe('basics', function() {
 
-    var rootShape, shape1, shape2;
+    var rootShape, connection, shape1, shape2;
 
     beforeEach(inject(function(elementFactory, canvas) {
 
@@ -28,14 +32,16 @@ describe('features/modeling - resize shape', function() {
 
       shape1 = elementFactory.createShape({
         id: 'shape1',
-        x: 50, y: 100, width: 100, height: 100
+        x: 50, y: 100, 
+        width: 100, height: 100
       });
 
       canvas.addShape(shape1, rootShape);
 
       shape2 = elementFactory.createShape({
         id: 'shape2',
-        x: 50, y: 250, width: 100, height: 100
+        x: 200, y: 100, 
+        width: 100, height: 100
       });
 
       canvas.addShape(shape2, rootShape);
@@ -45,7 +51,7 @@ describe('features/modeling - resize shape', function() {
     it('should change size of shape', inject(function(modeling) {
 
       // when
-      modeling.resizeShape(shape2, { width: 124, height: 202 });
+      modeling.resizeShape(shape2, { x: 200, y: 100, width: 124, height: 202 });
 
       // then
       expect(shape2.width).to.equal(124);
@@ -56,8 +62,8 @@ describe('features/modeling - resize shape', function() {
     it('should undo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.resizeShape(shape2, { width: 124, height: 202 });
-      modeling.resizeShape(shape2, { width: 999, height: 999 });
+      modeling.resizeShape(shape2, { x: 200, y: 100, width: 124, height: 202 });
+      modeling.resizeShape(shape2, { x: 200, y: 100, width: 999, height: 999 });
 
       // when
       commandStack.undo();
@@ -78,8 +84,8 @@ describe('features/modeling - resize shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.resizeShape(shape2, { width: 124, height: 202 });
-      modeling.resizeShape(shape2, { width: 999, height: 999 });
+      modeling.resizeShape(shape2, { x: 200, y: 100, width: 124, height: 202 });
+      modeling.resizeShape(shape2, { x: 200, y: 100, width: 999, height: 999 });
 
       commandStack.undo();
       commandStack.undo();
@@ -97,6 +103,43 @@ describe('features/modeling - resize shape', function() {
       // then
       expect(shape2.width).to.equal(999);
       expect(shape2.height).to.equal(999);
+    }));
+
+
+    it('should crop connections', inject(function(modeling, connectionDocking, canvas, elementFactory, eventBus) {
+
+      // given
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [
+          { x: 100, y: 150 },
+          { x: 250, y: 150 }
+        ],
+        source: shape1,
+        target: shape2
+      });
+
+      canvas.addConnection(connection);
+
+      eventBus.on('commandStack.connection.layout.executed', function(e) {
+          var context = e.context,
+              connection;
+
+          if (!context.cropped) {
+            connection = context.connection;
+            connection.waypoints = connectionDocking.getCroppedWaypoints(connection);
+            context.cropped = true;
+          }
+      });
+
+      // when 
+      modeling.resizeShape(shape1, { x: 50, y: 100, width: 50, height: 100 });
+
+      //then
+      expect(connection.waypoints).to.deep.eql([
+          { x: 100, y: 150, original: { x: 75, y: 150 } },
+          { x: 200, y: 150, original: { x: 250, y: 150 } }
+        ]);
     }));
 
   });
@@ -277,6 +320,50 @@ describe('features/modeling - resize shape', function() {
 
       expect(shape.x).to.equal(100);
       expect(shape.y).to.equal(100);
+    }));
+
+  });
+
+  
+  describe('error handling', function () {
+
+    var rootShape, shape1, shape2;
+
+    beforeEach(inject(function(elementFactory, canvas) {
+
+      rootShape = elementFactory.createRoot({
+        id: 'root'
+      });
+
+      canvas.setRootElement(rootShape);
+
+      shape1 = elementFactory.createShape({
+        id: 'shape1',
+        x: 50, y: 100, 
+        width: 100, height: 100
+      });
+
+      canvas.addShape(shape1, rootShape);
+
+      shape2 = elementFactory.createShape({
+        id: 'shape2',
+        x: 50, y: 250, 
+        width: 100, height: 100
+      });
+
+      canvas.addShape(shape2, rootShape);
+    }));
+
+    
+    it('should throw error when there are missing properties', inject(function(modeling) {
+      
+      // when
+      function resize() {
+        return modeling.resizeShape(shape2, { width: 150, height: 150 });
+      }
+
+      // then
+      expect(resize).to.throw('newBounds must have {x, y, width, height} properties');
     }));
 
   });

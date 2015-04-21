@@ -4,7 +4,7 @@
 
 
 var layoutModule = {
-  layouter: [ 'type', require('../../../lib/layout/CroppingConnectionDocking') ]
+  connectionDocking: [ 'type', require('../../../lib/layout/CroppingConnectionDocking') ]
 };
 
 
@@ -90,10 +90,10 @@ describe('features/layout/CroppingConnectionDocking', function() {
 
   describe('#getDockingPoint', function() {
 
-    it('should compute docking points', inject(function(layouter, canvas) {
+    it('should compute docking points', inject(function(connectionDocking, canvas) {
 
       function expectDockingPoint(connection, shape, expected) {
-        var dockingPoint = layouter.getDockingPoint(connection, shape);
+        var dockingPoint = connectionDocking.getDockingPoint(connection, shape);
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
@@ -131,23 +131,23 @@ describe('features/layout/CroppingConnectionDocking', function() {
       // diagonal source docking
       expectDockingPoint(topLeft_bottomRightConnection, topLeft_bottomRightConnection.source, {
         point : { x : 150, y : 150 },
-        actual : { x : 195, y : 195 },
+        actual : { x : 200, y : 200 },
         idx : 0
       });
 
       // vertical target docking
       expectDockingPoint(topLeft_bottomRightConnection, topLeft_bottomRightConnection.target, {
         point : { x : 450, y : 450 },
-        actual : { x : 405, y : 405 },
+        actual : { x : 400, y : 400 },
         idx : 1
       });
     }));
 
 
-    it('should take shape x,y from shape', inject(function(layouter, canvas) {
+    it('should take shape x,y from shape', inject(function(connectionDocking, canvas) {
 
       function expectDockingPoint(connection, shape, expected) {
-        var dockingPoint = layouter.getDockingPoint(connection, shape);
+        var dockingPoint = connectionDocking.getDockingPoint(connection, shape);
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
@@ -165,16 +165,16 @@ describe('features/layout/CroppingConnectionDocking', function() {
       // vertical target docking
       expectDockingPoint(topLeft_bottomRightConnection, shape, {
         point : { x : 450, y : 450 },
-        actual : { x : 425, y : 425 },
+        actual : { x : 420, y : 420 },
         idx : 1
       });
     }));
 
 
-    it('should fallback if no intersection', inject(function(layouter, canvas) {
+    it('should fallback if no intersection', inject(function(connectionDocking, canvas) {
 
       function expectDockingPoint(connection, shape, expected) {
-        var dockingPoint = layouter.getDockingPoint(connection, shape);
+        var dockingPoint = connectionDocking.getDockingPoint(connection, shape);
 
         canvas._svg.circle(dockingPoint.actual.x, dockingPoint.actual.y, 4);
 
@@ -201,43 +201,43 @@ describe('features/layout/CroppingConnectionDocking', function() {
 
   describe('#getCroppedWaypoints', function() {
 
-    it('should crop connection', inject(function(layouter) {
+    it('should crop connection', inject(function(connectionDocking) {
 
       // vertical connection
-      expect(layouter.getCroppedWaypoints(topLeft_bottomLeftConnection)).to.eql([
+      expect(connectionDocking.getCroppedWaypoints(topLeft_bottomLeftConnection)).to.eql([
         { x: 150, y: 200, original: topLeft_bottomLeftConnection.waypoints[0] },
         { x: 150, y: 400, original: topLeft_bottomLeftConnection.waypoints[1]  }
       ]);
 
-      expect(layouter.getCroppedWaypoints(bottomLeft_bottomRightConnection)).to.eql([
+      expect(connectionDocking.getCroppedWaypoints(bottomLeft_bottomRightConnection)).to.eql([
         { x: 200, y: 450, original: bottomLeft_bottomRightConnection.waypoints[0] },
         { x: 400, y: 450, original: bottomLeft_bottomRightConnection.waypoints[1] }
       ]);
 
-      expect(layouter.getCroppedWaypoints(topLeft_bottomRightConnection)).to.eql([
-        { x: 195, y: 195, original: topLeft_bottomRightConnection.waypoints[0] },
-        { x: 405, y: 405, original: topLeft_bottomRightConnection.waypoints[1] }
+      expect(connectionDocking.getCroppedWaypoints(topLeft_bottomRightConnection)).to.eql([
+        { x: 200, y: 200, original: topLeft_bottomRightConnection.waypoints[0] },
+        { x: 400, y: 400, original: topLeft_bottomRightConnection.waypoints[1] }
       ]);
 
-      expect(layouter.getCroppedWaypoints(backAndForthConnection)).to.eql([
+      expect(connectionDocking.getCroppedWaypoints(backAndForthConnection)).to.eql([
         { x: 200, y: 150, original: backAndForthConnection.waypoints[0] },
         backAndForthConnection.waypoints[1],
         backAndForthConnection.waypoints[2],
         backAndForthConnection.waypoints[3],
-        { x: 405, y: 405, original: backAndForthConnection.waypoints[4] }
+        { x: 400, y: 400, original: backAndForthConnection.waypoints[4] }
       ]);
 
 
-      expect(layouter.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).to.eql([
-        { x: 195, y: 195, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
+      expect(connectionDocking.getCroppedWaypoints(topLeft_bottomRightFreeStyleConnection)).to.eql([
+        { x: 200, y: 200, original: topLeft_bottomRightFreeStyleConnection.waypoints[0] },
         topLeft_bottomRightFreeStyleConnection.waypoints[1],
         topLeft_bottomRightFreeStyleConnection.waypoints[2],
         topLeft_bottomRightFreeStyleConnection.waypoints[3],
-        { x: 405, y: 405, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
+        { x: 400, y: 400, original: topLeft_bottomRightFreeStyleConnection.waypoints[4] }
       ]);
 
       // unconnected connection
-      expect(layouter.getCroppedWaypoints(unconnectedConnection)).to.eql([
+      expect(connectionDocking.getCroppedWaypoints(unconnectedConnection)).to.eql([
         { x: 130, y: 210, original: unconnectedConnection.waypoints[0] },
         { x: 130, y: 390, original: unconnectedConnection.waypoints[1] }
       ]);
