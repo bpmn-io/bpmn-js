@@ -9,7 +9,7 @@ var Diagram = require('diagram-js/lib/Diagram'),
     Viewer = require('../../../lib/Viewer');
 
 
-describe('import - importer', function() {
+describe('import - Importer', function() {
 
   var moddle = new BpmnModdle();
 
@@ -272,7 +272,7 @@ describe('import - importer', function() {
     });
 
 
-    it('should import multiple dis', function(done) {
+    it('should import multiple DIs', function(done) {
 
       // given
       var xml = require('../../fixtures/bpmn/error/multiple-dis.bpmn');
@@ -291,10 +291,10 @@ describe('import - importer', function() {
     });
 
 
-    it('should extend missing attribute with default value', function(done) {
+    it('should extend attributes with default value', function(done) {
 
       // given
-      var xml = require('../../fixtures//bpmn/draw/gateway-type-default.bpmn');
+      var xml = require('../../fixtures/bpmn/import/default-attrs.bpmn');
 
       // when
       runImport(diagram, xml, function(err, warnings) {

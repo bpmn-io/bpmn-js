@@ -1,0 +1,24 @@
+<?xml version="1.0"encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             exporter="Signavio Process Editor, http://www.signavio.com"
+             exporterVersion="8.1.1"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             id="sid-cfb874bb-23ca-47b0-ac68-b7b1cb824b1f"
+             targetNamespace="http://www.signavio.com/bpmn20"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="sid-7c34ae8d-0b83-4c60-8872-200ac8efdf58" isClosed="false" isExecutable="false" processType="None">
+      <eventBasedGateway id="GATEWAY_1" instantiate="false" />
+   </process>
+   <bpmndi:BPMNDiagram id="sid-a323de14-b068-49b3-a252-669822cdf78c">
+      <bpmndi:BPMNPlane bpmnElement="sid-7c34ae8d-0b83-4c60-8872-200ac8efdf58" id="sid-8b686f77-8ed1-419f-823f-2527a66f1584">
+         <bpmndi:BPMNShape bpmnElement="GATEWAY_1" id="GATEWAY_1_gui">
+            <omgdc:Bounds height="40.0" width="40.0" x="165.0" y="165.0"/>
+         </bpmndi:BPMNShape>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>
