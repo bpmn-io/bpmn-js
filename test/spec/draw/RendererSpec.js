@@ -64,6 +64,35 @@ describe('draw - Renderer', function() {
       expect(path).to.eql('M150,150L200,200L350,300');
     }));
 
+
+    it('should take invisible dockings into account', inject(function(canvas, renderer) {
+
+      // given
+      var shapeA = canvas.addShape({
+        id: 'shapeA',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      var shapeB = canvas.addShape({
+        id: 'shapeB',
+        x: 300, y: 250, width: 100, height: 100
+      });
+
+      var connection = canvas.addShape({
+        id: 'connection',
+        waypoints: [ { x: 150, y: 150, original: { x: 130, y: 130 } }, { x: 200, y: 200 }, { x: 350, y: 300 }],
+        source: shapeA,
+        target: shapeB
+      });
+
+
+      // when
+      var path = renderer.getConnectionPath(connection);
+
+      // then
+      expect(path).to.eql('M130,130L200,200L350,300');
+    }));
+
   });
 
 });
