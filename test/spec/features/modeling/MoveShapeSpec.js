@@ -47,10 +47,10 @@ describe('features/modeling - move shape', function() {
 
       // expect flow layout
       expect(sequenceFlowElement.waypoints).toDeepEqual([
-        { original: { x: 370, y: 310 }, x: 388, y: 310 },
+        { original: { x: 388, y: 310 }, x: 388, y: 310 },
         { x: 404, y: 310 },
         { x: 404, y: 260 },
-        { original: { x: 470, y: 260 }, x: 420, y: 260 }
+        { original: { x: 420, y: 260 }, x: 420, y: 260 }
       ]);
 
       expect(sequenceFlow.di.waypoint).toDeepEqual([

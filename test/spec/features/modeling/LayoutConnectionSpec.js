@@ -36,8 +36,9 @@ describe('features/modeling - layout connection', function() {
       // then
 
       // expect cropped, repaired connection
+      // that was not actually modified
       expect(sequenceFlowConnection.waypoints).toDeepEqual([
-        { original: { x: 553, y: 341 }, x: 578, y: 341 },
+        { original: { x: 578, y: 341 }, x: 578, y: 341 },
         { x: 934, y: 341 },
         { x: 934, y: 436 },
         { original: { x: 832, y: 436 }, x: 832, y: 436 }
