@@ -26,12 +26,14 @@
 
 .djs-shape.connect-ok .djs-visual > :nth-child(1),
 .djs-shape.drop-ok .djs-visual > :nth-child(1) {
-  fill: #90DD5F /* light-green */ !important;
+  fill: #54FF00 /* light-green */ !important;
+  fill-opacity: 0.2;
 }
 
 .djs-shape.connect-not-ok .djs-visual > :nth-child(1),
 .djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
   fill: #E56283 /* light-red */ !important;
+  fill-opacity: 0.2;
 }
 
 .djs-connection.connect-ok .djs-visual > :nth-child(1),
@@ -87,6 +89,8 @@
   fill: white;
   stroke-width: 1px;
   stroke: black;
+  shape-rendering: crispEdges;
+  stroke-opacity: 0.2;
 }
 
 .djs-resizer-nw, .djs-resizer-se {
