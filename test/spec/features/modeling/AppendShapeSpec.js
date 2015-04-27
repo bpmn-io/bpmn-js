@@ -10,7 +10,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
 
-var LabelUtil = require('../../../../lib/util/Label');
+var LabelUtil = require('../../../../lib/util/LabelUtil');
 
 
 describe('features/modeling - append shape', function() {
