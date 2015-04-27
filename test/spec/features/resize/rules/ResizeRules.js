@@ -27,8 +27,11 @@ ResizeRules.prototype.init = function() {
         return false;
       }
     } else {
-      // element must have minimum size of 10*10 points
-      return context.newBounds.width > 10 && context.newBounds.height > 10;
+      if (shape.resizable === 'always') {
+        return true;
+      }
+      // element must have minimum size of 50*50 points
+      return context.newBounds.width > 50 && context.newBounds.height > 50;
     }
   });
 };

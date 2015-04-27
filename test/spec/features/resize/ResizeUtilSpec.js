@@ -156,7 +156,108 @@ describe('resize/ResizeUtil', function() {
         x: 100, y: 100,
         width: 450, height: 450
       });
+
     });
+
+  });
+
+  describe('getMinResizeBounds', function () {
+
+    var currentBounds = {
+      x: 100, y: 100,
+      width: 100, height: 100
+    };
+
+    var minDimensions = {
+      width: 50, height: 50
+    };
+    
+
+    it('should give min bounds for "nw"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('nw', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({ x: 150, y: 150, width: 50, height: 50 });
+    });    
+
+
+    it('should give min bounds for "sw"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('sw', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({ x: 150, y: 100, width: 50, height: 50 });
+    });   
+
+
+    it('should give min bounds for "ne"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('ne', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({ x: 100, y: 150, width: 50, height: 50 });
+    });
+
+
+    it('should give min bounds for "se"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('se', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({ x: 100, y: 100, width: 50, height: 50 });
+    });
+
+  });
+
+
+  describe('getMinResizeBounds', function () {
+
+    var currentBounds = {
+      x: 100, y: 100,
+      width: 100, height: 100
+    };
+
+    var minDimensions = {
+      width: 50, height: 50
+    };
+    
+
+    it('should give min bounds for "nw"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('nw', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({x: 150, y: 150, width: 50, height: 50});
+    });    
+
+
+    it('should give min bounds for "sw"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('sw', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({x: 150, y: 100, width: 50, height: 50});
+    });   
+
+
+    it('should give min bounds for "ne"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('ne', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({x: 100, y: 150, width: 50, height: 50});
+    });
+
+
+    it('should give min bounds for "se"', function() {
+      // when 
+      var newBounds = ResizeUtil.getMinResizeBounds('se', currentBounds, minDimensions);
+
+      // then
+      expect(newBounds).to.eql({x: 100, y: 100, width: 50, height: 50});
+    });
+
 
   });
 

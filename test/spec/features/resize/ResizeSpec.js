@@ -65,6 +65,53 @@ describe('features/resize - visuals', function() {
 
   });
 
+  describe('basics end-to-end', function () {
+    
+    it('should resize to minimum bounds', inject(function(canvas, resize, dragging, elementFactory) {
+      // given
+      var shapeX = elementFactory.createShape({
+        id: 'shapeA',
+        resizable: 'always',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      shapeX = canvas.addShape(shapeX);
+
+      // when 
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shapeX, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
+      dragging.end();
+
+      // then
+      var shapeXBounds = pick(shapeX, ['x', 'y', 'width', 'height']);
+
+      expect(shapeXBounds).to.eql({ x: 100, y: 100, width: 10, height: 10 });
+    }));
+
+
+    it('should not resize due to rules', inject(function(resize, canvas, dragging, elementFactory) {
+      // given
+      var shapeX = elementFactory.createShape({
+        id: 'shapeA',
+        resizable: true,
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      shapeX = canvas.addShape(shapeX);
+
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shapeX, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -60, y: -60 }));
+      dragging.end();
+
+      // then
+      var shapeXBounds = pick(shapeX, ['x', 'y', 'width', 'height']);
+
+      expect(shapeXBounds).to.eql({ x: 100, y: 100, width: 100, height: 100 });
+    }));
+
+  });
+
 
   describe('frame', function() {
 
@@ -144,37 +191,15 @@ describe('features/resize - visuals', function() {
 
     describe('live check, rejecting', function() {
 
-      it('should indicate resize not allowed', inject(function(canvas, resize, dragging) {
-
+      it('should indicate resize not allowed', inject(function(resize, canvas, dragging) {
         // when resize to small
         resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
-        dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
+        dragging.move(Events.create(canvas._svg, { x: -60, y: -60 }));
 
         // then
         var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
 
         expect(frame.hasClass('resize-not-ok')).to.equal(true);
-
-
-        // when resize big enough
-        dragging.move(Events.create(canvas._svg, { x: -50, y: -50 }));
-
-        // then
-        expect(frame.hasClass('resize-not-ok')).to.equal(false);
-      }));
-
-
-      it('should not perform actual resize operation', inject(function(canvas, dragging, resize) {
-
-        // when
-        resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
-        dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
-        dragging.end();
-
-        // then
-        // no change happened
-        expect(shape.width).to.equal(100);
-        expect(shape.height).to.equal(100);
       }));
 
     });
@@ -259,24 +284,6 @@ describe('features/resize - visuals', function() {
       expect(resizedBounds).to.eql({
         x: 80, y: 80,
         width: 420, height: 420
-      });
-
-    }));
-
-
-    it('should not limit resize if no children', inject(function(resize, dragging, canvas) {
-
-      // when
-      resize.activate(Events.create(canvas._svg, { x: 100, y: 100 }), childShape, 'se');
-      dragging.move(Events.create(canvas._svg, { x: 20, y: 20 }));
-      dragging.end();
-
-      var resizedBounds = pick(childShape, ['x', 'y', 'width', 'height']);
-
-      // then
-      expect(resizedBounds).to.eql({
-        x: 100, y: 100,
-        width: 20, height: 20
       });
 
     }));
