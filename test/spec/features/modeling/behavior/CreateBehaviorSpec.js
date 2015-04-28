@@ -1,12 +1,12 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var modelingModule = require('../../../../../lib/features/modeling'),
+    coreModule = require('../../../../../lib/core');
 
 
 describe('features/modeling - create participant', function() {
@@ -18,7 +18,7 @@ describe('features/modeling - create participant', function() {
 
     describe('should transform diagram into collaboration', function() {
 
-      var processDiagramXML = require('../../../fixtures/bpmn/collaboration/process-empty.bpmn');
+      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
 
       beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
@@ -98,7 +98,7 @@ describe('features/modeling - create participant', function() {
 
     describe('should wrap existing elements', function() {
 
-      var processDiagramXML = require('../../../fixtures/bpmn/collaboration/process.bpmn');
+      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process.bpmn');
 
       beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
@@ -151,7 +151,7 @@ describe('features/modeling - create participant', function() {
 
   describe('should add to collaboration', function() {
 
-    var collaborationDiagramXML = require('../../../fixtures/bpmn/collaboration/collaboration-participant.bpmn');
+    var collaborationDiagramXML = require('../../../../fixtures/bpmn/collaboration/collaboration-participant.bpmn');
 
     beforeEach(bootstrapModeler(collaborationDiagramXML, { modules: testModules }));
 
