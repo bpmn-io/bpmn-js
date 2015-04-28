@@ -10,6 +10,7 @@ var coreModule = require('../../../../lib/core'),
     snappingModule = require('../../../../lib/features/snapping'),
     modelingModule = require('../../../../lib/features/modeling'),
     createModule = require('diagram-js/lib/features/create'),
+    resizeModule = require('diagram-js/lib/features/resize'),
     rulesModule = require('../../../../lib/features/modeling/rules');
 
 var pick = require('lodash/object/pick');
@@ -161,6 +162,60 @@ describe('features/snapping - BpmnSnapping', function() {
       expect(bounds(participantShape)).toEqual({
         width: 600, height: 300, x: 100, y: 250
       });
+    }));
+
+  });
+
+  
+  describe('on shape resize', function () {
+    var diagramXML = require('../../../fixtures/bpmn/collaboration-resize.bpmn');
+    
+    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
+
+    var createEvent;
+
+    beforeEach(inject(function(canvas, dragging) {
+      createEvent = Events.scopedCreate(canvas);
+    }));
+
+
+    it('should snap a SubProcess to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
+      
+      var subProcess = elementRegistry.get('SubProcess_1');
+
+      resize.activate(Events.create(canvas._svg, { x: 453, y: 624 }), subProcess, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -453, y: -624 }));
+      dragging.end();
+
+      expect(subProcess.width).toEqual(140);
+      expect(subProcess.height).toEqual(120);
+    }));
+
+
+    it('should snap a Participant to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
+
+      var participant = elementRegistry.get('Participant_1');
+
+      resize.activate(Events.create(canvas._svg, { x: 614, y: 310 }), participant, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -614, y: -310 }));
+      dragging.end();
+
+      expect(participant.width).toEqual(400);
+      expect(participant.height).toEqual(200);
+    }));
+
+    it('should snap a TextAnnotation to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
+      
+      var textAnnotation = elementRegistry.get('TextAnnotation_1');
+
+      resize.activate(Events.create(canvas._svg, { x: 592, y: 452 }), textAnnotation, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -592, y: -452 }));
+      dragging.end();
+
+      expect(textAnnotation.width).toEqual(50);
+      expect(textAnnotation.height).toEqual(50);
     }));
 
   });
