@@ -147,6 +147,9 @@ function insertCSS(name, css) {
 
 module.exports.insertCSS = insertCSS;
 
+module.exports.getDiagramJS = function() {
+  return DIAGRAM;
+};
 
 function DomEventTracker() {
 
