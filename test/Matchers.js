@@ -13,12 +13,16 @@ function toFitBBox(actual, expected) {
              (expected.height ? actualBBox.height <= expected.height : true) &&
              (expected.height ? actualBBox.y + actualBBox.height <= expected.y + expected.height : true);
 
-  var message = '';
 
   if (!pass) {
-    message = 'Expected element#' + actual.id + ' with bbox ' +
-                            jasmine.pp(pick(actualBBox, ['x', 'y', 'width', 'height'])) + ' to fit ' +
-                            jasmine.pp(expected);
+    var bbox = pick(actualBBox, ['x', 'y', 'width', 'height']);
+
+    var message =
+      'Expected Element#' + actual.id + ' with bbox ' +
+       JSON.stringify(bbox) + ' to fit ' +
+       JSON.stringify(expected);
+
+    console.error(message);
   }
 
   return !!pass;
