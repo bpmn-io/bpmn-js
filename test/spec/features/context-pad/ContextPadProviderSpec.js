@@ -6,7 +6,8 @@ var TestHelper = require('../../../TestHelper');
 
 
 var contextPadModule = require('../../../../lib/features/context-pad'),
-    bpmnModule = require('../../../../lib/core'),
+    coreModule = require('../../../../lib/core'),
+    modelingModule = require('../../../../lib/features/modeling'),
     popupModule = require('diagram-js/lib/features/popup-menu'),
     replaceModule = require('diagram-js/lib/features/replace');
 
@@ -15,7 +16,7 @@ describe('features - context-pad', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
-  var testModules = [ contextPadModule, bpmnModule, popupModule, replaceModule ];
+  var testModules = [ contextPadModule, coreModule, modelingModule, popupModule, replaceModule ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
