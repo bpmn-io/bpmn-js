@@ -37,7 +37,7 @@ describe('Viewer', function() {
   });
 
 
-  iit('should import diagram', function(done) {
+  it('should import diagram', function(done) {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 

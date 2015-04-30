@@ -40,6 +40,20 @@ describe('Modeler', function() {
   });
 
 
+  iit('should import diagram', function(done) {
+
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    // Viewer
+    var modeler = new Modeler({ container: container });
+
+    modeler.importXML(xml, function(err, warnings) {
+
+      done(err);
+    });
+  });
+
+
   it('should re-import simple process', function(done) {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
