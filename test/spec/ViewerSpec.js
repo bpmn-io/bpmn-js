@@ -36,6 +36,28 @@ describe('Viewer', function() {
   });
 
 
+  iit('should import diagram', function(done) {
+
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    // Viewer
+    var viewer = new Viewer({ container: container });
+
+    viewer.importXML(xml, function(err, warnings) {
+
+      // eventBus -> EventBus
+
+      var eventBus = viewer.get('eventBus');
+
+      eventBus.on('element.hover', function(event) {
+        console.log('hovererd', event);
+      });
+
+      done(err);
+    });
+  });
+
+
   it('should re-import simple process', function(done) {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
