@@ -4,6 +4,7 @@ require('../TestHelper');
 
 
 var Viewer = require('../../lib/Viewer');
+var NavigatedViewer = require('../../lib/NavigatedViewer');
 
 
 describe('Viewer', function() {
@@ -41,7 +42,7 @@ describe('Viewer', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // Viewer
-    var viewer = new Viewer({ container: container });
+    var viewer = new NavigatedViewer({ container: container });
 
     viewer.importXML(xml, function(err, warnings) {
 
