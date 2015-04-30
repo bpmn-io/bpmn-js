@@ -53,6 +53,17 @@ describe('Viewer', function() {
         console.log('hovererd', event);
       });
 
+
+      var overlays = viewer.get('overlays');
+
+      overlays.add('SubProcess_1', {
+        'html': '<em>how are you</em>',
+        position: {
+         top: -5,
+         left: -5
+        }
+      });
+
       done(err);
     });
   });
