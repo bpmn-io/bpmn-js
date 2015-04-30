@@ -44,8 +44,28 @@ describe('Modeler', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
+    var customRulesModule = {
+      __init__: [ 'customRules' ],
+      customRules: [ 'type', function(eventBus) {
+
+        // cannot connect from custom task to any element
+        eventBus.on('commandStack.connection.create.canExecute', 1500, function(event) {
+
+          var context = event.context,
+              source = context.source;
+
+          var customAttrs = source.businessObject.$attrs;
+
+          if (customAttrs && customAttrs['mycompany:customType'] === 'transformation') {
+            event.preventDefault();
+          }
+        });
+
+      }]
+    };
+
     // Viewer
-    var modeler = new Modeler({ container: container });
+    var modeler = new Modeler({ container: container, additionalModules: [ customRulesModule ] });
 
     modeler.importXML(xml, function(err, warnings) {
 
