@@ -69,6 +69,25 @@ describe('Modeler', function() {
   });
 
 
+  describe('defaults', function() {
+
+    it('should use <body> as default parent', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var modeler = new Modeler();
+
+      modeler.importXML(xml, function(err, warnings) {
+
+        expect(modeler.container.parentNode).toBe(document.body);
+
+        done(err, warnings);
+      });
+    });
+
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
