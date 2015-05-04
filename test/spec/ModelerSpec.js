@@ -1,5 +1,6 @@
 'use strict';
 
+var TestHelper = require('../TestHelper');
 
 var Modeler = require('../../lib/Modeler');
 

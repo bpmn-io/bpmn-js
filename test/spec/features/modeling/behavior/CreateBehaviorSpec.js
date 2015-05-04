@@ -127,7 +127,7 @@ describe('features/modeling - create participant', function() {
       }));
 
 
-      it('undo', inject(function(modeling, elementFactory, canvas, commandStack) {
+      it('undo', inject(function(modeling, elementFactory, elementRegistry, canvas, commandStack) {
 
         // given
         var processShape = canvas.getRootElement(),
@@ -138,10 +138,34 @@ describe('features/modeling - create participant', function() {
         // when
         commandStack.undo();
 
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEventDi = startEventElement.businessObject.di,
+            rootElement = canvas.getRootElement(),
+            rootShapeDi = rootElement.businessObject.di;
 
         // then
         expect(participantShape.children.length).toBe(0);
         expect(processShape.children.length).toBe(9);
+
+        // children di is wired
+        expect(startEventDi.$parent).toEqual(rootShapeDi);
+        expect(rootShapeDi.planeElement).toContain(startEventDi);
+      }));
+
+
+      it('should detach DI on update canvas root', inject(function(canvas, elementFactory, commandStack, modeling, elementRegistry) {
+
+          // when
+          modeling.makeCollaboration();
+
+          var startEventElement = elementRegistry.get('StartEvent_1'),
+              startEventDi = startEventElement.businessObject.di,
+              rootElement = canvas.getRootElement(),
+              rootShapeDi = rootElement.businessObject.di;
+
+          // then
+          expect(startEventDi.$parent).toBeFalsy();
+          expect(rootShapeDi.planeElement).not.toContain(startEventDi);
       }));
 
     });
