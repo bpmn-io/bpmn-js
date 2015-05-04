@@ -62,6 +62,25 @@ describe('Viewer', function() {
   });
 
 
+  describe('defaults', function() {
+
+    it('should use <body> as default parent', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer();
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        expect(viewer.container.parentNode).toBe(document.body);
+
+        done(err, warnings);
+      });
+    });
+
+  });
+
+
   describe('import events', function() {
 
     it('should fire <import.*> events', function(done) {
