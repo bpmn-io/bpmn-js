@@ -59,7 +59,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
       // then
       expect(bounds(participantShape)).toEqual({
-        width: 600, height: 300, x: 18, y: -58
+        width: 600, height: 250, x: 18, y: -8
       });
     }));
 
@@ -82,7 +82,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
       // then
       expect(bounds(participantShape)).toEqual({
-        width: 600, height: 300, x: 100, y: 52
+        width: 600, height: 250, x: 100, y: 52
       });
     }));
 
@@ -121,7 +121,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
       // then
       expect(bounds(participantShape)).toEqual({
-        width: 600, height: 300, x: 100, y: 250
+        x: 100, y: 275, width: 600, height: 250
       });
     }));
 
@@ -160,16 +160,16 @@ describe('features/snapping - BpmnSnapping', function() {
 
       // then
       expect(bounds(participantShape)).toEqual({
-        width: 600, height: 300, x: 100, y: 250
+        x: 100, y: 275, width: 600, height: 250
       });
     }));
 
   });
 
-  
+
   describe('on shape resize', function () {
     var diagramXML = require('../../../fixtures/bpmn/collaboration-resize.bpmn');
-    
+
     var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
@@ -182,7 +182,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
 
     it('should snap a SubProcess to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
-      
+
       var subProcess = elementRegistry.get('SubProcess_1');
 
       resize.activate(Events.create(canvas._svg, { x: 453, y: 624 }), subProcess, 'se');
@@ -207,7 +207,7 @@ describe('features/snapping - BpmnSnapping', function() {
     }));
 
     it('should snap a TextAnnotation to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
-      
+
       var textAnnotation = elementRegistry.get('TextAnnotation_1');
 
       resize.activate(Events.create(canvas._svg, { x: 592, y: 452 }), textAnnotation, 'se');
