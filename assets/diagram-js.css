@@ -93,11 +93,15 @@
   stroke-opacity: 0.2;
 }
 
-.djs-resizer-nw, .djs-resizer-se {
+.djs-cursor-resize-nwse,
+.djs-resizer-nw,
+.djs-resizer-se {
   cursor: nwse-resize;
 }
 
-.djs-resizer-ne, .djs-resizer-sw {
+.djs-cursor-resize-nesw,
+.djs-resizer-ne,
+.djs-resizer-sw {
   cursor: nesw-resize;
 }
 
@@ -171,6 +175,10 @@
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: grabbing;
+}
+
+.djs-cursor-crosshair {
+  cursor: crosshair;
 }
 
 .djs-cursor-move {
