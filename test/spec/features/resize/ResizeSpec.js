@@ -15,7 +15,7 @@ function bounds(b) {
   return pick(b, [ 'x', 'y', 'width', 'height' ]);
 }
 
-describe('features/resize - visuals', function() {
+describe('features/resize - Resize', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ resizeModule, rulesModule, selectModule ] }));
 
@@ -65,49 +65,75 @@ describe('features/resize - visuals', function() {
 
   });
 
-  describe('basics end-to-end', function () {
-    
+
+  describe('modeling', function () {
+
     it('should resize to minimum bounds', inject(function(canvas, resize, dragging, elementFactory) {
+
       // given
-      var shapeX = elementFactory.createShape({
+      var shape = elementFactory.createShape({
         id: 'shapeA',
         resizable: 'always',
         x: 100, y: 100, width: 100, height: 100
       });
 
-      shapeX = canvas.addShape(shapeX);
+      shape = canvas.addShape(shape);
 
-      // when 
-      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shapeX, 'se');
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
       dragging.move(Events.create(canvas._svg, { x: -99, y: -99 }));
       dragging.end();
 
       // then
-      var shapeXBounds = pick(shapeX, ['x', 'y', 'width', 'height']);
+      var shapeBounds = pick(shape, ['x', 'y', 'width', 'height']);
 
-      expect(shapeXBounds).to.eql({ x: 100, y: 100, width: 10, height: 10 });
+      expect(shapeBounds).to.eql({ x: 100, y: 100, width: 10, height: 10 });
     }));
 
 
     it('should not resize due to rules', inject(function(resize, canvas, dragging, elementFactory) {
+
       // given
-      var shapeX = elementFactory.createShape({
+      var shape = elementFactory.createShape({
         id: 'shapeA',
         resizable: true,
         x: 100, y: 100, width: 100, height: 100
       });
 
-      shapeX = canvas.addShape(shapeX);
+      shape = canvas.addShape(shape);
 
       // when
-      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shapeX, 'se');
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
       dragging.move(Events.create(canvas._svg, { x: -60, y: -60 }));
       dragging.end();
 
       // then
-      var shapeXBounds = pick(shapeX, ['x', 'y', 'width', 'height']);
+      var shapeBounds = pick(shape, ['x', 'y', 'width', 'height']);
 
-      expect(shapeXBounds).to.eql({ x: 100, y: 100, width: 100, height: 100 });
+      expect(shapeBounds).to.eql({ x: 100, y: 100, width: 100, height: 100 });
+    }));
+
+
+    it('should round to full pixel values', inject(function(resize, canvas, dragging, elementFactory) {
+
+      // given
+      var shape = elementFactory.createShape({
+        id: 'shapeA',
+        resizable: 'always',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      shape = canvas.addShape(shape);
+
+      // when
+      resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), shape, 'se');
+      dragging.move(Events.create(canvas._svg, { x: -20.4, y: 9.8 }));
+      dragging.end();
+
+      // then
+      var shapeBounds = pick(shape, ['x', 'y', 'width', 'height']);
+
+      expect(shapeBounds).to.eql({ x: 100, y: 100, width: 80, height: 110 });
     }));
 
   });

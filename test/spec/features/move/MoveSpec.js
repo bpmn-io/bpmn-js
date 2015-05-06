@@ -10,7 +10,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules');
 
 
-describe('features/move - MoveVisuals', function() {
+describe('features/move - Move', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, moveModule, rulesModule ] }));
 
@@ -171,15 +171,27 @@ describe('features/move - MoveVisuals', function() {
   });
 
 
-  describe('integration', function() {
+  describe('modeling', function() {
 
-    it('should not click on drag end', inject(function(eventBus) {
+    it('should round movement to pixels', inject(function(move, dragging, elementRegistry) {
 
-      // after dragging we should not see any
-      // clicks dispatched by the modeler
-      eventBus.on('element.click', function(e) {
-        console.log('element click', e);
+      // given
+      move.start(Event.create({ x: 0, y: 0 }), childShape);
+
+      // when
+      dragging.move(Event.create({ x: 20, y: 20 }));
+      dragging.hover({
+        element: parentShape,
+        gfx: elementRegistry.getGraphics(parentShape)
       });
+
+      dragging.move(Event.create({ x: 30.4, y: 99.7 }));
+
+      dragging.end();
+
+      // then
+      expect(childShape.x).to.eql(140);
+      expect(childShape.y).to.eql(210);
     }));
 
   });

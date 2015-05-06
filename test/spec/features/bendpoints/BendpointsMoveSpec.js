@@ -192,7 +192,7 @@ describe('features/bendpoints - move', function() {
   });
 
 
-  describe('model update', function() {
+  describe('modeling', function() {
 
     it('should update bendpoint', inject(function(canvas, bendpointMove, dragging) {
 
@@ -201,6 +201,20 @@ describe('features/bendpoints - move', function() {
       dragging.move(createEvent({ x: 450, y: 430 }));
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
       dragging.move(createEvent({ x: 530, y: 420 }));
+      dragging.end();
+
+      // then
+      expect(connection.waypoints[1]).to.eql({ x: 530, y: 420 });
+    }));
+
+
+    it('should round to pixel values', inject(function(canvas, bendpointMove, dragging) {
+
+      // when
+      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 1);
+      dragging.move(createEvent({ x: 450, y: 430 }));
+      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.move(createEvent({ x: 530.3, y: 419.8 }));
       dragging.end();
 
       // then
