@@ -185,6 +185,14 @@
   cursor: move;
 }
 
+.djs-cursor-resize-ns {
+  cursor: ns-resize;
+}
+
+.djs-cursor-resize-ew {
+  cursor: ew-resize;
+}
+
 
 /**
  * snapping
@@ -205,7 +213,7 @@
   stroke-linecap: round;
   stroke-width: 1px;
   pointer-events: none;
-  shape-rendering: optimizeSpeed;
+  shape-rendering: crispEdges;
   stroke-dasharray: 5, 5;
 }
 

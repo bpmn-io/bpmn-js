@@ -211,7 +211,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({x: 300, y: 150}));
 
-        dragging.move(createEvent({x: 350, y: 150}, { altKey: true }));
+        dragging.move(createEvent({x: 350, y: 150}, { shiftKey: true }));
         dragging.end();
 
         // then
@@ -230,7 +230,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 150 }));
 
-        dragging.move(createEvent({ x: 300, y: 150 }, { altKey: true }));
+        dragging.move(createEvent({ x: 300, y: 150 }, { shiftKey: true }));
         dragging.end();
 
         // then
@@ -249,7 +249,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 280 }, { altKey: true }));
+        dragging.move(createEvent({ x: 350, y: 280 }, { shiftKey: true }));
         dragging.end();
 
         // then
@@ -268,7 +268,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 180 }, { altKey: true }));
+        dragging.move(createEvent({ x: 350, y: 180 }, { shiftKey: true }));
         dragging.end();
 
         // then
@@ -393,15 +393,6 @@ describe('features/space-tool', function() {
     }));
 
 
-    it('should work (manual test)', inject(function(eventBus, dragging, spaceTool) {
-      dragging.setOptions({ manual: false });
-
-      eventBus.on('element.click', function(e) {
-        spaceTool.activateSelection(e.originalEvent);
-      });
-    }));
-
-
     it('should resize parents', inject(function(spaceTool, dragging) {
 
       // when
@@ -460,7 +451,7 @@ describe('features/space-tool', function() {
       // when
       spaceTool.activateMakeSpace(createEvent({ x: 280, y: 155 }));
 
-      dragging.move(createEvent({ x: 330, y: 155 }, { altKey: true })); // x =/= 50
+      dragging.move(createEvent({ x: 330, y: 155 }, { shiftKey: true })); // x =/= 50
       dragging.end();
 
       // then
