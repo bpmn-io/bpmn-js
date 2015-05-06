@@ -147,6 +147,25 @@ describe('features/space-tool', function() {
       }));
 
 
+      it('should round made space to pixel values', inject(function(spaceTool, dragging) {
+        // when
+        spaceTool.activateMakeSpace(createEvent({x: 300, y: 150}));
+
+        dragging.move(createEvent({ x: 350.14, y: 149.8 }));
+        dragging.end();
+
+        // then
+        expect(childShape.x).to.equal(110);
+        expect(childShape.y).to.equal(110);
+
+        expect(childShape2.x).to.equal(450);
+        expect(childShape2.y).to.equal(250);
+
+        expect(connection.waypoints[0]).to.eql({ x: 160, y: 160});
+        expect(connection.waypoints[1]).to.eql({ x: 500, y: 300});
+      }));
+
+
       it('should make space to the left and resize parent', inject(function(spaceTool, dragging) {
 
         // when
@@ -211,7 +230,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({x: 300, y: 150}));
 
-        dragging.move(createEvent({x: 350, y: 150}, { shiftKey: true }));
+        dragging.move(createEvent({x: 350, y: 150}, { ctrlKey: true }));
         dragging.end();
 
         // then
@@ -230,7 +249,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 150 }));
 
-        dragging.move(createEvent({ x: 300, y: 150 }, { shiftKey: true }));
+        dragging.move(createEvent({ x: 300, y: 150 }, { ctrlKey: true }));
         dragging.end();
 
         // then
@@ -249,7 +268,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 280 }, { shiftKey: true }));
+        dragging.move(createEvent({ x: 350, y: 280 }, { ctrlKey: true }));
         dragging.end();
 
         // then
@@ -268,7 +287,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 180 }, { shiftKey: true }));
+        dragging.move(createEvent({ x: 350, y: 180 }, { ctrlKey: true }));
         dragging.end();
 
         // then
@@ -451,7 +470,7 @@ describe('features/space-tool', function() {
       // when
       spaceTool.activateMakeSpace(createEvent({ x: 280, y: 155 }));
 
-      dragging.move(createEvent({ x: 330, y: 155 }, { shiftKey: true })); // x =/= 50
+      dragging.move(createEvent({ x: 330, y: 155 }, { ctrlKey: true })); // x =/= 50
       dragging.end();
 
       // then
