@@ -101,7 +101,7 @@ describe('features/lasso-tool', function() {
     it('should show lasso box', inject(function(lassoTool, canvas, dragging) {
 
       // when
-      lassoTool.activate(createEvent({ x: 100, y: 100 }));
+      lassoTool.activateLasso(createEvent({ x: 100, y: 100 }));
       dragging.move(createEvent({ x: 200, y: 300 }));
 
       // then
@@ -112,7 +112,7 @@ describe('features/lasso-tool', function() {
     it('should select after lasso', inject(function(lassoTool, dragging, selection, elementRegistry) {
 
       // when
-      lassoTool.activate(createEvent({ x: 100, y: 100 }));
+      lassoTool.activateLasso(createEvent({ x: 100, y: 100 }));
       dragging.move(createEvent({ x: 200, y: 300 }));
       dragging.end();
 
