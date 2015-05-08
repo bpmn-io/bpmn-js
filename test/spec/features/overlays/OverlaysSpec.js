@@ -34,6 +34,9 @@ function highlight(element) {
   return element;
 }
 
+function queryOverlay(id) {
+  return document.querySelector('[data-overlay-id=' + id + ']');
+}
 
 function createOverlay() {
   var element = highlight(domify('<div>TEST<br/>TEST</div>'));
@@ -49,12 +52,13 @@ describe('features/overlays', function() {
     beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
 
 
-    it('overlay to be defined', inject(function(overlays) {
+    it('should expose api', inject(function(overlays) {
       expect(overlays).to.be.defined;
       expect(overlays.get).to.be.defined;
       expect(overlays.add).to.be.defined;
       expect(overlays.remove).to.be.defined;
     }));
+
   });
 
 
@@ -80,13 +84,13 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: '<div class="overlay" id="html-ov"></div>'
+        html: '<div class="overlay"></div>'
       });
 
       // then
       expect(id).to.be.defined;
-      expect(overlays.get(id)).to.be.defined;
-      expect(document.getElementById('html-ov')).to.be.defined;
+      expect(overlays.get(id)).to.exist;
+      expect(queryOverlay(id)).to.exist;
     }));
 
 
@@ -107,7 +111,7 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight(domify('<div id="html-jq" class="overlay" />'))
+        html: highlight(domify('<div class="overlay" />'))
       });
 
       // then
@@ -117,7 +121,7 @@ describe('features/overlays', function() {
       expect(isVisible(overlays._overlayRoot)).to.be.true;
       expect(isVisible(overlay.html)).to.be.true;
 
-      expect(document.getElementById('html-jq')).to.be.defined;
+      expect(queryOverlay(id)).to.exist;
     }));
 
 
@@ -138,12 +142,12 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight(domify('<div id="html-id" class="overlay" />'))
+        html: highlight(domify('<div class="overlay" />'))
       });
 
       // then
-      expect(overlays.get(id)).to.be.defined;
-      expect(document.getElementById('html-id')).to.be.defined;
+      expect(overlays.get(id)).to.exist;
+      expect(queryOverlay(id)).to.exist;
     }));
 
   });
@@ -170,17 +174,17 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: highlight(domify('<div class="overlay" id="html-ov2"></div>'))
+        html: highlight(domify('<div class="overlay"></div>'))
       });
 
       // when
       overlays.remove(id);
 
       // then
-      expect(overlays.get(id)).to.not.be.defined;
-      expect(overlays.get({ element: shape }).length).to.equal(0);
+      expect(overlays.get(id)).not.to.exist;
+      expect(overlays.get({ element: shape }).length).to.be.empty;
 
-      expect(document.getElementById('html-ov2')).to.be.null;
+      expect(queryOverlay(id)).not.to.exist;
     }));
 
 
@@ -215,8 +219,8 @@ describe('features/overlays', function() {
       overlays.remove({ element: shape, type: 'badge' });
 
       // then
-      expect(overlays.get({ element: shape, type: 'badge' }).length).to.equal(0);
-      expect(overlays.get({ element: shape }).length).to.equal(0);
+      expect(overlays.get({ element: shape, type: 'badge' })).to.be.empty;
+      expect(overlays.get({ element: shape })).to.be.empty;
 
       expect(overlays._getOverlayContainer(shape, true).html.textContent).to.equal('');
     }));
@@ -238,15 +242,15 @@ describe('features/overlays', function() {
           left: 0,
           top: 0
         },
-        html: '<div class="overlay" id="html-ov1"></div>'
+        html: '<div class="overlay"></div>'
       });
 
       // when
       eventBus.fire('shape.remove', { element: shape });
 
       // then
-      expect(overlays.get(id)).to.be.undefined;
-      expect(document.getElementById('html-ov1')).to.be.null;
+      expect(overlays.get(id)).not.to.exist;
+      expect(queryOverlay(id)).not.to.exist;
     }));
 
   });
