@@ -18,10 +18,10 @@ Make sure you have [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](ht
 The following projects from the [bpmn-io](https://github.com/bpmn-io) project on GitHub
 
 * [bpmn-js](https://github.com/bpmn-io/bpmn-js)
-* [diagram-js](https://github.com/bpmn-io/bpmn-js)
+* [diagram-js](https://github.com/bpmn-io/diagram-js)
 * [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle)
-* [moddle](https://github.com/bpmn-io/bpmn-js)
-* [moddle-xml](https://github.com/bpmn-io/bpmn-js)
+* [moddle](https://github.com/bpmn-io/moddle)
+* [moddle-xml](https://github.com/bpmn-io/moddle-xml)
 
 and clone them into a common directory via
 
