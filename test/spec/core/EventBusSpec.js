@@ -3,7 +3,7 @@
 var EventBus = require('../../../lib/core/EventBus');
 
 
-/*global sinon*/
+/* global sinon */
 
 describe('core/EventBus', function() {
 
@@ -67,32 +67,32 @@ describe('core/EventBus', function() {
     });
 
 
-    describe('default action', function() {
+    describe('return value', function() {
 
-      it('should allow if no listeners', function() {
+      it('should be undefined if no listeners', function() {
 
         // when
-        var defaultPrevented = !eventBus.fire('foo');
+        var returnValue = eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).to.equal(false);
+        expect(returnValue).to.be.undefined;
       });
 
 
-      it('should allow with listeners', function() {
+      it('should be true with non-acting listener', function() {
 
         // given
         eventBus.on('foo', function(event) { });
 
         // when
-        var defaultPrevented = !eventBus.fire('foo');
+        var returnValue = eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).to.equal(false);
+        expect(returnValue).to.be.undefined;
       });
 
 
-      it('should prevent on Event#preventDefault', function() {
+      it('should be false with listener preventing event default', function() {
 
         // given
         eventBus.on('foo', function(event) {
@@ -100,14 +100,76 @@ describe('core/EventBus', function() {
         });
 
         // when
-        var defaultPrevented = !eventBus.fire('foo');
+        var returnValue = eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).to.equal(true);
+        expect(returnValue).to.be.false;
       });
 
 
-      it('should prevent on listener returning false', function() {
+      it('should be undefined with listener stopping propagation', function() {
+
+        // given
+        eventBus.on('foo', function(event) {
+          event.stopPropagation();
+        });
+
+        // when
+        var returnValue = eventBus.fire('foo');
+
+        // then
+        expect(returnValue).to.be.undefined;
+      });
+
+    });
+
+
+    describe('returning custom value in listener', function() {
+
+      it('should pass through', function() {
+
+        // given
+        var result = {};
+
+        eventBus.on('foo', function(event) {
+          return result;
+        });
+
+        // when
+        var returnValue = eventBus.fire('foo');
+
+        // then
+        expect(returnValue).to.equal(result);
+      });
+
+
+      it('should stop propagation', function() {
+
+        // given
+        var result = {},
+            otherResult = {};
+
+        eventBus.on('foo', function(event) {
+          return result;
+        });
+
+        eventBus.on('foo', function(event) {
+          return otherResult;
+        });
+
+        // when
+        var returnValue = eventBus.fire('foo');
+
+        // then
+        expect(returnValue).to.equal(result);
+      });
+
+    });
+
+
+    describe('returning false in listener', function() {
+
+      it('should set return value to false', function() {
 
         // given
         eventBus.on('foo', function(event) {
@@ -115,14 +177,14 @@ describe('core/EventBus', function() {
         });
 
         // when
-        var defaultPrevented = !eventBus.fire('foo');
+        var returnValue = eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).to.equal(true);
+        expect(returnValue).to.be.false;
       });
 
 
-      it('should not stop propagation to other listeners', function() {
+      it('should stop propagation to other listeners', function() {
 
         // given
         var listener1 = sinon.spy(function(event){
@@ -135,13 +197,38 @@ describe('core/EventBus', function() {
         eventBus.on('foo', listener2);
 
         // when
-        var defaultPrevented = !eventBus.fire('foo');
+        var returnValue = eventBus.fire('foo');
 
         // then
-        expect(defaultPrevented).to.equal(true);
+        expect(returnValue).to.be.false;
 
         expect(listener1).to.have.been.called;
-        expect(listener2).to.have.been.called;
+        expect(listener2).to.not.have.been.called;
+      });
+
+    });
+
+
+    describe('custom arguments', function() {
+
+      it('should pass arguments', function() {
+
+        var listenerArgs;
+
+        function captureArgs() {
+          listenerArgs = arguments;
+        }
+
+        eventBus.on('capture', captureArgs);
+
+        // when
+        eventBus.fire('capture', 1, 2, 3);
+
+        // then
+        expect(listenerArgs.length).to.eql(4);
+        expect(listenerArgs[1]).to.eql(1);
+        expect(listenerArgs[2]).to.eql(2);
+        expect(listenerArgs[3]).to.eql(3);
       });
 
     });
@@ -431,4 +518,5 @@ describe('core/EventBus', function() {
     });
 
   });
+
 });

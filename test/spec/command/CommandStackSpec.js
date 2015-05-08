@@ -165,7 +165,7 @@ describe('command/CommandStack', function() {
       var canExecute = commandStack.canExecute('non-existing-command');
 
       // then
-      expect(canExecute).to.equal(false);
+      expect(canExecute).to.be.false;
     }));
 
 
@@ -205,7 +205,7 @@ describe('command/CommandStack', function() {
 
     describe('should integrate with eventBus', function() {
 
-      it('events having precedence', inject(function(eventBus, commandStack) {
+      it('rejecting in listener', inject(function(eventBus, commandStack) {
 
         // given
         eventBus.on('commandStack.command.canExecute', function(event) {
@@ -224,13 +224,13 @@ describe('command/CommandStack', function() {
         var canExecute = commandStack.canExecute('command', context);
 
         // then
-        expect(canExecute).to.equal(false);
-        expect(context.listenerCanExecute).to.equal(false);
+        expect(canExecute).to.be.false;
+        expect(context.listenerCanExecute).to.be.false;
         expect(context.commandCanExecute).to.not.be.defined;
       }));
 
 
-      it('rejecting in command', inject(function(eventBus, commandStack) {
+      it('allowing in listener', inject(function(eventBus, commandStack) {
 
         // given
         eventBus.on('commandStack.command.canExecute', function(event) {
@@ -249,9 +249,33 @@ describe('command/CommandStack', function() {
         var canExecute = commandStack.canExecute('command', context);
 
         // then
-        expect(canExecute).to.equal(false);
-        expect(context.listenerCanExecute).to.equal(true);
-        expect(context.commandCanExecute).to.equal(false);
+        expect(canExecute).to.be.true;
+        expect(context.listenerCanExecute).to.be.true;
+        expect(context.commandCanExecute).to.not.be.defined;
+      }));
+
+
+      it('rejecting in command', inject(function(eventBus, commandStack) {
+
+        // given
+        eventBus.on('commandStack.command.canExecute', function(event) {
+          // do nothing, just chill
+        });
+
+        commandStack.register('command', {
+          canExecute: function(context) {
+            return (context.commandCanExecute = false);
+          }
+        });
+
+        var context = { };
+
+        // when
+        var canExecute = commandStack.canExecute('command', context);
+
+        // then
+        expect(canExecute).to.be.false;
+        expect(context.commandCanExecute).to.be.false;
       }));
 
     });

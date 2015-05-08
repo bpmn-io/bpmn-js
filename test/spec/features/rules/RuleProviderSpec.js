@@ -6,7 +6,7 @@ var rulesModule = require('./rules'),
     modelingModule = require('../../../../lib/features/modeling');
 
 
-describe('features/rules', function() {
+describe('features/rules - RuleProvider', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ rulesModule, modelingModule ] }));
 
@@ -41,24 +41,44 @@ describe('features/rules', function() {
   }));
 
 
-  describe('RuleProvider', function() {
+  it('should correctly interpret allow', inject(function(rules) {
 
-    it('should correctly interpret (true|false|null|undefined)', inject(function(rules) {
+    // when
+    var result = rules.allowed('shape.resize', { shape: resizableShape });
 
-      // when
-      var resizableResult = rules.allowed('shape.resize', { shape: resizableShape });
-      var nonResizableResult = rules.allowed('shape.resize', { shape: nonResizableShape });
-      var ignoreResult = rules.allowed('shape.resize', { shape: ignoreResizeShape });
-      var unspecifiedResult = rules.allowed('shape.resize', { shape: unspecifiedShape });
+    // then
+    expect(result).to.be.true;
+  }));
 
-      // then
-      expect(resizableResult).to.be.true;
-      expect(nonResizableResult).to.be.false;
-      expect(ignoreResult).to.be.null;
-      expect(unspecifiedResult).to.be.true;
-    }));
 
-  });
+  it('should correctly interpret reject', inject(function(rules) {
+
+    // when
+    var result = rules.allowed('shape.resize', { shape: nonResizableShape });
+
+    // then
+    expect(result).to.be.false;
+  }));
+
+
+  it('should correctly interpret ignore', inject(function(rules) {
+
+    // when
+    var result = rules.allowed('shape.resize', { shape: ignoreResizeShape });
+
+    // then
+    expect(result).to.be.null;
+  }));
+
+
+  it('should correctly interpret undefined', inject(function(rules) {
+
+    // when
+    var result = rules.allowed('shape.resize', { shape: unspecifiedShape });
+
+    // then
+    expect(result).to.be.true;
+  }));
 
 
   describe('unspecified handler', function() {
