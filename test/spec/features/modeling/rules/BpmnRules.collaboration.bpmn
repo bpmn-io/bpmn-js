@@ -1,68 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_biH3sOTeEeS2YerRfpjPrw" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_biH3sOTeEeS2YerRfpjPrw" targetNamespace="http://activiti.org/bpmn" exporter="camunda modeler" exporterVersion="2.6.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:collaboration id="Collaboration">
-    <bpmn2:participant id="Participant" name="Pool" processRef="Process"/>
-    <bpmn2:participant id="OtherParticipant" name="Pool" processRef="OtherProcess"/>
+    <bpmn2:textAnnotation id="TextAnnotation_Global" />
+    <bpmn2:participant id="Participant" name="Pool" processRef="Process" />
+    <bpmn2:participant id="OtherParticipant" name="Pool" processRef="OtherProcess" />
   </bpmn2:collaboration>
   <bpmn2:process id="Process" isExecutable="false">
+    <bpmn2:startEvent id="StartEvent_None" />
+    <bpmn2:startEvent id="StartEvent_Message">
+      <bpmn2:messageEventDefinition />
+    </bpmn2:startEvent>
+    <bpmn2:startEvent id="StartEvent_Timer">
+      <bpmn2:timerEventDefinition />
+    </bpmn2:startEvent>
     <bpmn2:subProcess id="SubProcess">
-      <bpmn2:task id="Task_in_SubProcess"/>
-      <bpmn2:endEvent id="EndEvent_in_SubProcess"/>
+      <bpmn2:task id="Task_in_SubProcess" />
+      <bpmn2:endEvent id="EndEvent_None_in_SubProcess" />
     </bpmn2:subProcess>
-    <bpmn2:startEvent id="StartEvent_None"/>
+    <bpmn2:endEvent id="EndEvent_Message">
+      <bpmn2:messageEventDefinition />
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_None" />
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Escalation">
+      <bpmn2:escalationEventDefinition />
+    </bpmn2:intermediateCatchEvent>
     <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Message">
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_1"/>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" />
     </bpmn2:intermediateThrowEvent>
-    <bpmn2:endEvent id="EndEvent_None"/>
-    <bpmn2:textAnnotation id="TextAnnotation_Global"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_None" />
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Signal">
+      <bpmn2:signalEventDefinition />
+    </bpmn2:intermediateThrowEvent>
+    <bpmn2:endEvent id="EndEvent_Cancel">
+      <bpmn2:cancelEventDefinition />
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:process id="OtherProcess" isExecutable="false">
-    <bpmn2:task id="Task_in_OtherParticipant"/>
-    <bpmn2:textAnnotation id="TextAnnotation_OtherParticipant"/>
+    <bpmn2:task id="Task_in_OtherParticipant" />
+    <bpmn2:textAnnotation id="TextAnnotation_OtherParticipant" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_3" bpmnElement="Participant" isHorizontal="true">
-        <dc:Bounds height="265.0" width="697.0" x="72.0" y="48.0"/>
+        <dc:Bounds x="72" y="48" width="706" height="266" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_SubProcess_3" bpmnElement="SubProcess" isExpanded="true">
-        <dc:Bounds height="205.0" width="248.0" x="468.0" y="72.0"/>
+        <dc:Bounds x="510" y="72" width="248" height="205" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_in_SubProcess">
-        <dc:Bounds height="80.0" width="100.0" x="493.0" y="95.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_None">
-        <dc:Bounds height="36.0" width="36.0" x="144.0" y="157.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="162.0" y="198.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_in_SubProcess">
-        <dc:Bounds height="36.0" width="36.0" x="660.0" y="117.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="678.0" y="158.0"/>
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="535" y="95" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Participant_4" bpmnElement="OtherParticipant" isHorizontal="true">
-        <dc:Bounds height="157.0" width="697.0" x="72.0" y="432.0"/>
+        <dc:Bounds x="72" y="432" width="697" height="157" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_7" bpmnElement="Task_in_OtherParticipant">
-        <dc:Bounds height="80.0" width="100.0" x="408.0" y="465.0"/>
+        <dc:Bounds x="408" y="465" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_2" bpmnElement="IntermediateThrowEvent_Message">
-        <dc:Bounds height="36.0" width="36.0" x="264.0" y="157.0"/>
+        <dc:Bounds x="239" y="157" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="282.0" y="198.0"/>
+          <dc:Bounds x="212" y="198" width="90" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="EndEvent_None">
-        <dc:Bounds height="36.0" width="36.0" x="373.0" y="156.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_3" bpmnElement="TextAnnotation_OtherParticipant">
-        <dc:Bounds height="88.0" width="103.0" x="162.0" y="465.0"/>
+        <dc:Bounds x="162" y="465" width="103" height="88" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_4" bpmnElement="TextAnnotation_Global">
-        <dc:Bounds height="88.0" width="96.0" x="900.0" y="180.0"/>
+        <dc:Bounds x="922" y="128" width="96" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_None_di" bpmnElement="StartEvent_None">
+        <dc:Bounds x="144" y="234" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="117" y="270" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_None_di" bpmnElement="IntermediateThrowEvent_None">
+        <dc:Bounds x="239" y="234" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="212" y="270" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Message_di" bpmnElement="StartEvent_Message">
+        <dc:Bounds x="144" y="157" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="117" y="193" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Message_di" bpmnElement="EndEvent_Message">
+        <dc:Bounds x="417" y="157" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="193" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_None_di" bpmnElement="EndEvent_None">
+        <dc:Bounds x="417" y="234" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="270" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_None_in_SubProcess_di" bpmnElement="EndEvent_None_in_SubProcess">
+        <dc:Bounds x="689" y="117" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="662" y="153" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Timer_di" bpmnElement="StartEvent_Timer">
+        <dc:Bounds x="144" y="78" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="117" y="114" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_Escalation_di" bpmnElement="IntermediateCatchEvent_Escalation">
+        <dc:Bounds x="239" y="78" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="212" y="114" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Cancel_di" bpmnElement="EndEvent_Cancel">
+        <dc:Bounds x="417" y="78" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="114" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_Signal_di" bpmnElement="IntermediateThrowEvent_Signal">
+        <dc:Bounds x="326" y="78" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="299" y="114" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

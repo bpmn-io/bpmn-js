@@ -119,7 +119,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateCatchEvent_Link -> ', inject(function(bpmnRules) {
+    it('connect IntermediateCatchEvent_Link -> Task', inject(function(bpmnRules) {
 
       expectCanConnect('IntermediateCatchEvent_Link', 'Task', {
         sequenceFlow: true,
@@ -284,9 +284,51 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect OtherParticipant -> StartEvent_Timer', inject(function(bpmnRules) {
+
+      expectCanConnect('OtherParticipant', 'StartEvent_Timer', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+
+    }));
+
+
+    it('connect OtherParticipant -> StartEvent_Message', inject(function(bpmnRules) {
+
+      expectCanConnect('OtherParticipant', 'StartEvent_Message', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: true
+      });
+
+    }));
+
+
     it('connect EndEvent_None -> OtherParticipant', inject(function(bpmnRules) {
 
       expectCanConnect('EndEvent_None', 'OtherParticipant', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: true
+      });
+    }));
+
+
+    it('connect EndEvent_Cancel -> OtherParticipant', inject(function(bpmnRules) {
+
+      expectCanConnect('EndEvent_Cancel', 'OtherParticipant', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect EndEvent_Message -> OtherParticipant', inject(function(bpmnRules) {
+
+      expectCanConnect('EndEvent_Message', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
         association: true
@@ -314,6 +356,26 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect IntermediateThrowEvent_None -> OtherParticipant', inject(function(bpmnRules) {
+
+      expectCanConnect('IntermediateThrowEvent_None', 'OtherParticipant', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: true
+      });
+    }));
+
+
+    it('connect IntermediateThrowEvent_Signal -> OtherParticipant', inject(function(bpmnRules) {
+
+      expectCanConnect('IntermediateThrowEvent_Signal', 'OtherParticipant', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
     it('connect OtherParticipant -> IntermediateThrowEvent_Message', inject(function(bpmnRules) {
 
       expectCanConnect('OtherParticipant', 'IntermediateThrowEvent_Message', {
@@ -327,6 +389,16 @@ describe('features/modeling/rules - BpmnRules', function() {
     it('connect Task_in_SubProcess -> OtherParticipant', inject(function(bpmnRules) {
 
       expectCanConnect('Task_in_SubProcess', 'OtherParticipant', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: true
+      });
+    }));
+
+
+    it('connect EndEvent_None_in_SubProcess -> OtherParticipant', inject(function(bpmnRules) {
+
+      expectCanConnect('EndEvent_None_in_SubProcess', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
         association: true
