@@ -24,8 +24,7 @@
   stroke-width: 1px;
 }
 
-.djs-shape.connect-ok .djs-visual > :nth-child(1),
-.djs-shape.drop-ok .djs-visual > :nth-child(1) {
+.djs-shape.connect-ok .djs-visual > :nth-child(1) {
   fill: #54FF00 /* light-green */ !important;
   fill-opacity: 0.2;
 }
@@ -34,6 +33,10 @@
 .djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
   fill: #E56283 /* light-red */ !important;
   fill-opacity: 0.2;
+}
+
+svg.drop-not-ok {
+  background: rgba(229, 98, 131, 0.2) /* light-red */ !important;
 }
 
 .djs-connection.connect-ok .djs-visual > :nth-child(1),
@@ -122,7 +125,7 @@
  */
 .djs-dragger {
   fill: white;
-  opacity: 0.8;
+  fill-opacity: 0.6;
   stroke: #333;
 }
 
