@@ -33,7 +33,6 @@
     "browserify": "^8.1.0",
     "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
-    "diagram-js": "^0.9.0",
     "grunt": "^0.4.4",
     "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.7.2",
@@ -57,15 +56,13 @@
   },
   "dependencies": {
     "bpmn-moddle": "^0.8.0",
-    "diagram-js-direct-editing": "^0.9.0",
+    "diagram-js": "^0.10.0",
+    "diagram-js-direct-editing": "^0.10.0",
     "didi": "^0.0.4",
     "ids": "^0.1.0",
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
     "min-dom": "^0.2.0",
     "object-refs": "^0.1.0"
-  },
-  "peerDependencies": {
-    "diagram-js": "^0.9.0"
   }
 }
