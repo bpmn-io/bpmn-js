@@ -69,7 +69,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('connect StartEvent_None -> Task', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> Task', inject(function() {
 
       expectCanConnect('StartEvent_None', 'Task', {
         sequenceFlow: true,
@@ -79,7 +79,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> TextAnnotation', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> TextAnnotation', inject(function() {
 
       expectCanConnect('StartEvent_None', 'TextAnnotation', {
         sequenceFlow: false,
@@ -89,7 +89,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect Task -> IntermediateThrowEvent_Link', inject(function(bpmnRules) {
+    it('connect Task -> IntermediateThrowEvent_Link', inject(function() {
 
       expectCanConnect('Task', 'IntermediateThrowEvent_Link', {
         sequenceFlow: true,
@@ -99,7 +99,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateThrowEvent_Link -> EndEvent_None', inject(function(bpmnRules) {
+    it('connect IntermediateThrowEvent_Link -> EndEvent_None', inject(function() {
 
       expectCanConnect('IntermediateThrowEvent_Link', 'EndEvent_None', {
         sequenceFlow: false,
@@ -109,7 +109,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> IntermediateCatchEvent_Link', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> IntermediateCatchEvent_Link', inject(function() {
 
       expectCanConnect('StartEvent_None', 'IntermediateCatchEvent_Link', {
         sequenceFlow: false,
@@ -119,7 +119,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateCatchEvent_Link -> Task', inject(function(bpmnRules) {
+    it('connect IntermediateCatchEvent_Link -> Task', inject(function() {
 
       expectCanConnect('IntermediateCatchEvent_Link', 'Task', {
         sequenceFlow: true,
@@ -129,7 +129,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('drop TextAnnotation -> Process', inject(function(bpmnRules) {
+    it('drop TextAnnotation -> Process', inject(function() {
 
       expectCanDrop('TextAnnotation', 'Process', true);
     }));
@@ -144,7 +144,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent_Message', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent_Message', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Message', {
         sequenceFlow: true,
@@ -154,7 +154,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent_Message', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent_Message', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Message', {
         sequenceFlow: true,
@@ -164,7 +164,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent_Signal', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent_Signal', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Signal', {
         sequenceFlow: true,
@@ -174,7 +174,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent_Condition', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent_Condition', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Condition', {
         sequenceFlow: true,
@@ -184,7 +184,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent_Timer', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent_Timer', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Timer', {
         sequenceFlow: true,
@@ -194,7 +194,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateCatchEvent', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateCatchEvent', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent', {
         sequenceFlow: false,
@@ -204,7 +204,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> IntermediateThrowEvent_Message', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> IntermediateThrowEvent_Message', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'IntermediateThrowEvent_Message', {
         sequenceFlow: false,
@@ -214,7 +214,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> ReceiveTask', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> ReceiveTask', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'ReceiveTask', {
         sequenceFlow: true,
@@ -224,7 +224,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> Task_None', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> Task_None', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'Task_None', {
         sequenceFlow: false,
@@ -234,7 +234,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EventBasedGateway -> ParallelGateway', inject(function(bpmnRules) {
+    it('connect EventBasedGateway -> ParallelGateway', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'ParallelGateway', {
         sequenceFlow: false,
@@ -253,7 +253,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('connect StartEvent_None -> IntermediateEvent', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> IntermediateEvent', inject(function() {
 
       expectCanConnect('StartEvent_None', 'IntermediateThrowEvent_Message', {
         sequenceFlow: true,
@@ -263,7 +263,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> OtherParticipant', inject(function() {
 
       expectCanConnect('StartEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
@@ -273,7 +273,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> StartEvent_None', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> StartEvent_None', inject(function() {
 
       expectCanConnect('OtherParticipant', 'StartEvent_None', {
         sequenceFlow: false,
@@ -284,7 +284,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> StartEvent_Timer', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> StartEvent_Timer', inject(function() {
 
       expectCanConnect('OtherParticipant', 'StartEvent_Timer', {
         sequenceFlow: false,
@@ -295,7 +295,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> StartEvent_Message', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> StartEvent_Message', inject(function() {
 
       expectCanConnect('OtherParticipant', 'StartEvent_Message', {
         sequenceFlow: false,
@@ -306,7 +306,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EndEvent_None -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect EndEvent_None -> OtherParticipant', inject(function() {
 
       expectCanConnect('EndEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
@@ -316,7 +316,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EndEvent_Cancel -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect EndEvent_Cancel -> OtherParticipant', inject(function() {
 
       expectCanConnect('EndEvent_Cancel', 'OtherParticipant', {
         sequenceFlow: false,
@@ -326,7 +326,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EndEvent_Message -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect EndEvent_Message -> OtherParticipant', inject(function() {
 
       expectCanConnect('EndEvent_Message', 'OtherParticipant', {
         sequenceFlow: false,
@@ -336,7 +336,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> EndEvent_None', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> EndEvent_None', inject(function() {
 
       expectCanConnect('OtherParticipant', 'EndEvent_None', {
         sequenceFlow: false,
@@ -346,7 +346,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateThrowEvent_Message -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect IntermediateThrowEvent_Message -> OtherParticipant', inject(function() {
 
       expectCanConnect('IntermediateThrowEvent_Message', 'OtherParticipant', {
         sequenceFlow: false,
@@ -356,7 +356,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateThrowEvent_None -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect IntermediateThrowEvent_None -> OtherParticipant', inject(function() {
 
       expectCanConnect('IntermediateThrowEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
@@ -366,7 +366,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect IntermediateThrowEvent_Signal -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect IntermediateThrowEvent_Signal -> OtherParticipant', inject(function() {
 
       expectCanConnect('IntermediateThrowEvent_Signal', 'OtherParticipant', {
         sequenceFlow: false,
@@ -376,7 +376,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> IntermediateThrowEvent_Message', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> IntermediateThrowEvent_Message', inject(function() {
 
       expectCanConnect('OtherParticipant', 'IntermediateThrowEvent_Message', {
         sequenceFlow: false,
@@ -386,7 +386,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect Task_in_SubProcess -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect Task_in_SubProcess -> OtherParticipant', inject(function() {
 
       expectCanConnect('Task_in_SubProcess', 'OtherParticipant', {
         sequenceFlow: false,
@@ -396,7 +396,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect EndEvent_None_in_SubProcess -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect EndEvent_None_in_SubProcess -> OtherParticipant', inject(function() {
 
       expectCanConnect('EndEvent_None_in_SubProcess', 'OtherParticipant', {
         sequenceFlow: false,
@@ -406,7 +406,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect OtherParticipant -> Task_in_SubProcess', inject(function(bpmnRules) {
+    it('connect OtherParticipant -> Task_in_SubProcess', inject(function() {
 
       expectCanConnect('OtherParticipant', 'Task_in_SubProcess', {
         sequenceFlow: false,
@@ -416,7 +416,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect Participant -> OtherParticipant', inject(function(bpmnRules) {
+    it('connect Participant -> OtherParticipant', inject(function() {
 
       expectCanConnect('Participant', 'OtherParticipant', {
         sequenceFlow: false,
@@ -426,7 +426,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> TextAnnotation_OtherParticipant', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> TextAnnotation_OtherParticipant', inject(function() {
 
       expectCanConnect('StartEvent_None', 'TextAnnotation_OtherParticipant', {
         sequenceFlow: false,
@@ -436,7 +436,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> TextAnnotation_Global', inject(function(bpmnRules) {
+    it('connect StartEvent_None -> TextAnnotation_Global', inject(function() {
 
       expectCanConnect('StartEvent_None', 'TextAnnotation_Global', {
         sequenceFlow: false,
@@ -446,9 +446,24 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('drop TextAnnotation_Global -> Participant', inject(function(bpmnRules) {
+    it('drop TextAnnotation_Global -> Participant', inject(function() {
 
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
+    }));
+
+  });
+
+
+  describe('message flows', function() {
+
+    var testXML = require('./BpmnRules.messageFlow.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('drop MessageFlow -> Collaboration', inject(function() {
+
+      expectCanDrop('MessageFlow', 'Collaboration', true);
     }));
 
   });
