@@ -6,8 +6,10 @@ var TestHelper = require('../../../TestHelper'),
 /* global bootstrapDiagram, inject */
 
 var spaceTool = require('../../../../lib/features/space-tool'),
+    isMac = require('../../../../lib/util/Mouse').isMac,
     rulesModule = require('./rules');
 
+var keyModifier = isMac() ? { altKey: true } : { ctrlKey: true };
 
 describe('features/space-tool', function() {
 
@@ -230,7 +232,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({x: 300, y: 150}));
 
-        dragging.move(createEvent({x: 350, y: 150}, { ctrlKey: true }));
+        dragging.move(createEvent({x: 350, y: 150}, keyModifier));
         dragging.end();
 
         // then
@@ -249,7 +251,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 150 }));
 
-        dragging.move(createEvent({ x: 300, y: 150 }, { ctrlKey: true }));
+        dragging.move(createEvent({ x: 300, y: 150 }, keyModifier));
         dragging.end();
 
         // then
@@ -268,7 +270,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 280 }, { ctrlKey: true }));
+        dragging.move(createEvent({ x: 350, y: 280 }, keyModifier));
         dragging.end();
 
         // then
@@ -287,7 +289,7 @@ describe('features/space-tool', function() {
         // when
         spaceTool.activateMakeSpace(createEvent({ x: 350, y: 230 }));
 
-        dragging.move(createEvent({ x: 350, y: 180 }, { ctrlKey: true }));
+        dragging.move(createEvent({ x: 350, y: 180 }, keyModifier));
         dragging.end();
 
         // then
@@ -470,7 +472,7 @@ describe('features/space-tool', function() {
       // when
       spaceTool.activateMakeSpace(createEvent({ x: 280, y: 155 }));
 
-      dragging.move(createEvent({ x: 330, y: 155 }, { ctrlKey: true })); // x =/= 50
+      dragging.move(createEvent({ x: 330, y: 155 }, keyModifier)); // x =/= 50
       dragging.end();
 
       // then
