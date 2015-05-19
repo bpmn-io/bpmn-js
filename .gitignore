@@ -5,3 +5,4 @@ docs/api/
 dist/
 .idea
 *.iml
+.DS_Store
