@@ -1,0 +1,143 @@
+'use strict';
+
+var TestHelper = require('../../../../TestHelper'),
+    Matchers = require('../../../../Matchers');
+
+/* global inject, bootstrapModeler */
+
+
+var modelingModule = require('../../../../../lib/features/modeling');
+
+
+describe('modeling/behavior - drop on connection', function(){
+
+  beforeEach(Matchers.addDeepEquals);
+
+
+  var diagramXML = require('./CreateOnFlowBehavior.bpmn');
+
+  beforeEach(bootstrapModeler(diagramXML, { modules: modelingModule }));
+
+
+  describe('rules', function() {
+
+    it('should be allowed for an IntermediateThrowEvent', inject(function(elementRegistry, bpmnRules, elementFactory) {
+
+      // when
+      var sequenceFlow = elementRegistry.get('SequenceFlow');
+      var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+
+      // then
+      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).toBe(true);
+    }));
+
+  });
+
+
+  describe('execution', function() {
+
+    it('should connect start -> target -> end', inject(function(modeling, elementRegistry, elementFactory) {
+
+      // given
+      var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+
+      var startEvent = elementRegistry.get('StartEvent'),
+          sequenceFlow = elementRegistry.get('SequenceFlow'),
+          task = elementRegistry.get('Task');
+
+      var position = { x: 340, y: 120 }; // first bendpoint
+
+      // when
+      var newShape = modeling.createShape(intermediateThrowEvent, position, sequenceFlow);
+
+      // then
+
+      var targetConnection = newShape.outgoing[0];
+
+      // new incoming connection
+      expect(newShape.incoming.length).toBe(1);
+      expect(newShape.incoming[0]).toBe(sequenceFlow);
+
+      // new outgoing connection
+      expect(newShape.outgoing.length).toBe(1);
+      expect(targetConnection).toBeTruthy();
+      expect(targetConnection.type).toBe('bpmn:SequenceFlow');
+
+      expect(startEvent.outgoing[0]).toBe(newShape.incoming[0]);
+      expect(task.incoming[0]).toBe(newShape.outgoing[0]);
+
+      // split target at insertion point
+      expect(sequenceFlow.waypoints).toDeepEqual([
+        { original: { x: 209, y: 120 }, x: 209, y: 120 },
+        { original: { x: 340, y: 120 }, x: 322, y: 120 }
+      ]);
+
+      expect(targetConnection.waypoints).toDeepEqual([
+        { original: { x: 340, y: 120 }, x: 340, y: 138 },
+        { x: 340, y: 299 },
+        { original: { x: 502, y: 299 }, x: 502, y: 299 }
+      ]);
+    }));
+
+
+    it('should connect start -> target', inject(function(modeling, elementRegistry, elementFactory) {
+
+      // given
+      var endEventShape = elementFactory.createShape({ type: 'bpmn:EndEvent' });
+
+      var sequenceFlow = elementRegistry.get('SequenceFlow');
+
+      var position = { x: 340, y: 120 }; // first bendpoint
+
+      // when
+      var newShape = modeling.createShape(endEventShape, position, sequenceFlow);
+
+      // then
+
+      // new incoming connection
+      expect(newShape.incoming.length).toBe(1);
+      expect(newShape.incoming[0]).toBe(sequenceFlow);
+
+      // no outgoing edges
+      expect(newShape.outgoing.length).toBe(0);
+
+      // split target at insertion point
+      expect(sequenceFlow.waypoints).toDeepEqual([
+        { original: { x: 209, y: 120 }, x: 209, y: 120 },
+        { original: { x: 340, y: 120 }, x: 322, y: 120 }
+      ]);
+    }));
+
+
+    it('should connect target -> end', inject(function(modeling, elementRegistry, elementFactory) {
+
+      // given
+      var startEventShape = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+
+      var sequenceFlow = elementRegistry.get('SequenceFlow');
+
+      var position = { x: 340, y: 120 }; // first bendpoint
+
+      // when
+      var newShape = modeling.createShape(startEventShape, position, sequenceFlow);
+
+      // then
+
+      // no incoming connection
+      expect(newShape.incoming.length).toBe(0);
+
+      // no outgoing edges
+      expect(newShape.outgoing.length).toBe(1);
+      expect(newShape.outgoing[0]).toBe(sequenceFlow);
+
+      // split target at insertion point
+      expect(sequenceFlow.waypoints).toDeepEqual([
+        { original: { x: 340, y: 120 }, x: 340, y: 138 },
+        { x: 340, y: 299 },
+        { original: { x: 502, y: 299 }, x: 502, y: 299 }
+      ]);
+    }));
+
+  });
+
+});
