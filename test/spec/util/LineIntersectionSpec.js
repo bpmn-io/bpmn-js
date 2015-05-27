@@ -1,9 +1,9 @@
 'use strict';
 
-var Util = require('../../../../lib/features/bendpoints/Util');
+var getApproxIntersection = require('../../../lib/util/LineIntersection').getApproxIntersection;
 
 
-describe('features/bendpoints - Util', function() {
+describe('features/bendpoints - LineIntersection', function() {
 
   describe('#getApproxIntersection', function() {
 
@@ -16,7 +16,7 @@ describe('features/bendpoints - Util', function() {
 
 
     it('should match start point', function() {
-      var intersection = Util.getApproxIntersection(waypoints, waypoints[0]);
+      var intersection = getApproxIntersection(waypoints, waypoints[0]);
 
       expect(intersection.bendpoint).to.be.true;
       expect(intersection.index).to.equal(0);
@@ -25,7 +25,7 @@ describe('features/bendpoints - Util', function() {
 
 
     it('should fuzzy match start point', function() {
-      var intersection = Util.getApproxIntersection(waypoints, { x: 7, y: -7 });
+      var intersection = getApproxIntersection(waypoints, { x: 7, y: -7 });
 
       expect(intersection.bendpoint).to.be.true;
       expect(intersection.index).to.equal(0);
@@ -34,14 +34,14 @@ describe('features/bendpoints - Util', function() {
 
 
     it('should not match start point', function() {
-      var intersection = Util.getApproxIntersection(waypoints, { x: 10, y: -10 });
+      var intersection = getApproxIntersection(waypoints, { x: 10, y: -10 });
 
       expect(intersection).to.be.null;
     });
 
 
     it('should fuzzy match intermediate waypoint', function() {
-      var intersection = Util.getApproxIntersection(waypoints, { x: 55, y: 45 });
+      var intersection = getApproxIntersection(waypoints, { x: 55, y: 45 });
 
       expect(intersection.bendpoint).to.be.true;
       expect(intersection.index).to.equal(1);
@@ -49,7 +49,7 @@ describe('features/bendpoints - Util', function() {
 
 
     it('should fuzzy match inbetween point', function() {
-      var intersection = Util.getApproxIntersection(waypoints, { x: 24.5, y: 25.5 });
+      var intersection = getApproxIntersection(waypoints, { x: 24.5, y: 25.5 });
 
       expect(intersection.bendpoint).to.not.be.defined;
       expect(intersection.index).to.equal(1);
@@ -58,7 +58,7 @@ describe('features/bendpoints - Util', function() {
 
 
     it('should fuzzy match end point', function() {
-      var intersection = Util.getApproxIntersection(waypoints, { x: 105, y: 95 });
+      var intersection = getApproxIntersection(waypoints, { x: 105, y: 95 });
 
       expect(intersection.bendpoint).to.be.true;
       expect(intersection.index).to.equal(3);
