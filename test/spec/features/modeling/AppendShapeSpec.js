@@ -15,29 +15,22 @@ describe('features/modeling - append shape', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, parentShape, childShape;
+  var diagramRoot, childShape;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
-    rootShape = elementFactory.createRoot({
+    diagramRoot = elementFactory.createRoot({
       id: 'root'
     });
 
-    canvas.setRootElement(rootShape);
-
-    parentShape = elementFactory.createShape({
-      id: 'parent',
-      x: 100, y: 100, width: 300, height: 300
-    });
-
-    canvas.addShape(parentShape, rootShape);
+    canvas.setRootElement(diagramRoot);
 
     childShape = elementFactory.createShape({
       id: 'child',
       x: 110, y: 110, width: 100, height: 100
     });
 
-    canvas.addShape(childShape, parentShape);
+    canvas.addShape(childShape, diagramRoot);
   }));
 
 
@@ -128,11 +121,36 @@ describe('features/modeling - append shape', function() {
       };
 
       // when
-      var newShape = modeling.appendShape(childShape, { id: 'appended' }, { x: 200, y: 200 }, null, connectionProperties);
+      var newShape = modeling.appendShape(childShape, { id: 'appended', width: 100, height: 100 }, { x: 200, y: 200 }, null, connectionProperties);
       var newConnection = newShape.incoming[0];
 
       // then
       expect(newConnection.custom).to.be.true;
+    }));
+
+  });
+
+
+  describe('connection create behavior', function() {
+
+
+    it('should only create if not connected already', inject(function(modeling, eventBus) {
+
+      // given
+      eventBus.on('commandStack.shape.create.postExecute', function connectListener(event) {
+        var context = event.context;
+
+        // connect childShape -> shape
+        modeling.connect(childShape, context.shape);
+      });
+
+      // when
+      var newShape = modeling.appendShape(childShape, { id: 'appended', width: 100, height: 100 }, { x: 500, y: 200 });
+
+      var incomingConnections = newShape.incoming;
+
+      // then
+      expect(incomingConnections.length).to.eql(1);
     }));
 
   });
