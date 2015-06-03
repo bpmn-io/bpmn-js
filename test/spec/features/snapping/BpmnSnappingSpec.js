@@ -168,6 +168,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
 
   describe('on shape resize', function () {
+
     var diagramXML = require('../../../fixtures/bpmn/collaboration-resize.bpmn');
 
     var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
@@ -179,6 +180,36 @@ describe('features/snapping - BpmnSnapping', function() {
     beforeEach(inject(function(canvas, dragging) {
       createEvent = Events.scopedCreate(canvas);
     }));
+
+
+    describe('Participant min bounds', function() {
+
+      it('should snap <se>', inject(function(canvas, elementRegistry, resize, dragging) {
+
+        var participant = elementRegistry.get('Participant_2');
+
+        resize.activate(Events.create(canvas._svg, { x: 500, y: 500 }), participant, 'se');
+        dragging.move(Events.create(canvas._svg, { x: 0, y: 0 }));
+        dragging.end();
+
+        expect(participant.width).toEqual(400);
+        expect(participant.height).toEqual(200);
+      }));
+
+
+      it('should snap from <nw>', inject(function(canvas, elementRegistry, resize, dragging) {
+
+        var participant = elementRegistry.get('Participant_2');
+
+        resize.activate(Events.create(canvas._svg, { x: 0, y: 0 }), participant, 'nw');
+        dragging.move(Events.create(canvas._svg, { x: 500, y: 500 }));
+        dragging.end();
+
+        expect(participant.width).toEqual(400);
+        expect(participant.height).toEqual(200);
+      }));
+
+    });
 
 
     it('should snap a SubProcess to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
@@ -205,6 +236,7 @@ describe('features/snapping - BpmnSnapping', function() {
       expect(participant.width).toEqual(400);
       expect(participant.height).toEqual(200);
     }));
+
 
     it('should snap a TextAnnotation to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
 
