@@ -333,7 +333,7 @@ describe('core/EventBus', function() {
       // given
       var errorListener = sinon.spy();
       var failingListener = function() {
-        throw new Error('fail');
+        throw new Error('expected failure');
       };
 
       // when
@@ -343,7 +343,7 @@ describe('core/EventBus', function() {
       // then
       expect(function() {
         eventBus.fire({ type: 'fail' });
-      }).to.throw('fail');
+      }).to.throw('expected failure');
 
       expect(errorListener).to.have.been.called;
     });
@@ -357,7 +357,7 @@ describe('core/EventBus', function() {
       }
 
       function failingListener() {
-        throw new Error('fail');
+        throw new Error('expected failure');
       }
 
       // when
@@ -375,7 +375,7 @@ describe('core/EventBus', function() {
 
       // given
       function failingListener() {
-        throw new Error('fail');
+        throw new Error('expected failure');
       }
 
       // when
@@ -384,7 +384,7 @@ describe('core/EventBus', function() {
       // then
       expect(function() {
         eventBus.fire({ type: 'fail' });
-      }).to.throw();
+      }).to.throw('expected failure');
     });
 
   });
