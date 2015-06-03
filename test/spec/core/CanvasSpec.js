@@ -62,6 +62,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram());
 
 
@@ -115,7 +116,7 @@ describe('Canvas', function() {
         // when
         canvas.addShape(s);
 
-        throw ('expected exception');
+        throw new Error('expected exception');
       }).to.throw('element must have an id');
     }));
 
@@ -130,8 +131,23 @@ describe('Canvas', function() {
         canvas.addShape(s);
         canvas.addShape(s);
 
-        throw ('expected exception');
+        throw new Error('expected exception');
       }).to.throw('element with id FOO already exists');
+
+    }));
+
+
+    it('should fail on missing attr', inject(function(canvas, elementRegistry) {
+
+      // given
+      var s = { id: 'FOO', x: 10 };
+
+      expect(function() {
+        // when
+        canvas.addShape(s);
+
+        throw new Error('expected exception');
+      }).to.throw('must supply { x, y, width, height } with shape');
 
     }));
 
@@ -267,6 +283,20 @@ describe('Canvas', function() {
       expect(listener).to.have.been.called;
     }));
 
+
+    it('should fail on missing attr', inject(function(canvas, elementRegistry) {
+
+      // given
+      var c = { id: 'FOO' };
+
+      expect(function() {
+        // when
+        canvas.addConnection(c);
+
+        throw new Error('expected exception');
+      }).to.throw('must supply { waypoints } with connection');
+
+    }));
   });
 
 
@@ -275,6 +305,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram());
 
 

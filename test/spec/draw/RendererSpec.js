@@ -49,7 +49,7 @@ describe('draw - Renderer', function() {
         x: 300, y: 250, width: 100, height: 100
       });
 
-      var connection = canvas.addShape({
+      var connection = canvas.addConnection({
         id: 'connection',
         waypoints: [ { x: 150, y: 150 }, { x: 200, y: 200 }, { x: 350, y: 300 }],
         source: shapeA,
@@ -78,7 +78,7 @@ describe('draw - Renderer', function() {
         x: 300, y: 250, width: 100, height: 100
       });
 
-      var connection = canvas.addShape({
+      var connection = canvas.addConnection({
         id: 'connection',
         waypoints: [ { x: 150, y: 150, original: { x: 130, y: 130 } }, { x: 200, y: 200 }, { x: 350, y: 300 }],
         source: shapeA,
