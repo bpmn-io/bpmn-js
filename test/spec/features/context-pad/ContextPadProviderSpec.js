@@ -2,6 +2,8 @@
 
 var TestHelper = require('../../../TestHelper');
 
+var domQuery = require('min-dom/lib/query');
+
 /* global bootstrapViewer, inject */
 
 
@@ -30,40 +32,37 @@ describe('features - context-pad', function() {
   });
 
 
-  describe('should show chooser/replace menu in the correct position ', function() {
+  describe('should show replace popup menu in the correct position ', function() {
 
     var container;
-
     beforeEach(function() {
       container = jasmine.getEnv().getTestContainer();
     });
 
+    it('for a diagram element', inject(function(elementRegistry, contextPad, popupMenu) {
 
-    it('for a diagram element', inject(function(elementRegistry, eventBus, contextPad, popupMenu) {
       // given
-      var bpmnContainer = container.firstChild,
-          element = elementRegistry.get('StartEvent_1'),
+      var element = elementRegistry.get('StartEvent_1'),
           padding = 5,
           replaceMenuRect,
           padMenuRect;
+      
+      contextPad.open(element);
+      padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
 
-      bpmnContainer.style.marginLeft = '200px';
-      bpmnContainer.style.marginTop = '200px';
+      // mock event
+      var event = {
+        target: domQuery('[data-action="replace"]', container),
+        preventDefault: function(){}
+      };
 
       // when
-      eventBus.on('contextPad.open', function(event) {
-        event.current.entries.replace.action.click(null, element);
-        replaceMenuRect = popupMenu._instances['replace-menu']._container.getBoundingClientRect();
-        padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
-      });
-
-      eventBus.fire('element.click', { element: element });
+      contextPad.trigger('click', event);
+      replaceMenuRect = domQuery('.replace-menu', container).getBoundingClientRect();    
 
       // then
       expect(replaceMenuRect.left).not.toBeGreaterThan(padMenuRect.left);
       expect(replaceMenuRect.top).not.toBeGreaterThan(padMenuRect.bottom + padding);
     }));
-
   });
-
 });
