@@ -262,8 +262,9 @@ describe('features/popup', function() {
       expect(popupMenu.name).to.equal('popup-menu2');
       expect(popupMenu._container.style.left).to.equal('200px');
       expect(popupMenu._container.style.top).to.equal('200px');
-      expect(popupMenu._container.childNodes[0].innerText).to.equal('Entry A');
-      expect(popupMenu._container.childNodes[1].innerText).to.equal('Entry B');
+
+      expect(popupMenu._container.childNodes[0].textContent).to.equal('Entry A');
+      expect(popupMenu._container.childNodes[1].textContent).to.equal('Entry B');
     }));
   });
 
