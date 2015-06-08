@@ -81,7 +81,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 0, height: 0 }});
 
       expect(text).to.be.defined;
-      expect(toFitBBox(text, { x: 0, y: 3, width: 30, height: 275 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 275 })).to.be.true;
     });
 
 
@@ -94,7 +94,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 25, height: 25 }});
 
       expect(text).to.be.defined;
-      expect(toFitBBox(text, { x: 0, y: 3, width: 30, height: 170 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 170 })).to.be.true;
     });
 
 
