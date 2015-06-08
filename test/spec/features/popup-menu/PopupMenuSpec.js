@@ -236,14 +236,15 @@ describe('features/popup', function() {
       // when
       popupMenu.open('test-popup', { x: 100, y: 100}, [
           {id: 'id1', label: 'Entry 1'},
-          {id: 'id2', label: 'Entry 2', className: 'special-entry', style:'color: rgb(222,67,157)'},
+          {id: 'id2', label: 'Entry 2', className: 'special-entry', style:'color: rgb(222, 67, 157)'},
           {id: 'id2', label: 'Entry 3'}
         ]
       );
 
       // then
       var element = popupMenu._container.querySelector('.special-entry');
-      expect(element.getAttribute('style')).to.equal('color: rgb(222,67,157)');
+
+      expect(element.style.color).to.equal('rgb(222, 67, 157)');
     }));
 
   }) ;
@@ -270,7 +271,7 @@ describe('features/popup', function() {
   describe('#isOpen', function(){
 
     it('should not be open initially', inject(function(popupMenu){
-   
+
       // when at initial state
 
       // then
@@ -279,17 +280,17 @@ describe('features/popup', function() {
 
 
     it('should be open after opening', inject(function(popupMenu){
-   
+
       // when
       popupMenu.open('popup-menu1', { x: 100, y: 100 }, [ { label: 'Entry 1' }, { label: 'Entry 2' } ]);
 
-      // then 
+      // then
       expect(popupMenu.isOpen()).to.be.true;
     }));
 
 
     it('should be closed after closing', inject(function(popupMenu){
-      
+
       // given
       popupMenu.open('popup-menu1', { x: 100, y: 100 }, [ { label: 'Entry 1' }, { label: 'Entry 2' } ]);
 
