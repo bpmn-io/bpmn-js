@@ -48,6 +48,7 @@
     "karma-ie-launcher": "^0.1.4",
     "karma-jasmine": "https://github.com/Nikku/karma-jasmine/archive/jasmine-v2.0.0-latest-1.tar.gz",
     "karma-phantomjs-launcher": "^0.1.2",
+    "karma-safari-launcher": "^0.1.1",
     "load-grunt-tasks": "^0.3.0",
     "source-map-concat": "^0.4.0",
     "stringify": "^3.1.0",
