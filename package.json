@@ -28,7 +28,7 @@
       "url": "https://github.com/bpmn-io"
     }
   ],
-  "license": "http://bpmn.io/license",
+  "license": "LicenseRef-LICENSE",
   "devDependencies": {
     "browserify": "^8.1.0",
     "browserify-derequire": "^0.9.1",
