@@ -304,8 +304,8 @@ svg.drop-not-ok {
 
   cursor: default;
 
-  background-color: rgba(255,255,255, 0.85);
-  box-shadow: 0 0 2px 1px rgba(255,255,255, 0.85);
+  background-color: #FEFEFE;
+  box-shadow: 0 0 2px 1px #FEFEFE;
 
   pointer-events: all;
 }
@@ -322,27 +322,71 @@ svg.drop-not-ok {
   display: block;
 }
 
-.djs-popup-entry {
-  font-size: 20px;
+/**
+ * popup styles
+ */
+.djs-popup .entry {
   line-height: 20px;
-  padding: 2px 10px 2px 5px;
-  background-color: rgba(255,255,255, 0.85);
   white-space: nowrap;
+
+  cursor: default;
 }
 
-.djs-popup-entry:hover {
+/* larger font for prefixed icons */
+.djs-popup .entry:before {
+  vertical-align: middle;
+  font-size: 20px;
+}
+
+.djs-popup .entry > span {
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.djs-popup .entry:hover,
+.djs-popup .entry.active:hover {
   background: rgb(255, 252, 176);
 }
 
-.djs-popup-entry > span {
-  font-size: 14px;
-  margin-left: 5px;
-
-  vertical-align: middle;
+.djs-popup .entry.disabled {
+  background: inherit;
 }
 
-.djs-popup-entry:before {
-  vertical-align: middle;
+.djs-popup .entry.active {
+  color: rgb(255, 116, 0);
+  border: solid 1px rgb(255, 116, 0);
+  border-radius: 3px;
+  background-color: #F6F6F6;
+}
+
+.djs-popup-body .entry {
+  padding: 2px 10px 2px 5px;
+}
+
+.djs-popup-header .entry {
+  display: inline-block;
+  padding: 2px 3px 2px 3px;
+}
+
+.djs-popup-body .entry > span {
+  margin-left: 5px;
+}
+
+.djs-popup-body {
+  background-color: #FEFEFE;
+}
+
+.djs-popup-header {
+  border-bottom: 1px solid #DDD;
+}
+
+.djs-popup-header .entry {
+  margin: 1px;
+  margin-left: 3px;
+}
+
+.djs-popup-header .entry:last-child {
+  margin-right: 3px;
 }
 
 /**
