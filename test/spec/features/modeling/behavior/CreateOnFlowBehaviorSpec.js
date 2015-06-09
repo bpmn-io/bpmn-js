@@ -137,6 +137,30 @@ describe('modeling/behavior - drop on connection', function(){
         { original: { x: 502, y: 299 }, x: 502, y: 299 }
       ]);
     }));
+  });
+
+
+  describe('rules', function() {
+
+    it('should not insert participant', inject(function(rules, elementRegistry, elementFactory) {
+
+      // given
+      var participantShape = elementFactory.createShape({ type: 'bpmn:Participant' });
+
+      var sequenceFlow = elementRegistry.get('SequenceFlow');
+
+      var position = { x: 340, y: 120 }; // first bendpoint
+
+      // when
+      var canDrop = rules.allowed('shape.create', {
+        shape: participantShape,
+        parent: sequenceFlow,
+        position: position
+      });
+
+      // then
+      expect(canDrop).toBe(false);
+    }));
 
   });
 
