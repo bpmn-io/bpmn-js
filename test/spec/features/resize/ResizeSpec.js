@@ -302,11 +302,11 @@ describe('features/resize - Resize', function() {
 
         var resizedBounds = pick(parentShape, ['x', 'y', 'width', 'height']);
 
-
         // then
+        // still takes children bbox into account (!)
         expect(resizedBounds).to.eql({
           x: 50, y: 50,
-          width: 300, height: 150
+          width: 370, height: 370
         });
 
       }));
@@ -329,9 +329,10 @@ describe('features/resize - Resize', function() {
         var resizedBounds = pick(parentShape, ['x', 'y', 'width', 'height']);
 
         // then
+        // still takes children bbox into account (!)
         expect(resizedBounds).to.eql({
-          x: 200, y: 350,
-          width: 300, height: 150
+          x: 80, y: 80,
+          width: 420, height: 420
         });
 
       }));
