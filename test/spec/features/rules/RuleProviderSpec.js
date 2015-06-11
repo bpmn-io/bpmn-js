@@ -11,7 +11,7 @@ describe('features/rules - RuleProvider', function() {
   beforeEach(bootstrapDiagram({ modules: [ rulesModule, modelingModule ] }));
 
 
-  var resizableShape, nonResizableShape, ignoreResizeShape, unspecifiedShape;
+  var resizableShape, nonResizableShape, ignoreResizeShape, unspecifiedShape, customResizableShape;
 
   beforeEach(inject(function(canvas, elementFactory, elementRegistry) {
 
@@ -36,6 +36,12 @@ describe('features/rules - RuleProvider', function() {
     unspecifiedShape = canvas.addShape(elementFactory.createShape({
       id: 's4',
       x: 400, y: 100, width: 100, height: 100
+    }));
+
+    customResizableShape = canvas.addShape(elementFactory.createShape({
+      id: 's5',
+      x: 400, y: 100, width: 100, height: 100,
+      resizable: 'maybe'
     }));
 
   }));
@@ -78,6 +84,16 @@ describe('features/rules - RuleProvider', function() {
 
     // then
     expect(result).to.be.true;
+  }));
+
+
+  it('should correctly interpret custom object', inject(function(rules) {
+
+    // when
+    var result = rules.allowed('shape.resize', { shape: customResizableShape });
+
+    // then
+    expect(result).to.eql('maybe');
   }));
 
 
