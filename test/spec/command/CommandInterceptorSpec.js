@@ -60,38 +60,38 @@ describe('command/CommandInterceptor', function() {
   beforeEach(bootstrapDiagram({ modules: [ cmdModule ] }));
 
 
-  describe('should intercept command events', function() {
+  var element, context;
 
-    var element, context;
+  beforeEach(inject(function(commandStack) {
 
-    beforeEach(inject(function(commandStack) {
+    element = { trace: [] };
 
-      element = { trace: [] };
+    context = {
+      element: element
+    };
 
-      context = {
-        element: element
-      };
+    commandStack.registerHandler('simple-command', SimpleCommand);
+    commandStack.registerHandler('complex-command', ComplexCommand);
+    commandStack.registerHandler('pre-command', PreCommand);
+    commandStack.registerHandler('post-command', PostCommand);
+  }));
 
-      commandStack.registerHandler('simple-command', SimpleCommand);
-      commandStack.registerHandler('complex-command', ComplexCommand);
-      commandStack.registerHandler('pre-command', PreCommand);
-      commandStack.registerHandler('post-command', PostCommand);
-    }));
+  function traceCommand(e) {
+    expect(e).to.be.defined;
 
-    function traceCommand(e) {
-      expect(e).to.be.defined;
+    e.context.element.trace.push(e.command);
+  }
 
-      e.context.element.trace.push(e.command);
-    }
+  function traceUnwrappedCommand(context, command, event) {
+    expect(context).to.be.defined;
+    expect(command).to.be.defined;
+    expect(event).to.be.defined;
 
-    function traceUnwrappedCommand(context, command, event) {
-      expect(context).to.be.defined;
-      expect(command).to.be.defined;
-      expect(event).to.be.defined;
+    context.element.trace.push(command);
+  }
 
-      context.element.trace.push(command);
-    }
 
+  describe('should hook into commands', function() {
 
     describe('#preExecute', function() {
 
@@ -328,6 +328,120 @@ describe('command/CommandInterceptor', function() {
         // then
         expect(element.trace).to.eql([
           'simple-command'
+        ]);
+      }));
+
+    });
+
+  });
+
+
+  describe('priorities', function() {
+
+    function trace(suffix) {
+      return function(e) {
+        e.context.element.trace.push(e.command + '-' + suffix);
+      };
+    }
+
+
+    describe('via #preExecute', function() {
+
+      it('should register globally', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.preExecute(500, trace('low'));
+        interceptor.preExecute(trace('default'));
+        interceptor.preExecute(1600, trace('high'));
+
+        // when
+        commandStack.execute('simple-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          'simple-command-high',
+          'simple-command-default',
+          'simple-command-low'
+        ]);
+      }));
+
+
+      it('should register locally', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.preExecute('simple-command', 500, trace('low'));
+        interceptor.preExecute('simple-command', trace('default'));
+        interceptor.preExecute('simple-command', 1600, trace('high'));
+
+        // when
+        commandStack.execute('simple-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          'simple-command-high',
+          'simple-command-default',
+          'simple-command-low'
+        ]);
+      }));
+
+    });
+
+
+    describe('via #on', function() {
+
+      it('should register', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.on('preExecute', 500, trace('global-low'));
+        interceptor.on([ 'simple-command.preExecute' ], trace('local-default'));
+        interceptor.on('simple-command', 'preExecute', 1600, trace('local-high'));
+
+        // when
+        commandStack.execute('simple-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          'simple-command-local-high',
+          'simple-command-local-default',
+          'simple-command-global-low'
+        ]);
+      }));
+
+    });
+
+
+    describe('mixed', function() {
+
+      it('should register mixed', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.on([ 'simple-command.preExecute', 'preExecute'], 500, trace('raw-multiple-low'));
+
+        interceptor.preExecute([ 'simple-command' ], 500, trace('local-multiple-low'));
+        interceptor.preExecute(500, trace('global-low'));
+        interceptor.preExecute('simple-command', trace('default'));
+        interceptor.preExecute(1500, trace('global-high'));
+        interceptor.preExecute('simple-command', 1600, trace('local-high'));
+
+        // when
+        commandStack.execute('simple-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          // local listeners are invoked first
+          'simple-command-local-high',
+          'simple-command-default',
+          'simple-command-raw-multiple-low',
+          'simple-command-local-multiple-low',
+
+          // global listeners are invoked after local ones
+          'simple-command-global-high',
+          'simple-command-raw-multiple-low',
+          'simple-command-global-low'
         ]);
       }));
 
