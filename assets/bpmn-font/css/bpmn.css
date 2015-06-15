@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bpmn';
-  src: url('../font/bpmn.eot?8685581');
-  src: url('../font/bpmn.eot?8685581#iefix') format('embedded-opentype'),
-       url('../font/bpmn.woff?8685581') format('woff'),
-       url('../font/bpmn.ttf?8685581') format('truetype'),
-       url('../font/bpmn.svg?8685581#bpmn') format('svg');
+  src: url('../font/bpmn.eot?59918261');
+  src: url('../font/bpmn.eot?59918261#iefix') format('embedded-opentype'),
+       url('../font/bpmn.woff?59918261') format('woff'),
+       url('../font/bpmn.ttf?59918261') format('truetype'),
+       url('../font/bpmn.svg?59918261#bpmn') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'bpmn';
-    src: url('../font/bpmn.svg?8685581#bpmn') format('svg');
+    src: url('../font/bpmn.svg?59918261#bpmn') format('svg');
   }
 }
 */
@@ -76,7 +76,7 @@
 .icon-intermediate-event-catch-non-interrupting-parallel-multiple:before { content: '\e813'; } /* '' */
 .icon-start-event-condition:before { content: '\e814'; } /* '' */
 .icon-start-event-non-interrupting-timer:before { content: '\e815'; } /* '' */
-.icon-sequential-mi-marker-kopie:before { content: '\e816'; } /* '' */
+.icon-sequential-mi-marker:before { content: '\e816'; } /* '' */
 .icon-manual:before { content: '\e817'; } /* '' */
 .icon-receive:before { content: '\e818'; } /* '' */
 .icon-sub-process-marker:before { content: '\e819'; } /* '' */
