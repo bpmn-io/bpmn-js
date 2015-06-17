@@ -1,41 +1,33 @@
 'use strict';
 
-require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
+/* global bootstrapModeler, inject */
 
-var Modeler = require('../../../../lib/Modeler');
+var modelingModule = require('../../../../lib/features/modeling'),
+    paletteModule = require('../../../../lib/features/palette'),
+    coreModule = require('../../../../lib/core');
 
 var domQuery = require('min-dom/lib/query');
 
 
-describe('palette', function() {
+describe('features/palette', function() {
 
-  var container;
+  var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-  beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
-  });
+  var testModules = [ coreModule, modelingModule, paletteModule ];
+
+  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  it('should should draw palette', function(done) {
+  it('should provide BPMN modeling palette', inject(function(canvas, palette) {
 
-    var modeler = new Modeler({ container: container });
-    modeler.createDiagram(function(err) {
+    // when
+    var paletteElement = domQuery('.djs-palette', canvas._container);
+    var entries = domQuery.all('.entry', paletteElement);
 
-      // assume
-      var provider = modeler.get('paletteProvider');
-
-      // then
-      expect(provider).toBeTruthy();
-
-      // when
-      var paletteElement = domQuery('.djs-palette', container);
-
-      // then
-      expect(domQuery.all('.entry', paletteElement).length).toBe(10);
-
-      done(err);
-    });
-  });
+    // then
+    expect(entries.length).toBe(10);
+  }));
 
 });
