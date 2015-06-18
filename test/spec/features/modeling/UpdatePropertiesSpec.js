@@ -70,7 +70,7 @@ describe('features/modeling - update properties', function() {
     }));
 
 
-    it('updating label', inject(function(elementRegistry, modeling) {
+    it('updating name', inject(function(elementRegistry, modeling) {
 
       // given
       var flowConnection = elementRegistry.get('SequenceFlow_1');
@@ -86,6 +86,19 @@ describe('features/modeling - update properties', function() {
     }));
 
 
+    it('unsetting name', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_3');
+
+      // when
+      modeling.updateProperties(flowConnection, { name: undefined });
+
+      // then
+      expect(flowConnection.businessObject.name).not.toBeDefined();
+    }));
+
+
     it('updating id', inject(function(elementRegistry, modeling) {
 
       // given
@@ -97,6 +110,23 @@ describe('features/modeling - update properties', function() {
       // then
       expect(flowConnection.businessObject.id).toBe('FOO_BAR');
       expect(flowConnection.id).toBe('FOO_BAR');
+    }));
+
+
+    it('updating extension elements', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.updateProperties(flowConnection, {
+        'xmlns:foo': 'http://foo',
+        'foo:customAttr': 'FOO'
+      });
+
+      // then
+      expect(flowConnection.businessObject.get('xmlns:foo')).toBe('http://foo');
+      expect(flowConnection.businessObject.get('foo:customAttr')).toBe('FOO');
     }));
 
   });
@@ -154,6 +184,21 @@ describe('features/modeling - update properties', function() {
     }));
 
 
+    it('unsetting name', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_3');
+
+      modeling.updateProperties(flowConnection, { name: undefined });
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(flowConnection.businessObject.name).toBe('conditional');
+    }));
+
+
     it('updating id', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
@@ -166,6 +211,25 @@ describe('features/modeling - update properties', function() {
       // then
       expect(flowConnection.businessObject.id).toBe('SequenceFlow_1');
       expect(flowConnection.id).toBe('SequenceFlow_1');
+    }));
+
+
+    it('updating extension elements', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+
+      modeling.updateProperties(flowConnection, {
+        'xmlns:foo': 'http://foo',
+        'foo:customAttr': 'FOO'
+      });
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(flowConnection.businessObject.get('xmlns:foo')).toBe(undefined);
+      expect(flowConnection.businessObject.get('foo:customAttr')).toBe(undefined);
     }));
 
   });
@@ -223,6 +287,22 @@ describe('features/modeling - update properties', function() {
 
       // flow got updated, too
       expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
+    }));
+
+
+    it('unsetting name', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_3');
+
+      modeling.updateProperties(flowConnection, { name: undefined });
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(flowConnection.businessObject.name).not.toBeDefined();
     }));
 
   });
