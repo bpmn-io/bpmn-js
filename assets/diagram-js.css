@@ -328,7 +328,7 @@ svg.drop-not-ok {
 .djs-popup .entry {
   line-height: 20px;
   white-space: nowrap;
-
+  border: solid 1px transparent;
   cursor: default;
 }
 
