@@ -22,7 +22,7 @@ describe('Modeler', function() {
   }
 
 
-  it('should import simple process', function(done) {
+  iit('should import simple process', function(done) {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     createModeler(xml, done);
   });
