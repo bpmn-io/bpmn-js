@@ -6,8 +6,8 @@ var TestHelper = require('../../../TestHelper');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
-    coreModule = require('../../../../lib/core');
-
+    coreModule = require('../../../../lib/core'),
+    is = require('../../../../lib/util/ModelUtil').is;
 
 
 describe('features/replace', function() {
@@ -36,7 +36,7 @@ describe('features/replace', function() {
       var businessObject = newElement.businessObject;
 
       expect(newElement).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:UserTask')).toBe(true);
+      expect(is(businessObject, 'bpmn:UserTask')).toBe(true);
     }));
 
 
@@ -56,7 +56,42 @@ describe('features/replace', function() {
       var businessObject = newElement.businessObject;
 
       expect(newElement).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:InclusiveGateway')).toBe(true);
+      expect(is(businessObject, 'bpmn:InclusiveGateway')).toBe(true);
+    }));
+
+
+    it('expanded sub process', inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+      
+      // given
+      var subProcess = elementRegistry.get('SubProcess_1'),
+          newElementData = {
+            type: 'bpmn:Transaction',
+            isExpanded: true
+          };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(subProcess, newElementData);
+
+      // then
+      expect(newElement).toBeDefined();
+      expect(is(newElement.businessObject, 'bpmn:Transaction')).toBe(true);
+
+    }));
+
+
+    it('transaction', inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+      
+      var transaction = elementRegistry.get('Transaction_1'),
+          newElementData = {
+            type: 'bpmn:SubProcess',
+            isExpanded: true
+          };
+
+      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
+
+      expect(newElement).toBeDefined();
+      expect(is(newElement.businessObject, 'bpmn:SubProcess')).toBe(true);
+
     }));
 
   });
@@ -144,7 +179,7 @@ describe('features/replace', function() {
           businessObject = target.businessObject;
 
       expect(target).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:Task')).toBe(true);
+      expect(is(businessObject, 'bpmn:Task')).toBe(true);
     }));
 
 
@@ -173,7 +208,7 @@ describe('features/replace', function() {
       var businessObject = servicetask.businessObject;
 
       expect(servicetask).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:ServiceTask')).toBe(true);
+      expect(is(businessObject, 'bpmn:ServiceTask')).toBe(true);
     }));
 
   });
