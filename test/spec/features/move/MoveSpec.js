@@ -12,7 +12,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/move - Move', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, moveModule, rulesModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ moveModule, rulesModule, modelingModule ] }));
 
   var Event;
 
@@ -192,6 +192,235 @@ describe('features/move - Move', function() {
       // then
       expect(childShape.x).to.eql(140);
       expect(childShape.y).to.eql(210);
+    }));
+
+  });
+
+  describe('attachment - moving', function () {
+
+    var rootGfx, hostGfx, host, attacher, attacher2;
+
+    beforeEach(inject(function(canvas, modeling, elementFactory, elementRegistry) {
+      host = elementFactory.createShape({
+        id: 'host',
+        x: 500, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(host, rootShape);
+
+      attacher = elementFactory.createShape({
+        id: 'attacher',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacher, { x: 600, y: 100 }, host, true);
+
+      attacher2 = elementFactory.createShape({
+        id: 'attacher2',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacher2, { x: 600, y: 200 }, host, true);
+    }));
+
+    it('should move attachers along with host', inject(function(move, dragging, elementRegistry) {
+      // given
+      rootGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      move.start(Event.create({ x: 550, y: 150 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(Event.create({ x: 675, y: 275 }));
+      dragging.end();
+
+      move.start(Event.create({ x: 675, y: 275 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(Event.create({ x: 700, y: 300 }));
+      dragging.end();
+
+      // then
+      expect(attacher.x).to.equal(725);
+      expect(attacher.y).to.equal(225);
+
+      expect(attacher.host).to.equal(host);
+      expect(host.attachers).to.include(attacher);
+
+      expect(attacher2.x).to.equal(725);
+      expect(attacher2.y).to.equal(325);
+
+      expect(attacher2.host).to.equal(host);
+      expect(host.attachers).to.include(attacher2);
+    }));
+
+
+    it('should not move disallowed attacher', inject(function(move, dragging, elementRegistry) {
+      // given
+      var hostGfx = elementRegistry.getGraphics(host);
+
+      // when
+      move.start(Event.create({ x: 600, y: 200 }), attacher2);
+
+      dragging.hover({
+        element: host,
+        gfx: hostGfx
+      });
+
+      dragging.move(Event.create({ x: 100, y: 100 }));
+
+      // then
+      expect(attacher2.x).to.equal(575);
+      expect(attacher2.y).to.equal(175);
+    }));
+
+
+    it('should detach attacher from host', inject(function(move, dragging, elementRegistry, eventBus) {
+      // given
+      rootGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      move.start(Event.create({ x: 625, y: 125 }), attacher);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(Event.create({ x: 700, y: 275 }));
+      dragging.end();
+
+      move.start(Event.create({ x: 700, y: 275 }), attacher);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(Event.create({ x: 800, y: 375 }));
+      dragging.end();
+
+      // then
+      expect(attacher.host).to.not.exist;
+      expect(host.attachers).to.not.include(attacher);
+      expect(host.attachers).to.include(attacher2);
+    }));
+
+
+    it('should detach and reattach', inject(function(elementRegistry, move, dragging) {
+      // given
+      var detachedState;
+
+      rootGfx = elementRegistry.getGraphics(rootShape);
+      hostGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      move.start(Event.create({ x: 625, y: 125 }), attacher);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(Event.create({ x: 700, y: 275 }));
+      dragging.end();
+
+      detachedState = {
+        host: attacher.host
+      };
+
+      move.start(Event.create({ x: 700, y: 275 }), attacher);
+
+      dragging.hover({
+        element: host,
+        gfx: hostGfx
+      });
+
+      dragging.move(Event.create({ x: 625, y: 125 }));
+      dragging.end();
+
+      // then
+      expect(detachedState.host).to.not.exist;
+      expect(attacher.host).to.exist;
+      expect(host.attachers).to.include(attacher);
+    }));
+
+  });
+
+  describe('attachment - visuals', function () {
+
+    var hostGfx, host, attacher, attacher2;
+
+    beforeEach(inject(function(canvas, modeling, elementFactory, elementRegistry) {
+      host = elementFactory.createShape({
+        id: 'host',
+        x: 500, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(host, rootShape);
+
+      attacher = elementFactory.createShape({
+        id: 'attacher',
+        x: 800, y: 100, width: 50, height: 50
+      });
+
+      canvas.addShape(attacher, rootShape);
+
+      attacher2 = elementFactory.createShape({
+        id: 'attacher2',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacher2, { x: 600, y: 200 }, host, true);
+    }));
+
+    it('should add attachment marker', inject(function(move, dragging, elementRegistry) {
+      // given
+      hostGfx = elementRegistry.getGraphics(host);
+
+      // when
+      move.start(Event.create({ x: 800, y: 100 }), attacher);
+
+      dragging.hover({
+        element: host,
+        gfx: hostGfx
+      });
+
+      dragging.move(Event.create({ x: 575, y: 75 }));
+
+      var ctx = dragging.active();
+
+      // then
+      expect(ctx.data.context.canExecute).to.equal('attach');
+      expect(elementRegistry.getGraphics(host).hasClass('attach-ok')).to.be.true;
+    }));
+
+
+    it('should remove attachment marker', inject(function(move, dragging, elementRegistry) {
+      // given
+      hostGfx = elementRegistry.getGraphics(host);
+
+      // when
+      move.start(Event.create({ x: 800, y: 100 }), attacher);
+
+      dragging.hover({
+        element: host,
+        gfx: hostGfx
+      });
+
+      dragging.move(Event.create({ x: 575, y: 75 }));
+      dragging.end();
+
+      // then
+      expect(elementRegistry.getGraphics(host).hasClass('attach-ok')).to.be.false;
     }));
 
   });

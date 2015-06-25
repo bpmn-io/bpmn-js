@@ -54,6 +54,11 @@ svg.drop-not-ok {
   cursor: not-allowed;
 }
 
+.djs-element.attach-ok .djs-visual > :nth-child(1) {
+  stroke-width: 8px !important;
+  stroke: rgba(255, 78, 255, 0.7);
+}
+
 
 /**
 * Selection box style

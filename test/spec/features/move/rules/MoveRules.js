@@ -18,7 +18,24 @@ module.exports = MoveRules;
 MoveRules.prototype.init = function() {
 
   this.addRule('shapes.move', function(context) {
-    var target = context.newParent,
+    var shapes = context.shapes,
+        target = context.target;
+
+    if (shapes.length === 1 && shapes[0].id === 'attacher' && target) {
+      if (target.id === 'host') {
+        return 'attach';
+      } else {
+        return true;
+      }
+    }
+
+    if (shapes.length === 1 && shapes[0].id === 'attacher2') {
+      return false;
+    }
+  });
+
+  this.addRule('shapes.move', function(context) {
+    var target = context.target,
         shapes = context.shapes;
 
     // check that we do not accidently try to drop elements

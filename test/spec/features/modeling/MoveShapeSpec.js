@@ -17,7 +17,7 @@ describe('features/modeling - move shape', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, parentShape, parentShape2, childShape, childShape2, connection;
+  var rootShape, parentShape, parentShape2, childShape, childShape2, connection, attacher, attacher2;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -29,35 +29,43 @@ describe('features/modeling - move shape', function() {
 
     parentShape = elementFactory.createShape({
       id: 'parent',
-      x: 100, y: 100, width: 300, height: 300
+      x: 100, y: 100,
+      width: 300, height: 300
     });
 
     canvas.addShape(parentShape, rootShape);
 
     parentShape2 = elementFactory.createShape({
       id: 'parent2',
-      x: 500, y: 500, width: 300, height: 300
+      x: 500, y: 500,
+      width: 300, height: 300
     });
 
     canvas.addShape(parentShape2, rootShape);
 
     childShape = elementFactory.createShape({
       id: 'child',
-      x: 110, y: 110, width: 100, height: 100
+      x: 110, y: 110,
+      width: 100, height: 100
     });
 
     canvas.addShape(childShape, parentShape);
 
     childShape2 = elementFactory.createShape({
       id: 'child2',
-      x: 200, y: 110, width: 100, height: 100
+      x: 200, y: 110,
+      width: 100, height: 100
     });
 
     canvas.addShape(childShape2, parentShape);
 
     connection = elementFactory.createConnection({
       id: 'connection',
-      waypoints: [ { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 } ],
+      waypoints: [
+        { x: 150, y: 150 },
+        { x: 150, y: 200 },
+        { x: 350, y: 150 }
+      ],
       source: childShape,
       target: childShape2
     });
@@ -163,8 +171,16 @@ describe('features/modeling - move shape', function() {
       modeling.removeShape(childShape);
       modeling.removeShape(childShape2);
 
-      var s1 = modeling.createShape({id:'s1', width: 100, height: 100},{x:170, y:200}, rootShape);
-      modeling.appendShape(s1, {id:'s2', width: 100, height: 100},{x:330, y:200}, rootShape);
+      var s1 = modeling.createShape({
+        id:'s1',
+        width: 100, height: 100
+      }, { x: 170, y: 200 }, rootShape);
+
+      modeling.appendShape(s1, {
+        id:'s2',
+        width: 100, height: 100
+      },{ x: 330, y: 200 }, rootShape);
+
       var c1 = s1.outgoing[0];
 
       // when
@@ -292,11 +308,126 @@ describe('features/modeling - move shape', function() {
     it('should drop', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([childShape, childShape2], { x: 450, y: 400 }, parentShape2);
+      modeling.moveShapes([ childShape, childShape2 ], { x: 450, y: 400 }, parentShape2);
 
       // then
       expect(childShape.parent).to.equal(parentShape2);
       expect(childShape2.parent).to.equal(parentShape2);
     }));
   });
+
+
+  describe('attached shapes', function () {
+
+    var host;
+
+    beforeEach(inject(function(canvas, elementFactory, modeling) {
+
+      host = elementFactory.createShape({
+        id:'host',
+        x: 700, y: 100,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(host, rootShape);
+
+      attacher = elementFactory.createShape({
+        id: 'attacher',
+        x: 400, y: 110,
+        width: 50, height: 50
+      });
+
+      modeling.createShape(attacher, { x: 400, y: 110 }, parentShape, 'attach');
+
+
+      attacher2 = elementFactory.createShape({
+        id: 'attacher2',
+        x: 425, y: 375,
+        width: 50, height: 50
+      });
+
+      canvas.addShape(attacher2, rootShape);
+    }));
+
+    it('should detach shape from host', inject(function(modeling) {
+      // when
+      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape);
+
+      // then
+      expect(attacher.host).to.be.null;
+      expect(parentShape.attachers).to.not.include(attacher);
+    }));
+
+
+    it('should reattach shape to original host on undo', inject(function(modeling, commandStack) {
+      // when
+      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape);
+
+      commandStack.undo();
+
+      // then
+      expect(attacher.host).to.equal(parentShape);
+      expect(parentShape.attachers).to.include(attacher);
+    }));
+
+
+    it('should attach shape', inject(function(modeling) {
+      // when
+      modeling.moveShapes([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
+
+      // then
+      expect(attacher2.host).to.equal(parentShape);
+      expect(parentShape.attachers).to.include(attacher2);
+    }));
+
+
+    it('should detach shape on undo', inject(function(modeling, commandStack) {
+      // when
+      modeling.moveShapes([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
+
+      commandStack.undo();
+
+      // then
+      expect(attacher2.host).to.be.null;
+      expect(parentShape.attachers).to.not.include(attacher2);
+    }));
+
+
+    it('should reattach shape to initial host when detached', inject(function(modeling) {
+      // when
+      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape);
+
+      modeling.moveShapes([ attacher ], { x: -50, y: -50 }, parentShape, true);
+
+      // then
+      expect(attacher.host).to.equal(parentShape);
+      expect(parentShape.attachers).to.include(attacher);
+    }));
+
+
+    it('should reattach shape to another host', inject(function(modeling) {
+      // when
+      modeling.moveShapes([ attacher ], { x: 300, y: 0 }, host, true);
+
+      // then
+      expect(attacher.host).to.equal(host);
+      expect(host.attachers).to.include(attacher);
+    }));
+
+
+    it('should detach shape on reattachment undo', inject(function(modeling, commandStack) {
+      // when
+      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape);
+
+      modeling.moveShapes([ attacher ], { x: -50, y: -50 }, parentShape, true);
+
+      commandStack.undo();
+
+      // then
+      expect(attacher.host).to.not.exist;
+      expect(parentShape.attachers).to.not.include(attacher);
+    }));
+
+  });
+
 });
