@@ -7,7 +7,9 @@ var fs = require('fs');
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes'),
     Events = require('../../../util/Events'),
-    popupMenuModule = require('../../../../lib/features/popup-menu');
+    popupMenuModule = require('../../../../lib/features/popup-menu'),
+    modelingModule = require('../../../../lib/features/modeling'),
+    commandStack = require('../../../../lib/command');
 
 
 function queryEntry(popupMenu, id) {
@@ -20,7 +22,11 @@ function queryPopup(popupMenu, selector) {
 
 describe('features/popup', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ popupMenuModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ popupMenuModule, commandStack, modelingModule ] }));
+
+  afterEach(inject(function(popupMenu){
+    popupMenu.close();
+  }));
 
   describe('bootstrap', function() {
 
@@ -157,7 +163,7 @@ describe('features/popup', function() {
 
     it('should trigger the right action handler', inject(function(popupMenu) {
 
-      var entry, evt, trigger;
+      var entry, trigger;
 
       // given
       popupMenu.open({
@@ -182,10 +188,9 @@ describe('features/popup', function() {
       });
 
       entry = queryPopup(popupMenu, '.Entry_2');
-      evt = Events.create(entry, { x: 0, y: 0 });
 
       // when
-      trigger = popupMenu.trigger(evt);
+      trigger = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
 
       // then
       expect(trigger).to.eql('Entry 2');
@@ -216,7 +221,7 @@ describe('features/popup', function() {
       }));
 
 
-      it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
+      it('should close menu (canvas.viewbox.changed)', inject(function(popupMenu, eventBus) {
 
         // given
         popupMenu.open({
@@ -237,9 +242,11 @@ describe('features/popup', function() {
 
     describe('header entries', function() {
 
+      var menu;
+
       beforeEach(inject(function(popupMenu){
 
-        popupMenu.open({
+        menu = {
           position: { x: 100, y: 100 },
           entries: [],
           headerEntries: [
@@ -249,11 +256,15 @@ describe('features/popup', function() {
               className: 'foo',
               action: function(event, entry){
                 if (entry.active) {
-                  popupMenu.update(entry, { active: false });
-                  popupMenu.update('bar', { disabled: false });
+                  popupMenu.updateHeaderEntries([
+                    { id: entry.id, active: false },
+                    { id: 'bar', disabled: false }
+                  ]);
                 } else {
-                  popupMenu.update(entry, { active: true });
-                  popupMenu.update('bar', { disabled: true });
+                  popupMenu.updateHeaderEntries([
+                    { id: entry.id, active: true },
+                    { id: 'bar', disabled: true }
+                  ]);
                 }
               }
             },
@@ -263,19 +274,18 @@ describe('features/popup', function() {
               className: 'bar'
             }
           ]
-        });
+        };
+
+        popupMenu.open(menu);
       }));
 
-
       it('should add classes to entries', inject(function(popupMenu){
-
         // given
         var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo'),
-            evt = { target: fooEntry, preventDefault: function(){} };
+            fooEntry = queryEntry(popupMenu, 'foo');
 
         // when
-        popupMenu.trigger(evt);
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
 
         fooEntry = queryEntry(popupMenu, 'foo');
         barEntry = queryEntry(popupMenu, 'bar');
@@ -290,12 +300,11 @@ describe('features/popup', function() {
 
         // given
         var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo'),
-            evt = { target: fooEntry, preventDefault: function(){} };
+            fooEntry = queryEntry(popupMenu, 'foo');
 
         // when
-        popupMenu.trigger(evt);
-        popupMenu.trigger(evt);
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
 
         fooEntry = queryEntry(popupMenu, 'foo');
         barEntry = queryEntry(popupMenu, 'bar');
@@ -303,6 +312,73 @@ describe('features/popup', function() {
         // then
         expect(domClasses(fooEntry).has('active')).to.be.false;
         expect(domClasses(barEntry).has('disabled')).to.be.false;
+      }));
+
+
+      it('should undo changes to classes if the popup menu is open',
+        inject(function(popupMenu, commandStack){
+
+        // given
+        var barEntry,
+            fooEntry = queryEntry(popupMenu, 'foo');
+
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
+
+        // when
+        commandStack.undo();
+
+        // then
+        fooEntry = queryEntry(popupMenu, 'foo');
+        barEntry = queryEntry(popupMenu, 'bar');
+
+        expect(domClasses(fooEntry).has('active')).to.be.false;
+        expect(domClasses(barEntry).has('disabled')).to.be.false;
+      }));
+
+
+      it('should redo changes to classes if the popup menu is open',
+        inject(function(popupMenu, commandStack){
+
+        // given
+        var barEntry,
+            fooEntry = queryEntry(popupMenu, 'foo');
+
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        fooEntry = queryEntry(popupMenu, 'foo');
+        barEntry = queryEntry(popupMenu, 'bar');
+
+        expect(domClasses(fooEntry).has('active')).to.be.true;
+        expect(domClasses(barEntry).has('disabled')).to.be.true;
+      }));
+
+
+      it('should redo changes to classes after closing and opening the popup menu',
+        inject(function(popupMenu, commandStack){
+
+        // given
+        var barEntry,
+            fooEntry = queryEntry(popupMenu, 'foo');
+
+        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
+
+        // when
+        commandStack.undo();
+        popupMenu.close();
+        popupMenu.open(menu);
+        commandStack.redo();
+
+        // then
+        fooEntry = queryEntry(popupMenu, 'foo');
+        barEntry = queryEntry(popupMenu, 'bar');
+
+        expect(domClasses(fooEntry).has('active')).to.be.true;
+        expect(domClasses(barEntry).has('disabled')).to.be.true;
       }));
     });
   });
@@ -431,6 +507,8 @@ describe('features/popup', function() {
           entriesContainer = domQuery('.djs-popup-body', container);
 
       // then
+      expect(domQuery('.popup-menu1', document)).to.be.null;
+      expect(domQuery('.popup-menu2', document)).not.to.be.null;
       expect(domClasses(container).has('popup-menu2')).to.be.true;
       expect(container.style.left).to.eql('200px');
       expect(container.style.top).to.eql('200px');
@@ -608,11 +686,10 @@ describe('features/popup', function() {
         position: { x: 100, y: 100 }
       });
 
-      var entry = queryPopup(popupMenu, '.entry'),
-          evt = { target: entry, preventDefault: function(){} };
+      var entry = queryPopup(popupMenu, '.entry');
 
       // when
-      popupMenu.trigger(evt);
+      popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
 
       // then
       expect(actionListener).to.have.been.called;
@@ -622,7 +699,7 @@ describe('features/popup', function() {
     it('should add disabled and active classes', inject(function(popupMenu){
 
       // given
-      var entry, evt;
+      var entry;
 
       popupMenu.open({
         position: { x: 100, y: 100 },
@@ -631,16 +708,11 @@ describe('features/popup', function() {
           {
             id: 'foo',
             action: function(event, entry) {
-              if (entry.active) {
-                popupMenu.update(entry, { active: false });
-              } else {
-                popupMenu.update(entry, { active: true });
-              }
-              if (entry.disabled) {
-                popupMenu.update(entry, { disabled: false });
-              } else {
-                popupMenu.update(entry, { disabled: true });
-              }
+              popupMenu.updateHeaderEntries([{
+                id: entry.id,
+                active: !entry.active,
+                disabled: !entry.disabled
+              }]);
             },
             label: 'foo'
           }
@@ -649,12 +721,12 @@ describe('features/popup', function() {
 
       // when
       entry = queryEntry(popupMenu, 'foo');
-      evt = Events.create(entry, { x: 0, y: 0 });
 
-      popupMenu.trigger(evt);
+      popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
 
       // then
       entry = queryEntry(popupMenu, 'foo');
+
       expect(domClasses(entry).has('active')).to.be.true;
       expect(domClasses(entry).has('disabled')).to.be.true;
 
@@ -673,90 +745,20 @@ describe('features/popup', function() {
         headerEntries: [
           {
             id: 'my-header-entry',
-            label: 'foo'
+            active: false
           }
         ],
         position: { x: 100, y: 100 }
       });
 
       // when
-      popupMenu.update('my-header-entry', { label: 'bar' });
+      popupMenu.updateHeaderEntries([{ id: 'my-header-entry', active: true}]);
 
       var headerEntry = popupMenu._getEntry('my-header-entry');
 
       // then
-      expect(headerEntry.label).to.eql('bar');
+      expect(headerEntry.active).to.be.true;
     }));
-
-
-    it('should update a header entry by instance', inject(function(popupMenu){
-
-      // given
-
-      var headerEntry = {
-        id: 'my-header-entry',
-        label: 'foo'
-      };
-
-      popupMenu.open({
-        entries: [],
-        headerEntries: [
-          headerEntry
-        ],
-        position: { x: 100, y: 100 }
-      });
-
-      // when
-      popupMenu.update(headerEntry, { label: 'bar' });
-
-      // then
-      expect(popupMenu._getEntry(headerEntry.id).label).to.eql('bar');
-    }));
-
-
-    it('should update an entry by id', inject(function(popupMenu){
-
-      // given
-      popupMenu.open({
-        entries: [
-          {
-            id: 'my-entry',
-            label: 'foo'
-          }
-        ],
-        position: { x: 100, y: 100 }
-      });
-
-      // when
-      popupMenu.update('my-entry', { label: 'bar' });
-
-      // then
-      expect(popupMenu._getEntry('my-entry').label).to.eql('bar');
-    }));
-
-
-    it('should update an entry by instance', inject(function(popupMenu){
-
-      // given
-      popupMenu.open({
-        entries: [
-          {
-            id: 'my-entry',
-            label: 'foo'
-          }
-        ],
-        position: { x: 100, y: 100 }
-      });
-
-      var entry = popupMenu._current.menu.entries[0];
-
-      // when
-      popupMenu.update(entry, { label: 'bar' });
-
-      // then
-      expect(popupMenu._getEntry('my-entry').label).to.eql('bar');
-    }));
-
 
     it('should throw an error if no entry could be found', inject(function(popupMenu){
 
@@ -768,7 +770,7 @@ describe('features/popup', function() {
 
       // when
       expect(function() {
-        popupMenu.update('non-existent-entry', { foo: 'bar' });
+        popupMenu.updateHeaderEntries([{ id: 'non-existent-entry', active: false }]);
       }).to.throw('entry not found');
     }));
 
