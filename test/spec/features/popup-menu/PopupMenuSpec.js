@@ -33,6 +33,10 @@ describe('features/popup-menu', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
+  afterEach(inject(function(popupMenu) {
+    popupMenu.close();
+  }));
+
   describe('active attribute', function(){
 
     it('should be true for parallel marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
