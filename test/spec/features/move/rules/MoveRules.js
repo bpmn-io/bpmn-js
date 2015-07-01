@@ -21,11 +21,15 @@ MoveRules.prototype.init = function() {
     var shapes = context.shapes,
         target = context.target;
 
+
     if (shapes.length === 1 && shapes[0].id === 'attacher' && target) {
-      if (target.id === 'host') {
+
+      if (target.id === 'host' || target.id === 'host2') {
         return 'attach';
-      } else {
+      } else if (target.id === 'parent') {
         return true;
+      } else {
+        return false;
       }
     }
 
