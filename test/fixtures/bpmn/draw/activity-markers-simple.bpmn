@@ -13,6 +13,7 @@
     <bpmn2:task id="Task" name="Task" />
     <bpmn2:subProcess id="SubProcess" />
     <bpmn2:transaction id="Transaction" />
+    <bpmn2:adHocSubProcess id="AdHocSubProcess" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -33,6 +34,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Transaction__di" bpmnElement="Transaction" isExpanded="true">
         <dc:Bounds x="496" y="224" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="AdHocSubProcess_di" bpmnElement="AdHocSubProcess">
+        <dc:Bounds x="667" y="100" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

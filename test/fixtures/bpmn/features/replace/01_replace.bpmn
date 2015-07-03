@@ -28,73 +28,85 @@
       <bpmn:sequenceFlow id="SequenceFlow_4" sourceRef="StartEvent_2" targetRef="Task_2" />
     </bpmn:subProcess>
     <bpmn:transaction id="Transaction_1" />
+    <bpmn:subProcess id="SubProcessCollapsed" />
+    <bpmn:adHocSubProcess id="AdHocSubProcessCollapsed" />
+    <bpmn:adHocSubProcess id="AdHocSubProcessExpanded" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds x="171" y="171" width="36" height="36" />
+        <dc:Bounds x="99" y="34" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="144" y="207" width="90" height="20" />
+          <dc:Bounds x="72" y="70" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
-        <dc:Bounds x="346" y="149" width="100" height="80" />
+        <dc:Bounds x="274" y="12" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
-        <di:waypoint xsi:type="dc:Point" x="207" y="189" />
-        <di:waypoint xsi:type="dc:Point" x="346" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="135" y="52" />
+        <di:waypoint xsi:type="dc:Point" x="274" y="52" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="311" y="179" width="90" height="20" />
+          <dc:Bounds x="239" y="42" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds x="573" y="164" width="50" height="50" />
+        <dc:Bounds x="501" y="27" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="553" y="214" width="90" height="20" />
+          <dc:Bounds x="481" y="77" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_2_di" bpmnElement="SequenceFlow_2">
-        <di:waypoint xsi:type="dc:Point" x="446" y="189" />
-        <di:waypoint xsi:type="dc:Point" x="573" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="374" y="52" />
+        <di:waypoint xsi:type="dc:Point" x="501" y="52" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="650" y="179" width="90" height="20" />
+          <dc:Bounds x="578" y="42" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="768" y="171" width="36" height="36" />
+        <dc:Bounds x="696" y="34" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="741" y="207" width="90" height="20" />
+          <dc:Bounds x="669" y="70" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_3_di" bpmnElement="SequenceFlow_3">
-        <di:waypoint xsi:type="dc:Point" x="623" y="189" />
-        <di:waypoint xsi:type="dc:Point" x="768" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="551" y="52" />
+        <di:waypoint xsi:type="dc:Point" x="696" y="52" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="789.5" y="179" width="90" height="20" />
+          <dc:Bounds x="718" y="42" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds x="173" y="275" width="350" height="200" />
+        <dc:Bounds x="101" y="138" width="350" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Transaction_1_di" bpmnElement="Transaction_1" isExpanded="true">
-        <dc:Bounds x="562" y="275" width="350" height="200" />
+        <dc:Bounds x="490" y="138" width="350" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_2_di" bpmnElement="StartEvent_2">
-        <dc:Bounds x="225" y="355" width="36" height="36" />
+        <dc:Bounds x="153" y="218" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="198" y="391" width="90" height="20" />
+          <dc:Bounds x="126" y="254" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
-        <dc:Bounds x="359" y="333" width="100" height="80" />
+        <dc:Bounds x="287" y="196" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_4_di" bpmnElement="SequenceFlow_4">
-        <di:waypoint xsi:type="dc:Point" x="261" y="373" />
-        <di:waypoint xsi:type="dc:Point" x="359" y="373" />
+        <di:waypoint xsi:type="dc:Point" x="189" y="236" />
+        <di:waypoint xsi:type="dc:Point" x="287" y="236" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="265" y="363" width="90" height="20" />
+          <dc:Bounds x="193" y="226" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcessCollapsed_di" bpmnElement="SubProcessCollapsed">
+        <dc:Bounds x="103" y="367" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="AdHocSubProcessCollapsed_di" bpmnElement="AdHocSubProcessCollapsed">
+        <dc:Bounds x="235" y="367" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="AdHocSubProcessExpanded_di" bpmnElement="AdHocSubProcessExpanded" isExpanded="true">
+        <dc:Bounds x="374" y="368" width="140" height="120" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

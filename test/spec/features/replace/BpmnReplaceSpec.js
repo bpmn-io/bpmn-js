@@ -7,7 +7,8 @@ var TestHelper = require('../../../TestHelper');
 var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
     coreModule = require('../../../../lib/core'),
-    is = require('../../../../lib/util/ModelUtil').is;
+    is = require('../../../../lib/util/ModelUtil').is,
+    isExpanded = require('../../../../lib/util/DiUtil').isExpanded;
 
 
 describe('features/replace', function() {
@@ -21,7 +22,7 @@ describe('features/replace', function() {
 
   describe('should replace', function() {
 
-    it('task', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('task', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -40,7 +41,7 @@ describe('features/replace', function() {
     }));
 
 
-    it('gateway', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('gateway', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var gateway = elementRegistry.get('ExclusiveGateway_1');
@@ -111,8 +112,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(newElement.x).toBe(346);
-      expect(newElement.y).toBe(149);
+      expect(newElement.x).toBe(task.x);
+      expect(newElement.y).toBe(task.y);
     }));
 
   });
@@ -120,7 +121,8 @@ describe('features/replace', function() {
 
   describe('selection', function() {
 
-    it('should select after replace', inject(function(elementRegistry, selection, bpmnReplace) {
+    it('should select after replace',
+      inject(function(elementRegistry, selection, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -140,7 +142,8 @@ describe('features/replace', function() {
 
   describe('label', function() {
 
-    it('should keep copy label', inject(function(elementRegistry, bpmnReplace) {
+    it('should keep copy label',
+      inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -161,7 +164,8 @@ describe('features/replace', function() {
 
   describe('undo support', function() {
 
-    it('should undo replace', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
+    it('should undo replace',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -183,7 +187,8 @@ describe('features/replace', function() {
     }));
 
 
-    it('should redo replace', inject(function(elementRegistry, modeling, bpmnReplace, commandStack, eventBus) {
+    it('should redo replace',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -216,7 +221,8 @@ describe('features/replace', function() {
 
   describe('connection handling', function() {
 
-    it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('should reconnect valid connections',
+      inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -241,7 +247,8 @@ describe('features/replace', function() {
     }));
 
 
-    it('should remove invalid incomming connections', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('should remove invalid incomming connections',
+      inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('StartEvent_1');
@@ -262,7 +269,8 @@ describe('features/replace', function() {
     }));
 
 
-    it('should remove invalid outgoing connections', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('should remove invalid outgoing connections',
+      inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('EndEvent_1');
@@ -285,7 +293,8 @@ describe('features/replace', function() {
 
     describe('undo support', function() {
 
-      it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
+      it('should reconnect valid connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var task = elementRegistry.get('Task_1');
@@ -313,8 +322,8 @@ describe('features/replace', function() {
       }));
 
 
-      it('should remove invalid incoming connections', inject(function(elementRegistry,
-        modeling, bpmnReplace, commandStack) {
+      it('should remove invalid incoming connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
@@ -340,8 +349,8 @@ describe('features/replace', function() {
       }));
 
 
-      it('should remove invalid outgoing connections', inject(function(elementRegistry,
-         modeling, bpmnReplace, commandStack) {
+      it('should remove invalid outgoing connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var endEvent = elementRegistry.get('EndEvent_1');
@@ -371,7 +380,8 @@ describe('features/replace', function() {
 
     describe('redo support', function() {
 
-      it('should reconnect valid connections', inject(function(elementRegistry, modeling, bpmnReplace, commandStack) {
+      it('should reconnect valid connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var task = elementRegistry.get('Task_1');
@@ -398,8 +408,8 @@ describe('features/replace', function() {
       }));
 
 
-      it('should remove invalid incoming connections', inject(function(elementRegistry,
-        modeling, bpmnReplace, commandStack) {
+      it('should remove invalid incoming connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
@@ -422,8 +432,8 @@ describe('features/replace', function() {
       }));
 
 
-      it('should remove invalid outgoing connections', inject(function(elementRegistry,
-        modeling, bpmnReplace, commandStack) {
+      it('should remove invalid outgoing connections',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var endEvent = elementRegistry.get('EndEvent_1');
@@ -448,7 +458,6 @@ describe('features/replace', function() {
     });
 
   });
-
 
   describe('children handling', function() {
 
@@ -481,6 +490,83 @@ describe('features/replace', function() {
       expect(subProcessChildren).not.toContain(startEventShape.businessObject);
       expect(subProcessChildren).not.toContain(taskShape.businessObject);
       expect(subProcessChildren).not.toContain(sequenceFlowConnection.businessObject);
+    }));
+
+  });
+
+  describe('sub processes', function() {
+
+    it('should allow morphing expanded into expanded ad hoc',
+      inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('SubProcess_1');
+      var newElementData = {
+        type: 'bpmn:AdHocSubProcess'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(true);
+      expect(isExpanded(newElement)).toBe(true);
+    }));
+
+
+    it('should allow morphing expanded ad hoc into expanded',
+      inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('AdHocSubProcessExpanded');
+      var newElementData = {
+        type: 'bpmn:SubProcess'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).toBe(true);
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(false);
+      expect(isExpanded(newElement)).toBe(true);
+    }));
+
+
+    it('should allow morphing collapsed into collapsed ad hoc',
+      inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('SubProcessCollapsed');
+      var newElementData = {
+        type: 'bpmn:AdHocSubProcess'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(true);
+      expect(isExpanded(newElement)).not.toBe(true);
+    }));
+
+
+    it('should allow morphing collapsed ad hoc into collapsed',
+      inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('AdHocSubProcessCollapsed');
+      var newElementData = {
+        type: 'bpmn:SubProcess'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).toBe(true);
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(false);
+      expect(isExpanded(newElement)).not.toBe(true);
     }));
 
   });
