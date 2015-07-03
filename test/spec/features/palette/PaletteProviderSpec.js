@@ -27,7 +27,7 @@ describe('features/palette', function() {
     var entries = domQuery.all('.entry', paletteElement);
 
     // then
-    expect(entries.length).toBe(10);
+    expect(entries.length).toBe(9);
   }));
 
 });

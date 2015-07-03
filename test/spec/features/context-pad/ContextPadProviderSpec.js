@@ -46,7 +46,7 @@ describe('features - context-pad', function() {
           padding = 5,
           replaceMenuRect,
           padMenuRect;
-      
+
       contextPad.open(element);
       padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
 
@@ -58,7 +58,7 @@ describe('features - context-pad', function() {
 
       // when
       contextPad.trigger('click', event);
-      replaceMenuRect = domQuery('.replace-menu', container).getBoundingClientRect();    
+      replaceMenuRect = domQuery('.replace-menu', container).getBoundingClientRect();
 
       // then
       expect(replaceMenuRect.left).not.toBeGreaterThan(padMenuRect.left);
