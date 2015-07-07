@@ -247,6 +247,93 @@ describe('features/modeling - #removeShape', function() {
       expect(parentShape.attachers).to.eql([ attachedShape, attachedShape2, attachedShape3, attachedShape4 ]);
     }));
 
+
+    it('should remove all attached shapes when removing host',
+      inject(function(commandStack, modeling, elementRegistry) {
+
+      // when
+      modeling.removeShape(parentShape);
+
+      // then
+      var parent = elementRegistry.get('parent');
+
+      var attacher = elementRegistry.get('attachedShape');
+
+      var attacher2 = elementRegistry.get('attachedShape2');
+
+      var attacher3 = elementRegistry.get('attachedShape3');
+
+      var attacher4 = elementRegistry.get('attachedShape4');
+
+
+      expect(parent).to.not.exist;
+
+      expect(attacher).to.not.exist;
+      expect(attacher2).to.not.exist;
+      expect(attacher3).to.not.exist;
+      expect(attacher4).to.not.exist;
+    }));
+
+
+    it('should add all attached shapes on host removal -> undo',
+      inject(function(commandStack, modeling, elementRegistry) {
+
+      // given
+      modeling.removeShape(parentShape);
+
+      // when
+      commandStack.undo();
+
+      // then
+      var parent = elementRegistry.get('parent');
+
+      var attacher = elementRegistry.get('attachedShape');
+
+      var attacher2 = elementRegistry.get('attachedShape2');
+
+      var attacher3 = elementRegistry.get('attachedShape3');
+
+      var attacher4 = elementRegistry.get('attachedShape4');
+
+      expect(parent).to.exist;
+      expect(parent.attachers).to.eql([attacher, attacher2, attacher3, attacher4 ]);
+
+      expect(attacher).to.exist;
+      expect(attacher2).to.exist;
+      expect(attacher3).to.exist;
+      expect(attacher4).to.exist;
+    }));
+
+
+    it('should remove all attached shapes on host removal -> redo',
+      inject(function(commandStack, modeling, elementRegistry) {
+
+      // given
+      modeling.removeShape(parentShape);
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      var parent = elementRegistry.get('parent');
+
+      var attacher = elementRegistry.get('attachedShape');
+
+      var attacher2 = elementRegistry.get('attachedShape2');
+
+      var attacher3 = elementRegistry.get('attachedShape3');
+
+      var attacher4 = elementRegistry.get('attachedShape4');
+
+      expect(parent).to.not.exist;
+
+      expect(attacher).to.not.exist;
+      expect(attacher2).to.not.exist;
+      expect(attacher3).to.not.exist;
+      expect(attacher4).to.not.exist;
+    }));
+
   });
 
 });
