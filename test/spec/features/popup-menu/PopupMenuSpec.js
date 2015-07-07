@@ -5,9 +5,12 @@
 var fs = require('fs');
 
 var domQuery = require('min-dom/lib/query'),
-    domClasses = require('min-dom/lib/classes'),
-    Events = require('../../../util/Events'),
-    popupMenuModule = require('../../../../lib/features/popup-menu'),
+    domClasses = require('min-dom/lib/classes');
+
+var Events = require('../../../util/Events'),
+    IdGenerator = require('../../../../lib/util/IdGenerator');
+
+var popupMenuModule = require('../../../../lib/features/popup-menu'),
     modelingModule = require('../../../../lib/features/modeling'),
     commandStack = require('../../../../lib/command');
 
@@ -24,18 +27,14 @@ describe('features/popup', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ popupMenuModule, commandStack, modelingModule ] }));
 
-  afterEach(inject(function(popupMenu){
-    popupMenu.close();
-  }));
-
   describe('bootstrap', function() {
 
     it('overlay to be defined', inject(function(popupMenu) {
       expect(popupMenu).to.be.defined;
       expect(popupMenu.open).to.be.defined;
     }));
-  });
 
+  });
 
   describe('#open', function() {
 
@@ -72,6 +71,7 @@ describe('features/popup', function() {
 
       // then
       var container = popupMenu._current.container;
+
       expect(domClasses(container).has('djs-popup')).to.be.true;
       expect(domClasses(container).has('test-popup')).to.be.true;
     }));
@@ -91,6 +91,7 @@ describe('features/popup', function() {
 
       // then
       var element = queryPopup(popupMenu, '.firstEntry');
+
       expect(element.textContent).to.eql('Entry 1');
     }));
 
@@ -117,8 +118,8 @@ describe('features/popup', function() {
       expect(entry2.getAttribute('data-id')).to.eql('load');
       expect(entry3.getAttribute('data-id')).to.eql('undo');
     }));
-  });
 
+  });
 
   describe('#close', function() {
 
@@ -152,12 +153,10 @@ describe('features/popup', function() {
       popupMenu.close();
 
       // then
-      expect(function() {
-        popupMenu.close();
-      }).not.to.throw;
+      expect(popupMenu.close).not.to.throw;
     }));
-  });
 
+  });
 
   describe('#trigger', function () {
 
@@ -198,11 +197,9 @@ describe('features/popup', function() {
 
   });
 
-
   describe('integration', function() {
 
     describe('events', function() {
-
 
       it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
 
@@ -217,6 +214,7 @@ describe('features/popup', function() {
 
         // then
         var open = popupMenu.isOpen();
+
         expect(open).to.be.false;
       }));
 
@@ -234,19 +232,22 @@ describe('features/popup', function() {
 
         // then
         var open = popupMenu.isOpen();
+
         expect(open).to.be.false;
       }));
 
     });
 
-
     describe('header entries', function() {
 
       var menu;
+      var popupIds = new IdGenerator('popup');
+      var currentId;
 
       beforeEach(inject(function(popupMenu){
-
+        currentId = popupIds.next();
         menu = {
+          className: currentId,
           position: { x: 100, y: 100 },
           entries: [],
           headerEntries: [
@@ -275,7 +276,6 @@ describe('features/popup', function() {
             }
           ]
         };
-
         popupMenu.open(menu);
       }));
 
@@ -369,8 +369,11 @@ describe('features/popup', function() {
 
         // when
         commandStack.undo();
+
         popupMenu.close();
+
         popupMenu.open(menu);
+
         commandStack.redo();
 
         // then
@@ -380,7 +383,9 @@ describe('features/popup', function() {
         expect(domClasses(fooEntry).has('active')).to.be.true;
         expect(domClasses(barEntry).has('disabled')).to.be.true;
       }));
+
     });
+
   });
 
 
@@ -401,6 +406,7 @@ describe('features/popup', function() {
 
       // then
       var elements = domQuery.all('.entry', popupMenu._current.container);
+
       expect(elements.length).to.eql(2);
     }));
 
@@ -419,6 +425,7 @@ describe('features/popup', function() {
 
       // then
       var element = queryPopup(popupMenu, '.special-entry');
+
       expect(element.textContent).to.eql('Entry 2 - special');
     }));
 
@@ -475,22 +482,19 @@ describe('features/popup', function() {
 
   });
 
-
   describe('singleton handling', function() {
 
     it('should update the popup menu, when it is opened again' , inject(function(popupMenu) {
 
       // when
-      popupMenu.open(
-        {
+      popupMenu.open({
           className: 'popup-menu1',
           position: { x: 100, y: 100, },
           entries: [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2' }
           ]
-        }
-      );
+      });
 
       popupMenu.open(
         {
@@ -509,15 +513,17 @@ describe('features/popup', function() {
       // then
       expect(domQuery('.popup-menu1', document)).to.be.null;
       expect(domQuery('.popup-menu2', document)).not.to.be.null;
+
       expect(domClasses(container).has('popup-menu2')).to.be.true;
+
       expect(container.style.left).to.eql('200px');
       expect(container.style.top).to.eql('200px');
+
       expect(entriesContainer.childNodes[0].textContent).to.eql('Entry A');
       expect(entriesContainer.childNodes[1].textContent).to.eql('Entry B');
     }));
 
   });
-
 
   describe('#isOpen', function(){
 
@@ -554,7 +560,6 @@ describe('features/popup', function() {
 
   });
 
-
   describe('header', function() {
 
     it('should throw an error, if the id of a header entry is not set', inject(function(popupMenu){
@@ -571,7 +576,6 @@ describe('features/popup', function() {
         popupMenu.open(menu);
       }).to.throw('every entry must have the id property set');
     }));
-
 
 
     it('should be attached to the top of the popup menu, if set' , inject(function(popupMenu) {
@@ -639,6 +643,7 @@ describe('features/popup', function() {
 
       // then
       var headerEntry = queryPopup(popupMenu, '.label-1');
+
       expect(headerEntry.textContent).to.eql('foo');
     }));
 
@@ -702,6 +707,7 @@ describe('features/popup', function() {
       var entry;
 
       popupMenu.open({
+        className: 'myPopup',
         position: { x: 100, y: 100 },
         entries: [],
         headerEntries: [
@@ -729,11 +735,9 @@ describe('features/popup', function() {
 
       expect(domClasses(entry).has('active')).to.be.true;
       expect(domClasses(entry).has('disabled')).to.be.true;
-
     }));
 
   });
-
 
   describe('#update', function() {
 
