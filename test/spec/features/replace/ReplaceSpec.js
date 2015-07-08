@@ -5,6 +5,8 @@
 var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace');
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/Replace', function() {
 
@@ -168,6 +170,46 @@ describe('features/Replace', function() {
 
       // then
       expect(replacedShape.incoming[0]).to.be.defined;
+    }));
+
+
+    it('should adopt children', inject(function(elementFactory, replace, elementRegistry) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 300,
+        height: 300
+      };
+
+      // when
+      var newShape = replace.replaceElement(parentShape, replacement);
+
+      // then
+      expect(newShape.children).to.contain(originalShape);
+      expect(newShape.children).to.contain(targetShape);
+
+    }));
+
+
+    it('should adopt children and show them in the DOM',
+      inject(function(canvas, elementFactory, replace, elementRegistry) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 300,
+        height: 300
+      };
+
+      // when
+      replace.replaceElement(parentShape, replacement);
+
+      var newShapeContainer = domQuery('[data-element-id="replacement"]', canvas.getContainer());
+
+      // then
+      expect(domQuery('[data-element-id="originalShape"]', newShapeContainer.parentNode)).to.exist;
+      expect(domQuery('[data-element-id="targetShape"]', newShapeContainer.parentNode)).to.exist;
     }));
   });
 
