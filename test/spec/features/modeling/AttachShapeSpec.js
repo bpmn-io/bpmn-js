@@ -174,4 +174,75 @@ describe('features/modeling - attach shape', function() {
 
   });
 
+  describe('connections', function () {
+
+    var child, connection;
+
+    beforeEach(inject(function(canvas, elementFactory) {
+
+      child = elementFactory.createShape({
+        id: 'child',
+        x: 700, y: 400,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(child, rootShape);
+
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [
+          { x: 400, y: 110 },
+          { x: 750, y: 450 },
+        ],
+        source: attacher,
+        target: child
+      });
+
+      canvas.addConnection(connection, rootShape);
+    }));
+
+    it('should not remove connection when changing host', inject(function(modeling) {
+      // when
+      modeling.attachShape(attacher, host, true);
+
+      expect(attacher.outgoing.length).to.eql(1);
+
+      expect(child.incoming.length).to.eql(1);
+    }));
+
+
+    it('should remove connection when detaching', inject(function(modeling) {
+      // when
+      modeling.attachShape(attacher, rootShape, false);
+
+      expect(attacher.outgoing.length).to.eql(0);
+
+      expect(child.incoming.length).to.eql(0);
+    }));
+
+
+    it('should remove connection when attaching to the host where it is connected to',
+      inject(function(modeling) {
+      // when
+      modeling.attachShape(attacher, child, true);
+
+      expect(attacher.outgoing.length).to.eql(0);
+
+      expect(child.incoming.length).to.eql(0);
+    }));
+
+
+    it('should add connection when detaching -> undo', inject(function(modeling, commandStack) {
+      // when
+      modeling.attachShape(attacher, rootShape, false);
+
+      commandStack.undo();
+
+      expect(attacher.outgoing.length).to.eql(1);
+
+      expect(child.incoming.length).to.eql(1);
+    }));
+
+  });
+
 });

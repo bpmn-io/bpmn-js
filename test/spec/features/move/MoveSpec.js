@@ -316,7 +316,8 @@ describe('features/move - Move', function() {
     }));
 
 
-    it('should reattach to host -> detachment (undo)', inject(function(move, dragging, elementRegistry, eventBus, commandStack) {
+    it('should reattach to host -> detachment (undo)',
+      inject(function(move, dragging, elementRegistry, eventBus, commandStack) {
       // given
       var parentGfx = elementRegistry.getGraphics(parentShape);
 
