@@ -5,6 +5,11 @@
 
 var modelingModule = require('../../../../lib/features/modeling');
 
+function items(collection) {
+  return collection.map(function(e) {
+    return e;
+  });
+}
 
 describe('features/modeling - #removeShape', function() {
 
@@ -28,7 +33,9 @@ describe('features/modeling - #removeShape', function() {
     canvas.addShape(parentShape, rootShape);
   }));
 
+
   describe('basics', function () {
+
     var childShape, childShape2, connection;
 
     beforeEach(inject(function(elementFactory, canvas) {
@@ -117,6 +124,7 @@ describe('features/modeling - #removeShape', function() {
       expect(connection.parent).to.equal(parentShape);
     }));
 
+
     it('should remove label', inject(function(modeling) {
 
       var label = modeling.createLabel(childShape, { x: 160, y: 145 });
@@ -160,41 +168,66 @@ describe('features/modeling - #removeShape', function() {
 
   });
 
+
   describe('attachment', function () {
 
-    var attachedShape, attachedShape2, attachedShape3, attachedShape4;
+    var child, connection, attachedShape, attachedShape2, attachedShape3, attachedShape4;
 
-    beforeEach(inject(function(modeling, elementFactory) {
+    beforeEach(inject(function(modeling, elementFactory, canvas) {
+
+      child = elementFactory.createShape({
+        id: 'child',
+        x: 600, y: 75,
+        width: 50, height: 50
+      });
+
+      canvas.addShape(child, rootShape);
 
       attachedShape = elementFactory.createShape({
         id: 'attachedShape',
-        x: 200, y: 110, width: 50, height: 50
+        x: 75, y: 75, width: 50, height: 50,
+        host: parentShape
       });
 
-      modeling.createShape(attachedShape, { x: 100, y: 100 }, parentShape, true);
+      canvas.addShape(attachedShape, rootShape);
 
       attachedShape2 = elementFactory.createShape({
         id: 'attachedShape2',
-        x: 0, y: 0, width: 50, height: 50
+        x: 375, y: 75, width: 50, height: 50,
+        host: parentShape
       });
 
-      modeling.createShape(attachedShape2, { x: 400, y: 100 }, parentShape, true);
+      canvas.addShape(attachedShape2, rootShape);
 
       attachedShape3 = elementFactory.createShape({
         id: 'attachedShape3',
-        x: 0, y: 0, width: 50, height: 50
+        x: 75, y: 375, width: 50, height: 50,
+        host: parentShape
       });
 
-      modeling.createShape(attachedShape3, { x: 100, y: 400 }, parentShape, true);
+      canvas.addShape(attachedShape3, rootShape);
 
       attachedShape4 = elementFactory.createShape({
         id: 'attachedShape4',
-        x: 0, y: 0, width: 50, height: 50
+        x: 375, y: 375, width: 50, height: 50,
+        host: parentShape
       });
 
-      modeling.createShape(attachedShape4, { x: 400, y: 400 }, parentShape, true);
+      canvas.addShape(attachedShape4, rootShape);
 
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        source: attachedShape2,
+        target: child,
+        waypoints: [
+          { x: 400, y: 100 },
+          { x: 625, y: 100 }
+        ]
+      });
+
+      canvas.addConnection(connection, rootShape);
     }));
+
 
     it('should remove attacher from host', inject(function(modeling) {
 
@@ -217,67 +250,73 @@ describe('features/modeling - #removeShape', function() {
       expect(parentShape.attachers).to.include(attachedShape);
     }));
 
-    it('should only have one attacher on remove', inject(function(modeling) {
 
+    describe('remove multiple', function() {
+
+      it('should execute', inject(function(modeling) {
+
+        // when
+        modeling.removeShape(attachedShape2);
+
+        modeling.removeShape(attachedShape3);
+
+        // then
+        expect(items(parentShape.attachers)).to.eql([ attachedShape, attachedShape4 ]);
+      }));
+
+
+      it('should undo', inject(function(commandStack, modeling) {
+
+        // given
+        var originalAttachers = items(parentShape.attachers);
+
+        modeling.removeShape(attachedShape2);
+
+        modeling.removeShape(attachedShape4);
+
+        // when
+        commandStack.undo();
+
+        commandStack.undo();
+
+        // then
+        expect(items(parentShape.attachers)).to.eql(originalAttachers);
+      }));
+
+    });
+
+
+    it('should remove connection when deleting shape', inject(function(modeling) {
       // when
       modeling.removeShape(attachedShape2);
 
-      modeling.removeShape(attachedShape3);
-
       // then
-      expect(parentShape.attachers).to.have.length(2);
-      expect(parentShape.attachers).to.include(attachedShape4);
+      expect(child.incoming).to.have.length(0);
     }));
 
 
-    it('should have 3 attachers on remove UNDO', inject(function(commandStack, modeling) {
-
+    it('should add connection when deleting shape -> undo', inject(function(commandStack, modeling) {
       // given
       modeling.removeShape(attachedShape2);
 
-      modeling.removeShape(attachedShape4);
-
       // when
       commandStack.undo();
 
-      commandStack.undo();
-
       // then
-      expect(parentShape.attachers).to.have.length(4);
-      expect(parentShape.attachers).to.eql([ attachedShape, attachedShape2, attachedShape3, attachedShape4 ]);
+      expect(child.incoming).to.have.length(1);
     }));
 
 
-    it('should remove all attached shapes when removing host',
-      inject(function(commandStack, modeling, elementRegistry) {
-
+    it('should remove connection when deleting host of connected shape', inject(function(modeling) {
       // when
       modeling.removeShape(parentShape);
 
       // then
-      var parent = elementRegistry.get('parent');
-
-      var attacher = elementRegistry.get('attachedShape');
-
-      var attacher2 = elementRegistry.get('attachedShape2');
-
-      var attacher3 = elementRegistry.get('attachedShape3');
-
-      var attacher4 = elementRegistry.get('attachedShape4');
-
-
-      expect(parent).to.not.exist;
-
-      expect(attacher).to.not.exist;
-      expect(attacher2).to.not.exist;
-      expect(attacher3).to.not.exist;
-      expect(attacher4).to.not.exist;
+      expect(child.incoming).to.have.length(0);
     }));
 
 
-    it('should add all attached shapes on host removal -> undo',
-      inject(function(commandStack, modeling, elementRegistry) {
-
+    it('should add connection when deleting host of connected shape -> undo', inject(function(commandStack, modeling) {
       // given
       modeling.removeShape(parentShape);
 
@@ -285,54 +324,96 @@ describe('features/modeling - #removeShape', function() {
       commandStack.undo();
 
       // then
-      var parent = elementRegistry.get('parent');
-
-      var attacher = elementRegistry.get('attachedShape');
-
-      var attacher2 = elementRegistry.get('attachedShape2');
-
-      var attacher3 = elementRegistry.get('attachedShape3');
-
-      var attacher4 = elementRegistry.get('attachedShape4');
-
-      expect(parent).to.exist;
-      expect(parent.attachers).to.eql([attacher, attacher2, attacher3, attacher4 ]);
-
-      expect(attacher).to.exist;
-      expect(attacher2).to.exist;
-      expect(attacher3).to.exist;
-      expect(attacher4).to.exist;
+      expect(child.incoming).to.have.length(1);
     }));
 
 
-    it('should remove all attached shapes on host removal -> redo',
-      inject(function(commandStack, modeling, elementRegistry) {
+    describe('remove attachers shapes with host', function() {
 
-      // given
-      modeling.removeShape(parentShape);
+      it('should execute', inject(function(modeling, elementRegistry) {
 
-      // when
-      commandStack.undo();
-      commandStack.redo();
+        // when
+        modeling.removeShape(parentShape);
 
-      // then
-      var parent = elementRegistry.get('parent');
+        // then
+        var parent = elementRegistry.get('parent');
 
-      var attacher = elementRegistry.get('attachedShape');
+        var attacher = elementRegistry.get('attachedShape');
 
-      var attacher2 = elementRegistry.get('attachedShape2');
+        var attacher2 = elementRegistry.get('attachedShape2');
 
-      var attacher3 = elementRegistry.get('attachedShape3');
+        var attacher3 = elementRegistry.get('attachedShape3');
 
-      var attacher4 = elementRegistry.get('attachedShape4');
+        var attacher4 = elementRegistry.get('attachedShape4');
 
-      expect(parent).to.not.exist;
 
-      expect(attacher).to.not.exist;
-      expect(attacher2).to.not.exist;
-      expect(attacher3).to.not.exist;
-      expect(attacher4).to.not.exist;
-    }));
+        expect(parent).to.not.exist;
+
+        expect(attacher).to.not.exist;
+        expect(attacher2).to.not.exist;
+        expect(attacher3).to.not.exist;
+        expect(attacher4).to.not.exist;
+      }));
+
+
+      it('should undo', inject(function(commandStack, modeling, elementRegistry) {
+
+        // given
+        modeling.removeShape(parentShape);
+
+        // when
+        commandStack.undo();
+
+        // then
+        var parent = elementRegistry.get('parent');
+
+        var attacher = elementRegistry.get('attachedShape');
+
+        var attacher2 = elementRegistry.get('attachedShape2');
+
+        var attacher3 = elementRegistry.get('attachedShape3');
+
+        var attacher4 = elementRegistry.get('attachedShape4');
+
+        expect(parent).to.exist;
+        expect(items(parent.attachers)).to.eql([attacher, attacher2, attacher3, attacher4 ]);
+
+        expect(attacher).to.exist;
+        expect(attacher2).to.exist;
+        expect(attacher3).to.exist;
+        expect(attacher4).to.exist;
+      }));
+
+
+      it('should redo', inject(function(commandStack, modeling, elementRegistry) {
+
+        // given
+        modeling.removeShape(parentShape);
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        var parent = elementRegistry.get('parent');
+
+        var attacher = elementRegistry.get('attachedShape');
+
+        var attacher2 = elementRegistry.get('attachedShape2');
+
+        var attacher3 = elementRegistry.get('attachedShape3');
+
+        var attacher4 = elementRegistry.get('attachedShape4');
+
+        expect(parent).to.not.exist;
+
+        expect(attacher).to.not.exist;
+        expect(attacher2).to.not.exist;
+        expect(attacher3).to.not.exist;
+        expect(attacher4).to.not.exist;
+      }));
+
+    });
 
   });
 

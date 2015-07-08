@@ -5,14 +5,15 @@
 
 var modelingModule = require('../../../../lib/features/modeling');
 
-describe('features/modeling - attach shape', function() {
 
+describe('features/modeling - attach shape', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
-  var rootShape, parentShape, host, attacher, attacher2;
 
-  beforeEach(inject(function(elementFactory, modeling, canvas) {
+  var rootShape, oldHostShape, hostShape, attachedShape, detachedShape;
+
+  beforeEach(inject(function(elementFactory, canvas) {
 
     rootShape = elementFactory.createRoot({
       id: 'root'
@@ -20,227 +21,286 @@ describe('features/modeling - attach shape', function() {
 
     canvas.setRootElement(rootShape);
 
-    parentShape = elementFactory.createShape({
+    oldHostShape = elementFactory.createShape({
       id: 'parent',
       x: 100, y: 100,
       width: 300, height: 300
     });
 
-    canvas.addShape(parentShape, rootShape);
+    canvas.addShape(oldHostShape, rootShape);
 
-    host = elementFactory.createShape({
-      id:'host',
+    hostShape = elementFactory.createShape({
+      id: 'hostShape',
       x: 700, y: 100,
       width: 100, height: 100
     });
 
-    canvas.addShape(host, rootShape);
+    canvas.addShape(hostShape, rootShape);
 
-    attacher = elementFactory.createShape({
-      id: 'attacher',
+    attachedShape = elementFactory.createShape({
+      id: 'attachedShape',
       x: 400, y: 110,
-      width: 50, height: 50
+      width: 50, height: 50,
+      host: oldHostShape
     });
 
-    modeling.createShape(attacher, { x: 400, y: 110 }, parentShape, 'attach');
+    canvas.addShape(attachedShape, rootShape);
 
-    attacher2 = elementFactory.createShape({
-      id: 'attacher2',
+    detachedShape = elementFactory.createShape({
+      id: 'detachedShape',
       x: 400, y: 400,
       width: 50, height: 50
     });
 
-    canvas.addShape(attacher2, rootShape);
+    canvas.addShape(detachedShape, rootShape);
   }));
 
-  describe('detach', function () {
 
-    it('should detach shape from host', inject(function(modeling) {
-      // when
-      modeling.attachShape(attacher, rootShape, false);
+  describe('initial state', function() {
 
-      // then
-      expect(attacher.host).to.be.null;
-      expect(parentShape.attachers).to.not.include(attacher);
-    }));
+    it('should have wired host <-> attachers', inject(function() {
 
+      // assume
+      expect(oldHostShape.attachers).to.contain(attachedShape);
+      expect(oldHostShape.attachers).not.to.contain(detachedShape);
 
-    it('should reattach shape to original host on undo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher, rootShape, false);
-
-      commandStack.undo();
-
-      // then
-      expect(attacher.host).to.equal(parentShape);
-      expect(parentShape.attachers).to.include(attacher);
-    }));
-
-
-    it('should detach shape on undo -> redo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher, rootShape, false);
-
-      commandStack.undo();
-
-      commandStack.redo();
-
-      // then
-      expect(attacher.host).to.be.null;
-      expect(parentShape.attachers).to.not.include(attacher);
+      expect(attachedShape.host).to.eql(oldHostShape);
+      expect(detachedShape.host).not.to.exist;
     }));
 
   });
 
-  describe('attach', function () {
 
-    it('should attach shape', inject(function(modeling) {
+  describe('detach attached shape', function() {
+
+    it('should execute', inject(function(modeling) {
+
       // when
-      modeling.attachShape(attacher2, host, true);
+      modeling.attachShape(attachedShape, null);
 
       // then
-      expect(attacher2.host).to.equal(host);
-      expect(host.attachers).to.include(attacher2);
+      expect(attachedShape.host).not.to.exist;
+      expect(oldHostShape.attachers).not.to.include(attachedShape);
     }));
 
 
-    it('should detach shape on undo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher2, host, true);
+    it('should undo', inject(function(modeling, commandStack) {
 
+      // given
+      modeling.attachShape(attachedShape, null);
+
+      // when
       commandStack.undo();
 
       // then
-      expect(attacher2.host).to.be.null;
-      expect(host.attachers).to.not.include(attacher2);
+      expect(attachedShape.host).to.equal(oldHostShape);
+      expect(oldHostShape.attachers).to.include(attachedShape);
     }));
 
-    it('should attach shape on undo -> redo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher2, host, true);
+
+    it('should redo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.attachShape(attachedShape, null);
 
       commandStack.undo();
 
+      // when
       commandStack.redo();
 
       // then
-      expect(attacher2.host).to.equal(host);
-      expect(host.attachers).to.include(attacher2);
+      expect(attachedShape.host).not.to.exist;
+      expect(oldHostShape.attachers).to.not.include(attachedShape);
     }));
 
   });
 
-  describe('reattach', function () {
-    it('should reattach shape to another host', inject(function(modeling) {
+
+  describe('attach detached shape', function() {
+
+    it('should execute', inject(function(modeling) {
+
       // when
-      modeling.attachShape(attacher, host, true);
+      modeling.attachShape(detachedShape, hostShape);
 
       // then
-      expect(attacher.host).to.equal(host);
-
-      expect(host.attachers).to.include(attacher);
-      expect(parentShape.attachers).to.not.include(attacher);
+      expect(detachedShape.host).to.equal(hostShape);
+      expect(hostShape.attachers).to.include(detachedShape);
     }));
 
 
-    it('should reattach shape to original host on undo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher, host, true);
+    it('should undo', inject(function(modeling, commandStack) {
 
+      // given
+      modeling.attachShape(detachedShape, hostShape);
+
+      // when
       commandStack.undo();
 
       // then
-      expect(attacher.host).to.equal(parentShape);
-
-      expect(parentShape.attachers).to.include(attacher);
-      expect(host.attachers).to.not.include(attacher);
+      expect(detachedShape.host).not.to.exist;
+      expect(hostShape.attachers).to.not.include(detachedShape);
     }));
 
 
-    it('should reattach shape to another host on undo -> redo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher, host, true);
+    it('should redo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.attachShape(detachedShape, hostShape);
 
       commandStack.undo();
 
+      // when
       commandStack.redo();
 
       // then
-      expect(attacher.host).to.equal(host);
-
-      expect(host.attachers).to.include(attacher);
-      expect(parentShape.attachers).to.not.include(attacher);
+      expect(detachedShape.host).to.equal(hostShape);
+      expect(hostShape.attachers).to.include(detachedShape);
     }));
 
   });
 
-  describe('connections', function () {
 
-    var child, connection;
+  describe('reattach attached shape', function () {
+
+    it('should execute', inject(function(modeling) {
+
+      // when
+      modeling.attachShape(attachedShape, hostShape);
+
+      // then
+      expect(attachedShape.host).to.equal(hostShape);
+
+      expect(hostShape.attachers).to.include(attachedShape);
+      expect(oldHostShape.attachers).to.not.include(attachedShape);
+    }));
+
+
+    it('should undo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.attachShape(attachedShape, hostShape);
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(attachedShape.host).to.equal(oldHostShape);
+
+      expect(oldHostShape.attachers).to.include(attachedShape);
+      expect(hostShape.attachers).to.not.include(attachedShape);
+    }));
+
+
+    it('should redo', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.attachShape(attachedShape, hostShape);
+
+      commandStack.undo();
+
+      // when
+      commandStack.redo();
+
+      // then
+      expect(attachedShape.host).to.equal(hostShape);
+
+      expect(hostShape.attachers).to.include(attachedShape);
+      expect(oldHostShape.attachers).to.not.include(attachedShape);
+    }));
+
+  });
+
+
+  describe('connection handling', function () {
+
+    var connectedShape, connectionToAttached, connectionToDetached;
 
     beforeEach(inject(function(canvas, elementFactory) {
 
-      child = elementFactory.createShape({
-        id: 'child',
+      connectedShape = elementFactory.createShape({
+        id: 'connectedShape',
         x: 700, y: 400,
         width: 100, height: 100
       });
 
-      canvas.addShape(child, rootShape);
+      canvas.addShape(connectedShape, rootShape);
 
-      connection = elementFactory.createConnection({
-        id: 'connection',
+      connectionToAttached = elementFactory.createConnection({
+        id: 'connectionToAttached',
         waypoints: [
           { x: 400, y: 110 },
           { x: 750, y: 450 },
         ],
-        source: attacher,
-        target: child
+        source: attachedShape,
+        target: connectedShape
       });
 
-      canvas.addConnection(connection, rootShape);
-    }));
-
-    it('should not remove connection when changing host', inject(function(modeling) {
-      // when
-      modeling.attachShape(attacher, host, true);
-
-      expect(attacher.outgoing.length).to.eql(1);
-
-      expect(child.incoming.length).to.eql(1);
-    }));
+      canvas.addConnection(connectionToAttached, rootShape);
 
 
-    it('should remove connection when detaching', inject(function(modeling) {
-      // when
-      modeling.attachShape(attacher, rootShape, false);
+      connectionToDetached = elementFactory.createConnection({
+        id: 'connectionToDetached',
+        waypoints: [
+          { x: 425, y: 425 },
+          { x: 750, y: 450 },
+        ],
+        source: detachedShape,
+        target: connectedShape
+      });
 
-      expect(attacher.outgoing.length).to.eql(0);
-
-      expect(child.incoming.length).to.eql(0);
+      canvas.addConnection(connectionToDetached, rootShape);
     }));
 
 
-    it('should remove connection when attaching to the host where it is connected to',
-      inject(function(modeling) {
+    it('should keep connection when reattaching', inject(function(modeling) {
+
       // when
-      modeling.attachShape(attacher, child, true);
+      modeling.attachShape(attachedShape, hostShape);
 
-      expect(attacher.outgoing.length).to.eql(0);
+      // then
+      expect(attachedShape.outgoing).to.have.lengthOf(1);
 
-      expect(child.incoming.length).to.eql(0);
+      expect(connectedShape.incoming).to.have.lengthOf(2);
     }));
 
 
-    it('should add connection when detaching -> undo', inject(function(modeling, commandStack) {
-      // when
-      modeling.attachShape(attacher, rootShape, false);
+    it('should keep connection when detaching', inject(function(modeling) {
 
+      // when
+      modeling.attachShape(attachedShape, null);
+
+      // then
+      expect(attachedShape.outgoing).to.have.lengthOf(1);
+
+      expect(connectedShape.incoming).to.have.lengthOf(2);
+    }));
+
+
+    it('should keep connection when attaching', inject(function(modeling) {
+
+      // when
+      modeling.attachShape(detachedShape, hostShape);
+
+      // then
+      expect(detachedShape.outgoing).to.have.lengthOf(1);
+
+      expect(connectedShape.incoming).to.have.lengthOf(2);
+    }));
+
+
+    it('should keep connection when undoing detach', inject(function(modeling, commandStack) {
+
+      // given
+      modeling.attachShape(attachedShape, null);
+
+      // when
       commandStack.undo();
 
-      expect(attacher.outgoing.length).to.eql(1);
+      // then
+      expect(attachedShape.outgoing).to.have.lengthOf(1);
 
-      expect(child.incoming.length).to.eql(1);
+      expect(connectedShape.incoming).to.have.lengthOf(2);
     }));
 
   });

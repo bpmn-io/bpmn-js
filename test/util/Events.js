@@ -40,6 +40,16 @@ function scopedCreate(canvas) {
 
   var E = target(canvas._svg);
 
+  /**
+   * Create an event with global coordinates
+   * computed based on the canvas position and the
+   * specified canvas local coordinates.
+   *
+   * @param {Point} point of the event local the canvas (closure)
+   * @param {Object} data
+   *
+   * @return {Event} event, scoped to the given canvas
+   */
   return function(point, data) {
 
     var clientRect = canvas._container.getBoundingClientRect();

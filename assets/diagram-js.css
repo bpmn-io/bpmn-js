@@ -53,7 +53,7 @@ svg.drop-not-ok {
 }
 
 .djs-element.attach-ok .djs-visual > :nth-child(1) {
-  stroke-width: 4px !important;
+  stroke-width: 5px !important;
   stroke: rgba(255, 116, 0, 0.7);
 }
 
