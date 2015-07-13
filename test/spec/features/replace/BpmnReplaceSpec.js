@@ -61,7 +61,7 @@ describe('features/replace', function() {
 
 
     it('expanded sub process', inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
-      
+
       // given
       var subProcess = elementRegistry.get('SubProcess_1'),
           newElementData = {
@@ -80,7 +80,7 @@ describe('features/replace', function() {
 
 
     it('transaction', inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
-      
+
       var transaction = elementRegistry.get('Transaction_1'),
           newElementData = {
             type: 'bpmn:SubProcess',
@@ -446,6 +446,42 @@ describe('features/replace', function() {
       }));
 
     });
+
+  });
+
+
+  describe('children handling', function() {
+
+    it('should update bpmn containment properly', inject(function(elementRegistry, modeling, bpmnReplace) {
+
+      // given
+      var subProcessShape = elementRegistry.get('SubProcess_1');
+      var startEventShape = elementRegistry.get('StartEvent_2');
+      var taskShape = elementRegistry.get('Task_2');
+      var sequenceFlowConnection = elementRegistry.get('SequenceFlow_4');
+
+      var transactionShapeData =  {
+        type: 'bpmn:Transaction'
+      };
+
+      // when
+      var transactionShape = bpmnReplace.replaceElement(subProcessShape, transactionShapeData);
+
+      // then
+      var subProcess = subProcessShape.businessObject,
+          transaction = transactionShape.businessObject;
+
+      var transactionChildren = transaction.get('flowElements');
+      var subProcessChildren = subProcess.get('flowElements');
+
+      expect(transactionChildren).toContain(startEventShape.businessObject);
+      expect(transactionChildren).toContain(taskShape.businessObject);
+      expect(transactionChildren).toContain(sequenceFlowConnection.businessObject);
+
+      expect(subProcessChildren).not.toContain(startEventShape.businessObject);
+      expect(subProcessChildren).not.toContain(taskShape.businessObject);
+      expect(subProcessChildren).not.toContain(sequenceFlowConnection.businessObject);
+    }));
 
   });
 
