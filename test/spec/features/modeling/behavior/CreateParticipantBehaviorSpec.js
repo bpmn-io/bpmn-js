@@ -6,8 +6,11 @@ var TestHelper = require('../../../../TestHelper');
 
 
 var modelingModule = require('../../../../../lib/features/modeling'),
+    snappingModule = require('../../../../../lib/features/snapping'),
+    createModule = require('diagram-js/lib/features/create'),
     coreModule = require('../../../../../lib/core');
 
+var Events = require('diagram-js/test/util/Events');
 
 describe('features/modeling - create participant', function() {
 

@@ -12,6 +12,7 @@
       </bpmn2:task>
       <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="Task_1" />
     </bpmn2:subProcess>
+    <bpmn2:boundaryEvent id="BoundaryEvent_1" attachedToRef="SubProcess_1" />
     <bpmn2:endEvent id="EndEvent_1" name="End Event">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
     </bpmn2:endEvent>
@@ -56,6 +57,12 @@
           <dc:Bounds x="192" y="204" width="33" height="21" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="575" y="359" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="548" y="395" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

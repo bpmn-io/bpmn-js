@@ -208,8 +208,7 @@ describe('features/modeling - move shape', function() {
     it('should move label with shape', inject(function(elementRegistry, modeling) {
 
       // given
-      var startEventElement = elementRegistry.get('StartEvent_1'),
-          startEvent = startEventElement.businessObject;
+      var startEventElement = elementRegistry.get('StartEvent_1');
 
       var label = startEventElement.label;
 
@@ -231,9 +230,7 @@ describe('features/modeling - move shape', function() {
 
       // given
       var startEventElement = elementRegistry.get('StartEvent_2'),
-          startEvent = startEventElement.businessObject,
           subProcessElement = elementRegistry.get('SubProcess_1'),
-          subProcess = startEventElement.businessObject,
           flowLabel = elementRegistry.get('SequenceFlow_3_label');
 
       var labelPosition = {
@@ -255,8 +252,7 @@ describe('features/modeling - move shape', function() {
       it('should undo label with shape', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventElement = elementRegistry.get('StartEvent_1'),
-            startEvent = startEventElement.businessObject;
+        var startEventElement = elementRegistry.get('StartEvent_1');
 
         var label = startEventElement.label;
 
@@ -280,9 +276,7 @@ describe('features/modeling - move shape', function() {
 
         // given
         var startEventElement = elementRegistry.get('StartEvent_2'),
-            startEvent = startEventElement.businessObject,
             subProcessElement = elementRegistry.get('SubProcess_1'),
-            subProcess = startEventElement.businessObject,
             flowLabel = elementRegistry.get('SequenceFlow_3_label');
 
         var labelPosition = {
@@ -308,8 +302,7 @@ describe('features/modeling - move shape', function() {
       it('should redo move label with shape', inject(function(elementRegistry, modeling, commandStack) {
 
         // given
-        var startEventElement = elementRegistry.get('StartEvent_1'),
-            startEvent = startEventElement.businessObject;
+        var startEventElement = elementRegistry.get('StartEvent_1');
 
         var label = startEventElement.label;
 
@@ -334,9 +327,7 @@ describe('features/modeling - move shape', function() {
 
         // given
         var startEventElement = elementRegistry.get('StartEvent_2'),
-            startEvent = startEventElement.businessObject,
             subProcessElement = elementRegistry.get('SubProcess_1'),
-            subProcess = startEventElement.businessObject,
             flowLabel = elementRegistry.get('SequenceFlow_3_label');
 
         var labelPosition = {

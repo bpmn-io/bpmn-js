@@ -11,6 +11,7 @@ var coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
     createModule = require('diagram-js/lib/features/create'),
     resizeModule = require('diagram-js/lib/features/resize'),
+    moveModule = require('diagram-js/lib/features/move'),
     rulesModule = require('../../../../lib/features/modeling/rules');
 
 var pick = require('lodash/object/pick');
@@ -23,8 +24,74 @@ function bounds(element) {
 
 describe('features/snapping - BpmnSnapping', function() {
 
-  var testModules = [ coreModule, snappingModule, modelingModule, createModule, rulesModule ];
+  var testModules = [ coreModule, snappingModule, modelingModule, createModule, rulesModule, moveModule ];
 
+  describe('on Boundary Events', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/collaboration/process.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    var task, intermediateThrowEvent, createEvent;
+
+    beforeEach(inject(function(elementFactory, elementRegistry, canvas, dragging) {
+      task = elementRegistry.get('Task_1');
+
+      intermediateThrowEvent = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+      });
+
+      dragging.setOptions({ manual: true });
+
+      createEvent = Events.scopedCreate(canvas);
+    }));
+
+    afterEach(inject(function(dragging) {
+      dragging.setOptions({ manual: false });
+    }));
+
+    it('should snap on create to the bottom',
+        inject(function(canvas, create, dragging, elementRegistry) {
+
+      // given
+      var taskGfx = canvas.getGraphics(task);
+
+      // when
+      create.start(createEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+
+      dragging.hover({ element: task, gfx: taskGfx });
+
+      dragging.move(createEvent({ x: 382, y: 170 }));
+      dragging.end();
+
+      var boundaryEvent = elementRegistry.get(task.attachers[0].id);
+
+      // then
+      expect(bounds(boundaryEvent)).to.eql({ x: 364, y: 167, width: 36, height: 36 });
+    }));
+
+
+    it('should snap on create to the left',
+        inject(function(canvas, create, dragging, elementRegistry) {
+
+      // given
+      var taskGfx = canvas.getGraphics(task);
+
+      // when
+      create.start(createEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+
+      dragging.hover({ element: task, gfx: taskGfx });
+
+      dragging.move(createEvent({ x: 382, y: 115 }));
+      dragging.end();
+
+      var boundaryEvent = elementRegistry.get(task.attachers[0].id);
+
+      // then
+      expect(bounds(boundaryEvent)).to.eql({ x: 364, y: 87, width: 36, height: 36 });
+    }));
+
+  });
 
   describe('on Participant create', function() {
 

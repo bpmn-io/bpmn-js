@@ -4,8 +4,7 @@ var TestHelper = require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-
-var rulesModule = require('../../../../../lib/features/modeling/rules'),
+var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
 
@@ -18,8 +17,8 @@ function expectCanConnect(source, target, rules) {
     source = elementRegistry.get(source);
     target = elementRegistry.get(target);
 
-    expect(source).to.be.defined;
-    expect(target).to.be.defined;
+    expect(source).to.exist;
+    expect(target).to.exist;
 
     if ('sequenceFlow' in rules) {
       results.sequenceFlow = bpmnRules.canConnectSequenceFlow(source, target);
@@ -47,8 +46,8 @@ function expectCanDrop(element, target, expectedResult) {
     element = elementRegistry.get(element);
     target = elementRegistry.get(target);
 
-    expect(element).to.be.defined;
-    expect(target).to.be.defined;
+    expect(element).to.exist;
+    expect(target).to.exist;
 
     result = bpmnRules.canDrop(element, target);
   });
@@ -57,9 +56,30 @@ function expectCanDrop(element, target, expectedResult) {
 }
 
 
+function expectCanExecute(elements, target, rules) {
+
+  var results = {};
+
+  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+
+    target = elementRegistry.get(target);
+
+    if ('canAttach' in rules) {
+      results.canAttach = bpmnRules.canAttach(elements, target);
+    }
+
+    if ('canMove' in rules) {
+      results.canMove = bpmnRules.canMove(elements, target);
+    }
+  });
+
+  expect(results).to.eql(rules);
+}
+
+
 describe('features/modeling/rules - BpmnRules', function() {
 
-  var testModules = [ coreModule, rulesModule ];
+  var testModules = [ coreModule, modelingModule ];
 
 
   describe('on process diagram', function() {
@@ -123,6 +143,56 @@ describe('features/modeling/rules - BpmnRules', function() {
 
       expectCanConnect('IntermediateCatchEvent_Link', 'Task', {
         sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent -> Task', inject(function() {
+
+      expectCanConnect('BoundaryEvent', 'Task', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_1 -> SubProcess', inject(function() {
+
+      expectCanConnect('BoundaryEvent', 'SubProcess', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent -> BoundaryEvent_1', inject(function() {
+
+      expectCanConnect('BoundaryEvent', 'BoundaryEvent_1', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent -> StartEvent_None', inject(function() {
+
+      expectCanConnect('BoundaryEvent', 'BoundaryEvent_1', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect StartEvent_None -> BoundaryEvent', inject(function() {
+
+      expectCanConnect('StartEvent_None', 'BoundaryEvent', {
+        sequenceFlow: false,
         messageFlow: false,
         association: true
       });
@@ -227,6 +297,16 @@ describe('features/modeling/rules - BpmnRules', function() {
     it('connect EventBasedGateway -> Task_None', inject(function() {
 
       expectCanConnect('EventBasedGateway', 'Task_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect EventBasedGateway -> ParallelGateway', inject(function() {
+
+      expectCanConnect('EventBasedGateway', 'ParallelGateway', {
         sequenceFlow: false,
         messageFlow: false,
         association: true
@@ -436,11 +516,11 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect StartEvent_None -> TextAnnotation_Global', inject(function() {
+    it('connect BoundaryEvent -> Task_in_OtherParticipant', inject(function() {
 
-      expectCanConnect('StartEvent_None', 'TextAnnotation_Global', {
+      expectCanConnect('BoundaryEvent', 'Task_in_OtherParticipant', {
         sequenceFlow: false,
-        messageFlow: false,
+        messageFlow: true,
         association: true
       });
     }));
@@ -464,6 +544,226 @@ describe('features/modeling/rules - BpmnRules', function() {
     it('drop MessageFlow -> Collaboration', inject(function() {
 
       expectCanDrop('MessageFlow', 'Collaboration', true);
+    }));
+
+  });
+
+
+  describe('event move', function() {
+
+    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('attach/move BoundaryEvent -> Process', inject(function(elementRegistry) {
+
+      // when
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+      var elements = [ boundaryEvent ];
+
+      // then
+      expectCanExecute(elements, 'Process_1', {
+        canAttach: false,
+        canMove: false
+      });
+
+    }));
+
+
+    it('attach/move BoundaryEvent -> Task', inject(function(elementRegistry) {
+
+      // when
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+      var elements = [ boundaryEvent ];
+
+      // then
+      expectCanExecute(elements, 'Task_2', {
+        canAttach: 'attach',
+        canMove: false
+      });
+
+    }));
+
+
+    it('attach/move BoundaryEvent label -> SubProcess', inject(function(elementRegistry) {
+
+      // when
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          label = boundaryEvent.label;
+
+      var elements = [ label ];
+
+      // then
+      expectCanExecute(elements, 'SubProcess_1', {
+        canAttach: false,
+        canMove: true
+      });
+
+    }));
+
+
+    it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(function (elementRegistry) {
+      // when
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          boundaryEvent2 = elementRegistry.get('BoundaryEvent_2');
+
+      // we assume boundary events and labels
+      // to be already filtered during move
+      var elements = [ boundaryEvent, boundaryEvent2 ];
+
+      // then
+      expectCanExecute(elements, 'SubProcess_1', {
+        canAttach: false,
+        canMove: false
+      });
+    }));
+
+
+    it('attach/move SubProcess, BoundaryEvent and label -> Process', inject(function (elementRegistry) {
+      // when
+      var subProcess = elementRegistry.get('SubProcess_1'),
+          boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          label = boundaryEvent.label;
+
+      // we assume boundary events and labels
+      // to be already filtered during move
+      var elements = [ subProcess, boundaryEvent, label ];
+
+      // then
+      expectCanExecute(elements, 'Process_1', {
+        canAttach: false,
+        canMove: false
+      });
+    }));
+
+  });
+
+
+  describe('event create', function() {
+
+    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('attach IntermediateEvent to Task', inject(function(elementFactory, bpmnRules) {
+
+      // given
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 254
+      });
+
+      // then
+      expectCanExecute([ eventShape ], 'Task_1', {
+        canAttach: 'attach',
+        canMove: false
+      });
+    }));
+
+
+    it('attach IntermediateEvent to SubProcess border', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var subProcessElement = elementRegistry.get('SubProcess_1');
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 350
+      });
+
+      var position = {
+        x: eventShape.x,
+        y: eventShape.y
+      };
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], subProcessElement, null, position);
+
+      // then
+      expect(canAttach).to.equal('attach');
+    }));
+
+
+    it('create IntermediateEvent in SubProcess body', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var subProcessElement = elementRegistry.get('SubProcess_1');
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 250
+      });
+
+      var position = {
+        x: eventShape.x,
+        y: eventShape.y
+      };
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], subProcessElement, null, position),
+          canCreate = bpmnRules.canCreate(eventShape, subProcessElement, null, position);
+
+      // then
+      expect(canAttach).to.equal(false);
+      expect(canCreate).to.equal(true);
+    }));
+
+  });
+
+
+  describe('event append', function() {
+
+    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('append IntermediateEvent from Task', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var subProcessElement = elementRegistry.get('SubProcess_1'),
+          taskElement = elementRegistry.get('Task_2');
+
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 250
+      });
+
+      var position = {
+        x: eventShape.x,
+        y: eventShape.y
+      };
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], subProcessElement, taskElement, position),
+          canCreate = bpmnRules.canCreate(eventShape, subProcessElement, taskElement, position);
+
+      // then
+      expect(canAttach).to.equal(false);
+      expect(canCreate).to.equal(true);
+    }));
+
+
+    it('append IntermediateEvent from BoundaryEvent', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var boundaryElement = elementRegistry.get('BoundaryEvent_1'),
+          taskElement = elementRegistry.get('Task_2');
+
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 250
+      });
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], taskElement, boundaryElement),
+          canCreate = bpmnRules.canCreate(eventShape, taskElement, boundaryElement);
+
+      // then
+      expect(canAttach).to.equal(false);
+      expect(canCreate).to.equal(false);
     }));
 
   });
