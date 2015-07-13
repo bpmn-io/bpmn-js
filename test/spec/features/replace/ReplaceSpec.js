@@ -187,7 +187,15 @@ describe('features/Replace', function() {
 
       // then
       expect(newShape.children).to.contain(originalShape);
+      expect(newShape.children).to.contain(connection);
       expect(newShape.children).to.contain(targetShape);
+
+      expect(originalShape.parent).to.eql(newShape);
+      expect(connection.parent).to.eql(newShape);
+      expect(targetShape.parent).to.eql(newShape);
+
+      expect(originalShape.outgoing).to.contain(connection);
+      expect(targetShape.incoming).to.contain(connection);
 
     }));
 
