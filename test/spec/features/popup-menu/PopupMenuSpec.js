@@ -7,8 +7,7 @@ var fs = require('fs');
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes');
 
-var Events = require('../../../util/Events'),
-    IdGenerator = require('../../../../lib/util/IdGenerator');
+var Events = require('../../../util/Events');
 
 var popupMenuModule = require('../../../../lib/features/popup-menu'),
     modelingModule = require('../../../../lib/features/modeling'),
@@ -234,154 +233,6 @@ describe('features/popup', function() {
         var open = popupMenu.isOpen();
 
         expect(open).to.be.false;
-      }));
-
-    });
-
-    describe('header entries', function() {
-
-      var menu;
-      var popupIds = new IdGenerator('popup');
-      var currentId;
-
-      beforeEach(inject(function(popupMenu){
-        currentId = popupIds.next();
-        menu = {
-          className: currentId,
-          position: { x: 100, y: 100 },
-          entries: [],
-          headerEntries: [
-            {
-              id: 'foo',
-              label: 'foo',
-              className: 'foo',
-              action: function(event, entry){
-                if (entry.active) {
-                  popupMenu.updateHeaderEntries([
-                    { id: entry.id, active: false },
-                    { id: 'bar', disabled: false }
-                  ]);
-                } else {
-                  popupMenu.updateHeaderEntries([
-                    { id: entry.id, active: true },
-                    { id: 'bar', disabled: true }
-                  ]);
-                }
-              }
-            },
-            {
-              id: 'bar',
-              label: 'bar',
-              className: 'bar'
-            }
-          ]
-        };
-        popupMenu.open(menu);
-      }));
-
-      it('should add classes to entries', inject(function(popupMenu){
-        // given
-        var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo');
-
-        // when
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-
-        fooEntry = queryEntry(popupMenu, 'foo');
-        barEntry = queryEntry(popupMenu, 'bar');
-
-        // then
-        expect(domClasses(fooEntry).has('active')).to.be.true;
-        expect(domClasses(barEntry).has('disabled')).to.be.true;
-      }));
-
-
-      it('should remove classes from entries', inject(function(popupMenu){
-
-        // given
-        var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo');
-
-        // when
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-
-        fooEntry = queryEntry(popupMenu, 'foo');
-        barEntry = queryEntry(popupMenu, 'bar');
-
-        // then
-        expect(domClasses(fooEntry).has('active')).to.be.false;
-        expect(domClasses(barEntry).has('disabled')).to.be.false;
-      }));
-
-
-      it('should undo changes to classes if the popup menu is open',
-        inject(function(popupMenu, commandStack){
-
-        // given
-        var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo');
-
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-
-        // when
-        commandStack.undo();
-
-        // then
-        fooEntry = queryEntry(popupMenu, 'foo');
-        barEntry = queryEntry(popupMenu, 'bar');
-
-        expect(domClasses(fooEntry).has('active')).to.be.false;
-        expect(domClasses(barEntry).has('disabled')).to.be.false;
-      }));
-
-
-      it('should redo changes to classes if the popup menu is open',
-        inject(function(popupMenu, commandStack){
-
-        // given
-        var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo');
-
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-
-        // when
-        commandStack.undo();
-        commandStack.redo();
-
-        // then
-        fooEntry = queryEntry(popupMenu, 'foo');
-        barEntry = queryEntry(popupMenu, 'bar');
-
-        expect(domClasses(fooEntry).has('active')).to.be.true;
-        expect(domClasses(barEntry).has('disabled')).to.be.true;
-      }));
-
-
-      it('should redo changes to classes after closing and opening the popup menu',
-        inject(function(popupMenu, commandStack){
-
-        // given
-        var barEntry,
-            fooEntry = queryEntry(popupMenu, 'foo');
-
-        popupMenu.trigger(Events.create(fooEntry, { x: 0, y: 0 }));
-
-        // when
-        commandStack.undo();
-
-        popupMenu.close();
-
-        popupMenu.open(menu);
-
-        commandStack.redo();
-
-        // then
-        fooEntry = queryEntry(popupMenu, 'foo');
-        barEntry = queryEntry(popupMenu, 'bar');
-
-        expect(domClasses(fooEntry).has('active')).to.be.true;
-        expect(domClasses(barEntry).has('disabled')).to.be.true;
       }));
 
     });
@@ -706,76 +557,28 @@ describe('features/popup', function() {
       // given
       var entry;
 
-      popupMenu.open({
+      var menu = {
         className: 'myPopup',
         position: { x: 100, y: 100 },
         entries: [],
         headerEntries: [
           {
             id: 'foo',
-            action: function(event, entry) {
-              popupMenu.updateHeaderEntries([{
-                id: entry.id,
-                active: !entry.active,
-                disabled: !entry.disabled
-              }]);
-            },
+            active: true,
+            disabled: true,
             label: 'foo'
           }
         ]
-      });
+      };
 
       // when
-      entry = queryEntry(popupMenu, 'foo');
-
-      popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      popupMenu.open(menu);
 
       // then
       entry = queryEntry(popupMenu, 'foo');
 
       expect(domClasses(entry).has('active')).to.be.true;
       expect(domClasses(entry).has('disabled')).to.be.true;
-    }));
-
-  });
-
-  describe('#update', function() {
-
-    it('should update a header entry by id', inject(function(popupMenu){
-
-      // given
-      popupMenu.open({
-        entries: [],
-        headerEntries: [
-          {
-            id: 'my-header-entry',
-            active: false
-          }
-        ],
-        position: { x: 100, y: 100 }
-      });
-
-      // when
-      popupMenu.updateHeaderEntries([{ id: 'my-header-entry', active: true}]);
-
-      var headerEntry = popupMenu._getEntry('my-header-entry');
-
-      // then
-      expect(headerEntry.active).to.be.true;
-    }));
-
-    it('should throw an error if no entry could be found', inject(function(popupMenu){
-
-      // given
-      popupMenu.open({
-        entries: [],
-        position: { x: 100, y: 100 }
-      });
-
-      // when
-      expect(function() {
-        popupMenu.updateHeaderEntries([{ id: 'non-existent-entry', active: false }]);
-      }).to.throw('entry not found');
     }));
 
   });
