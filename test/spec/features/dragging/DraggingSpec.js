@@ -53,7 +53,7 @@ describe('Dragging', function() {
 
 
     function raw(e) {
-      return omit(e, [ 'originalEvent' ]);
+      return omit(e, [ 'originalEvent', 'previousSelection' ]);
     }
 
 
