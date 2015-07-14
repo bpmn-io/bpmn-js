@@ -25,18 +25,16 @@
 }
 
 .djs-shape.connect-ok .djs-visual > :nth-child(1) {
-  fill: #54FF00 /* light-green */ !important;
-  fill-opacity: 0.2;
+  fill: #DCFECC /* light-green */ !important;
 }
 
 .djs-shape.connect-not-ok .djs-visual > :nth-child(1),
 .djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
-  fill: #E56283 /* light-red */ !important;
-  fill-opacity: 0.2;
+  fill: #f9dee5 /* light-red */ !important;
 }
 
 svg.drop-not-ok {
-  background: rgba(229, 98, 131, 0.2) /* light-red */ !important;
+  background: #f9dee5 /* light-red */ !important;
 }
 
 .djs-connection.connect-ok .djs-visual > :nth-child(1),
