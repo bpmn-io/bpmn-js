@@ -60,7 +60,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(createEvent({ x: 65, y: 65 }));
 
         // then
-        expect(bounds(participantShape)).toEqual({
+        expect(bounds(participantShape)).to.eql({
           width: 600, height: 250, x: 18, y: -8
         });
       }));
@@ -83,7 +83,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(createEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).toEqual({
+        expect(bounds(participantShape)).to.eql({
           width: 600, height: 250, x: 100, y: 52
         });
       }));
@@ -122,7 +122,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(createEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).toEqual({
+        expect(bounds(participantShape)).to.eql({
           x: 100, y: 275, width: 600, height: 250
         });
       }));
@@ -161,7 +161,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(createEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).toEqual({
+        expect(bounds(participantShape)).to.eql({
           x: 100, y: 275, width: 600, height: 250
         });
       }));
@@ -196,8 +196,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 0, y: 0 }));
         dragging.end();
 
-        expect(participant.width).toEqual(497);
-        expect(participant.height).toEqual(252);
+        expect(participant.width).to.equal(497);
+        expect(participant.height).to.equal(252);
       }));
 
 
@@ -209,8 +209,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 500, y: 500 }));
         dragging.end();
 
-        expect(participant.width).toEqual(467);
-        expect(participant.height).toEqual(287);
+        expect(participant.width).to.equal(467);
+        expect(participant.height).to.equal(287);
       }));
 
 
@@ -222,8 +222,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 0, y: 0 }));
         dragging.end();
 
-        expect(participant.width).toEqual(300);
-        expect(participant.height).toEqual(150);
+        expect(participant.width).to.equal(300);
+        expect(participant.height).to.equal(150);
       }));
 
 
@@ -235,8 +235,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 500, y: 500 }));
         dragging.end();
 
-        expect(participant.width).toEqual(300);
-        expect(participant.height).toEqual(150);
+        expect(participant.width).to.equal(300);
+        expect(participant.height).to.equal(150);
       }));
 
 
@@ -248,8 +248,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 0, y: 0 }));
         dragging.end();
 
-        expect(participant.width).toEqual(320);
-        expect(participant.height).toEqual(150);
+        expect(participant.width).to.equal(320);
+        expect(participant.height).to.equal(150);
       }));
 
 
@@ -261,8 +261,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(createEvent({ x: 500, y: 500 }));
         dragging.end();
 
-        expect(participant.width).toEqual(353);
-        expect(participant.height).toEqual(177);
+        expect(participant.width).to.equal(353);
+        expect(participant.height).to.equal(177);
       }));
 
     });
@@ -276,8 +276,8 @@ describe('features/snapping - BpmnSnapping', function() {
       dragging.move(createEvent({ x: -453, y: -624 }));
       dragging.end();
 
-      expect(subProcess.width).toEqual(140);
-      expect(subProcess.height).toEqual(120);
+      expect(subProcess.width).to.equal(140);
+      expect(subProcess.height).to.equal(120);
     }));
 
 
@@ -289,8 +289,8 @@ describe('features/snapping - BpmnSnapping', function() {
       dragging.move(createEvent({ x: -614, y: -310 }));
       dragging.end();
 
-      expect(participant.width).toEqual(300);
-      expect(participant.height).toEqual(150);
+      expect(participant.width).to.equal(300);
+      expect(participant.height).to.equal(150);
     }));
 
 
@@ -302,8 +302,8 @@ describe('features/snapping - BpmnSnapping', function() {
       dragging.move(createEvent({ x: -592, y: -452 }));
       dragging.end();
 
-      expect(textAnnotation.width).toEqual(50);
-      expect(textAnnotation.height).toEqual(50);
+      expect(textAnnotation.width).to.equal(50);
+      expect(textAnnotation.height).to.equal(50);
     }));
 
   });

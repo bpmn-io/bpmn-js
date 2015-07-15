@@ -1,8 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper'),
-    Matchers = require('../../../../Matchers');
-
 /* global inject, bootstrapModeler */
 
 
@@ -10,9 +7,6 @@ var modelingModule = require('../../../../../lib/features/modeling');
 
 
 describe('modeling/behavior - drop on connection', function(){
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = require('./CreateOnFlowBehavior.bpmn');
 
@@ -28,7 +22,7 @@ describe('modeling/behavior - drop on connection', function(){
       var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
       // then
-      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).toBe(true);
+      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).to.be.true;
     }));
 
   });
@@ -55,24 +49,24 @@ describe('modeling/behavior - drop on connection', function(){
       var targetConnection = newShape.outgoing[0];
 
       // new incoming connection
-      expect(newShape.incoming.length).toBe(1);
-      expect(newShape.incoming[0]).toBe(sequenceFlow);
+      expect(newShape.incoming.length).to.equal(1);
+      expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
       // new outgoing connection
-      expect(newShape.outgoing.length).toBe(1);
-      expect(targetConnection).toBeTruthy();
-      expect(targetConnection.type).toBe('bpmn:SequenceFlow');
+      expect(newShape.outgoing.length).to.equal(1);
+      expect(targetConnection).to.be.ok;
+      expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
-      expect(startEvent.outgoing[0]).toBe(newShape.incoming[0]);
-      expect(task.incoming[0]).toBe(newShape.outgoing[0]);
+      expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
+      expect(task.incoming[0]).to.equal(newShape.outgoing[0]);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).toDeepEqual([
+      expect(sequenceFlow.waypoints).eql([
         { original: { x: 209, y: 120 }, x: 209, y: 120 },
         { original: { x: 340, y: 120 }, x: 322, y: 120 }
       ]);
 
-      expect(targetConnection.waypoints).toDeepEqual([
+      expect(targetConnection.waypoints).eql([
         { original: { x: 340, y: 120 }, x: 340, y: 138 },
         { x: 340, y: 299 },
         { original: { x: 502, y: 299 }, x: 502, y: 299 }
@@ -95,14 +89,14 @@ describe('modeling/behavior - drop on connection', function(){
       // then
 
       // new incoming connection
-      expect(newShape.incoming.length).toBe(1);
-      expect(newShape.incoming[0]).toBe(sequenceFlow);
+      expect(newShape.incoming.length).to.equal(1);
+      expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
       // no outgoing edges
-      expect(newShape.outgoing.length).toBe(0);
+      expect(newShape.outgoing.length).to.equal(0);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).toDeepEqual([
+      expect(sequenceFlow.waypoints).eql([
         { original: { x: 209, y: 120 }, x: 209, y: 120 },
         { original: { x: 340, y: 120 }, x: 322, y: 120 }
       ]);
@@ -124,14 +118,14 @@ describe('modeling/behavior - drop on connection', function(){
       // then
 
       // no incoming connection
-      expect(newShape.incoming.length).toBe(0);
+      expect(newShape.incoming.length).to.equal(0);
 
       // no outgoing edges
-      expect(newShape.outgoing.length).toBe(1);
-      expect(newShape.outgoing[0]).toBe(sequenceFlow);
+      expect(newShape.outgoing.length).to.equal(1);
+      expect(newShape.outgoing[0]).to.eql(sequenceFlow);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).toDeepEqual([
+      expect(sequenceFlow.waypoints).eql([
         { original: { x: 340, y: 120 }, x: 340, y: 138 },
         { x: 340, y: 299 },
         { original: { x: 502, y: 299 }, x: 502, y: 299 }
@@ -159,7 +153,7 @@ describe('modeling/behavior - drop on connection', function(){
       });
 
       // then
-      expect(canDrop).toBe(false);
+      expect(canDrop).to.be.false;
     }));
 
   });

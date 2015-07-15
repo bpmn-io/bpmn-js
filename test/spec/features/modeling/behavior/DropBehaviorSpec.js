@@ -19,11 +19,11 @@ function getConnection(source, target, connectionOrType) {
 }
 
 function expectConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).toBeDefined();
+  expect(getConnection(source, target, connectionOrType)).to.be.defined;
 }
 
 function expectNotConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).not.toBeDefined();
+  expect(getConnection(source, target, connectionOrType)).not.to.be.defined;
 }
 
 
@@ -60,7 +60,7 @@ describe('features/modeling - drop behavior', function() {
         modeling.moveShapes([ taskShape ], { x: 0, y: 330 }, targetShape);
 
         // then
-        expect(taskShape.parent).toBe(targetShape);
+        expect(taskShape.parent).to.eql(targetShape);
 
         expectNotConnected(element('StartEvent_1'), taskShape, 'bpmn:SequenceFlow');
 
@@ -82,7 +82,7 @@ describe('features/modeling - drop behavior', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.parent).toBe(oldParent);
+        expect(taskShape.parent).to.eql(oldParent);
 
         expectConnected(element('StartEvent_1'), taskShape, element('SequenceFlow_3'));
 
@@ -106,8 +106,8 @@ describe('features/modeling - drop behavior', function() {
         modeling.moveShapes([ startEventShape, taskShape ], { x: 0, y: 330 }, targetShape);
 
         // then
-        expect(taskShape.parent).toBe(targetShape);
-        expect(startEventShape.parent).toBe(targetShape);
+        expect(taskShape.parent).to.eql(targetShape);
+        expect(startEventShape.parent).to.eql(targetShape);
 
         expectConnected(startEventShape, taskShape, element('SequenceFlow_3'));
 
@@ -129,7 +129,7 @@ describe('features/modeling - drop behavior', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.parent).toBe(oldParent);
+        expect(taskShape.parent).to.eql(oldParent);
 
         expectConnected(element('StartEvent_1'), taskShape, element('SequenceFlow_3'));
 
@@ -154,7 +154,7 @@ describe('features/modeling - drop behavior', function() {
         modeling.moveShapes([ subProcessShape ], { x: 0, y: 530 }, targetShape);
 
         // then
-        expect(subProcessShape.parent).toBe(targetShape);
+        expect(subProcessShape.parent).to.eql(targetShape);
 
         expectConnected(element('Task_2'), subProcessShape, 'bpmn:MessageFlow');
 
@@ -212,7 +212,7 @@ describe('features/modeling - drop behavior', function() {
         modeling.moveShapes([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
 
         // then
-        expect(textAnnotationShape.parent).toBe(targetShape);
+        expect(textAnnotationShape.parent).to.eql(targetShape);
 
         expectNotConnected(textAnnotationShape, targetShape, 'bpmn:TextAnnotation');
       }));

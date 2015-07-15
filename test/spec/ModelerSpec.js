@@ -1,16 +1,15 @@
 'use strict';
 
-var TestHelper = require('../TestHelper');
-
 var Modeler = require('../../lib/Modeler');
 
+var TestContainer = require('mocha-test-container-support');
 
 describe('Modeler', function() {
 
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = TestContainer.get(this);
   });
 
 
@@ -61,7 +60,7 @@ describe('Modeler', function() {
         }
 
         // then
-        expect(warnings.length).toBe(0);
+        expect(warnings.length).to.equal(0);
 
         done();
       });
@@ -80,7 +79,7 @@ describe('Modeler', function() {
 
       modeler.importXML(xml, function(err, warnings) {
 
-        expect(modeler.container.parentNode).toBe(document.body);
+        expect(modeler.container.parentNode).to.equal(document.body);
 
         done(err, warnings);
       });
@@ -102,8 +101,8 @@ describe('Modeler', function() {
             elementRegistry = viewer.get('elementRegistry');
 
         // assume
-        expect(overlays).toBeDefined();
-        expect(elementRegistry).toBeDefined();
+        expect(overlays).to.be.defined;
+        expect(elementRegistry).to.be.defined;
 
 
         // when
@@ -124,8 +123,8 @@ describe('Modeler', function() {
         });
 
         // then
-        expect(overlays.get({ element: 'SubProcess_1', type: 'badge' }).length).toBe(1);
-        expect(overlays.get({ element: 'StartEvent_1', type: 'badge' }).length).toBe(1);
+        expect(overlays.get({ element: 'SubProcess_1', type: 'badge' }).length).to.equal(1);
+        expect(overlays.get({ element: 'StartEvent_1', type: 'badge' }).length).to.equal(1);
 
         done(err);
       });
@@ -152,7 +151,7 @@ describe('Modeler', function() {
             createEvent = Events.scopedCreate(viewer.get('canvas'));
 
         // assume
-        expect(bendpointMove).toBeDefined();
+        expect(bendpointMove).to.be.defined;
 
         // when
         bendpointMove.start(createEvent({ x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
@@ -174,7 +173,7 @@ describe('Modeler', function() {
 
     modeler.importXML(xml, function(err) {
 
-      expect(err).toBeDefined();
+      expect(err).to.be.defined;
 
       done();
     });
@@ -195,7 +194,7 @@ describe('Modeler', function() {
 
       createModeler(xml, function(err, warnings, modeler) {
 
-        expect(modeler.get('bpmnjs')).toBe(modeler);
+        expect(modeler.get('bpmnjs')).to.equal(modeler);
 
         done(err);
       });

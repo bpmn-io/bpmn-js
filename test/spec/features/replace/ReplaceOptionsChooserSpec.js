@@ -30,7 +30,7 @@ describe('features/replace - chooser', function() {
       bpmnReplace.openChooser({ x: 100, y: 100 }, element);
 
       // then
-      expect(null).toBeDefined();
+      expect(null).to.be.defined;
     }));
 
 
@@ -43,7 +43,7 @@ describe('features/replace - chooser', function() {
       bpmnReplace.openChooser({ x: 100, y: 100 }, element);
 
       // then
-      expect(null).toBeDefined();
+      expect(null).to.be.defined;
     }));
 
 
@@ -56,7 +56,7 @@ describe('features/replace - chooser', function() {
       bpmnReplace.openChooser({ x: 100, y: 100 }, element);
 
       // then
-      expect(null).toBeDefined();
+      expect(null).to.be.defined;
     }));
 
   });

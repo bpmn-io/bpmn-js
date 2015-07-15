@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -11,9 +10,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 
 describe('features/modeling - resize shape', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = require('../../../fixtures/bpmn/simple-resizable.bpmn');
 
@@ -25,7 +21,7 @@ describe('features/modeling - resize shape', function() {
   describe('shape', function() {
 
 
-    it('should resize', inject(function(elementRegistry, modeling) {
+    it('should resize', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var subProcessElement = elementRegistry.get('SubProcess_1');
@@ -41,14 +37,16 @@ describe('features/modeling - resize shape', function() {
       // then
 
       // expect flow layout
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 589, y: 242 },
-        { $type: 'dc:Point', x: 821, y: 242 }
+      var diWaypoints = bpmnFactory.createDiWaypoints([
+        { x: 589, y: 242 },
+        { x: 821, y: 242 }
       ]);
+
+      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
 
-    it('should move', inject(function(elementRegistry, modeling) {
+    it('should move', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var subProcessElement = elementRegistry.get('SubProcess_1');
@@ -62,10 +60,12 @@ describe('features/modeling - resize shape', function() {
       // then
 
       // expect flow layout
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 639, y: 242 },
-        { $type: 'dc:Point', x: 821, y: 242 }
+      var diWaypoints = bpmnFactory.createDiWaypoints([
+        { x: 639, y: 242 },
+        { x: 821, y: 242 }
       ]);
+
+      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
   });

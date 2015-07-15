@@ -30,8 +30,8 @@ describe('features/move - drop', function() {
       modeling.moveShape(task_1, { x: 0, y: 200 }, parent);
 
       // then
-      expect(task_1.parent).toBe(parent);
-      expect(task_1.businessObject.$parent).toBe(parent.businessObject);
+      expect(task_1.parent).to.eql(parent);
+      expect(task_1.businessObject.$parent).to.eql(parent.businessObject);
     }));
 
 
@@ -46,10 +46,10 @@ describe('features/move - drop', function() {
       modeling.moveShapes([ task_1, task_2 ], { x: 0, y: 200 }, parent);
 
       // then
-      expect(task_1.parent).toBe(parent);
-      expect(task_1.businessObject.$parent).toBe(parent.businessObject);
-      expect(task_2.parent).toBe(parent);
-      expect(task_2.businessObject.$parent).toBe(parent.businessObject);
+      expect(task_1.parent).to.eql(parent);
+      expect(task_1.businessObject.$parent).to.eql(parent.businessObject);
+      expect(task_2.parent).to.eql(parent);
+      expect(task_2.businessObject.$parent).to.eql(parent.businessObject);
     }));
 
   });
@@ -72,8 +72,8 @@ describe('features/move - drop', function() {
       modeling.moveShapes([ task_1 ], { x: 0, y: 200 }, parent);
 
       // then
-      expect(flow.parent).toBe(null);
-      expect(flow.businessObject.$parent).toBe(null);
+      expect(flow.parent).to.be.null;
+      expect(flow.businessObject.$parent).to.be.null;
     }));
 
 
@@ -89,8 +89,8 @@ describe('features/move - drop', function() {
       modeling.moveShapes([ task_1, task_2 ], { x: 0, y: 250 }, parent);
 
       // then
-      expect(flow.parent).toBe(parent);
-      expect(flow.businessObject.$parent).toBe(parent.businessObject);
+      expect(flow.parent).to.eql(parent);
+      expect(flow.businessObject.$parent).to.eql(parent.businessObject);
     }));
 
   });
@@ -111,11 +111,11 @@ describe('features/move - drop', function() {
       modeling.moveShapes([ task_1 ], { x: 0, y: 200 }, parent);
 
       // then
-      expect(task_1.parent).toBe(parent);
-      expect(task_1.businessObject.$parent).toBe(parent.businessObject);
+      expect(task_1.parent).to.eql(parent);
+      expect(task_1.businessObject.$parent).to.eql(parent.businessObject);
 
-      expect(sequenceFlow.parent).toBe(parent);
-      expect(sequenceFlow.businessObject.$parent).toBe(parent.businessObject);
+      expect(sequenceFlow.parent).to.eql(parent);
+      expect(sequenceFlow.businessObject.$parent).to.eql(parent.businessObject);
     }));
 
   });

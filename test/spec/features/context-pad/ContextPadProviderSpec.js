@@ -2,6 +2,8 @@
 
 var TestHelper = require('../../../TestHelper');
 
+var TestContainer = require('mocha-test-container-support');
+
 var domQuery = require('min-dom/lib/query');
 
 /* global bootstrapViewer, inject */
@@ -26,7 +28,7 @@ describe('features - context-pad', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap', inject(function(contextPadProvider) {
-      expect(contextPadProvider).toBeDefined();
+      expect(contextPadProvider).to.exist;
     }));
 
   });
@@ -36,7 +38,7 @@ describe('features - context-pad', function() {
 
     var container;
     beforeEach(function() {
-      container = jasmine.getEnv().getTestContainer();
+      container = TestContainer.get(this);
     });
 
     it('for a diagram element', inject(function(elementRegistry, contextPad, popupMenu) {
@@ -61,8 +63,8 @@ describe('features - context-pad', function() {
       replaceMenuRect = domQuery('.replace-menu', container).getBoundingClientRect();
 
       // then
-      expect(replaceMenuRect.left).not.toBeGreaterThan(padMenuRect.left);
-      expect(replaceMenuRect.top).not.toBeGreaterThan(padMenuRect.bottom + padding);
+      expect(replaceMenuRect.left).to.be.at.most(padMenuRect.left);
+      expect(replaceMenuRect.top).to.be.at.most(padMenuRect.bottom + padding);
     }));
   });
 });

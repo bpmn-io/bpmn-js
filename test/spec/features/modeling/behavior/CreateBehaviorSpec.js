@@ -36,27 +36,27 @@ describe('features/modeling - create participant', function() {
         modeling.createShape(participantShape, { x: 350, y: 200 }, processShape);
 
         // then
-        expect(participant.processRef).toBe(process);
+        expect(participant.processRef).to.eql(process);
 
         var collaborationRoot = canvas.getRootElement(),
             collaboration = collaborationRoot.businessObject,
             collaborationDi = collaboration.di;
 
-        expect(collaboration.$instanceOf('bpmn:Collaboration')).toBe(true);
+        expect(collaboration.$instanceOf('bpmn:Collaboration')).to.be.true;
 
         // participant / collaboration are wired
-        expect(participant.$parent).toBe(collaboration);
-        expect(collaboration.participants).toContain(participant);
+        expect(participant.$parent).to.eql(collaboration);
+        expect(collaboration.participants).to.include(participant);
 
 
         // collaboration is added to root elements
-        expect(collaboration.$parent).toBe(process.$parent);
+        expect(collaboration.$parent).to.eql(process.$parent);
 
         // di is wired
         var participantDi = participant.di;
 
-        expect(participantDi.$parent).toBe(collaborationDi);
-        expect(collaborationDi.$parent).toBe(diRoot);
+        expect(participantDi.$parent).to.eql(collaborationDi);
+        expect(collaborationDi.$parent).to.eql(diRoot);
       }));
 
 
@@ -81,16 +81,16 @@ describe('features/modeling - create participant', function() {
 
 
         // then
-        expect(participant.processRef).toBe(oldParticipantProcessRef);
+        expect(participant.processRef).to.eql(oldParticipantProcessRef);
 
-        expect(participant.$parent).toBe(null);
-        expect(collaboration.participants).not.toContain(participant);
+        expect(participant.$parent).to.be.null;
+        expect(collaboration.participants).not.to.include(participant);
 
         // collaboration is detached
-        expect(collaboration.$parent).toBe(null);
+        expect(collaboration.$parent).to.be.null;
 
         // di is wired
-        expect(processDi.$parent).toBe(diRoot);
+        expect(processDi.$parent).to.eql(diRoot);
       }));
 
     });
@@ -115,15 +115,15 @@ describe('features/modeling - create participant', function() {
         modeling.createShape(participantShape, { x: 350, y: 200 }, processShape);
 
         // then
-        expect(participant.processRef).toBe(process);
+        expect(participant.processRef).to.eql(process);
 
         var newRootShape = canvas.getRootElement(),
             collaboration = newRootShape.businessObject;
 
-        expect(collaboration.$instanceOf('bpmn:Collaboration')).toBe(true);
+        expect(collaboration.$instanceOf('bpmn:Collaboration')).to.be.true;
 
-        expect(participant.$parent).toBe(collaboration);
-        expect(collaboration.participants).toContain(participant);
+        expect(participant.$parent).to.eql(collaboration);
+        expect(collaboration.participants).to.include(participant);
       }));
 
 
@@ -144,12 +144,12 @@ describe('features/modeling - create participant', function() {
             rootShapeDi = rootElement.businessObject.di;
 
         // then
-        expect(participantShape.children.length).toBe(0);
-        expect(processShape.children.length).toBe(9);
+        expect(participantShape.children.length).to.equal(0);
+        expect(processShape.children.length).to.equal(9);
 
         // children di is wired
-        expect(startEventDi.$parent).toEqual(rootShapeDi);
-        expect(rootShapeDi.planeElement).toContain(startEventDi);
+        expect(startEventDi.$parent).to.eql(rootShapeDi);
+        expect(rootShapeDi.planeElement).to.include(startEventDi);
       }));
 
 
@@ -164,8 +164,8 @@ describe('features/modeling - create participant', function() {
               rootShapeDi = rootElement.businessObject.di;
 
           // then
-          expect(startEventDi.$parent).toBeFalsy();
-          expect(rootShapeDi.planeElement).not.toContain(startEventDi);
+          expect(startEventDi.$parent).to.not.be.ok;
+          expect(rootShapeDi.planeElement).not.to.include(startEventDi);
       }));
 
     });
@@ -192,10 +192,10 @@ describe('features/modeling - create participant', function() {
       modeling.createShape(participantShape, { x: 350, y: 500 }, collaborationRoot);
 
       // then
-      expect(collaborationRoot.children).toContain(participantShape);
+      expect(collaborationRoot.children).to.include(participantShape);
 
-      expect(participant.$parent).toBe(collaboration);
-      expect(collaboration.participants).toContain(participant);
+      expect(participant.$parent).to.eql(collaboration);
+      expect(collaboration.participants).to.include(participant);
     }));
 
 
@@ -213,10 +213,10 @@ describe('features/modeling - create participant', function() {
       commandStack.undo();
 
       // then
-      expect(collaborationRoot.children).not.toContain(participantShape);
+      expect(collaborationRoot.children).not.to.include(participantShape);
 
-      expect(participant.$parent).toBeFalsy();
-      expect(collaboration.participants).not.toContain(participant);
+      expect(participant.$parent).to.not.be.ok;
+      expect(collaboration.participants).not.to.include(participant);
     }));
 
   });

@@ -41,19 +41,19 @@ describe('features/modeling - append text-annotation', function() {
       var connecting = connectingConnection.businessObject;
 
       // then
-      expect(annotationShape).toBeDefined();
-      expect(annotation.$instanceOf('bpmn:TextAnnotation')).toBe(true);
+      expect(annotationShape).to.be.defined;
+      expect(annotation.$instanceOf('bpmn:TextAnnotation')).to.be.true;
 
-      expect(connecting.$instanceOf('bpmn:Association')).toBe(true);
-      expect(connecting.sourceRef).toBe(eventShape.businessObject);
-      expect(connecting.targetRef).toBe(annotation);
+      expect(connecting.$instanceOf('bpmn:Association')).to.be.true;
+      expect(connecting.sourceRef).to.eql(eventShape.businessObject);
+      expect(connecting.targetRef).to.eql(annotation);
 
       // correctly assign artifact parent
-      expect(annotation.$parent).toBe(process);
-      expect(connecting.$parent).toBe(process);
+      expect(annotation.$parent).to.eql(process);
+      expect(connecting.$parent).to.eql(process);
 
-      expect(process.artifacts).toContain(annotation);
-      expect(process.artifacts).toContain(connecting);
+      expect(process.artifacts).to.include(annotation);
+      expect(process.artifacts).to.include(connecting);
     }));
 
 
@@ -73,16 +73,16 @@ describe('features/modeling - append text-annotation', function() {
       var connecting = connectingConnection.businessObject;
 
       // then
-      expect(annotationShape).toBeDefined();
-      expect(annotation.$instanceOf('bpmn:TextAnnotation')).toBe(true);
+      expect(annotationShape).to.be.defined;
+      expect(annotation.$instanceOf('bpmn:TextAnnotation')).to.be.true;
 
-      expect(connecting.$instanceOf('bpmn:Association')).toBe(true);
-      expect(connecting.sourceRef).toBe(eventShape.businessObject);
-      expect(connecting.targetRef).toBe(annotation);
+      expect(connecting.$instanceOf('bpmn:Association')).to.be.true;
+      expect(connecting.sourceRef).to.eql(eventShape.businessObject);
+      expect(connecting.targetRef).to.eql(annotation);
 
       // correctly assign artifact parent
-      expect(annotation.$parent.id).toBe('Transaction_2');
-      expect(connecting.$parent.id).toBe('Transaction_2');
+      expect(annotation.$parent.id).to.equal('Transaction_2');
+      expect(connecting.$parent.id).to.equal('Transaction_2');
     }));
 
   });
@@ -109,13 +109,13 @@ describe('features/modeling - append text-annotation', function() {
       commandStack.undo();
 
       // then
-      expect(connecting.sourceRef).toBe(null);
-      expect(connecting.targetRef).toBe(null);
-      expect(connecting.$parent).toBe(null);
-      expect(process.artifacts).not.toContain(connecting);
+      expect(connecting.sourceRef).to.be.null;
+      expect(connecting.targetRef).to.be.null;
+      expect(connecting.$parent).to.be.null;
+      expect(process.artifacts).not.to.include(connecting);
 
-      expect(annotation.$parent).toBe(null);
-      expect(process.artifacts).not.toContain(annotation);
+      expect(annotation.$parent).to.be.null;
+      expect(process.artifacts).not.to.include(annotation);
     }));
 
   });

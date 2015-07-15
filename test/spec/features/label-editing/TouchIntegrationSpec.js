@@ -2,6 +2,7 @@
 
 var TestHelper = require('../../../TestHelper');
 
+var TestContainer = require('mocha-test-container-support');
 
 var Modeler = require('../../../../lib/Modeler');
 
@@ -11,7 +12,7 @@ describe('direct editing - touch integration', function() {
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = TestContainer.get(this);
   });
 
 

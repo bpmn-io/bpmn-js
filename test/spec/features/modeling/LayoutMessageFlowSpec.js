@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -11,9 +10,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 
 describe('features/modeling - layout message flows', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = require('../../../fixtures/bpmn/collaboration-message-flows.bpmn');
 
@@ -34,7 +30,7 @@ describe('features/modeling - layout message flows', function() {
     // then
 
     // expect cropped, repaired manhattan connection
-    expect(messageFlowConnection.waypoints).toDeepEqual([
+    expect(messageFlowConnection.waypoints).eql([
       { original: { x: 420, y: 234 }, x: 420, y: 234 },
       { x: 420, y: 387 },
       { x: 318, y: 387 },
@@ -55,7 +51,7 @@ describe('features/modeling - layout message flows', function() {
     // then
 
     // expect cropped, repaired manhattan connection
-    expect(messageFlowConnection.waypoints).toDeepEqual([
+    expect(messageFlowConnection.waypoints).eql([
       { original: { x: 610, y: 194 }, x: 610, y: 194 },
       { original: { x: 610, y: 415 }, x: 610, y: 415 }
     ]);
@@ -74,7 +70,7 @@ describe('features/modeling - layout message flows', function() {
     // then
 
     // expect cropped, repaired manhattan connection
-    expect(messageFlowConnection.waypoints).toDeepEqual([
+    expect(messageFlowConnection.waypoints).eql([
       { original: { x: 671, y: 214 }, x: 671, y: 214 },
       { original: { x: 671, y: 465 }, x: 671, y: 465 }
     ]);
@@ -95,7 +91,7 @@ describe('features/modeling - layout message flows', function() {
     // then
 
     // expect cropped, repaired manhattan connection
-    expect(messageFlowConnection.waypoints).toDeepEqual([
+    expect(messageFlowConnection.waypoints).eql([
       { original: { x: 671, y: 214 }, x: 671, y: 214 },
       { x: 671, y: 315 },
       { x: 471, y: 315 },

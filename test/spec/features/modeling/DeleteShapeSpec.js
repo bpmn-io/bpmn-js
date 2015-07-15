@@ -29,7 +29,7 @@ describe('features/modeling - #removeShape', function() {
       modeling.removeShape(taskShape);
 
       // then
-      expect(task.$parent).toBeNull();
+      expect(task.$parent).to.be.null;
     }));
   });
 
@@ -48,7 +48,7 @@ describe('features/modeling - #removeShape', function() {
       commandStack.undo();
 
       // then
-      expect(task.$parent).toBe(parent);
+      expect(task.$parent).to.eql(parent);
     }));
   });
 
@@ -67,7 +67,7 @@ describe('features/modeling - #removeShape', function() {
       commandStack.redo();
 
       // then
-      expect(task.$parent).toBeNull();
+      expect(task.$parent).to.be.null;
     }));
   });
 

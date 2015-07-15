@@ -20,7 +20,7 @@ describe('features/bendpoints', function() {
 
 
   it('should contain bendpoints', inject(function(bendpoints) {
-    expect(bendpoints).toBeDefined();
+    expect(bendpoints).to.be.defined;
   }));
 
 });

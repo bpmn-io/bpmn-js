@@ -2,6 +2,7 @@
 
 var TestHelper = require('../../TestHelper');
 
+var TestContainer = require('mocha-test-container-support');
 
 var Diagram = require('diagram-js/lib/Diagram'),
     BpmnModdle = require('bpmn-moddle'),
@@ -16,7 +17,7 @@ describe('import - Importer', function() {
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = TestContainer.get(this);
   });
 
 
@@ -63,7 +64,7 @@ describe('import - Importer', function() {
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(eventCount).toEqual(9);
+        expect(eventCount).to.equal(9);
 
         done(err);
       });
@@ -95,7 +96,7 @@ describe('import - Importer', function() {
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(events).toEqual([
+        expect(events).to.eql([
            { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: 'Process_1' },
            { type: 'add', semantic: 'SubProcess_1', di: '_BPMNShape_SubProcess_2', diagramElement: 'SubProcess_1' },
            { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_2', diagramElement: 'StartEvent_1' },
@@ -133,7 +134,7 @@ describe('import - Importer', function() {
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(events).toEqual([
+        expect(events).to.eql([
           { type: 'add', semantic: '_Collaboration_2', di: 'BPMNPlane_1', diagramElement: '_Collaboration_2' },
           { type: 'add', semantic: 'Participant_2', di: '_BPMNShape_Participant_2', diagramElement: 'Participant_2' },
           { type: 'add', semantic: 'Lane_1', di: '_BPMNShape_Lane_2', diagramElement: 'Lane_1' },
@@ -178,11 +179,11 @@ describe('import - Importer', function() {
       var anyChild = elements[1];
 
       // assume
-      expect(root.businessObject.$instanceOf('bpmn:Process')).toBe(true);
-      expect(anyChild.parent).toBe(root);
+      expect(root.businessObject.$instanceOf('bpmn:Process')).to.be.true;
+      expect(anyChild.parent).to.eql(root);
 
       // then
-      expect(canvas.getRootElement()).toBe(root);
+      expect(canvas.getRootElement()).to.eql(root);
     });
 
 
@@ -193,10 +194,10 @@ describe('import - Importer', function() {
       var startEventShape = elements[2];
 
       // then
-      expect(startEventShape.type).toBe('bpmn:StartEvent');
-      expect(startEventShape.parent).toBe(subProcessShape);
+      expect(startEventShape.type).to.equal('bpmn:StartEvent');
+      expect(startEventShape.parent).to.eql(subProcessShape);
 
-      expect(subProcessShape.children.length).toBe(5);
+      expect(subProcessShape.children.length).to.equal(5);
     });
 
 
@@ -207,10 +208,10 @@ describe('import - Importer', function() {
       var label = startEventShape.label;
 
       // then
-      expect(label).toBeDefined();
-      expect(label.id).toBe(startEventShape.id + '_label');
+      expect(label).to.be.defined;
+      expect(label.id).to.equal(startEventShape.id + '_label');
 
-      expect(label.labelTarget).toBe(startEventShape);
+      expect(label.labelTarget).to.eql(startEventShape);
     });
 
 
@@ -224,11 +225,11 @@ describe('import - Importer', function() {
           startEvent = startEventShape.businessObject;
 
       // then
-      expect(subProcess).toBeDefined();
-      expect(subProcess.$instanceOf('bpmn:SubProcess')).toBe(true);
+      expect(subProcess).to.be.defined;
+      expect(subProcess.$instanceOf('bpmn:SubProcess')).to.be.true;
 
-      expect(startEvent).toBeDefined();
-      expect(startEvent.$instanceOf('bpmn:StartEvent')).toBe(true);
+      expect(startEvent).to.be.defined;
+      expect(startEvent.$instanceOf('bpmn:StartEvent')).to.be.true;
     });
 
 
@@ -245,11 +246,11 @@ describe('import - Importer', function() {
           startEventDi = startEvent.di;
 
       // then
-      expect(subProcessDi).toBeDefined();
-      expect(subProcessDi.bpmnElement).toBe(subProcess);
+      expect(subProcessDi).to.be.defined;
+      expect(subProcessDi.bpmnElement).to.eql(subProcess);
 
-      expect(startEventDi).toBeDefined();
-      expect(startEventDi.bpmnElement).toBe(startEvent);
+      expect(startEventDi).to.be.defined;
+      expect(startEventDi.bpmnElement).to.eql(startEvent);
     });
 
   });
@@ -265,7 +266,7 @@ describe('import - Importer', function() {
       // when
       runImport(diagram, xml, function(err, warnings) {
 
-        expect(warnings.length).toBe(1);
+        expect(warnings.length).to.equal(1);
 
         done(err);
       });
@@ -283,8 +284,8 @@ describe('import - Importer', function() {
         var expectedMessage =
           'multiple DI elements defined for <bpmn:InclusiveGateway id="InclusiveGateway_1" />';
 
-        expect(warnings.length).toBe(1);
-        expect(warnings[0].message).toBe(expectedMessage);
+        expect(warnings.length).to.equal(1);
+        expect(warnings[0].message).to.equal(expectedMessage);
 
         done(err);
       });
@@ -303,7 +304,7 @@ describe('import - Importer', function() {
 
         var element = elementRegistry.get('GATEWAY_1');
 
-        expect(element.businessObject.eventGatewayType).toEqual('Exclusive');
+        expect(element.businessObject.eventGatewayType).to.equal('Exclusive');
 
         done();
       });
@@ -323,7 +324,7 @@ describe('import - Importer', function() {
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(warnings.length).toBe(0);
+        expect(warnings.length).to.equal(0);
 
         done(err);
       });
@@ -339,10 +340,10 @@ describe('import - Importer', function() {
       runImport(diagram, xml, function(err, warnings) {
 
         // then
-        expect(warnings.length).toBe(0);
+        expect(warnings.length).to.equal(0);
 
-        expect(diagram.get('elementRegistry').get('_b467921a-ef7b-44c5-bf78-fd624c400d17')).toBeDefined();
-        expect(diagram.get('elementRegistry').get('_c311cc87-677e-47a4-bdb1-8744c4ec3147')).toBeDefined();
+        expect(diagram.get('elementRegistry').get('_b467921a-ef7b-44c5-bf78-fd624c400d17')).to.be.defined;
+        expect(diagram.get('elementRegistry').get('_c311cc87-677e-47a4-bdb1-8744c4ec3147')).to.be.defined;
 
         done(err);
       });
@@ -368,12 +369,12 @@ describe('import - Importer', function() {
       runImport(diagram, xml1, function(err, warnings) {
 
         //round up
-        expect(events.ID_End.x).toBe(Math.round(340.6));
-        expect(events.ID_End.y).toBe(Math.round(136.6));
+        expect(events.ID_End.x).to.equal(Math.round(340.6));
+        expect(events.ID_End.y).to.equal(Math.round(136.6));
 
         //round down
-        expect(events.ID_Start.x).toBe(Math.round(120.4));
-        expect(events.ID_Start.y).toBe(Math.round(135.4));
+        expect(events.ID_Start.x).to.equal(Math.round(120.4));
+        expect(events.ID_Start.y).to.equal(Math.round(135.4));
 
         done(err);
       });
@@ -394,8 +395,8 @@ describe('import - Importer', function() {
       runImport(diagram, xml1, function(err, warnings) {
 
         //round down
-        expect(events.ID_Start.height).toBe(Math.round(30.4));
-        expect(events.ID_Start.width).toBe(Math.round(30.4));
+        expect(events.ID_Start.height).to.equal(Math.round(30.4));
+        expect(events.ID_Start.width).to.equal(Math.round(30.4));
 
         done(err);
       });

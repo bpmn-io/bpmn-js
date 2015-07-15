@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -12,9 +11,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - move connection', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
@@ -24,7 +20,7 @@ describe('features/modeling - move connection', function() {
 
   describe('connection handling', function() {
 
-    it('should execute', inject(function(elementRegistry, modeling) {
+    it('should execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -33,23 +29,22 @@ describe('features/modeling - move connection', function() {
       // when
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
 
+      var waypoints = [
+        {x: 598, y: 351 },
+        {x: 954, y: 351 },
+        {x: 954, y: 446 },
+        {x: 852, y: 446 }
+      ];
+
       // then
 
       // expect cropped connection
-      expect(sequenceFlowConnection.waypoints).toDeepEqual([
-        { x: 598, y: 351 },
-        { x: 954, y: 351 },
-        { x: 954, y: 446 },
-        { x: 852, y: 446 }
-      ]);
+      expect(sequenceFlowConnection.waypoints).eql(waypoints);
 
       // expect cropped waypoints in di
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 598, y: 351 },
-        { $type: 'dc:Point', x: 954, y: 351 },
-        { $type: 'dc:Point', x: 954, y: 446 },
-        { $type: 'dc:Point', x: 852, y: 446 }
-      ]);
+      var diWaypoints = bpmnFactory.createDiWaypoints(waypoints);
+
+      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
   });
@@ -72,8 +67,8 @@ describe('features/modeling - move connection', function() {
       commandStack.undo();
 
       // then
-      expect(sequenceFlowConnection.waypoints).toDeepEqual(oldWaypoints);
-      expect(sequenceFlow.di.waypoint).toDeepEqual(oldDiWaypoints);
+      expect(sequenceFlowConnection.waypoints).eql(oldWaypoints);
+      expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
     }));
 
   });
@@ -97,8 +92,8 @@ describe('features/modeling - move connection', function() {
       commandStack.redo();
 
       // then
-      expect(sequenceFlowConnection.waypoints).toDeepEqual(newWaypoints);
-      expect(sequenceFlow.di.waypoint).toDeepEqual(newDiWaypoints);
+      expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
+      expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
     }));
 
   });

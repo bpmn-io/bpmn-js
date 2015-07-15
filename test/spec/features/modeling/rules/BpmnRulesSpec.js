@@ -18,8 +18,8 @@ function expectCanConnect(source, target, rules) {
     source = elementRegistry.get(source);
     target = elementRegistry.get(target);
 
-    expect(source).toBeDefined();
-    expect(target).toBeDefined();
+    expect(source).to.be.defined;
+    expect(target).to.be.defined;
 
     if ('sequenceFlow' in rules) {
       results.sequenceFlow = bpmnRules.canConnectSequenceFlow(source, target);
@@ -34,7 +34,7 @@ function expectCanConnect(source, target, rules) {
     }
   });
 
-  expect(results).toEqual(rules);
+  expect(results).to.eql(rules);
 }
 
 
@@ -47,13 +47,13 @@ function expectCanDrop(element, target, expectedResult) {
     element = elementRegistry.get(element);
     target = elementRegistry.get(target);
 
-    expect(element).toBeDefined();
-    expect(target).toBeDefined();
+    expect(element).to.be.defined;
+    expect(target).to.be.defined;
 
     result = bpmnRules.canDrop(element, target);
   });
 
-  expect(result).toEqual(expectedResult);
+  expect(result).to.eql(expectedResult);
 }
 
 

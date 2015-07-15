@@ -35,7 +35,7 @@ describe('features/modeling - remove behavior', function() {
         // then
         var rootElement = canvas.getRootElement();
 
-        expect(is(rootElement, 'bpmn:Collaboration')).toBeTruthy();
+        expect(is(rootElement, 'bpmn:Collaboration')).to.be.ok;
       }));
 
     });
@@ -68,25 +68,25 @@ describe('features/modeling - remove behavior', function() {
         modeling.removeShape(participantShape);
 
         // then
-        expect(participant.$parent).toBeFalsy();
+        expect(participant.$parent).to.not.be.ok;
 
         var newRootShape = canvas.getRootElement(),
             newRootBusinessObject = newRootShape.businessObject;
 
-        expect(newRootBusinessObject.$instanceOf('bpmn:Process')).toBe(true);
+        expect(newRootBusinessObject.$instanceOf('bpmn:Process')).to.be.true;
 
         // collaboration DI is unwired
-        expect(participantDi.$parent).toBeFalsy();
-        expect(collaboration.di).toBeFalsy();
+        expect(participantDi.$parent).to.not.be.ok;
+        expect(collaboration.di).to.not.be.ok;
 
-        expect(bpmnDefinitions.rootElements).not.toContain(process);
-        expect(bpmnDefinitions.rootElements).not.toContain(collaboration);
+        expect(bpmnDefinitions.rootElements).not.to.include(process);
+        expect(bpmnDefinitions.rootElements).not.to.include(collaboration);
 
         // process DI is wired
-        expect(diPlane.bpmnElement).toBe(newRootBusinessObject);
-        expect(newRootBusinessObject.di).toBe(diPlane);
+        expect(diPlane.bpmnElement).to.eql(newRootBusinessObject);
+        expect(newRootBusinessObject.di).to.eql(diPlane);
 
-        expect(bpmnDefinitions.rootElements).toContain(newRootBusinessObject);
+        expect(bpmnDefinitions.rootElements).to.include(newRootBusinessObject);
       }));
 
 
@@ -107,16 +107,16 @@ describe('features/modeling - remove behavior', function() {
         commandStack.undo();
 
         // then
-        expect(participant.$parent).toBe(originalRootElementBo);
-        expect(originalRootElementBo.$parent).toBe(bpmnDefinitions);
+        expect(participant.$parent).to.eql(originalRootElementBo);
+        expect(originalRootElementBo.$parent).to.eql(bpmnDefinitions);
 
-        expect(canvas.getRootElement()).toBe(originalRootElement);
+        expect(canvas.getRootElement()).to.eql(originalRootElement);
 
         // di is unwired
-        expect(participantDi.$parent).toBe(originalRootElementBo.di);
+        expect(participantDi.$parent).to.eql(originalRootElementBo.di);
 
         // new di is wired
-        expect(diPlane.bpmnElement).toBe(originalRootElementBo);
+        expect(diPlane.bpmnElement).to.eql(originalRootElementBo);
       }));
 
     });

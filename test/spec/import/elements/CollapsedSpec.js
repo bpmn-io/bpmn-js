@@ -18,8 +18,8 @@ describe('import - collapsed container', function() {
       var collapsedShape = elementRegistry.get('SubProcess_1');
       var childShape = elementRegistry.get('IntermediateCatchEvent_1');
 
-      expect(collapsedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
+      expect(collapsedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
     }));
 
 
@@ -27,8 +27,8 @@ describe('import - collapsed container', function() {
       var collapsedShape = elementRegistry.get('Transaction_1');
       var childShape = elementRegistry.get('UserTask_1');
 
-      expect(collapsedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
+      expect(collapsedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
     }));
 
 
@@ -36,8 +36,8 @@ describe('import - collapsed container', function() {
       var collapsedShape = elementRegistry.get('AdHocSubProcess_1');
       var childShape = elementRegistry.get('StartEvent_1');
 
-      expect(collapsedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
+      expect(collapsedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
     }));
 
 
@@ -46,18 +46,18 @@ describe('import - collapsed container', function() {
       var childShape = elementRegistry.get('SubProcess_5');
       var nestedChildShape = elementRegistry.get('Task_3');
 
-      expect(collapsedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
-      expect(nestedChildShape.hidden).toBe(true);
+      expect(collapsedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
+      expect(nestedChildShape.hidden).to.be.true;
     }));
 
 
     it('should import collapsed with nested elements', inject(function(elementRegistry) {
       var hiddenEventShape = elementRegistry.get('StartEvent_2');
-      expect(hiddenEventShape.label.hidden).toBe(true);
+      expect(hiddenEventShape.label.hidden).to.be.true;
 
       var hiddenDataShape = elementRegistry.get('DataObjectReference_1');
-      expect(hiddenDataShape.label.hidden).toBe(true);
+      expect(hiddenDataShape.label.hidden).to.be.true;
     }));
 
 
@@ -65,8 +65,8 @@ describe('import - collapsed container', function() {
       var expandedShape = elementRegistry.get('SubProcess_3');
       var childShape = elementRegistry.get('Task_2');
 
-      expect(expandedShape.collapsed).toBe(false);
-      expect(childShape.hidden).toBe(false);
+      expect(expandedShape.collapsed).to.be.false;
+      expect(childShape.hidden).to.be.false;
     }));
 
   });
@@ -83,8 +83,8 @@ describe('import - collapsed container', function() {
       var expandedShape = elementRegistry.get('SubProcess_1');
       var childShape = elementRegistry.get('Task_1');
 
-      expect(expandedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
+      expect(expandedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
     }));
 
 
@@ -92,8 +92,8 @@ describe('import - collapsed container', function() {
       var expandedShape = elementRegistry.get('SubProcess_2');
       var childShape = elementRegistry.get('StartEvent_1');
 
-      expect(expandedShape.collapsed).toBe(false);
-      expect(childShape.hidden).toBe(false);
+      expect(expandedShape.collapsed).to.be.false;
+      expect(childShape.hidden).to.be.false;
     }));
 
 
@@ -101,8 +101,8 @@ describe('import - collapsed container', function() {
       var expandedShape = elementRegistry.get('SubProcess_4');
       var childShape = elementRegistry.get('Task_2');
 
-      expect(expandedShape.collapsed).toBe(true);
-      expect(childShape.hidden).toBe(true);
+      expect(expandedShape.collapsed).to.be.true;
+      expect(childShape.hidden).to.be.true;
     }));
 
 
@@ -110,8 +110,8 @@ describe('import - collapsed container', function() {
       var expandedShape = elementRegistry.get('SubProcess_3');
       var childShape = elementRegistry.get('StartEvent_2');
 
-      expect(expandedShape.collapsed).toBe(false);
-      expect(childShape.hidden).toBe(false);
+      expect(expandedShape.collapsed).to.be.false;
+      expect(childShape.hidden).to.be.false;
     }));
 
   });

@@ -36,8 +36,8 @@ describe('features/replace', function() {
       // then
       var businessObject = newElement.businessObject;
 
-      expect(newElement).toBeDefined();
-      expect(is(businessObject, 'bpmn:UserTask')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(is(businessObject, 'bpmn:UserTask')).to.be.true;
     }));
 
 
@@ -56,8 +56,8 @@ describe('features/replace', function() {
       // then
       var businessObject = newElement.businessObject;
 
-      expect(newElement).toBeDefined();
-      expect(is(businessObject, 'bpmn:InclusiveGateway')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(is(businessObject, 'bpmn:InclusiveGateway')).to.be.true;
     }));
 
 
@@ -74,8 +74,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(subProcess, newElementData);
 
       // then
-      expect(newElement).toBeDefined();
-      expect(is(newElement.businessObject, 'bpmn:Transaction')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(is(newElement.businessObject, 'bpmn:Transaction')).to.be.true;
 
     }));
 
@@ -90,8 +90,8 @@ describe('features/replace', function() {
 
       var newElement = bpmnReplace.replaceElement(transaction, newElementData);
 
-      expect(newElement).toBeDefined();
-      expect(is(newElement.businessObject, 'bpmn:SubProcess')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(is(newElement.businessObject, 'bpmn:SubProcess')).to.be.true;
 
     }));
 
@@ -112,8 +112,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(newElement.x).toBe(task.x);
-      expect(newElement.y).toBe(task.y);
+      expect(newElement.x).to.equal(task.x);
+      expect(newElement.y).to.equal(task.y);
     }));
 
   });
@@ -134,7 +134,7 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(selection.get()).toContain(newElement);
+      expect(selection.get()).to.include(newElement);
     }));
 
   });
@@ -156,7 +156,7 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(newElement.businessObject.name).toBe('Task Caption');
+      expect(newElement.businessObject.name).to.equal('Task Caption');
     }));
 
   });
@@ -182,8 +182,8 @@ describe('features/replace', function() {
       var target = elementRegistry.get('Task_1'),
           businessObject = target.businessObject;
 
-      expect(target).toBeDefined();
-      expect(is(businessObject, 'bpmn:Task')).toBe(true);
+      expect(target).to.be.defined;
+      expect(is(businessObject, 'bpmn:Task')).to.be.true;
     }));
 
 
@@ -212,8 +212,8 @@ describe('features/replace', function() {
       // then
       var businessObject = servicetask.businessObject;
 
-      expect(servicetask).toBeDefined();
-      expect(is(businessObject, 'bpmn:ServiceTask')).toBe(true);
+      expect(servicetask).to.be.defined;
+      expect(is(businessObject, 'bpmn:ServiceTask')).to.be.true;
     }));
 
   });
@@ -240,10 +240,10 @@ describe('features/replace', function() {
           target = outgoing.target;
 
 
-      expect(incoming).toBeDefined();
-      expect(outgoing).toBeDefined();
-      expect(source).toBe(elementRegistry.get('StartEvent_1'));
-      expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+      expect(incoming).to.be.defined;
+      expect(outgoing).to.be.defined;
+      expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+      expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
     }));
 
 
@@ -264,8 +264,8 @@ describe('features/replace', function() {
           outgoing = newElement.outgoing[0];
 
 
-      expect(incoming).toBeUndefined();
-      expect(outgoing).toBeUndefined();
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
     }));
 
 
@@ -286,8 +286,8 @@ describe('features/replace', function() {
           outgoing = newElement.outgoing[0];
 
 
-      expect(incoming).toBeUndefined();
-      expect(outgoing).toBeUndefined();
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
     }));
 
 
@@ -315,10 +315,10 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeDefined();
-        expect(source).toBe(elementRegistry.get('StartEvent_1'));
-        expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.defined;
+        expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+        expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
 
@@ -343,9 +343,9 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeDefined();
-        expect(target).toBe(elementRegistry.get('Task_1'));
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.defined;
+        expect(target).to.eql(elementRegistry.get('Task_1'));
       }));
 
 
@@ -370,9 +370,9 @@ describe('features/replace', function() {
             source   = incoming.source;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeUndefined();
-        expect(source).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.undefined;
+        expect(source).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
     });
@@ -401,10 +401,10 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeDefined();
-        expect(source).toBe(elementRegistry.get('StartEvent_1'));
-        expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.defined;
+        expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+        expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
 
@@ -427,8 +427,8 @@ describe('features/replace', function() {
             outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeUndefined();
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.undefined;
       }));
 
 
@@ -451,8 +451,8 @@ describe('features/replace', function() {
             outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeUndefined();
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.undefined;
       }));
 
     });
@@ -483,13 +483,13 @@ describe('features/replace', function() {
       var transactionChildren = transaction.get('flowElements');
       var subProcessChildren = subProcess.get('flowElements');
 
-      expect(transactionChildren).toContain(startEventShape.businessObject);
-      expect(transactionChildren).toContain(taskShape.businessObject);
-      expect(transactionChildren).toContain(sequenceFlowConnection.businessObject);
+      expect(transactionChildren).to.include(startEventShape.businessObject);
+      expect(transactionChildren).to.include(taskShape.businessObject);
+      expect(transactionChildren).to.include(sequenceFlowConnection.businessObject);
 
-      expect(subProcessChildren).not.toContain(startEventShape.businessObject);
-      expect(subProcessChildren).not.toContain(taskShape.businessObject);
-      expect(subProcessChildren).not.toContain(sequenceFlowConnection.businessObject);
+      expect(subProcessChildren).not.to.include(startEventShape.businessObject);
+      expect(subProcessChildren).not.to.include(taskShape.businessObject);
+      expect(subProcessChildren).not.to.include(sequenceFlowConnection.businessObject);
     }));
 
   });
@@ -509,8 +509,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(element, newElementData);
 
       // then
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(true);
-      expect(isExpanded(newElement)).toBe(true);
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.true;
     }));
 
 
@@ -527,9 +527,9 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(element, newElementData);
 
       // then
-      expect(is(newElement, 'bpmn:SubProcess')).toBe(true);
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(false);
-      expect(isExpanded(newElement)).toBe(true);
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
+      expect(isExpanded(newElement)).to.be.true;
     }));
 
 
@@ -546,8 +546,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(element, newElementData);
 
       // then
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(true);
-      expect(isExpanded(newElement)).not.toBe(true);
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+      expect(isExpanded(newElement)).not.to.be.true;
     }));
 
 
@@ -564,9 +564,9 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(element, newElementData);
 
       // then
-      expect(is(newElement, 'bpmn:SubProcess')).toBe(true);
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).toBe(false);
-      expect(isExpanded(newElement)).not.toBe(true);
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
+      expect(isExpanded(newElement)).not.to.be.true;
     }));
 
   });
