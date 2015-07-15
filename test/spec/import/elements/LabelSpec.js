@@ -58,8 +58,8 @@ describe('import - labels', function() {
               sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
           // then
-          expect(bounds(endEvent.label)).toEqual({ x: 211, y: 256, width: 119, height: 44 });
-          expect(bounds(sequenceFlow.label)).toEqual({ x: 432, y: 317, width: 99, height: 22 });
+          expect(bounds(endEvent.label)).to.eql({ x: 211, y: 256, width: 119, height: 44 });
+          expect(bounds(sequenceFlow.label)).to.eql({ x: 432, y: 317, width: 99, height: 22 });
 
           done();
         })();

@@ -50,11 +50,11 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(taskShape, { loopCharacteristics: loopCharacteristics });
 
       // then
-      expect(taskShape.businessObject.loopCharacteristics).toBe(loopCharacteristics);
+      expect(taskShape.businessObject.loopCharacteristics).to.eql(loopCharacteristics);
 
 
       // task shape got updated
-      expect(updatedElements).toContain(taskShape);
+      expect(updatedElements).to.include(taskShape);
     }));
 
 
@@ -67,10 +67,10 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(gatewayShape, { 'default': undefined });
 
       // then
-      expect(gatewayShape.businessObject['default']).not.toBeDefined();
+      expect(gatewayShape.businessObject['default']).not.to.be.defined;
 
       // flow got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
     }));
 
 
@@ -83,10 +83,10 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(flowConnection, { name: 'FOO BAR' });
 
       // then
-      expect(flowConnection.businessObject.name).toBe('FOO BAR');
+      expect(flowConnection.businessObject.name).to.equal('FOO BAR');
 
       // flow label got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1_label'));
     }));
 
   });
@@ -106,7 +106,7 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(taskShape.businessObject.loopCharactersistics).not.toBeDefined();
+      expect(taskShape.businessObject.loopCharactersistics).not.to.be.defined;
     }));
 
 
@@ -120,10 +120,10 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(gatewayShape.businessObject['default']).toBeDefined();
+      expect(gatewayShape.businessObject['default']).to.be.defined;
 
       // flow got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
     }));
 
 
@@ -137,10 +137,10 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(flowConnection.businessObject.name).toBe('default');
+      expect(flowConnection.businessObject.name).to.equal('default');
 
       // flow got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1_label'));
     }));
 
   });
@@ -161,7 +161,7 @@ describe('features/modeling - update properties', function() {
       commandStack.redo();
 
       // then
-      expect(taskShape.businessObject.loopCharacteristics).toBe(loopCharacteristics);
+      expect(taskShape.businessObject.loopCharacteristics).to.eql(loopCharacteristics);
     }));
 
 
@@ -176,10 +176,10 @@ describe('features/modeling - update properties', function() {
       commandStack.redo();
 
       // then
-      expect(gatewayShape.businessObject['default']).not.toBeDefined();
+      expect(gatewayShape.businessObject['default']).not.to.be.defined;
 
       // flow got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
     }));
 
 
@@ -194,10 +194,10 @@ describe('features/modeling - update properties', function() {
       commandStack.redo();
 
       // then
-      expect(flowConnection.businessObject.name).toBe('FOO BAR');
+      expect(flowConnection.businessObject.name).to.equal('FOO BAR');
 
       // flow got updated, too
-      expect(updatedElements).toContain(elementRegistry.get('SequenceFlow_1_label'));
+      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1_label'));
     }));
 
   });

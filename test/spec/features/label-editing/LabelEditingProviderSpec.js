@@ -48,7 +48,7 @@ describe('features - label-editing', function() {
       eventBus.fire('element.dblclick', { element: shape });
 
       // then
-      expect(directEditing.isActive()).toBe(true);
+      expect(directEditing.isActive()).to.be.true;
     }));
 
 
@@ -72,8 +72,8 @@ describe('features - label-editing', function() {
       triggerKeyEvent(textarea, 'keydown', 27);
 
       // then
-      expect(directEditing.isActive()).toBe(false);
-      expect(task.name).toBe(oldName);
+      expect(directEditing.isActive()).to.be.false;
+      expect(task.name).to.equal(oldName);
     }));
 
 
@@ -98,8 +98,8 @@ describe('features - label-editing', function() {
       eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
 
       // then
-      expect(directEditing.isActive()).toBe(false);
-      expect(task.name).toBe(newName);
+      expect(directEditing.isActive()).to.be.false;
+      expect(task.name).to.equal(newName);
     }));
 
   });
@@ -158,7 +158,7 @@ describe('features - label-editing', function() {
       directEditComplete('BAR');
 
       // then
-      expect(listenerCalled).toBe(true);
+      expect(listenerCalled).to.be.true;
     });
 
 
@@ -177,7 +177,7 @@ describe('features - label-editing', function() {
 
       // then
       var label = LabelUtil.getLabel(diagramElement);
-      expect(label).toBe(oldLabel);
+      expect(label).to.eql(oldLabel);
     }));
 
   });
@@ -203,7 +203,7 @@ describe('features - label-editing', function() {
       directEditComplete('BAR');
 
       // then
-      expect(listenerCalled).toBe(true);
+      expect(listenerCalled).to.be.true;
     });
 
 
@@ -225,7 +225,7 @@ describe('features - label-editing', function() {
       directEditComplete('BAR');
 
       // then
-      expect(listenerCalled).toBe(true);
+      expect(listenerCalled).to.be.true;
     });
 
   });
@@ -247,8 +247,8 @@ describe('features - label-editing', function() {
 
         // then
         // expect editing to be active
-        expect(directEditing.getValue()).toBe(label);
-        expect(directEditing.isActive()).toBe(true);
+        expect(directEditing.getValue()).to.eql(label);
+        expect(directEditing.isActive()).to.be.true;
 
 
         // when
@@ -257,7 +257,7 @@ describe('features - label-editing', function() {
         // then
         // expect update to have happened
         label = LabelUtil.getLabel(diagramElement);
-        expect(label).toBe('B');
+        expect(label).to.equal('B');
 
 
         // when
@@ -266,7 +266,7 @@ describe('features - label-editing', function() {
 
         // expect no label update to have happened
         label = LabelUtil.getLabel(diagramElement);
-        expect(label).toBe('B');
+        expect(label).to.equal('B');
       });
     }
 

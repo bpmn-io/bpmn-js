@@ -12,8 +12,10 @@ describe('NavigatedViewer', function() {
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = document.createElement('div');
+    document.body.appendChild(container);
   });
+
 
 
   function createViewer(xml, done) {
@@ -39,7 +41,7 @@ describe('NavigatedViewer', function() {
 
     it('should include zoomScroll', function(done) {
       createViewer(xml, function(err, warnings, viewer) {
-        expect(viewer.get('zoomScroll')).toBeDefined();
+        expect(viewer.get('zoomScroll')).to.be.defined;
 
         done(err);
       });
@@ -48,7 +50,7 @@ describe('NavigatedViewer', function() {
 
     it('should include moveCanvas', function(done) {
       createViewer(xml, function(err, warnings, viewer) {
-        expect(viewer.get('moveCanvas')).toBeDefined();
+        expect(viewer.get('moveCanvas')).to.be.defined;
 
         done(err);
       });

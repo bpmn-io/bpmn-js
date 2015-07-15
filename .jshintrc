@@ -4,6 +4,7 @@
   "strict": true,
   "unused": "vars",
   "maxlen": 120,
+  "expr": true,
   "globals": {
     "describe": false,
     "it": false,
@@ -11,7 +12,6 @@
     "beforeEach": true,
     "afterEach": true,
     "console": true,
-    "spyOn": true,
-    "jasmine": true
+    "spyOn": true
   }
 }

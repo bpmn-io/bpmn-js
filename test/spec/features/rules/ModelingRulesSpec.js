@@ -16,9 +16,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/ModelingRules', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var sequenceXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
   var eventGatewaysEdgeXML =
       fs.readFileSync('test/fixtures/bpmn/features/rules/event-based-gateway-outgoing-edge.bpmn', 'utf8');
@@ -47,7 +44,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(false);
+      expect(allowed).to.be.false;
     }));
   });
 
@@ -71,7 +68,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
 
     it('should allow catching timer intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -90,7 +87,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
 
     it('should allow catching condition intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -109,7 +106,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
 
     it('should allow catching signal intermediate event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -128,7 +125,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
 
     it('should allow receive task on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -147,7 +144,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
 
     it('should not allow throw event on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -166,7 +163,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(false);
+      expect(allowed).to.be.false;
     }));
 
     it('should not allow task on outgoing edges', inject(function(elementRegistry, modeling, rules) {
@@ -185,7 +182,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(false);
+      expect(allowed).to.be.false;
     }));
 
   });
@@ -212,7 +209,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(false);
+      expect(allowed).to.be.false;
     }));
 
     it('should be allowed to have outgoing sequence flows ', inject(function(elementRegistry, modeling, rules) {
@@ -230,7 +227,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
   });
 
@@ -256,7 +253,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(false);
+      expect(allowed).to.be.false;
     }));
 
     it('should be allowed to have incoming sequence flows ', inject(function(elementRegistry, modeling, rules) {
@@ -275,7 +272,7 @@ describe('features/ModelingRules', function() {
 
       // then
       // connection should not be allowed
-      expect(allowed).toBe(true);
+      expect(allowed).to.be.true;
     }));
   });
 });

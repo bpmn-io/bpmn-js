@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -15,9 +14,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - move shape', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
@@ -27,7 +23,7 @@ describe('features/modeling - move shape', function() {
 
   describe('shape', function() {
 
-    it('should move', inject(function(elementRegistry, modeling) {
+    it('should move', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var startEventElement = elementRegistry.get('StartEvent_1'),
@@ -45,23 +41,25 @@ describe('features/modeling - move shape', function() {
       modeling.moveShape(startEventElement, { x: 0, y: 50 });
 
       // then
-      expect(startEvent.di.bounds.x).toBe(oldPosition.x);
-      expect(startEvent.di.bounds.y).toBe(oldPosition.y + 50);
+      expect(startEvent.di.bounds.x).to.equal(oldPosition.x);
+      expect(startEvent.di.bounds.y).to.equal(oldPosition.y + 50);
 
       // expect flow layout
-      expect(sequenceFlowElement.waypoints).toDeepEqual([
+      expect(sequenceFlowElement.waypoints).to.eql([
         { original: { x: 370, y: 310 }, x: 388, y: 310 },
         { x: 404, y: 310 },
         { x: 404, y: 260 },
         { original: { x: 470, y: 260 }, x: 420, y: 260 }
       ]);
 
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 388, y: 310 },
-        { $type: 'dc:Point', x: 404, y: 310 },
-        { $type: 'dc:Point', x: 404, y: 260 },
-        { $type: 'dc:Point', x: 420, y: 260 }
+      var diWaypoints = bpmnFactory.createDiWaypoints([
+        {x: 388, y: 310 },
+        {x: 404, y: 310 },
+        {x: 404, y: 260 },
+        {x: 420, y: 260 }
       ]);
+
+      expect(sequenceFlow.di.waypoint).to.eql(diWaypoints);
     }));
 
 
@@ -80,8 +78,8 @@ describe('features/modeling - move shape', function() {
       modeling.moveShape(labelElement, { x: 0, y: 50 });
 
       // then
-      expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
-      expect(startEvent.di.label.bounds.y).toBe(oldPosition.y + 50);
+      expect(startEvent.di.label.bounds.x).to.equal(oldPosition.x);
+      expect(startEvent.di.label.bounds.y).to.equal(oldPosition.y + 50);
     }));
 
 
@@ -99,11 +97,11 @@ describe('features/modeling - move shape', function() {
       modeling.moveShape(labelElement, { x: 0, y: 50 }, processElement);
 
       // then
-      expect(labelElement.parent).toBe(processElement);
+      expect(labelElement.parent).to.eql(processElement);
 
       // expect actual element + businessObject to be unchanged
-      expect(startEventElement.parent).toBe(subProcessElement);
-      expect(startEvent.$parent).toBe(subProcess);
+      expect(startEventElement.parent).to.eql(subProcessElement);
+      expect(startEvent.$parent).to.eql(subProcess);
     }));
 
 
@@ -126,8 +124,8 @@ describe('features/modeling - move shape', function() {
         commandStack.undo();
 
         // then
-        expect(startEvent.di.bounds.x).toBe(oldPosition.x);
-        expect(startEvent.di.bounds.y).toBe(oldPosition.y);
+        expect(startEvent.di.bounds.x).to.equal(oldPosition.x);
+        expect(startEvent.di.bounds.y).to.equal(oldPosition.y);
       }));
 
 
@@ -148,8 +146,8 @@ describe('features/modeling - move shape', function() {
         commandStack.undo();
 
         // then
-        expect(startEvent.di.label.bounds.x).toBe(oldPosition.x);
-        expect(startEvent.di.label.bounds.y).toBe(oldPosition.y);
+        expect(startEvent.di.label.bounds.x).to.equal(oldPosition.x);
+        expect(startEvent.di.label.bounds.y).to.equal(oldPosition.y);
       }));
 
     });
@@ -176,8 +174,8 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(startEvent.di.bounds.x).toBe(newPosition.x);
-        expect(startEvent.di.bounds.y).toBe(newPosition.y);
+        expect(startEvent.di.bounds.x).to.equal(newPosition.x);
+        expect(startEvent.di.bounds.y).to.equal(newPosition.y);
       }));
 
 
@@ -199,8 +197,8 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(startEvent.di.label.bounds.x).toBe(newPosition.x);
-        expect(startEvent.di.label.bounds.y).toBe(newPosition.y);
+        expect(startEvent.di.label.bounds.x).to.equal(newPosition.x);
+        expect(startEvent.di.label.bounds.y).to.equal(newPosition.y);
       }));
 
     });
@@ -227,8 +225,8 @@ describe('features/modeling - move shape', function() {
       modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
 
       // then
-      expect(label.x).toBe(labelPosition.x + 40);
-      expect(label.y).toBe(labelPosition.y - 80);
+      expect(label.x).to.equal(labelPosition.x + 40);
+      expect(label.y).to.equal(labelPosition.y - 80);
     }));
 
 
@@ -250,8 +248,8 @@ describe('features/modeling - move shape', function() {
       modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
 
       // then
-      expect(flowLabel.x).toBe(labelPosition.x + 40);
-      expect(flowLabel.y).toBe(labelPosition.y - 80);
+      expect(flowLabel.x).to.equal(labelPosition.x + 40);
+      expect(flowLabel.y).to.equal(labelPosition.y - 80);
     }));
 
 
@@ -276,8 +274,8 @@ describe('features/modeling - move shape', function() {
         commandStack.undo();
 
         // then
-        expect(label.x).toBe(labelPosition.x);
-        expect(label.y).toBe(labelPosition.y);
+        expect(label.x).to.equal(labelPosition.x);
+        expect(label.y).to.equal(labelPosition.y);
       }));
 
 
@@ -301,8 +299,8 @@ describe('features/modeling - move shape', function() {
         commandStack.undo();
 
         // then
-        expect(flowLabel.x).toBe(labelPosition.x);
-        expect(flowLabel.y).toBe(labelPosition.y);
+        expect(flowLabel.x).to.equal(labelPosition.x);
+        expect(flowLabel.y).to.equal(labelPosition.y);
       }));
 
     });
@@ -330,8 +328,8 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(label.x).toBe(labelPosition.x + 40);
-        expect(label.y).toBe(labelPosition.y - 80);
+        expect(label.x).to.equal(labelPosition.x + 40);
+        expect(label.y).to.equal(labelPosition.y - 80);
       }));
 
 
@@ -356,8 +354,8 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(flowLabel.x).toBe(labelPosition.x + 40);
-        expect(flowLabel.y).toBe(labelPosition.y - 80);
+        expect(flowLabel.x).to.equal(labelPosition.x + 40);
+        expect(flowLabel.y).to.equal(labelPosition.y - 80);
       }));
 
     });

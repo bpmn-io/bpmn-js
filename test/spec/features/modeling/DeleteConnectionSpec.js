@@ -2,8 +2,7 @@
 
 /* global bootstrapModeler, inject */
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 var _ = require('lodash');
 
@@ -14,9 +13,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 
 describe('features/modeling - #removeConnection', function() {
-
-  beforeEach(Matchers.addDeepEquals);
-
 
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
 
@@ -37,7 +33,7 @@ describe('features/modeling - #removeConnection', function() {
       modeling.removeConnection(sequenceFlowShape);
 
       // then
-      expect(sequenceFlow.$parent).toBeNull();
+      expect(sequenceFlow.$parent).to.be.null;
     }));
   });
 
@@ -56,7 +52,7 @@ describe('features/modeling - #removeConnection', function() {
       commandStack.undo();
 
       // then
-      expect(sequenceFlow.$parent).toBe(parent);
+      expect(sequenceFlow.$parent).to.eql(parent);
     }));
   });
 
@@ -76,7 +72,7 @@ describe('features/modeling - #removeConnection', function() {
       commandStack.redo();
 
       // then
-      expect(sequenceFlow.$parent).toBeNull();
+      expect(sequenceFlow.$parent).to.be.null;
     }));
   });
 

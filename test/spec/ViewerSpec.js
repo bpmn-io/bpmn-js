@@ -2,8 +2,9 @@
 
 require('../TestHelper');
 
-
 var fs = require('fs');
+
+var TestContainer = require('mocha-test-container-support');
 
 var Viewer = require('../../lib/Viewer');
 
@@ -13,7 +14,7 @@ describe('Viewer', function() {
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+      container = TestContainer.get(this);
   });
 
 
@@ -58,8 +59,8 @@ describe('Viewer', function() {
       viewer.importXML(xml, function(err, warnings) {
 
         // then
-        expect(err).toBeFalsy();
-        expect(warnings.length).toBe(0);
+        expect(err).to.not.be.ok;
+        expect(warnings.length).to.equal(0);
 
         done();
       });
@@ -95,7 +96,7 @@ describe('Viewer', function() {
       viewer.importXML(xml, function(err) {
 
         // then
-        expect(events).toEqual([
+        expect(events).to.eql([
           'import.start',
           'import.success'
         ]);
@@ -120,8 +121,8 @@ describe('Viewer', function() {
             elementRegistry = viewer.get('elementRegistry');
 
         // then
-        expect(overlays).toBeDefined();
-        expect(elementRegistry).toBeDefined();
+        expect(overlays).to.be.defined;
+        expect(elementRegistry).to.be.defined;
 
         // when
         overlays.add('SubProcess_1', {
@@ -133,7 +134,7 @@ describe('Viewer', function() {
         });
 
         // then
-        expect(overlays.get({ element: 'SubProcess_1' }).length).toBe(1);
+        expect(overlays.get({ element: 'SubProcess_1' }).length).to.equal(1);
 
         done(err);
       });
@@ -148,18 +149,18 @@ describe('Viewer', function() {
 
     function expectMessage(e, expectedMessage) {
 
-      expect(e).toBeDefined();
+      expect(e).to.be.defined;
 
       if (expectedMessage instanceof RegExp) {
-        expect(e.message).toMatch(expectedMessage);
+        expect(e.message).to.match(expectedMessage);
       } else {
-        expect(e.message).toEqual(expectedMessage);
+        expect(e.message).to.equal(expectedMessage);
       }
     }
 
     function expectWarnings(warnings, expected) {
 
-      expect(warnings.length).toBe(expected.length);
+      expect(warnings.length).to.equal(expected.length);
 
       warnings.forEach(function(w, idx) {
         expectMessage(w, expected[idx]);
@@ -173,7 +174,7 @@ describe('Viewer', function() {
 
       createViewer(xml, function(err) {
 
-        expect(err).toBeTruthy();
+        expect(err).to.be.ok;
 
         expectMessage(err, /Text data outside of root node./);
 
@@ -190,7 +191,7 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).toBeFalsy();
+        expect(err).to.not.be.ok;
 
         expectWarnings(warnings, [
           'unresolved reference <Collaboration_2>',
@@ -205,7 +206,8 @@ describe('Viewer', function() {
     });
 
 
-    it('should handle invalid namespaced element', function(done) {
+    it
+    ('should handle invalid namespaced element', function(done) {
 
       var xml = fs.readFileSync('test/fixtures/bpmn/error/categoryValue.bpmn', 'utf8');
 
@@ -213,7 +215,7 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).toBeFalsy();
+        expect(err).to.not.be.ok;
 
         expectWarnings(warnings, [
           /unparsable content <categoryValue> detected/,
@@ -233,7 +235,7 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).toBeFalsy();
+        expect(err).to.not.be.ok;
 
         expectWarnings(warnings, [
           /unparsable content <collaboration> detected/,
@@ -258,7 +260,7 @@ describe('Viewer', function() {
 
       createViewer(xml, function(err, warnings, viewer) {
 
-        expect(viewer.get('bpmnjs')).toBe(viewer);
+        expect(viewer.get('bpmnjs')).to.equal(viewer);
 
         done(err);
       });
@@ -277,15 +279,15 @@ describe('Viewer', function() {
       var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
       var expectedEnd = '</svg>';
 
-      expect(svg.indexOf(expectedStart)).toEqual(0);
-      expect(svg.indexOf(expectedEnd)).toEqual(svg.length - expectedEnd.length);
+      expect(svg.indexOf(expectedStart)).to.equal(0);
+      expect(svg.indexOf(expectedEnd)).to.equal(svg.length - expectedEnd.length);
 
       // ensure correct rendering of SVG contents
-      expect(svg.indexOf('undefined')).toBe(-1);
+      expect(svg.indexOf('undefined')).to.equal(-1);
 
       // expect header to be written only once
-      expect(svg.indexOf('<svg width="100%" height="100%">')).toBe(-1);
-      expect(svg.indexOf('<g class="viewport"')).toBe(-1);
+      expect(svg.indexOf('<svg width="100%" height="100%">')).to.equal(-1);
+      expect(svg.indexOf('<g class="viewport"')).to.equal(-1);
 
       // FIXME(nre): make matcher
       return true;
@@ -311,7 +313,7 @@ describe('Viewer', function() {
           }
 
           // then
-          expect(isValid(svg)).toBe(true);
+          expect(isValid(svg)).to.be.true;
 
           done();
         });
@@ -340,10 +342,10 @@ describe('Viewer', function() {
           }
 
           // then
-          expect(isValid(svg)).toBe(true);
+          expect(isValid(svg)).to.be.true;
 
           // no svg export should take more than 500ms
-          expect(currentTime() - time).toBeLessThan(500);
+          expect(currentTime() - time).to.be.below(500);
 
           done();
         });
@@ -378,7 +380,7 @@ describe('Viewer', function() {
         appendTestRect(svgDoc);
         appendTestRect(svgDoc);
 
-        expect(svgDoc.querySelectorAll('.outer-bound-marker')).toBeDefined();
+        expect(svgDoc.querySelectorAll('.outer-bound-marker')).to.be.defined;
 
         // when
         viewer.saveSVG(function(err, svg) {
@@ -391,8 +393,8 @@ describe('Viewer', function() {
           svgDoc.innerHTML = svg;
 
           // then
-          expect(isValid(svg)).toBe(true);
-          expect(svgDoc.querySelector('.outer-bound-marker')).toBeNull();
+          expect(isValid(svg)).to.be.true;
+          expect(svgDoc.querySelector('.outer-bound-marker')).to.be.null;
 
           done();
         });
@@ -427,7 +429,7 @@ describe('Viewer', function() {
       viewer.importXML(xml, function(err) {
 
         // then
-        expect(err.message).toBe('No provider for "bpmnImporter"! (Resolving: bpmnImporter)');
+        expect(err.message).to.equal('No provider for "bpmnImporter"! (Resolving: bpmnImporter)');
         done();
       });
 
@@ -444,7 +446,7 @@ describe('Viewer', function() {
 
         // then
         var logger = viewer.get('logger');
-        expect(logger.called).toBe(true);
+        expect(logger.called).to.be.true;
 
         done(err);
       });
@@ -463,13 +465,13 @@ describe('Viewer', function() {
       });
 
       // then
-      expect(viewer.container.style.position).toBe('fixed');
-      expect(viewer.container.style.width).toBe('200px');
-      expect(viewer.container.style.height).toBe('100px');
+      expect(viewer.container.style.position).to.equal('fixed');
+      expect(viewer.container.style.width).to.equal('200px');
+      expect(viewer.container.style.height).to.equal('100px');
     });
 
 
-    var camundaPackage = require('../fixtures/json/model/camunda');
+    var camundaPackage = require('test/fixtures/json/model/camunda');
 
     it('should provide custom moddle extensions', function(done) {
 
@@ -492,18 +494,18 @@ describe('Viewer', function() {
             sendTask = taskShape.businessObject;
 
         // then
-        expect(sendTask).toBeDefined();
+        expect(sendTask).to.be.defined;
 
         var extensionElements = sendTask.extensionElements;
 
         // receive task should be moddle extended
-        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).toBeTruthy();
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.be.ok;
 
         // extension elements should provide typed element
-        expect(extensionElements).toBeTruthy();
+        expect(extensionElements).to.be.ok;
 
-        expect(extensionElements.values.length).toBe(1);
-        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).toBeTruthy();
+        expect(extensionElements.values.length).to.equal(1);
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.ok;
 
         done(err);
       });
@@ -526,7 +528,7 @@ describe('Viewer', function() {
       viewer.destroy();
 
       // then
-      expect(viewer.container.parentNode).toBeFalsy();
+      expect(viewer.container.parentNode).to.not.be.ok;
     });
 
   });

@@ -36,9 +36,9 @@ describe('features/replace', function() {
       bpmnReplace.replaceElement(element, target);
 
       // then
-      expect(elementRegistry.get('Association_0gzxvep')).toBeDefined();
-      expect(elementRegistry.get('SequenceFlow_1rme11l')).toBeDefined();
-      expect(elementRegistry.get('SequenceFlow_0608fzs')).not.toBeDefined();
+      expect(elementRegistry.get('Association_0gzxvep')).to.be.defined;
+      expect(elementRegistry.get('SequenceFlow_1rme11l')).to.be.defined;
+      expect(elementRegistry.get('SequenceFlow_0608fzs')).not.to.be.defined;
     }));
 
 
@@ -54,8 +54,8 @@ describe('features/replace', function() {
       bpmnReplace.replaceElement(element, target);
 
       // then
-      expect(elementRegistry.get('Association_1ncsghq')).toBeDefined();
-      expect(elementRegistry.get('SequenceFlow_0fn1a6r')).not.toBeDefined();
+      expect(elementRegistry.get('Association_1ncsghq')).to.be.defined;
+      expect(elementRegistry.get('SequenceFlow_0fn1a6r')).not.to.be.defined;
     }));
 
 
@@ -71,8 +71,8 @@ describe('features/replace', function() {
       bpmnReplace.replaceElement(element, target);
 
       // then
-      expect(elementRegistry.get('Association_06tpzma')).toBeDefined();
-      expect(elementRegistry.get('SequenceFlow_19u6x8u')).not.toBeDefined();
+      expect(elementRegistry.get('Association_06tpzma')).to.be.defined;
+      expect(elementRegistry.get('SequenceFlow_19u6x8u')).not.to.be.defined;
     }));
 
   });

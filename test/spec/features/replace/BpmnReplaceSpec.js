@@ -37,8 +37,8 @@ describe('features/replace', function() {
       // then
       var businessObject = newElement.businessObject;
 
-      expect(newElement).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:UserTask')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(businessObject.$instanceOf('bpmn:UserTask')).to.be.true;
     }));
 
 
@@ -57,8 +57,8 @@ describe('features/replace', function() {
       // then
       var businessObject = newElement.businessObject;
 
-      expect(newElement).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:InclusiveGateway')).toBe(true);
+      expect(newElement).to.be.defined;
+      expect(businessObject.$instanceOf('bpmn:InclusiveGateway')).to.be.true;
     }));
 
   });
@@ -78,8 +78,8 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(newElement.x).toBe(346);
-      expect(newElement.y).toBe(149);
+      expect(newElement.x).to.equal(346);
+      expect(newElement.y).to.equal(149);
     }));
 
   });
@@ -99,7 +99,7 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(selection.get()).toContain(newElement);
+      expect(selection.get()).to.include(newElement);
     }));
 
   });
@@ -120,7 +120,7 @@ describe('features/replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      expect(newElement.businessObject.name).toBe('Task Caption');
+      expect(newElement.businessObject.name).to.equal('Task Caption');
     }));
 
   });
@@ -145,8 +145,8 @@ describe('features/replace', function() {
       var target = elementRegistry.get('Task_1'),
           businessObject = target.businessObject;
 
-      expect(target).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:Task')).toBe(true);
+      expect(target).to.be.defined;
+      expect(businessObject.$instanceOf('bpmn:Task')).to.be.true;
     }));
 
 
@@ -174,8 +174,8 @@ describe('features/replace', function() {
       // then
       var businessObject = servicetask.businessObject;
 
-      expect(servicetask).toBeDefined();
-      expect(businessObject.$instanceOf('bpmn:ServiceTask')).toBe(true);
+      expect(servicetask).to.be.defined;
+      expect(businessObject.$instanceOf('bpmn:ServiceTask')).to.be.true;
     }));
 
   });
@@ -201,10 +201,10 @@ describe('features/replace', function() {
           target = outgoing.target;
 
 
-      expect(incoming).toBeDefined();
-      expect(outgoing).toBeDefined();
-      expect(source).toBe(elementRegistry.get('StartEvent_1'));
-      expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+      expect(incoming).to.be.defined;
+      expect(outgoing).to.be.defined;
+      expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+      expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
     }));
 
 
@@ -224,8 +224,8 @@ describe('features/replace', function() {
           outgoing = newElement.outgoing[0];
 
 
-      expect(incoming).toBeUndefined();
-      expect(outgoing).toBeUndefined();
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
     }));
 
 
@@ -245,8 +245,8 @@ describe('features/replace', function() {
           outgoing = newElement.outgoing[0];
 
 
-      expect(incoming).toBeUndefined();
-      expect(outgoing).toBeUndefined();
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
     }));
 
 
@@ -273,10 +273,10 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeDefined();
-        expect(source).toBe(elementRegistry.get('StartEvent_1'));
-        expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.defined;
+        expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+        expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
 
@@ -301,9 +301,9 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeDefined();
-        expect(target).toBe(elementRegistry.get('Task_1'));
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.defined;
+        expect(target).to.eql(elementRegistry.get('Task_1'));
       }));
 
 
@@ -328,9 +328,9 @@ describe('features/replace', function() {
             source   = incoming.source;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeUndefined();
-        expect(source).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.undefined;
+        expect(source).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
     });
@@ -358,10 +358,10 @@ describe('features/replace', function() {
             target = outgoing.target;
 
 
-        expect(incoming).toBeDefined();
-        expect(outgoing).toBeDefined();
-        expect(source).toBe(elementRegistry.get('StartEvent_1'));
-        expect(target).toBe(elementRegistry.get('ExclusiveGateway_1'));
+        expect(incoming).to.be.defined;
+        expect(outgoing).to.be.defined;
+        expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+        expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
       }));
 
 
@@ -384,8 +384,8 @@ describe('features/replace', function() {
             outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeUndefined();
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.undefined;
       }));
 
 
@@ -408,8 +408,8 @@ describe('features/replace', function() {
             outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).toBeUndefined();
-        expect(outgoing).toBeUndefined();
+        expect(incoming).to.be.undefined;
+        expect(outgoing).to.be.undefined;
       }));
 
     });

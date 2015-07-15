@@ -2,6 +2,7 @@
 
 require('../../../TestHelper');
 
+var TestContainer = require('mocha-test-container-support');
 
 var Modeler = require('../../../../lib/Modeler');
 
@@ -13,7 +14,7 @@ describe('palette', function() {
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = TestContainer.get(this);
   });
 
 
@@ -26,13 +27,13 @@ describe('palette', function() {
       var provider = modeler.get('paletteProvider');
 
       // then
-      expect(provider).toBeTruthy();
+      expect(provider).to.exist;
 
       // when
       var paletteElement = domQuery('.djs-palette', container);
 
       // then
-      expect(domQuery.all('.entry', paletteElement).length).toBe(7);
+      expect(domQuery.all('.entry', paletteElement).length).to.equal(7);
 
       done(err);
     });

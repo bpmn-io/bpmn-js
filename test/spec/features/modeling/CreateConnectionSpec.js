@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -15,9 +14,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - create connection', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
@@ -27,7 +23,7 @@ describe('features/modeling - create connection', function() {
 
   describe('connection handling', function() {
 
-    it('should execute', inject(function(elementRegistry, modeling) {
+    it('should execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var taskShape = elementRegistry.get('Task_1'),
@@ -44,33 +40,35 @@ describe('features/modeling - create connection', function() {
       var sequenceFlow = sequenceFlowConnection.businessObject;
 
       // then
-      expect(sequenceFlowConnection).toBeDefined();
-      expect(sequenceFlow).toBeDefined();
+      expect(sequenceFlowConnection).to.be.defined;
+      expect(sequenceFlow).to.be.defined;
 
-      expect(sequenceFlow.sourceRef).toBe(task);
-      expect(sequenceFlow.targetRef).toBe(gateway);
+      expect(sequenceFlow.sourceRef).to.eql(task);
+      expect(sequenceFlow.targetRef).to.eql(gateway);
 
-      expect(task.outgoing).toContain(sequenceFlow);
-      expect(gateway.incoming).toContain(sequenceFlow);
+      expect(task.outgoing).to.include(sequenceFlow);
+      expect(gateway.incoming).to.include(sequenceFlow);
 
-      expect(sequenceFlow.di.$parent).toBe(task.di.$parent);
-      expect(sequenceFlow.di.$parent.planeElement).toContain(sequenceFlow.di);
+      expect(sequenceFlow.di.$parent).to.eql(task.di.$parent);
+      expect(sequenceFlow.di.$parent.planeElement).to.include(sequenceFlow.di);
 
       // expect cropped connection
-      expect(sequenceFlowConnection.waypoints).toDeepEqual([
+      expect(sequenceFlowConnection.waypoints).eql([
         { original: { x: 242, y: 376 }, x: 292, y: 376},
         { x: 410, y: 376 },
         { x: 410, y: 341 },
         { original: { x: 553, y: 341 }, x: 528, y: 341}
       ]);
 
-      // expect cropped waypoints in di
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 292, y: 376 },
-        { $type: 'dc:Point', x: 410, y: 376 },
-        { $type: 'dc:Point', x: 410, y: 341 },
-        { $type: 'dc:Point', x: 528, y: 341 }
+      var diWaypoints = bpmnFactory.createDiWaypoints([
+        { x: 292, y: 376 },
+        { x: 410, y: 376 },
+        { x: 410, y: 341 },
+        { x: 528, y: 341 }
       ]);
+
+      // expect cropped waypoints in di
+      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
   });
@@ -97,12 +95,12 @@ describe('features/modeling - create connection', function() {
       commandStack.undo();
 
       // then
-      expect(sequenceFlow.$parent).toBe(null);
-      expect(sequenceFlow.sourceRef).toBe(null);
-      expect(sequenceFlow.targetRef).toBe(null);
+      expect(sequenceFlow.$parent).to.be.null;
+      expect(sequenceFlow.sourceRef).to.be.null;
+      expect(sequenceFlow.targetRef).to.be.null;
 
-      expect(task.outgoing).not.toContain(sequenceFlow);
-      expect(gateway.incoming).not.toContain(sequenceFlow);
+      expect(task.outgoing).not.to.include(sequenceFlow);
+      expect(gateway.incoming).not.to.include(sequenceFlow);
     }));
 
   });
@@ -133,20 +131,20 @@ describe('features/modeling - create connection', function() {
       commandStack.redo();
 
       // then
-      expect(sequenceFlow.sourceRef).toBe(task);
-      expect(sequenceFlow.targetRef).toBe(gateway);
+      expect(sequenceFlow.sourceRef).to.eql(task);
+      expect(sequenceFlow.targetRef).to.eql(gateway);
 
-      expect(task.outgoing).toContain(sequenceFlow);
-      expect(gateway.incoming).toContain(sequenceFlow);
+      expect(task.outgoing).to.include(sequenceFlow);
+      expect(gateway.incoming).to.include(sequenceFlow);
 
-      expect(sequenceFlow.di.$parent).toBe(task.di.$parent);
-      expect(sequenceFlow.di.$parent.planeElement).toContain(sequenceFlow.di);
+      expect(sequenceFlow.di.$parent).to.eql(task.di.$parent);
+      expect(sequenceFlow.di.$parent.planeElement).to.include(sequenceFlow.di);
 
       // expect cropped connection
-      expect(sequenceFlowConnection.waypoints).toDeepEqual(newWaypoints);
+      expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
 
       // expect cropped waypoints in di
-      expect(sequenceFlow.di.waypoint).toDeepEqual(newDiWaypoints);
+      expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
     }));
 
   });

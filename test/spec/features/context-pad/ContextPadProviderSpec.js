@@ -1,10 +1,12 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
+
+var TestContainer = require('mocha-test-container-support');
+
+var domQuery = require('min-dom/lib/query');
 
 /* global bootstrapViewer, inject */
-
 
 var fs = require('fs');
 
@@ -16,9 +18,6 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
 
 describe('features - context-pad', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
   var testModules = [ contextPadModule, bpmnModule, popupModule, replaceModule ];
@@ -29,8 +28,9 @@ describe('features - context-pad', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap', inject(function(contextPadProvider) {
-      expect(contextPadProvider).toBeDefined();
+      expect(contextPadProvider).to.exist;
     }));
 
   });
+
 });

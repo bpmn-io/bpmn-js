@@ -1,7 +1,6 @@
 'use strict';
 
-var Matchers = require('../../../Matchers'),
-    TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -15,9 +14,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - layout connection', function() {
 
-  beforeEach(Matchers.addDeepEquals);
-
-
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/sequence-flows.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
@@ -27,7 +23,7 @@ describe('features/modeling - layout connection', function() {
 
   describe('connection handling', function() {
 
-    it('should execute', inject(function(elementRegistry, modeling) {
+    it('should execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -39,19 +35,11 @@ describe('features/modeling - layout connection', function() {
       // then
 
       // expect cropped, repaired connection
-      expect(sequenceFlowConnection.waypoints).toDeepEqual([
+      expect(sequenceFlowConnection.waypoints).to.eql([
         { original: { x: 553, y: 341 }, x: 578, y: 341 },
         { x: 934, y: 341 },
         { x: 934, y: 436 },
         { original: { x: 832, y: 436 }, x: 832, y: 436 }
-      ]);
-
-      // expect cropped waypoints in di
-      expect(sequenceFlow.di.waypoint).toDeepEqual([
-        { $type: 'dc:Point', x: 578, y: 341 },
-        { $type: 'dc:Point', x: 934, y: 341 },
-        { $type: 'dc:Point', x: 934, y: 436 },
-        { $type: 'dc:Point', x: 832, y: 436 }
       ]);
     }));
 
@@ -75,8 +63,8 @@ describe('features/modeling - layout connection', function() {
       commandStack.undo();
 
       // then
-      expect(sequenceFlowConnection.waypoints).toDeepEqual(oldWaypoints);
-      expect(sequenceFlow.di.waypoint).toDeepEqual(oldDiWaypoints);
+      expect(sequenceFlowConnection.waypoints).eql(oldWaypoints);
+      expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
     }));
 
   });
@@ -100,8 +88,8 @@ describe('features/modeling - layout connection', function() {
       commandStack.redo();
 
       // then
-      expect(sequenceFlowConnection.waypoints).toDeepEqual(newWaypoints);
-      expect(sequenceFlow.di.waypoint).toDeepEqual(newDiWaypoints);
+      expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
+      expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
     }));
 
   });

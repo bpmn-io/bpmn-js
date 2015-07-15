@@ -1,21 +1,15 @@
 'use strict';
 
-var Matchers = require('../Matchers'),
-    TestHelper = require('../TestHelper');
-
-
-var fs = require('fs');
-
 var Modeler = require('../../lib/Modeler');
 
+var TestContainer = require('mocha-test-container-support');
 
 describe('scenario - simple modeling', function() {
-
 
   var container;
 
   beforeEach(function() {
-    container = jasmine.getEnv().getTestContainer();
+    container = TestContainer.get(this);
   });
 
 

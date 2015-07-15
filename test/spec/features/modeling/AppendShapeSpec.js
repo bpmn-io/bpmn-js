@@ -1,7 +1,5 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapModeler, inject */
 
 var find = require('lodash/collection/find');
@@ -20,14 +18,12 @@ describe('features/modeling - append shape', function() {
   var diagramXML = fs.readFileSync('test/fixtures/bpmn/simple.bpmn', 'utf8');
 
   var testModules = [ coreModule, modelingModule ];
-
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
   describe('shape handling', function() {
 
     it('should execute', inject(function(elementRegistry, modeling) {
-
       // given
       var startEventShape = elementRegistry.get('StartEvent_1');
 
@@ -36,8 +32,8 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
       // then
-      expect(targetShape).toBeDefined();
-      expect(target.$instanceOf('bpmn:Task')).toBe(true);
+      expect(targetShape).to.be.defined;
+      expect(target.$instanceOf('bpmn:Task')).to.be.true;
     }));
 
 
@@ -55,13 +51,13 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
       // then
-      expect(target.di).toBeDefined();
-      expect(target.di.$parent).toBe(startEvent.di.$parent);
+      expect(target.di).to.be.defined;
+      expect(target.di.$parent).to.eql(startEvent.di.$parent);
 
-      expect(target.di.bounds.x).toBe(targetShape.x);
-      expect(target.di.bounds.y).toBe(targetShape.y);
-      expect(target.di.bounds.width).toBe(targetShape.width);
-      expect(target.di.bounds.height).toBe(targetShape.height);
+      expect(target.di.bounds.x).to.equal(targetShape.x);
+      expect(target.di.bounds.y).to.equal(targetShape.y);
+      expect(target.di.bounds.width).to.equal(targetShape.width);
+      expect(target.di.bounds.height).to.equal(targetShape.height);
     }));
 
 
@@ -79,7 +75,7 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
       // then
-      expect(subProcess.get('flowElements')).toContain(target);
+      expect(subProcess.get('flowElements')).to.include(target);
     }));
 
 
@@ -101,13 +97,13 @@ describe('features/modeling - append shape', function() {
         var label = targetShape.label;
 
         // then
-        expect(label).toBeDefined();
-        expect(elementRegistry.get(label.id)).toBeDefined();
+        expect(label).to.be.defined;
+        expect(elementRegistry.get(label.id)).to.be.defined;
 
-        expect(label.x).toBe(441);
-        expect(label.y).toBe(278);
-        expect(label.width).toBe(LabelUtil.DEFAULT_LABEL_SIZE.width);
-        expect(label.height).toBe(LabelUtil.DEFAULT_LABEL_SIZE.height);
+        expect(label.x).to.equal(441);
+        expect(label.y).to.equal(278);
+        expect(label.width).to.equal(LabelUtil.DEFAULT_LABEL_SIZE.width);
+        expect(label.height).to.equal(LabelUtil.DEFAULT_LABEL_SIZE.height);
       }));
 
 
@@ -125,12 +121,12 @@ describe('features/modeling - append shape', function() {
             target = targetShape.businessObject;
 
         // then
-        expect(target.di.label).toBeDefined();
+        expect(target.di.label).to.be.defined;
 
-        expect(target.di.label.bounds.x).toBe(targetShape.label.x);
-        expect(target.di.label.bounds.y).toBe(targetShape.label.y);
-        expect(target.di.label.bounds.width).toBe(targetShape.label.width);
-        expect(target.di.label.bounds.height).toBe(targetShape.label.height);
+        expect(target.di.label.bounds.x).to.equal(targetShape.label.x);
+        expect(target.di.label.bounds.y).to.equal(targetShape.label.y);
+        expect(target.di.label.bounds.width).to.equal(targetShape.label.width);
+        expect(target.di.label.bounds.height).to.equal(targetShape.label.height);
       }));
 
     });
@@ -154,8 +150,8 @@ describe('features/modeling - append shape', function() {
       });
 
       // then
-      expect(connection).toBeDefined();
-      expect(connection.$instanceOf('bpmn:SequenceFlow')).toBe(true);
+      expect(connection).to.be.defined;
+      expect(connection.$instanceOf('bpmn:SequenceFlow')).to.be.true;
     }));
 
   });
@@ -179,8 +175,8 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(subProcess.get('flowElements')).not.toContain(target);
-      expect(subProcess.di.$parent.get('planeElement')).not.toContain(target.di);
+      expect(subProcess.get('flowElements')).not.to.include(target);
+      expect(subProcess.di.$parent.get('planeElement')).not.to.include(target.di);
     }));
 
 
@@ -204,13 +200,13 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(connection.sourceRef).toBe(null);
-      expect(connection.targetRef).toBe(null);
-      expect(connection.$parent).toBe(null);
-      expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
+      expect(connection.sourceRef).to.be.null;
+      expect(connection.targetRef).to.be.null;
+      expect(connection.$parent).to.be.null;
+      expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(targetShape.label).not.toBeDefined();
-      expect(elementRegistry.get(target.id + '_label')).not.toBeDefined();
+      expect(targetShape.label).not.to.be.defined;
+      expect(elementRegistry.get(target.id + '_label')).not.to.be.defined;
     }));
 
 
@@ -234,16 +230,16 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(connection.sourceRef).toBe(null);
-      expect(connection.targetRef).toBe(null);
+      expect(connection.sourceRef).to.be.null;
+      expect(connection.targetRef).to.be.null;
 
-      expect(startEvent.get('outgoing')).not.toContain(connection);
-      expect(target.get('incoming')).not.toContain(connection);
+      expect(startEvent.get('outgoing')).not.to.include(connection);
+      expect(target.get('incoming')).not.to.include(connection);
 
-      expect(connection.$parent).toBe(null);
-      expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
+      expect(connection.$parent).to.be.null;
+      expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(elementRegistry.get(targetShape.id)).not.toBeDefined();
+      expect(elementRegistry.get(targetShape.id)).not.to.be.defined;
     }));
 
 
@@ -267,12 +263,12 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(connection.sourceRef).toBe(null);
-      expect(connection.targetRef).toBe(null);
-      expect(connection.$parent).toBe(null);
-      expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
+      expect(connection.sourceRef).to.be.null;
+      expect(connection.targetRef).to.be.null;
+      expect(connection.$parent).to.be.null;
+      expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(elementRegistry.get(connection.id + '_label')).not.toBeDefined();
+      expect(elementRegistry.get(connection.id + '_label')).not.to.be.defined;
     }));
 
 
@@ -298,15 +294,15 @@ describe('features/modeling - append shape', function() {
 
       // then
       // expect redo to work on original target object
-      expect(targetShape.parent).toBe(subProcessShape);
+      expect(targetShape.parent).to.eql(subProcessShape);
 
       // when
       commandStack.undo();
       commandStack.undo();
 
       // then
-      expect(targetShape2.parent).toBe(null);
-      expect(elementRegistry.get(targetShape2.id)).not.toBeDefined();
+      expect(targetShape2.parent).to.be.null;
+      expect(elementRegistry.get(targetShape2.id)).not.to.be.defined;
     }));
 
 
@@ -332,11 +328,11 @@ describe('features/modeling - append shape', function() {
       commandStack.undo();
 
       // then
-      expect(connection.sourceRef).toBe(null);
-      expect(connection.targetRef).toBe(null);
-      expect(connection.$parent).toBe(null);
+      expect(connection.sourceRef).to.be.null;
+      expect(connection.targetRef).to.be.null;
+      expect(connection.$parent).to.be.null;
 
-      expect(subProcess.di.$parent.get('planeElement')).not.toContain(connection.di);
+      expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
     }));
 
   });
@@ -356,8 +352,8 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
         // then
-        expect(targetShape).toBeDefined();
-        expect(target.$instanceOf('bpmn:ExclusiveGateway')).toBe(true);
+        expect(targetShape).to.be.defined;
+        expect(target.$instanceOf('bpmn:ExclusiveGateway')).to.be.true;
       }));
 
 
@@ -375,7 +371,7 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
         // then
-        expect(subProcess.get('flowElements')).toContain(target);
+        expect(subProcess.get('flowElements')).to.include(target);
       }));
 
 
@@ -395,8 +391,8 @@ describe('features/modeling - append shape', function() {
         commandStack.undo();
 
         // then
-        expect(subProcess.get('flowElements')).not.toContain(target);
-        expect(subProcess.di.$parent.get('planeElement')).not.toContain(target.di);
+        expect(subProcess.get('flowElements')).not.to.include(target);
+        expect(subProcess.di.$parent.get('planeElement')).not.to.include(target.di);
       }));
 
     });

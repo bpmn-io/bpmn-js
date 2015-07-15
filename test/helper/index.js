@@ -31,77 +31,71 @@ var unique = require('lodash/array/unique'),
     assign = require('lodash/object/assign'),
     forEach = require('lodash/collection/forEach');
 
+var TestContainer = require('mocha-test-container-support');
+
 var Modeler = require('../../lib/Modeler'),
     Viewer = require('../../lib/Viewer');
 
-try {
-  // enhance jasmine with test container API
-  require('jasmine-test-container-support').extend(jasmine);
-} catch (e) {
-  // no test container :-(
-}
-
 var OPTIONS, BPMN_JS;
 
-function options(opts) {
-  if (isFunction(opts)) {
-    opts = opts();
-  }
+function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
-  OPTIONS = opts;
-}
+  return function(done) {
+    var testContainer;
 
+    // Make sure the test container is an optional dependency and we fall back
+    // to an empty <div> if it does not exist.
+    //
+    // This is needed if other libraries rely on this helper for testing
+    // while not adding the mocha-test-container-support as a dependency.
+    try {
+      // 'this' is the current test context
+      testContainer = TestContainer.get(this);
+    } catch (e) {
+      testContainer = document.createElement('div');
+      document.body.appendChild(testContainer);
+    }
 
-function bootstrapBpmnJS(BpmnJS, options, locals) {
+    testContainer.classList.add('test-container');
 
-  var testContainer;
+    var _options = options,
+        _locals = locals;
 
-  try {
-    testContainer = jasmine.getEnv().getTestContainer();
-  } catch (e) {
-    testContainer = document.createElement('div');
-    document.body.appendChild(testContainer);
-  }
+    if (_locals === undefined && isFunction(_options)) {
+      _locals = _options;
+      _options = null;
+    }
 
-  testContainer.classList.add('test-container');
+    if (isFunction(_options)) {
+      _options = _options();
+    }
 
-  var _options = options,
-      _locals = locals;
+    if (isFunction(_locals)) {
+      _locals = _locals();
+    }
 
-  if (_locals === undefined && isFunction(_options)) {
-    _locals = _options;
-    _options = null;
-  }
+    _options = assign({ container: testContainer }, OPTIONS || {}, _options || {});
 
-  if (isFunction(_options)) {
-    _options = _options();
-  }
+    if (_locals) {
+      var mockModule = {};
 
-  if (isFunction(_locals)) {
-    _locals = _locals();
-  }
+      forEach(_locals, function(v, k) {
+        mockModule[k] = ['value', v];
+      });
 
-  _options = assign({ container: testContainer, width: '100%', height: '100%' }, OPTIONS || {}, _options || {});
+      _options.modules = [].concat(_options.modules || [], [ mockModule ]);
+    }
 
-  if (_locals) {
-    var mockModule = {};
+    _options.modules = unique(_options.modules);
 
-    forEach(_locals, function(v, k) {
-      mockModule[k] = ['value', v];
-    });
+    if (!_options.modules.length) {
+      _options.modules = undefined;
+    }
 
-    _options.modules = [].concat(_options.modules || [], [ mockModule ]);
-  }
+    BPMN_JS = new BpmnJS(_options);
 
-  _options.modules = unique(_options.modules);
-
-  if (!_options.modules.length) {
-    _options.modules = undefined;
-  }
-
-  BPMN_JS = new BpmnJS(_options);
-
-  return BPMN_JS;
+    BPMN_JS.importXML(diagram, done);
+  };
 }
 
 
@@ -130,14 +124,7 @@ function bootstrapBpmnJS(BpmnJS, options, locals) {
  * @return {Function}         a function to be passed to beforeEach
  */
 function bootstrapModeler(diagram, options, locals) {
-
-  return function(done) {
-    // bootstrap
-    var modeler = bootstrapBpmnJS(Modeler, options, locals);
-
-    // import diagram
-    modeler.importXML(diagram, done);
-  };
+  return bootstrapBpmnJS(Modeler, diagram, options, locals);
 }
 
 /**
@@ -165,14 +152,7 @@ function bootstrapModeler(diagram, options, locals) {
  * @return {Function}         a function to be passed to beforeEach
  */
 function bootstrapViewer(diagram, options, locals) {
-
-  return function(done) {
-    // bootstrap
-    var viewer = bootstrapBpmnJS(Viewer, options, locals);
-
-    // import diagram
-    viewer.importXML(diagram, done);
-  };
+  return bootstrapBpmnJS(Viewer, diagram, options, locals);
 }
 
 
@@ -190,7 +170,7 @@ function bootstrapViewer(diagram, options, locals) {
  *   beforeEach(bootstrapViewer(...));
  *
  *   it('should provide mocked events', inject(function(events) {
- *     expect(events).toBe(mockEvents);
+ *     expect(events).to.eql(mockEvents);
  *   }));
  *
  * });
