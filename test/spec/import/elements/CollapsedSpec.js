@@ -9,7 +9,7 @@ describe('import - collapsed container', function() {
 
   describe('in process', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/import/collapsed.bpmn');
+    var diagramXML = require('../../../fixtures/bpmn/import/collapsed/process.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML));
 
@@ -74,7 +74,7 @@ describe('import - collapsed container', function() {
 
   describe('in collaboration', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/import/collapsed-collaboration.bpmn');
+    var diagramXML = require('../../../fixtures/bpmn/import/collapsed/collaboration.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML));
 
