@@ -5,6 +5,7 @@
 
 var forEach = require('lodash/collection/forEach'),
     assign = require('lodash/object/assign'),
+    every = require('lodash/collection/every'),
     domify = require('min-dom/lib/domify');
 
 var tooltipsModule = require('../../../../lib/features/tooltips');
@@ -337,6 +338,15 @@ describe('features/tooltips', function() {
       return asMatrix(element.style.transform);
     }
 
+    function isMatrixEql(original, test) {
+      return every(original, function(val, key) {
+        if (key === 'e') {
+          return val <= -500 || val > -520;
+        }
+        return val === test[key];
+      });
+    }
+
 
     it('should not be transformed initially', inject(function(tooltips, canvas) {
       // given
@@ -365,8 +375,12 @@ describe('features/tooltips', function() {
       // when
       canvas.zoom(2);
 
+      var containerTransform = asMatrix(tooltips._tooltipRoot.style.transform);
+
+      var result = { a : 2, b : 0, c : 0, d : 2, e : -501, f : -300 };
+
       // then
-      expect(transformMatrix(tooltips._tooltipRoot)).to.eql({ a : 2, b : 0, c : 0, d : 2, e : 0, f : 0 });
+      expect(isMatrixEql(containerTransform, result)).to.be.true;
     }));
 
 

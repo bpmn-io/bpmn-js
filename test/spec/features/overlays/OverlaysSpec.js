@@ -5,6 +5,7 @@
 
 var forEach = require('lodash/collection/forEach'),
     assign = require('lodash/object/assign'),
+    every = require('lodash/collection/every'),
     domify = require('min-dom/lib/domify');
 
 var overlayModule = require('../../../../lib/features/overlays');
@@ -15,12 +16,12 @@ function asMatrix(transformStr) {
     var m = transformStr.match(/[+-]?\d*[.]?\d+(?=,|\))/g);
 
     return {
-      a: parseFloat(m[0]),
-      b: parseFloat(m[1]),
-      c: parseFloat(m[2]),
-      d: parseFloat(m[3]),
-      e: parseFloat(m[4]),
-      f: parseFloat(m[5])
+      a: parseFloat(m[0], 10),
+      b: parseFloat(m[1], 10),
+      c: parseFloat(m[2], 10),
+      d: parseFloat(m[3], 10),
+      e: parseFloat(m[4], 10),
+      f: parseFloat(m[5], 10)
     };
   }
 }
@@ -649,6 +650,14 @@ describe('features/overlays', function() {
       return asMatrix(element.style.transform);
     }
 
+    function isMatrixEql(original, test) {
+      return every(original, function(val, key) {
+        if (key === 'e') {
+          return val <= -500 || val > -520;
+        }
+        return val === test[key];
+      });
+    }
 
     it('should not be transformed initially', inject(function(overlays, canvas) {
       // given
@@ -677,8 +686,12 @@ describe('features/overlays', function() {
       // when
       canvas.zoom(2);
 
+      var containerTransform = asMatrix(overlays._overlayRoot.style.transform);
+
+      var result = { a : 2, b : 0, c : 0, d : 2, e: -501, f: -300 };
+
       // then
-      expect(transformMatrix(overlays._overlayRoot)).to.eql({ a : 2, b : 0, c : 0, d : 2, e : 0, f : 0 });
+      expect(isMatrixEql(containerTransform, result)).to.be.true;
     }));
 
 

@@ -935,14 +935,14 @@ describe('Canvas', function() {
         canvas.zoom(2.0, { x: 200, y: 200 });
 
         // when
-        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
 
         // then
         expect(zoom).to.equal(1);
 
         expect(viewbox).to.eql({
-          x: -125, y: -125,
+          x: 0, y: 0,
           width: 300, height: 300,
           scale: 1,
           inner: { width: 50, height: 50, x: 0, y: 0 },
@@ -957,14 +957,14 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 50, y: 100, width: 600, height: 200 });
 
         // when
-        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
 
         // then
         expect(zoom).to.equal(0.5);
 
         expect(viewbox).to.eql({
-          x: 50, y: -100,
+          x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
           inner: { width: 600, height: 200, x: 50, y: 100 },
@@ -979,14 +979,14 @@ describe('Canvas', function() {
         canvas.addShape({ id: 's0', x: 50, y: 100, width: 250, height: 600 });
 
         // when
-        var zoom = canvas.zoom('fit-viewport', 'auto');
+        var zoom = canvas.zoom('fit-viewport');
         var viewbox = canvas.viewbox();
 
         // then
         expect(zoom).to.equal(0.5);
 
         expect(viewbox).to.eql({
-          x: -125, y: 100,
+          x: 50, y: 100,
           width: 600, height: 600,
           scale: 0.5,
           inner: { width: 250, height: 600, x: 50, y: 100 },
@@ -1022,8 +1022,6 @@ describe('Canvas', function() {
         // given
         canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
-        var originalViewbox = canvas.viewbox();
-
         // when
         canvas.zoom('fit-viewport');
         canvas.zoom(1.0);
@@ -1031,7 +1029,13 @@ describe('Canvas', function() {
         var viewbox = canvas.viewbox();
 
         // then
-        expect(viewbox).to.eql(originalViewbox);
+        expect(viewbox).to.eql({
+          x: 150, y: 150,
+          width: 300, height: 300,
+          scale: 1,
+          inner: { width: 600, height: 600, x: 0, y: 0 },
+          outer: { width: 300, height: 300 }
+        });
       }));
 
 
@@ -1190,11 +1194,11 @@ describe('Canvas', function() {
           canvas.addShape({ id: 's0', x: 0, y: 0, width: 600, height: 600 });
 
           // when
-          canvas.zoom(2.0, 'auto');
-          canvas.zoom(0.3, 'auto');
-          canvas.zoom(1.5, 'auto');
-          canvas.zoom(1.8, 'auto');
-          canvas.zoom(0.5, 'auto');
+          canvas.zoom(2.0);
+          canvas.zoom(0.3);
+          canvas.zoom(1.5);
+          canvas.zoom(1.8);
+          canvas.zoom(0.5);
 
           var viewbox = canvas.viewbox();
 
