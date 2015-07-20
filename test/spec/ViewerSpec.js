@@ -217,8 +217,7 @@ describe('Viewer', function() {
     });
 
 
-    it
-    ('should handle invalid namespaced element', function(done) {
+    it('should handle invalid namespaced element', function(done) {
 
       var xml = require('../fixtures/bpmn/error/categoryValue.bpmn');
 
@@ -355,8 +354,8 @@ describe('Viewer', function() {
           // then
           expect(isValid(svg)).to.be.true;
 
-          // no svg export should take more than 500ms
-          expect(currentTime() - time).to.be.below(500);
+          // no svg export should not take too long
+          expect(currentTime() - time).to.be.below(1000);
 
           done();
         });
@@ -367,7 +366,7 @@ describe('Viewer', function() {
     it('should remove outer-makers on export', function(done) {
 
       // given
-      var xml = require('../fixtures/bpmn/complex.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
       function appendTestRect(svgDoc) {
         var rect = document.createElementNS(svgDoc.namespaceURI, 'rect');
         rect.setAttribute('class', 'outer-bound-marker');

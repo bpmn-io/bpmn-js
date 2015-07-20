@@ -50,7 +50,9 @@ describe('bpmn-moddle', function() {
 
       // when
       parse(xml, function(err) {
-        expect((new Date().getTime() - start)).to.be.below(500);
+
+        // parsing a XML document should not take too long
+        expect((new Date().getTime() - start)).to.be.below(1000);
 
         done(err);
       });
