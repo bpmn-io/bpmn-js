@@ -50,7 +50,8 @@ describe('bpmn-moddle', function() {
 
       // when
       parse(xml, function(err) {
-        console.log('parsed in ' + (new Date().getTime() - start) + ' ms');
+        expect((new Date().getTime() - start)).to.be.below(500);
+
         done(err);
       });
 
