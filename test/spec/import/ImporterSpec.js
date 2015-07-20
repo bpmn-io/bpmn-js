@@ -421,6 +421,10 @@ describe('import - Importer', function() {
 
   describe('integration', function() {
 
+    // slightly increase timeout for complex test cases
+    this.timeout(4000);
+
+
     it('should import complex', function(done) {
 
       // given
