@@ -50,13 +50,16 @@ describe('features/modeling - replace connection', function() {
 
       it('sequence flow to another task', inject(function(elementRegistry, modeling){
 
+        // given
         var task4Shape = element('Task_4');
         var connection = element('SequenceFlow_1');
 
-        var newWaypoints = [connection.waypoints[0], {x: task4Shape.x+30, y: task4Shape.y}];
+        var newWaypoints = [connection.waypoints[0], { x: task4Shape.x+30, y: task4Shape.y }];
 
+        // when
         modeling.reconnectEnd(connection, task4Shape, newWaypoints);
 
+        // then
         expectConnected(element('Task_2'), task4Shape, 'bpmn:MessageFlow');
 
       }));
@@ -64,14 +67,55 @@ describe('features/modeling - replace connection', function() {
 
       it('message flow to another task', inject(function(elementRegistry, modeling){
 
+        // given
         var task4Shape = element('Task_4');
         var connection = element('MessageFlow_1');
 
-        var newWaypoints = [connection.waypoints[0], {x: task4Shape.x, y: task4Shape.y+20}];
+        var newWaypoints = [connection.waypoints[0], { x: task4Shape.x, y: task4Shape.y+20 }];
 
+        // when
         modeling.reconnectEnd(connection, task4Shape, newWaypoints);
 
+        // then
         expectConnected(element('Task_3'), task4Shape, 'bpmn:SequenceFlow');
+
+      }));
+
+
+      it('sequence flow to a participant', inject(function(elementRegistry, modeling){
+
+        // given
+        var participant2 = element('Participant_2');
+        var connection = element('SequenceFlow_1');
+
+        var newWaypoints = [connection.waypoints[0], { x: participant2.x, y: participant2.y }];
+
+        // when
+        modeling.reconnectEnd(connection, participant2, newWaypoints);
+
+        // then
+        expectConnected(element('Task_2'), participant2, 'bpmn:MessageFlow');
+
+      }));
+
+
+      it('sequence flow from a participant', inject(function(elementRegistry, modeling){
+
+        // given
+        var participant2 = element('Participant_2'),
+            subProcess1 = element('SubProcess_1'),
+            connection = element('SequenceFlow_1');
+
+        var newWaypoints = [
+          { x: participant2.x+200 , y: participant2.y },
+          { x: subProcess1.x, y: subProcess1.y+50 }
+        ];
+
+        // when
+        modeling.reconnectStart(connection, participant2, newWaypoints);
+
+        // then
+        expectConnected(participant2, subProcess1, 'bpmn:MessageFlow');
 
       }));
 
