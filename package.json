@@ -52,6 +52,7 @@
     "karma-safari-launcher": "^0.1.1",
     "karma-sinon-chai": "~0.3.0",
     "load-grunt-tasks": "^0.3.0",
+    "mocha": "^2.2.5",
     "mocha-test-container-support": "~0.1.0",
     "source-map-concat": "^0.4.0",
     "stringify": "^3.1.0",
