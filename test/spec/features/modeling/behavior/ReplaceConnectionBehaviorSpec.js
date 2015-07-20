@@ -27,17 +27,16 @@ function expectNotConnected(source, target, connectionOrType) {
 }
 
 
-describe('features/modeling - drop behavior', function() {
+describe('features/modeling - replace connection', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
 
   describe('should replace SequenceFlow <> MessageFlow', function() {
 
-    var processDiagramXML = require('./DropBehavior.message-sequence-flow.bpmn');
+    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
-
 
     var element;
 
@@ -47,6 +46,36 @@ describe('features/modeling - drop behavior', function() {
       };
     }));
 
+    describe('after reconnecting', function(){
+
+      it('sequence flow to another task', inject(function(elementRegistry, modeling){
+
+        var task4Shape = element('Task_4');
+        var connection = element('SequenceFlow_1');
+
+        var newWaypoints = [connection.waypoints[0], {x: task4Shape.x+30, y: task4Shape.y}];
+
+        modeling.reconnectEnd(connection, task4Shape, newWaypoints);
+
+        expectConnected(element('Task_2'), task4Shape, 'bpmn:MessageFlow');
+
+      }));
+
+
+      it('message flow to another task', inject(function(elementRegistry, modeling){
+
+        var task4Shape = element('Task_4');
+        var connection = element('MessageFlow_1');
+
+        var newWaypoints = [connection.waypoints[0], {x: task4Shape.x, y: task4Shape.y+20}];
+
+        modeling.reconnectEnd(connection, task4Shape, newWaypoints);
+
+        expectConnected(element('Task_3'), task4Shape, 'bpmn:SequenceFlow');
+
+      }));
+
+    });
 
     describe('moving single shape', function() {
 
@@ -186,7 +215,7 @@ describe('features/modeling - drop behavior', function() {
 
   describe('should replace SequenceFlow <> MessageFlow', function() {
 
-    var processDiagramXML = require('./DropBehavior.association.bpmn');
+    var processDiagramXML = require('./ReplaceConnectionBehavior.association.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
