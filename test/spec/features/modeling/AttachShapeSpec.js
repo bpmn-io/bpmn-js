@@ -76,7 +76,7 @@ describe('features/modeling - attach shape', function() {
     it('should execute', inject(function(modeling) {
 
       // when
-      modeling.attachShape(attachedShape, null);
+      modeling.updateAttachment(attachedShape, null);
 
       // then
       expect(attachedShape.host).not.to.exist;
@@ -87,7 +87,7 @@ describe('features/modeling - attach shape', function() {
     it('should undo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(attachedShape, null);
+      modeling.updateAttachment(attachedShape, null);
 
       // when
       commandStack.undo();
@@ -101,7 +101,7 @@ describe('features/modeling - attach shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(attachedShape, null);
+      modeling.updateAttachment(attachedShape, null);
 
       commandStack.undo();
 
@@ -121,7 +121,7 @@ describe('features/modeling - attach shape', function() {
     it('should execute', inject(function(modeling) {
 
       // when
-      modeling.attachShape(detachedShape, hostShape);
+      modeling.updateAttachment(detachedShape, hostShape);
 
       // then
       expect(detachedShape.host).to.equal(hostShape);
@@ -132,7 +132,7 @@ describe('features/modeling - attach shape', function() {
     it('should undo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(detachedShape, hostShape);
+      modeling.updateAttachment(detachedShape, hostShape);
 
       // when
       commandStack.undo();
@@ -146,7 +146,7 @@ describe('features/modeling - attach shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(detachedShape, hostShape);
+      modeling.updateAttachment(detachedShape, hostShape);
 
       commandStack.undo();
 
@@ -166,7 +166,7 @@ describe('features/modeling - attach shape', function() {
     it('should execute', inject(function(modeling) {
 
       // when
-      modeling.attachShape(attachedShape, hostShape);
+      modeling.updateAttachment(attachedShape, hostShape);
 
       // then
       expect(attachedShape.host).to.equal(hostShape);
@@ -179,7 +179,7 @@ describe('features/modeling - attach shape', function() {
     it('should undo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(attachedShape, hostShape);
+      modeling.updateAttachment(attachedShape, hostShape);
 
       // when
       commandStack.undo();
@@ -195,7 +195,7 @@ describe('features/modeling - attach shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(attachedShape, hostShape);
+      modeling.updateAttachment(attachedShape, hostShape);
 
       commandStack.undo();
 
@@ -256,7 +256,7 @@ describe('features/modeling - attach shape', function() {
     it('should keep connection when reattaching', inject(function(modeling) {
 
       // when
-      modeling.attachShape(attachedShape, hostShape);
+      modeling.updateAttachment(attachedShape, hostShape);
 
       // then
       expect(attachedShape.outgoing).to.have.lengthOf(1);
@@ -268,7 +268,7 @@ describe('features/modeling - attach shape', function() {
     it('should keep connection when detaching', inject(function(modeling) {
 
       // when
-      modeling.attachShape(attachedShape, null);
+      modeling.updateAttachment(attachedShape, null);
 
       // then
       expect(attachedShape.outgoing).to.have.lengthOf(1);
@@ -280,7 +280,7 @@ describe('features/modeling - attach shape', function() {
     it('should keep connection when attaching', inject(function(modeling) {
 
       // when
-      modeling.attachShape(detachedShape, hostShape);
+      modeling.updateAttachment(detachedShape, hostShape);
 
       // then
       expect(detachedShape.outgoing).to.have.lengthOf(1);
@@ -292,7 +292,7 @@ describe('features/modeling - attach shape', function() {
     it('should keep connection when undoing detach', inject(function(modeling, commandStack) {
 
       // given
-      modeling.attachShape(attachedShape, null);
+      modeling.updateAttachment(attachedShape, null);
 
       // when
       commandStack.undo();
