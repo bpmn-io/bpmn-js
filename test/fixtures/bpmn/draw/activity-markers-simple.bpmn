@@ -14,6 +14,12 @@
     <bpmn2:subProcess id="SubProcess" />
     <bpmn2:transaction id="Transaction" />
     <bpmn2:adHocSubProcess id="AdHocSubProcess" />
+    <bpmn2:boundaryEvent id="BoundaryEvent_1" attachedToRef="Task">
+      <bpmn2:messageEventDefinition />
+    </bpmn2:boundaryEvent>
+    <bpmn2:boundaryEvent id="BoundaryEvent_2" cancelActivity="false" attachedToRef="Task">
+      <bpmn2:messageEventDefinition />
+    </bpmn2:boundaryEvent>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -37,6 +43,18 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="AdHocSubProcess_di" bpmnElement="AdHocSubProcess">
         <dc:Bounds x="667" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="532" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="505" y="198" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="593" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="566" y="198" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

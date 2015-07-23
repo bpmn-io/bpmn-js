@@ -514,11 +514,48 @@ describe('features/popup-menu', function() {
       var entry = queryEntry(popupMenu, 'replace-with-subprocess');
 
       // when
-      // replacing the expanded sub process with a transaction
+      // replacing the transaction with an expanded sub process 
       var subProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
+    }));
+
+  });
+
+  describe('replace menu', function() {
+
+    it('should contain all boundary events for an interrupting boundary event',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+      // when
+      openPopup(boundaryEvent, 40);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(entriesContainer.childNodes.length).to.equal(10);
+      expect(queryEntry(popupMenu, 'replace-with-message-intermediate-catch')).to.be.null;
+    }));
+
+
+    it('should contain all boundary events for a non interrupting boundary event',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+
+      // when
+      openPopup(boundaryEvent, 40);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(entriesContainer.childNodes.length).to.equal(10);
+      expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
     }));
 
   });

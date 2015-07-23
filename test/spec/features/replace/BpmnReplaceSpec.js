@@ -82,17 +82,83 @@ describe('features/replace', function() {
 
     it('transaction', inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
+      // given
       var transaction = elementRegistry.get('Transaction_1'),
           newElementData = {
             type: 'bpmn:SubProcess',
             isExpanded: true
           };
 
+      // when
       var newElement = bpmnReplace.replaceElement(transaction, newElementData);
 
+      // then
       expect(newElement).to.be.defined;
       expect(is(newElement.businessObject, 'bpmn:SubProcess')).to.be.true;
 
+    }));
+
+
+    it('non interrupting boundary event by interrupting boundary event',
+      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          newElementData = {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinition: 'bpmn:EscalationEventDefinition'
+          };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+      // then
+      expect(newElement).to.be.defined;
+      expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+      expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
+      expect(newElement.businessObject.cancelActivity).to.be.true;
+    }));
+
+
+    it('interrupting boundary event by non interrupting boundary event',
+      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
+          newElementData = {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinition: 'bpmn:SignalEventDefinition',
+            cancelActivity: false
+          };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+      // then
+      expect(newElement).to.be.defined;
+      expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+      expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
+      expect(newElement.businessObject.cancelActivity).to.be.false;
+    }));
+
+
+    it('boundary event and update host',
+      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          host = elementRegistry.get('Task_1'),
+          newElementData = {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinition: 'bpmn:ErrorEventDefinition',
+          };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+      // then
+      expect(newElement.host).to.be.defined;
+      expect(newElement.host).to.eql(host);
     }));
 
   });

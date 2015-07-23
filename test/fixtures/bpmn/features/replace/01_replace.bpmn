@@ -31,6 +31,12 @@
     <bpmn:subProcess id="SubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessExpanded" />
+    <bpmn:boundaryEvent id="BoundaryEvent_1" cancelActivity="false" attachedToRef="Task_1">
+      <bpmn:timerEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="Task_1">
+      <bpmn:conditionalEventDefinition />
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -106,6 +112,18 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="AdHocSubProcessExpanded_di" bpmnElement="AdHocSubProcessExpanded" isExpanded="true">
         <dc:Bounds x="374" y="368" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="349" y="74" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="322" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="262" y="74" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
