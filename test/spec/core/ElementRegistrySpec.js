@@ -156,6 +156,21 @@ describe('ElementRegistry', function() {
   });
 
 
+  describe('getAll', function() {
+
+    it('should return all', inject(function(elementRegistry) {
+
+      // when
+      var elements = elementRegistry.getAll();
+
+      // then
+      // two shapes + root
+      expect(elements.length).to.equal(3);
+    }));
+
+  });
+
+
   describe('filter', function() {
 
     it('should noop, returning all', inject(function(elementRegistry) {
