@@ -14,7 +14,7 @@ describe('features/Replace', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, replaceModule ] }));
 
 
-  var rootShape, parentShape, originalShape;
+  var rootShape, parentShape, originalShape, attachedShape, hostShape;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -196,7 +196,6 @@ describe('features/Replace', function() {
 
       expect(originalShape.outgoing).to.contain(connection);
       expect(targetShape.incoming).to.contain(connection);
-
     }));
 
 
@@ -219,6 +218,40 @@ describe('features/Replace', function() {
       expect(domQuery('[data-element-id="originalShape"]', newShapeContainer.parentNode)).to.exist;
       expect(domQuery('[data-element-id="targetShape"]', newShapeContainer.parentNode)).to.exist;
     }));
+
+  });
+
+  describe('attachments', function() {
+
+    beforeEach(inject(function(elementFactory, canvas, modeling) {
+
+      hostShape = parentShape;
+
+      attachedShape = elementFactory.createShape({
+        id: 'targetShape',
+        x: 200, y: 375, width: 50, height: 50,
+        host: hostShape
+      });
+
+      canvas.addShape(attachedShape);
+    }));
+
+    it('should update host', inject(function(elementFactory, replace, elementRegistry) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 50,
+        height: 50
+      };
+
+      // when
+      var newShape = replace.replaceElement(attachedShape, replacement);
+
+      // then
+      expect(newShape.host).to.be.defined;
+      expect(newShape.host).to.eql(hostShape);
+    }));
   });
 
 
@@ -240,7 +273,6 @@ describe('features/Replace', function() {
       // then
       var shape = elementRegistry.get('originalShape');
       expect(shape.width).to.equal(100);
-
     }));
 
 
