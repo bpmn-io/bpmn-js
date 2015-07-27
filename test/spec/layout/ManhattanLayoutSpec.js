@@ -212,11 +212,10 @@ describe('layout/ManhattanLayout', function() {
 
     describe('tolerance', function() {
 
-      it('should connect v:v with tolerance', function() {
+      it('should connect default v:v inside tolerance (preferred = default)', function() {
 
         // given
-        var end = rect(205, 0, 50, 50);
-
+        var end = rect(210, 0, 50, 50);
 
         // when
         var connection = ManhattanLayout.connectRectangles(start, end);
@@ -226,11 +225,90 @@ describe('layout/ManhattanLayout', function() {
         expectConnection(connection, [
           { original: { x: 150, y: 150 }, x: 150, y: 100 },
           { x: 150, y: 75 },
-          { x: 230, y: 75 },
-          { original: { x: 230, y: 25 }, x: 230, y: 50 }
+          { x: 235, y: 75 },
+          { original: { x: 235, y: 25 }, x: 235, y: 50 }
         ]);
       });
 
+
+      it('should connect h:h outside tolerance (preferred = default)', function() {
+
+        // given
+        var end = rect(230, 0, 50, 50);
+
+        // when
+        var connection = ManhattanLayout.connectRectangles(start, end);
+
+        // expect
+        // layouted h:h
+        expectConnection(connection, [
+          {"original":{"x":150,"y":150},"x":200,"y":150},
+          {"x":215,"y":150},
+          {"x":215,"y":25},
+          {"original":{"x":255,"y":25},"x":230,"y":25}
+        ]);
+      });
+
+
+      it('should connect v:v inside tolerance (preferred = v:h)', function() {
+
+        // given
+        var end = rect(185, 0, 50, 50);
+
+        // when
+        var connection = ManhattanLayout.connectRectangles(start, end, null, null, {
+          preferredLayouts: [ 'v:h' ]
+        });
+
+        // expect
+        // still layouted v:v due to tolerance
+        expectConnection(connection, [
+          {"original":{"x":150,"y":150},"x":150,"y":100},
+          {"x":150,"y":75},
+          {"x":210,"y":75},
+          {"original":{"x":210,"y":25},"x":210,"y":50}
+        ]);
+      });
+
+
+      it('should connect v:h outside tolerance (preferred v:h)', function() {
+
+        // given
+        var end = rect(230, 0, 50, 50);
+
+        // when
+        var connection = ManhattanLayout.connectRectangles(start, end, null, null, {
+          preferredLayouts: [ 'v:h' ]
+        });
+
+        // expect
+        // layouted h:h
+        expectConnection(connection, [
+          {"x":150,"y":150},
+          {"x":150,"y":25},
+          {"x":255,"y":25}
+        ]);
+      });
+
+
+      it('should connect h:v outside tolerance (preferred h:v)', function() {
+
+        // given
+        var end = rect(230, 0, 50, 50);
+
+        // when
+        var connection = ManhattanLayout.connectRectangles(start, end, null, null, {
+          preferredLayouts: [ 'h:v' ]
+        });
+
+        // expect
+        // layouted h:h
+        expectConnection(connection, [
+          {"x":150,"y":150},
+          {"x":255,"y":150},
+          {"x":255,"y":25}
+        ]);
+      });
     });
 
   });
@@ -256,7 +334,7 @@ describe('layout/ManhattanLayout', function() {
     }
 
 
-    describe('preferVertical', function() {
+    describe('v:v layout preferred', function() {
 
       it('should relayout vertical', function() {
 
@@ -267,7 +345,7 @@ describe('layout/ManhattanLayout', function() {
         var waypoints = [];
 
         // when
-        var repaired = repair(start, end, waypoints, { preferVertical: true });
+        var repaired = repair(start, end, waypoints, { preferredLayouts: [ 'v:v' ] });
 
         // then
         expect(repaired).to.eql([
@@ -288,7 +366,7 @@ describe('layout/ManhattanLayout', function() {
         var waypoints = [];
 
         // when
-        var repaired = repair(start, end, waypoints, { preferVertical: true });
+        var repaired = repair(start, end, waypoints, { preferredLayouts: [ 'v:v' ] });
 
         // then
         expect(repaired).to.eql([
@@ -302,7 +380,7 @@ describe('layout/ManhattanLayout', function() {
     });
 
 
-    describe('preferStraight', function() {
+    describe('straight layout preferred', function() {
 
       it('should layout straight line (horizontal)', function() {
 
@@ -313,7 +391,7 @@ describe('layout/ManhattanLayout', function() {
         var waypoints = [];
 
         // when
-        var repaired = repair(start, end, waypoints, { preferStraight: true });
+        var repaired = repair(start, end, waypoints, { preferredLayouts: [ 'straight' ] });
 
         // then
         expect(repaired).to.eql([
@@ -333,7 +411,7 @@ describe('layout/ManhattanLayout', function() {
         var waypoints = [];
 
         // when
-        var repaired = repair(start, end, waypoints, { preferStraight: true });
+        var repaired = repair(start, end, waypoints, { preferredLayouts: [ 'straight' ] });
 
         // then
         expect(repaired).to.eql([
