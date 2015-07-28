@@ -3,16 +3,16 @@
 /* global bootstrapDiagram, inject */
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    replaceModule = require('../../../../lib/features/replace');
+    replaceModule = require('../../../../lib/features/replace'),
+    attachSupportModule = require('../../../../lib/features/attach-support'),
+    rulesModule = require('./rules');
 
 var domQuery = require('min-dom/lib/query');
 
 
 describe('features/Replace', function() {
 
-
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, replaceModule ] }));
-
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, replaceModule, rulesModule, attachSupportModule ] }));
 
   var rootShape, parentShape, originalShape, attachedShape, hostShape;
 
@@ -51,13 +51,36 @@ describe('features/Replace', function() {
         height: 200
       };
 
-      // shape replacement
-      replace.replaceElement(originalShape, replacement);
+      // when
+      var newShape = replace.replaceElement(originalShape, replacement);
 
       // then
-      var replacementShape = elementRegistry.get('replacement');
-      expect(replacementShape).to.be.defined;
+      expect(newShape).to.exist;
+
+      // expect added
+      expect(elementRegistry.get('replacement')).to.equal(newShape);
     }));
+
+
+    it('should define custom attributes on new shape', inject(function(replace) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 200,
+        height: 200,
+        customArray: ['FOO', 'BAR'],
+        customString: 'foobar'
+      };
+
+      // when
+      var newShape = replace.replaceElement(originalShape, replacement);
+
+      // then
+      expect(newShape.customArray).to.equal(replacement.customArray);
+      expect(newShape.customString).to.equal(replacement.customString);
+    }));
+
 
     it('should delete old shape', inject(function(elementFactory, replace, elementRegistry) {
 
@@ -75,6 +98,7 @@ describe('features/Replace', function() {
       expect(originalShape.parent).to.be.null;
     }));
 
+
     it('should return new shape', inject(function(elementRegistry, replace) {
 
       // given
@@ -91,6 +115,7 @@ describe('features/Replace', function() {
       expect(newShape).to.be.defined;
       expect(newShape.id).to.equal('replacement');
     }));
+
 
     it('should add correct attributes to new shape', inject(function(elementFactory, replace, elementRegistry) {
 
@@ -111,6 +136,7 @@ describe('features/Replace', function() {
       expect(replacementShape.width).to.equal(200);
       expect(replacementShape.height).to.equal(200);
     }));
+
   });
 
 
@@ -221,14 +247,14 @@ describe('features/Replace', function() {
 
   });
 
-  describe('attachments', function() {
+  describe('attachments/host', function() {
 
     beforeEach(inject(function(elementFactory, canvas, modeling) {
 
       hostShape = parentShape;
 
       attachedShape = elementFactory.createShape({
-        id: 'targetShape',
+        id: 'attachedShape',
         x: 200, y: 375, width: 50, height: 50,
         host: hostShape
       });
@@ -236,7 +262,7 @@ describe('features/Replace', function() {
       canvas.addShape(attachedShape);
     }));
 
-    it('should update host', inject(function(elementFactory, replace, elementRegistry) {
+    it('should update host after replacing attachment', inject(function(replace) {
 
       // given
       var replacement = {
@@ -250,8 +276,80 @@ describe('features/Replace', function() {
 
       // then
       expect(newShape.host).to.be.defined;
+      expect(hostShape.attachers).to.include(newShape);
       expect(newShape.host).to.eql(hostShape);
     }));
+
+
+    it('should remove attachments after replacing host',
+      inject(function(rules, replace) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: hostShape.width,
+        height: hostShape.height
+      };
+
+      // when
+      var newShape = replace.replaceElement(hostShape, replacement);
+
+      // then
+      expect(newShape.attachers).not.to.include(attachedShape);
+      expect(attachedShape.host).not.to.eql(newShape);
+    }));
+
+
+    it('should retain attachments after replacing host if a rule exist', inject(function(replace) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: hostShape.width,
+        height: hostShape.height,
+        retainAttachmentIds: ['attachedShape']
+      };
+
+      // when
+      var newShape = replace.replaceElement(hostShape, replacement);
+
+      // then
+      expect(attachedShape).to.be.defined;
+      expect(newShape.attachers).to.include(attachedShape);
+      expect(attachedShape.host).to.eql(newShape);
+    }));
+
+
+    it('should retain a subset of attachments after replacing host if a rule exist',
+      inject(function(replace, elementFactory, canvas) {
+
+      // given
+      var attachedShape2 = elementFactory.createShape({
+        id: 'attachedShape2',
+        x: 280, y: 375, width: 50, height: 50,
+        host: hostShape
+      });
+
+      canvas.addShape(attachedShape2);
+
+      var replacement = {
+        id: 'replacement',
+        width: hostShape.width,
+        height: hostShape.height,
+        retainAttachmentIds: ['attachedShape']
+      };
+
+      // when
+      var newShape = replace.replaceElement(hostShape, replacement);
+
+      // then
+      expect(attachedShape.host).to.eql(newShape);
+      expect(newShape.attachers).to.include(attachedShape);
+
+      expect(attachedShape2.host).not.to.eql(newShape);
+      expect(newShape.attachers).not.to.include(attachedShape2);
+    }));
+
   });
 
 
@@ -305,6 +403,7 @@ describe('features/Replace', function() {
       var redoShape = elementRegistry.get('replacement2');
       expect(redoShape.width).to.equal(280);
     }));
+
   });
 
 });
