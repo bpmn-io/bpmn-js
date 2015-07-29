@@ -8,16 +8,25 @@ function rect(x, y, width, height) {
 }
 
 
-describe('layout/Util', function() {
+describe('layout/LayoutUtil', function() {
 
-  describe('#getMidPoint', function() {
+  describe('#getMid', function() {
 
     it('should return rectangle mid point', function() {
       // given
       var r = rect(100, 100, 100, 200);
 
       // then
-      expect(LayoutUtil.getMidPoint(r)).to.eql({ x: 150, y: 200 });
+      expect(LayoutUtil.getMid(r)).to.eql({ x: 150, y: 200 });
+    });
+
+
+    it('should return point mid point', function() {
+      // given
+      var point = { x: 100, y: 100 };
+
+      // then
+      expect(LayoutUtil.getMid(point)).to.eql(point);
     });
 
   });
