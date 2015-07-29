@@ -3,18 +3,16 @@
 /* global bootstrapDiagram, inject */
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    replaceModule = require('../../../../lib/features/replace'),
-    attachSupportModule = require('../../../../lib/features/attach-support'),
-    rulesModule = require('./rules');
+    replaceModule = require('../../../../lib/features/replace');
 
 var domQuery = require('min-dom/lib/query');
 
 
 describe('features/Replace', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, replaceModule, rulesModule, attachSupportModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, replaceModule ] }));
 
-  var rootShape, parentShape, originalShape, attachedShape, hostShape;
+  var rootShape, parentShape, originalShape;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -246,112 +244,6 @@ describe('features/Replace', function() {
     }));
 
   });
-
-  describe('attachments/host', function() {
-
-    beforeEach(inject(function(elementFactory, canvas, modeling) {
-
-      hostShape = parentShape;
-
-      attachedShape = elementFactory.createShape({
-        id: 'attachedShape',
-        x: 200, y: 375, width: 50, height: 50,
-        host: hostShape
-      });
-
-      canvas.addShape(attachedShape);
-    }));
-
-    it('should update host after replacing attachment', inject(function(replace) {
-
-      // given
-      var replacement = {
-        id: 'replacement',
-        width: 50,
-        height: 50
-      };
-
-      // when
-      var newShape = replace.replaceElement(attachedShape, replacement);
-
-      // then
-      expect(newShape.host).to.be.defined;
-      expect(hostShape.attachers).to.include(newShape);
-      expect(newShape.host).to.eql(hostShape);
-    }));
-
-
-    it('should remove attachments after replacing host',
-      inject(function(rules, replace) {
-
-      // given
-      var replacement = {
-        id: 'replacement',
-        width: hostShape.width,
-        height: hostShape.height
-      };
-
-      // when
-      var newShape = replace.replaceElement(hostShape, replacement);
-
-      // then
-      expect(newShape.attachers).not.to.include(attachedShape);
-      expect(attachedShape.host).not.to.eql(newShape);
-    }));
-
-
-    it('should retain attachments after replacing host if a rule exist', inject(function(replace) {
-
-      // given
-      var replacement = {
-        id: 'replacement',
-        width: hostShape.width,
-        height: hostShape.height,
-        retainAttachmentIds: ['attachedShape']
-      };
-
-      // when
-      var newShape = replace.replaceElement(hostShape, replacement);
-
-      // then
-      expect(attachedShape).to.be.defined;
-      expect(newShape.attachers).to.include(attachedShape);
-      expect(attachedShape.host).to.eql(newShape);
-    }));
-
-
-    it('should retain a subset of attachments after replacing host if a rule exist',
-      inject(function(replace, elementFactory, canvas) {
-
-      // given
-      var attachedShape2 = elementFactory.createShape({
-        id: 'attachedShape2',
-        x: 280, y: 375, width: 50, height: 50,
-        host: hostShape
-      });
-
-      canvas.addShape(attachedShape2);
-
-      var replacement = {
-        id: 'replacement',
-        width: hostShape.width,
-        height: hostShape.height,
-        retainAttachmentIds: ['attachedShape']
-      };
-
-      // when
-      var newShape = replace.replaceElement(hostShape, replacement);
-
-      // then
-      expect(attachedShape.host).to.eql(newShape);
-      expect(newShape.attachers).to.include(attachedShape);
-
-      expect(attachedShape2.host).not.to.eql(newShape);
-      expect(newShape.attachers).not.to.include(attachedShape2);
-    }));
-
-  });
-
 
   describe('undo/redo support', function() {
 
