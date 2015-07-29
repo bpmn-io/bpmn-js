@@ -41,22 +41,16 @@ describe('features/modeling - move shape', function() {
       expect(startEvent.di.bounds.x).to.equal(oldPosition.x);
       expect(startEvent.di.bounds.y).to.equal(oldPosition.y + 50);
 
-      // expect flow layout
-      expect(sequenceFlowElement.waypoints).to.eql([
-        { original: { x: 388, y: 310 }, x: 388, y: 310 },
-        { x: 404, y: 310 },
-        { x: 404, y: 260 },
-        { original: { x: 420, y: 260 }, x: 420, y: 260 }
-      ]);
+      var newWaypoints = sequenceFlowElement.waypoints;
 
-      var diWaypoints = bpmnFactory.createDiWaypoints([
-        {x: 388, y: 310 },
-        {x: 404, y: 310 },
-        {x: 404, y: 260 },
-        {x: 420, y: 260 }
-      ]);
+      var expectedDiWaypoints = bpmnFactory.createDiWaypoints(newWaypoints.map(function(p) {
+        return { x: p.x, y: p.y };
+      }));
 
-      expect(sequenceFlow.di.waypoint).to.eql(diWaypoints);
+      // see LayoutSpec for actual connection layouting tests
+
+      // expect di waypoints update
+      expect(sequenceFlow.di.waypoint).to.eql(expectedDiWaypoints);
     }));
 
 

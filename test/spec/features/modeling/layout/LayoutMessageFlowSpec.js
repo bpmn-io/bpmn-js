@@ -1,17 +1,17 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+var TestHelper = require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var modelingModule = require('../../../../../lib/features/modeling'),
+    coreModule = require('../../../../../lib/core');
 
 
 describe('features/modeling - layout message flows', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/collaboration-message-flows.bpmn');
+  var diagramXML = require('../../../../fixtures/bpmn/collaboration-message-flows.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 
