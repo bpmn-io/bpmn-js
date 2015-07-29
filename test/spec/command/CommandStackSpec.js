@@ -478,8 +478,10 @@ describe('command/CommandStack', function() {
 
         eventBus.on([
           'commandStack.preExecute',
+          'commandStack.preExecuted',
           'commandStack.execute',
-          'commandStack.postExecute'
+          'commandStack.postExecute',
+          'commandStack.postExecuted'
         ], logEvent);
 
         // when
@@ -489,13 +491,19 @@ describe('command/CommandStack', function() {
         expect(events).eql([
           'commandStack.preExecute complex-command',
           'commandStack.preExecute pre-command',
+          'commandStack.preExecuted pre-command',
           'commandStack.execute pre-command',
           'commandStack.postExecute pre-command',
+          'commandStack.postExecuted pre-command',
+          'commandStack.preExecuted complex-command',
           'commandStack.execute complex-command',
+          'commandStack.postExecute complex-command',
           'commandStack.preExecute post-command',
+          'commandStack.preExecuted post-command',
           'commandStack.execute post-command',
           'commandStack.postExecute post-command',
-          'commandStack.postExecute complex-command'
+          'commandStack.postExecuted post-command',
+          'commandStack.postExecuted complex-command'
         ]);
       }));
 

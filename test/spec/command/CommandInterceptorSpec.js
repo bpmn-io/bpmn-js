@@ -167,6 +167,27 @@ describe('command/CommandInterceptor', function() {
     });
 
 
+    describe('#preExecuted', function() {
+
+      it('should register scoped', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.preExecuted('simple-command', traceCommand);
+
+        // when
+        commandStack.execute('simple-command', context);
+        commandStack.execute('pre-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          'simple-command'
+        ]);
+      }));
+
+    });
+
+
     describe('#postExecute', function() {
 
       it('should register scoped', inject(function(commandStack, eventBus) {
@@ -174,6 +195,27 @@ describe('command/CommandInterceptor', function() {
         var interceptor = new TestInterceptor(eventBus);
 
         interceptor.postExecute('simple-command', traceCommand);
+
+        // when
+        commandStack.execute('simple-command', context);
+        commandStack.execute('pre-command', context);
+
+        // then
+        expect(element.trace).to.eql([
+          'simple-command'
+        ]);
+      }));
+
+    });
+
+
+    describe('#postExecuted', function() {
+
+      it('should register scoped', inject(function(commandStack, eventBus) {
+
+        var interceptor = new TestInterceptor(eventBus);
+
+        interceptor.postExecuted('simple-command', traceCommand);
 
         // when
         commandStack.execute('simple-command', context);
