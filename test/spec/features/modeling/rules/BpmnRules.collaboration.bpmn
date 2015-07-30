@@ -34,7 +34,6 @@
     <bpmn2:endEvent id="EndEvent_Cancel">
       <bpmn2:cancelEventDefinition />
     </bpmn2:endEvent>
-    <bpmn2:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess" />
   </bpmn2:process>
   <bpmn2:process id="OtherProcess" isExecutable="false">
     <bpmn2:task id="Task_in_OtherParticipant" />
@@ -127,12 +126,6 @@
         <dc:Bounds x="326" y="78" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="299" y="114" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BoundaryEvent_di" bpmnElement="BoundaryEvent">
-        <dc:Bounds x="499" y="259" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="472" y="295" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

@@ -1,80 +1,15 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+var Helper = require('./Helper');
+
+var expectCanConnect = Helper.expectCanConnect,
+    expectCanDrop = Helper.expectCanDrop,
+    expectCanMove = Helper.expectCanMove;
 
 /* global bootstrapModeler, inject */
 
 var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
-
-
-function expectCanConnect(source, target, rules) {
-
-  var results = {};
-
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
-
-    source = elementRegistry.get(source);
-    target = elementRegistry.get(target);
-
-    expect(source).to.exist;
-    expect(target).to.exist;
-
-    if ('sequenceFlow' in rules) {
-      results.sequenceFlow = bpmnRules.canConnectSequenceFlow(source, target);
-    }
-
-    if ('messageFlow' in rules) {
-      results.messageFlow = bpmnRules.canConnectMessageFlow(source, target);
-    }
-
-    if ('association' in rules) {
-      results.association = bpmnRules.canConnectAssociation(source, target);
-    }
-  });
-
-  expect(results).to.eql(rules);
-}
-
-
-function expectCanDrop(element, target, expectedResult) {
-
-  var result;
-
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
-
-    element = elementRegistry.get(element);
-    target = elementRegistry.get(target);
-
-    expect(element).to.exist;
-    expect(target).to.exist;
-
-    result = bpmnRules.canDrop(element, target);
-  });
-
-  expect(result).to.eql(expectedResult);
-}
-
-
-function expectCanExecute(elements, target, rules) {
-
-  var results = {};
-
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
-
-    target = elementRegistry.get(target);
-
-    if ('canAttach' in rules) {
-      results.canAttach = bpmnRules.canAttach(elements, target);
-    }
-
-    if ('canMove' in rules) {
-      results.canMove = bpmnRules.canMove(elements, target);
-    }
-  });
-
-  expect(results).to.eql(rules);
-}
 
 
 describe('features/modeling/rules - BpmnRules', function() {
@@ -149,59 +84,128 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect BoundaryEvent -> Task', inject(function() {
-
-      expectCanConnect('BoundaryEvent', 'Task', {
-        sequenceFlow: true,
-        messageFlow: false,
-        association: true
-      });
-    }));
-
-
-    it('connect BoundaryEvent_1 -> SubProcess', inject(function() {
-
-      expectCanConnect('BoundaryEvent', 'SubProcess', {
-        sequenceFlow: true,
-        messageFlow: false,
-        association: true
-      });
-    }));
-
-
-    it('connect BoundaryEvent -> BoundaryEvent_1', inject(function() {
-
-      expectCanConnect('BoundaryEvent', 'BoundaryEvent_1', {
-        sequenceFlow: false,
-        messageFlow: false,
-        association: true
-      });
-    }));
-
-
-    it('connect BoundaryEvent -> StartEvent_None', inject(function() {
-
-      expectCanConnect('BoundaryEvent', 'BoundaryEvent_1', {
-        sequenceFlow: false,
-        messageFlow: false,
-        association: true
-      });
-    }));
-
-
-    it('connect StartEvent_None -> BoundaryEvent', inject(function() {
-
-      expectCanConnect('StartEvent_None', 'BoundaryEvent', {
-        sequenceFlow: false,
-        messageFlow: false,
-        association: true
-      });
-    }));
-
-
     it('drop TextAnnotation -> Process', inject(function() {
 
       expectCanDrop('TextAnnotation', 'Process', true);
+    }));
+
+  });
+
+
+  describe('boundary events', function() {
+
+    var testXML = require('./BpmnRules.boundaryEvent.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> Task', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'Task', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> ExclusiveGateway', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'ExclusiveGateway', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> SubProcess', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'SubProcess', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> BoundaryEvent_on_Task', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'BoundaryEvent_on_Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> StartEvent_None', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'StartEvent_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect StartEvent_None -> BoundaryEvent_on_SubProcess', inject(function() {
+
+      expectCanConnect('StartEvent_None', 'BoundaryEvent_on_SubProcess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_nested -> Task', inject(function() {
+
+      expectCanConnect('BoundaryEvent_nested', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_nested -> EndEvent_nested', inject(function() {
+
+      expectCanConnect('BoundaryEvent_nested', 'EndEvent_nested', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> BoundaryEvent_in_OtherProcess', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'BoundaryEvent_in_OtherProcess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect BoundaryEvent_on_SubProcess -> Task_in_OtherProcess', inject(function() {
+
+      expectCanConnect('BoundaryEvent_on_SubProcess', 'Task_in_OtherProcess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true
+      });
+    }));
+
+
+    it('connect Task_in_OtherProcess -> BoundaryEvent_on_SubProcess', inject(function() {
+
+      expectCanConnect('Task_in_OtherProcess', 'BoundaryEvent_on_SubProcess', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: true
+      });
     }));
 
   });
@@ -516,16 +520,6 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect BoundaryEvent -> Task_in_OtherParticipant', inject(function() {
-
-      expectCanConnect('BoundaryEvent', 'Task_in_OtherParticipant', {
-        sequenceFlow: false,
-        messageFlow: true,
-        association: true
-      });
-    }));
-
-
     it('drop TextAnnotation_Global -> Participant', inject(function() {
 
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
@@ -564,9 +558,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       var elements = [ boundaryEvent ];
 
       // then
-      expectCanExecute(elements, 'Process_1', {
-        canAttach: false,
-        canMove: false
+      expectCanMove(elements, 'Process_1', {
+        attach: false,
+        move: false
       });
 
     }));
@@ -580,9 +574,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       var elements = [ boundaryEvent ];
 
       // then
-      expectCanExecute(elements, 'Task_2', {
-        canAttach: 'attach',
-        canMove: false
+      expectCanMove(elements, 'Task_2', {
+        attach: 'attach',
+        move: false
       });
 
     }));
@@ -597,9 +591,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       var elements = [ label ];
 
       // then
-      expectCanExecute(elements, 'SubProcess_1', {
-        canAttach: false,
-        canMove: true
+      expectCanMove(elements, 'SubProcess_1', {
+        attach: false,
+        move: true
       });
 
     }));
@@ -615,9 +609,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       var elements = [ boundaryEvent, boundaryEvent2 ];
 
       // then
-      expectCanExecute(elements, 'SubProcess_1', {
-        canAttach: false,
-        canMove: false
+      expectCanMove(elements, 'SubProcess_1', {
+        attach: false,
+        move: false
       });
     }));
 
@@ -633,9 +627,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       var elements = [ subProcess, boundaryEvent, label ];
 
       // then
-      expectCanExecute(elements, 'Process_1', {
-        canAttach: false,
-        canMove: false
+      expectCanMove(elements, 'Process_1', {
+        attach: false,
+        move: false
       });
     }));
 
@@ -658,9 +652,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       });
 
       // then
-      expectCanExecute([ eventShape ], 'Task_1', {
-        canAttach: 'attach',
-        canMove: false
+      expectCanMove([ eventShape ], 'Task_1', {
+        attach: 'attach',
+        move: false
       });
     }));
 
