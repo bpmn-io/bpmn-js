@@ -529,6 +529,57 @@ describe('features/popup-menu', function() {
 
     beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
+    it('should contain all start events except the current one',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      // when
+      openPopup(startEvent);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(entriesContainer.childNodes.length).to.equal(6);
+      expect(queryEntry(popupMenu, 'replace-with-none-start')).to.be.null;
+    }));
+
+
+    it('should contain all intermediate events except the current one',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var intermediateEvent = elementRegistry.get('IntermediateThrowEvent_1');
+
+      // when
+      openPopup(intermediateEvent);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(entriesContainer.childNodes.length).to.equal(12);
+      expect(queryEntry(popupMenu, 'replace-with-none-intermediate-throw')).to.be.null;
+    }));
+
+
+    it('should contain all end events except the current one',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var endEvent = elementRegistry.get('EndEvent_1');
+
+      // when
+      openPopup(endEvent);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(entriesContainer.childNodes.length).to.equal(9);
+      expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
+    }));
+
+
     it('should contain all boundary events for an interrupting boundary event',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
