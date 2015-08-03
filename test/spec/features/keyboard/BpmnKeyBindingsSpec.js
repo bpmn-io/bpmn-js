@@ -9,25 +9,12 @@ var coreModule = require('../../../../lib/core'),
     keyboardModule = require('../../../../lib/features/keyboard'),
     selectionModule = require('diagram-js/lib/features/selection'),
     spaceToolModule = require('diagram-js/lib/features/space-tool'),
-    lassoToolModule = require('diagram-js/lib/features/lasso-tool');
+    lassoToolModule = require('diagram-js/lib/features/lasso-tool'),
+    zoomScrollModule = require('diagram-js/lib/navigation/zoomscroll');
+
+var createKeyEvent = require('diagram-js/test/util/KeyEvents').createKeyEvent;
 
 /* global bootstrapViewer, inject, sinon */
-
-
-function createKeyEvent(element, code, ctrlKey) {
-  var e = document.createEvent('Events');
-
-  if (e.initEvent) {
-    e.initEvent(event, true, true);
-  }
-
-  e.keyCode = code;
-  e.which = code;
-  e.ctrlKey = ctrlKey;
-
-  return e;
-}
-
 
 describe('features - keyboard', function() {
 
@@ -39,7 +26,8 @@ describe('features - keyboard', function() {
     selectionModule,
     spaceToolModule,
     lassoToolModule,
-    keyboardModule
+    keyboardModule,
+    zoomScrollModule
   ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
