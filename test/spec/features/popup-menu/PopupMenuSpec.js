@@ -27,12 +27,10 @@ function queryPopup(popupMenu, selector) {
 
 describe('features/popup-menu', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+  var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
+      diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
   var testModules = [ coreModule, modelingModule, popupMenuModule, replaceModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
 
   var openPopup = function(element, offset) {
     offset = offset || 100;
@@ -44,6 +42,8 @@ describe('features/popup-menu', function() {
 
 
   describe('toggle', function(){
+
+    beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
 
     describe('active attribute', function(){
 
@@ -443,6 +443,8 @@ describe('features/popup-menu', function() {
 
   describe('replacing', function() {
 
+    beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
+
     it('should retain the loop characteristics', inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
       // given
@@ -524,6 +526,8 @@ describe('features/popup-menu', function() {
   });
 
   describe('replace menu', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
     it('should contain all boundary events for an interrupting boundary event',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
