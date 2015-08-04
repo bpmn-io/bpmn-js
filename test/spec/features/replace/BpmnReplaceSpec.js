@@ -8,7 +8,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
     coreModule = require('../../../../lib/core'),
     is = require('../../../../lib/util/ModelUtil').is,
-    isExpanded = require('../../../../lib/util/DiUtil').isExpanded;
+    isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
+    isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess;
 
 
 describe('features/replace', function() {
@@ -95,6 +96,25 @@ describe('features/replace', function() {
       // then
       expect(newElement).to.be.defined;
       expect(is(newElement.businessObject, 'bpmn:SubProcess')).to.be.true;
+
+    }));
+
+
+    it('event sub process', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var transaction = elementRegistry.get('SubProcess_1'),
+          newElementData = {
+            type: 'bpmn:SubProcess',
+            triggeredByEvent: true
+          };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
+
+      // then
+      expect(newElement).to.be.defined;
+      expect(isEventSubProcess(newElement)).to.be.true;
 
     }));
 
@@ -357,6 +377,27 @@ describe('features/replace', function() {
     }));
 
 
+    it('should remove connections for event sub processes',
+      inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var transaction = elementRegistry.get('Transaction_1');
+      var newElementData =  {
+        type: 'bpmn:SubProcess',
+        triggeredByEvent: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
+
+      // then
+      var incoming = newElement.incoming[0],
+          outgoing = newElement.outgoing[0];
+
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
+    }));
+
     describe('undo support', function() {
 
       it('should reconnect valid connections',
@@ -438,7 +479,7 @@ describe('features/replace', function() {
 
         expect(incoming).to.be.defined;
         expect(outgoing).to.be.undefined;
-        expect(source).to.eql(elementRegistry.get('ExclusiveGateway_1'));
+        expect(source).to.eql(elementRegistry.get('Transaction_1'));
       }));
 
     });

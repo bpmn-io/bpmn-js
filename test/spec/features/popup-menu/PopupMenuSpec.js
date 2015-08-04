@@ -516,11 +516,51 @@ describe('features/popup-menu', function() {
       var entry = queryEntry(popupMenu, 'replace-with-subprocess');
 
       // when
-      // replacing the transaction with an expanded sub process 
+      // replacing the transaction with an expanded sub process
       var subProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
+    }));
+
+
+    it('should not retain the loop characteristics morphing to an event sub process',
+      inject(function(popupMenu, bpmnReplace, elementRegistry, modeling) {
+
+      // given
+      var transaction = elementRegistry.get('Transaction');
+
+      modeling.updateProperties(transaction, { loopCharacteristics: { isparallel: true } });
+
+      openPopup(transaction);
+
+      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+
+      // when
+      // replacing the transaction with an event sub process
+      var subProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+
+      // then
+      expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
+    }));
+
+
+    it('should retain the expanded property morphing to an event sub processes',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var transaction = elementRegistry.get('Transaction');
+
+      openPopup(transaction);
+
+      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+
+      // when
+      // replacing the transaction with an expanded sub process
+      var eventSubProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+
+      // then
+      expect(isExpanded(eventSubProcess)).to.equal(isExpanded(transaction));
     }));
 
   });
@@ -541,8 +581,8 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(entriesContainer.childNodes.length).to.equal(6);
       expect(queryEntry(popupMenu, 'replace-with-none-start')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(6);
     }));
 
 
@@ -558,8 +598,8 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(entriesContainer.childNodes.length).to.equal(12);
       expect(queryEntry(popupMenu, 'replace-with-none-intermediate-throw')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(12);
     }));
 
 
@@ -575,8 +615,50 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(entriesContainer.childNodes.length).to.equal(9);
       expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(9);
+    }));
+
+
+    it('should contain all start events inside event sub process except the current one',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_3');
+
+      // when
+      openPopup(startEvent);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.defined;
+      expect(queryEntry(popupMenu, 'replace-with-message-start')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(11);
+    }));
+
+
+    it('should contain all non interrupting start events inside event sub process except the current one',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_3');
+
+      var newElement = bpmnReplace.replaceElement(startEvent, {
+        type: 'bpmn:StartEvent',
+        eventDefinition: 'bpmn:ConditionalEventDefinition',
+        isInterrupting: false
+      });
+
+      // when
+      openPopup(newElement);
+
+      var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+      // then
+      expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.be.defined;
+      expect(queryEntry(popupMenu, 'replace-with-non-interrupting-conditional-start')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(11);
     }));
 
 
@@ -592,8 +674,8 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
+      expect(queryEntry(popupMenu, 'replace-with-conditional-intermediate-catch')).to.be.null;
       expect(entriesContainer.childNodes.length).to.equal(10);
-      expect(queryEntry(popupMenu, 'replace-with-message-intermediate-catch')).to.be.null;
     }));
 
 
@@ -609,8 +691,8 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(entriesContainer.childNodes.length).to.equal(10);
       expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
+      expect(entriesContainer.childNodes.length).to.equal(10);
     }));
 
   });

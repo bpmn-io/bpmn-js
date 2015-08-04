@@ -16,9 +16,12 @@
     <bpmn:sequenceFlow id="SequenceFlow_2" sourceRef="Task_1" targetRef="ExclusiveGateway_1" />
     <bpmn:endEvent id="EndEvent_1">
       <bpmn:incoming>SequenceFlow_3</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_8</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_3" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_1" />
     <bpmn:subProcess id="SubProcess_1">
+      <bpmn:incoming>SequenceFlow_7</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_6</bpmn:outgoing>
       <bpmn:startEvent id="StartEvent_2">
         <bpmn:outgoing>SequenceFlow_4</bpmn:outgoing>
       </bpmn:startEvent>
@@ -32,7 +35,10 @@
       </bpmn:intermediateThrowEvent>
       <bpmn:sequenceFlow id="SequenceFlow_5" sourceRef="Task_2" targetRef="IntermediateThrowEvent_1" />
     </bpmn:subProcess>
-    <bpmn:transaction id="Transaction_1" />
+    <bpmn:transaction id="Transaction_1">
+      <bpmn:incoming>SequenceFlow_6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_8</bpmn:outgoing>
+    </bpmn:transaction>
     <bpmn:subProcess id="SubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessExpanded" />
@@ -40,8 +46,17 @@
       <bpmn:timerEventDefinition />
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="Task_1">
+      <bpmn:outgoing>SequenceFlow_7</bpmn:outgoing>
       <bpmn:conditionalEventDefinition />
     </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_6" sourceRef="SubProcess_1" targetRef="Transaction_1" />
+    <bpmn:sequenceFlow id="SequenceFlow_7" sourceRef="BoundaryEvent_2" targetRef="SubProcess_1" />
+    <bpmn:sequenceFlow id="SequenceFlow_8" sourceRef="Transaction_1" targetRef="EndEvent_1" />
+    <bpmn:subProcess id="EventSubProcess_1" triggeredByEvent="true">
+      <bpmn:startEvent id="StartEvent_3">
+        <bpmn:messageEventDefinition />
+      </bpmn:startEvent>
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -143,6 +158,36 @@
           <dc:Bounds x="273" y="248" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_6_di" bpmnElement="SequenceFlow_6">
+        <di:waypoint xsi:type="dc:Point" x="451" y="238" />
+        <di:waypoint xsi:type="dc:Point" x="490" y="238" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="425.5" y="228" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_7_di" bpmnElement="SequenceFlow_7">
+        <di:waypoint xsi:type="dc:Point" x="280" y="110" />
+        <di:waypoint xsi:type="dc:Point" x="280" y="138" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="233" y="114" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_8_di" bpmnElement="SequenceFlow_8">
+        <di:waypoint xsi:type="dc:Point" x="714" y="138" />
+        <di:waypoint xsi:type="dc:Point" x="714" y="70" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="644.5" y="94" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EventSubProcess_1_di" bpmnElement="EventSubProcess_1" isExpanded="true">
+        <dc:Bounds x="539" y="370" width="193" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_3_di" bpmnElement="StartEvent_3">
+        <dc:Bounds x="553" y="411" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="526" y="447" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
