@@ -134,6 +134,30 @@ describe('Dragging', function() {
 
     }));
 
+
+    it('should adjust positions to local point', inject(function(dragging) {
+
+      // given
+      var events = recordEvents('foo');
+
+      // when
+      dragging.activate(createEvent({ x: 0, y: 0 }), { x: 10, y: 10 }, 'foo');
+      dragging.move(createEvent({ x: 20, y: 10 }));
+      dragging.move(createEvent({ x: -5, y: 0 }));
+
+      dragging.cancel();
+
+      // then
+      expect(events.map(raw)).to.eql([
+        { type: 'foo.activate' },
+        { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
+        { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cancel' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' }
+      ]);
+    }));
+
   });
 
 });
