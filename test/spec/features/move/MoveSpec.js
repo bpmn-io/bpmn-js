@@ -4,6 +4,8 @@ var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
+var assign = require('lodash/object/assign'),
+    pick = require('lodash/object/pick');
 
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
@@ -72,6 +74,46 @@ describe('features/move - Move', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap diagram with component', inject(function() {}));
+
+  });
+
+
+  describe('event centering', function() {
+
+    it('should emit events relative to shape center', inject(function(eventBus, move, dragging) {
+
+      // given
+      function recordEvents(prefix) {
+        var events = [];
+
+        [ 'start', 'move', 'end', 'hover', 'out', 'cancel', 'cleanup', 'activate' ].forEach(function(type) {
+          eventBus.on(prefix + '.' + type, function(e) {
+            events.push(assign({}, e));
+          });
+        });
+
+        return events;
+      }
+
+      function position(e) {
+        return pick(e, [ 'x', 'y', 'dx', 'dy' ]);
+      }
+
+      var events = recordEvents('shape.move');
+
+
+      // when
+      move.start(Event.create({ x: 0, y: 0 }), childShape);
+
+      dragging.move(Event.create({ x: 20, y: 20 }));
+
+      // then
+      expect(events.map(position)).to.eql([
+        { },
+        { x: 160, y: 160, dx: 0, dy: 0 },
+        { x: 180, y: 180, dx: 20, dy: 20 }
+      ]);
+    }));
 
   });
 
