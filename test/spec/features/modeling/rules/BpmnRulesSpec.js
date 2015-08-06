@@ -659,7 +659,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('attach IntermediateEvent to SubProcess border', inject(function(elementFactory, elementRegistry, bpmnRules) {
+    it('attach IntermediateEvent to SubProcess inner', inject(function(elementFactory, elementRegistry, bpmnRules) {
 
       // given
       var subProcessElement = elementRegistry.get('SubProcess_1');
@@ -669,8 +669,30 @@ describe('features/modeling/rules - BpmnRules', function() {
       });
 
       var position = {
-        x: eventShape.x,
-        y: eventShape.y
+        x: subProcessElement.x + subProcessElement.width / 2,
+        y: subProcessElement.y + subProcessElement.height / 2
+      };
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], subProcessElement, null, position);
+
+      // then
+      expect(canAttach).to.equal(false);
+    }));
+
+
+    it('attach IntermediateEvent to SubProcess border', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var subProcessElement = elementRegistry.get('SubProcess_1');
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 0, y: 0
+      });
+
+      var position = {
+        x: subProcessElement.x + subProcessElement.width / 2,
+        y: subProcessElement.y + subProcessElement.height
       };
 
       // when
