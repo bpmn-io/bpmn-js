@@ -6,110 +6,53 @@ var TestHelper = require('../../../../TestHelper');
 
 
 var modelingModule = require('../../../../../lib/features/modeling'),
-    snappingModule = require('../../../../../lib/features/snapping'),
-    createModule = require('diagram-js/lib/features/create'),
     coreModule = require('../../../../../lib/core');
 
-var Events = require('diagram-js/test/util/Events');
 
-describe('features/modeling - create boundary events', function() {
+describe('features/modeling/behavior - create boundary events', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
 
-  describe('attach to rootShape', function () {
+  var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
 
-    var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules.concat(createModule, snappingModule) }));
+  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules.concat(modelingModule) }));
 
 
-    var createEvent;
+  it('should execute on attach', inject(function(canvas, elementFactory, modeling) {
 
-    beforeEach(inject(function(dragging, canvas) {
-      createEvent = Events.scopedCreate(canvas);
+    // given
+    var rootElement = canvas.getRootElement(),
+        task = elementFactory.createShape({ type: 'bpmn:Task' }),
+        intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
-      dragging.setOptions({ manual: true });
-    }));
+    modeling.createShape(task, { x: 100, y: 100 }, rootElement);
 
-    afterEach(inject(function(dragging) {
-      dragging.setOptions({ manual: false });
-    }));
+    // when
+    var newEvent = modeling.createShape(intermediateEvent, { x: 50 + 15, y: 100 }, task, true);
 
-
-    it('should morph an IntermediateThrowEvent to a BoundaryEvent -> Modeling',
-      inject(function(elementFactory, modeling, canvas) {
-
-      var rootShape = canvas.getRootElement(),
-          task = elementFactory.createShape({ type: 'bpmn:Task' }),
-          intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' }),
-          boundaryEvent;
-
-      // given
-      modeling.createShape(task, { x: 100, y: 100 }, rootShape);
-
-      // when
-      modeling.createShape(intermediateEvent, { x: 150, y: 135 }, task, true);
-
-      boundaryEvent = task.attachers[0];
-
-      // then
-      expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
-      expect(boundaryEvent.businessObject.attachedToRef).to.equal(task.businessObject);
-    }));
+    // then
+    expect(newEvent.type).to.equal('bpmn:BoundaryEvent');
+    expect(newEvent.businessObject.attachedToRef).to.equal(task.businessObject);
+  }));
 
 
-    it('should morph an IntermediateThrowEvent to a BoundaryEvent -> Create',
-      inject(function(elementFactory, create, canvas, dragging, modeling, elementRegistry) {
+  it('should NOT execute on drop', inject(function(canvas, elementFactory, modeling) {
 
-      // given
-      var rootShape = canvas.getRootElement(),
-          task = elementFactory.createShape({ type: 'bpmn:Task' }),
-          intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' }),
-          boundaryEvent;
-
-      modeling.createShape(task, { x: 100, y: 100 }, rootShape);
-
-      // when
-      create.start(createEvent({ x: 0, y: 0 }), intermediateEvent);
-
-      dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
-      dragging.move(createEvent({ x: 50 + 18, y: 100 }));
-
-      dragging.end();
-
-      boundaryEvent = task.attachers[0];
-
-      // then
-      expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
-      expect(boundaryEvent.businessObject.attachedToRef).to.equal(task.businessObject);
-    }));
+    // given
+    var rootElement = canvas.getRootElement(),
+        subProcess = elementFactory.createShape({ type: 'bpmn:SubProcess', isExpanded: true }),
+        intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
 
-    it('should NOT morph an IntermediateThrowEvent to a BoundaryEvent',
-      inject(function(elementFactory, create, canvas, dragging, modeling, elementRegistry) {
+    modeling.createShape(subProcess, { x: 300, y: 200 }, rootElement);
 
-      var rootShape = canvas.getRootElement(),
-          subProcess = elementFactory.createShape({ type: 'bpmn:SubProcess', isExpanded: true }),
-          intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' }),
-          intermediateEventId = intermediateEvent.id;
+    // when
+    var newEvent = modeling.createShape(intermediateEvent, { x: 300, y: 200 }, subProcess);
 
-      modeling.createShape(subProcess, { x: 300, y: 200 }, rootShape);
-
-      create.start(createEvent({ x: 0, y: 0 }), intermediateEvent);
-
-      dragging.hover({ element: subProcess, gfx: elementRegistry.getGraphics(subProcess) });
-
-      dragging.move(createEvent({ x: 300, y: 200 }));
-      dragging.end();
-
-      intermediateEvent = elementRegistry.get(intermediateEventId);
-
-      // then
-      expect(intermediateEvent).to.exist;
-      expect(intermediateEvent.type).to.equal('bpmn:IntermediateThrowEvent');
-    }));
-
-  });
+    // then
+    expect(newEvent).to.exist;
+    expect(newEvent.type).to.equal('bpmn:IntermediateThrowEvent');
+  }));
 
 });
