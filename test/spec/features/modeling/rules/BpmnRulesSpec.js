@@ -677,7 +677,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       var canAttach = bpmnRules.canAttach([ eventShape ], subProcessElement, null, position);
 
       // then
-      expect(canAttach).to.equal(false);
+      expect(canAttach).to.be.false;
     }));
 
 
@@ -722,8 +722,8 @@ describe('features/modeling/rules - BpmnRules', function() {
           canCreate = bpmnRules.canCreate(eventShape, subProcessElement, null, position);
 
       // then
-      expect(canAttach).to.equal(false);
-      expect(canCreate).to.equal(true);
+      expect(canAttach).to.be.false;
+      expect(canCreate).to.be.true;
     }));
 
   });
@@ -757,8 +757,8 @@ describe('features/modeling/rules - BpmnRules', function() {
           canCreate = bpmnRules.canCreate(eventShape, subProcessElement, taskElement, position);
 
       // then
-      expect(canAttach).to.equal(false);
-      expect(canCreate).to.equal(true);
+      expect(canAttach).to.be.false;
+      expect(canCreate).to.be.true;
     }));
 
 
@@ -778,9 +778,157 @@ describe('features/modeling/rules - BpmnRules', function() {
           canCreate = bpmnRules.canCreate(eventShape, taskElement, boundaryElement);
 
       // then
-      expect(canAttach).to.equal(false);
-      expect(canCreate).to.equal(false);
+      expect(canAttach).to.be.false;
+      expect(canCreate).to.be.false;
     }));
+
+  });
+
+
+  describe('lanes', function() {
+
+    var testXML = require('./BpmnRules.collaboration-lanes.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    describe('should add', function() {
+
+      it('Lane -> Participant', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var participantElement = elementRegistry.get('Participant');
+
+        var laneShape = elementFactory.createShape({
+          type: 'bpmn:Lane',
+          x: 413, y: 250
+        });
+
+        // when
+        var canCreate = bpmnRules.canCreate(laneShape, participantElement);
+
+        // then
+        expect(canCreate).to.be.true;
+      }));
+
+
+      it('Lane -> Participant_Lane', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var participantElement = elementRegistry.get('Participant_Lane');
+
+        var laneShape = elementFactory.createShape({
+          type: 'bpmn:Lane',
+          x: 413, y: 250
+        });
+
+        // when
+        var canCreate = bpmnRules.canCreate(laneShape, participantElement);
+
+        // then
+        expect(canCreate).to.be.true;
+      }));
+
+
+      it('[not] Lane -> SubProcess', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var subProcessElement = elementRegistry.get('SubProcess');
+
+        var laneShape = elementFactory.createShape({
+          type: 'bpmn:Lane',
+          x: 413, y: 250
+        });
+
+        // when
+        var canCreate = bpmnRules.canCreate(laneShape, subProcessElement);
+
+        // then
+        expect(canCreate).to.be.false;
+      }));
+
+    });
+
+
+    describe('should move', function() {
+
+      it('Lane -> Participant', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var participantElement = elementRegistry.get('Participant'),
+            laneElement = elementRegistry.get('Lane');
+
+        // when
+        var canMove = bpmnRules.canMove([ laneElement ], participantElement);
+
+        // then
+        expect(canMove).to.be.true;
+      }));
+
+
+      it('[not] Lane -> SubProcess', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var subProcessElement = elementRegistry.get('SubProcess'),
+            laneElement = elementRegistry.get('Lane');
+
+        // when
+        var canMove = bpmnRules.canMove([ laneElement ], subProcessElement);
+
+        // then
+        expect(canMove).to.be.false;
+      }));
+
+    });
+
+
+    describe('should resize', function() {
+
+      it('Lane', inject(function(bpmnRules) {
+
+        // given
+        var laneElement = elementRegistry.get('Lane');
+
+        // when
+        var canResize = bpmnRules.canResize(laneElement);
+
+        // then
+        expect(canResize).to.be.true;
+      }));
+
+    });
+
+
+    describe('should allow drop', function() {
+
+      it('SubProcess -> Lane', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var element = elementRegistry.get('SubProcess'),
+            laneElement = elementRegistry.get('Lane');
+
+        // when
+        var canMove = bpmnRules.canMove([ element ], laneElement);
+
+        // then
+        expect(canMove).to.be.true;
+      }));
+
+
+      it('Task_in_SubProcess -> Lane', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var element = elementRegistry.get('Task_in_SubProcess'),
+            laneElement = elementRegistry.get('Lane');
+
+        // when
+        var canMove = bpmnRules.canMove([ element ], laneElement);
+
+        // then
+        expect(canMove).to.be.true;
+      }));
+
+    });
 
   });
 
