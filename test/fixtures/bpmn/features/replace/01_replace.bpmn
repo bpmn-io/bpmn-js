@@ -53,7 +53,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_7" sourceRef="BoundaryEvent_2" targetRef="SubProcess_1" />
     <bpmn:sequenceFlow id="SequenceFlow_8" sourceRef="Transaction_1" targetRef="EndEvent_1" />
     <bpmn:subProcess id="EventSubProcess_1" triggeredByEvent="true">
-      <bpmn:startEvent id="StartEvent_3">
+      <bpmn:startEvent id="StartEvent_3" isInterrupting="false">
         <bpmn:messageEventDefinition />
       </bpmn:startEvent>
     </bpmn:subProcess>

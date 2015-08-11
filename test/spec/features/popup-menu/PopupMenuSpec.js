@@ -632,8 +632,8 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.defined;
-      expect(queryEntry(popupMenu, 'replace-with-message-start')).to.be.null;
+      expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.null;
+      expect(queryEntry(popupMenu, 'replace-with-message-start')).to.be.defined;
       expect(entriesContainer.childNodes.length).to.equal(11);
     }));
 

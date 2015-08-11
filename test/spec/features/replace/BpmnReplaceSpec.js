@@ -9,19 +9,20 @@ var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core'),
     is = require('../../../../lib/util/ModelUtil').is,
     isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
+    isInterrupting = require('../../../../lib/util/DiUtil').isInterrupting,
     isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess;
 
 
 describe('features/replace', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
   var testModules = [ coreModule, modelingModule, replaceModule ];
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
-
   describe('should replace', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('task', inject(function(elementRegistry, bpmnReplace) {
 
@@ -186,6 +187,11 @@ describe('features/replace', function() {
 
   describe('position and size', function() {
 
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
     it('should keep position', inject(function(elementRegistry, bpmnReplace) {
 
       // given
@@ -206,6 +212,11 @@ describe('features/replace', function() {
 
 
   describe('selection', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should select after replace',
       inject(function(elementRegistry, selection, bpmnReplace) {
@@ -228,6 +239,10 @@ describe('features/replace', function() {
 
   describe('label', function() {
 
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
     it('should keep copy label',
       inject(function(elementRegistry, bpmnReplace) {
 
@@ -249,6 +264,11 @@ describe('features/replace', function() {
 
 
   describe('undo support', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should undo replace',
       inject(function(elementRegistry, bpmnReplace, commandStack) {
@@ -306,6 +326,11 @@ describe('features/replace', function() {
 
 
   describe('connection handling', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should reconnect valid connections',
       inject(function(elementRegistry, bpmnReplace) {
@@ -376,27 +401,6 @@ describe('features/replace', function() {
       expect(outgoing).to.be.undefined;
     }));
 
-
-    it('should remove connections for event sub processes',
-      inject(function(elementRegistry, bpmnReplace) {
-
-      // given
-      var transaction = elementRegistry.get('Transaction_1');
-      var newElementData =  {
-        type: 'bpmn:SubProcess',
-        triggeredByEvent: true
-      };
-
-      // when
-      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
-
-      // then
-      var incoming = newElement.incoming[0],
-          outgoing = newElement.outgoing[0];
-
-      expect(incoming).to.be.undefined;
-      expect(outgoing).to.be.undefined;
-    }));
 
     describe('undo support', function() {
 
@@ -566,7 +570,13 @@ describe('features/replace', function() {
 
   });
 
+
   describe('children handling', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should update bpmn containment properly', inject(function(elementRegistry, modeling, bpmnReplace) {
 
@@ -601,7 +611,13 @@ describe('features/replace', function() {
 
   });
 
+
   describe('sub processes', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should allow morphing expanded into expanded ad hoc',
       inject(function(bpmnReplace, elementRegistry) {
@@ -674,6 +690,164 @@ describe('features/replace', function() {
       expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
       expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
       expect(isExpanded(newElement)).not.to.be.true;
+    }));
+
+  });
+
+
+  describe('event sub processes', function() {
+
+    var diagramXML = require('./BpmnReplace.eventSubProcesses.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should remove connections',
+      inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var transaction = elementRegistry.get('SubProcess_1');
+      var newElementData =  {
+        type: 'bpmn:SubProcess',
+        triggeredByEvent: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
+
+      // then
+      var incoming = newElement.incoming[0],
+          outgoing = newElement.outgoing[0];
+
+      expect(incoming).to.be.undefined;
+      expect(outgoing).to.be.undefined;
+    }));
+
+
+    it('should replace non-interrupting start event after moving it outside event sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_2'),
+          root = elementRegistry.get('Process_1');
+
+      // when
+      modeling.moveShapes([startEvent], { x: 0, y: 200 }, root);
+
+      var startEventAfter = elementRegistry.filter(function(element) {
+        return is(element, 'bpmn:StartEvent') && element.parent === root;
+      })[0];
+
+      // then
+      expect(isInterrupting(startEventAfter)).to.be.true;
+
+    }));
+
+
+    it('should replace non-interrupting start event after moving it to a regular sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_2'),
+          subProcess = elementRegistry.get('SubProcess_1');
+
+      // when
+      modeling.moveShapes([startEvent], { x: 260, y: 60 }, subProcess);
+
+      var startEventAfter = elementRegistry.filter(function(element) {
+        return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
+      })[0];
+
+      // then
+      expect(isInterrupting(startEventAfter)).to.be.true;
+
+    }));
+
+
+    it('should not replace non-interrupting start event after moving it to another event sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_2'),
+          subProcess = elementRegistry.get('SubProcess_1');
+
+      var eventSubProcess = bpmnReplace.replaceElement(subProcess, {
+        type: 'bpmn:SubProcess',
+        triggeredByEvent: true,
+        isExpanded: true
+      });
+
+      // when
+      modeling.moveShapes([startEvent], { x: 260, y: 60 }, eventSubProcess);
+
+      var startEventAfter = elementRegistry.filter(function(element) {
+        return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
+      })[1];
+
+      // then
+      expect(startEvent.id).to.equal(startEventAfter.id);
+
+    }));
+
+
+    it('should not replace interrupting start event after moving it outside event sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_2'),
+          root = elementRegistry.get('Process_1');
+
+      var interruptingStartEvent = bpmnReplace.replaceElement(startEvent, { type: 'bpmn:StartEvent' });
+
+      // when
+      modeling.moveShapes([interruptingStartEvent], { x: 0, y: 200 }, root);
+
+      var startEventAfter = elementRegistry.filter(function(element) {
+        return is(element, 'bpmn:StartEvent') && element.parent === root;
+      })[0];
+
+      // then
+      expect(startEventAfter).to.equal(interruptingStartEvent);
+
+    }));
+
+
+    it('should replace non-interrupting start event when replacing parent event sub process',
+      inject(function(elementRegistry, bpmnReplace){
+
+      // given
+      var eventSubProcess = elementRegistry.get('SubProcess_2');
+
+      // when
+      var subProcess = bpmnReplace.replaceElement(eventSubProcess, { type: 'bpmn:SubProcess' });
+
+      // then
+      var replacedStartEvent = elementRegistry.filter(function (element) {
+        return (element.parent === subProcess && element.type !== 'label');
+      })[0];
+
+      expect(isInterrupting(replacedStartEvent)).to.be.true;
+    }));
+
+
+    it('should not replace non-interrupting start event when moving parent event sub process',
+      inject(function(elementRegistry, bpmnReplace, modeling){
+
+      // given
+      var eventSubProcess = elementRegistry.get('SubProcess_2'),
+          startEvent = elementRegistry.get('StartEvent_2');
+
+      // when
+      modeling.moveShapes([eventSubProcess], { x: 20, y: 30 });
+
+      // start event after moving parent
+      var startEventAfter = elementRegistry.filter(function (element) {
+        return (element.parent === eventSubProcess && element.type !== 'label');
+      })[0];
+
+      // then
+      expect(startEventAfter).to.equal(startEvent);
+      expect(startEventAfter.parent).to.eql(eventSubProcess);
     }));
 
   });
