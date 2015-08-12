@@ -34,6 +34,9 @@ describe('features/modeling - create lanes', function() {
       var lane = laneShape.businessObject;
 
       // then
+      // expect it to have an id
+      expect(lane.id).to.exist;
+
       expect(laneShape).to.exist;
       expect(lane).to.exist;
 
