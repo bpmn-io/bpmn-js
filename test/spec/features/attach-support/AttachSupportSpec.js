@@ -16,9 +16,11 @@ function items(collection) {
   });
 }
 
-describe('features/attach-support - Attach', function() {
+
+describe('features/attach-support', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ attachSupportModule, modelingModule, rulesModule, replaceModule ] }));
+
 
   var Event;
 
@@ -170,6 +172,11 @@ describe('features/attach-support - Attach', function() {
       expect(parentShape.attachers).not.to.include(attacher);
     }));
 
+  });
+
+
+  describe('ordering', function() {
+    // up to someone else to care about
   });
 
   describe('moving', function () {
@@ -749,71 +756,6 @@ describe('features/attach-support - Attach', function() {
     }));
 
 
-    it('should be on top of host with label',
-      inject(function(elementRegistry, move, dragging, selection) {
-      // given
-      var host2Gfx = elementRegistry.getGraphics(host2);
-
-      selection.select([ attacher, label ]);
-
-      // when
-      move.start(Event.create({ x: 800, y: 100 }), attacher);
-
-      dragging.hover({
-        element: host2,
-        gfx: host2Gfx
-      });
-
-      dragging.move(Event.create({ x: 800, y: 400 }));
-      dragging.end();
-
-      var rootChildren = rootShape.children;
-
-      var labelIdx = rootChildren.indexOf(label);
-
-      // then
-      expect(rootChildren.indexOf(attacher)).to.be.above(rootChildren.indexOf(host2));
-
-      expect(labelIdx).to.be.above(rootChildren.indexOf(host2));
-      expect(labelIdx).to.be.above(rootChildren.indexOf(attacher));
-    }));
-
-
-    it('should be on top of host with label -> undo',
-      inject(function(elementRegistry, move, dragging, selection, commandStack) {
-      // given
-      var host2Gfx = elementRegistry.getGraphics(host2),
-          rootChildren = rootShape.children;
-
-      selection.select([ attacher, label ]);
-
-      var attacherIdx = rootChildren.indexOf(attacher),
-          labelIdx = rootChildren.indexOf(label),
-          hostIdx = rootChildren.indexOf(host);
-
-      // when
-      move.start(Event.create({ x: 800, y: 100 }), attacher);
-
-      dragging.hover({
-        element: host2,
-        gfx: host2Gfx
-      });
-
-      dragging.move(Event.create({ x: 800, y: 400 }));
-      dragging.end();
-
-
-      commandStack.undo();
-
-      // then
-      expect(attacherIdx).to.equal(rootChildren.indexOf(attacher));
-
-      expect(labelIdx).to.equal(rootChildren.indexOf(label));
-
-      expect(hostIdx).to.equal(rootChildren.indexOf(host));
-    }));
-
-
     it('should add attachment marker', inject(function(move, dragging, elementRegistry) {
       // given
       var hostGfx = elementRegistry.getGraphics(host);
@@ -856,6 +798,7 @@ describe('features/attach-support - Attach', function() {
     }));
 
   });
+
 
   describe('remove', function () {
 
@@ -917,108 +860,136 @@ describe('features/attach-support - Attach', function() {
     }));
 
 
-    it('should remove attacher from host', inject(function(modeling) {
+    describe('should remove attacher', function() {
 
-      // when
-      modeling.removeShape(attachedShape);
-
-      // then
-      expect(parentShape.attachers).to.have.length(3);
-    }));
-
-
-    it('should add attacher to host on undo', inject(function(modeling, commandStack) {
-
-      // when
-      modeling.removeShape(attachedShape);
-
-      commandStack.undo();
-
-      // then
-      expect(parentShape.attachers).to.include(attachedShape);
-    }));
-
-
-    describe('remove multiple', function() {
-
-      it('should execute', inject(function(modeling) {
+      it('execute', inject(function(modeling) {
 
         // when
-        modeling.removeShape(attachedShape2);
+        modeling.removeShape(attachedShape);
 
-        modeling.removeShape(attachedShape3);
+        // then
+        expect(parentShape.attachers).to.have.length(3);
+      }));
+
+
+      it('undo', inject(function(modeling, commandStack) {
+
+        // when
+        modeling.removeShape(attachedShape);
+
+        commandStack.undo();
+
+        // then
+        expect(parentShape.attachers).to.include(attachedShape);
+      }));
+
+    });
+
+
+    describe('should remove multiple attachers', function() {
+
+      it('execute', inject(function(modeling) {
+
+        // when
+        modeling.removeElements([ attachedShape2 ]);
+        modeling.removeElements([ attachedShape3 ]);
 
         // then
         expect(items(parentShape.attachers)).to.eql([ attachedShape, attachedShape4 ]);
       }));
 
 
-      it('should undo', inject(function(commandStack, modeling) {
+      it('undo', inject(function(commandStack, modeling) {
 
         // given
         var originalAttachers = items(parentShape.attachers);
 
-        modeling.removeShape(attachedShape2);
-
-        modeling.removeShape(attachedShape4);
+        modeling.removeElements([ attachedShape2 ]);
+        modeling.removeElements([ attachedShape3 ]);
 
         // when
         commandStack.undo();
-
         commandStack.undo();
 
         // then
         expect(items(parentShape.attachers)).to.eql(originalAttachers);
       }));
 
+
+      it('redo', inject(function(commandStack, modeling) {
+
+        // given
+        modeling.removeElements([ attachedShape2 ]);
+        modeling.removeElements([ attachedShape3 ]);
+
+        commandStack.undo();
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+        commandStack.redo();
+
+        // then
+        expect(items(parentShape.attachers)).to.eql([ attachedShape, attachedShape4 ]);
+      }));
+
     });
 
 
-    it('should remove connection when deleting shape', inject(function(modeling) {
-      // when
-      modeling.removeShape(attachedShape2);
+    describe('should remove connections with attachers', function() {
 
-      // then
-      expect(child.incoming).to.have.length(0);
-    }));
+      it('execute', inject(function(modeling) {
+        // when
+        modeling.removeShape(attachedShape2);
 
-
-    it('should add connection when deleting shape -> undo', inject(function(commandStack, modeling) {
-      // given
-      modeling.removeShape(attachedShape2);
-
-      // when
-      commandStack.undo();
-
-      // then
-      expect(child.incoming).to.have.length(1);
-    }));
+        // then
+        expect(child.incoming).to.have.length(0);
+      }));
 
 
-    it('should remove connection when deleting host of connected shape', inject(function(modeling) {
-      // when
-      modeling.removeShape(parentShape);
+      it('undo', inject(function(commandStack, modeling) {
+        // given
+        modeling.removeShape(attachedShape2);
 
-      // then
-      expect(child.incoming).to.have.length(0);
-    }));
+        // when
+        commandStack.undo();
 
+        // then
+        expect(child.incoming).to.have.length(1);
+      }));
 
-    it('should add connection when deleting host of connected shape -> undo', inject(function(commandStack, modeling) {
-      // given
-      modeling.removeShape(parentShape);
-
-      // when
-      commandStack.undo();
-
-      // then
-      expect(child.incoming).to.have.length(1);
-    }));
+    });
 
 
-    describe('remove attachers shapes with host', function() {
+    describe('should remove connections with host', function() {
 
-      it('should execute', inject(function(modeling, elementRegistry) {
+      it('execute', inject(function(modeling) {
+
+        // when
+        modeling.removeShape(parentShape);
+
+        // then
+        expect(child.incoming).to.have.length(0);
+      }));
+
+
+      it('undo', inject(function(commandStack, modeling) {
+        // given
+        modeling.removeShape(parentShape);
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(child.incoming).to.have.length(1);
+      }));
+
+    });
+
+
+    describe('should remove attachers with host', function() {
+
+      it('execute', inject(function(modeling, elementRegistry) {
 
         // when
         modeling.removeShape(parentShape);
@@ -1044,7 +1015,7 @@ describe('features/attach-support - Attach', function() {
       }));
 
 
-      it('should undo', inject(function(commandStack, modeling, elementRegistry) {
+      it('undo', inject(function(commandStack, modeling, elementRegistry) {
 
         // given
         modeling.removeShape(parentShape);
@@ -1073,7 +1044,7 @@ describe('features/attach-support - Attach', function() {
       }));
 
 
-      it('should redo', inject(function(commandStack, modeling, elementRegistry) {
+      it('redo', inject(function(commandStack, modeling, elementRegistry) {
 
         // given
         modeling.removeShape(parentShape);
