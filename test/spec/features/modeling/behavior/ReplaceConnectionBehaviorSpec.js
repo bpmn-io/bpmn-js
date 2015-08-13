@@ -130,7 +130,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_2');
 
         // when
-        modeling.moveShapes([ taskShape ], { x: 0, y: 330 }, targetShape);
+        modeling.moveElements([ taskShape ], { x: 0, y: 330 }, targetShape);
 
         // then
         expect(taskShape.parent).to.eql(targetShape);
@@ -149,7 +149,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_2'),
             oldParent = taskShape.parent;
 
-        modeling.moveShapes([ taskShape ], { x: 0, y: 300 }, targetShape);
+        modeling.moveElements([ taskShape ], { x: 0, y: 300 }, targetShape);
 
         // when
         commandStack.undo();
@@ -176,7 +176,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_2');
 
         // when
-        modeling.moveShapes([ startEventShape, taskShape ], { x: 0, y: 330 }, targetShape);
+        modeling.moveElements([ startEventShape, taskShape ], { x: 0, y: 330 }, targetShape);
 
         // then
         expect(taskShape.parent).to.eql(targetShape);
@@ -196,7 +196,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_2'),
             oldParent = taskShape.parent;
 
-        modeling.moveShapes([ taskShape ], { x: 0, y: 300 }, targetShape);
+        modeling.moveElements([ taskShape ], { x: 0, y: 300 }, targetShape);
 
         // when
         commandStack.undo();
@@ -224,7 +224,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_2');
 
         // when
-        modeling.moveShapes([ subProcessShape ], { x: 0, y: 530 }, targetShape);
+        modeling.moveElements([ subProcessShape ], { x: 0, y: 530 }, targetShape);
 
         // then
         expect(subProcessShape.parent).to.eql(targetShape);
@@ -241,7 +241,7 @@ describe('features/modeling - replace connection', function() {
         var subProcessShape = element('SubProcess_1'),
             targetShape = element('Participant_2');
 
-        modeling.moveShapes([ subProcessShape ], { x: 0, y: 530 }, targetShape);
+        modeling.moveElements([ subProcessShape ], { x: 0, y: 530 }, targetShape);
 
         // when
         commandStack.undo();
@@ -282,7 +282,7 @@ describe('features/modeling - replace connection', function() {
             targetShape = element('Participant_1');
 
         // when
-        modeling.moveShapes([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
+        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
 
         // then
         expect(textAnnotationShape.parent).to.eql(targetShape);
@@ -297,7 +297,7 @@ describe('features/modeling - replace connection', function() {
         var textAnnotationShape = element('TextAnnotation_1'),
             targetShape = element('Participant_1');
 
-        modeling.moveShapes([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
+        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
 
         // when
         commandStack.undo();

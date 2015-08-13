@@ -25,7 +25,7 @@ describe('features/modeling - layout message flows', function() {
         messageFlowConnection = elementRegistry.get('MessageFlow_4');
 
     // when
-    modeling.moveShapes([ taskShape ], { x: 30, y: 20 });
+    modeling.moveElements([ taskShape ], { x: 30, y: 20 });
 
     // then
 
@@ -46,7 +46,7 @@ describe('features/modeling - layout message flows', function() {
         messageFlowConnection = elementRegistry.get('MessageFlow_1');
 
     // when
-    modeling.moveShapes([ taskShape ], { x: 20, y: -20 });
+    modeling.moveElements([ taskShape ], { x: 20, y: -20 });
 
     // then
 
@@ -65,7 +65,7 @@ describe('features/modeling - layout message flows', function() {
         messageFlowConnection = elementRegistry.get('MessageFlow_5');
 
     // when
-    modeling.moveShapes([ participantShape ], { x: 100, y: 50 });
+    modeling.moveElements([ participantShape ], { x: 100, y: 50 });
 
     // then
 
@@ -86,7 +86,7 @@ describe('features/modeling - layout message flows', function() {
         messageFlowConnection = elementRegistry.get('MessageFlow_5');
 
     // when
-    modeling.moveShapes([ participantShape ], { x: -200, y: 0 });
+    modeling.moveElements([ participantShape ], { x: -200, y: 0 });
 
     // then
 

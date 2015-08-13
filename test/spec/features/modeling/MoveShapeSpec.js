@@ -212,7 +212,7 @@ describe('features/modeling - move shape', function() {
       };
 
       // when
-      modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
+      modeling.moveElements([ startEventElement ], { x: 40, y: -80 });
 
       // then
       expect(label.x).to.equal(labelPosition.x + 40);
@@ -233,7 +233,7 @@ describe('features/modeling - move shape', function() {
       };
 
       // when
-      modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
+      modeling.moveElements([ startEventElement, subProcessElement ], { x: 40, y: -80 });
 
       // then
       expect(flowLabel.x).to.equal(labelPosition.x + 40);
@@ -255,7 +255,7 @@ describe('features/modeling - move shape', function() {
           y: label.y
         };
 
-        modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
+        modeling.moveElements([ startEventElement ], { x: 40, y: -80 });
 
         // when
         commandStack.undo();
@@ -278,7 +278,7 @@ describe('features/modeling - move shape', function() {
           y: flowLabel.y
         };
 
-        modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
+        modeling.moveElements([ startEventElement, subProcessElement ], { x: 40, y: -80 });
 
         // when
         commandStack.undo();
@@ -305,7 +305,7 @@ describe('features/modeling - move shape', function() {
           y: label.y
         };
 
-        modeling.moveShapes([ startEventElement ], { x: 40, y: -80 });
+        modeling.moveElements([ startEventElement ], { x: 40, y: -80 });
         commandStack.undo();
 
         // when
@@ -329,7 +329,7 @@ describe('features/modeling - move shape', function() {
           y: flowLabel.y
         };
 
-        modeling.moveShapes([ startEventElement, subProcessElement ], { x: 40, y: -80 });
+        modeling.moveElements([ startEventElement, subProcessElement ], { x: 40, y: -80 });
         commandStack.undo();
 
         // when

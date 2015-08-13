@@ -66,7 +66,7 @@ module.exports.appendShape = function(source, shape, distance, target, connectio
 };
 
 
-module.exports.moveShapes = function(elements, distance, target, isAttach, hints) {
+module.exports.moveElements = function(elements, distance, target, isAttach, hints) {
 
   var actualElements = elements.map(function(e) {
     var actualElement = getElement(e);
@@ -82,7 +82,7 @@ module.exports.moveShapes = function(elements, distance, target, isAttach, hints
 
     var delta = normalizeDelta(distance);
 
-    var allowed = rules.allowed('shapes.move', {
+    var allowed = rules.allowed('elements.move', {
       shapes: actualElements,
       delta: delta,
       target: target
@@ -92,7 +92,7 @@ module.exports.moveShapes = function(elements, distance, target, isAttach, hints
     expect(allowed).to.eql(typeof isAttach === 'boolean' ? 'attach' : true);
 
     // perform actual move
-    modeling.moveShapes(actualElements, delta, target, isAttach, hints);
+    modeling.moveElements(actualElements, delta, target, isAttach, hints);
   });
 };
 

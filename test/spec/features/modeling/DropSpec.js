@@ -43,7 +43,7 @@ describe('features/move - drop', function() {
           parent = elementRegistry.get('ID_SubProcess_1');
 
       // when
-      modeling.moveShapes([ task_1, task_2 ], { x: 0, y: 200 }, parent);
+      modeling.moveElements([ task_1, task_2 ], { x: 0, y: 200 }, parent);
 
       // then
       expect(task_1.parent).to.eql(parent);
@@ -69,7 +69,7 @@ describe('features/move - drop', function() {
           flow   = elementRegistry.get('ID_Sequenceflow_1');
 
       // when
-      modeling.moveShapes([ task_1 ], { x: 0, y: 200 }, parent);
+      modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
 
       // then
       expect(flow.parent).to.be.null;
@@ -86,7 +86,7 @@ describe('features/move - drop', function() {
           flow   = elementRegistry.get('ID_Sequenceflow_1');
 
       // when
-      modeling.moveShapes([ task_1, task_2 ], { x: 0, y: 250 }, parent);
+      modeling.moveElements([ task_1, task_2 ], { x: 0, y: 250 }, parent);
 
       // then
       expect(flow.parent).to.eql(parent);
@@ -108,7 +108,7 @@ describe('features/move - drop', function() {
           sequenceFlow = elementRegistry.get('ID_sequenceflow_1');
 
       // when
-      modeling.moveShapes([ task_1 ], { x: 0, y: 200 }, parent);
+      modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
 
       // then
       expect(task_1.parent).to.eql(parent);

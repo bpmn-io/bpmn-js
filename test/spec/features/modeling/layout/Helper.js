@@ -46,7 +46,7 @@ function move(shape, delta) {
   // assume
   expect(shapeElement).to.exist;
 
-  modeling.moveShapes([shapeElement], delta);
+  modeling.moveElements([shapeElement], delta);
 
   return shapeElement;
 }

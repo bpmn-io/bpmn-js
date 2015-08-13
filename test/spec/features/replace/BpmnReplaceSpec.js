@@ -732,7 +732,7 @@ describe('features/replace', function() {
           root = elementRegistry.get('Process_1');
 
       // when
-      modeling.moveShapes([startEvent], { x: 0, y: 200 }, root);
+      modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
 
       var startEventAfter = elementRegistry.filter(function(element) {
         return is(element, 'bpmn:StartEvent') && element.parent === root;
@@ -752,7 +752,7 @@ describe('features/replace', function() {
           subProcess = elementRegistry.get('SubProcess_1');
 
       // when
-      modeling.moveShapes([startEvent], { x: 260, y: 60 }, subProcess);
+      modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
 
       var startEventAfter = elementRegistry.filter(function(element) {
         return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
@@ -778,7 +778,7 @@ describe('features/replace', function() {
       });
 
       // when
-      modeling.moveShapes([startEvent], { x: 260, y: 60 }, eventSubProcess);
+      modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
 
       var startEventAfter = elementRegistry.filter(function(element) {
         return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
@@ -800,7 +800,7 @@ describe('features/replace', function() {
       var interruptingStartEvent = bpmnReplace.replaceElement(startEvent, { type: 'bpmn:StartEvent' });
 
       // when
-      modeling.moveShapes([interruptingStartEvent], { x: 0, y: 200 }, root);
+      modeling.moveElements([interruptingStartEvent], { x: 0, y: 200 }, root);
 
       var startEventAfter = elementRegistry.filter(function(element) {
         return is(element, 'bpmn:StartEvent') && element.parent === root;
@@ -838,7 +838,7 @@ describe('features/replace', function() {
           startEvent = elementRegistry.get('StartEvent_2');
 
       // when
-      modeling.moveShapes([eventSubProcess], { x: 20, y: 30 });
+      modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
 
       // start event after moving parent
       var startEventAfter = elementRegistry.filter(function (element) {
