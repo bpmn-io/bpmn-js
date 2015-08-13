@@ -148,7 +148,7 @@ describe('features/modeling - move shape', function() {
     it('should move according to delta', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveElements([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
 
       // then
       expect(childShape.x).to.equal(90);
@@ -185,7 +185,7 @@ describe('features/modeling - move shape', function() {
       var c1 = s1.outgoing[0];
 
       // when
-      modeling.moveShapes([ s1, c1 ], { x: 0, y: +100 }, rootShape);
+      modeling.moveElements([ s1, c1 ], { x: 0, y: +100 }, rootShape);
 
       // then
       expect(c1.waypoints[1]).to.eql({ x : 330, y : 200 });
@@ -197,8 +197,8 @@ describe('features/modeling - move shape', function() {
           oldContainment2 = containment(childShape2);
 
       // given
-      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
-      modeling.moveShapes([ childShape ], { x: 40, y: 40 }, parentShape);
+      modeling.moveElements([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveElements([ childShape ], { x: 40, y: 40 }, parentShape);
 
       // when
       commandStack.undo();
@@ -213,8 +213,8 @@ describe('features/modeling - move shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.moveShapes([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
-      modeling.moveShapes([ childShape ], { x: 40, y: 40 }, parentShape);
+      modeling.moveElements([ childShape, childShape2 ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveElements([ childShape ], { x: 40, y: 40 }, parentShape);
 
       var newContainment = containment(childShape),
           newContainment2 = containment(childShape2);
@@ -238,7 +238,7 @@ describe('features/modeling - move shape', function() {
     it('should move according to delta', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ parentShape ], { x: -20, y: +20 }, parentShape2);
+      modeling.moveElements([ parentShape ], { x: -20, y: +20 }, parentShape2);
 
       // then
       expect(childShape.x).to.equal(90);
@@ -264,8 +264,8 @@ describe('features/modeling - move shape', function() {
       var oldContainment = containment(childShape);
       var oldContainment2 = containment(childShape2);
 
-      modeling.moveShapes([ parentShape ], { x: -20, y: 20 }, parentShape2);
-      modeling.moveShapes([ parentShape ], { x: 40, y: -20 });
+      modeling.moveElements([ parentShape ], { x: -20, y: 20 }, parentShape2);
+      modeling.moveElements([ parentShape ], { x: 40, y: -20 });
 
       // when
       commandStack.undo();
@@ -282,8 +282,8 @@ describe('features/modeling - move shape', function() {
     it('should redo', inject(function(modeling, commandStack) {
 
       // given
-      modeling.moveShapes([ parentShape ], { x: -20, y: 20 }, parentShape2);
-      modeling.moveShapes([ parentShape ], { x: 40, y: -20 });
+      modeling.moveElements([ parentShape ], { x: -20, y: 20 }, parentShape2);
+      modeling.moveElements([ parentShape ], { x: 40, y: -20 });
 
       var newContainment = containment(childShape),
           newContainment2 = containment(childShape2);
@@ -309,7 +309,7 @@ describe('features/modeling - move shape', function() {
     it('should drop', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ childShape, childShape2 ], { x: 450, y: 400 }, parentShape2);
+      modeling.moveElements([ childShape, childShape2 ], { x: 450, y: 400 }, parentShape2);
 
       // then
       expect(childShape.parent).to.equal(parentShape2);

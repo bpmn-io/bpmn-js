@@ -17,7 +17,7 @@ module.exports = MoveRules;
 
 MoveRules.prototype.init = function() {
 
-  this.addRule('shapes.move', function(context) {
+  this.addRule('elements.move', function(context) {
     var target = context.target,
         shapes = context.shapes;
 

@@ -87,7 +87,7 @@ describe('features/attach-support - Attach', function() {
     it('should attach', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
+      modeling.moveElements([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
 
       // then
       expect(attacher2.host).to.equal(parentShape);
@@ -98,7 +98,7 @@ describe('features/attach-support - Attach', function() {
     it('should detach from host', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape, false);
+      modeling.moveElements([ attacher ], { x: 50, y: 50 }, rootShape, false);
 
       // then
       expect(attacher.host).not.to.exist;
@@ -109,7 +109,7 @@ describe('features/attach-support - Attach', function() {
     it('should reattach to original host on undo', inject(function(modeling, commandStack) {
 
       // when
-      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape, false);
+      modeling.moveElements([ attacher ], { x: 50, y: 50 }, rootShape, false);
 
       commandStack.undo();
 
@@ -122,7 +122,7 @@ describe('features/attach-support - Attach', function() {
     it('should detach on undo', inject(function(modeling, commandStack) {
 
       // when
-      modeling.moveShapes([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
+      modeling.moveElements([ attacher2 ], { x: -50, y: 0 }, parentShape, true);
 
       commandStack.undo();
 
@@ -135,9 +135,9 @@ describe('features/attach-support - Attach', function() {
     it('should reattach to initial host when detached', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape, false);
+      modeling.moveElements([ attacher ], { x: 50, y: 50 }, rootShape, false);
 
-      modeling.moveShapes([ attacher ], { x: -50, y: -50 }, parentShape, true);
+      modeling.moveElements([ attacher ], { x: -50, y: -50 }, parentShape, true);
 
       // then
       expect(attacher.host).to.equal(parentShape);
@@ -148,7 +148,7 @@ describe('features/attach-support - Attach', function() {
     it('should reattach to another host', inject(function(modeling) {
 
       // when
-      modeling.moveShapes([ attacher ], { x: 300, y: 0 }, host, true);
+      modeling.moveElements([ attacher ], { x: 300, y: 0 }, host, true);
 
       // then
       expect(attacher.host).to.equal(host);
@@ -159,9 +159,9 @@ describe('features/attach-support - Attach', function() {
     it('should detach on reattachment undo', inject(function(modeling, commandStack) {
 
       // when
-      modeling.moveShapes([ attacher ], { x: 50, y: 50 }, rootShape, false);
+      modeling.moveElements([ attacher ], { x: 50, y: 50 }, rootShape, false);
 
-      modeling.moveShapes([ attacher ], { x: -50, y: -50 }, parentShape, true);
+      modeling.moveElements([ attacher ], { x: -50, y: -50 }, parentShape, true);
 
       commandStack.undo();
 
@@ -293,7 +293,7 @@ describe('features/attach-support - Attach', function() {
       dragging.move(Event.create({ x: 225, y: 275 }));
       dragging.end();
 
-      modeling.moveShapes([ host2 ], { x: 300, y: 50 }, rootShape);
+      modeling.moveElements([ host2 ], { x: 300, y: 50 }, rootShape);
 
       // then
       expect(host2.parent).to.equal(rootShape);

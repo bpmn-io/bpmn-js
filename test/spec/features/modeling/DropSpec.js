@@ -93,7 +93,7 @@ describe('features/modeling - move shape - drop', function() {
       // given
 
       // when
-      modeling.moveShapes([shape1, shape2], { x: 5, y: 50 }, parent1);
+      modeling.moveElements([shape1, shape2], { x: 5, y: 50 }, parent1);
 
       // then
       expect(shape1.parent).to.equal(parent1);
@@ -108,7 +108,7 @@ describe('features/modeling - move shape - drop', function() {
       modeling.moveShape(shape2, { x: 75, y: 50 }, parent2);
 
       // when
-      modeling.moveShapes([shape1, shape2], { x: 180, y: 0 }, parent3);
+      modeling.moveElements([shape1, shape2], { x: 180, y: 0 }, parent3);
 
       // then
       expect(shape1.parent).to.equal(parent3);
@@ -119,7 +119,7 @@ describe('features/modeling - move shape - drop', function() {
     it('should drop container in container', inject(function(modeling) {
 
       // given
-      modeling.moveShapes([shape1, shape2], { x: 110, y: 50 }, parent2);
+      modeling.moveElements([shape1, shape2], { x: 110, y: 50 }, parent2);
 
       // when
       modeling.moveShape(parent2, { x: 115, y: 25 }, parent3);

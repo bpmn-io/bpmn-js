@@ -65,7 +65,7 @@ describe('features/label-support - Label', function() {
 
     it('should move', inject(function(modeling) {
       // when
-      modeling.moveShapes([ label ], { x: 75, y: 0 }, parentShape);
+      modeling.moveElements([ label ], { x: 75, y: 0 }, parentShape);
 
       // then
       expect(label.x).to.eql(235);
@@ -75,7 +75,7 @@ describe('features/label-support - Label', function() {
 
     it('should move with labelTarget', inject(function(modeling) {
       // when
-      modeling.moveShapes([ childShape ], { x: 75, y: 0 }, parentShape);
+      modeling.moveElements([ childShape ], { x: 75, y: 0 }, parentShape);
 
       // then
       expect(label.x).to.eql(235);

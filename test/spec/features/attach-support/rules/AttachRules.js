@@ -19,7 +19,7 @@ module.exports = MoveRules;
 
 MoveRules.prototype.init = function() {
 
-  this.addRule('shapes.move', function(context) {
+  this.addRule('elements.move', function(context) {
 
     if (context.target && context.target.retainAttachmentIds) {
       var attachmentIds = context.target.retainAttachmentIds;
@@ -28,7 +28,7 @@ MoveRules.prototype.init = function() {
     }
   });
 
-  this.addRule('shapes.move', function(context) {
+  this.addRule('elements.move', function(context) {
     var shapes = context.shapes,
         target = context.target;
 
