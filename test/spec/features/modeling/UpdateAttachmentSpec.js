@@ -9,7 +9,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
 
-describe('features/modeling - attach shape', function() {
+describe('features/modeling - update attachment', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
 
@@ -39,12 +39,12 @@ describe('features/modeling - attach shape', function() {
   }));
 
 
-  describe('shape', function() {
+  describe('should reattach BoundaryEvent', function() {
 
-    it('should reattach', inject(function(modeling, elementRegistry) {
+    it('execute', inject(function(modeling, elementRegistry) {
 
       // when
-      modeling.updateAttachment(boundaryEventElement, subProcessElement, true);
+      modeling.updateAttachment(boundaryEventElement, subProcessElement);
 
       // then
       expect(boundaryEvent.attachedToRef).to.equal(subProcess);
@@ -56,10 +56,10 @@ describe('features/modeling - attach shape', function() {
     }));
 
 
-    it('should undo', inject(function(elementRegistry, commandStack, modeling) {
+    it('undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      modeling.updateAttachment(boundaryEventElement, subProcessElement, true);
+      modeling.updateAttachment(boundaryEventElement, subProcessElement);
 
       // when
       commandStack.undo();
@@ -73,10 +73,10 @@ describe('features/modeling - attach shape', function() {
     }));
 
 
-    it('should redo', inject(function(elementRegistry, commandStack, modeling) {
+    it('redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      modeling.updateAttachment(boundaryEventElement, subProcessElement, true);
+      modeling.updateAttachment(boundaryEventElement, subProcessElement);
 
       // when
       commandStack.undo();
