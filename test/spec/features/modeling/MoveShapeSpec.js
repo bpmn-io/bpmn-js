@@ -308,15 +308,8 @@ describe('features/modeling - move shape', function() {
 
   describe('drop', function() {
 
-    it('should drop', inject(function(modeling) {
+    // @see DropShapeSpec.js
 
-      // when
-      modeling.moveElements([ childShape, childShape2 ], { x: 450, y: 400 }, parentShape2);
-
-      // then
-      expect(childShape.parent).to.equal(parentShape2);
-      expect(childShape2.parent).to.equal(parentShape2);
-    }));
   });
 
 });
