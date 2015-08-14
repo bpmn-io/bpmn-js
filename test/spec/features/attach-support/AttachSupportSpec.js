@@ -73,7 +73,7 @@ describe('features/attach-support', function() {
         width: 50, height: 50
       });
 
-      modeling.createShape(attacher, { x: 400, y: 110 }, parentShape, 'attach');
+      modeling.createShape(attacher, { x: 400, y: 110 }, parentShape, true);
 
 
       attacher2 = elementFactory.createShape({

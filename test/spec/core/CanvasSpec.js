@@ -14,7 +14,6 @@ describe('Canvas', function() {
    * Create a diagram with the given options
    */
   function createDiagram(options) {
-
     return bootstrapDiagram(function() {
       return merge({ canvas: { container: container } }, options);
     }, {});
@@ -25,6 +24,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram());
 
     it('should create <svg> element', inject(function() {
@@ -43,6 +43,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram());
 
     it('should remove created elements', inject(function(eventBus, canvas) {
@@ -189,6 +190,36 @@ describe('Canvas', function() {
       expect(childShape.parent).to.equal(parentShape);
     }));
 
+
+    it('should add with parentIndex', inject(function(elementFactory, canvas) {
+
+      // given
+      var parentShape = elementFactory.createShape({
+        id: 'parent',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      var childShape = elementFactory.createShape({
+        id: 'child',
+        x: 110, y: 110, width: 100, height: 100
+      });
+
+      var firstChildShape = elementFactory.createShape({
+        id: 'first-child',
+        x: 110, y: 110, width: 100, height: 100
+      });
+
+      canvas.addShape(parentShape);
+      canvas.addShape(childShape, parentShape);
+
+      // when
+      canvas.addShape(firstChildShape, parentShape, 0);
+
+      // then
+      expect(parentShape.children).to.eql([ firstChildShape, childShape ]);
+      expect(firstChildShape.parent).to.equal(parentShape);
+    }));
+
   });
 
 
@@ -297,6 +328,25 @@ describe('Canvas', function() {
       }).to.throw('must supply { waypoints } with connection');
 
     }));
+
+
+    it('should add with parentIndex', inject(function(elementFactory, canvas) {
+
+      // given
+      var rootElement = canvas.getRootElement();
+
+      var childShape = canvas.addShape({ id: 's1', x: 10, y: 10, width: 30, height: 30 });
+      var otherChildShape = canvas.addShape({ id: 's2', x: 100, y: 100, width: 30, height: 30 });
+
+      // when
+      var connection = canvas.addConnection(
+        { id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]}, rootElement, 0);
+
+      // then
+      expect(rootElement.children).to.eql([ connection, childShape, otherChildShape ]);
+      expect(connection.parent).to.equal(rootElement);
+    }));
+
   });
 
 
