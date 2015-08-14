@@ -10,12 +10,6 @@ var attachSupportModule = require('../../../../lib/features/attach-support'),
     replaceModule = require('../../../../lib/features/replace'),
     rulesModule = require('./rules');
 
-function items(collection) {
-  return collection.map(function(e) {
-    return e;
-  });
-}
-
 
 describe('features/attach-support', function() {
 
@@ -52,6 +46,7 @@ describe('features/attach-support', function() {
 
     canvas.addShape(parentShape, rootShape);
   }));
+
 
   describe('modeling', function () {
 
@@ -895,14 +890,14 @@ describe('features/attach-support', function() {
         modeling.removeElements([ attachedShape3 ]);
 
         // then
-        expect(items(parentShape.attachers)).to.eql([ attachedShape, attachedShape4 ]);
+        expect(parentShape.attachers).to.eql([ attachedShape, attachedShape4 ]);
       }));
 
 
       it('undo', inject(function(commandStack, modeling) {
 
         // given
-        var originalAttachers = items(parentShape.attachers);
+        var originalAttachers = parentShape.attachers.slice();
 
         modeling.removeElements([ attachedShape2 ]);
         modeling.removeElements([ attachedShape3 ]);
@@ -912,7 +907,7 @@ describe('features/attach-support', function() {
         commandStack.undo();
 
         // then
-        expect(items(parentShape.attachers)).to.eql(originalAttachers);
+        expect(parentShape.attachers).to.eql(originalAttachers);
       }));
 
 
@@ -930,7 +925,7 @@ describe('features/attach-support', function() {
         commandStack.redo();
 
         // then
-        expect(items(parentShape.attachers)).to.eql([ attachedShape, attachedShape4 ]);
+        expect(parentShape.attachers).to.eql([ attachedShape, attachedShape4 ]);
       }));
 
     });
@@ -1035,7 +1030,7 @@ describe('features/attach-support', function() {
         var attacher4 = elementRegistry.get('attachedShape4');
 
         expect(parent).to.exist;
-        expect(items(parent.attachers)).to.eql([attacher, attacher2, attacher3, attacher4 ]);
+        expect(parent.attachers).to.eql([attacher, attacher2, attacher3, attacher4 ]);
 
         expect(attacher).to.exist;
         expect(attacher2).to.exist;
@@ -1073,6 +1068,112 @@ describe('features/attach-support', function() {
       }));
 
     });
+
+  });
+
+
+  describe('create', function() {
+
+    var hostShape;
+
+    beforeEach(inject(function(canvas, elementFactory, modeling) {
+
+      hostShape = elementFactory.createShape({
+        id: 'childShape',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      modeling.createShape(hostShape, { x: 150, y: 150 }, canvas.getRootElement());
+    }));
+
+
+    describe('should wire host <-> attacher', function() {
+
+      it('execute', inject(function(elementFactory, modeling) {
+
+        // when
+        var attachedShape = elementFactory.createShape({
+          id: 'childShape2',
+          x: 0, y: 0, width: 50, height: 50
+        });
+
+        modeling.createShape(attachedShape, { x: 225, y: 225 }, hostShape, true);
+
+        // then
+        expect(attachedShape.host).to.equal(hostShape);
+        expect(hostShape.attachers).to.contain(attachedShape);
+
+        expect(attachedShape.parent).to.equal(hostShape.parent);
+      }));
+
+
+      it('undo', inject(function(elementFactory, modeling, commandStack) {
+
+        // given
+        var attachedShape = elementFactory.createShape({
+          id: 'childShape2',
+          x: 0, y: 0, width: 50, height: 50
+        });
+
+        modeling.createShape(attachedShape, { x: 225, y: 225 }, hostShape, true);
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(attachedShape.host).to.equal(undefined);
+        expect(hostShape.attachers).to.not.contain(attachedShape);
+
+        expect(attachedShape.parent).not.to.exist;
+      }));
+
+
+      it('redo', inject(function(elementFactory, modeling, commandStack) {
+
+        // given
+        var attachedShape = elementFactory.createShape({
+          id: 'childShape2',
+          x: 0, y: 0, width: 50, height: 50
+        });
+
+        modeling.createShape(attachedShape, { x: 225, y: 225 }, hostShape, true);
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(attachedShape.host).to.equal(hostShape);
+        expect(hostShape.attachers).to.contain(attachedShape);
+
+        expect(attachedShape.parent).to.equal(hostShape.parent);
+      }));
+
+    });
+
+
+    it('should create multiple attachers', inject(function(elementFactory, modeling) {
+
+      // when
+      var attacherShape1 = elementFactory.createShape({
+        id: 'attacherShape1',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacherShape1, { x: 225, y: 225 }, hostShape, true);
+
+      var attacherShape2 = elementFactory.createShape({
+        id: 'attacherShape2',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacherShape2, { x: 125, y: 225 }, hostShape, true);
+
+      // then
+      expect(hostShape.attachers.slice()).to.eql([ attacherShape1, attacherShape2 ]);
+
+    }));
 
   });
 

@@ -7,10 +7,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
     orderingProviderModule = require('./provider');
 
-function items(collection) {
-  return collection.slice();
-}
-
 
 describe('features/ordering', function() {
 
@@ -87,7 +83,7 @@ describe('features/ordering', function() {
       modeling.moveElements([ nestedLevel1Shape ], { x: -20, y: +20 }, level3Shape_Parent);
 
       // then
-      expect(items(level3Shape_Parent.children)).to.eql([ nestedLevel1Shape, nestedLevel2Shape ]);
+      expect(level3Shape_Parent.children).to.eql([ nestedLevel1Shape, nestedLevel2Shape ]);
     }));
 
 
@@ -97,7 +93,7 @@ describe('features/ordering', function() {
       modeling.moveElements([ nestedLevel1Shape ], { x: -20, y: +20 }, rootShape);
 
       // then
-      expect(items(rootShape.children)).to.eql([
+      expect(rootShape.children).to.eql([
         level1Shape_alwaysTopLevel,
         nestedLevel1Shape,
         level3Shape_Parent,
@@ -112,7 +108,7 @@ describe('features/ordering', function() {
       modeling.moveElements([ level5Shape_alwaysTopLevel ], { x: -20, y: +20 }, level3Shape_Parent);
 
       // then
-      expect(items(rootShape.children)).to.eql([
+      expect(rootShape.children).to.eql([
         level1Shape_alwaysTopLevel,
         level3Shape_Parent,
         level5Shape_alwaysTopLevel
@@ -133,12 +129,12 @@ describe('features/ordering', function() {
       modeling.moveElements(elements, { x: -20, y: +20 }, level3Shape_Parent);
 
       // then
-      expect(items(level3Shape_Parent.children)).to.eql([
+      expect(level3Shape_Parent.children).to.eql([
         nestedLevel1Shape,
         nestedLevel2Shape
       ]);
 
-      expect(items(rootShape.children)).to.eql([
+      expect(rootShape.children).to.eql([
         level1Shape_alwaysTopLevel,
         level3Shape_Parent,
         level5Shape_alwaysTopLevel

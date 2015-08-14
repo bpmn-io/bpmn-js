@@ -10,21 +10,29 @@ var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
     dragModule = require('../../../../lib/features/dragging'),
     createModule = require('../../../../lib/features/create'),
+    attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
 
 describe('features/create - Create', function () {
 
-  beforeEach(bootstrapDiagram({ modules: [ createModule, rulesModule, modelingModule, moveModule, dragModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      createModule,
+      rulesModule,
+      attachSupportModule,
+      modelingModule,
+      moveModule,
+      dragModule
+    ]
+  }));
 
-  var rootShape, parentShape, childShape, attacher;
+  var rootShape, parentShape, childShape, newShape;
 
   var createEvent;
 
   beforeEach(inject(function(canvas, dragging, elementRegistry) {
     createEvent = Events.scopedCreate(canvas);
-
-    global.elementRegistry = elementRegistry;
 
     dragging.setOptions({ manual: true });
   }));
@@ -55,21 +63,22 @@ describe('features/create - Create', function () {
 
     canvas.addShape(childShape, rootShape);
 
-    attacher = elementFactory.createShape({
-      id: 'attacher',
+
+    newShape = elementFactory.createShape({
+      id: 'newShape',
       x: 0, y: 0, width: 50, height: 50
     });
-
   }));
+
 
   describe('basics', function() {
 
-    it('should create a shape', inject(function(create, elementRegistry, dragging) {
+    it('should create', inject(function(create, elementRegistry, elementFactory, dragging) {
       // given
       var parentGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 125, y: 125 }));
       dragging.hover({ element: parentShape, gfx: parentGfx });
@@ -77,20 +86,22 @@ describe('features/create - Create', function () {
 
       dragging.end();
 
-      var shape = elementRegistry.get('attacher');
+      var createdShape = elementRegistry.get('newShape');
 
       // then
-      expect(shape).to.exist;
-      expect(shape.parent).to.equal(parentShape);
+      expect(createdShape).to.exist;
+      expect(createdShape).to.eql(newShape);
+
+      expect(createdShape.parent).to.equal(parentShape);
     }));
 
 
-    it('should append a shape', inject(function(create, elementRegistry, dragging) {
+    it('should append', inject(function(create, elementRegistry, elementFactory, dragging) {
       // given
       var rootGfx = elementRegistry.getGraphics('root');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher, parentShape);
+      create.start(createEvent({ x: 0, y: 0 }), newShape, parentShape);
 
       dragging.move(createEvent({ x: 175, y: 175 }));
       dragging.hover({ element: rootShape, gfx: rootGfx });
@@ -98,20 +109,23 @@ describe('features/create - Create', function () {
 
       dragging.end();
 
-      var shape = elementRegistry.get('attacher');
+      var createdShape = elementRegistry.get('newShape');
 
       // then
-      expect(shape).to.exist;
-      expect(shape.incoming).to.have.length(1);
+      expect(createdShape).to.exist;
+      expect(createdShape).to.eql(newShape);
+
+      expect(createdShape.incoming).to.have.length(1);
     }));
 
 
-    it('should attach a shape', inject(function(create, elementRegistry, dragging) {
+    it('should attach', inject(function(create, elementRegistry, elementFactory, dragging) {
+
       // given
       var childShapeGfx = elementRegistry.getGraphics('childShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 150, y: 350 }));
       dragging.hover({ element: childShape, gfx: childShapeGfx });
@@ -120,18 +134,19 @@ describe('features/create - Create', function () {
       dragging.end();
 
       // then
-      expect(attacher.host).to.equal(childShape);
-      expect(childShape.attachers).to.include(attacher);
+      expect(newShape.host).to.equal(childShape);
+      expect(childShape.attachers).to.include(newShape);
     }));
 
   });
+
 
   describe('visuals', function() {
 
     it('should add visuals', inject(function(create, elementRegistry, dragging) {
 
       // when
-      create.start(createEvent({ x: 50, y: 50 }), attacher);
+      create.start(createEvent({ x: 50, y: 50 }), newShape);
 
       dragging.move(createEvent({ x: 50, y: 50 }));
 
@@ -146,7 +161,7 @@ describe('features/create - Create', function () {
       var parentGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 50, y: 50 }), attacher);
+      create.start(createEvent({ x: 50, y: 50 }), newShape);
 
       dragging.move(createEvent({ x: 100, y: 100 }));
       dragging.hover({ element: parentShape, gfx: parentGfx});
@@ -162,6 +177,7 @@ describe('features/create - Create', function () {
 
   });
 
+
   describe('rules', function () {
 
     it('should not allow shape create', inject(function(canvas, create, elementRegistry, dragging) {
@@ -169,7 +185,7 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('rootShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 50, y: 25 }));
       dragging.hover({ element: rootShape, gfx: targetGfx});
@@ -186,7 +202,7 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 200, y: 50 }));
       dragging.hover({ element: parentShape, gfx: targetGfx});
@@ -201,7 +217,7 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('rootShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 50, y: 25 }));
       dragging.hover({ element: rootShape, gfx: targetGfx});
@@ -216,7 +232,7 @@ describe('features/create - Create', function () {
       var hostGfx = elementRegistry.getGraphics('childShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 150, y: 350 }));
       dragging.hover({ element: childShape, gfx: hostGfx });
@@ -231,7 +247,7 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), attacher);
+      create.start(createEvent({ x: 0, y: 0 }), newShape);
 
       dragging.move(createEvent({ x: 200, y: 50 }));
       dragging.hover({ element: parentShape, gfx: targetGfx});
