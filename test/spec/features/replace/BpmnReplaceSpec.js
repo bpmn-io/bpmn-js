@@ -740,6 +740,7 @@ describe('features/replace', function() {
 
       // then
       expect(isInterrupting(startEventAfter)).to.be.true;
+      expect(startEventAfter.parent).to.equal(root);
 
     }));
 
@@ -760,6 +761,7 @@ describe('features/replace', function() {
 
       // then
       expect(isInterrupting(startEventAfter)).to.be.true;
+      expect(startEventAfter.parent).to.equal(subProcess);
 
     }));
 
@@ -786,6 +788,7 @@ describe('features/replace', function() {
 
       // then
       expect(startEvent.id).to.equal(startEventAfter.id);
+      expect(startEventAfter.parent).to.equal(eventSubProcess);
 
     }));
 
@@ -808,6 +811,7 @@ describe('features/replace', function() {
 
       // then
       expect(startEventAfter).to.equal(interruptingStartEvent);
+      expect(startEventAfter.parent).to.equal(root);
 
     }));
 
@@ -827,6 +831,7 @@ describe('features/replace', function() {
       })[0];
 
       expect(isInterrupting(replacedStartEvent)).to.be.true;
+      expect(replacedStartEvent.parent).to.equal(subProcess);
     }));
 
 
