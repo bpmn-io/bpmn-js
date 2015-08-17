@@ -70,6 +70,6 @@
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
     "min-dom": "^0.2.0",
-    "object-refs": "^0.1.0"
+    "object-refs": "^0.1.1"
   }
 }
