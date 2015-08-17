@@ -51,7 +51,7 @@
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
     "min-dom": "^0.2.0",
-    "object-refs": "^0.1.0",
+    "object-refs": "^0.1.1",
     "snapsvg": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
   }
 }
