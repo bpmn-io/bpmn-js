@@ -1,11 +1,7 @@
 'use strict';
 
 function createKeyEvent(element, code, ctrlKey) {
-  var e = document.createEvent('Events');
-
-  if (e.initEvent) {
-    e.initEvent(event, true, true);
-  }
+  var e = document.createEvent('Events') || new document.defaultView.CustomEvent('keyEvent');
 
   e.keyCode = code;
   e.which = code;
