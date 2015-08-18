@@ -84,67 +84,60 @@ describe('features/label-support - Label', function() {
 
   });
 
+
   describe('moving', function() {
 
-    it('should move with labelTarget', inject(function(move, dragging) {
-      // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+    describe('should move with labelTarget', function() {
 
-      dragging.move(Event.create({ x: 300, y: 275 }));
-      dragging.end();
+      it('execute', inject(function(move, dragging) {
+        // when
+        move.start(Event.create({ x: 225, y: 275 }), childShape);
 
-      // then
-      expect(label.x).to.eql(235);
-      expect(label.y).to.eql(230);
-    }));
+        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.end();
 
-
-    it('should move with labelTarget -> undo', inject(function(move, dragging, commandStack) {
-      // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
-
-      dragging.move(Event.create({ x: 300, y: 275 }));
-      dragging.end();
-
-      commandStack.undo();
-
-      // then
-      expect(label.x).to.eql(160);
-      expect(label.y).to.eql(230);
-    }));
+        // then
+        expect(label.x).to.eql(235);
+        expect(label.y).to.eql(230);
+      }));
 
 
-    it('should move with labelTarget -> redo', inject(function(move, dragging, commandStack) {
-      // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      it('undo', inject(function(move, dragging, commandStack) {
+        // when
+        move.start(Event.create({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 300, y: 275 }));
-      dragging.end();
+        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.end();
 
-      commandStack.undo();
+        commandStack.undo();
 
-      commandStack.redo();
-
-      // then
-      expect(label.x).to.eql(235);
-      expect(label.y).to.eql(230);
-    }));
+        // then
+        expect(label.x).to.eql(160);
+        expect(label.y).to.eql(230);
+      }));
 
 
-    it('should not be inside move collection', inject(function(move, dragging) {
-      // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      it('redo', inject(function(move, dragging, commandStack) {
+        // when
+        move.start(Event.create({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 225, y: 150 }));
+        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.end();
 
-      var ctx = dragging.active().data.context;
+        commandStack.undo();
 
-      // then
-      expect(ctx.shapes).to.not.include(label);
-    }));
+        commandStack.redo();
+
+        // then
+        expect(label.x).to.eql(235);
+        expect(label.y).to.eql(230);
+      }));
+
+    });
 
 
-    it('should not be inside move collection', inject(function(move, dragging) {
+    it('should keep on top of labelTarget', inject(function(move, dragging) {
+
       // when
       move.start(Event.create({ x: 225, y: 275 }), childShape);
 
@@ -159,6 +152,7 @@ describe('features/label-support - Label', function() {
     }));
 
   });
+
 
   describe('visuals', function() {
 
@@ -202,7 +196,6 @@ describe('features/label-support - Label', function() {
       // then
       expect(children).to.have.lengthOf(2);
     }));
-
 
   });
 
