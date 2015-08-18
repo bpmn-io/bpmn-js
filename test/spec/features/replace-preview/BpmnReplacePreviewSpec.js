@@ -17,7 +17,7 @@ describe('features/replace-preview', function() {
 
   var testModules = [ replacePreviewModule, modelingModule, coreModule ];
 
-  var diagramXML = require('./BpmnReplacePreview.bpmn');
+  var diagramXML = require('../../../fixtures/bpmn/event-sub-processes.bpmn');
 
   var startEvent_1,
       rootElement,
