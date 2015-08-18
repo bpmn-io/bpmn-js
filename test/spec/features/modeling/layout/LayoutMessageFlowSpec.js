@@ -28,7 +28,6 @@ describe('features/modeling - layout message flows', function() {
     modeling.moveElements([ taskShape ], { x: 30, y: 20 });
 
     // then
-
     // expect cropped, repaired manhattan connection
     expect(messageFlowConnection.waypoints).eql([
       { original: { x: 420, y: 234 }, x: 420, y: 234 },
@@ -72,7 +71,7 @@ describe('features/modeling - layout message flows', function() {
     // expect cropped, repaired manhattan connection
     expect(messageFlowConnection.waypoints).eql([
       { original: { x: 671, y: 214 }, x: 671, y: 214 },
-      { original: { x: 671, y: 465 }, x: 671, y: 465 }
+      { original: { x: 771, y: 465 }, x: 771, y: 465 }
     ]);
 
   }));
