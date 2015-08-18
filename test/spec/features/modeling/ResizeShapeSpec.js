@@ -2,6 +2,7 @@
 
 /* global bootstrapDiagram, inject */
 
+var pick = require('lodash/object/pick');
 
 var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeBounds,
     Events = require('../../../util/Events'),
@@ -15,6 +16,11 @@ var layoutModule = {
   connectionDocking: [ 'type', require('../../../../lib/layout/CroppingConnectionDocking') ]
 };
 
+var getNewAttachPoint = require('../../../../lib/util/AttachUtil').getNewAttachPoint;
+
+function bounds(b) {
+  return pick(b, [ 'x', 'y', 'width', 'height' ]);
+}
 
 describe('features/modeling - resize shape', function() {
 
@@ -43,7 +49,7 @@ describe('features/modeling - resize shape', function() {
 
       shape1 = elementFactory.createShape({
         id: 'shape1',
-        x: 50, y: 100, 
+        x: 50, y: 100,
         width: 100, height: 100
       });
 
@@ -52,7 +58,7 @@ describe('features/modeling - resize shape', function() {
       shape2 = elementFactory.createShape({
         id: 'shape2',
         resizable: true,
-        x: 200, y: 100, 
+        x: 200, y: 100,
         width: 100, height: 100
       });
 
@@ -144,7 +150,7 @@ describe('features/modeling - resize shape', function() {
           }
       });
 
-      // when 
+      // when
       modeling.resizeShape(shape1, { x: 50, y: 100, width: 50, height: 100 });
 
       //then
@@ -172,7 +178,8 @@ describe('features/modeling - resize shape', function() {
     }));
 
 
-    it('should customize childrenBoxPadding on shape resize', inject(function(canvas, elementFactory, resize, dragging, eventBus) {
+    it('should customize childrenBoxPadding on shape resize',
+      inject(function(canvas, elementFactory, resize, dragging, eventBus) {
 
       // given
       var padding = 30;
@@ -192,6 +199,141 @@ describe('features/modeling - resize shape', function() {
       var childrenBoxPadding = parentShape.width - (getBBox.x + getBBox.width);
 
       expect(childrenBoxPadding).to.equal(padding);
+    }));
+
+  });
+
+  describe('connections', function() {
+
+    var rootShape, parentShape, shapeA, shapeB, connectionA, connectionB;
+
+    beforeEach(inject(function(elementFactory, canvas, elementRegistry, modeling) {
+
+      rootShape = elementFactory.createRoot({
+        id: 'root'
+      });
+
+      canvas.setRootElement(rootShape);
+
+      parentShape = elementFactory.createShape({
+        id: 'parent',
+        resizable: true,
+        x: 400, y: 50,
+        width: 450, height: 450
+      });
+
+      canvas.addShape(parentShape, rootShape);
+
+      shapeA = elementFactory.createShape({
+        id: 'shapeA',
+        resizable: true,
+        x: 100, y: 100,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(shapeA, rootShape);
+
+      shapeB = elementFactory.createShape({
+        id: 'shapeB',
+        x: 1100, y: 300,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(shapeB, rootShape);
+
+      connectionA = elementFactory.createConnection({
+        id: 'connectionA',
+        waypoints: [
+          { x: 150, y: 150 },
+          { x: 425, y: 475, original: { x: 425, y: 475 } }
+        ],
+        source: shapeA,
+        target: parentShape
+      });
+
+      canvas.addConnection(connectionA, rootShape);
+
+      connectionB = elementFactory.createConnection({
+        id: 'connectionB',
+        waypoints: [
+          { x: 825, y: 75, original: { x: 825, y: 75 } },
+          { x: 1150, y: 350 }
+        ],
+        source: parentShape,
+        target: shapeB
+      });
+
+      canvas.addConnection(connectionB, rootShape);
+    }));
+
+    it('should update anchors on incoming connections after resize', inject(function(modeling) {
+      // given
+      var parentOldBounds,
+          parentNewBounds,
+          resultWaypoints;
+
+      parentOldBounds = bounds(parentShape);
+
+      parentNewBounds = { x: 400, y: 50, width: 350, height: 350 };
+
+      // when
+      modeling.resizeShape(parentShape, parentNewBounds);
+
+      resultWaypoints = getNewAttachPoint({ x: 425, y: 475 }, parentOldBounds, parentNewBounds);
+
+      expect(connectionA.waypoints[1].original).to.eql(resultWaypoints);
+    }));
+
+
+    it('should update anchors on outgoing connections after resize', inject(function(modeling) {
+      // given
+      var parentOldBounds,
+          parentNewBounds,
+          resultWaypoints;
+
+      parentOldBounds = bounds(parentShape);
+
+      parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
+
+      // when
+      modeling.resizeShape(parentShape, parentNewBounds);
+
+      resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
+
+      expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
+    }));
+
+
+   it('should update anchors on incoming connections after resize (undo)',
+    inject(function(modeling, commandStack) {
+      // when
+      modeling.resizeShape(parentShape, { x: 400, y: 50, width: 350, height: 350 });
+
+      commandStack.undo();
+
+      expect(connectionA.waypoints[1].original).to.eql({ x: 425, y: 475 });
+    }));
+
+
+   it('should update anchors on outgoing connections after resize (undo -> redo)',
+    inject(function(modeling, commandStack) {
+      var parentOldBounds,
+          parentNewBounds,
+          resultWaypoints;
+
+      parentOldBounds = bounds(parentShape);
+
+      parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
+
+      // when
+      modeling.resizeShape(parentShape, parentNewBounds);
+
+      resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
+
+      commandStack.undo();
+      commandStack.redo();
+
+      expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
     }));
 
   });
@@ -376,7 +518,7 @@ describe('features/modeling - resize shape', function() {
 
   });
 
-  
+
   describe('error handling', function () {
 
     var rootShape, shape1, shape2;
@@ -391,7 +533,7 @@ describe('features/modeling - resize shape', function() {
 
       shape1 = elementFactory.createShape({
         id: 'shape1',
-        x: 50, y: 100, 
+        x: 50, y: 100,
         width: 100, height: 100
       });
 
@@ -399,16 +541,16 @@ describe('features/modeling - resize shape', function() {
 
       shape2 = elementFactory.createShape({
         id: 'shape2',
-        x: 50, y: 250, 
+        x: 50, y: 250,
         width: 100, height: 100
       });
 
       canvas.addShape(shape2, rootShape);
     }));
 
-    
+
     it('should throw error when there are missing properties', inject(function(modeling) {
-      
+
       // when
       function resize() {
         return modeling.resizeShape(shape2, { width: 150, height: 150 });

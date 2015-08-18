@@ -3,7 +3,8 @@
 /* global bootstrapDiagram, inject */
 
 
-var pick = require('lodash/object/pick');
+var pick = require('lodash/object/pick'),
+    map = require('lodash/collection/map');
 
 var modelingModule = require('../../../../lib/features/modeling');
 
@@ -109,8 +110,9 @@ describe('features/modeling - move shape', function() {
 
       // then
       // update parent
-      expect(connection.waypoints).to.eql([
-        { x : 140, y : 180 }, { x : 250, y : 160 }
+      expect(connection.waypoints).to.deep.equal([
+        { x: 140, y: 180, original: { x: 130, y: 170 } },
+        { x: 250, y: 160 }
       ]);
     }));
 

@@ -5,6 +5,7 @@
 
 var modelingModule = require('../../../../lib/features/modeling');
 
+var map = require('lodash/collection/map');
 
 describe('features/modeling - layout connection', function() {
 

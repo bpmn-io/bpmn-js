@@ -31,7 +31,6 @@ describe('layout/LayoutUtil', function() {
 
   });
 
-
   describe('#getOrientation', function() {
 
     // a rectangle 100,100 -> 200,200

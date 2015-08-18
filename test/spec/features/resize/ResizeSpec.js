@@ -10,7 +10,6 @@ var resizeModule = require('../../../../lib/features/resize'),
     rulesModule = require('./rules'),
     selectModule = require('../../../../lib/features/selection');
 
-
 function bounds(b) {
   return pick(b, [ 'x', 'y', 'width', 'height' ]);
 }
@@ -20,9 +19,15 @@ describe('features/resize - Resize', function() {
   beforeEach(bootstrapDiagram({ modules: [ resizeModule, rulesModule, selectModule ] }));
 
 
-  var shape, gfx;
+  var shape, gfx, rootShape;
 
   beforeEach(inject(function(canvas, elementFactory, elementRegistry) {
+    rootShape = elementFactory.createRoot({
+      id: 'root'
+    });
+
+    canvas.setRootElement(rootShape);
+
     var s = elementFactory.createShape({
       id: 'c1',
       resizable: true, // checked by our rules
@@ -97,6 +102,28 @@ describe('features/resize - Resize', function() {
       expect(shapeBounds).to.eql({ x: 100, y: 100, width: 10, height: 10 });
     }));
 
+    it('should resize to minimum bounds', inject(function(canvas, resize, dragging, elementFactory) {
+
+      // given
+      var shape = elementFactory.createShape({
+        id: 'shapeA',
+        resizable: 'always',
+        x: 100, y: 100, width: 100, height: 100
+      });
+
+      shape = canvas.addShape(shape);
+
+      // when
+      resize.activate(createEvent({ x: 0, y: 0 }), shape, 'se');
+      dragging.move(createEvent({ x: -99, y: -99 }));
+      dragging.end();
+
+      // then
+      var shapeBounds = pick(shape, ['x', 'y', 'width', 'height']);
+
+      expect(shapeBounds).to.eql({ x: 100, y: 100, width: 10, height: 10 });
+    }));
+
 
     it('should not resize due to rules', inject(function(resize, canvas, dragging, elementFactory) {
 
@@ -144,7 +171,6 @@ describe('features/resize - Resize', function() {
     }));
 
   });
-
 
   describe('frame', function() {
 
