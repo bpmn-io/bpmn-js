@@ -10,7 +10,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
 
-describe('features/modeling - remove behavior', function() {
+describe('features/modeling - remove participant behavior', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
