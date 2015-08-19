@@ -8,13 +8,12 @@ var assign = require('lodash/object/assign'),
     pick = require('lodash/object/pick');
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    moveModule = require('../../../../lib/features/move'),
-    rulesModule = require('./rules');
+    moveModule = require('../../../../lib/features/move');
 
 
 describe('features/move - Move', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ moveModule, rulesModule, modelingModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ moveModule, modelingModule ] }));
 
   var Event;
 
@@ -70,14 +69,6 @@ describe('features/move - Move', function() {
     canvas.addConnection(connection, parentShape);
   }));
 
-
-  describe('bootstrap', function() {
-
-    it('should bootstrap diagram with component', inject(function() {}));
-
-  });
-
-
   describe('event centering', function() {
 
     it('should emit events relative to shape center', inject(function(eventBus, move, dragging) {
@@ -116,102 +107,6 @@ describe('features/move - Move', function() {
     }));
 
   });
-
-
-  describe('style integration via <djs-dragging>', function() {
-
-    it('should append class to shape + outgoing connections', inject(function(move, dragging, elementRegistry) {
-
-      // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
-
-      // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-
-      // then
-      expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).to.equal(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
-    }));
-
-
-    it('should append class to shape + incoming connections', inject(function(move, dragging, elementRegistry) {
-
-      // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape2);
-
-      // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-
-      // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
-    }));
-
-
-    it('should remove class on drag end', inject(function(move, dragging, elementRegistry) {
-
-      // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape2);
-
-      // when
-      dragging.move(Event.create({ x: 30, y: 30 }));
-      dragging.end();
-
-      // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(false);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(false);
-    }));
-
-  });
-
-
-  describe('drop markup', function() {
-
-    it('should indicate drop allowed', inject(function(move, dragging, elementRegistry) {
-
-      // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
-
-      // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-      dragging.hover(Event.create({ x: 20, y: 20 }, {
-        element: parentShape,
-        gfx: elementRegistry.getGraphics(parentShape)
-      }));
-
-      dragging.move(Event.create({ x: 22, y: 22 }));
-
-      // then
-      var ctx = dragging.active();
-      expect(ctx.data.context.canExecute).to.equal(true);
-
-      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).to.equal(true);
-    }));
-
-
-    it('should indicate drop not allowed', inject(function(move, dragging, elementRegistry) {
-
-      // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
-
-      // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-      dragging.hover(Event.create({ x: 20, y: 20 }, {
-        element: childShape,
-        gfx: elementRegistry.getGraphics(childShape)
-      }));
-
-      dragging.move(Event.create({ x: 22, y: 22 }));
-
-      // then
-      var ctx = dragging.active();
-      expect(ctx.data.context.canExecute).to.equal(false);
-
-      expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).to.equal(true);
-    }));
-
-  });
-
 
   describe('modeling', function() {
 
