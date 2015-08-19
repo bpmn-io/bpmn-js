@@ -12,7 +12,7 @@ var coreModule = require('../../../../lib/core'),
     createModule = require('diagram-js/lib/features/create'),
     resizeModule = require('diagram-js/lib/features/resize'),
     moveModule = require('diagram-js/lib/features/move'),
-    rulesModule = require('../../../../lib/features/modeling/rules');
+    rulesModule = require('../../../../lib/features/rules');
 
 var pick = require('lodash/object/pick');
 

@@ -8,8 +8,8 @@ var expectCanConnect = Helper.expectCanConnect,
 
 /* global bootstrapModeler, inject */
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('../../../../lib/features/modeling'),
+    coreModule = require('../../../../lib/core');
 
 
 describe('features/modeling/rules - BpmnRules', function() {
@@ -545,7 +545,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event move', function() {
 
-    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
 
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
@@ -638,7 +638,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event create', function() {
 
-    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
 
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
@@ -731,7 +731,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event append', function() {
 
-    var testXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
 
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
