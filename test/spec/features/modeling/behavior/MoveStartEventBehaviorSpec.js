@@ -11,7 +11,7 @@ var replacePreviewModule = require('../../../../../lib/features/replace-preview'
 var is = require('../../../../../lib/util/ModelUtil').is,
     Events = require('diagram-js/test/util/Events');
 
-describe.only('features/modeling - move start event behavior', function() {
+describe('features/modeling - move start event behavior', function() {
 
   var testModules = [ replacePreviewModule, modelingModule, coreModule ];
 
@@ -60,6 +60,36 @@ describe.only('features/modeling - move start event behavior', function() {
 
     // then
     expect(selection.get()).to.include(replacement);
+    expect(selection.get()).not.to.include(startEvent);
+
+  }));
+
+
+  it('should select all moved shapes after some of them got replaced',
+    inject(function(elementRegistry, canvas, dragging, move, selection) {
+
+    // given
+    var startEvent1 = elementRegistry.get('StartEvent_1'),
+        startEvent2 = elementRegistry.get('StartEvent_2'),
+        startEvent3 = elementRegistry.get('StartEvent_3'),
+        rootElement = canvas.getRootElement();
+
+    // when
+    selection.select([ startEvent1, startEvent2, startEvent3 ]);
+    moveShape(startEvent1, rootElement, { x: 140, y: 250 });
+
+    dragging.end();
+
+    var replacements = elementRegistry.filter(function(element) {
+      if(is(element, 'bpmn:StartEvent') && element.type !== 'label') {
+        return true;
+      }
+    });
+
+    // then
+    expect(selection.get()).to.include(replacements[0]);
+    expect(selection.get()).to.include(replacements[1]);
+    expect(selection.get()).to.include(replacements[2]);
 
   }));
 
