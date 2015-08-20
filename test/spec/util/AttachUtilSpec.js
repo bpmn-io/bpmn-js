@@ -79,7 +79,7 @@ describe('AttachUtil', function() {
       };
 
       // then
-      expect(AttachUtil.getNewAttachPoint(point, oldBounds, newBounds)).to.eql({ x: 25.5, y: 10 });
+      expect(AttachUtil.getNewAttachPoint(point, oldBounds, newBounds)).to.eql({ x: 26, y: 10 });
     });
 
   });

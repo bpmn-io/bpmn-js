@@ -10,7 +10,8 @@ var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeB
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    resizeModule = require('../../../../lib/features/resize');
+    resizeModule = require('../../../../lib/features/resize'),
+    attachModule = require('../../../../lib/features/attach-support');
 
 var layoutModule = {
   connectionDocking: [ 'type', require('../../../../lib/layout/CroppingConnectionDocking') ]
@@ -24,7 +25,7 @@ function bounds(b) {
 
 describe('features/modeling - resize shape', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, layoutModule, resizeModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ modelingModule, layoutModule, resizeModule, attachModule ] }));
 
 
   describe('basics', function() {
@@ -561,5 +562,7 @@ describe('features/modeling - resize shape', function() {
     }));
 
   });
+
+
 
 });

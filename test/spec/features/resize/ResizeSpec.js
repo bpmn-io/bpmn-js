@@ -226,7 +226,8 @@ describe('features/resize - Resize', function() {
 
   describe('rule integration', function() {
 
-    it('should add resize handles only if allowed', inject(function(canvas, elementFactory, elementRegistry, selection) {
+    it('should add resize handles only if allowed',
+      inject(function(canvas, elementFactory, elementRegistry, selection) {
 
       // given
       var s = elementFactory.createShape({

@@ -4,11 +4,14 @@ var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
+var pick = require('lodash/object/pick');
 
 var attachSupportModule = require('../../../../lib/features/attach-support'),
     modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
     rulesModule = require('./rules');
+
+var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAttachShapeDelta;
 
 
 describe('features/attach-support', function() {
@@ -1176,5 +1179,119 @@ describe('features/attach-support', function() {
     }));
 
   });
+
+  describe('attachers', function() {
+
+    var rootShape, host, attacher;
+
+    beforeEach(inject(function(elementFactory, canvas, elementRegistry, modeling) {
+
+      host = elementFactory.createShape({
+        id: 'host',
+        resizable: true,
+        x: 200, y: 50,
+        width: 400, height: 400
+      });
+
+      canvas.addShape(host, rootShape);
+
+      attacher = elementFactory.createShape({
+        id: 'attacher',
+        host: host,
+        x: 250, y: 400,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(attacher, rootShape);
+    }));
+
+
+    it('should move attachers after resize', inject(function(modeling) {
+      // given
+      var oldPosition = pick(attacher, [ 'x', 'y' ]),
+          newPosition,
+          delta;
+
+      var oldBounds = {
+        x: 200, y: 50,
+        width: 400, height: 400
+      };
+
+      var newBounds = {
+        x: 250, y: 50,
+        width: 350, height: 350
+      };
+
+      delta = getNewAttachShapeDelta(attacher, oldBounds, newBounds);
+
+      // when
+      modeling.resizeShape(host, newBounds);
+
+      newPosition = pick(attacher, [ 'x', 'y' ]);
+
+      // then
+      expect(newPosition).to.eql({
+        x: oldPosition.x + delta.x,
+        y: oldPosition.y + delta.y
+      });
+    }));
+
+
+    it('should move attachers after resize (undo)', inject(function(modeling, commandStack) {
+      // given
+      var oldPosition = pick(attacher, [ 'x', 'y' ]),
+          newPosition;
+
+      var newBounds = {
+        x: 250, y: 50,
+        width: 350, height: 350
+      };
+
+      // when
+      modeling.resizeShape(host, newBounds);
+
+      commandStack.undo();
+
+      newPosition = pick(attacher, [ 'x', 'y' ]);
+
+      // then
+      expect(newPosition).to.eql(oldPosition);
+    }));
+
+
+    it('should move attachers after resize (undo -> redo)', inject(function(modeling, commandStack) {
+      // given
+      var oldPosition = pick(attacher, [ 'x', 'y' ]),
+          newPosition,
+          delta;
+
+      var oldBounds = {
+        x: 200, y: 50,
+        width: 400, height: 400
+      };
+
+      var newBounds = {
+        x: 250, y: 50,
+        width: 350, height: 350
+      };
+
+      delta = getNewAttachShapeDelta(attacher, oldBounds, newBounds);
+
+      // when
+      modeling.resizeShape(host, newBounds);
+
+      commandStack.undo();
+      commandStack.redo();
+
+      newPosition = pick(attacher, [ 'x', 'y' ]);
+
+      // then
+      expect(newPosition).to.eql({
+        x: oldPosition.x + delta.x,
+        y: oldPosition.y + delta.y
+      });
+    }));
+
+});
 
 });
