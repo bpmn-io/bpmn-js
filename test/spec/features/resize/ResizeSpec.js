@@ -48,13 +48,13 @@ describe('features/resize - Resize', function() {
 
   describe('handles', function() {
 
-    it('should add on selection', inject(function(selection) {
+    it('should add on selection', inject(function(selection, resizeHandles, canvas) {
 
       // when
       selection.select(shape);
 
       // then
-      var resizeAnchors = gfx.selectAll('.djs-resizer');
+      var resizeAnchors = resizeHandles._getResizersParent().selectAll('.djs-resizer');
 
       expect(resizeAnchors.length).to.equal(4);
     }));
