@@ -330,4 +330,75 @@ describe('resize/ResizeUtil', function() {
 
   });
 
+
+  describe('addPadding', function () {
+
+    var bounds = {
+      x: -50, y: -50, width: 100, height: 100
+    };
+
+    it('should apply padding', function() {
+
+      // when
+      var newBounds = ResizeUtil.addPadding(bounds, 30);
+
+      // then
+      expect(newBounds).to.eql({ x: -80, y: -80, width: 160, height: 160 });
+    });
+
+
+    it('should apply 0 padding', function() {
+
+      // when
+      var newBounds = ResizeUtil.addPadding(bounds, 0);
+
+      // then
+      expect(newBounds).to.eql(bounds);
+    });
+
+
+    it('should apply negative padding', function() {
+
+      // when
+      var newBounds = ResizeUtil.addPadding(bounds, -10);
+
+      // then
+      expect(newBounds).to.eql({ x: -40, y: -40, width: 80, height: 80 });
+    });
+
+
+    it('should apply default padding', function() {
+
+      // when
+      var newBounds = ResizeUtil.addPadding(bounds);
+
+      // then
+      expect(newBounds).to.eql({ x: -70, y: -70, width: 140, height: 140 });
+    });
+
+
+    it('should apply custom padding', function() {
+
+      var padding = {
+        top: 5,
+        bottom: 0,
+        left: -20
+        // intentional no right
+      };
+
+      // when
+      var newBounds = ResizeUtil.addPadding(bounds, padding);
+
+      // then
+      expect(newBounds).to.eql({
+        x: bounds.x - padding.left,
+        y: bounds.y - padding.top,
+        width: bounds.width + padding.left + 20 /* default padding */,
+        height: bounds.height + padding.top + padding.bottom
+      });
+
+    });
+
+  });
+
 });
