@@ -218,4 +218,32 @@ describe('features/modeling - create lanes', function() {
 
   });
 
+
+  function ids(elements) {
+    return elements.map(function(e) { return e.id; });
+  }
+
+  describe('should wrap existing children', function() {
+
+    var diagramXML = require('./nested-lane.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('execute', inject(function(elementRegistry, modeling) {
+
+      // given
+      var nestedLaneShape = elementRegistry.get('Nested_Lane');
+
+      // when
+      var newLaneShape = modeling.createShape({ type: 'bpmn:Lane' }, { x: 180, y: 100 }, nestedLaneShape);
+
+      // then
+      expect(ids(newLaneShape.children)).to.eql([ 'Task_Boundary', 'Task', 'Boundary' ]);
+    }));
+
+  });
+
 });
