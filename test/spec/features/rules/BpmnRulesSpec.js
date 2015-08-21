@@ -884,7 +884,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('should resize', function() {
 
-      it('Lane', inject(function(bpmnRules) {
+      it('Lane', inject(function(bpmnRules, elementRegistry) {
 
         // given
         var laneElement = elementRegistry.get('Lane');
