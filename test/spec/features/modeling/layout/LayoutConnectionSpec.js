@@ -33,6 +33,7 @@ describe('features/modeling - layout connection', function() {
 
       // expect cropped, repaired connection
       // that was not actually modified
+
       var waypoints = [
         { original: { x: 578, y: 341 }, x: 578, y: 341 },
         { x: 934, y: 341 },
