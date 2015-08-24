@@ -242,10 +242,10 @@ describe('layout/ManhattanLayout', function() {
         // expect
         // layouted h:h
         expectConnection(connection, [
-          {"original":{"x":150,"y":150},"x":200,"y":150},
-          {"x":215,"y":150},
-          {"x":215,"y":25},
-          {"original":{"x":255,"y":25},"x":230,"y":25}
+          { original: { x: 150, y: 150 }, x: 200, y: 150 },
+          { x: 215, y: 150},
+          { x: 215, y: 25},
+          { original: { x: 255, y: 25 }, x: 230, y: 25 }
         ]);
       });
 
@@ -263,10 +263,10 @@ describe('layout/ManhattanLayout', function() {
         // expect
         // still layouted v:v due to tolerance
         expectConnection(connection, [
-          {"original":{"x":150,"y":150},"x":150,"y":100},
-          {"x":150,"y":75},
-          {"x":210,"y":75},
-          {"original":{"x":210,"y":25},"x":210,"y":50}
+          { original: { x: 150, y: 150}, x: 150, y: 100 },
+          { x: 150, y: 75 },
+          { x: 210, y: 75 },
+          { original: { x: 210, y: 25 }, x: 210, y: 50 }
         ]);
       });
 
@@ -284,9 +284,9 @@ describe('layout/ManhattanLayout', function() {
         // expect
         // layouted h:h
         expectConnection(connection, [
-          {"x":150,"y":150},
-          {"x":150,"y":25},
-          {"x":255,"y":25}
+          { x: 150, y: 150 },
+          { x: 150, y: 25 },
+          { x: 255, y: 25 }
         ]);
       });
 
@@ -304,11 +304,12 @@ describe('layout/ManhattanLayout', function() {
         // expect
         // layouted h:h
         expectConnection(connection, [
-          {"x":150,"y":150},
-          {"x":255,"y":150},
-          {"x":255,"y":25}
+          { x: 150, y: 150 },
+          { x: 255, y: 150 },
+          { x: 255, y: 25 }
         ]);
       });
+
     });
 
   });
@@ -396,9 +397,8 @@ describe('layout/ManhattanLayout', function() {
         // then
         expect(repaired).to.eql([
           { x: 150, y: 150 },
-          { x: 350, y: 150 }
+          { x: 350, y: 150, original: { x: 350, y: 150 } }
         ]);
-
       });
 
 
@@ -416,9 +416,8 @@ describe('layout/ManhattanLayout', function() {
         // then
         expect(repaired).to.eql([
           { x: 150, y: 150 },
-          { x: 150, y: 350 }
+          { x: 150, y: 350, original: { x: 150, y: 350 }  }
         ]);
-
       });
 
     });
