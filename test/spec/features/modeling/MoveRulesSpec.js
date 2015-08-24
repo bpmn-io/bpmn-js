@@ -9,7 +9,7 @@ var coreModule = require('../../../../lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
     snappingModule = require('../../../../lib/features/snapping');
 
-var Events = require('diagram-js/test/util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 
 describe('features/modeling - move', function() {
@@ -21,8 +21,6 @@ describe('features/modeling - move', function() {
   beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
   beforeEach(inject(function(dragging, canvas) {
-    createEvent = Events.scopedCreate(canvas);
-
     dragging.setOptions({ manual: true });
   }));
 
@@ -30,7 +28,6 @@ describe('features/modeling - move', function() {
     dragging.setOptions({ manual: false });
   }));
 
-  var createEvent;
 
   it('should not attach label when moving BoundaryEvent', inject(function(elementRegistry, move, dragging) {
     // given
@@ -39,14 +36,14 @@ describe('features/modeling - move', function() {
         label = boundaryEvent.label;
 
     // when
-    move.start(createEvent({ x: 190, y: 355 }), boundaryEvent);
+    move.start(canvasEvent({ x: 190, y: 355 }), boundaryEvent);
 
     dragging.hover({
       element: subProcess,
       gfx: elementRegistry.getGraphics(subProcess)
     });
 
-    dragging.move(createEvent({ x: 220, y: 240 }));
+    dragging.move(canvasEvent({ x: 220, y: 240 }));
     dragging.end();
 
     // then
@@ -68,14 +65,14 @@ describe('features/modeling - move', function() {
     // when
     selection.select([ boundaryEvent, label ]);
 
-    move.start(createEvent({ x: 190, y: 355 }), boundaryEvent);
+    move.start(canvasEvent({ x: 190, y: 355 }), boundaryEvent);
 
     dragging.hover({
       element: subProcess,
       gfx: elementRegistry.getGraphics(subProcess)
     });
 
-    dragging.move(createEvent({ x: 220, y: 240 }));
+    dragging.move(canvasEvent({ x: 220, y: 240 }));
     dragging.end();
 
     // then
@@ -95,13 +92,13 @@ describe('features/modeling - move', function() {
         root = canvas.getRootElement();
 
     // when
-    move.start(createEvent({ x: 190, y: 355 }), subProcess);
+    move.start(canvasEvent({ x: 190, y: 355 }), subProcess);
 
     dragging.hover({
       element: root,
       gfx: elementRegistry.getGraphics(root)
     });
-    dragging.move(createEvent({ x: 290, y: 455 }));
+    dragging.move(canvasEvent({ x: 290, y: 455 }));
     dragging.end();
 
     // then
@@ -127,13 +124,13 @@ describe('features/modeling - move', function() {
     // when
     selection.select([ boundaryEvent, label, subProcess ]);
 
-    move.start(createEvent({ x: 190, y: 355 }), subProcess);
+    move.start(canvasEvent({ x: 190, y: 355 }), subProcess);
 
     dragging.hover({
       element: root,
       gfx: elementRegistry.getGraphics(root)
     });
-    dragging.move(createEvent({ x: 290, y: 455 }));
+    dragging.move(canvasEvent({ x: 290, y: 455 }));
     dragging.end();
 
     // then

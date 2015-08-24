@@ -9,7 +9,8 @@ var replacePreviewModule = require('../../../../../lib/features/replace-preview'
     coreModule = require('../../../../../lib/core');
 
 var is = require('../../../../../lib/util/ModelUtil').is,
-    Events = require('diagram-js/test/util/Events');
+    canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
+
 
 describe('features/modeling - move start event behavior', function() {
 
@@ -17,25 +18,23 @@ describe('features/modeling - move start event behavior', function() {
 
   var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
 
-  var Event,
-      moveShape;
+  var moveShape;
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-  beforeEach(inject(function(canvas, move, dragging, elementRegistry) {
-    Event = Events.target(canvas._svg);
+  beforeEach(inject(function(move, dragging, elementRegistry) {
 
     moveShape = function(shape, target, position) {
       var startPosition = { x: shape.x + 10 + shape.width / 2, y: shape.y + 30 + shape.height/2 };
 
-      move.start(Event.create(startPosition), shape);
+      move.start(canvasEvent(startPosition), shape);
 
       dragging.hover({
         element: target,
         gfx: elementRegistry.getGraphics(target)
       });
 
-      dragging.move(Event.create(position));
+      dragging.move(canvasEvent(position));
     };
   }));
 

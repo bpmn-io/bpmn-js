@@ -8,7 +8,7 @@ var replacePreviewModule = require('../../../../lib/features/replace-preview'),
     modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
-var Events = require('diagram-js/test/util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var assign = require('lodash/object/assign');
 
@@ -29,8 +29,6 @@ describe('features/replace-preview', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
   beforeEach(inject(function(canvas, elementRegistry, elementFactory, move, dragging) {
-
-    Event = Events.target(canvas._svg);
 
     startEvent_1 = elementRegistry.get('StartEvent_1');
     rootElement = canvas.getRootElement();
@@ -59,14 +57,14 @@ describe('features/replace-preview', function() {
     moveShape = function(shape, target, position) {
       var startPosition = { x: shape.x + 10 + (shape.width / 2), y: shape.y + 30 + (shape.height / 2) };
 
-      move.start(Event.create(startPosition), shape);
+      move.start(canvasEvent(startPosition), shape);
 
       dragging.hover({
         element: target,
         gfx: elementRegistry.getGraphics(target)
       });
 
-      dragging.move(Event.create(position));
+      dragging.move(canvasEvent(position));
     };
 
   }));

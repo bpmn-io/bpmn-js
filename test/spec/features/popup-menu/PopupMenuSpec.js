@@ -4,7 +4,7 @@
 
 var TestHelper = require('../../../TestHelper');
 
-var Events = require('diagram-js/test/util/Events.js');
+var globalEvent = require('../../../util/MockEvents.js').createEvent;
 
 var coreModule = require('../../../../lib/core'),
     popupMenuModule = require('diagram-js/lib/features/popup-menu'),
@@ -24,6 +24,7 @@ function queryEntry(popupMenu, id) {
 function queryPopup(popupMenu, selector) {
   return domQuery(selector, popupMenu._current.container);
 }
+
 
 describe('features/popup-menu', function() {
 
@@ -112,6 +113,7 @@ describe('features/popup-menu', function() {
 
     });
 
+
     describe('exclusive toggle buttons', function(){
 
       it('should not toggle non exclusive buttons off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
@@ -122,7 +124,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(subProcess);
 
@@ -149,14 +151,14 @@ describe('features/popup-menu', function() {
 
         var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
-        popupMenu.trigger(Events.create(parallelEntry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(parallelEntry, { x: 0, y: 0 }));
 
         // toggle ad hoc on
         openPopup(subProcess);
 
         var adHocEntry = queryEntry(popupMenu, 'toggle-adhoc');
 
-        var adHocSubProcess = popupMenu.trigger(Events.create(adHocEntry, { x: 0, y: 0 }));
+        var adHocSubProcess = popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
 
         openPopup(adHocSubProcess);
 
@@ -183,7 +185,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -205,7 +207,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -228,7 +230,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -249,7 +251,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -273,7 +275,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-sequential-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -295,7 +297,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-sequential-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -318,7 +320,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-sequential-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -339,7 +341,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-sequential-mi');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -363,7 +365,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-loop');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -385,7 +387,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-loop');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -407,7 +409,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-loop');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -428,7 +430,7 @@ describe('features/popup-menu', function() {
         var entry = queryEntry(popupMenu, 'toggle-loop');
 
         // when
-        popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
         openPopup(task);
 
@@ -456,7 +458,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the task with a send task
-      var sendTask = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var sendTask = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(sendTask.businessObject.loopCharacteristics).to.be.defined;
@@ -477,7 +479,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the task with a call activity
-      var callActivity = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var callActivity = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(callActivity.businessObject.loopCharacteristics).to.be.defined;
@@ -498,7 +500,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the expanded sub process with a transaction
-      var transaction = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var transaction = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(transaction)).to.equal(isExpanded(subProcess));
@@ -517,7 +519,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the transaction with an expanded sub process
-      var subProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
@@ -538,7 +540,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the transaction with an event sub process
-      var subProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
@@ -557,7 +559,7 @@ describe('features/popup-menu', function() {
 
       // when
       // replacing the transaction with an expanded sub process
-      var eventSubProcess = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(isExpanded(eventSubProcess)).to.equal(isExpanded(transaction));

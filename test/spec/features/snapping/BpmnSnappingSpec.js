@@ -4,7 +4,7 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var Events = require('diagram-js/test/util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var coreModule = require('../../../../lib/core'),
     snappingModule = require('../../../../lib/features/snapping'),
@@ -32,7 +32,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-    var task, intermediateThrowEvent, createEvent;
+    var task, intermediateThrowEvent;
 
     beforeEach(inject(function(elementFactory, elementRegistry, canvas, dragging) {
       task = elementRegistry.get('Task_1');
@@ -42,8 +42,6 @@ describe('features/snapping - BpmnSnapping', function() {
       });
 
       dragging.setOptions({ manual: true });
-
-      createEvent = Events.scopedCreate(canvas);
     }));
 
     afterEach(inject(function(dragging) {
@@ -57,11 +55,11 @@ describe('features/snapping - BpmnSnapping', function() {
       var taskGfx = canvas.getGraphics(task);
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+      create.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
       dragging.hover({ element: task, gfx: taskGfx });
 
-      dragging.move(createEvent({ x: 382, y: 170 }));
+      dragging.move(canvasEvent({ x: 382, y: 170 }));
       dragging.end();
 
       var boundaryEvent = elementRegistry.get(task.attachers[0].id);
@@ -78,11 +76,11 @@ describe('features/snapping - BpmnSnapping', function() {
       var taskGfx = canvas.getGraphics(task);
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+      create.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
       dragging.hover({ element: task, gfx: taskGfx });
 
-      dragging.move(createEvent({ x: 382, y: 115 }));
+      dragging.move(canvasEvent({ x: 382, y: 115 }));
       dragging.end();
 
       var boundaryEvent = elementRegistry.get(task.attachers[0].id);
@@ -93,6 +91,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
   });
 
+
   describe('on Participant create', function() {
 
     describe('in non-empty process', function() {
@@ -101,11 +100,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-
-      var createEvent;
-
-      beforeEach(inject(function(canvas, dragging) {
-        createEvent = Events.scopedCreate(canvas);
+      beforeEach(inject(function(dragging) {
         dragging.setOptions({ manual: true });
       }));
 
@@ -119,12 +114,12 @@ describe('features/snapping - BpmnSnapping', function() {
             rootGfx = canvas.getGraphics(rootElement);
 
         // when
-        create.start(createEvent({ x: 50, y: 50 }), participantShape);
+        create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
 
         dragging.hover({ element: rootElement, gfx: rootGfx });
 
-        dragging.move(createEvent({ x: 65, y: 65 }));
-        dragging.end(createEvent({ x: 65, y: 65 }));
+        dragging.move(canvasEvent({ x: 65, y: 65 }));
+        dragging.end(canvasEvent({ x: 65, y: 65 }));
 
         // then
         expect(bounds(participantShape)).to.eql({
@@ -142,12 +137,12 @@ describe('features/snapping - BpmnSnapping', function() {
             rootGfx = canvas.getGraphics(rootElement);
 
         // when
-        create.start(createEvent({ x: 50, y: 50 }), participantShape);
+        create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
 
         dragging.hover({ element: rootElement, gfx: rootGfx });
 
-        dragging.move(createEvent({ x: 400, y: 400 }));
-        dragging.end(createEvent({ x: 400, y: 400 }));
+        dragging.move(canvasEvent({ x: 400, y: 400 }));
+        dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
         expect(bounds(participantShape)).to.eql({
@@ -165,10 +160,7 @@ describe('features/snapping - BpmnSnapping', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      var createEvent;
-
-      beforeEach(inject(function(canvas, dragging) {
-        createEvent = Events.scopedCreate(canvas);
+      beforeEach(inject(function(dragging) {
         dragging.setOptions({ manual: true });
       }));
 
@@ -181,12 +173,12 @@ describe('features/snapping - BpmnSnapping', function() {
             rootGfx = canvas.getGraphics(rootElement);
 
         // when
-        create.start(createEvent({ x: 50, y: 50 }), participantShape);
+        create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
 
         dragging.hover({ element: rootElement, gfx: rootGfx });
 
-        dragging.move(createEvent({ x: 400, y: 400 }));
-        dragging.end(createEvent({ x: 400, y: 400 }));
+        dragging.move(canvasEvent({ x: 400, y: 400 }));
+        dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
         expect(bounds(participantShape)).to.eql({
@@ -204,10 +196,7 @@ describe('features/snapping - BpmnSnapping', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      var createEvent;
-
-      beforeEach(inject(function(canvas, dragging) {
-        createEvent = Events.scopedCreate(canvas);
+      beforeEach(inject(function(dragging) {
         dragging.setOptions({ manual: true });
       }));
 
@@ -220,12 +209,12 @@ describe('features/snapping - BpmnSnapping', function() {
             rootGfx = canvas.getGraphics(rootElement);
 
         // when
-        create.start(createEvent({ x: 50, y: 50 }), participantShape);
+        create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
 
         dragging.hover({ element: rootElement, gfx: rootGfx });
 
-        dragging.move(createEvent({ x: 400, y: 400 }));
-        dragging.end(createEvent({ x: 400, y: 400 }));
+        dragging.move(canvasEvent({ x: 400, y: 400 }));
+        dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
         expect(bounds(participantShape)).to.eql({
@@ -246,12 +235,6 @@ describe('features/snapping - BpmnSnapping', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
 
-    var createEvent;
-
-    beforeEach(inject(function(canvas, dragging) {
-      createEvent = Events.scopedCreate(canvas);
-    }));
-
 
     describe('snap min bounds', function() {
 
@@ -259,8 +242,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_2');
 
-        resize.activate(createEvent({ x: 500, y: 500 }), participant, 'se');
-        dragging.move(createEvent({ x: 0, y: 0 }));
+        resize.activate(canvasEvent({ x: 500, y: 500 }), participant, 'se');
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
         dragging.end();
 
         expect(participant.width).to.equal(497);
@@ -272,8 +255,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_2');
 
-        resize.activate(createEvent({ x: 0, y: 0 }), participant, 'nw');
-        dragging.move(createEvent({ x: 500, y: 500 }));
+        resize.activate(canvasEvent({ x: 0, y: 0 }), participant, 'nw');
+        dragging.move(canvasEvent({ x: 500, y: 500 }));
         dragging.end();
 
         expect(participant.width).to.equal(467);
@@ -285,8 +268,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_1');
 
-        resize.activate(createEvent({ x: 500, y: 500 }), participant, 'se');
-        dragging.move(createEvent({ x: 0, y: 0 }));
+        resize.activate(canvasEvent({ x: 500, y: 500 }), participant, 'se');
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
         dragging.end();
 
         expect(participant.width).to.equal(300);
@@ -298,8 +281,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_1');
 
-        resize.activate(createEvent({ x: 0, y: 0 }), participant, 'nw');
-        dragging.move(createEvent({ x: 500, y: 500 }));
+        resize.activate(canvasEvent({ x: 0, y: 0 }), participant, 'nw');
+        dragging.move(canvasEvent({ x: 500, y: 500 }));
         dragging.end();
 
         expect(participant.width).to.equal(300);
@@ -311,8 +294,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_3');
 
-        resize.activate(createEvent({ x: 500, y: 500 }), participant, 'se');
-        dragging.move(createEvent({ x: 0, y: 0 }));
+        resize.activate(canvasEvent({ x: 500, y: 500 }), participant, 'se');
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
         dragging.end();
 
         expect(participant.width).to.equal(320);
@@ -324,8 +307,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
         var participant = elementRegistry.get('Participant_3');
 
-        resize.activate(createEvent({ x: 0, y: 0 }), participant, 'nw');
-        dragging.move(createEvent({ x: 500, y: 500 }));
+        resize.activate(canvasEvent({ x: 0, y: 0 }), participant, 'nw');
+        dragging.move(canvasEvent({ x: 500, y: 500 }));
         dragging.end();
 
         expect(participant.width).to.equal(353);
@@ -339,8 +322,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var subProcess = elementRegistry.get('SubProcess_1');
 
-      resize.activate(createEvent({ x: 453, y: 624 }), subProcess, 'se');
-      dragging.move(createEvent({ x: -453, y: -624 }));
+      resize.activate(canvasEvent({ x: 453, y: 624 }), subProcess, 'se');
+      dragging.move(canvasEvent({ x: -453, y: -624 }));
       dragging.end();
 
       expect(subProcess.width).to.equal(140);
@@ -352,8 +335,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var participant = elementRegistry.get('Participant_1');
 
-      resize.activate(createEvent({ x: 614, y: 310 }), participant, 'se');
-      dragging.move(createEvent({ x: -614, y: -310 }));
+      resize.activate(canvasEvent({ x: 614, y: 310 }), participant, 'se');
+      dragging.move(canvasEvent({ x: -614, y: -310 }));
       dragging.end();
 
       expect(participant.width).to.equal(300);
@@ -365,8 +348,8 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var textAnnotation = elementRegistry.get('TextAnnotation_1');
 
-      resize.activate(createEvent({ x: 592, y: 452 }), textAnnotation, 'se');
-      dragging.move(createEvent({ x: -592, y: -452 }));
+      resize.activate(canvasEvent({ x: 592, y: 452 }), textAnnotation, 'se');
+      dragging.move(canvasEvent({ x: -592, y: -452 }));
       dragging.end();
 
       expect(textAnnotation.width).to.equal(50);

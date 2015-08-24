@@ -136,7 +136,8 @@ describe('Modeler', function() {
 
   describe('bendpoint editing support', function() {
 
-    var Events = require('diagram-js/test/util/Events');
+    var createEvent = require('../util/MockEvents').createEvent;
+
 
     it('should allow to edit bendpoints', function(done) {
 
@@ -148,14 +149,14 @@ describe('Modeler', function() {
         var bendpointMove = viewer.get('bendpointMove'),
             dragging = viewer.get('dragging'),
             elementRegistry = viewer.get('elementRegistry'),
-            createEvent = Events.scopedCreate(viewer.get('canvas'));
+            canvas = viewer.get('canvas');
 
         // assume
         expect(bendpointMove).to.be.defined;
 
         // when
-        bendpointMove.start(createEvent({ x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
-        dragging.move(createEvent({ x: 200, y: 200 }));
+        bendpointMove.start(createEvent(canvas, { x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
+        dragging.move(createEvent(canvas, { x: 200, y: 200 }));
 
         done(err);
       });
