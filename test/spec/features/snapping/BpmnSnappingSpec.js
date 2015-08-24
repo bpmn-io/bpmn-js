@@ -34,7 +34,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
     var task, intermediateThrowEvent;
 
-    beforeEach(inject(function(elementFactory, elementRegistry, canvas, dragging) {
+    beforeEach(inject(function(elementFactory, elementRegistry, dragging) {
       task = elementRegistry.get('Task_1');
 
       intermediateThrowEvent = elementFactory.createShape({
@@ -229,16 +229,16 @@ describe('features/snapping - BpmnSnapping', function() {
 
   describe('on Participant resize', function () {
 
-    var diagramXML = require('./BpmnSnapping.collaboration-resize.bpmn');
-
-    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
-
-
     describe('snap min bounds', function() {
 
-      it('should snap to children from <se>', inject(function(canvas, elementRegistry, resize, dragging) {
+      var diagramXML = require('./BpmnSnapping.participant-resize.bpmn');
+
+      var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
+
+
+      it('should snap to children from <se>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_2');
 
@@ -251,7 +251,7 @@ describe('features/snapping - BpmnSnapping', function() {
       }));
 
 
-      it('should snap to children from <nw>', inject(function(canvas, elementRegistry, resize, dragging) {
+      it('should snap to children from <nw>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_2');
 
@@ -264,7 +264,7 @@ describe('features/snapping - BpmnSnapping', function() {
       }));
 
 
-      it('should snap to min dimensions from <se>', inject(function(canvas, elementRegistry, resize, dragging) {
+      it('should snap to min dimensions from <se>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_1');
 
@@ -277,7 +277,7 @@ describe('features/snapping - BpmnSnapping', function() {
       }));
 
 
-      it('should snap to min dimensions from <nw>', inject(function(canvas, elementRegistry, resize, dragging) {
+      it('should snap to min dimensions from <nw>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_1');
 
@@ -290,7 +290,7 @@ describe('features/snapping - BpmnSnapping', function() {
       }));
 
 
-      it('should snap to min dimensions + children from <se>', inject(function(canvas, elementRegistry, resize, dragging) {
+      it('should snap to min dimensions + children from <se>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_3');
 
@@ -299,11 +299,13 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end();
 
         expect(participant.width).to.equal(320);
-        expect(participant.height).to.equal(150);
+
+        // snap to children rather than min dimensions
+        expect(participant.height).to.equal(143);
       }));
 
 
-      it('should snap to min dimensions + children from <nw>', inject(function(canvas, elementRegistry, resize, dragging) {
+      it('should snap to min dimensions + children from <nw>', inject(function(elementRegistry, resize, dragging) {
 
         var participant = elementRegistry.get('Participant_3');
 
@@ -318,38 +320,86 @@ describe('features/snapping - BpmnSnapping', function() {
     });
 
 
-    it('should snap a SubProcess to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
+    describe('snap child lanes', function() {
 
-      var subProcess = elementRegistry.get('SubProcess_1');
+      var diagramXML = require('./BpmnSnapping.lanes-resize.bpmn');
 
-      resize.activate(canvasEvent({ x: 453, y: 624 }), subProcess, 'se');
-      dragging.move(canvasEvent({ x: -453, y: -624 }));
+      var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
+
+
+      it('should snap to child lanes from <nw>', inject(function(elementRegistry, resize, dragging) {
+
+        var participant = elementRegistry.get('Participant');
+
+        resize.activate(canvasEvent({ x: 0, y: 0 }), participant, 'nw');
+        dragging.move(canvasEvent({ x: 500, y: 500 }));
+        dragging.end();
+
+        expect(participant.width).to.equal(600);
+        expect(participant.height).to.equal(250);
+      }));
+
+
+      it('should snap to nested child lanes from <se>', inject(function(elementRegistry, resize, dragging) {
+
+        var lane = elementRegistry.get('Lane_B_0');
+
+        resize.activate(canvasEvent({ x: 0, y: 0 }), lane, 'se');
+        dragging.move(canvasEvent({ x: -500, y: -500 }));
+        dragging.end();
+
+        expect(lane.width).to.equal(570);
+        expect(lane.height).to.equal(118);
+      }));
+
+    });
+
+  });
+
+
+  describe('on SubProcess resize', function() {
+
+
+    var diagramXML = require('./BpmnSnapping.subProcess-resize.bpmn');
+
+    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
+
+
+    it('should snap to minimum bounds', inject(function(elementRegistry, resize, dragging) {
+
+      var subProcess = elementRegistry.get('SubProcess');
+
+      resize.activate(canvasEvent({ x: 0, y: 0 }), subProcess, 'se');
+      dragging.move(canvasEvent({ x: -400, y: -400 }));
       dragging.end();
 
       expect(subProcess.width).to.equal(140);
       expect(subProcess.height).to.equal(120);
     }));
 
-
-    it('should snap a Participant to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
-
-      var participant = elementRegistry.get('Participant_1');
-
-      resize.activate(canvasEvent({ x: 614, y: 310 }), participant, 'se');
-      dragging.move(canvasEvent({ x: -614, y: -310 }));
-      dragging.end();
-
-      expect(participant.width).to.equal(300);
-      expect(participant.height).to.equal(150);
-    }));
+  });
 
 
-    it('should snap a TextAnnotation to minimum bounds', inject(function(canvas, elementRegistry, resize, dragging) {
+  describe('on TextAnnotation resize', function() {
 
-      var textAnnotation = elementRegistry.get('TextAnnotation_1');
 
-      resize.activate(canvasEvent({ x: 592, y: 452 }), textAnnotation, 'se');
-      dragging.move(canvasEvent({ x: -592, y: -452 }));
+    var diagramXML = require('./BpmnSnapping.textAnnotation-resize.bpmn');
+
+    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
+
+
+    it('should snap a TextAnnotation to minimum bounds', inject(function(elementRegistry, resize, dragging) {
+
+      var textAnnotation = elementRegistry.get('TextAnnotation');
+
+      resize.activate(canvasEvent({ x: 0, y: 0 }), textAnnotation, 'se');
+      dragging.move(canvasEvent({ x: -400, y: -400 }));
       dragging.end();
 
       expect(textAnnotation.width).to.equal(50);

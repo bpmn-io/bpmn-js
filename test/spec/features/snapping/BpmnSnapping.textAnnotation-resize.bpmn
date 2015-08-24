@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process">
+    <bpmn:task id="Task" />
+    <bpmn:textAnnotation id="TextAnnotation" />
+    <bpmn:association id="Association" sourceRef="Task" targetRef="TextAnnotation" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="101" y="191" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_di" bpmnElement="TextAnnotation">
+        <dc:Bounds x="322" y="126" width="121" height="112" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
+        <di:waypoint xsi:type="dc:Point" x="201" y="220" />
+        <di:waypoint xsi:type="dc:Point" x="322" y="195" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant" name="Participant" processRef="Process" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_A" name="Lane_A" />
+      <bpmn:lane id="Lane_B_0" name="Lane_B_0">
+        <bpmn:childLaneSet xsi:type="bpmn:tLaneSet">
+          <bpmn:lane id="Lane_B_1" name="Lane_B_1" />
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent" />
+    <bpmn:task id="Task" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant">
+        <dc:Bounds x="123" y="49" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_di" bpmnElement="StartEvent">
+        <dc:Bounds x="210" y="96" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="183" y="132" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_A_di" bpmnElement="Lane_A">
+        <dc:Bounds x="153" y="49" width="570" height="132" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_B_0_di" bpmnElement="Lane_B_0">
+        <dc:Bounds x="153" y="181" width="570" height="118" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="345.84507042253523" y="203.42637644046096" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_B_1_di" bpmnElement="Lane_B_1">
+        <dc:Bounds x="183" y="181" width="540" height="118" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
