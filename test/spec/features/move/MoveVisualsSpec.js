@@ -2,7 +2,7 @@
 
 /* global bootstrapDiagram, inject */
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
@@ -13,16 +13,8 @@ describe('features/move - MoveVisuals', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ moveModule, rulesModule, modelingModule ] }));
 
-  var Event;
-
   beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
     dragging.setOptions({ manual: true });
-  }));
-
-  afterEach(inject(function(dragging) {
-    dragging.setOptions({ manual: false });
   }));
 
 
@@ -73,10 +65,10 @@ describe('features/move - MoveVisuals', function() {
     it('should append class to shape + outgoing connections', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape);
 
       // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
       expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).to.equal(true);
@@ -87,10 +79,10 @@ describe('features/move - MoveVisuals', function() {
     it('should append class to shape + incoming connections', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape2);
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape2);
 
       // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
       expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(true);
@@ -101,10 +93,10 @@ describe('features/move - MoveVisuals', function() {
     it('should remove class on drag end', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape2);
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape2);
 
       // when
-      dragging.move(Event.create({ x: 30, y: 30 }));
+      dragging.move(canvasEvent({ x: 30, y: 30 }));
       dragging.end();
 
       // then
@@ -120,16 +112,16 @@ describe('features/move - MoveVisuals', function() {
     it('should indicate drop allowed', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape);
 
       // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-      dragging.hover(Event.create({ x: 20, y: 20 }, {
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
+      dragging.hover(canvasEvent({ x: 20, y: 20 }, {
         element: parentShape,
         gfx: elementRegistry.getGraphics(parentShape)
       }));
 
-      dragging.move(Event.create({ x: 22, y: 22 }));
+      dragging.move(canvasEvent({ x: 22, y: 22 }));
 
       // then
       var ctx = dragging.active();
@@ -142,16 +134,16 @@ describe('features/move - MoveVisuals', function() {
     it('should indicate drop not allowed', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 10, y: 10 }), childShape);
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape);
 
       // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
-      dragging.hover(Event.create({ x: 20, y: 20 }, {
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
+      dragging.hover(canvasEvent({ x: 20, y: 20 }, {
         element: childShape,
         gfx: elementRegistry.getGraphics(childShape)
       }));
 
-      dragging.move(Event.create({ x: 22, y: 22 }));
+      dragging.move(canvasEvent({ x: 22, y: 22 }));
 
       // then
       var ctx = dragging.active();

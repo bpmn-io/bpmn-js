@@ -1,6 +1,6 @@
 'use strict';
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -14,16 +14,8 @@ describe('features/label-support - Label', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ labelSupportModule, modelingModule, rulesModule ] }));
 
-  var Event;
-
   beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
     dragging.setOptions({ manual: true });
-  }));
-
-  afterEach(inject(function(dragging) {
-    dragging.setOptions({ manual: false });
   }));
 
 
@@ -91,9 +83,9 @@ describe('features/label-support - Label', function() {
 
       it('execute', inject(function(move, dragging) {
         // when
-        move.start(Event.create({ x: 225, y: 275 }), childShape);
+        move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.move(canvasEvent({ x: 300, y: 275 }));
         dragging.end();
 
         // then
@@ -104,9 +96,9 @@ describe('features/label-support - Label', function() {
 
       it('undo', inject(function(move, dragging, commandStack) {
         // when
-        move.start(Event.create({ x: 225, y: 275 }), childShape);
+        move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.move(canvasEvent({ x: 300, y: 275 }));
         dragging.end();
 
         commandStack.undo();
@@ -119,9 +111,9 @@ describe('features/label-support - Label', function() {
 
       it('redo', inject(function(move, dragging, commandStack) {
         // when
-        move.start(Event.create({ x: 225, y: 275 }), childShape);
+        move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-        dragging.move(Event.create({ x: 300, y: 275 }));
+        dragging.move(canvasEvent({ x: 300, y: 275 }));
         dragging.end();
 
         commandStack.undo();
@@ -139,9 +131,9 @@ describe('features/label-support - Label', function() {
     it('should keep on top of labelTarget', inject(function(move, dragging) {
 
       // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 225, y: 150 }));
+      dragging.move(canvasEvent({ x: 225, y: 150 }));
       dragging.end();
 
       var labelIdx = parentShape.children.indexOf(label),
@@ -160,9 +152,9 @@ describe('features/label-support - Label', function() {
       var labelGfx = elementRegistry.getGraphics(label);
 
       // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 225, y: 150 }));
+      dragging.move(canvasEvent({ x: 225, y: 150 }));
 
       // then
       expect(labelGfx.hasClass('djs-dragging')).to.be.true;
@@ -172,9 +164,9 @@ describe('features/label-support - Label', function() {
     it('should remove marker', inject(function(elementRegistry, move, dragging) {
 
       // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 225, y: 150 }));
+      dragging.move(canvasEvent({ x: 225, y: 150 }));
       dragging.end();
 
       var labelGfx = elementRegistry.getGraphics(label);
@@ -185,9 +177,9 @@ describe('features/label-support - Label', function() {
 
     it('should be inside dragGroup', inject(function(elementRegistry, move, dragging) {
       // when
-      move.start(Event.create({ x: 225, y: 275 }), childShape);
+      move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
-      dragging.move(Event.create({ x: 225, y: 150 }));
+      dragging.move(canvasEvent({ x: 225, y: 150 }));
 
       var ctx = dragging.active().data.context;
 

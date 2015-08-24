@@ -1,6 +1,6 @@
 'use strict';
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -15,16 +15,8 @@ describe('features/move - Move', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ moveModule, modelingModule ] }));
 
-  var Event;
-
   beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
     dragging.setOptions({ manual: true });
-  }));
-
-  afterEach(inject(function(dragging) {
-    dragging.setOptions({ manual: false });
   }));
 
 
@@ -69,6 +61,7 @@ describe('features/move - Move', function() {
     canvas.addConnection(connection, parentShape);
   }));
 
+
   describe('event centering', function() {
 
     it('should emit events relative to shape center', inject(function(eventBus, move, dragging) {
@@ -94,9 +87,9 @@ describe('features/move - Move', function() {
 
 
       // when
-      move.start(Event.create({ x: 0, y: 0 }), childShape);
+      move.start(canvasEvent({ x: 0, y: 0 }), childShape);
 
-      dragging.move(Event.create({ x: 20, y: 20 }));
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
       expect(events.map(position)).to.eql([
@@ -113,16 +106,16 @@ describe('features/move - Move', function() {
     it('should round movement to pixels', inject(function(move, dragging, elementRegistry) {
 
       // given
-      move.start(Event.create({ x: 0, y: 0 }), childShape);
+      move.start(canvasEvent({ x: 0, y: 0 }), childShape);
 
       // when
-      dragging.move(Event.create({ x: 20, y: 20 }));
+      dragging.move(canvasEvent({ x: 20, y: 20 }));
       dragging.hover({
         element: parentShape,
         gfx: elementRegistry.getGraphics(parentShape)
       });
 
-      dragging.move(Event.create({ x: 30.4, y: 99.7 }));
+      dragging.move(canvasEvent({ x: 30.4, y: 99.7 }));
 
       dragging.end();
 

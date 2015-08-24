@@ -1,7 +1,7 @@
 'use strict';
 
 
-var Events = require('../../../util/Events');
+var globalEvent = require('../../../util/MockEvents').createEvent;
 
 
 
@@ -209,7 +209,7 @@ describe('features/context-pad', function() {
           html = pad.html,
           target = domQuery('[data-action="action.c"]', html);
 
-      var event = Events.create(target, { x: 0, y: 0 });
+      var event = globalEvent(target, { x: 0, y: 0 });
 
       // when
       contextPad.trigger('click', event);
@@ -230,7 +230,7 @@ describe('features/context-pad', function() {
           html = pad.html,
           target = domQuery('[data-action="action.c"]', html);
 
-      var event = Events.create(target, { x: 0, y: 0 });
+      var event = globalEvent(target, { x: 0, y: 0 });
 
       // when
       contextPad.trigger('dragstart', event);
@@ -251,7 +251,7 @@ describe('features/context-pad', function() {
           html = pad.html,
           target = domQuery('[data-action="action.dragstart"]', html);
 
-      var event = Events.create(target, { x: 0, y: 0 });
+      var event = globalEvent(target, { x: 0, y: 0 });
 
       // when
       contextPad.trigger('dragstart', event);

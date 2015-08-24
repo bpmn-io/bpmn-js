@@ -10,7 +10,7 @@ var TestContainer = require('mocha-test-container-support');
 var Diagram = require('../../lib/Diagram'),
     domEvent = require('min-dom/lib/event');
 
-var OPTIONS, DIAGRAM;
+var OPTIONS, DIAGRAM_JS;
 
 
 /**
@@ -84,7 +84,7 @@ function bootstrapDiagram(options, locals) {
 
     _options.modules = unique([].concat(_options.modules || [], [ mockModule ]));
 
-    DIAGRAM = new Diagram(_options);
+    DIAGRAM_JS = new Diagram(_options);
   };
 }
 
@@ -113,11 +113,11 @@ function bootstrapDiagram(options, locals) {
 function inject(fn) {
   return function() {
 
-    if (!DIAGRAM) {
+    if (!DIAGRAM_JS) {
       throw new Error('no bootstraped diagram, ensure you created it via #bootstrapDiagram');
     }
 
-    DIAGRAM.invoke(fn);
+    DIAGRAM_JS.invoke(fn);
   };
 }
 
@@ -148,7 +148,7 @@ function insertCSS(name, css) {
 module.exports.insertCSS = insertCSS;
 
 module.exports.getDiagramJS = function() {
-  return DIAGRAM;
+  return DIAGRAM_JS;
 };
 
 function DomEventTracker() {

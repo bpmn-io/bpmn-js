@@ -2,7 +2,7 @@
 
 require('../../../TestHelper');
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -20,11 +20,6 @@ describe('features/bendpoints - move', function() {
     dragging.setOptions({ manual: true });
   }));
 
-  var createEvent;
-
-  beforeEach(inject(function(canvas) {
-    createEvent = Events.scopedCreate(canvas);
-  }));
 
   var rootShape, shape1, shape2, shape3, connection, connection2;
 
@@ -88,8 +83,8 @@ describe('features/bendpoints - move', function() {
       var layer = canvas.getLayer('overlays');
 
       // when
-      bendpointMove.start(createEvent({ x: 0, y: 0 }), connection, 2);
-      dragging.move(createEvent({ x: 400, y: 200 }));
+      bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 400, y: 200 }));
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
@@ -103,8 +98,8 @@ describe('features/bendpoints - move', function() {
       var layer = canvas.getLayer('overlays');
 
       // when
-      bendpointMove.start(createEvent({ x: 0, y: 0 }), connection, 1);
-      dragging.move(createEvent({ x: 100, y: 100 }));
+      bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+      dragging.move(canvasEvent({ x: 100, y: 100 }));
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
@@ -118,8 +113,8 @@ describe('features/bendpoints - move', function() {
       var layer = canvas.getLayer('overlays');
 
       // when
-      bendpointMove.start(createEvent({ x: 0, y: 0 }), connection, 2);
-      dragging.move(createEvent({ x: 100, y: 100 }));
+      bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 100, y: 100 }));
 
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
       dragging.cancel();
@@ -133,18 +128,18 @@ describe('features/bendpoints - move', function() {
     it('should connect-hover and out', inject(function(canvas, bendpointMove, dragging) {
 
       // when
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 2);
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
-      dragging.move(createEvent({ x: 550, y: 150 }));
+      dragging.move(canvasEvent({ x: 550, y: 150 }));
       dragging.out();
       dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
-      dragging.move(createEvent({ x: 530, y: 120 }));
+      dragging.move(canvasEvent({ x: 530, y: 120 }));
       dragging.out();
       dragging.hover({ element: shape3, gfx: canvas.getGraphics(shape3) });
-      dragging.move(createEvent({ x: 530, y: 420 }));
+      dragging.move(canvasEvent({ x: 530, y: 420 }));
       dragging.out();
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
-      dragging.move(createEvent({ x: 610, y: 310 }));
+      dragging.move(canvasEvent({ x: 610, y: 310 }));
 
       // then
       var hoverNodes = canvas._svg.node.querySelectorAll('.connect-hover, .connect-ok, .connect-not-ok');
@@ -161,10 +156,10 @@ describe('features/bendpoints - move', function() {
     it('should live-check hover (allowed)', inject(function(canvas, bendpointMove, dragging) {
 
       // when
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 2);
-      dragging.move(createEvent({ x: 550, y: 150 }));
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
+      dragging.move(canvasEvent({ x: 550, y: 150 }));
       dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
-      dragging.move(createEvent({ x: 530, y: 120 }));
+      dragging.move(canvasEvent({ x: 530, y: 120 }));
 
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-ok');
@@ -177,10 +172,10 @@ describe('features/bendpoints - move', function() {
     it('should live-check hover (rejected)', inject(function(canvas, bendpointMove, dragging) {
 
       // when
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 2);
-      dragging.move(createEvent({ x: 550, y: 450 }));
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
+      dragging.move(canvasEvent({ x: 550, y: 450 }));
       dragging.hover({ element: shape3, gfx: canvas.getGraphics(shape3) });
-      dragging.move(createEvent({ x: 530, y: 420 }));
+      dragging.move(canvasEvent({ x: 530, y: 420 }));
 
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-not-ok');
@@ -197,10 +192,10 @@ describe('features/bendpoints - move', function() {
     it('should update bendpoint', inject(function(canvas, bendpointMove, dragging) {
 
       // when
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 1);
-      dragging.move(createEvent({ x: 450, y: 430 }));
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 1);
+      dragging.move(canvasEvent({ x: 450, y: 430 }));
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
-      dragging.move(createEvent({ x: 530, y: 420 }));
+      dragging.move(canvasEvent({ x: 530, y: 420 }));
       dragging.end();
 
       // then
@@ -211,10 +206,10 @@ describe('features/bendpoints - move', function() {
     it('should round to pixel values', inject(function(canvas, bendpointMove, dragging) {
 
       // when
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 1);
-      dragging.move(createEvent({ x: 450, y: 430 }));
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 1);
+      dragging.move(canvasEvent({ x: 450, y: 430 }));
       dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
-      dragging.move(createEvent({ x: 530.3, y: 419.8 }));
+      dragging.move(canvasEvent({ x: 530.3, y: 419.8 }));
       dragging.end();
 
       // then
@@ -225,9 +220,9 @@ describe('features/bendpoints - move', function() {
     it('should reattach target', inject(function(canvas, bendpointMove, dragging) {
 
       // given
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 2);
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
       dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
-      dragging.move(createEvent({ x: 530, y: 120 }));
+      dragging.move(canvasEvent({ x: 530, y: 120 }));
 
       // when
       dragging.end();
@@ -240,9 +235,9 @@ describe('features/bendpoints - move', function() {
     it('should reattach source', inject(function(canvas, bendpointMove, dragging) {
 
       // given
-      bendpointMove.start(createEvent({ x: 500, y: 500 }), connection, 0);
+      bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 0);
       dragging.hover({ element: shape1, gfx: canvas.getGraphics(shape1) });
-      dragging.move(createEvent({ x: 230, y: 120 }));
+      dragging.move(canvasEvent({ x: 230, y: 120 }));
 
       // when
       dragging.end();

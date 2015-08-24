@@ -1,6 +1,6 @@
 'use strict';
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -19,11 +19,7 @@ describe('features/attach-support', function() {
   beforeEach(bootstrapDiagram({ modules: [ attachSupportModule, modelingModule, rulesModule, replaceModule ] }));
 
 
-  var Event;
-
-  beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
+  beforeEach(inject(function(dragging) {
     dragging.setOptions({ manual: true });
   }));
 
@@ -220,14 +216,14 @@ describe('features/attach-support', function() {
       var rootGfx = elementRegistry.getGraphics(rootShape);
 
       // when
-      move.start(Event.create({ x: 550, y: 150 }), host);
+      move.start(canvasEvent({ x: 550, y: 150 }), host);
 
       dragging.hover({
         element: rootShape,
         gfx: rootGfx
       });
 
-      dragging.move(Event.create({ x: 700, y: 300 }));
+      dragging.move(canvasEvent({ x: 700, y: 300 }));
       dragging.end();
 
       // then
@@ -252,24 +248,24 @@ describe('features/attach-support', function() {
           parentGfx = elementRegistry.getGraphics(parentShape);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
-      move.start(Event.create({ x: 250, y: 300 }), host2);
+      move.start(canvasEvent({ x: 250, y: 300 }), host2);
 
       dragging.hover({
         element: parentShape,
         gfx: parentGfx
       });
 
-      dragging.move(Event.create({ x: 300, y: 300 }));
+      dragging.move(canvasEvent({ x: 300, y: 300 }));
       dragging.end();
 
       // then
@@ -288,14 +284,14 @@ describe('features/attach-support', function() {
       var host2Gfx = elementRegistry.getGraphics(host2);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
       modeling.moveElements([ host2 ], { x: 300, y: 50 }, rootShape);
@@ -320,14 +316,14 @@ describe('features/attach-support', function() {
       selection.select([ host, attacher, attacher2 ]);
 
       // when
-      move.start(Event.create({ x: 550, y: 150 }), host);
+      move.start(canvasEvent({ x: 550, y: 150 }), host);
 
       dragging.hover({
         element: rootShape,
         gfx: rootGfx
       });
 
-      dragging.move(Event.create({ x: 700, y: 300 }));
+      dragging.move(canvasEvent({ x: 700, y: 300 }));
       dragging.end();
 
       // then
@@ -353,25 +349,25 @@ describe('features/attach-support', function() {
       var host2Gfx = elementRegistry.getGraphics(host2);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
       // when
-      move.start(Event.create({ x: 550, y: 150 }), parentShape);
+      move.start(canvasEvent({ x: 550, y: 150 }), parentShape);
 
       dragging.hover({
         element: rootShape,
         gfx: rootGfx
       });
 
-      dragging.move(Event.create({ x: 700, y: 300 }));
+      dragging.move(canvasEvent({ x: 700, y: 300 }));
       dragging.end();
 
       // then
@@ -388,14 +384,14 @@ describe('features/attach-support', function() {
       var hostGfx = elementRegistry.getGraphics(host);
 
       // when
-      move.start(Event.create({ x: 600, y: 200 }), attacher2);
+      move.start(canvasEvent({ x: 600, y: 200 }), attacher2);
 
       dragging.hover({
         element: host,
         gfx: hostGfx
       });
 
-      dragging.move(Event.create({ x: 100, y: 100 }));
+      dragging.move(canvasEvent({ x: 100, y: 100 }));
 
       // then
       expect(attacher2.x).to.equal(575);
@@ -409,14 +405,14 @@ describe('features/attach-support', function() {
       var parentGfx = elementRegistry.getGraphics(parentShape);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: parentShape,
         gfx: parentGfx
       });
 
-      dragging.move(Event.create({ x: 425, y: 125 }));
+      dragging.move(canvasEvent({ x: 425, y: 125 }));
 
       dragging.end();
 
@@ -437,14 +433,14 @@ describe('features/attach-support', function() {
       var parentGfx = elementRegistry.getGraphics(parentShape);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: parentShape,
         gfx: parentGfx
       });
 
-      dragging.move(Event.create({ x: 425, y: 125 }));
+      dragging.move(canvasEvent({ x: 425, y: 125 }));
       dragging.end();
 
       commandStack.undo();
@@ -464,14 +460,14 @@ describe('features/attach-support', function() {
           hostGfx = elementRegistry.getGraphics(host);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: parentShape,
         gfx: parentGfx
       });
 
-      dragging.move(Event.create({ x: 425, y: 125 }));
+      dragging.move(canvasEvent({ x: 425, y: 125 }));
       dragging.end();
 
       // then
@@ -479,14 +475,14 @@ describe('features/attach-support', function() {
 
 
       // but when ...
-      move.start(Event.create({ x: 700, y: 275 }), attacher);
+      move.start(canvasEvent({ x: 700, y: 275 }), attacher);
 
       dragging.hover({
         element: host,
         gfx: hostGfx
       });
 
-      dragging.move(Event.create({ x: 625, y: 125 }));
+      dragging.move(canvasEvent({ x: 625, y: 125 }));
       dragging.end();
 
       // then
@@ -502,14 +498,14 @@ describe('features/attach-support', function() {
       var host2Gfx = elementRegistry.getGraphics(host2);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
       // then
@@ -524,14 +520,14 @@ describe('features/attach-support', function() {
       var host2Gfx = elementRegistry.getGraphics(host2);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
       commandStack.undo();
@@ -557,14 +553,14 @@ describe('features/attach-support', function() {
       selection.select([ attacher, label ]);
 
       // when
-      move.start(Event.create({ x: 625, y: 125 }), attacher);
+      move.start(canvasEvent({ x: 625, y: 125 }), attacher);
 
       dragging.hover({
         element: host2,
         gfx: host2Gfx
       });
 
-      dragging.move(Event.create({ x: 225, y: 275 }));
+      dragging.move(canvasEvent({ x: 225, y: 275 }));
       dragging.end();
 
       // then
@@ -759,14 +755,14 @@ describe('features/attach-support', function() {
       var hostGfx = elementRegistry.getGraphics(host);
 
       // when
-      move.start(Event.create({ x: 800, y: 100 }), attacher);
+      move.start(canvasEvent({ x: 800, y: 100 }), attacher);
 
       dragging.hover({
         element: host,
         gfx: hostGfx
       });
 
-      dragging.move(Event.create({ x: 575, y: 75 }));
+      dragging.move(canvasEvent({ x: 575, y: 75 }));
 
       var ctx = dragging.active();
 
@@ -781,14 +777,14 @@ describe('features/attach-support', function() {
       var hostGfx = elementRegistry.getGraphics(host);
 
       // when
-      move.start(Event.create({ x: 800, y: 100 }), attacher);
+      move.start(canvasEvent({ x: 800, y: 100 }), attacher);
 
       dragging.hover({
         element: host,
         gfx: hostGfx
       });
 
-      dragging.move(Event.create({ x: 575, y: 75 }));
+      dragging.move(canvasEvent({ x: 575, y: 75 }));
       dragging.end();
 
       // then

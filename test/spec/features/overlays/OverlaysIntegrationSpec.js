@@ -1,12 +1,10 @@
 'use strict';
 
-
 require('../../../TestHelper');
-
-var Events = require('../../../util/Events');
 
 /* global bootstrapDiagram, inject */
 
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var domClasses = require('min-dom/lib/classes'),
     domQuery = require('min-dom/lib/query'),
@@ -32,11 +30,7 @@ describe('features/overlay - integration', function() {
   ] }));
 
 
-  var Event;
-
-  beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
+  beforeEach(inject(function(dragging) {
     dragging.setOptions({ manual: true });
   }));
 
@@ -246,8 +240,8 @@ describe('features/overlay - integration', function() {
       var childOverlayContainer = overlays._getOverlayContainer(child);
 
       // when
-      move.start(Event.create({ x: 10, y: 10 }), parent);
-      dragging.move(Event.create({ x: 20, y: 30 }));
+      move.start(canvasEvent({ x: 10, y: 10 }), parent);
+      dragging.move(canvasEvent({ x: 20, y: 30 }));
 
       // then
       expect(domClasses(parentOverlayContainer.html).has('djs-dragging')).to.be.true;
@@ -279,8 +273,8 @@ describe('features/overlay - integration', function() {
       var childOverlayContainer = overlays._getOverlayContainer(child);
 
       // when
-      move.start(Event.create({ x: 10, y: 10 }), parent);
-      dragging.move(Event.create({ x: 30, y: 30 }));
+      move.start(canvasEvent({ x: 10, y: 10 }), parent);
+      dragging.move(canvasEvent({ x: 30, y: 30 }));
       dragging.end();
 
       // then

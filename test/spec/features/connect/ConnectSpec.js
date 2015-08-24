@@ -1,7 +1,7 @@
 'use strict';
 
 var TestHelper = require('../../../TestHelper'),
-    Events = require('../../../util/Events');
+    canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -15,12 +15,7 @@ describe('features/connect', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, connectModule, rulesModule ] }));
 
-
-  var Event;
-
   beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
     dragging.setOptions({ manual: true });
   }));
 
@@ -64,11 +59,11 @@ describe('features/connect', function() {
     it('should connect if allowed', inject(function(connect, dragging) {
 
       // when
-      connect.start(Event.create({ x: 0, y: 0 }), shape1);
+      connect.start(canvasEvent({ x: 0, y: 0 }), shape1);
 
-      dragging.move(Event.create({ x: 40, y: 30 }));
+      dragging.move(canvasEvent({ x: 40, y: 30 }));
 
-      dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
+      dragging.hover(canvasEvent({ x: 10, y: 10 }, { element: shape2 }));
       dragging.end();
 
       var newConnection = shape1.outgoing[0];
@@ -90,10 +85,10 @@ describe('features/connect', function() {
       expect(rules.allowed('connection.create', context)).to.be.false;
 
       // when
-      connect.start(Event.create({ x: 0, y: 0 }), shape1child);
+      connect.start(canvasEvent({ x: 0, y: 0 }), shape1child);
 
-      dragging.move(Event.create({ x: 40, y: 30 }));
-      dragging.hover(Event.create({ x: 10, y: 10 }, { element: shape2 }));
+      dragging.move(canvasEvent({ x: 40, y: 30 }));
+      dragging.hover(canvasEvent({ x: 10, y: 10 }, { element: shape2 }));
       dragging.end();
 
       // then

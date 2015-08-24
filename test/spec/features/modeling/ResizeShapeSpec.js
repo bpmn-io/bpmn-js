@@ -5,7 +5,7 @@
 var pick = require('lodash/object/pick');
 
 var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeBounds,
-    Events = require('../../../util/Events'),
+    canvasEvent = require('../../../util/MockEvents').createCanvasEvent,
     Elements = require('../../../../lib/util/Elements');
 
 
@@ -170,8 +170,8 @@ describe('features/modeling - resize shape', function() {
         context.minDimensions = { width: 40, height: 60 };
       });
 
-      resize.activate(Events.create(canvas._svg, { x: 300, y: 200 }), shape2, 'se');
-      dragging.move(Events.create(canvas._svg, { x: -90, y: -90 }));
+      resize.activate(canvasEvent({ x: 300, y: 200 }), shape2, 'se');
+      dragging.move(canvasEvent({ x: -90, y: -90 }));
       dragging.end();
 
       expect(shape2.width).to.equal(40);
@@ -193,8 +193,8 @@ describe('features/modeling - resize shape', function() {
 
       var getBBox = Elements.getBBox([shape1, shape2]);
 
-      resize.activate(Events.create(canvas._svg, { x: 300, y: 300 }), parentShape, 'se');
-      dragging.move(Events.create(canvas._svg, { x: -100, y: -100 }));
+      resize.activate(canvasEvent({ x: 300, y: 300 }), parentShape, 'se');
+      dragging.move(canvasEvent({ x: -100, y: -100 }));
       dragging.end();
 
       var childrenBoxPadding = parentShape.width - (getBBox.x + getBBox.width);
@@ -266,6 +266,7 @@ describe('features/modeling - resize shape', function() {
 
       canvas.addConnection(connectionB, rootShape);
     }));
+
 
     it('should update anchors on incoming connections after resize', inject(function(modeling) {
       // given

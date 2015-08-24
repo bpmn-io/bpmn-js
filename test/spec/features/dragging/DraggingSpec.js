@@ -2,7 +2,7 @@
 
 require('../../../TestHelper');
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -26,12 +26,6 @@ describe('Dragging', function() {
 
     beforeEach(inject(function(dragging) {
       dragging.setOptions({ manual: true });
-    }));
-
-    var createEvent;
-
-    beforeEach(inject(function(canvas) {
-      createEvent = Events.scopedCreate(canvas);
     }));
 
 
@@ -60,7 +54,7 @@ describe('Dragging', function() {
     it('should cancel original event on activate', inject(function(dragging) {
 
       // given
-      var event = createEvent({ x: 10, y: 10 });
+      var event = canvasEvent({ x: 10, y: 10 });
 
       // when
       dragging.activate(event, 'foo');
@@ -76,7 +70,7 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', {
+      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', {
         data: { foo: 'BAR' }
       });
 
@@ -95,9 +89,9 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo');
-      dragging.move(createEvent({ x: 30, y: 20 }));
-      dragging.move(createEvent({ x: 5, y: 10 }));
+      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+      dragging.move(canvasEvent({ x: 30, y: 20 }));
+      dragging.move(canvasEvent({ x: 5, y: 10 }));
 
       dragging.cancel();
 
@@ -119,11 +113,11 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // a is active
-      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
+      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
 
       // when
       // activate b
-      dragging.activate(createEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
+      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
 
       // then
       expect(events.map(raw)).to.eql([
@@ -141,9 +135,9 @@ describe('Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(createEvent({ x: 0, y: 0 }), { x: 10, y: 10 }, 'foo');
-      dragging.move(createEvent({ x: 20, y: 10 }));
-      dragging.move(createEvent({ x: -5, y: 0 }));
+      dragging.activate(canvasEvent({ x: 0, y: 0 }), { x: 10, y: 10 }, 'foo');
+      dragging.move(canvasEvent({ x: 20, y: 10 }));
+      dragging.move(canvasEvent({ x: -5, y: 0 }));
 
       dragging.cancel();
 

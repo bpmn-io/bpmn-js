@@ -2,7 +2,7 @@
 
 require('../../../TestHelper');
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
@@ -91,18 +91,12 @@ describe('features/lasso-tool', function() {
       dragging.setOptions({ manual: true });
     }));
 
-    var createEvent;
-
-    beforeEach(inject(function(canvas) {
-      createEvent = Events.scopedCreate(canvas);
-    }));
-
 
     it('should show lasso box', inject(function(lassoTool, canvas, dragging) {
 
       // when
-      lassoTool.activateLasso(createEvent({ x: 100, y: 100 }));
-      dragging.move(createEvent({ x: 200, y: 300 }));
+      lassoTool.activateLasso(canvasEvent({ x: 100, y: 100 }));
+      dragging.move(canvasEvent({ x: 200, y: 300 }));
 
       // then
       expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).to.be.defined;
@@ -112,8 +106,8 @@ describe('features/lasso-tool', function() {
     it('should select after lasso', inject(function(lassoTool, dragging, selection, elementRegistry) {
 
       // when
-      lassoTool.activateLasso(createEvent({ x: 100, y: 100 }));
-      dragging.move(createEvent({ x: 200, y: 300 }));
+      lassoTool.activateLasso(canvasEvent({ x: 100, y: 100 }));
+      dragging.move(canvasEvent({ x: 200, y: 300 }));
       dragging.end();
 
       // then

@@ -7,7 +7,7 @@ var fs = require('fs');
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes');
 
-var Events = require('../../../util/Events');
+var globalEvent = require('../../../util/MockEvents').createEvent;
 
 var popupMenuModule = require('../../../../lib/features/popup-menu'),
     modelingModule = require('../../../../lib/features/modeling'),
@@ -22,6 +22,7 @@ function queryPopup(popupMenu, selector) {
   return domQuery(selector, popupMenu._current.container);
 }
 
+
 describe('features/popup', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ popupMenuModule, commandStack, modelingModule ] }));
@@ -34,6 +35,7 @@ describe('features/popup', function() {
     }));
 
   });
+
 
   describe('#open', function() {
 
@@ -188,7 +190,7 @@ describe('features/popup', function() {
       entry = queryPopup(popupMenu, '.Entry_2');
 
       // when
-      trigger = popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      trigger = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(trigger).to.eql('Entry 2');
@@ -545,7 +547,7 @@ describe('features/popup', function() {
       var entry = queryPopup(popupMenu, '.entry');
 
       // when
-      popupMenu.trigger(Events.create(entry, { x: 0, y: 0 }));
+      popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(actionListener).to.have.been.called;

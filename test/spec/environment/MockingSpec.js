@@ -5,21 +5,21 @@ var TestHelper = require('../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var Events = require('../../../lib/core/EventBus');
+var EventBus = require('../../../lib/core/EventBus');
 
 
 describe('environment/Mocking', function() {
 
-  var mockEvents, bootstrapCalled;
+  var mockEventBus, bootstrapCalled;
 
 
   beforeEach(bootstrapDiagram(function() {
-    mockEvents = new Events();
+    mockEventBus = new EventBus();
 
     bootstrapCalled = true;
 
     return {
-      eventBus: mockEvents
+      eventBus: mockEventBus
     };
   }));
 
@@ -30,7 +30,7 @@ describe('environment/Mocking', function() {
 
   it('should use spy', inject(function(eventBus) {
 
-    expect(eventBus).to.equal(mockEvents);
+    expect(eventBus).to.equal(mockEventBus);
     expect(bootstrapCalled).to.equal(true);
   }));
 

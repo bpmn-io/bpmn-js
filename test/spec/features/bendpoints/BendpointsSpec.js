@@ -2,8 +2,6 @@
 
 require('../../../TestHelper');
 
-var Events = require('../../../util/Events');
-
 /* global bootstrapDiagram, inject */
 
 
@@ -17,15 +15,6 @@ describe('features/bendpoints', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, bendpointsModule, interactionModule, rulesModule ] }));
 
-  /*
-  var Event;
-
-  beforeEach(inject(function(canvas, dragging) {
-    Event = Events.target(canvas._svg);
-
-    dragging.setOptions({ manual: true });
-  }));
-  */
 
   var rootShape, shape1, shape2, shape3, connection, connection2;
 

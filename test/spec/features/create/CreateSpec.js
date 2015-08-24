@@ -4,7 +4,7 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
-var Events = require('../../../util/Events');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
@@ -29,11 +29,7 @@ describe('features/create - Create', function () {
 
   var rootShape, parentShape, childShape, newShape;
 
-  var createEvent;
-
-  beforeEach(inject(function(canvas, dragging, elementRegistry) {
-    createEvent = Events.scopedCreate(canvas);
-
+  beforeEach(inject(function(dragging, elementRegistry) {
     dragging.setOptions({ manual: true });
   }));
 
@@ -78,11 +74,11 @@ describe('features/create - Create', function () {
       var parentGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 125, y: 125 }));
+      dragging.move(canvasEvent({ x: 125, y: 125 }));
       dragging.hover({ element: parentShape, gfx: parentGfx });
-      dragging.move(createEvent({ x: 175, y: 175 }));
+      dragging.move(canvasEvent({ x: 175, y: 175 }));
 
       dragging.end();
 
@@ -101,11 +97,11 @@ describe('features/create - Create', function () {
       var rootGfx = elementRegistry.getGraphics('root');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape, parentShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape, parentShape);
 
-      dragging.move(createEvent({ x: 175, y: 175 }));
+      dragging.move(canvasEvent({ x: 175, y: 175 }));
       dragging.hover({ element: rootShape, gfx: rootGfx });
-      dragging.move(createEvent({ x: 400, y: 200 }));
+      dragging.move(canvasEvent({ x: 400, y: 200 }));
 
       dragging.end();
 
@@ -125,11 +121,11 @@ describe('features/create - Create', function () {
       var childShapeGfx = elementRegistry.getGraphics('childShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 150, y: 350 }));
+      dragging.move(canvasEvent({ x: 150, y: 350 }));
       dragging.hover({ element: childShape, gfx: childShapeGfx });
-      dragging.move(createEvent({ x: 200, y: 350 }));
+      dragging.move(canvasEvent({ x: 200, y: 350 }));
 
       dragging.end();
 
@@ -146,9 +142,9 @@ describe('features/create - Create', function () {
     it('should add visuals', inject(function(create, elementRegistry, dragging) {
 
       // when
-      create.start(createEvent({ x: 50, y: 50 }), newShape);
+      create.start(canvasEvent({ x: 50, y: 50 }), newShape);
 
-      dragging.move(createEvent({ x: 50, y: 50 }));
+      dragging.move(canvasEvent({ x: 50, y: 50 }));
 
       var ctx = dragging.active();
 
@@ -161,11 +157,11 @@ describe('features/create - Create', function () {
       var parentGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 50, y: 50 }), newShape);
+      create.start(canvasEvent({ x: 50, y: 50 }), newShape);
 
-      dragging.move(createEvent({ x: 100, y: 100 }));
+      dragging.move(canvasEvent({ x: 100, y: 100 }));
       dragging.hover({ element: parentShape, gfx: parentGfx});
-      dragging.move(createEvent({ x: 150, y: 150 }));
+      dragging.move(canvasEvent({ x: 150, y: 150 }));
 
       var ctx = dragging.active();
 
@@ -185,11 +181,11 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('rootShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 50, y: 25 }));
+      dragging.move(canvasEvent({ x: 50, y: 25 }));
       dragging.hover({ element: rootShape, gfx: targetGfx});
-      dragging.move(createEvent({ x: 50, y: 50 }));
+      dragging.move(canvasEvent({ x: 50, y: 50 }));
 
       dragging.end();
 
@@ -202,11 +198,11 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 200, y: 50 }));
+      dragging.move(canvasEvent({ x: 200, y: 50 }));
       dragging.hover({ element: parentShape, gfx: targetGfx});
-      dragging.move(createEvent({ x: 200, y: 225 }));
+      dragging.move(canvasEvent({ x: 200, y: 225 }));
 
       expect(canvas.hasMarker(parentShape, 'drop-ok')).to.be.true;
     }));
@@ -217,11 +213,11 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('rootShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 50, y: 25 }));
+      dragging.move(canvasEvent({ x: 50, y: 25 }));
       dragging.hover({ element: rootShape, gfx: targetGfx});
-      dragging.move(createEvent({ x: 50, y: 50 }));
+      dragging.move(canvasEvent({ x: 50, y: 50 }));
 
       expect(canvas.hasMarker(rootShape, 'drop-not-ok')).to.be.true;
     }));
@@ -232,11 +228,11 @@ describe('features/create - Create', function () {
       var hostGfx = elementRegistry.getGraphics('childShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 150, y: 350 }));
+      dragging.move(canvasEvent({ x: 150, y: 350 }));
       dragging.hover({ element: childShape, gfx: hostGfx });
-      dragging.move(createEvent({ x: 200, y: 350 }));
+      dragging.move(canvasEvent({ x: 200, y: 350 }));
 
       expect(canvas.hasMarker(childShape, 'attach-ok')).to.be.true;
     }));
@@ -247,11 +243,11 @@ describe('features/create - Create', function () {
       var targetGfx = elementRegistry.getGraphics('parentShape');
 
       // when
-      create.start(createEvent({ x: 0, y: 0 }), newShape);
+      create.start(canvasEvent({ x: 0, y: 0 }), newShape);
 
-      dragging.move(createEvent({ x: 200, y: 50 }));
+      dragging.move(canvasEvent({ x: 200, y: 50 }));
       dragging.hover({ element: parentShape, gfx: targetGfx});
-      dragging.move(createEvent({ x: 200, y: 225 }));
+      dragging.move(canvasEvent({ x: 200, y: 225 }));
 
       var hasMarker = canvas.hasMarker(parentShape, 'drop-ok');
 
