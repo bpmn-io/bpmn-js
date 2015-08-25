@@ -9,7 +9,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
 
-describe('features/modeling - create lanes', function() {
+describe('features/modeling - lanes', function() {
 
 
   describe('should add to participant', function() {

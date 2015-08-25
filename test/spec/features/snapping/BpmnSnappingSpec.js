@@ -338,7 +338,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end();
 
         expect(participant.width).to.equal(600);
-        expect(participant.height).to.equal(250);
+        expect(participant.height).to.equal(254);
       }));
 
 

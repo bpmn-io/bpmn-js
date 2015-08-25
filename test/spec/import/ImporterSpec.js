@@ -13,34 +13,26 @@ var Diagram = require('diagram-js/lib/Diagram'),
     Viewer = require('../../../lib/Viewer');
 
 
-var is = require('../../../lib/util/ModelUtil').is;
-
 describe('import - Importer', function() {
 
-  var moddle = new BpmnModdle();
-
-  var container;
-
-  beforeEach(function() {
-    container = TestContainer.get(this);
-  });
-
-
-  function createDiagram() {
+  function createDiagram(container, modules) {
     return new Diagram({
       canvas: { container: container },
-      modules: Viewer.prototype._modules
+      modules: modules
     });
   }
 
   var diagram;
 
   beforeEach(function() {
-    diagram = createDiagram();
+    diagram = createDiagram(TestContainer.get(this), Viewer.prototype._modules);
   });
 
 
   function runImport(diagram, xml, done) {
+
+    var moddle = new BpmnModdle();
+
     moddle.fromXML(xml, function(err, definitions) {
       if (err) {
         return done(err);
@@ -152,8 +144,67 @@ describe('import - Importer', function() {
 
         done(err);
       });
+
     });
 
+  });
+
+
+  describe('position', function() {
+
+    var xml = require('../../fixtures/bpmn/import/position/position-testcase.bpmn');
+
+    it('should round shape\'s x and y coordinates', function(done) {
+
+      // given
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml, function(err, warnings) {
+
+        //round up
+        expect(events.ID_End.x).to.equal(Math.round(340.6));
+        expect(events.ID_End.y).to.equal(Math.round(136.6));
+
+        //round down
+        expect(events.ID_Start.x).to.equal(Math.round(120.4));
+        expect(events.ID_Start.y).to.equal(Math.round(135.4));
+
+        done(err);
+      });
+    });
+
+
+    it('should round shape\'s height and width', function(done) {
+
+      // given
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml, function(err, warnings) {
+
+        //round down
+        expect(events.ID_Start.height).to.equal(Math.round(30.4));
+        expect(events.ID_Start.width).to.equal(Math.round(30.4));
+
+        done(err);
+      });
+    });
+
+  });
+
+
+  describe('elements', function() {
 
     it('should import boundary events', function(done) {
 
@@ -186,135 +237,6 @@ describe('import - Importer', function() {
 
         done(err);
       });
-    });
-  });
-
-
-  describe('model wiring', function() {
-
-    describe('basics', function() {
-
-      var xml = require('../../fixtures/bpmn/import/process.bpmn');
-
-      beforeEach(bootstrapViewer(xml));
-
-
-      it('should wire root element', inject(function(elementRegistry, canvas) {
-
-        // when
-        var processElement = elementRegistry.get('Process_1');
-        var subProcessShape = elementRegistry.get('SubProcess_1');
-
-        // then
-        expect(subProcessShape.parent).to.eql(processElement);
-        expect(canvas.getRootElement()).to.eql(processElement);
-
-        expect(is(processElement, 'bpmn:Process')).to.be.true;
-      }));
-
-
-      it('should wire parent child relationship', inject(function(elementRegistry) {
-
-        // when
-        var subProcessShape = elementRegistry.get('SubProcess_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
-
-        // then
-        expect(startEventShape.type).to.equal('bpmn:StartEvent');
-        expect(startEventShape.parent).to.eql(subProcessShape);
-
-        expect(subProcessShape.children.length).to.equal(5);
-      }));
-
-
-      it('should wire label relationship', inject(function(elementRegistry) {
-
-        // when
-        var startEventShape = elementRegistry.get('StartEvent_1');
-        var label = startEventShape.label;
-
-        // then
-        expect(label).to.be.defined;
-        expect(label.id).to.equal(startEventShape.id + '_label');
-
-        expect(label.labelTarget).to.eql(startEventShape);
-      }));
-
-
-      it('should wire businessObject', inject(function(elementRegistry) {
-
-        // when
-        var subProcessShape = elementRegistry.get('SubProcess_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
-
-        var subProcess = subProcessShape.businessObject,
-            startEvent = startEventShape.businessObject;
-
-        // then
-        expect(subProcess).to.be.defined;
-        expect(is(subProcess, 'bpmn:SubProcess')).to.be.true;
-
-        expect(startEvent).to.be.defined;
-        expect(is(startEvent, 'bpmn:StartEvent')).to.be.true;
-      }));
-
-
-      it('should wire shape di', inject(function(elementRegistry) {
-
-        // when
-        var subProcessShape = elementRegistry.get('SubProcess_1');
-
-        var subProcess = subProcessShape.businessObject;
-        var subProcessDi = subProcess.di;
-
-        // then
-        expect(subProcessDi).to.be.defined;
-        expect(subProcessDi.bpmnElement).to.eql(subProcess);
-      }));
-
-
-      it('should wire connection di', inject(function(elementRegistry) {
-
-        // when
-        var sequenceFlowElement = elementRegistry.get('SequenceFlow_1');
-
-        var sequenceFlow = sequenceFlowElement.businessObject;
-        var sequenceFlowDi = sequenceFlow.di;
-
-        // then
-        expect(sequenceFlowDi).to.be.defined;
-        expect(sequenceFlowDi.bpmnElement).to.eql(sequenceFlow);
-      }));
-
-    });
-
-
-    describe('boundary events', function() {
-
-      var xml = require('../../fixtures/bpmn/import/boundaryEvent.bpmn');
-
-      beforeEach(bootstrapViewer(xml));
-
-
-      it('should wire host attacher relationship', inject(function(elementRegistry) {
-
-        // when
-        var boundaryEventShape = elementRegistry.get('BoundaryEvent_1'),
-            boundaryEvent = boundaryEventShape.businessObject;
-
-        var taskShape = elementRegistry.get('Task_1'),
-            task = taskShape.businessObject;
-
-        // assume
-        expect(boundaryEvent.attachedToRef).to.eql(task);
-
-        // then
-        expect(boundaryEventShape.host).to.eql(taskShape);
-
-        expect(taskShape.attachers).to.exist;
-        expect(taskShape.attachers).to.contain(boundaryEventShape);
-      }));
-
     });
 
   });
@@ -421,26 +343,6 @@ describe('import - Importer', function() {
 
   describe('integration', function() {
 
-    // slightly increase timeout for complex test cases
-    this.timeout(4000);
-
-
-    it('should import complex', function(done) {
-
-      // given
-      var xml = require('../../fixtures/bpmn/complex.bpmn');
-
-      // when
-      runImport(diagram, xml, function(err, warnings) {
-
-        // then
-        expect(warnings.length).to.equal(0);
-
-        done(err);
-      });
-    });
-
-
     it('should import dangling process message flows', function(done) {
 
       // given
@@ -454,60 +356,6 @@ describe('import - Importer', function() {
 
         expect(diagram.get('elementRegistry').get('_b467921a-ef7b-44c5-bf78-fd624c400d17')).to.be.defined;
         expect(diagram.get('elementRegistry').get('_c311cc87-677e-47a4-bdb1-8744c4ec3147')).to.be.defined;
-
-        done(err);
-      });
-    });
-
-  });
-
-
-  describe('position', function() {
-
-    var xml = require('../../fixtures/bpmn/import/position/position-testcase.bpmn');
-
-    it('should round shape\'s x and y coordinates', function(done) {
-
-      // given
-      var events = {};
-
-      // log events
-      diagram.get('eventBus').on('bpmnElement.added', function(e) {
-
-        events[e.element.id] = e.element;
-      });
-
-      runImport(diagram, xml, function(err, warnings) {
-
-        //round up
-        expect(events.ID_End.x).to.equal(Math.round(340.6));
-        expect(events.ID_End.y).to.equal(Math.round(136.6));
-
-        //round down
-        expect(events.ID_Start.x).to.equal(Math.round(120.4));
-        expect(events.ID_Start.y).to.equal(Math.round(135.4));
-
-        done(err);
-      });
-    });
-
-
-    it('should round shape\'s height and width', function(done) {
-
-      // given
-      var events = {};
-
-      // log events
-      diagram.get('eventBus').on('bpmnElement.added', function(e) {
-
-        events[e.element.id] = e.element;
-      });
-
-      runImport(diagram, xml, function(err, warnings) {
-
-        //round down
-        expect(events.ID_Start.height).to.equal(Math.round(30.4));
-        expect(events.ID_Start.width).to.equal(Math.round(30.4));
 
         done(err);
       });

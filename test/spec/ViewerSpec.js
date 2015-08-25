@@ -331,7 +331,7 @@ describe('Viewer', function() {
     });
 
 
-    it('should export complex svg', function(done) {
+    it('should export huge svg', function(done) {
 
       // given
       var xml = require('../fixtures/bpmn/complex.bpmn');
