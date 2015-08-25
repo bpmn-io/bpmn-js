@@ -2,8 +2,7 @@
 
 /* global bootstrapDiagram, inject */
 
-
-var modelingModule = require('../../../../lib/features/modeling');
+var modelingModule = require('./custom/modeling');
 
 var map = require('lodash/collection/map');
 
@@ -41,7 +40,11 @@ describe('features/modeling - layout connection', function() {
 
       connection = elementFactory.createConnection({
         id: 'connection',
-        waypoints: [ { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 } ],
+        waypoints: [
+          { x: 150, y: 150, original: { x: 125, y: 125 } },
+          { x: 150, y: 200 },
+          { x: 350, y: 150, original: { x: 325, y: 125 } }
+        ],
         source: sourceShape,
         target: targetShape
       });
@@ -49,15 +52,14 @@ describe('features/modeling - layout connection', function() {
       canvas.addConnection(connection);
     }));
 
-
-    it('should execute', inject(function(modeling) {
-
+    it('should execute and add new original waypoints', inject(function(modeling) {
       // when
       modeling.layoutConnection(connection);
 
       // then
       expect(connection.waypoints).to.eql([
-        { x: 150, y: 150 }, { x: 350, y: 350 }
+        { x: 150, y: 150, original: { x: 150, y: 150 } },
+        { x: 350, y: 350, original: { x: 325, y: 125 } }
       ]);
     }));
 
@@ -72,7 +74,9 @@ describe('features/modeling - layout connection', function() {
 
       // then
       expect(connection.waypoints).to.eql([
-        { x: 150, y: 150 }, { x: 150, y: 200 }, { x: 350, y: 150 }
+        { x: 150, y: 150, original: { x: 125, y: 125 } },
+        { x: 150, y: 200 },
+        { x: 350, y: 150, original: { x: 325, y: 125 } }
       ]);
     }));
   });
