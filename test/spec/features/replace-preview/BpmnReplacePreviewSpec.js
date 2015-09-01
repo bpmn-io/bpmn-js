@@ -20,8 +20,7 @@ describe('features/replace-preview', function() {
   var diagramXML = require('../../../fixtures/bpmn/event-sub-processes.bpmn');
 
   var startEvent_1,
-      rootElement,
-      Event;
+      rootElement;
 
   var getGfx,
       moveShape;
@@ -242,6 +241,28 @@ describe('features/replace-preview', function() {
     expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
     expect(context.dragGroup[2].innerSVG()).to.equal(timerStartEventGfx.innerSVG());
 
+  }));
+
+
+  it('should not throw TypeError when moving boundaryEvent',
+    inject(function(move, dragging, elementRegistry, elementFactory, selection, modeling) {
+
+    // given
+    var startEvent_1 = elementRegistry.get('StartEvent_1'),
+        subProcess_3 = elementRegistry.get('SubProcess_3');
+
+    var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+
+    var boundaryEvent = modeling.createShape(intermediateEvent, { x: 550, y: 180 }, subProcess_3, true);
+
+    // when
+    selection.select([ startEvent_1 ]);
+
+    moveShape(boundaryEvent, subProcess_3, { x: 580, y: 210 });
+    moveShape(boundaryEvent, subProcess_3, { x: 580, y: 180 });
+
+    // then
+    // expect not to throw TypeError: Cannot read property 'oldElementId' of undefined
   }));
 
 });
