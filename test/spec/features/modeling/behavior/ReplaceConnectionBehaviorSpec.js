@@ -310,4 +310,74 @@ describe('features/modeling - replace connection', function() {
 
   });
 
+  describe('boundary events', function() {
+
+    var processDiagramXML = require('./ReplaceConnectionBehavior.boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+    var element;
+
+    beforeEach(inject(function(elementRegistry) {
+      element = function(id) {
+        return elementRegistry.get(id);
+      };
+    }));
+
+    describe('moving host', function() {
+
+      it('should remove invalid connections', inject(function(modeling) {
+
+        // given
+        var taskShape = element('Task_1'),
+            targetShape = element('SubProcess_1'),
+            sequenceFlow = element('SequenceFlow_1');
+
+        // when
+        modeling.moveElements([ taskShape ], { x: 30, y: 200 }, targetShape);
+
+        // then
+        expectNotConnected(taskShape, targetShape, sequenceFlow);
+
+      }));
+
+
+      it('should remove invalid connections (undo)', inject(function(modeling, commandStack) {
+
+        // given
+        var taskShape = element('Task_1'),
+            targetShape = element('SubProcess_1'),
+            sequenceFlow = element('SequenceFlow_1');
+
+        // when
+        modeling.moveElements([ taskShape ], { x: 30, y: 200 }, targetShape);
+        commandStack.undo();
+
+        // then
+        expectConnected(taskShape, targetShape, sequenceFlow);
+
+      }));
+
+
+      it('should remove invalid connections (redo)', inject(function(modeling, commandStack) {
+
+        // given
+        var taskShape = element('Task_1'),
+            targetShape = element('SubProcess_1'),
+            sequenceFlow = element('SequenceFlow_1');
+
+        // when
+        modeling.moveElements([ taskShape ], { x: 30, y: 200 }, targetShape);
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expectNotConnected(taskShape, targetShape, sequenceFlow);
+
+      }));
+
+    });
+
+  });
+
 });
