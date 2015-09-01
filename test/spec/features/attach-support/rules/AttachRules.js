@@ -47,6 +47,20 @@ MoveRules.prototype.init = function() {
       return false;
     }
   });
+
+  this.addRule('connection.reconnectEnd', function(context) {
+    if (context.target.host.parent.id === 'parent') {
+      return false;
+    }
+    return true;
+  });
+
+  this.addRule('connection.reconnectStart', function(context) {
+    if (context.source.host.parent.id === 'parent') {
+      return false;
+    }
+    return true;
+  });
 };
 
 
