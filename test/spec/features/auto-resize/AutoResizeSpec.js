@@ -48,7 +48,7 @@ describe('features/auto-resize', function() {
 
     describe('after moving', function() {
 
-      it('should expand the right edge of the parent collaboration',
+      it('should expand the right edge',
           inject(function(modeling) {
 
         // when
@@ -62,36 +62,33 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should expand the top edge of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the top edge', inject(function(modeling) {
 
         // when
         modeling.moveElements([task], { x: 0, y: -50 }, participant);
 
         // then
-        assign(expectedBounds, { y: 79, height: 259 });
+        assign(expectedBounds, { y: 99, height: 239 });
 
         expect(getBounds(participant)).to.eql(expectedBounds);
 
       }));
 
 
-      it('should expand the bottom edge of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the bottom edge', inject(function(modeling) {
 
         // when
         modeling.moveElements([task], { x: 0, y: 50 }, participant);
 
         // then
-        assign(expectedBounds, { height: 259 });
+        assign(expectedBounds, { height: 239 });
 
         expect(getBounds(participant)).to.eql(expectedBounds);
 
       }));
 
 
-      it('should expand the left edge of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the left edge', inject(function(modeling) {
 
         // when
         modeling.moveElements([startEvent], { x: -100, y: 0 }, participant);
@@ -104,37 +101,61 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should expand the bottom right edges of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the bottom right edges', inject(function(modeling) {
 
         // when
         modeling.moveElements([task], { x: 50, y: 50 }, participant);
 
         // then
-        assign(expectedBounds, { width: 475, height: 259 });
+        assign(expectedBounds, { width: 475, height: 239 });
 
         expect(getBounds(participant)).to.eql(expectedBounds);
 
       }));
 
 
-      it('should expand the top left edges of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the top left edges', inject(function(modeling) {
 
         // when
         modeling.moveElements([startEvent], { x: -100, y: -100 }, participant);
 
         // then
-        expect(getBounds(participant)).to.eql({ x: 122, y: 51, width: 496, height: 287 });
+        expect(getBounds(participant)).to.eql({ x: 122, y: 71, width: 496, height: 267 });
 
       }));
 
 
-      it('should not resize the parent collaboration if element is placed too far outside',
+      it('should not resize the parent if element is placed too far outside',
           inject(function(modeling) {
 
         // when
         modeling.moveElements([task], { x: 300, y: 0 }, participant);
+
+        // then
+        expect(getBounds(participant)).to.eql(expectedBounds);
+
+      }));
+
+
+      it('should resize the parent if element and parent edge intersect',
+          inject(function(modeling) {
+
+        // when
+        modeling.moveElements([task], { x: 0, y: 49 }, participant);
+
+        // then
+        assign(expectedBounds, { height: 238 });
+
+        expect(getBounds(participant)).to.eql(expectedBounds);
+
+      }));
+
+
+      it('should not resize the parent if element is placed near the bottom',
+          inject(function(modeling) {
+
+        // when
+        modeling.moveElements([task], { x: 0, y: 47 }, participant);
 
         // then
         expect(getBounds(participant)).to.eql(expectedBounds);
@@ -162,7 +183,7 @@ describe('features/auto-resize', function() {
         commandStack.redo();
 
         // then
-        expect(getBounds(participant)).to.eql({ x: 122, y: 51, width: 496, height: 287 });
+        expect(getBounds(participant)).to.eql({ x: 122, y: 71, width: 496, height: 267 });
 
       }));
 
@@ -172,14 +193,13 @@ describe('features/auto-resize', function() {
     describe('after appending', function(){
 
 
-      it('should expand the bottom right edges of the parent collaboration',
-          inject(function(modeling) {
+      it('should expand the bottom right edges', inject(function(modeling) {
 
         // when
         modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 350 }, participant);
 
         // then
-        assign(expectedBounds, { width: 563, height: 310 });
+        assign(expectedBounds, { width: 563, height: 290 });
 
         expect(getBounds(participant)).to.eql(expectedBounds);
 
@@ -187,6 +207,7 @@ describe('features/auto-resize', function() {
 
 
       it('should undo resizing', inject(function(modeling, commandStack) {
+
         // given
         modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participant);
 
@@ -195,7 +216,6 @@ describe('features/auto-resize', function() {
 
         // then
         expect(getBounds(participant)).to.eql(expectedBounds);
-
       }));
 
 
@@ -258,7 +278,7 @@ describe('features/auto-resize', function() {
       modeling.createShape({ type: 'bpmn:Task' }, { x: 600, y: 320 }, laneShape);
 
       // then
-      expect(getBounds(laneShape)).to.eql({ x: 307, y: 160, width: 443, height: 280});
+      expect(getBounds(laneShape)).to.eql({ x: 307, y: 160, width: 443, height: 260});
     }));
 
   });
