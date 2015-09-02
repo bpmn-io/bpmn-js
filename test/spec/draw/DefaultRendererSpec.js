@@ -8,14 +8,14 @@ require('../../TestHelper');
 var drawModule = require('../../../lib/draw');
 
 
-describe('draw - Renderer', function() {
+describe('draw - DefaultRenderer', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ drawModule ] }));
 
 
   describe('#getShapePath', function() {
 
-    it('should return rectangular shape path', inject(function(canvas, elementFactory, renderer) {
+    it('should return rectangular shape path', inject(function(canvas, elementFactory, graphicsFactory) {
 
       // given
       var shape = canvas.addShape(elementFactory.createShape({
@@ -25,7 +25,7 @@ describe('draw - Renderer', function() {
 
 
       // when
-      var path = renderer.getShapePath(shape);
+      var path = graphicsFactory.getShapePath(shape);
 
       // then
       expect(path).to.eql('M100,100l100,0l0,100l-100,0z');
@@ -36,7 +36,7 @@ describe('draw - Renderer', function() {
 
   describe('#getConnectionPath', function() {
 
-    it('should return line segments connection path', inject(function(canvas, renderer) {
+    it('should return line segments connection path', inject(function(canvas, graphicsFactory) {
 
       // given
       var shapeA = canvas.addShape({
@@ -58,14 +58,14 @@ describe('draw - Renderer', function() {
 
 
       // when
-      var path = renderer.getConnectionPath(connection);
+      var path = graphicsFactory.getConnectionPath(connection);
 
       // then
       expect(path).to.eql('M150,150L200,200L350,300');
     }));
 
 
-    it('should take invisible dockings into account', inject(function(canvas, renderer) {
+    it('should take invisible dockings into account', inject(function(canvas, graphicsFactory) {
 
       // given
       var shapeA = canvas.addShape({
@@ -87,7 +87,7 @@ describe('draw - Renderer', function() {
 
 
       // when
-      var path = renderer.getConnectionPath(connection);
+      var path = graphicsFactory.getConnectionPath(connection);
 
       // then
       expect(path).to.eql('M130,130L200,200L350,300');

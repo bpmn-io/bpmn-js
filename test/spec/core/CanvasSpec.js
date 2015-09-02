@@ -6,6 +6,8 @@
 var merge = require('lodash/object/merge');
 var TestContainer = require('mocha-test-container-support');
 
+var drawModule = require('../../../lib/draw');
+
 describe('Canvas', function() {
 
   var container;
@@ -26,6 +28,8 @@ describe('Canvas', function() {
     });
 
     beforeEach(createDiagram());
+
+    beforeEach(bootstrapDiagram({ modules: [ drawModule ] }));
 
     it('should create <svg> element', inject(function() {
 
