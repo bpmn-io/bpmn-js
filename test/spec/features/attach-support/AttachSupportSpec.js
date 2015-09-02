@@ -737,6 +737,64 @@ describe('features/attach-support', function() {
 
     }));
 
+
+    it('should move labels along with attachers when moving host',
+        inject(function(elementFactory, elementRegistry, modeling, move, dragging) {
+
+      // given
+      var label = elementFactory.createLabel({ width: 80, height: 40 });
+
+      modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
+
+      var rootGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(canvasEvent({ x: 600, y: 200 }));
+      dragging.end();
+
+      // then
+      expect(label.x).to.equal(650);
+      expect(label.y).to.equal(170);
+
+    }));
+
+
+    it('should move labels along with attachers when moving selection',
+        inject(function(elementFactory, elementRegistry, modeling, move, dragging, selection) {
+
+      // given
+      var label = elementFactory.createLabel({ width: 80, height: 40 });
+
+      modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
+
+      var rootGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      selection.select([ host, label ]);
+
+      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(canvasEvent({ x: 600, y: 200 }));
+      dragging.end();
+
+      // then
+      expect(label.x).to.equal(650);
+      expect(label.y).to.equal(170);
+
+    }));
+
   });
 
   describe('replace', function() {
@@ -906,7 +964,7 @@ describe('features/attach-support', function() {
 
       label = elementFactory.createLabel({ width: 80, height: 40 });
 
-      modeling.createLabel(attacher, { x: 600, y: 100 }, label, parentShape);
+      modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
 
       host2 = elementFactory.createShape({
         id: 'host2',
@@ -956,6 +1014,31 @@ describe('features/attach-support', function() {
 
       // then
       expect(elementRegistry.getGraphics(host).hasClass('attach-ok')).to.be.false;
+    }));
+
+
+    it('should add attachment labels to dragGroup',
+      inject(function(move, dragging, elementRegistry, elementFactory, modeling) {
+
+      // given
+      var rootGfx = elementRegistry.getGraphics(rootShape);
+
+      // when
+      move.start(canvasEvent({ x: 800, y: 100 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(canvasEvent({ x: 850, y: 75 }));
+
+      // then
+      // expect the label to be included in the dragGroup
+      var dragGroup = dragging.active().data.context.dragGroup;
+
+      expect(dragGroup.select('[data-element-id=' + label.id + ']')).to.exist;
+
     }));
 
   });
