@@ -241,7 +241,7 @@ describe('features/modeling - lanes', function() {
       var newLaneShape = modeling.createShape({ type: 'bpmn:Lane' }, { x: 180, y: 100 }, nestedLaneShape);
 
       // then
-      expect(ids(newLaneShape.children)).to.eql([ 'Task_Boundary', 'Task', 'Boundary' ]);
+      expect(ids(newLaneShape.children)).to.eql([ 'Task_Boundary', 'Task', 'Boundary', 'Boundary_label' ]);
     }));
 
   });
