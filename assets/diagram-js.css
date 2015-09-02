@@ -242,6 +242,7 @@ svg.drop-not-ok {
   width: 46px;
   height: 46px;
   line-height: 46px;
+  cursor: default;
 }
 
 .djs-palette .separator {
