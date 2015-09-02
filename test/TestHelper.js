@@ -9,3 +9,7 @@ TestHelper.insertCSS('bpmn-embedded.css', require('../assets/bpmn-font/css/bpmn-
 TestHelper.insertCSS('diagram-js-testing.css',
   '.test-container .result { height: 500px; }' + '.test-container > div'
 );
+
+
+// add suite specific matchers
+global.chai.use(require('./matchers/Bounds'));

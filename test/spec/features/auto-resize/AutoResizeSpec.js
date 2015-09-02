@@ -29,7 +29,7 @@ describe('features/auto-resize', function() {
     var task,
         participant,
         startEvent,
-        expectedBounds;
+        originalBounds;
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -39,9 +39,9 @@ describe('features/auto-resize', function() {
       participant = elementRegistry.get('Participant_1');
       startEvent = elementRegistry.get('StartEvent_1');
 
-      expectedBounds = getBounds(participant);
+      originalBounds = getBounds(participant);
 
-      expect(expectedBounds).to.eql({ x: 247, y: 160, width: 371, height: 178 });
+      expect(originalBounds).to.eql({ x: 247, y: 160, width: 371, height: 178 });
 
     }));
 
@@ -55,9 +55,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 100, y: 0 }, participant);
 
         // then
-        assign(expectedBounds, { width: 525 });
+        var expectedBounds = assign(originalBounds, { width: 525 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -68,9 +68,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 0, y: -50 }, participant);
 
         // then
-        assign(expectedBounds, { y: 99, height: 239 });
+        var expectedBounds = assign(originalBounds, { y: 99, height: 239 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -81,9 +81,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 0, y: 50 }, participant);
 
         // then
-        assign(expectedBounds, { height: 239 });
+        var expectedBounds = assign(originalBounds, { height: 239 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -94,9 +94,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([startEvent], { x: -100, y: 0 }, participant);
 
         // then
-        assign(expectedBounds, { x: 122, width: 496 });
+        var expectedBounds = assign(originalBounds, { x: 122, width: 496 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -107,9 +107,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 50, y: 50 }, participant);
 
         // then
-        assign(expectedBounds, { width: 475, height: 239 });
+        var expectedBounds = assign(originalBounds, { width: 475, height: 239 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -120,7 +120,7 @@ describe('features/auto-resize', function() {
         modeling.moveElements([startEvent], { x: -100, y: -100 }, participant);
 
         // then
-        expect(getBounds(participant)).to.eql({ x: 122, y: 71, width: 496, height: 267 });
+        expect(participant).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
 
       }));
 
@@ -132,7 +132,7 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 300, y: 0 }, participant);
 
         // then
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(originalBounds);
 
       }));
 
@@ -144,9 +144,9 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 0, y: 49 }, participant);
 
         // then
-        assign(expectedBounds, { height: 238 });
+        var expectedBounds = assign(originalBounds, { height: 238 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -158,7 +158,7 @@ describe('features/auto-resize', function() {
         modeling.moveElements([task], { x: 0, y: 47 }, participant);
 
         // then
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(originalBounds);
 
       }));
 
@@ -170,7 +170,7 @@ describe('features/auto-resize', function() {
         commandStack.undo();
 
         // then
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(originalBounds);
 
       }));
 
@@ -183,7 +183,7 @@ describe('features/auto-resize', function() {
         commandStack.redo();
 
         // then
-        expect(getBounds(participant)).to.eql({ x: 122, y: 71, width: 496, height: 267 });
+        expect(participant).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
 
       }));
 
@@ -192,16 +192,15 @@ describe('features/auto-resize', function() {
 
     describe('after appending', function(){
 
-
       it('should expand the bottom right edges', inject(function(modeling) {
 
         // when
         modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 350 }, participant);
 
         // then
-        assign(expectedBounds, { width: 563, height: 290 });
+        var expectedBounds = assign(originalBounds, { width: 563, height: 290 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
       }));
 
@@ -215,7 +214,7 @@ describe('features/auto-resize', function() {
         commandStack.undo();
 
         // then
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(originalBounds);
       }));
 
 
@@ -230,9 +229,9 @@ describe('features/auto-resize', function() {
         commandStack.redo();
 
         // then
-        assign(expectedBounds, { width: 563 });
+        var expectedBounds = assign(originalBounds, { width: 563 });
 
-        expect(getBounds(participant)).to.eql(expectedBounds);
+        expect(participant).to.have.bounds(expectedBounds);
 
         expect(task2).to.be.defined;
         expect(task.outgoing).not.to.be.empty;
@@ -256,7 +255,7 @@ describe('features/auto-resize', function() {
       modeling.createShape(laneAttrs, { x: 280, y: 200 }, participant);
 
       // then
-      expect(getBounds(participant)).to.eql(expectedBounds);
+      expect(participant).to.have.bounds(originalBounds);
     }));
 
   });
@@ -278,7 +277,7 @@ describe('features/auto-resize', function() {
       modeling.createShape({ type: 'bpmn:Task' }, { x: 600, y: 320 }, laneShape);
 
       // then
-      expect(getBounds(laneShape)).to.eql({ x: 307, y: 160, width: 443, height: 260});
+      expect(laneShape).to.have.bounds({ x: 307, y: 160, width: 443, height: 260});
     }));
 
   });

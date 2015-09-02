@@ -4,13 +4,6 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
-var pick = require('lodash/object/pick');
-
-
-function bounds(element) {
-  return pick(element, [ 'x', 'y', 'width', 'height' ]);
-}
-
 
 describe('import - labels', function() {
 
@@ -55,8 +48,8 @@ describe('import - labels', function() {
               sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
           // then
-          expect(bounds(endEvent.label)).to.eql({ x: 211, y: 256, width: 119, height: 44 });
-          expect(bounds(sequenceFlow.label)).to.eql({ x: 432, y: 317, width: 99, height: 22 });
+          expect(endEvent.label).to.have.bounds({ x: 211, y: 256, width: 119, height: 44 });
+          expect(sequenceFlow.label).to.have.bounds({ x: 432, y: 317, width: 99, height: 22 });
 
           done();
         })();

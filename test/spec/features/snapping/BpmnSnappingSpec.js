@@ -14,13 +14,6 @@ var coreModule = require('../../../../lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
     rulesModule = require('../../../../lib/features/rules');
 
-var pick = require('lodash/object/pick');
-
-
-function bounds(element) {
-  return pick(element, [ 'width', 'height', 'x', 'y' ]);
-}
-
 
 describe('features/snapping - BpmnSnapping', function() {
 
@@ -65,7 +58,7 @@ describe('features/snapping - BpmnSnapping', function() {
       var boundaryEvent = elementRegistry.get(task.attachers[0].id);
 
       // then
-      expect(bounds(boundaryEvent)).to.eql({ x: 364, y: 167, width: 36, height: 36 });
+      expect(boundaryEvent).to.have.bounds({ x: 364, y: 167, width: 36, height: 36 });
     }));
 
 
@@ -86,7 +79,7 @@ describe('features/snapping - BpmnSnapping', function() {
       var boundaryEvent = elementRegistry.get(task.attachers[0].id);
 
       // then
-      expect(bounds(boundaryEvent)).to.eql({ x: 364, y: 87, width: 36, height: 36 });
+      expect(boundaryEvent).to.have.bounds({ x: 364, y: 87, width: 36, height: 36 });
     }));
 
   });
@@ -122,7 +115,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(canvasEvent({ x: 65, y: 65 }));
 
         // then
-        expect(bounds(participantShape)).to.eql({
+        expect(participantShape).to.have.bounds({
           width: 600, height: 250, x: 18, y: -8
         });
       }));
@@ -145,7 +138,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).to.eql({
+        expect(participantShape).to.have.bounds({
           width: 600, height: 250, x: 100, y: 52
         });
       }));
@@ -181,7 +174,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).to.eql({
+        expect(participantShape).to.have.bounds({
           x: 100, y: 275, width: 600, height: 250
         });
       }));
@@ -217,7 +210,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end(canvasEvent({ x: 400, y: 400 }));
 
         // then
-        expect(bounds(participantShape)).to.eql({
+        expect(participantShape).to.have.bounds({
           x: 100, y: 275, width: 600, height: 250
         });
       }));

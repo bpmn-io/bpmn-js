@@ -51,11 +51,15 @@ describe('features/modeling - create/remove space', function() {
       modeling.createSpace([subProcessElement, endEventElement], [], delta, direction);
 
       // then
-      expect(subProcess.di.bounds.x).to.equal(subProcOldPos.x + 50);
-      expect(subProcess.di.bounds.y).to.equal(subProcOldPos.y);
+      expect(subProcess.di).to.have.position({
+        x: subProcOldPos.x + 50,
+        y: subProcOldPos.y
+      });
 
-      expect(endEvent.di.bounds.x).to.equal(endEventOldPos.x + 50);
-      expect(endEvent.di.bounds.y).to.equal(endEventOldPos.y);
+      expect(endEvent.di).to.have.position({
+        x: endEventOldPos.x + 50,
+        y: endEventOldPos.y
+      });
 
       var diWaypoints = bpmnFactory.createDiWaypoints([
         { x: 144, y: 230 },
@@ -103,14 +107,20 @@ describe('features/modeling - create/remove space', function() {
       modeling.createSpace([startEventElement ,subProcessElement, endEventElement], [], delta, direction);
 
       // then
-      expect(startEvent.di.bounds.x).to.equal(startEventOldPos.x);
-      expect(startEvent.di.bounds.y).to.equal(startEventOldPos.y + 50);
+      expect(startEvent.di).to.have.position({
+        x: startEventOldPos.x,
+        y: startEventOldPos.y + 50
+      });
 
-      expect(subProcess.di.bounds.x).to.equal(subProcOldPos.x);
-      expect(subProcess.di.bounds.y).to.equal(subProcOldPos.y + 50);
+      expect(subProcess.di).to.have.position({
+        x: subProcOldPos.x,
+        y: subProcOldPos.y + 50
+      });
 
-      expect(endEvent.di.bounds.x).to.equal(endEventOldPos.x);
-      expect(endEvent.di.bounds.y).to.equal(endEventOldPos.y + 50);
+      expect(endEvent.di).to.have.position({
+        x: endEventOldPos.x,
+        y: endEventOldPos.y + 50
+      });
 
       var diWaypoints = bpmnFactory.createDiWaypoints([
         { x: 144, y: 280 },
@@ -150,11 +160,15 @@ describe('features/modeling - create/remove space', function() {
       modeling.createSpace([subProcessElement, endEventElement], [], delta, direction);
 
       // then
-      expect(subProcess.di.bounds.x).to.equal(subProcOldPos.x - 50);
-      expect(subProcess.di.bounds.y).to.equal(subProcOldPos.y);
+      expect(subProcess.di).to.have.position({
+        x: subProcOldPos.x - 50,
+        y: subProcOldPos.y
+      });
 
-      expect(endEvent.di.bounds.x).to.equal(endEventOldPos.x - 50);
-      expect(endEvent.di.bounds.y).to.equal(endEventOldPos.y);
+      expect(endEvent.di).to.have.position({
+        x: endEventOldPos.x - 50,
+        y: endEventOldPos.y
+      });
 
       var diWaypoints = bpmnFactory.createDiWaypoints([
         { x: 144, y: 230 },
@@ -209,19 +223,27 @@ describe('features/modeling - create/remove space', function() {
       modeling.createSpace([startEventElement, startEventElement2, taskElement], [subProcessElement], delta, direction);
 
       // then
-      expect(subProcess.di.bounds.x).to.equal(subProcOldPos.x + 50);
-      expect(subProcess.di.bounds.y).to.equal(subProcOldPos.y);
-      expect(subProcess.di.bounds.width).to.equal(subProcOldPos.width - 50);
-      expect(subProcess.di.bounds.height).to.equal(subProcOldPos.height);
+      expect(subProcess.di).to.have.bounds({
+        x: subProcOldPos.x + 50,
+        y: subProcOldPos.y,
+        width: subProcOldPos.width - 50,
+        height: subProcOldPos.height
+      });
 
-      expect(startEvent.di.bounds.x).to.equal(startEventOldPos.x + 50);
-      expect(startEvent.di.bounds.y).to.equal(startEventOldPos.y);
+      expect(startEvent.di).to.have.position({
+        x: startEventOldPos.x + 50,
+        y: startEventOldPos.y
+      });
 
-      expect(startEvent2.di.bounds.x).to.equal(startEventOldPos2.x + 50);
-      expect(startEvent2.di.bounds.y).to.equal(startEventOldPos2.y);
+      expect(startEvent2.di).to.have.position({
+        x: startEventOldPos2.x + 50,
+        y: startEventOldPos2.y
+      });
 
-      expect(task.di.bounds.x).to.equal(taskOldPos.x + 50);
-      expect(task.di.bounds.y).to.equal(taskOldPos.y);
+      expect(task.di).to.have.position({
+        x: taskOldPos.x + 50,
+        y: taskOldPos.y
+      });
     }));
 
   });
