@@ -161,39 +161,39 @@ describe('path - bpmn renderer', function () {
   describe('circle', function () {
 
 
-    it('should return a circle path', inject(function(canvas, elementRegistry, renderer) {
+    it('should return a circle path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
       // given
       var eventElement = elementRegistry.get('StartEvent_1');
 
       // when
-      var startPath = renderer.getShapePath(eventElement);
+      var startPath = graphicsFactory.getShapePath(eventElement);
 
       // then
       expect(startPath).to.equal('M247,343m0,-18a18,18,0,1,1,0,36a18,18,0,1,1,0,-36z');
     }));
 
 
-    it('should return a diamond path', inject(function(canvas, elementRegistry, renderer) {
+    it('should return a diamond path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
       // given
       var gatewayElement = elementRegistry.get('ExclusiveGateway_1');
 
       // when
-      var gatewayPath = renderer.getShapePath(gatewayElement);
+      var gatewayPath = graphicsFactory.getShapePath(gatewayElement);
 
       // then
       expect(gatewayPath).to.equal('M418,318l25,25l-25,25l-25,-25z');
     }));
 
 
-    it('should return a rounded rectangular path', inject(function(canvas, elementRegistry, renderer) {
+    it('should return a rounded rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
       // given
       var subProcessElement = elementRegistry.get('SubProcess_1');
 
       // when
-      var subProcessPath = renderer.getShapePath(subProcessElement);
+      var subProcessPath = graphicsFactory.getShapePath(subProcessElement);
 
       // then
       expect(subProcessPath).to.equal('M584,243l330,0a10,10,0,0,1,10,10l0,180a10,10,0,0,1,-10,10' +
@@ -201,13 +201,13 @@ describe('path - bpmn renderer', function () {
     }));
 
 
-    it('should return a rectangular path', inject(function(canvas, elementRegistry, renderer) {
+    it('should return a rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
       // given
       var TextAnnotationElement = elementRegistry.get('TextAnnotation_1');
 
       // when
-      var TextAnnotationPath = renderer.getShapePath(TextAnnotationElement);
+      var TextAnnotationPath = graphicsFactory.getShapePath(TextAnnotationElement);
 
       // then
       expect(TextAnnotationPath).to.equal('M368,156l100,0l0,80l-100,0z');
