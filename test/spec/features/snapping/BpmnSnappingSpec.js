@@ -14,7 +14,6 @@ var coreModule = require('../../../../lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
     rulesModule = require('../../../../lib/features/rules');
 
-
 describe('features/snapping - BpmnSnapping', function() {
 
   var testModules = [ coreModule, snappingModule, modelingModule, createModule, rulesModule, moveModule ];
@@ -397,6 +396,83 @@ describe('features/snapping - BpmnSnapping', function() {
 
       expect(textAnnotation.width).to.equal(50);
       expect(textAnnotation.height).to.equal(50);
+    }));
+
+  });
+
+  describe('labels', function() {
+
+    var diagramXML = require('./BpmnSnapping.labels.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    it('should snap to start events', inject(function(canvas, elementRegistry, move, dragging) {
+
+      var label = elementRegistry.get('StartEvent_1_label'),
+          rootElement = canvas.getRootElement();
+
+      var originalPosition = { x: label.x, y: label.y };
+
+      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+
+      dragging.hover({
+        element: rootElement,
+        gfx: elementRegistry.getGraphics(rootElement)
+      });
+
+      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+
+      dragging.end();
+
+      expect(label.x).to.equal(originalPosition.x);
+
+    }));
+
+
+    it('should snap to boundary events', inject(function(canvas, elementRegistry, move, dragging) {
+
+      var label = elementRegistry.get('BoundaryEvent_1_label'),
+          rootElement = canvas.getRootElement();
+
+      var originalPosition = { x: label.x, y: label.y };
+
+      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+
+      dragging.hover({
+        element: rootElement,
+        gfx: elementRegistry.getGraphics(rootElement)
+      });
+
+      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+
+      dragging.end();
+
+      expect(label.x).to.equal(originalPosition.x);
+
+    }));
+
+
+    it('should snap to siblings', inject(function(canvas, elementRegistry, move, dragging) {
+
+      var label = elementRegistry.get('BoundaryEvent_1_label'),
+          rootElement = canvas.getRootElement();
+
+      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+
+      dragging.hover({
+        element: rootElement,
+        gfx: elementRegistry.getGraphics(rootElement)
+      });
+
+      dragging.move(canvasEvent({ x: label.x-23, y: label.y+40 }));
+      dragging.move(canvasEvent({ x: label.x-23, y: label.y+40 }));
+
+      dragging.end();
+
+      expect(label.x).to.equal(161);
+
     }));
 
   });
