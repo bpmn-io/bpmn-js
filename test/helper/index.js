@@ -192,6 +192,7 @@ function inject(fn) {
 }
 
 
+module.exports.bootstrapBpmnJS = (window || global).bootstrapBpmnJS = bootstrapBpmnJS;
 module.exports.bootstrapModeler = (window || global).bootstrapModeler = bootstrapModeler;
 module.exports.bootstrapViewer = (window || global).bootstrapViewer = bootstrapViewer;
 module.exports.inject = (window || global).inject = inject;
