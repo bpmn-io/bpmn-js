@@ -189,6 +189,34 @@ describe('features/auto-resize', function() {
 
     });
 
+    describe('after moving multiple elements', function() {
+
+      it('should expand the right edge', inject(function(modeling, selection) {
+
+        // when
+        modeling.moveElements([task, startEvent], { x: 200, y: 0 }, participant);
+
+        // then
+        var expectedBounds = assign(originalBounds, { width: 625 });
+
+        expect(participant).to.have.bounds(expectedBounds);
+
+      }));
+
+
+      it('should expand the bottom edge', inject(function(modeling, selection) {
+
+        // when
+        modeling.moveElements([task, startEvent], { x: 0, y: 48 }, participant);
+
+        // then
+        var expectedBounds = assign(originalBounds, { height: 237 });
+
+        expect(participant).to.have.bounds(expectedBounds);
+
+      }));
+
+    });
 
     describe('after appending', function(){
 
@@ -278,6 +306,25 @@ describe('features/auto-resize', function() {
 
       // then
       expect(laneShape).to.have.bounds({ x: 307, y: 160, width: 443, height: 260});
+    }));
+
+
+    it('should auto-resize to fit multiple moved elements', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Lane_Nested'),
+          taskShape = elementRegistry.get('Task_1'),
+          startEventShape = elementRegistry.get('StartEvent_1');
+
+      var originalBounds = getBounds(laneShape);
+
+      // when
+      modeling.moveElements([taskShape, startEventShape], { x: 200, y: 0 }, laneShape);
+
+      // then
+      var expectedBounds = assign(originalBounds, { width: 565 });
+
+      expect(laneShape).to.have.bounds(expectedBounds);
     }));
 
   });
