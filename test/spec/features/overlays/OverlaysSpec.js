@@ -695,6 +695,19 @@ describe('features/overlays', function() {
     }));
 
 
+    it('should add css prefixes to the overlay container on zoom', inject(function(overlays, canvas) {
+      // given
+      var containerStyle = overlays._overlayRoot.style;
+
+      // when
+      canvas.zoom(2);
+
+      // then
+      expect(containerStyle['-webkit-transform']).to.match(/matrix/);
+      expect(containerStyle['-ms-transform']).to.match(/matrix/);
+    }));
+
+
     it('should transform overlay container on zoom (with position)', inject(function(overlays, canvas) {
 
       // when
