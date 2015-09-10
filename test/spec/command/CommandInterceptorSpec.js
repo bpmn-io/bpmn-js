@@ -491,4 +491,86 @@ describe('command/CommandInterceptor', function() {
 
   });
 
+
+  describe('context', function () {
+
+    function Dog() {
+      this.barks = [];
+    }
+
+    Dog.prototype.bark = function () {
+      this.barks.push('WOOF WOOF');
+    };
+
+    beforeEach(inject(function(commandStack) {
+      commandStack.registerHandler('bark', ComplexCommand);
+    }));
+
+    it('should pass context -> WITHOUT unwrap', inject(function(commandStack, eventBus) {
+      var interceptor = new TestInterceptor(eventBus);
+
+      // given
+      Dog.prototype.bindListener = function() {
+        interceptor.execute('bark', function(event) {
+          return this.bark();
+        }, this);
+      };
+
+      var bobby = new Dog();
+
+      bobby.bindListener();
+
+      // when
+      commandStack.execute('bark', context);
+
+      // then
+      expect(bobby.barks).to.have.length(1);
+    }));
+
+
+    it('should pass context -> WITH unwrap', inject(function(commandStack, eventBus) {
+      var interceptor = new TestInterceptor(eventBus);
+
+      // given
+      Dog.prototype.bindListener = function() {
+        interceptor.execute('bark', function(event) {
+          return this.bark();
+        }, true, this);
+      };
+
+      var bobby = new Dog();
+
+      bobby.bindListener();
+
+      // when
+      commandStack.execute('bark', context);
+
+      // then
+      expect(bobby.barks).to.have.length(1);
+    }));
+
+
+    it('should pass context -> WITH everything', inject(function(commandStack, eventBus) {
+      var interceptor = new TestInterceptor(eventBus);
+
+      // given
+      Dog.prototype.bindListener = function() {
+        interceptor.execute('bark', 1000, function(event) {
+          return this.bark();
+        }, false, this);
+      };
+
+      var bobby = new Dog();
+
+      bobby.bindListener();
+
+      // when
+      commandStack.execute('bark', context);
+
+      // then
+      expect(bobby.barks).to.have.length(1);
+    }));
+
+  });
+
 });

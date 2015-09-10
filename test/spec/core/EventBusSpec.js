@@ -123,6 +123,80 @@ describe('core/EventBus', function() {
 
     });
 
+    describe('passing context', function () {
+      function Dog() {}
+
+      Dog.prototype.bark = function(msg) {
+        return msg || 'WOOF WOOF';
+      };
+
+      it('should pass context to listener', function() {
+        // given
+        Dog.prototype.bindListener = function() {
+
+          eventBus.on('bark', function(event) {
+            return this.bark();
+          }, this);
+        };
+
+        var bobby = new Dog();
+
+        bobby.bindListener();
+
+        // when
+        var returnValue = eventBus.fire('bark');
+
+        // then
+        expect(returnValue).to.equal('WOOF WOOF');
+      });
+
+
+      it('should pass context to listener and provide priority', function() {
+        // given
+        Dog.prototype.bindListener = function(priority, msg) {
+          eventBus.on('bark', priority, function(event) {
+            return this.bark(msg);
+          }, this);
+        };
+
+        var bobby = new Dog();
+        var bull = new Dog();
+
+        bobby.bindListener(1000);
+        bull.bindListener(1500, 'BOO');
+
+        // when
+        var returnValue = eventBus.fire('bark');
+
+        // then
+        expect(returnValue).to.equal('BOO');
+      });
+
+
+      it('should fire only once', function() {
+        // given
+        Dog.prototype.barks = [];
+
+        Dog.prototype.bindListener = function() {
+          eventBus.once('bark', function(event) {
+            this.barks.push('WOOF WOOF');
+          }, this);
+        };
+
+        var bobby = new Dog();
+
+        bobby.bindListener();
+
+        // when
+        eventBus.fire('bark'),
+        eventBus.fire('bark');
+
+        // then
+        expect(bobby.barks).to.have.length(1);
+      });
+
+    });
+
 
     describe('returning custom value in listener', function() {
 
@@ -248,7 +322,7 @@ describe('core/EventBus', function() {
       eventBus.fire({ type: 'foo' });
 
       // then
-      expect(listener1).to.not.have.been.called
+      expect(listener1).to.not.have.been.called;
       expect(listener2).to.not.have.been.called;
     });
 
