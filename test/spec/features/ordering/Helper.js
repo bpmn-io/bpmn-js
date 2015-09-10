@@ -4,6 +4,16 @@ var TestHelper = require('../../../TestHelper');
 
 var map = require('lodash/collection/map');
 
+// polyfill, because Math.sign is not available in PhantomJS, IE and Safari
+// https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/sign
+Math.sign = Math.sign || function(x) {
+  x = +x; // convert to a number
+  if (x === 0 || isNaN(x)) {
+    return x;
+  }
+  return x > 0 ? 1 : -1;
+};
+
 function move(elementIds, delta, targetId, isAttach) {
 
   if (typeof elementIds === 'string') {
@@ -21,18 +31,25 @@ function move(elementIds, delta, targetId, isAttach) {
     targetId = null;
   }
 
-  return TestHelper.getBpmnJS().invoke(function(elementRegistry, modeling) {
+  return TestHelper.getBpmnJS().invoke(function(canvas, elementRegistry, modeling) {
 
     function getElement(id) {
 
       var element = elementRegistry.get(id);
+
       expect(element).to.exist;
 
       return element;
     }
 
     var elements = map(elementIds, getElement),
-        target = targetId && getElement(targetId);
+        target;
+
+    if (targetId === 'Root') {
+      target = canvas.getRootElement();
+    } else {
+      target = targetId && getElement(targetId);
+    }
 
     return modeling.moveElements(elements, delta, target, isAttach);
   });
@@ -93,7 +110,7 @@ function compareZOrder(aId, bId) {
         parent: aAncestor
       };
     }
-  });
+  }, false);
 
   // b contained in a
   if (!sharedRoot.a) {
@@ -105,8 +122,8 @@ function compareZOrder(aId, bId) {
     return 1;
   }
 
-  var aIndex = sharedRoot.parent.indexOf(sharedRoot.a),
-      bIndex = sharedRoot.parent.indexOf(sharedRoot.b);
+  var aIndex = sharedRoot.parent.children.indexOf(sharedRoot.a),
+      bIndex = sharedRoot.parent.children.indexOf(sharedRoot.b);
 
   return Math.sign(aIndex - bIndex);
 }
@@ -122,7 +139,7 @@ function expectZOrder() {
 
   forEach(elements, function(e, idx) {
 
-    next = elements[idx];
+    next = elements[idx + 1];
 
     if (next) {
       expect(compareZOrder(e, next)).to.eql(-1);
