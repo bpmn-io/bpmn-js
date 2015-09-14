@@ -52,7 +52,7 @@ describe('import - collapsed container', function() {
     }));
 
 
-    it('should import collapsed with nested elements', inject(function(elementRegistry) {
+    it('should import collapsed with nested hidden labels', inject(function(elementRegistry) {
       var hiddenEventShape = elementRegistry.get('StartEvent_2');
       expect(hiddenEventShape.label.hidden).to.be.true;
 
