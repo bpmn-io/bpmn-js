@@ -267,6 +267,10 @@ svg.drop-not-ok {
   text-align: center;
 }
 
+.djs-palette .entry img {
+  max-width: 100%;
+}
+
 .djs-palette.open .djs-palette-toggle {
   height: 10px;
 }
