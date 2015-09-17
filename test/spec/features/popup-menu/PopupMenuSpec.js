@@ -618,7 +618,7 @@ describe('features/popup-menu', function() {
 
       // then
       expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
-      expect(entriesContainer.childNodes.length).to.equal(9);
+      expect(entriesContainer.childNodes.length).to.equal(8);
     }));
 
 
