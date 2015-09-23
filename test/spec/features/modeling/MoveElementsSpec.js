@@ -263,6 +263,86 @@ describe('features/modeling - move elements', function() {
   }));
 
 
+  describe('multiple selection', function(){
+
+    it('should keep parent of secondary shape (scenario 1)', inject(function(modeling) {
+      // scenario 1:
+      // primary shape parent hover:    does not change
+      // secondary shape parent hover:  does not change
+
+      // given
+      modeling.moveElements([ childShape ], { x: 350, y: -50 }, rootShape);
+
+      // when
+      modeling.moveElements([ childShape, otherChildShape ], { x: 0, y: 20 }, parentShape,
+        { primaryShape: otherChildShape });
+
+      // then
+      expect(otherChildShape.parent.id).to.equal(parentShape.id);
+      expect(childShape.parent.id).to.equal(rootShape.id);
+
+    }));
+
+
+    it('should keep parent of secondary shape (scenario 2)', inject(function(modeling) {
+      // scenario 2:
+      // primary shape parent hover:    does not change
+      // secondary shape parent hover:  does change
+
+      // given
+      modeling.moveElements([ childShape ], { x: 330, y: -50 }, rootShape);
+
+      // when
+      modeling.moveElements([ childShape, otherChildShape ], { x: -145, y: 100 }, parentShape,
+        { primaryShape: otherChildShape });
+
+      // then
+      expect(otherChildShape.parent.id).to.equal(parentShape.id);
+      expect(childShape.parent.id).to.equal(rootShape.id);
+
+    }));
+
+
+    it('should set parent of sec. shape to parent of prim. shape (scenario 3)', inject(function(modeling) {
+      // scenario 3:
+      // primary shape parent hover:    does change
+      // secondary shape parent hover:  does not change
+
+      // given
+      modeling.moveElements([ childShape ], { x: 350, y: -50 }, rootShape);
+
+      // when
+      modeling.moveElements([ childShape, otherChildShape ], { x: 400, y: 200 }, otherParentShape,
+        { primaryShape: otherChildShape });
+
+      // then
+      expect(otherChildShape.parent.id).to.equal(otherParentShape.id);
+      expect(childShape.parent.id).to.equal(otherParentShape.id);
+
+    }));
+
+
+    it('should set parent of sec. shape to parent of prim. shape (scenario 4)', inject(function(modeling) {
+      // scenario 4:
+      // primary shape parent hover:    does change
+      // secondary shape parent hover:  does change
+
+      // given
+      modeling.moveElements([ childShape ], { x: 300, y: -50 }, rootShape);
+
+      // when
+      modeling.moveElements([ childShape, otherChildShape ], { x: 280, y: 200 }, otherParentShape,
+        { primaryShape: otherChildShape });
+
+      // then
+      expect(otherChildShape.parent.id).to.equal(otherParentShape.id);
+      expect(childShape.parent.id).to.equal(otherParentShape.id);
+
+    }));
+
+  });
+
+
   describe('drop', function() {
 
     // @see DropShapeSpec.js
