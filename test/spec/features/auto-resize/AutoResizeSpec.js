@@ -486,6 +486,21 @@ describe('features/auto-resize', function() {
     }));
 
 
+    it('should expand top and bottom edge, if primary shape changes parent', inject(function(modeling){
+
+      // given
+      var originalBounds = getBounds(subProcessShape_1);
+
+      // when
+      modeling.moveElements([ taskShape_1, taskShape_2 ],
+        { x: 0, y: 100 }, subProcessShape_1, { primaryShape: taskShape_2 });
+
+      // then
+      var expectedBounds = assign(originalBounds, { y: 130, height: 334 });
+      expect(subProcessShape_1).to.have.bounds(expectedBounds);
+
+    }));
+
   });
 
   describe('nested sub processes', function() {
