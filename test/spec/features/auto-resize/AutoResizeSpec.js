@@ -418,6 +418,76 @@ describe('features/auto-resize', function() {
 
   });
 
+  describe('after moving multiple elements', function() {
+
+    var diagramXML = require('./AutoResize.multi-selection.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    var taskShape_1,
+        taskShape_2,
+        subProcessShape_1,
+        rootShape;
+
+    beforeEach(inject(function(elementRegistry, canvas) {
+      taskShape_1 = elementRegistry.get('Task_1');
+      taskShape_2 = elementRegistry.get('Task_2');
+      subProcessShape_1 = elementRegistry.get('SubProcess_1');
+      rootShape = canvas.getRootElement();
+    }));
+
+
+    it('should not expand, if elements keep their parents (different original parents)',
+      inject(function(modeling) {
+
+      // given
+      var originalBounds = getBounds(subProcessShape_1);
+
+      // when
+      modeling.moveElements([ taskShape_1, taskShape_2 ],
+        { x: -100, y: 0 }, subProcessShape_1, { primaryShape: taskShape_1 });
+
+      // then
+      expect(subProcessShape_1).to.have.bounds(originalBounds);
+
+    }));
+
+
+    it('should expand, if elements keep their parents (same original parent)', inject(function(modeling) {
+
+      // given
+      var originalBounds = getBounds(subProcessShape_1);
+      modeling.moveElements([ taskShape_2 ], { x: -110, y: 135 }, subProcessShape_1);
+
+      // when
+      modeling.moveElements([ taskShape_1, taskShape_2 ],
+        { x: -110, y: 0 }, subProcessShape_1, { primaryShape: taskShape_1 });
+
+      // then
+      var expectedBounds = assign(originalBounds, { x: 0, width: 444 });
+      expect(subProcessShape_1).to.have.bounds(expectedBounds);
+
+    }));
+
+
+    it('should expand, if primary shape changes parent', inject(function(modeling){
+
+      // given
+      var originalBounds = getBounds(subProcessShape_1);
+
+      // when
+      modeling.moveElements([ taskShape_1, taskShape_2 ],
+        { x: 0, y: 50 }, subProcessShape_1, { primaryShape: taskShape_2 });
+
+      // then
+      var expectedBounds = assign(originalBounds, { y: 80, height: 317 });
+      expect(subProcessShape_1).to.have.bounds(expectedBounds);
+
+    }));
+
+
+  });
+
   describe('nested sub processes', function() {
 
     var diagramXML = require('./AutoResize.nested-sub-processes.bpmn');
