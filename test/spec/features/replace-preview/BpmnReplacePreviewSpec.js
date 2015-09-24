@@ -83,6 +83,40 @@ describe('features/replace-preview', function() {
   }));
 
 
+  it('should add dragger to context.visualReplacements once', inject(function(dragging) {
+
+    // when
+    moveShape(startEvent_1, rootElement, { x: 275, y: 120 });
+    moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
+    moveShape(startEvent_1, rootElement, { x: 285, y: 120 });
+
+    // then
+    var visualReplacements = dragging.active().data.context.visualReplacements;
+
+    expect(visualReplacements[startEvent_1.id]).to.exist;
+    expect(Object.keys(visualReplacements).length).to.equal(1);
+
+  }));
+
+
+  it('should remove dragger from context.visualReplacements', inject(function(elementRegistry, dragging) {
+
+    // given
+    var subProcess_2 = elementRegistry.get('SubProcess_2');
+
+    // when
+    moveShape(startEvent_1, rootElement, { x: 275, y: 120 });
+    moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
+    moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
+
+    // then
+    var visualReplacements = dragging.active().data.context.visualReplacements;
+
+    expect(visualReplacements).to.be.empty;
+
+  }));
+
+
   it('should hide the replaced visual',
     inject(function(dragging) {
 
