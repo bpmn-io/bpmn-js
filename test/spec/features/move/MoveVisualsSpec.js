@@ -154,6 +154,101 @@ describe('features/move - MoveVisuals', function() {
 
   });
 
+  describe('drop markup on target change', function() {
+
+    var differentShape;
+
+    beforeEach(inject(function(elementFactory, canvas) {
+
+      differentShape = elementFactory.createShape({
+        id: 'differentShape',
+        x: 10, y: 110, width: 50, height: 50
+      });
+
+      canvas.addShape(differentShape, rootShape);
+
+    }));
+
+    it('should indicate new target, if selected shapes have different parents',
+      inject(function(move, dragging, elementRegistry, selection) {
+
+      // given
+      selection.select([ childShape, differentShape ]);
+
+      move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
+
+      // when
+      dragging.move(canvasEvent({ x: 200, y: 200 }));
+      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+        element: parentShape,
+        gfx: elementRegistry.getGraphics(parentShape)
+      }));
+
+      dragging.move(canvasEvent({ x: 120, y: 180 }));
+
+      // then
+      var ctx = dragging.active();
+      expect(ctx.data.context.differentParents).to.equal(true);
+
+      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(true);
+
+    }));
+
+
+    it('should not indicate new target, if target does not change',
+      inject(function(move, dragging, elementRegistry, selection) {
+
+      // given
+      selection.select([ childShape, differentShape ]);
+
+      move.start(canvasEvent({ x: 10, y: 10 }), childShape);
+
+      // when
+      dragging.move(canvasEvent({ x: 200, y: 200 }));
+      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+        element: parentShape,
+        gfx: elementRegistry.getGraphics(parentShape)
+      }));
+
+      dragging.move(canvasEvent({ x: 120, y: 180 }));
+
+      // then
+      var ctx = dragging.active();
+      expect(ctx.data.context.differentParents).to.equal(true);
+
+      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(false);
+
+    }));
+
+
+    it('should not indicate new target, if drop is not allowed',
+      inject(function(move, dragging, elementRegistry, selection) {
+
+      // given
+      selection.select([ childShape, differentShape ]);
+
+      move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
+
+      // when
+      dragging.move(canvasEvent({ x: 200, y: 200 }));
+      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+        element: childShape,
+        gfx: elementRegistry.getGraphics(childShape)
+      }));
+
+      dragging.move(canvasEvent({ x: 150, y: 15 }));
+
+      // then
+      var ctx = dragging.active();
+      expect(ctx.data.context.differentParents).to.equal(true);
+
+      var childGfx = elementRegistry.getGraphics(childShape);
+      expect(childGfx.hasClass('drop-new-target')).to.equal(false);
+      expect(childGfx.hasClass('drop-not-ok')).to.equal(true);
+    }));
+
+  });
+
   describe('addDragger', function(){
 
     it('should be exposed and return the added dragger', inject(function(moveVisuals) {
