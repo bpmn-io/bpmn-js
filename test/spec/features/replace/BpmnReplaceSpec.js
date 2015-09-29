@@ -870,243 +870,56 @@ describe('features/replace', function() {
 
     describe('- normal -', function() {
 
-      it('should replace CancelEvent when morphing transaction',
+      it('should show Cancel Event replace option',
         inject(function(elementRegistry, bpmnReplace) {
         // given
-        var transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
+        var endEvent = elementRegistry.get('EndEvent_1');
 
         // when
-        bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
-
-        var newEndEvent = subProcess.children[0].businessObject;
+        var opts = bpmnReplace.getReplaceOptions(endEvent);
 
         // then
-        expect(subProcess.children).to.have.length(2);
-        expect(newEndEvent.eventDefinitions).to.not.exist;
+        expect(opts).to.have.length(9);
       }));
 
-
-      it('should replace CancelEvent when morphing transaction -> undo',
-        inject(function(elementRegistry, bpmnReplace, commandStack) {
+      it('should NOT show Cancel Event replace option',
+        inject(function(elementRegistry, bpmnReplace) {
         // given
-        var transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
+        var endEvent = elementRegistry.get('EndEvent_2');
 
         // when
-        bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
-
-        commandStack.undo();
-
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
-        })[0];
+        var opts = bpmnReplace.getReplaceOptions(endEvent);
 
         // then
-        expect(transaction.children).to.have.length(2);
-        expect(endEventAfter.businessObject.eventDefinitions).to.exist;
-      }));
-
-
-      it('should replace a CancelEvent when moving outside of a transaction',
-        inject(function(elementRegistry, bpmnReplace, modeling) {
-        // given
-        var process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
-
-        // when
-        var cancelEvent = bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
-
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.parent === process && element.type === 'bpmn:EndEvent');
-        })[0];
-
-        // then
-        expect(transaction.children).to.have.length(0);
-        expect(endEventAfter.businessObject.eventDefinitions).to.not.exist;
-      }));
-
-
-      it('should replace a CancelEvent when moving outside of a transaction -> undo',
-        inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
-        // given
-        var process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
-
-        // when
-        var cancelEvent = bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
-
-        commandStack.undo();
-
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
-        })[0];
-
-        // then
-        expect(transaction.children).to.have.length(2);
-        expect(endEventAfter.businessObject.eventDefinitions).to.exist;
+        expect(opts).to.have.length(8);
       }));
 
     });
 
     describe('- boundary events -', function() {
 
-      it('should replace CancelBoundaryEvent when morphing from a transaction',
+      it('should NOT show Cancel Event replace option',
         inject(function(elementRegistry, bpmnReplace) {
         // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1');
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
         // when
-        bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
-
-        var newBoundaryEvent = subProcess.attachers[0].businessObject;
+        var opts = bpmnReplace.getReplaceOptions(boundaryEvent);
 
         // then
-        expect(newBoundaryEvent.eventDefinitions).to.not.exist;
-        expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
-        expect(elementRegistry.get('Transaction_1')).to.not.exist;
+        expect(opts).to.have.length(12);
       }));
 
-
-      it('should replace CancelBoundaryEvent when morphing from a transaction -> undo',
-        inject(function(elementRegistry, bpmnReplace, commandStack) {
+      it('should NOT show Cancel Event replace option',
+        inject(function(elementRegistry, bpmnReplace) {
         // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1');
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
 
         // when
-        bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
-
-        commandStack.undo();
-
-        var afterBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
+        var opts = bpmnReplace.getReplaceOptions(boundaryEvent);
 
         // then
-        expect(afterBoundaryEvent.businessObject.eventDefinitions).exist;
-        expect(afterBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
-        expect(transaction.attachers).to.have.length(1);
-      }));
-
-
-      it('should replace CancelBoundaryEvent when attaching to a NON-transaction',
-        inject(function(elementRegistry, bpmnReplace, modeling) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            subProcess = elementRegistry.get('SubProcess_1'),
-            process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1');
-
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
-
-        var movedBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
-
-        // then
-        expect(movedBoundaryEvent.businessObject.eventDefinitions).to.not.exist;
-        expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
-        expect(movedBoundaryEvent.parent).to.equal(process);
-
-        expect(movedBoundaryEvent.host).to.equal(subProcess);
-        expect(subProcess.attachers).to.contain(movedBoundaryEvent);
-        expect(transaction.attachers).to.be.empty;
-      }));
-
-
-      it('should replace CancelBoundaryEvent when attaching to a NON-transaction -> undo',
-        inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            subProcess = elementRegistry.get('SubProcess_1');
-
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
-
-        commandStack.undo();
-
-        var movedBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
-
-        // then
-        expect(movedBoundaryEvent.businessObject.eventDefinitions).to.exist;
-        expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
-
-        expect(movedBoundaryEvent.host).to.equal(transaction);
-        expect(transaction.attachers).to.contain(movedBoundaryEvent);
-        expect(subProcess.attachers).to.have.length(1);
-      }));
-
-      it('should NOT allow morphing into an IntermediateEvent',
-        inject(function(elementRegistry, bpmnReplace, commandStack, move, dragging) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            subProcess = elementRegistry.get('SubProcess_1');
-
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
-        });
-
-        move.start(canvasEvent({ x: 0, y: 0 }), newBoundaryEvent);
-
-        dragging.hover({
-          gfx: elementRegistry.getGraphics(subProcess),
-          element: subProcess
-        });
-        dragging.move(canvasEvent({ x: 450, y: -50 }));
-
-        var canExecute = dragging.active().data.context.canExecute;
-
-        expect(canExecute).to.be.false;
+        expect(opts).to.have.length(11);
       }));
 
     });
