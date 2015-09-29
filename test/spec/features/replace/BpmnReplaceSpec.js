@@ -926,4 +926,72 @@ describe('features/replace', function() {
 
   });
 
+  describe('default flows', function() {
+
+    var diagramXML = require('./BpmnReplace.defaultFlows.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    it('should show Default replace option', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // then
+      expect(opts).to.have.length(1);
+    }));
+
+
+    it('should NOT show Default replace option', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_4');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // then
+      expect(opts).to.have.length(0);
+    }));
+
+
+    it('should replace SequenceFlow with DefaultFlow', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      opts[0].action();
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+    }));
+
+
+    it('should only have one DefaultFlow', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          sequenceFlow2 = elementRegistry.get('SequenceFlow_3');
+
+      // when
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow),
+          sequenceFlowOpts2 = bpmnReplace.getReplaceOptions(sequenceFlow2);
+
+      // trigger DefaultFlow replacement
+      sequenceFlowOpts2[0].action();
+      sequenceFlowOpts[0].action();
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+    }));
+
+  });
+
 });
