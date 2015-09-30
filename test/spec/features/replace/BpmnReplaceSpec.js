@@ -926,11 +926,13 @@ describe('features/replace', function() {
 
   });
 
+
   describe('default flows', function() {
 
     var diagramXML = require('./BpmnReplace.defaultFlows.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should show Default replace option', inject(function(elementRegistry, bpmnReplace) {
       // given
@@ -973,6 +975,25 @@ describe('features/replace', function() {
     }));
 
 
+    it('should replace SequenceFlow with DefaultFlow -> undo', inject(function(elementRegistry, bpmnReplace, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      opts[0].action();
+
+      commandStack.undo();
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).to.not.exist;
+    }));
+
+
     it('should only have one DefaultFlow', inject(function(elementRegistry, bpmnReplace) {
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -990,6 +1011,91 @@ describe('features/replace', function() {
 
       // then
       expect(gateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+    }));
+
+  });
+
+
+  describe('conditional flows', function() {
+
+    var diagramXML = require('./BpmnReplace.conditionalFlows.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should show ConditionalFlow replace option', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3');
+
+      //when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // then
+      expect(opts).to.have.length(1);
+    }));
+
+
+    it('should NOT show ConditionalFlow replace option', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      //when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // then
+      expect(opts).to.have.length(0);
+    }));
+
+
+    it('should morph into a ConditionalFlow', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+
+      //when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // replace with ConditionalFlow
+      opts[0].action();
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
+    }));
+
+
+    it('should morph into a ConditionalFlow -> undo', inject(function(elementRegistry, bpmnReplace, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+
+      //when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // replace with ConditionalFlow
+      opts[0].action();
+
+      commandStack.undo();
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+    }));
+
+
+    it('should morph back into a SequenceFlow', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // replace with ConditionalFlow
+      opts[0].action();
+
+      var conditionalOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // replace with SequenceFlow
+      conditionalOpts[0].action();
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
     }));
 
   });
