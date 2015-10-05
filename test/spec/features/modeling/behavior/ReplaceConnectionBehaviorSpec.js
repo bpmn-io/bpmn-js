@@ -19,7 +19,7 @@ function getConnection(source, target, connectionOrType) {
 }
 
 function expectConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).to.be.defined;
+  expect(getConnection(source, target, connectionOrType)).to.exist;
 }
 
 function expectNotConnected(source, target, connectionOrType) {
@@ -330,14 +330,16 @@ describe('features/modeling - replace connection', function() {
 
         // given
         var taskShape = element('Task_1'),
+            taskShape2 = element('Task_2'),
             targetShape = element('SubProcess_1'),
+            boundaryEvent = element('BoundaryEvent_1'),
             sequenceFlow = element('SequenceFlow_1');
 
         // when
         modeling.moveElements([ taskShape ], { x: 30, y: 200 }, targetShape);
 
         // then
-        expectNotConnected(taskShape, targetShape, sequenceFlow);
+        expectNotConnected(boundaryEvent, taskShape2 ,sequenceFlow);
 
       }));
 
@@ -346,6 +348,8 @@ describe('features/modeling - replace connection', function() {
 
         // given
         var taskShape = element('Task_1'),
+            taskShape2 = element('Task_2'),
+            boundaryEvent = element('BoundaryEvent_1'),
             targetShape = element('SubProcess_1'),
             sequenceFlow = element('SequenceFlow_1');
 
@@ -354,7 +358,7 @@ describe('features/modeling - replace connection', function() {
         commandStack.undo();
 
         // then
-        expectConnected(taskShape, targetShape, sequenceFlow);
+        expectConnected(boundaryEvent, taskShape2, sequenceFlow);
 
       }));
 
