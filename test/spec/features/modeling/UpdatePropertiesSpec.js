@@ -122,11 +122,15 @@ describe('features/modeling - update properties', function() {
 
       // given
       var flowConnection = elementRegistry.get('SequenceFlow_1');
+      var ids = flowConnection.businessObject.$model.ids;
 
       // when
       modeling.updateProperties(flowConnection, { id: 'FOO_BAR' });
 
       // then
+      expect(ids.assigned('FOO_BAR')).to.exist;
+      expect(ids.assigned('SequenceFlow_1')).to.be.false;
+
       expect(flowConnection.businessObject.id).to.equal('FOO_BAR');
       expect(flowConnection.id).to.equal('FOO_BAR');
     }));
@@ -222,12 +226,16 @@ describe('features/modeling - update properties', function() {
 
       // given
       var flowConnection = elementRegistry.get('SequenceFlow_1');
+      var ids = flowConnection.businessObject.$model.ids;
 
       // when
       modeling.updateProperties(flowConnection, { id: 'FOO_BAR' });
       commandStack.undo();
 
       // then
+      expect(ids.assigned('FOO_BAR')).to.be.false;
+      expect(ids.assigned('SequenceFlow_1')).to.exist;
+
       expect(flowConnection.businessObject.id).to.equal('SequenceFlow_1');
       expect(flowConnection.id).to.equal('SequenceFlow_1');
     }));
