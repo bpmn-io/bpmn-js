@@ -14,7 +14,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
 function getConnection(source, target, connectionOrType) {
   return find(source.outgoing, function(c) {
     return c.target === target &&
-        (typeof connectionOrType === 'string' ? is(c, connectionOrType) : c === connectionOrType);
+      (typeof connectionOrType === 'string' ? is(c, connectionOrType) : c === connectionOrType);
   });
 }
 
@@ -54,14 +54,13 @@ describe('features/modeling - replace connection', function() {
         var task4Shape = element('Task_4');
         var connection = element('SequenceFlow_1');
 
-        var newWaypoints = [connection.waypoints[0], { x: task4Shape.x+30, y: task4Shape.y }];
+        var newWaypoints = [ connection.waypoints[0], { x: task4Shape.x + 30, y: task4Shape.y }];
 
         // when
         modeling.reconnectEnd(connection, task4Shape, newWaypoints);
 
         // then
         expectConnected(element('Task_2'), task4Shape, 'bpmn:MessageFlow');
-
       }));
 
 
@@ -71,14 +70,13 @@ describe('features/modeling - replace connection', function() {
         var task4Shape = element('Task_4');
         var connection = element('MessageFlow_1');
 
-        var newWaypoints = [connection.waypoints[0], { x: task4Shape.x, y: task4Shape.y+20 }];
+        var newWaypoints = [ connection.waypoints[0], { x: task4Shape.x, y: task4Shape.y + 20 } ];
 
         // when
         modeling.reconnectEnd(connection, task4Shape, newWaypoints);
 
         // then
         expectConnected(element('Task_3'), task4Shape, 'bpmn:SequenceFlow');
-
       }));
 
 
@@ -88,14 +86,13 @@ describe('features/modeling - replace connection', function() {
         var participant2 = element('Participant_2');
         var connection = element('SequenceFlow_1');
 
-        var newWaypoints = [connection.waypoints[0], { x: participant2.x, y: participant2.y }];
+        var newWaypoints = [ connection.waypoints[0], { x: participant2.x, y: participant2.y }];
 
         // when
         modeling.reconnectEnd(connection, participant2, newWaypoints);
 
         // then
         expectConnected(element('Task_2'), participant2, 'bpmn:MessageFlow');
-
       }));
 
 
@@ -107,8 +104,8 @@ describe('features/modeling - replace connection', function() {
             connection = element('SequenceFlow_1');
 
         var newWaypoints = [
-          { x: participant2.x+200 , y: participant2.y },
-          { x: subProcess1.x, y: subProcess1.y+50 }
+          { x: participant2.x + 200, y: participant2.y },
+          { x: subProcess1.x, y: subProcess1.y + 50 }
         ];
 
         // when
@@ -116,7 +113,6 @@ describe('features/modeling - replace connection', function() {
 
         // then
         expectConnected(participant2, subProcess1, 'bpmn:MessageFlow');
-
       }));
 
     });
@@ -263,7 +259,6 @@ describe('features/modeling - replace connection', function() {
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
-
     var element;
 
     beforeEach(inject(function(elementRegistry) {
@@ -271,7 +266,6 @@ describe('features/modeling - replace connection', function() {
         return elementRegistry.get(id);
       };
     }));
-
 
     describe('moving text-annotation to participant', function() {
 
@@ -340,7 +334,6 @@ describe('features/modeling - replace connection', function() {
 
         // then
         expectNotConnected(boundaryEvent, taskShape2 ,sequenceFlow);
-
       }));
 
 
@@ -359,7 +352,6 @@ describe('features/modeling - replace connection', function() {
 
         // then
         expectConnected(boundaryEvent, taskShape2, sequenceFlow);
-
       }));
 
 
@@ -377,7 +369,6 @@ describe('features/modeling - replace connection', function() {
 
         // then
         expectNotConnected(taskShape, targetShape, sequenceFlow);
-
       }));
 
     });

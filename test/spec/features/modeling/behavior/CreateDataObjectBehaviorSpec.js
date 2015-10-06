@@ -39,7 +39,6 @@ describe('features/modeling/behavior - data objects -', function() {
       expect(dataObject).to.exist;
       expect(is(dataObject, 'bpmn:DataObject')).to.be.true;
       expect(dataObject.id).to.exist;
-
     }));
 
 
@@ -60,7 +59,6 @@ describe('features/modeling/behavior - data objects -', function() {
 
       expect(dataObject2.$parent.id).to.equal(subProcess1.id);
       expect(dataObjectRefShape2.parent.id).to.equal(subProcess1.id);
-
     }));
 
   });
@@ -75,11 +73,9 @@ describe('features/modeling/behavior - data objects -', function() {
         taskShape;
 
     beforeEach(inject(function(canvas, elementRegistry) {
-
       rootShape = canvas.getRootElement();
       dataObjectRefShape1 = elementRegistry.get('DataObjectReference_1');
       taskShape = elementRegistry.get('Task_1');
-
     }));
 
     describe('dataOutputAssociation', function() {
@@ -95,7 +91,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataOutputAssociations[0].$parent).to.equal(taskShape.businessObject);
         expect(dataOutputAssociations).to.include(outputAssociation.businessObject);
         expect(taskShape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
 
@@ -108,7 +103,6 @@ describe('features/modeling/behavior - data objects -', function() {
         // then
         expect(taskShape.businessObject.get('dataOutputAssociations')).to.be.empty;
         expect(taskShape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
 
@@ -125,7 +119,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataOutputAssociations[0].$parent).to.equal(taskShape.businessObject);
         expect(dataOutputAssociations).to.include(outputAssociation.businessObject);
         expect(taskShape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
     });
@@ -143,7 +136,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataInputAssociations[0].$parent).to.equal(taskShape.businessObject);
         expect(dataInputAssociations).to.include(inputAssociation.businessObject);
         expect(taskShape.businessObject.get('dataOutputAssociations')).to.be.empty;
-
       }));
 
 
@@ -156,7 +148,6 @@ describe('features/modeling/behavior - data objects -', function() {
         // then
         expect(taskShape.businessObject.get('dataOutputAssociations')).to.be.empty;
         expect(taskShape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
 
@@ -173,7 +164,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataInputAssociations[0].$parent).to.equal(taskShape.businessObject);
         expect(dataInputAssociations).to.include(inputAssociation.businessObject);
         expect(taskShape.businessObject.get('dataOutputAssociations')).to.be.empty;
-
       }));
 
     });
@@ -192,13 +182,13 @@ describe('features/modeling/behavior - data objects -', function() {
         inputAssociation;
 
     beforeEach(inject(function(canvas, elementRegistry) {
-
       rootShape = canvas.getRootElement();
+
       task1Shape = elementRegistry.get('Task_1');
       task2Shape = elementRegistry.get('Task_2');
+
       outputAssociation = elementRegistry.get('DataOutputAssociation_1');
       inputAssociation = elementRegistry.get('DataInputAssociation_1');
-
     }));
 
     describe('DataOutputAssociation', function() {
@@ -211,7 +201,6 @@ describe('features/modeling/behavior - data objects -', function() {
         // then
         expect(task1Shape.businessObject.get('dataOutputAssociations')).to.be.empty;
         expect(task1Shape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
 
@@ -219,6 +208,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
         // when
         modeling.removeConnection(outputAssociation);
+
         commandStack.undo();
 
         var dataOutputAssociations = task1Shape.businessObject.get('dataOutputAssociations');
@@ -227,7 +217,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataOutputAssociations[0].$parent).to.equal(task1Shape.businessObject);
         expect(dataOutputAssociations).to.be.include(outputAssociation.businessObject);
         expect(task1Shape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
 
@@ -235,13 +224,13 @@ describe('features/modeling/behavior - data objects -', function() {
 
         // when
         modeling.removeConnection(outputAssociation);
+
         commandStack.undo();
         commandStack.redo();
 
         // then
         expect(task1Shape.businessObject.get('dataOutputAssociations')).to.be.empty;
         expect(task1Shape.businessObject.get('dataInputAssociations')).to.be.empty;
-
       }));
 
     });
@@ -256,7 +245,6 @@ describe('features/modeling/behavior - data objects -', function() {
         // then
         expect(task2Shape.businessObject.get('dataInputAssociations')).to.be.empty;
         expect(task2Shape.businessObject.get('dataOutputAssociations')).to.be.empty;
-
       }));
 
 
@@ -264,6 +252,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
         // when
         modeling.removeConnection(inputAssociation);
+
         commandStack.undo();
 
         var dataInputAssociations = task2Shape.businessObject.get('dataInputAssociations');
@@ -272,7 +261,6 @@ describe('features/modeling/behavior - data objects -', function() {
         expect(dataInputAssociations[0].$parent).to.equal(task2Shape.businessObject);
         expect(dataInputAssociations).to.include(inputAssociation.businessObject);
         expect(task2Shape.businessObject.get('dataOutputAssociations')).to.be.empty;
-
       }));
 
 
@@ -280,20 +268,16 @@ describe('features/modeling/behavior - data objects -', function() {
 
         // when
         modeling.removeConnection(inputAssociation);
+
         commandStack.undo();
         commandStack.redo();
 
         // then
         expect(task2Shape.businessObject.get('dataInputAssociations')).to.be.empty;
         expect(task2Shape.businessObject.get('dataOutputAssociations')).to.be.empty;
-
       }));
 
     });
-
-  });
-
-  describe('reconnect', function() {
 
   });
 
