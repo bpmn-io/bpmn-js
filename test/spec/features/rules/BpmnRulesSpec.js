@@ -29,7 +29,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'Task', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -39,7 +40,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'TextAnnotation', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -49,7 +51,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Task', 'IntermediateThrowEvent_Link', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -59,7 +62,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('IntermediateThrowEvent_Link', 'EndEvent_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -69,7 +73,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'IntermediateCatchEvent_Link', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -79,7 +84,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('IntermediateCatchEvent_Link', 'Task', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -89,6 +95,71 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanDrop('TextAnnotation', 'Process', true);
     }));
 
+
+    it('connect DataObjectReference -> StartEvent_None', inject(function() {
+
+      expectCanConnect('DataObjectReference', 'StartEvent_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect StartEvent_None -> DataObjectReference', inject(function() {
+
+      expectCanConnect('StartEvent_None', 'DataObjectReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect Task -> DataObjectReference', inject(function() {
+
+      expectCanConnect('Task', 'DataObjectReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataObjectReference -> Task', inject(function() {
+
+      expectCanConnect('DataObjectReference', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
+
+
+    it('connect SubProcess -> DataObjectReference', inject(function() {
+
+      expectCanConnect('SubProcess', 'DataObjectReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataObjectReference -> SubProcess', inject(function() {
+
+      expectCanConnect('DataObjectReference', 'SubProcess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
   });
 
 
@@ -104,7 +175,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'Task', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -114,7 +186,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'ExclusiveGateway', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -124,7 +197,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'SubProcess', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -134,7 +208,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'BoundaryEvent_on_Task', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -144,7 +219,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'StartEvent_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -154,7 +230,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'BoundaryEvent_on_SubProcess', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -164,7 +241,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_nested', 'Task', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -174,7 +252,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_nested', 'EndEvent_nested', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -184,7 +263,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'BoundaryEvent_in_OtherProcess', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -194,7 +274,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('BoundaryEvent_on_SubProcess', 'Task_in_OtherProcess', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -204,7 +285,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Task_in_OtherProcess', 'BoundaryEvent_on_SubProcess', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -223,7 +305,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Message', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -233,7 +316,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Message', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -243,7 +327,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Signal', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -253,7 +338,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Condition', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -263,7 +349,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Timer', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -273,7 +360,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -283,7 +371,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'IntermediateThrowEvent_Message', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -293,7 +382,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'ReceiveTask', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -303,7 +393,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'Task_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -313,7 +404,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'ParallelGateway', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -323,7 +415,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EventBasedGateway', 'ParallelGateway', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -342,7 +435,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'IntermediateThrowEvent_Message', {
         sequenceFlow: true,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -352,7 +446,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -362,7 +457,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'StartEvent_None', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
 
     }));
@@ -373,7 +469,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'StartEvent_Timer', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
 
     }));
@@ -384,7 +481,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'StartEvent_Message', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
 
     }));
@@ -395,7 +493,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EndEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -405,7 +504,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EndEvent_Cancel', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -415,7 +515,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EndEvent_Message', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -425,7 +526,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'EndEvent_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -435,7 +537,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('IntermediateThrowEvent_Message', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -445,7 +548,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('IntermediateThrowEvent_None', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -455,7 +559,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('IntermediateThrowEvent_Signal', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -465,7 +570,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'IntermediateThrowEvent_Message', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -475,7 +581,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Task_in_SubProcess', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -485,7 +592,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('EndEvent_None_in_SubProcess', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -495,7 +603,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('OtherParticipant', 'Task_in_SubProcess', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -505,7 +614,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Participant', 'OtherParticipant', {
         sequenceFlow: false,
         messageFlow: true,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 
@@ -515,7 +625,8 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'TextAnnotation_OtherParticipant', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true
+        association: true,
+        dataAssociation: false
       });
     }));
 

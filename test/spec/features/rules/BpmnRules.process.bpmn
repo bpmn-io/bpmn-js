@@ -18,6 +18,8 @@
       <bpmn2:endEvent id="EndEvent_in_SubProcess" />
     </bpmn2:subProcess>
     <bpmn2:endEvent id="EndEvent_None" />
+    <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject" />
+    <bpmn2:dataObject id="DataObject" />
     <bpmn2:textAnnotation id="TextAnnotation" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="_BPMNDiagram_2">
@@ -65,6 +67,12 @@
         <dc:Bounds x="516" y="168" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="534" y="209" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="601" y="162" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="574" y="212" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
