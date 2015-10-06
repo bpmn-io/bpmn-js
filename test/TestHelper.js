@@ -7,3 +7,8 @@ TestHelper.insertCSS('diagram-js.css', fs.readFileSync(__dirname + '/../assets/d
 TestHelper.insertCSS('diagram-js-testing.css',
   '.test-container .result { height: 500px; }' + '.test-container > div'
 );
+
+
+// add suite specific matchers
+global.chai.use(require('./matchers/Bounds'));
+global.chai.use(require('./matchers/Connection'));
