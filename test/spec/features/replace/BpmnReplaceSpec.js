@@ -9,8 +9,6 @@ var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('diagram-js/lib/features/move'),
     coreModule = require('../../../../lib/core');
 
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
-
 var is = require('../../../../lib/util/ModelUtil').is,
     isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
     isInterrupting = require('../../../../lib/util/DiUtil').isInterrupting,
@@ -975,7 +973,8 @@ describe('features/replace', function() {
     }));
 
 
-    it('should replace SequenceFlow with DefaultFlow -> undo', inject(function(elementRegistry, bpmnReplace, commandStack) {
+    it('should replace SequenceFlow with DefaultFlow -> undo',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -1013,6 +1012,152 @@ describe('features/replace', function() {
       expect(gateway.businessObject.default).to.equal(sequenceFlow.businessObject);
     }));
 
+
+    it('should replace DefaultFlow with SequenceFlow when changing source',
+      inject(function(elementRegistry, bpmnReplace, modeling) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          task = elementRegistry.get('Task_2');
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectStart(sequenceFlow, task, [
+        { x: 686, y: 267, original: { x: 686, y: 307 } },
+        { x: 686, y: 207, original: { x: 686, y: 187 } }
+      ]);
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).to.not.exist;
+    }));
+
+
+    it('should replace DefaultFlow with SequenceFlow when changing source -> undo',
+      inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          task = elementRegistry.get('Task_2');
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectStart(sequenceFlow, task, [
+        { x: 686, y: 267, original: { x: 686, y: 307 } },
+        { x: 686, y: 207, original: { x: 686, y: 187 } }
+      ]);
+
+      commandStack.undo();
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
+    }));
+
+
+    it('should replace DefaultFlow with SequenceFlow when changing target',
+      inject(function(elementRegistry, elementFactory, canvas, bpmnReplace, modeling) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          root = canvas.getRootElement();
+
+      var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+
+      modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+        { x: 686, y: 267, original: { x: 686, y: 307 } },
+        { x: 686, y: 50, original: { x: 686, y: 75 } }
+      ]);
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).to.not.exist;
+    }));
+
+
+    it('should replace DefaultFlow with SequenceFlow when changing target -> undo',
+      inject(function(elementRegistry, elementFactory, canvas, bpmnReplace, modeling, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          root = canvas.getRootElement();
+
+      var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+
+      modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+        { x: 686, y: 267, original: { x: 686, y: 307 } },
+        { x: 686, y: 50, original: { x: 686, y: 75 } }
+      ]);
+
+      commandStack.undo();
+
+      var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // then
+      expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
+    }));
+
+
+    it('should keep DefaultFlow when morphing Gateway', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      opts[0].action();
+
+      var inclusiveGateway = bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
+
+      // then
+      expect(inclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+    }));
+
+
+    it('should keep DefaultFlow when morphing Gateway -> undo',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
+
+      // when
+      var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger DefaultFlow replacement
+      opts[0].action();
+
+      bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
+
+      commandStack.undo();
+
+      // then
+      expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+    }));
   });
 
 
@@ -1096,6 +1241,104 @@ describe('features/replace', function() {
 
       // then
       expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+    }));
+
+
+    it('should replace ConditionalFlow with SequenceFlow when changing source',
+      inject(function(elementRegistry, bpmnReplace, modeling) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          startEvent = elementRegistry.get('StartEvent_1');
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger ConditionalFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectStart(sequenceFlow, startEvent, [
+        { x: 196, y: 197, original: { x: 178, y: 197 } },
+        { x: 497, y: 278, original: { x: 547, y: 278 } }
+      ]);
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+    }));
+
+
+    it('should replace ConditionalFlow with SequenceFlow when changing source -> undo',
+      inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          startEvent = elementRegistry.get('StartEvent_1');
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger ConditionalFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectStart(sequenceFlow, startEvent, [
+        { x: 196, y: 197, original: { x: 178, y: 197 } },
+        { x: 497, y: 278, original: { x: 547, y: 278 } }
+      ]);
+
+      commandStack.undo();
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
+    }));
+
+
+    it('should replace ConditionalFlow with SequenceFlow when changing target',
+      inject(function(elementRegistry, elementFactory, canvas, bpmnReplace, modeling) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          root = canvas.getRootElement(),
+          intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+
+      modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger ConditionalFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+        { x: 389, y: 197, original: { x: 389, y: 197 } },
+        { x: 497, y: 197, original: { x: 497, y: 197 } }
+      ]);
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+    }));
+
+
+    it('should replace ConditionalFlow with SequenceFlow when changing target -> undo',
+      inject(function(elementRegistry, elementFactory, canvas, bpmnReplace, modeling, commandStack) {
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+          root = canvas.getRootElement(),
+          intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+
+      modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+
+      var sequenceFlowOpts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+      // trigger ConditionalFlow replacement
+      sequenceFlowOpts[0].action();
+
+      // when
+      modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+        { x: 389, y: 197, original: { x: 389, y: 197 } },
+        { x: 497, y: 197, original: { x: 497, y: 197 } }
+      ]);
+
+      commandStack.undo();
+
+      // then
+      expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
     }));
 
   });
