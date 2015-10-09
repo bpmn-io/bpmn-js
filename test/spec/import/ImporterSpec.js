@@ -252,7 +252,7 @@ describe('import - Importer', function() {
       // when
       runImport(diagram, xml, function(err, warnings) {
 
-        expect(warnings.length).to.equal(1);
+        expect(warnings.length).to.equal(0);
 
         done(err);
       });
