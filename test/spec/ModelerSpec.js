@@ -34,6 +34,12 @@ describe('Modeler', function() {
   });
 
 
+  it('should import nested lanes', function(done) {
+    var xml = require('./features/modeling/lanes/lanes.bpmn');
+    createModeler(xml, done);
+  });
+
+
   it('should import empty definitions', function(done) {
     var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
     createModeler(xml, done);
