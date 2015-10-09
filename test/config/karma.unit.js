@@ -12,22 +12,22 @@ module.exports = function(karma) {
 
     basePath: basePath,
 
-    frameworks: [ 'browserify',
-                  'mocha',
-                  'chai',
-                  'sinon-chai'],
-
-    files: [
-      'test/spec/**/*Spec.js',
-      'test/integration/**/*Spec.js'
+    frameworks: [
+      'browserify',
+      'mocha',
+      'chai',
+      'sinon-chai'
     ],
 
-    reporters: [ 'dots' ],
+    files: [
+      'test/**/*Spec.js'
+    ],
 
     preprocessors: {
-      'test/spec/**/*Spec.js': [ 'browserify' ],
-      'test/integration/**/*Spec.js': [ 'browserify' ]
+      'test/**/*Spec.js': [ 'browserify' ]
     },
+
+    reporters: [ 'dots' ],
 
     browsers: [ 'PhantomJS' ],
 
