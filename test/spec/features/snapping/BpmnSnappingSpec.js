@@ -14,9 +14,18 @@ var coreModule = require('../../../../lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
     rulesModule = require('../../../../lib/features/rules');
 
+
 describe('features/snapping - BpmnSnapping', function() {
 
-  var testModules = [ coreModule, snappingModule, modelingModule, createModule, rulesModule, moveModule ];
+  var testModules = [
+    coreModule,
+    snappingModule,
+    modelingModule,
+    createModule,
+    rulesModule,
+    moveModule
+  ];
+
 
   describe('on Boundary Events', function() {
 
@@ -225,7 +234,13 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var diagramXML = require('./BpmnSnapping.participant-resize.bpmn');
 
-      var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+      var testResizeModules = [
+        coreModule,
+        resizeModule,
+        modelingModule,
+        rulesModule,
+        snappingModule
+      ];
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
 
@@ -238,7 +253,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(canvasEvent({ x: 0, y: 0 }));
         dragging.end();
 
-        expect(participant.width).to.equal(497);
+        expect(participant.width).to.equal(482);
         expect(participant.height).to.equal(252);
       }));
 
@@ -265,7 +280,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end();
 
         expect(participant.width).to.equal(300);
-        expect(participant.height).to.equal(150);
+        expect(participant.height).to.equal(60);
       }));
 
 
@@ -278,7 +293,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end();
 
         expect(participant.width).to.equal(300);
-        expect(participant.height).to.equal(150);
+        expect(participant.height).to.equal(60);
       }));
 
 
@@ -290,7 +305,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(canvasEvent({ x: 0, y: 0 }));
         dragging.end();
 
-        expect(participant.width).to.equal(320);
+        expect(participant.width).to.equal(305);
 
         // snap to children rather than min dimensions
         expect(participant.height).to.equal(143);
@@ -316,7 +331,13 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var diagramXML = require('./BpmnSnapping.lanes-resize.bpmn');
 
-      var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+      var testResizeModules = [
+        coreModule,
+        resizeModule,
+        modelingModule,
+        rulesModule,
+        snappingModule
+      ];
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
 
@@ -329,8 +350,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(canvasEvent({ x: 500, y: 500 }));
         dragging.end();
 
-        expect(participant.width).to.equal(600);
-        expect(participant.height).to.equal(254);
+        expect(participant.width).to.equal(563);
+        expect(participant.height).to.equal(223);
       }));
 
 
@@ -342,8 +363,8 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.move(canvasEvent({ x: -500, y: -500 }));
         dragging.end();
 
-        expect(lane.width).to.equal(570);
-        expect(lane.height).to.equal(118);
+        expect(lane.width).to.equal(313);
+        expect(lane.height).to.equal(122);
       }));
 
     });
