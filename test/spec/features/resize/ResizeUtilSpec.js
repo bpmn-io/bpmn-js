@@ -115,15 +115,24 @@ describe('resize/ResizeUtil', function() {
   });
 
 
-  describe('ensureMinBounds', function() {
+  describe('ensureConstraints', function() {
 
-    var minBounds = {
-      x: 100, y: 100,
-      width: 300, height: 300
+    var min = {
+      top: 100,
+      left: 100,
+      bottom: 400,
+      right: 400
+    };
+
+    var max = {
+      top: 50,
+      left: 50,
+      bottom: 450,
+      right: 450
     };
 
 
-    it('should ensure minimum bounds when changing height and width', function() {
+    it('should ensure minimum bounds when changing width/height', function() {
 
       // given
       var currentBounds = {
@@ -131,7 +140,7 @@ describe('resize/ResizeUtil', function() {
         width: 250, height: 250
       };
 
-      var newBounds = ResizeUtil.ensureMinBounds(currentBounds, minBounds);
+      var newBounds = ResizeUtil.ensureConstraints(currentBounds, { min: min });
 
       // then
       expect(newBounds).to.deep.equal({
@@ -141,7 +150,7 @@ describe('resize/ResizeUtil', function() {
     });
 
 
-    it('should ensure minimum bounds when changing x and y', function() {
+    it('should ensure minimum bounds when changing x/y', function() {
 
       // given
       var currentBounds = {
@@ -149,7 +158,7 @@ describe('resize/ResizeUtil', function() {
         width: 400, height: 400
       };
 
-      var newBounds = ResizeUtil.ensureMinBounds(currentBounds, minBounds);
+      var newBounds = ResizeUtil.ensureConstraints(currentBounds, { min: min });
 
       // then
       expect(newBounds).to.deep.equal({
@@ -159,6 +168,42 @@ describe('resize/ResizeUtil', function() {
 
     });
 
+
+    it('should ensure maximum bounds when changing width/height', function() {
+
+      // given
+      var currentBounds = {
+        x: 100, y: 100,
+        width: 400, height: 400
+      };
+
+      var newBounds = ResizeUtil.ensureConstraints(currentBounds, { max: max });
+
+      // then
+      expect(newBounds).to.deep.equal({
+        x: 100, y: 100,
+        width: 350, height: 350
+      });
+    });
+
+
+    it('should ensure maximum bounds when changing x/y', function() {
+
+      // given
+      var currentBounds = {
+        x: 0, y: 0,
+        width: 400, height: 400
+      };
+
+      var newBounds = ResizeUtil.ensureConstraints(currentBounds, { max: max });
+
+      // then
+      expect(newBounds).to.deep.equal({
+        x: 50, y: 50,
+        width: 350, height: 350
+      });
+
+    });
   });
 
 
