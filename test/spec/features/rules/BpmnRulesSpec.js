@@ -961,7 +961,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
 
-    describe('should move', function() {
+    describe('should not allow move', function() {
 
       it('Lane -> Participant', inject(function(elementFactory, elementRegistry, bpmnRules) {
 
@@ -973,11 +973,11 @@ describe('features/modeling/rules - BpmnRules', function() {
         var canMove = bpmnRules.canMove([ laneElement ], participantElement);
 
         // then
-        expect(canMove).to.be.true;
+        expect(canMove).to.be.false;
       }));
 
 
-      it('[not] Lane -> SubProcess', inject(function(elementFactory, elementRegistry, bpmnRules) {
+      it('Lane -> SubProcess', inject(function(elementFactory, elementRegistry, bpmnRules) {
 
         // given
         var subProcessElement = elementRegistry.get('SubProcess'),
