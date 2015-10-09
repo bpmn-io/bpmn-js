@@ -562,6 +562,58 @@ describe('command/CommandStack', function() {
   });
 
 
+  describe('missing handler #execute / #revert', function() {
+
+    function JustPrePostCommand() {
+
+      var id = 'just-pre-post-command';
+
+      this.preExecute = function(ctx) {
+        ctx.element.trace.push(id + '-pre-execute');
+      };
+
+      this.postExecute = function(ctx) {
+        ctx.element.trace.push(id + '-post-execute');
+      };
+    }
+
+
+    it('should execute anyway', inject(function(commandStack) {
+
+      // given
+      var element = { trace: [] };
+
+      commandStack.registerHandler('just-pre-post-command', JustPrePostCommand);
+
+      // when
+      commandStack.execute('just-pre-post-command', { element: element });
+
+      // then
+      expect(element.trace).to.eql([
+        'just-pre-post-command-pre-execute',
+        'just-pre-post-command-post-execute'
+      ]);
+    }));
+
+
+    it('should undo anyway', inject(function(commandStack) {
+
+      // given
+      var element = { trace: [] };
+
+      commandStack.registerHandler('just-pre-post-command', JustPrePostCommand);
+
+      commandStack.execute('just-pre-post-command', { element: element });
+
+      // then
+      expect(function() {
+        commandStack.undo();
+      }).to.not.throw;
+    }));
+
+  });
+
+
   describe('dirty handling', function() {
 
     var OuterHandler = function(commandStack) {
@@ -657,6 +709,7 @@ describe('command/CommandStack', function() {
         expect(commandStack.canUndo()).to.be.false;
       }));
     });
+
 
     describe('stack information #canRedo', function() {
 
