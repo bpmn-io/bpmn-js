@@ -61,7 +61,7 @@ module.exports = function(chai, utils) {
 
     var matches = utils.eql(objectBounds, expectedBounds);
 
-    var objectBoundsStr = inspect(objectBoundsStr),
+    var objectBoundsStr = inspect(objectBounds),
         expectedBoundsStr = inspect(expectedBounds);
 
 
@@ -100,7 +100,7 @@ module.exports = function(chai, utils) {
 
     var matches = utils.eql(objectDimensions, expectedDimensions);
 
-    var objectDimensionsStr = inspect(objectDimensionsStr),
+    var objectDimensionsStr = inspect(objectDimensions),
         expectedDimensionsStr = inspect(expectedDimensions);
 
 
@@ -140,7 +140,7 @@ module.exports = function(chai, utils) {
 
     var matches = utils.eql(objectPosition, expectedPosition);
 
-    var objectPositionStr = inspect(objectPositionStr),
+    var objectPositionStr = inspect(objectPosition),
         expectedPositionStr = inspect(expectedPosition);
 
 
