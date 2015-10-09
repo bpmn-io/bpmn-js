@@ -148,70 +148,71 @@ describe('draw - bpmn renderer', function() {
     bootstrapViewer(xml)(done);
   });
 
-});
 
-describe('path - bpmn renderer', function () {
+  describe('path', function () {
 
-  var diagramXML = require('../../fixtures/bpmn/simple-cropping.bpmn');
+    var diagramXML = require('../../fixtures/bpmn/simple-cropping.bpmn');
 
-  var testModules = [ coreModule, rendererModule ];
+    var testModules = [ coreModule, rendererModule ];
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-  describe('circle', function () {
-
-
-    it('should return a circle path', inject(function(canvas, elementRegistry, graphicsFactory) {
-
-      // given
-      var eventElement = elementRegistry.get('StartEvent_1');
-
-      // when
-      var startPath = graphicsFactory.getShapePath(eventElement);
-
-      // then
-      expect(startPath).to.equal('M247,343m0,-18a18,18,0,1,1,0,36a18,18,0,1,1,0,-36z');
-    }));
+    describe('circle', function () {
 
 
-    it('should return a diamond path', inject(function(canvas, elementRegistry, graphicsFactory) {
+      it('should return a circle path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
-      // given
-      var gatewayElement = elementRegistry.get('ExclusiveGateway_1');
+        // given
+        var eventElement = elementRegistry.get('StartEvent_1');
 
-      // when
-      var gatewayPath = graphicsFactory.getShapePath(gatewayElement);
+        // when
+        var startPath = graphicsFactory.getShapePath(eventElement);
 
-      // then
-      expect(gatewayPath).to.equal('M418,318l25,25l-25,25l-25,-25z');
-    }));
-
-
-    it('should return a rounded rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
-
-      // given
-      var subProcessElement = elementRegistry.get('SubProcess_1');
-
-      // when
-      var subProcessPath = graphicsFactory.getShapePath(subProcessElement);
-
-      // then
-      expect(subProcessPath).to.equal('M584,243l330,0a10,10,0,0,1,10,10l0,180a10,10,0,0,1,-10,10' +
-      'l-330,0a10,10,0,0,1,-10,-10l0,-180a10,10,0,0,1,10,-10z');
-    }));
+        // then
+        expect(startPath).to.equal('M247,343m0,-18a18,18,0,1,1,0,36a18,18,0,1,1,0,-36z');
+      }));
 
 
-    it('should return a rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
+      it('should return a diamond path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
-      // given
-      var TextAnnotationElement = elementRegistry.get('TextAnnotation_1');
+        // given
+        var gatewayElement = elementRegistry.get('ExclusiveGateway_1');
 
-      // when
-      var TextAnnotationPath = graphicsFactory.getShapePath(TextAnnotationElement);
+        // when
+        var gatewayPath = graphicsFactory.getShapePath(gatewayElement);
 
-      // then
-      expect(TextAnnotationPath).to.equal('M368,156l100,0l0,80l-100,0z');
-    }));
+        // then
+        expect(gatewayPath).to.equal('M418,318l25,25l-25,25l-25,-25z');
+      }));
+
+
+      it('should return a rounded rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
+
+        // given
+        var subProcessElement = elementRegistry.get('SubProcess_1');
+
+        // when
+        var subProcessPath = graphicsFactory.getShapePath(subProcessElement);
+
+        // then
+        expect(subProcessPath).to.equal('M584,243l330,0a10,10,0,0,1,10,10l0,180a10,10,0,0,1,-10,10' +
+        'l-330,0a10,10,0,0,1,-10,-10l0,-180a10,10,0,0,1,10,-10z');
+      }));
+
+
+      it('should return a rectangular path', inject(function(canvas, elementRegistry, graphicsFactory) {
+
+        // given
+        var TextAnnotationElement = elementRegistry.get('TextAnnotation_1');
+
+        // when
+        var TextAnnotationPath = graphicsFactory.getShapePath(TextAnnotationElement);
+
+        // then
+        expect(TextAnnotationPath).to.equal('M368,156l100,0l0,80l-100,0z');
+      }));
+
+    });
 
   });
 
