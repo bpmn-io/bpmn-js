@@ -35,14 +35,17 @@ module.exports = function(chai, utils) {
     var strippedWaypoints = obj.waypoints.map(extractPoints),
         strippedExpectedWaypoints = exp.map(extractPoints);
 
-    var waypointsAssert = new Assertion(strippedWaypoints);
-
     var matches = utils.eql(strippedWaypoints, strippedExpectedWaypoints);
 
-    var strippedWaypointsStr = inspect(strippedWaypoints, '  '),
-        strippedExpectedWaypointsStr = inspect(strippedExpectedWaypoints, '  ');
+    var strippedWaypointsStr = inspect(strippedWaypoints),
+        strippedExpectedWaypointsStr = inspect(strippedExpectedWaypoints);
 
-    waypointsAssert.assert(
+    var theAssert = new Assertion(strippedWaypoints);
+
+    // transfer negate status
+    utils.transferFlags(this, theAssert, false);
+
+    theAssert.assert(
       matches,
       'expected <' + obj.id + '#waypoints> ' +
           'to equal \n  ' + strippedExpectedWaypointsStr +
@@ -66,16 +69,22 @@ module.exports = function(chai, utils) {
     var obj = this._obj;
 
     var startPoint = obj.waypoints[0],
-        startDocking = startPoint.original;
-    var dockingAssert = new Assertion(startDocking);
+        startDocking = startPoint && startPoint.original;
 
-    dockingAssert.assert(
-      utils.eql(startDocking, exp),
-      'expected <' + obj.id + '> to have start docking #{exp} but got #{act}',
-      'expected <' + obj.id + '> to not have start docking #{exp}',
-      exp,
-      startDocking,
-      true
+    var matches = utils.eql(startDocking, exp);
+
+    var startDockingStr = inspect(startDocking),
+        expectedStartDockingStr = inspect(exp);
+
+    var theAssert = new Assertion(startDocking);
+
+    // transfer negate status
+    utils.transferFlags(this, theAssert, false);
+
+    theAssert.assert(
+      matches,
+      'expected <' + obj.id + '> to have startDocking ' +
+        expectedStartDockingStr + ' but got ' + startDockingStr
     );
   });
 
@@ -93,16 +102,22 @@ module.exports = function(chai, utils) {
     var obj = this._obj;
 
     var endPoint = obj.waypoints[obj.waypoints.length - 1],
-        endDocking = endPoint.original;
-    var dockingAssert = new Assertion(endDocking);
+        endDocking = endPoint && endPoint.original;
 
-    dockingAssert.assert(
-      utils.eql(endDocking, exp),
-      'expected <' + obj.id + '> to have end docking #{exp} but got #{act}',
-      'expected <' + obj.id + '> to not have end docking #{exp}',
-      exp,
-      endDocking,
-      true
+    var matches = utils.eql(endDocking, exp);
+
+    var endDockingStr = inspect(endDocking),
+        expectedEndDockingStr = inspect(exp);
+
+    var theAssert = new Assertion(endDocking);
+
+    // transfer negate status
+    utils.transferFlags(this, theAssert, false);
+
+    theAssert.assert(
+      matches,
+      'expected <' + obj.id + '> to have endDocking ' +
+        expectedEndDockingStr + ' but got ' + endDockingStr
     );
   });
 
