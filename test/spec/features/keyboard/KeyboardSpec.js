@@ -216,6 +216,67 @@ describe('features/keyboard', function() {
 
     });
 
+    describe.only('arrow keys', function(){
+
+      it('should handle left arrow', inject(function(canvas, keyboard) {
+
+        // given
+        var e = createKeyEvent(container, 37, true);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        //expect(canvas.viewbox().x).to.eql(5);
+        // natural scrolling:
+        expect(canvas.viewbox().x).to.eql(-5);
+        expect(canvas.viewbox().y).to.eql(0);
+      }));
+
+
+      it('should handle right arrow', inject(function(canvas, keyboard) {
+
+        // given
+        var e = createKeyEvent(container, 39, true);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        //expect(canvas.viewbox().x).to.eql(-5);
+        // natural scrolling:
+        expect(canvas.viewbox().x).to.eql(5);
+        expect(canvas.viewbox().y).to.eql(0);
+      }));
+
+      it('should handle up arrow', inject(function(canvas, keyboard) {
+
+        // given
+        var e = createKeyEvent(container, 38, true);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(canvas.viewbox().x).to.eql(0);
+        expect(canvas.viewbox().y).to.eql(5);
+      }));
+
+      it('should handle down arrow', inject(function(canvas, keyboard) {
+
+        // given
+        var e = createKeyEvent(container, 40, true);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(canvas.viewbox().x).to.eql(0);
+        expect(canvas.viewbox().y).to.eql(-5);
+      }));
+
+    });
+
   });
 
 });
