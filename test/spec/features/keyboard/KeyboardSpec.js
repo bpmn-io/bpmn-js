@@ -16,7 +16,12 @@ var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
 describe('features/keyboard', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, keyboardModule, selectionModule, zoomScrollModule ] }));
+  var config = {
+    keyboard: { speed:5, invertY:false },
+    modules: [ modelingModule, keyboardModule, selectionModule, zoomScrollModule ],
+  };
+
+  beforeEach(bootstrapDiagram(config));
 
   it('should bootstrap diagram with keyboard', inject(function(keyboard) {
     expect(keyboard).to.be.defined;
@@ -216,7 +221,7 @@ describe('features/keyboard', function() {
 
     });
 
-    describe.only('arrow keys', function(){
+    describe('arrow keys', function(){
 
       it('should handle left arrow', inject(function(canvas, keyboard) {
 
@@ -227,8 +232,6 @@ describe('features/keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        //expect(canvas.viewbox().x).to.eql(5);
-        // natural scrolling:
         expect(canvas.viewbox().x).to.eql(-5);
         expect(canvas.viewbox().y).to.eql(0);
       }));
@@ -243,8 +246,6 @@ describe('features/keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        //expect(canvas.viewbox().x).to.eql(-5);
-        // natural scrolling:
         expect(canvas.viewbox().x).to.eql(5);
         expect(canvas.viewbox().y).to.eql(0);
       }));
@@ -259,7 +260,7 @@ describe('features/keyboard', function() {
 
         // then
         expect(canvas.viewbox().x).to.eql(0);
-        expect(canvas.viewbox().y).to.eql(5);
+        expect(canvas.viewbox().y).to.eql(-5);
       }));
 
       it('should handle down arrow', inject(function(canvas, keyboard) {
@@ -272,11 +273,62 @@ describe('features/keyboard', function() {
 
         // then
         expect(canvas.viewbox().x).to.eql(0);
-        expect(canvas.viewbox().y).to.eql(-5);
+        expect(canvas.viewbox().y).to.eql(5);
       }));
 
+
+      describe("configurability", function() {
+
+        beforeEach(function() {
+          config.keyboard.speed = 5;
+          config.keyboard.invertY = false;
+        });
+
+        it('should handle speedy scrolling', inject(function(canvas, keyboard) {
+
+          // given
+          var e = createKeyEvent(container, 38, true);
+
+          // when
+          config.keyboard.speed = 23; // plenty of fuel needed
+          keyboard._keyHandler(e);
+
+          // then
+          expect(canvas.viewbox().x).to.eql(0);
+          expect(canvas.viewbox().y).to.eql(-23);
+        }));
+
+
+        it('should handle natural scrolling (up)', inject(function(canvas, keyboard) {
+
+          // given
+          var e = createKeyEvent(container, 38, true);
+
+          // when
+          config.keyboard.invertY = true;
+          keyboard._keyHandler(e);
+
+          // then
+          expect(canvas.viewbox().x).to.eql(0);
+          expect(canvas.viewbox().y).to.eql(5);
+        }));
+
+
+        it('should handle natural scrolling (down)', inject(function(canvas, keyboard) {
+
+          // given
+          var e = createKeyEvent(container, 40, true);
+
+          // when
+          config.keyboard.invertY = true;
+          keyboard._keyHandler(e);
+
+          // then
+          expect(canvas.viewbox().x).to.eql(0);
+          expect(canvas.viewbox().y).to.eql(-5);
+        }));
+
+      });
     });
-
   });
-
 });
