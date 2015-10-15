@@ -9,7 +9,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
 
-describe.skip('features/modeling - lanes - flowNodeRefs', function() {
+describe('features/modeling - lanes - flowNodeRefs', function() {
 
   var diagramXML = require('./flowNodeRefs.bpmn');
 
