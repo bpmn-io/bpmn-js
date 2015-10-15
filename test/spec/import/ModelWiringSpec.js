@@ -156,6 +156,19 @@ describe('import - model wiring', function() {
       expect(sequenceFlowElement.parent).to.eql(participantShape);
     }));
 
+
+    it('should wire FlowElement#lanes', inject(function(elementRegistry) {
+
+      // when
+      var taskShape = elementRegistry.get('Task'),
+          task = taskShape.businessObject,
+          laneShape = elementRegistry.get('Lane'),
+          lane = laneShape.businessObject;
+
+      // then
+      expect(task.get('lanes')).to.eql([ lane ]);
+    }));
+
   });
 
 
