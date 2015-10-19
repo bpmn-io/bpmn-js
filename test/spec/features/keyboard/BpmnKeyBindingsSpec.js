@@ -10,7 +10,8 @@ var coreModule = require('../../../../lib/core'),
     selectionModule = require('diagram-js/lib/features/selection'),
     spaceToolModule = require('diagram-js/lib/features/space-tool'),
     lassoToolModule = require('diagram-js/lib/features/lasso-tool'),
-    zoomScrollModule = require('diagram-js/lib/navigation/zoomscroll');
+    zoomScrollModule = require('diagram-js/lib/navigation/zoomscroll'),
+    editorActionsModule = require('diagram-js/lib/features/editor-actions');
 
 var createKeyEvent = require('diagram-js/test/util/KeyEvents').createKeyEvent;
 
@@ -27,7 +28,8 @@ describe('features - keyboard', function() {
     spaceToolModule,
     lassoToolModule,
     keyboardModule,
-    zoomScrollModule
+    zoomScrollModule,
+    editorActionsModule
   ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
@@ -39,6 +41,11 @@ describe('features - keyboard', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
+    it('should include triggers inside editorActions', inject(function(editorActions) {
+      // then
+      expect(editorActions.length()).to.equal(10);
+    }));
 
 
     it('should trigger lasso tool', inject(function(keyboard, lassoTool) {
