@@ -8,17 +8,15 @@ var TestContainer = require('mocha-test-container-support');
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
-    keyboardModule = require('../../../../lib/features/keyboard'),
-    selectionModule = require('../../../../lib/features/selection'),
-    zoomScrollModule = require('../../../../lib/navigation/zoomscroll');
+    keyboardModule = require('../../../../lib/features/keyboard');
 
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
 describe('features/keyboard', function() {
 
   var config = {
-    keyboard: { speed:5, invertY:false },
-    modules: [ modelingModule, keyboardModule, selectionModule, zoomScrollModule ],
+    keyboard: { speed:5, invertY: false },
+    modules: [ modelingModule, keyboardModule ],
   };
 
   beforeEach(bootstrapDiagram(config));
