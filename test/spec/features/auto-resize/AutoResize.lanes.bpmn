@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:collaboration id="Collaboration_1">
-    <bpmn:participant id="Participant_1" processRef="Process_1" />
+    <bpmn:participant id="Participant_Lanes" processRef="Process_Lanes" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1" isExecutable="false">
+  <bpmn:process id="Process_Lanes" isExecutable="false">
     <bpmn:laneSet>
-      <bpmn:lane id="Lane_1brtzvq">
+      <bpmn:lane id="Lane">
         <bpmn:childLaneSet xsi:type="bpmn:tLaneSet">
           <bpmn:lane id="Lane_Nested" name="Lane_Nested">
             <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
@@ -24,7 +24,7 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
-      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1">
+      <bpmndi:BPMNShape id="Participant_Lanes_di" bpmnElement="Participant_Lanes">
         <dc:Bounds x="247" y="160" width="371" height="178" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
@@ -43,7 +43,7 @@
           <dc:Bounds x="370" y="239" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Lane_1brtzvq_di" bpmnElement="Lane_1brtzvq">
+      <bpmndi:BPMNShape id="Lane_di" bpmnElement="Lane">
         <dc:Bounds x="277" y="160" width="341" height="178" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_Nested_di" bpmnElement="Lane_Nested">

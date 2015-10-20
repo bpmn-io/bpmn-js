@@ -206,6 +206,7 @@ describe('features/auto-resize', function() {
 
     });
 
+
     describe('after appending', function(){
 
       it('should expand the bottom right edges', inject(function(modeling) {
@@ -274,6 +275,7 @@ describe('features/auto-resize', function() {
 
   });
 
+
   describe('lane', function() {
 
     var diagramXML = require('./AutoResize.lanes.bpmn');
@@ -281,38 +283,39 @@ describe('features/auto-resize', function() {
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-    it('should auto-resize to fit new element', inject(function(elementRegistry, modeling) {
+    it('should fit new element', inject(function(elementRegistry, modeling) {
 
       // given
-      var laneShape = elementRegistry.get('Lane_Nested');
+      var participantShape = elementRegistry.get('Participant_Lanes');
 
       // when
-      modeling.createShape({ type: 'bpmn:Task' }, { x: 600, y: 320 }, laneShape);
+      modeling.createShape({ type: 'bpmn:Task' }, { x: 600, y: 320 }, participantShape);
 
       // then
-      expect(laneShape).to.have.bounds({ x: 307, y: 160, width: 443, height: 260});
+      expect(participantShape).to.have.bounds({ x: 247, y: 160, width: 503, height: 260});
     }));
 
 
-    it('should auto-resize to fit multiple moved elements', inject(function(elementRegistry, modeling) {
+    it('should fit multiple moved elements', inject(function(elementRegistry, modeling) {
 
       // given
-      var laneShape = elementRegistry.get('Lane_Nested'),
+      var participantShape = elementRegistry.get('Participant_Lanes'),
           taskShape = elementRegistry.get('Task_1'),
           startEventShape = elementRegistry.get('StartEvent_1');
 
-      var originalBounds = getBounds(laneShape);
+      var originalBounds = getBounds(participantShape);
 
       // when
-      modeling.moveElements([ taskShape, startEventShape ], { x: 200, y: 0 }, laneShape);
+      modeling.moveElements([ taskShape, startEventShape ], { x: 200, y: 0 }, participantShape);
 
       // then
-      var expectedBounds = assign(originalBounds, { width: 565 });
+      var expectedBounds = assign(originalBounds, { width: 625 });
 
-      expect(laneShape).to.have.bounds(expectedBounds);
+      expect(participantShape).to.have.bounds(expectedBounds);
     }));
 
   });
+
 
   describe('sub processes', function() {
 
