@@ -45,7 +45,7 @@
     "time-grunt": "^0.3.0"
   },
   "dependencies": {
-    "didi": "^0.0.4",
+    "didi": "^0.1.0",
     "eve": "^0.4.2",
     "hammerjs": "^2.0.1",
     "inherits": "^2.0.1",

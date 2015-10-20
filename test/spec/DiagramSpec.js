@@ -66,6 +66,40 @@ describe('diagram', function() {
       });
 
 
+      it('via #get / non-existing service', function() {
+
+        // when
+        var diagram = new Diagram({
+          canvas: {
+            container: container,
+            width: 700,
+            height: 500
+          }
+        });
+
+        // then
+        expect(function() {
+          diagram.get('foobar');
+        }).to.throw('No provider for "foobar"! (Resolving: foobar)');
+      });
+
+
+      it('via #get / non-existing optional service', function() {
+
+        // when
+        var diagram = new Diagram({
+          canvas: {
+            container: container,
+            width: 700,
+            height: 500
+          }
+        });
+
+        // then
+        expect(diagram.get('foobar', false)).to.be.null;
+      });
+
+
       it('via #invoke', function() {
 
         // when
