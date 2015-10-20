@@ -24,10 +24,13 @@ function createCanvasEvent(position, data) {
     var target = canvas._svg;
 
     var clientRect = canvas._container.getBoundingClientRect();
-    position.x += clientRect.left;
-    position.y += clientRect.top;
 
-    return createEvent(target, position, data);
+    var absolutePosition = {
+      x: position.x + clientRect.left,
+      y: position.y + clientRect.top
+    };
+
+    return createEvent(target, absolutePosition, data);
   });
 }
 
