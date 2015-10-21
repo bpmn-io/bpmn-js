@@ -54,16 +54,6 @@ module.exports = function(grunt) {
       }
     },
 
-    jsdoc: {
-      dist: {
-        src: [ '<%= config.sources %>/**/*.js' ],
-        options: {
-          destination: 'docs/api',
-          plugins: [ 'plugins/markdown' ]
-        }
-      }
-    },
-
     bundle: {
       viewer: {
         name: 'bpmn-viewer',
@@ -108,5 +98,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [ 'bundle', 'copy' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test', 'build', 'jsdoc' ]);
+  grunt.registerTask('default', [ 'jshint', 'test', 'build' ]);
 };
