@@ -58,16 +58,6 @@ module.exports = function(grunt) {
         browsers: TEST_BROWSERS,
         debug: true
       }
-    },
-
-    jsdoc: {
-      dist: {
-        src: [ '<%= config.sources %>/**/*.js' ],
-        options: {
-          destination: 'docs/api',
-          plugins: [ 'plugins/markdown' ]
-        }
-      }
     }
   });
 
@@ -77,5 +67,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test', 'jsdoc' ]);
+  grunt.registerTask('default', [ 'jshint', 'test' ]);
 };
