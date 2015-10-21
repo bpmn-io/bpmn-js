@@ -198,6 +198,7 @@ describe('features/popup', function() {
 
   });
 
+
   describe('integration', function() {
 
     describe('events', function() {
@@ -220,7 +221,7 @@ describe('features/popup', function() {
       }));
 
 
-      it('should close menu (canvas.viewbox.changed)', inject(function(popupMenu, eventBus) {
+      it('should close menu (canvas.viewbox.changing)', inject(function(popupMenu, eventBus) {
 
         // given
         popupMenu.open({
@@ -229,7 +230,7 @@ describe('features/popup', function() {
         });
 
         // when
-        eventBus.fire('canvas.viewbox.changed');
+        eventBus.fire('canvas.viewbox.changing');
 
         // then
         var open = popupMenu.isOpen();

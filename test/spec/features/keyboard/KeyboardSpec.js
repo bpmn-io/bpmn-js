@@ -12,14 +12,15 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
+
 describe('features/keyboard', function() {
 
-  var config = {
-    keyboard: { speed:5, invertY: false },
+  beforeEach(bootstrapDiagram({
     modules: [ modelingModule, keyboardModule ],
-  };
+    canvas: { deferUpdate: false },
+    keyboard: { speed: 5, invertY: false }
+  }));
 
-  beforeEach(bootstrapDiagram(config));
 
   it('should bootstrap diagram with keyboard', inject(function(keyboard) {
     expect(keyboard).to.be.defined;
@@ -82,6 +83,7 @@ describe('features/keyboard', function() {
     });
 
   });
+
 
   describe('default listeners', function() {
 
@@ -146,6 +148,7 @@ describe('features/keyboard', function() {
 
     });
 
+
     describe('zoom out', function(){
 
       it('should handle numpad minus', inject(function(canvas, keyboard) {
@@ -188,6 +191,7 @@ describe('features/keyboard', function() {
 
     });
 
+
     describe('default zoom level', function(){
 
       it('should handle numpad zero', inject(function(canvas, keyboard) {
@@ -219,6 +223,7 @@ describe('features/keyboard', function() {
 
     });
 
+
     describe('arrow keys', function(){
 
       it('should handle left arrow', inject(function(canvas, keyboard) {
@@ -248,6 +253,7 @@ describe('features/keyboard', function() {
         expect(canvas.viewbox().y).to.eql(0);
       }));
 
+
       it('should handle up arrow', inject(function(canvas, keyboard) {
 
         // given
@@ -260,6 +266,7 @@ describe('features/keyboard', function() {
         expect(canvas.viewbox().x).to.eql(0);
         expect(canvas.viewbox().y).to.eql(-5);
       }));
+
 
       it('should handle down arrow', inject(function(canvas, keyboard) {
 
@@ -275,21 +282,19 @@ describe('features/keyboard', function() {
       }));
 
 
-      describe("configurability", function() {
+      describe('configurability', function() {
 
-        beforeEach(function() {
-          config.keyboard.speed = 5;
-          config.keyboard.invertY = false;
-        });
-
-        it('should handle speedy scrolling', inject(function(canvas, keyboard) {
+        it('should configure speed',
+            inject(function(canvas, keyboard, injector) {
 
           // given
-          var e = createKeyEvent(container, 38, true);
+          var keyboardConfig = injector.get('config.keyboard');
+
+          var keyDownEvent = createKeyEvent(container, 38, true);
 
           // when
-          config.keyboard.speed = 23; // plenty of fuel needed
-          keyboard._keyHandler(e);
+          keyboardConfig.speed = 23; // plenty of fuel needed
+          keyboard._keyHandler(keyDownEvent);
 
           // then
           expect(canvas.viewbox().x).to.eql(0);
@@ -297,36 +302,38 @@ describe('features/keyboard', function() {
         }));
 
 
-        it('should handle natural scrolling (up)', inject(function(canvas, keyboard) {
+        it('should configure natural scrolling',
+            inject(function(canvas, keyboard, injector) {
 
           // given
-          var e = createKeyEvent(container, 38, true);
+          var keyboardConfig = injector.get('config.keyboard');
+
+          var keyDownEvent = createKeyEvent(container, 38, true),
+              keyUpEvent = createKeyEvent(container, 40, true);
 
           // when
-          config.keyboard.invertY = true;
-          keyboard._keyHandler(e);
+          keyboardConfig.invertY = true;
+          keyboard._keyHandler(keyDownEvent);
 
           // then
           expect(canvas.viewbox().x).to.eql(0);
           expect(canvas.viewbox().y).to.eql(5);
-        }));
 
 
-        it('should handle natural scrolling (down)', inject(function(canvas, keyboard) {
-
-          // given
-          var e = createKeyEvent(container, 40, true);
+          // but does up work, too?
 
           // when
-          config.keyboard.invertY = true;
-          keyboard._keyHandler(e);
+          keyboard._keyHandler(keyUpEvent);
 
           // then
           expect(canvas.viewbox().x).to.eql(0);
-          expect(canvas.viewbox().y).to.eql(-5);
+          expect(canvas.viewbox().y).to.eql(0);
         }));
 
       });
+
     });
+
   });
+
 });

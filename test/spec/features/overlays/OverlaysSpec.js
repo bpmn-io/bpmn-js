@@ -497,7 +497,10 @@ describe('features/overlays', function() {
 
   describe('zoom behavior', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ overlayModule ], overlays: { deferUpdate: false }}));
+    beforeEach(bootstrapDiagram({
+      modules: [ overlayModule ],
+      canvas: { deferUpdate: false }
+    }));
 
 
     var shape;
@@ -619,7 +622,10 @@ describe('features/overlays', function() {
 
   describe('scroll/zoom behavior', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ overlayModule ], overlays: { deferUpdate: false }}));
+    beforeEach(bootstrapDiagram({
+      modules: [ overlayModule ],
+      canvas: { deferUpdate: false }
+    }));
 
 
     var shape, overlay;

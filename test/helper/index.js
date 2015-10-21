@@ -2,7 +2,7 @@
 
 var unique = require('lodash/array/unique'),
     isFunction = require('lodash/lang/isFunction'),
-    assign = require('lodash/object/assign'),
+    merge = require('lodash/object/merge'),
     forEach = require('lodash/collection/forEach');
 
 var TestContainer = require('mocha-test-container-support');
@@ -74,7 +74,7 @@ function bootstrapDiagram(options, locals) {
       _locals = _locals();
     }
 
-    _options = assign({ canvas: { container: testContainer } }, OPTIONS || {}, _options || {});
+    _options = merge({ canvas: { container: testContainer } }, OPTIONS, _options);
 
     var mockModule = {};
 

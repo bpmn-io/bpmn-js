@@ -223,7 +223,10 @@ describe('features/tooltips', function() {
 
   describe('zoom behavior', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ tooltipsModule ], tooltips: { deferUpdate: false }}));
+    beforeEach(bootstrapDiagram({
+      modules: [ tooltipsModule ],
+      canvas: { deferUpdate: false }
+    }));
 
 
     function isVisible(element) {
@@ -331,7 +334,10 @@ describe('features/tooltips', function() {
 
   describe('scroll/zoom behavior', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ tooltipsModule ], tooltips: { deferUpdate: false }}));
+    beforeEach(bootstrapDiagram({
+      modules: [ tooltipsModule ],
+      canvas: { deferUpdate: false }
+    }));
 
 
     function transformMatrix(element) {

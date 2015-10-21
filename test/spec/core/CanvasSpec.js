@@ -6,7 +6,6 @@
 var merge = require('lodash/object/merge');
 var TestContainer = require('mocha-test-container-support');
 
-var drawModule = require('../../../lib/draw');
 
 describe('Canvas', function() {
 
@@ -17,7 +16,7 @@ describe('Canvas', function() {
    */
   function createDiagram(options) {
     return bootstrapDiagram(function() {
-      return merge({ canvas: { container: container } }, options);
+      return merge({ canvas: { container: container, deferUpdate: false } }, options);
     }, {});
   }
 
@@ -28,8 +27,6 @@ describe('Canvas', function() {
     });
 
     beforeEach(createDiagram());
-
-    beforeEach(bootstrapDiagram({ modules: [ drawModule ] }));
 
     it('should create <svg> element', inject(function() {
 
@@ -232,6 +229,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram());
 
     it('should fire <shape.removed> event', inject(function(canvas, eventBus, elementRegistry) {

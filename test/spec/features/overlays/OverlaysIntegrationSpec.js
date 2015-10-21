@@ -21,13 +21,16 @@ var resizeBounds = require('../../../../lib/features/resize/ResizeUtil').resizeB
 
 describe('features/overlay - integration', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [
-    overlayModule,
-    selectionModule,
-    modelingModule,
-    moveModule,
-    resizeModule
-  ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      overlayModule,
+      selectionModule,
+      modelingModule,
+      moveModule,
+      resizeModule
+    ],
+    canvas: { deferUpdate: false }
+  }));
 
 
   beforeEach(inject(function(dragging) {

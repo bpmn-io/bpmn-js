@@ -10,7 +10,7 @@ var zoomScrollModule = require('../../../../lib/navigation/zoomscroll');
 
 describe('navigation/zoomscroll', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ zoomScrollModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ zoomScrollModule ], canvas: { deferUpdate: false } }));
 
 
   describe('bootstrap', function() {
