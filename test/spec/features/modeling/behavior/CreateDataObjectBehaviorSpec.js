@@ -15,7 +15,9 @@ describe('features/modeling/behavior - data objects -', function() {
 
   var rootShape;
 
+
   describe('DataObjectReference', function() {
+
     var processDiagramXML = require('./CreateDataObjectBehavior.data-object-reference.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
@@ -26,6 +28,7 @@ describe('features/modeling/behavior - data objects -', function() {
       subProcess1 = elementRegistry.get('SubProcess_1');
       rootShape = canvas.getRootElement();
     }));
+
 
     it('should create the corresponding DataObject', inject(function(modeling) {
 
@@ -63,6 +66,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
   });
 
+
   describe('create', function() {
 
     var processDiagramXML = require('./CreateDataObjectBehavior.create-data-association.bpmn');
@@ -77,6 +81,7 @@ describe('features/modeling/behavior - data objects -', function() {
       dataObjectRefShape1 = elementRegistry.get('DataObjectReference_1');
       taskShape = elementRegistry.get('Task_1');
     }));
+
 
     describe('dataOutputAssociation', function() {
 
@@ -170,6 +175,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
   });
 
+
   describe('remove', function() {
 
     var processDiagramXML = require('./CreateDataObjectBehavior.remove-data-association.bpmn');
@@ -190,6 +196,7 @@ describe('features/modeling/behavior - data objects -', function() {
       outputAssociation = elementRegistry.get('DataOutputAssociation_1');
       inputAssociation = elementRegistry.get('DataInputAssociation_1');
     }));
+
 
     describe('DataOutputAssociation', function() {
 
@@ -234,6 +241,7 @@ describe('features/modeling/behavior - data objects -', function() {
       }));
 
     });
+
 
     describe('dataInputAssociation', function() {
 

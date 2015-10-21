@@ -113,6 +113,28 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataObjectReference -> EndEvent_None', inject(function() {
+
+      expectCanConnect('DataObjectReference', 'EndEvent_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
+
+
+    it('connect EndEvent_None -> DataObjectReference', inject(function() {
+
+      expectCanConnect('EndEvent_None', 'DataObjectReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
         dataAssociation: false
       });
     }));
