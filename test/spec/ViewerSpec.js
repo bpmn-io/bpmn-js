@@ -119,6 +119,36 @@ describe('Viewer', function() {
   });
 
 
+  describe('#on', function() {
+
+    it('should fire with given three', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+
+      // when
+      viewer.on('foo', 1000, function() {
+        return 'bar';
+      }, viewer);
+
+      // then
+      viewer.importXML(xml, function(err) {
+        var eventBus = viewer.get('eventBus');
+
+        var result = eventBus.fire('foo');
+
+        expect(result).to.equal('bar');
+
+        done();
+      });
+
+    });
+
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
