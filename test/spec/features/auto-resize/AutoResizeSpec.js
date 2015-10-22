@@ -120,17 +120,6 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should not resize the parent if element is placed too far outside',
-          inject(function(modeling) {
-
-        // when
-        modeling.moveElements([ task ], { x: 300, y: 0 }, participant);
-
-        // then
-        expect(participant).to.have.bounds(originalBounds);
-      }));
-
-
       it('should resize the parent if element and parent edge intersect',
           inject(function(modeling) {
 
@@ -452,6 +441,23 @@ describe('features/auto-resize', function() {
 
       // then
       expect(subProcessShape_1).to.have.bounds(originalBounds);
+
+    }));
+
+
+    it('should expand non-primary parents',
+      inject(function(modeling) {
+
+      // given
+      var originalBounds = getBounds(subProcessShape_1);
+
+      // when
+      modeling.moveElements([ taskShape_1, taskShape_2 ],
+        { x: 100, y: 0 }, rootShape, { primaryShape: taskShape_2 });
+
+      // then
+      var expectedBounds = assign(originalBounds, { width: 525 });
+      expect(subProcessShape_1).to.have.bounds(expectedBounds);
 
     }));
 
