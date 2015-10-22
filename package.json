@@ -61,7 +61,7 @@
     "uglify-js": "^2.4.16"
   },
   "dependencies": {
-    "bpmn-moddle": "^0.9.2",
+    "bpmn-moddle": "^0.10.0",
     "diagram-js": "^0.11.0",
     "diagram-js-direct-editing": "^0.11.0",
     "didi": "^0.0.4",
