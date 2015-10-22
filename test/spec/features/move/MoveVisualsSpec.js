@@ -190,7 +190,7 @@ describe('features/move - MoveVisuals', function() {
       var ctx = dragging.active();
       expect(ctx.data.context.differentParents).to.equal(true);
 
-      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(true);
+      expect(elementRegistry.getGraphics(parentShape).hasClass('new-parent')).to.equal(true);
 
     }));
 

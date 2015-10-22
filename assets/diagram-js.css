@@ -33,12 +33,16 @@
   fill: #f9dee5 /* light-red */ !important;
 }
 
-.djs-shape.drop-new-target .djs-visual > :nth-child(1) {
-  fill: #eeeeee !important;
+.djs-shape.new-parent .djs-visual > :nth-child(1) {
+  fill: #F7F9FF !important;
 }
 
 svg.drop-not-ok {
   background: #f9dee5 /* light-red */ !important;
+}
+
+svg.new-parent {
+  background: #F7F9FF /* light-blue */ !important;
 }
 
 .djs-connection.connect-ok .djs-visual > :nth-child(1),

@@ -193,7 +193,7 @@ describe('features/create - Create', function () {
     }));
 
 
-    it('should add "drop-ok" marker', inject(function(canvas, create, elementRegistry, dragging) {
+    it('should add "new-parent" marker', inject(function(canvas, create, elementRegistry, dragging) {
       // given
       var targetGfx = elementRegistry.getGraphics('parentShape');
 
@@ -204,7 +204,7 @@ describe('features/create - Create', function () {
       dragging.hover({ element: parentShape, gfx: targetGfx});
       dragging.move(canvasEvent({ x: 200, y: 225 }));
 
-      expect(canvas.hasMarker(parentShape, 'drop-ok')).to.be.true;
+      expect(canvas.hasMarker(parentShape, 'new-parent')).to.be.true;
     }));
 
 
@@ -249,12 +249,12 @@ describe('features/create - Create', function () {
       dragging.hover({ element: parentShape, gfx: targetGfx});
       dragging.move(canvasEvent({ x: 200, y: 225 }));
 
-      var hasMarker = canvas.hasMarker(parentShape, 'drop-ok');
+      var hasMarker = canvas.hasMarker(parentShape, 'new-parent');
 
       dragging.end();
 
-      expect(canvas.hasMarker(parentShape, 'drop-ok')).to.be.false;
-      expect(canvas.hasMarker(parentShape, 'drop-ok')).to.not.eql(hasMarker);
+      expect(canvas.hasMarker(parentShape, 'new-parent')).to.be.false;
+      expect(canvas.hasMarker(parentShape, 'new-parent')).to.not.eql(hasMarker);
     }));
 
   });
