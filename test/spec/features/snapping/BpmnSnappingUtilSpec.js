@@ -114,7 +114,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             aboveLaneShape = elementRegistry.get('Nested_Lane_A');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n');
+        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n', true);
 
         // then
         expect(sizeConstraints).to.eql({
@@ -136,7 +136,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Lane_B');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's');
+        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's', true);
 
         // then
         expect(sizeConstraints).to.eql({
