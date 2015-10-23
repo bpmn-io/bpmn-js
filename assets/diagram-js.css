@@ -420,7 +420,7 @@ svg.drop-not-ok {
   touch-action: none;
 }
 
-.djs-dragmarker,
+.djs-segment-dragger,
 .djs-bendpoint {
   display: none;
 }
@@ -428,7 +428,7 @@ svg.drop-not-ok {
 /**
  * bendpoints
  */
-.djs-dragmarker .djs-visual {
+.djs-segment-dragger .djs-visual {
   pointer-events: none;
   fill: rgba(255, 255, 121, 0.4);
   stroke-width: 1px;
@@ -444,9 +444,9 @@ svg.drop-not-ok {
   stroke: black;
 }
 
-.djs-dragmarker:hover,
-.djs-bendpoints.hover .djs-dragmarker,
-.djs-bendpoints.selected .djs-dragmarker,
+.djs-segment-dragger:hover,
+.djs-bendpoints.hover .djs-segment-dragger,
+.djs-bendpoints.selected .djs-segment-dragger,
 .djs-bendpoint:hover,
 .djs-bendpoints.hover .djs-bendpoint,
 .djs-bendpoints.selected .djs-bendpoint {
@@ -457,7 +457,7 @@ svg.drop-not-ok {
   display: none;
 }
 
-.djs-dragmarker:hover .djs-visual,
+.djs-segment-dragger:hover .djs-visual,
 .djs-bendpoint:hover .djs-visual,
 .djs-bendpoint.floating .djs-visual {
   fill: yellow;
@@ -468,17 +468,17 @@ svg.drop-not-ok {
   pointer-events: none;
 }
 
-.djs-dragmarker .djs-hit,
+.djs-segment-dragger .djs-hit,
 .djs-bendpoint .djs-hit {
   pointer-events: all;
   fill: none;
 }
 
-.djs-dragmarker.horizontal .djs-hit {
+.djs-segment-dragger.horizontal .djs-hit {
   cursor: ns-resize;
 }
 
-.djs-dragmarker.vertical .djs-hit {
+.djs-segment-dragger.vertical .djs-hit {
   cursor: ew-resize;
 }
 
@@ -497,13 +497,13 @@ svg.drop-not-ok {
   display: none !important;
 }
 
-.djs-dragmarker.djs-dragging,
+.djs-segment-dragger.djs-dragging,
 .djs-bendpoint.djs-dragging {
   display: block;
   opacity: 1.0;
 }
 
-.djs-dragmarker.djs-dragging .djs-visual,
+.djs-segment-dragger.djs-dragging .djs-visual,
 .djs-bendpoint.djs-dragging .djs-visual {
   fill: yellow;
   stroke-opacity: 0.5;
