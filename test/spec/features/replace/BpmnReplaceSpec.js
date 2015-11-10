@@ -925,6 +925,37 @@ describe('features/replace', function() {
   });
 
 
+  describe('default flows from inclusive gateways', function () {
+
+     var diagramXML = require('./BpmnReplace.defaultFlowsFromInclusiveGateways.bpmn');
+
+     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+     it ('should show Default replace option', inject(function (elementRegistry, bpmnReplace) {
+         // given
+         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+
+         // when
+         var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+         // then
+         expect(opts).to.have.length(1);
+     }));
+
+     it ('should NOT show Default replace option', inject(function (elementRegistry, bpmnReplace) {
+         // given
+         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+         // when
+         var opts = bpmnReplace.getReplaceOptions(sequenceFlow);
+
+         // then
+         expect(opts).to.have.length(1);
+     }));
+
+  });
+
+
   describe('default flows', function() {
 
     var diagramXML = require('./BpmnReplace.defaultFlows.bpmn');
