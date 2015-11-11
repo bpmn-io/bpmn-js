@@ -189,7 +189,7 @@ describe('Modeler', function() {
 
   it('should create new diagram', function(done) {
     var modeler = new Modeler({ container: container });
-    modeler.createTemplate(done);
+    modeler.createDiagram(done);
   });
 
 

@@ -20,7 +20,7 @@ describe('scenario - simple modeling', function() {
     var modeler = new Modeler({ container: container });
 
     // when
-    modeler.createTemplate(function(err) {
+    modeler.createDiagram(function(err) {
 
       done(err);
     });
