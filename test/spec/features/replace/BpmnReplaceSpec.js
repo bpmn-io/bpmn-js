@@ -1374,4 +1374,26 @@ describe('features/replace', function() {
 
   });
 
+  describe('events', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    it('should properly set parent of event definitions', inject(function(elementRegistry, modeling, bpmnReplace) {
+
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      var messageEvent = bpmnReplace.replaceElement(startEvent, {
+        type: 'bpmn:StartEvent',
+        eventDefinition: 'bpmn:MessageEventDefinition'
+      });
+
+      var parent = messageEvent.businessObject.eventDefinitions[0].$parent;
+
+      expect(parent).to.exist;
+      expect(parent).to.equal(messageEvent.businessObject);
+    }));
+  });
+
 });
