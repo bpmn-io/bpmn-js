@@ -459,7 +459,6 @@ describe('Viewer', function() {
       viewer.destroy();
     });
 
-
     it('should override default modules', function(done) {
 
       // given
@@ -550,6 +549,22 @@ describe('Viewer', function() {
         done(err);
       });
 
+    });
+	
+	it('should throw error due to missing diagrams', function(done) {
+
+      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+        
+      // given
+      viewer = new Viewer({ container: container, additionalModules: testModules });
+
+      // when
+      viewer.importXML(xml, function(err) {
+          // then
+          expect(err.message).to.equal('No diagrams to display');
+          done();
+      });
+        
     });
 
   });
