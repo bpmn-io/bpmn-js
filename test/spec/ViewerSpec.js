@@ -29,12 +29,6 @@ describe('Viewer', function() {
   });
 
 
-  it('should import empty definitions', function(done) {
-    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
-    createViewer(xml, done);
-  });
-
-
   it('should re-import simple process', function(done) {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -51,7 +45,7 @@ describe('Viewer', function() {
       viewer.importXML(xml, function(err, warnings) {
 
         // then
-        expect(err).to.not.be.ok;
+        expect(err).to.exist;
         expect(warnings.length).to.equal(0);
 
         done();
@@ -87,7 +81,7 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var events = [];
 
@@ -126,7 +120,7 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
       viewer.on('foo', 1000, function() {
@@ -187,7 +181,6 @@ describe('Viewer', function() {
 
   describe('error handling', function() {
 
-
     function expectMessage(e, expectedMessage) {
 
       expect(e).to.exist;
@@ -215,7 +208,7 @@ describe('Viewer', function() {
 
       createViewer(xml, function(err) {
 
-        expect(err).to.be.ok;
+        expect(err).to.exist;
 
         expectMessage(err, /Text data outside of root node./);
 
@@ -232,7 +225,7 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).to.not.be.ok;
+        expect(err).not.to.exist;
 
         expectWarnings(warnings, [
           'unresolved reference <Collaboration_2>',
@@ -255,7 +248,7 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).to.not.be.ok;
+        expect(err).not.to.exist;
 
         expectWarnings(warnings, [
           /unparsable content <categoryValue> detected/,
@@ -275,14 +268,14 @@ describe('Viewer', function() {
       createViewer(xml, function(err, warnings) {
 
         // then
-        expect(err).to.not.be.ok;
+        expect(err).to.exist;
+        expect(err.message).to.eql('no process or collaboration to display');
 
         expectWarnings(warnings, [
           /unparsable content <collaboration> detected/,
           'unresolved reference <Participant_1>',
           'no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />',
-          'no bpmnElement referenced in <bpmndi:BPMNShape id="BPMNShape_Participant_1" />',
-          'no process or collaboration present to display'
+          'no bpmnElement referenced in <bpmndi:BPMNShape id="BPMNShape_Participant_1" />'
         ]);
 
         done();
@@ -337,7 +330,7 @@ describe('Viewer', function() {
     it('should export svg', function(done) {
 
       // given
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       createViewer(xml, function(err, warnings, viewer) {
 
@@ -451,14 +444,13 @@ describe('Viewer', function() {
     ];
 
     // given
-    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     var viewer;
 
     afterEach(function() {
       viewer.destroy();
     });
-
 
     it('should override default modules', function(done) {
 
@@ -539,15 +531,34 @@ describe('Viewer', function() {
         var extensionElements = sendTask.extensionElements;
 
         // receive task should be moddle extended
-        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.be.ok;
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.exist;
 
         // extension elements should provide typed element
-        expect(extensionElements).to.be.ok;
+        expect(extensionElements).to.exist;
 
         expect(extensionElements.values.length).to.equal(1);
-        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.ok;
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.exist;
 
         done(err);
+      });
+
+    });
+
+
+    it('should throw error due to missing diagram', function(done) {
+
+      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+
+      // given
+      viewer = new Viewer({ container: container, additionalModules: testModules });
+
+      // when
+      viewer.importXML(xml, function(err) {
+
+        // then
+        expect(err.message).to.eql('no diagram to display');
+
+        done();
       });
 
     });
@@ -568,7 +579,7 @@ describe('Viewer', function() {
       viewer.destroy();
 
       // then
-      expect(viewer.container.parentNode).to.not.be.ok;
+      expect(viewer.container.parentNode).not.to.exist;
     });
 
   });
