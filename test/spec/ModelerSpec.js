@@ -40,9 +40,21 @@ describe('Modeler', function() {
   });
 
 
-  it('should import empty definitions', function(done) {
+  it('should not import empty definitions', function(done) {
     var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
-    createModeler(xml, done);
+	
+	// given
+    createModeler(xml, function(err, warnings, modeler) {
+
+      // when
+      modeler.importXML(xml, function(err, warnings) {
+        // then
+        expect(err.message).to.equal('No diagrams to display');
+ 
+        done();
+      });
+
+    });
   });
 
 

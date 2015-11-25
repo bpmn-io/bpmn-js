@@ -28,13 +28,6 @@ describe('Viewer', function() {
     createViewer(xml, done);
   });
 
-
-  it('should import empty definitions', function(done) {
-    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
-    createViewer(xml, done);
-  });
-
-
   it('should re-import simple process', function(done) {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -87,7 +80,7 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var events = [];
 
@@ -126,7 +119,7 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
       viewer.on('foo', 1000, function() {
@@ -337,7 +330,7 @@ describe('Viewer', function() {
     it('should export svg', function(done) {
 
       // given
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       createViewer(xml, function(err, warnings, viewer) {
 
@@ -451,7 +444,7 @@ describe('Viewer', function() {
     ];
 
     // given
-    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     var viewer;
 
@@ -554,7 +547,7 @@ describe('Viewer', function() {
 	it('should throw error due to missing diagrams', function(done) {
 
       var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
-        
+
       // given
       viewer = new Viewer({ container: container, additionalModules: testModules });
 
@@ -573,7 +566,7 @@ describe('Viewer', function() {
   describe('#destroy', function() {
 
     it('should remove traces in document tree', function() {
-
+		
       // given
       var viewer = new Viewer({
         container: container
