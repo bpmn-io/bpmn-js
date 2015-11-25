@@ -12,7 +12,7 @@ var ModelUtil = require('../../../lib/util/ModelUtil');
 
 describe('ModelUtil', function() {
 
-  var diagramXML = require('../../fixtures/bpmn/empty-definitions.bpmn');
+  var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule, modelingModule ] }));
 
