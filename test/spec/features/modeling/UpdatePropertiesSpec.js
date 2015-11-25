@@ -334,4 +334,24 @@ describe('features/modeling - update properties', function() {
 
   });
 
+
+  describe('error handling', function() {
+
+    it('should ignore unchanged id', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+      var ids = flowConnection.businessObject.$model.ids;
+
+      // when
+      modeling.updateProperties(flowConnection, { id: 'SequenceFlow_1' });
+
+      // then
+      expect(ids.assigned('SequenceFlow_1')).to.exist;
+
+      expect(flowConnection.businessObject.id).to.equal('SequenceFlow_1');
+    }));
+
+  });
+
 });
