@@ -1,3 +1,5 @@
+> The project is still in an early stage. Documentation may be missing and examples may be broken.
+
 # bpmn-js - BPMN 2.0 for the web
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js)
@@ -5,12 +7,11 @@
 [bpmn-js](https://github.com/bpmn-io/bpmn-js) is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn.io](http://bpmn.io).
 
 
-> the project is still in an early stage. Documentation may be missing and examples may be broken.
-
-
 ## Usage
 
-Get the library via [npm](http://npmjs.org) or [bower](http://bower.io) and use it in your web applications to display [BPMN 2.0 diagrams](http://www.bpmn.org/).
+> No need for additional setup: Try out our [seed project](https://github.com/bpmn-io/bpmn-js-seed) or use the [pre-packaged version](https://github.com/bpmn-io/bower-bpmn-js) of the library.
+
+Get the library via [npm](http://npmjs.org) or [Bower](http://bower.io/) and use it in your web applications to display [BPMN 2.0 diagrams](http://www.bpmn.org/).
 
 
 ```javascript
@@ -59,6 +60,7 @@ Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/m
 *   [Demo](http://demo.bpmn.io)
 *   [Issues](https://github.com/bpmn-io/bpmn-js/issues)
 *   [Examples](https://github.com/bpmn-io/bpmn-js-examples)
+*   [Forum](https://forum.bpmn.io)
 
 
 ## Tools
@@ -76,4 +78,4 @@ As long as the project is in alpha stage, you must make sure you setup the whole
 
 ## License
 
-Use under the terms of the [bpmn-js license](http://bpmn.io/license).
+Use under the terms of the [bpmn.io license](http://bpmn.io/license).
