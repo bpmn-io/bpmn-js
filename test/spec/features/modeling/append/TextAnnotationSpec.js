@@ -41,7 +41,7 @@ describe('features/modeling - append text-annotation', function() {
       var connecting = connectingConnection.businessObject;
 
       // then
-      expect(annotationShape).to.be.defined;
+      expect(annotationShape).to.exist;
       expect(annotation.$instanceOf('bpmn:TextAnnotation')).to.be.true;
 
       expect(connecting.$instanceOf('bpmn:Association')).to.be.true;
@@ -73,7 +73,7 @@ describe('features/modeling - append text-annotation', function() {
       var connecting = connectingConnection.businessObject;
 
       // then
-      expect(annotationShape).to.be.defined;
+      expect(annotationShape).to.exist;
       expect(annotation.$instanceOf('bpmn:TextAnnotation')).to.be.true;
 
       expect(connecting.$instanceOf('bpmn:Association')).to.be.true;

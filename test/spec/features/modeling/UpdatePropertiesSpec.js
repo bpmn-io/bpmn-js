@@ -63,7 +63,7 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(gatewayShape, { 'default': undefined });
 
       // then
-      expect(gatewayShape.businessObject['default']).not.to.be.defined;
+      expect(gatewayShape.businessObject['default']).not.to.exist;
 
       // flow got updated, too
       expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
@@ -111,7 +111,7 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(flowConnection, { name: undefined });
 
       // then
-      expect(flowConnection.businessObject.name).not.to.be.defined;
+      expect(flowConnection.businessObject.name).not.to.exist;
 
       // flow label is now hidden
       expect(flowConnection.label.hidden).to.be.true;
@@ -169,7 +169,7 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(taskShape.businessObject.loopCharactersistics).not.to.be.defined;
+      expect(taskShape.businessObject.loopCharactersistics).not.to.exist;
     }));
 
 
@@ -183,7 +183,7 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(gatewayShape.businessObject['default']).to.be.defined;
+      expect(gatewayShape.businessObject['default']).to.exist;
 
       // flow got updated, too
       expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
@@ -255,8 +255,8 @@ describe('features/modeling - update properties', function() {
       commandStack.undo();
 
       // then
-      expect(flowConnection.businessObject.get('xmlns:foo')).to.be.undefined;
-      expect(flowConnection.businessObject.get('foo:customAttr')).to.be.undefined;
+      expect(flowConnection.businessObject.get('xmlns:foo')).not.to.exist;
+      expect(flowConnection.businessObject.get('foo:customAttr')).not.to.exist;
     }));
 
   });
@@ -292,7 +292,7 @@ describe('features/modeling - update properties', function() {
       commandStack.redo();
 
       // then
-      expect(gatewayShape.businessObject['default']).not.to.be.defined;
+      expect(gatewayShape.businessObject['default']).not.to.exist;
 
       // flow got updated, too
       expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
@@ -329,7 +329,7 @@ describe('features/modeling - update properties', function() {
       commandStack.redo();
 
       // then
-      expect(flowConnection.businessObject.name).not.to.be.defined;
+      expect(flowConnection.businessObject.name).not.to.exist;
     }));
 
   });

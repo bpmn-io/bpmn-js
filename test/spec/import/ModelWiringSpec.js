@@ -53,7 +53,7 @@ describe('import - model wiring', function() {
       var label = startEventShape.label;
 
       // then
-      expect(label).to.be.defined;
+      expect(label).to.exist;
       expect(label.id).to.equal(startEventShape.id + '_label');
 
       expect(label.labelTarget).to.eql(startEventShape);
@@ -70,10 +70,10 @@ describe('import - model wiring', function() {
           startEvent = startEventShape.businessObject;
 
       // then
-      expect(subProcess).to.be.defined;
+      expect(subProcess).to.exist;
       expect(is(subProcess, 'bpmn:SubProcess')).to.be.true;
 
-      expect(startEvent).to.be.defined;
+      expect(startEvent).to.exist;
       expect(is(startEvent, 'bpmn:StartEvent')).to.be.true;
     }));
 
@@ -87,7 +87,7 @@ describe('import - model wiring', function() {
       var subProcessDi = subProcess.di;
 
       // then
-      expect(subProcessDi).to.be.defined;
+      expect(subProcessDi).to.exist;
       expect(subProcessDi.bpmnElement).to.eql(subProcess);
     }));
 
@@ -101,7 +101,7 @@ describe('import - model wiring', function() {
       var sequenceFlowDi = sequenceFlow.di;
 
       // then
-      expect(sequenceFlowDi).to.be.defined;
+      expect(sequenceFlowDi).to.exist;
       expect(sequenceFlowDi.bpmnElement).to.eql(sequenceFlow);
     }));
 

@@ -238,7 +238,7 @@ describe('features/auto-resize', function() {
 
         expect(participant).to.have.bounds(expectedBounds);
 
-        expect(task2).to.be.defined;
+        expect(task2).to.exist;
         expect(task.outgoing).not.to.be.empty;
         expect(task2.incoming).not.to.be.empty;
       }));

@@ -47,7 +47,7 @@ describe('environment - mocking', function() {
 
   it('should inject bpmnjs', inject(function(bpmnjs) {
 
-    expect(bpmnjs).to.be.defined;
+    expect(bpmnjs).to.exist;
   }));
 
 });

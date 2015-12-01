@@ -107,8 +107,8 @@ describe('Modeler', function() {
             elementRegistry = viewer.get('elementRegistry');
 
         // assume
-        expect(overlays).to.be.defined;
-        expect(elementRegistry).to.be.defined;
+        expect(overlays).to.exist;
+        expect(elementRegistry).to.exist;
 
 
         // when
@@ -158,7 +158,7 @@ describe('Modeler', function() {
             canvas = viewer.get('canvas');
 
         // assume
-        expect(bendpointMove).to.be.defined;
+        expect(bendpointMove).to.exist;
 
         // when
         bendpointMove.start(createEvent(canvas, { x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
@@ -180,7 +180,7 @@ describe('Modeler', function() {
 
     modeler.importXML(xml, function(err) {
 
-      expect(err).to.be.defined;
+      expect(err).to.exist;
 
       done();
     });

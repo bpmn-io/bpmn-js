@@ -354,8 +354,8 @@ describe('import - Importer', function() {
         // then
         expect(warnings.length).to.equal(0);
 
-        expect(diagram.get('elementRegistry').get('_b467921a-ef7b-44c5-bf78-fd624c400d17')).to.be.defined;
-        expect(diagram.get('elementRegistry').get('_c311cc87-677e-47a4-bdb1-8744c4ec3147')).to.be.defined;
+        expect(diagram.get('elementRegistry').get('_b467921a-ef7b-44c5-bf78-fd624c400d17')).to.exist;
+        expect(diagram.get('elementRegistry').get('_c311cc87-677e-47a4-bdb1-8744c4ec3147')).to.exist;
 
         done(err);
       });

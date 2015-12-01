@@ -33,7 +33,7 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
       // then
-      expect(targetShape).to.be.defined;
+      expect(targetShape).to.exist;
       expect(target.$instanceOf('bpmn:Task')).to.be.true;
     }));
 
@@ -50,7 +50,7 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
       // then
-      expect(target.di).to.be.defined;
+      expect(target.di).to.exist;
       expect(target.di.$parent).to.eql(startEvent.di.$parent);
 
       expect(target.di).to.have.bounds(targetShape);
@@ -87,8 +87,8 @@ describe('features/modeling - append shape', function() {
         var label = targetShape.label;
 
         // then
-        expect(label).to.be.defined;
-        expect(elementRegistry.get(label.id)).to.be.defined;
+        expect(label).to.exist;
+        expect(elementRegistry.get(label.id)).to.exist;
 
         expect(label).to.have.bounds(assign({ x: 441, y: 278 }, LabelUtil.DEFAULT_LABEL_SIZE));
       }));
@@ -104,7 +104,7 @@ describe('features/modeling - append shape', function() {
             target = targetShape.businessObject;
 
         // then
-        expect(target.di.label).to.be.defined;
+        expect(target.di.label).to.exist;
 
         expect(target.di.label).to.have.bounds(targetShape.label);
       }));
@@ -130,7 +130,7 @@ describe('features/modeling - append shape', function() {
       });
 
       // then
-      expect(connection).to.be.defined;
+      expect(connection).to.exist;
       expect(connection.$instanceOf('bpmn:SequenceFlow')).to.be.true;
     }));
 
@@ -184,8 +184,8 @@ describe('features/modeling - append shape', function() {
       expect(connection.$parent).to.be.null;
       expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(targetShape.label).not.to.be.defined;
-      expect(elementRegistry.get(target.id + '_label')).not.to.be.defined;
+      expect(targetShape.label).not.to.exist;
+      expect(elementRegistry.get(target.id + '_label')).not.to.exist;
     }));
 
 
@@ -218,7 +218,7 @@ describe('features/modeling - append shape', function() {
       expect(connection.$parent).to.be.null;
       expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(elementRegistry.get(targetShape.id)).not.to.be.defined;
+      expect(elementRegistry.get(targetShape.id)).not.to.exist;
     }));
 
 
@@ -247,7 +247,7 @@ describe('features/modeling - append shape', function() {
       expect(connection.$parent).to.be.null;
       expect(subProcess.di.$parent.get('planeElement')).not.to.include(connection.di);
 
-      expect(elementRegistry.get(connection.id + '_label')).not.to.be.defined;
+      expect(elementRegistry.get(connection.id + '_label')).not.to.exist;
     }));
 
 
@@ -277,7 +277,7 @@ describe('features/modeling - append shape', function() {
 
       // then
       expect(targetShape2.parent).to.be.null;
-      expect(elementRegistry.get(targetShape2.id)).not.to.be.defined;
+      expect(elementRegistry.get(targetShape2.id)).not.to.exist;
     }));
 
 
@@ -327,7 +327,7 @@ describe('features/modeling - append shape', function() {
           target = targetShape.businessObject;
 
         // then
-        expect(targetShape).to.be.defined;
+        expect(targetShape).to.exist;
         expect(target.$instanceOf('bpmn:ExclusiveGateway')).to.be.true;
       }));
 

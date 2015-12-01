@@ -26,7 +26,7 @@ describe('import - associations', function() {
           var association = elementRegistry.get('Association_1');
 
           // then
-          expect(association).to.be.defined;
+          expect(association).to.exist;
 
           done();
         })();
@@ -52,7 +52,7 @@ describe('import - associations', function() {
           var association = elementRegistry.get('Association_1');
 
           // then
-          expect(association).to.be.defined;
+          expect(association).to.exist;
 
           done();
         })();
@@ -83,8 +83,8 @@ describe('import - associations', function() {
           var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
 
           // then
-          expect(dataInputAssociation).to.be.defined;
-          expect(dataOutputAssociation).to.be.defined;
+          expect(dataInputAssociation).to.exist;
+          expect(dataOutputAssociation).to.exist;
 
           done();
         })();
@@ -111,8 +111,8 @@ describe('import - associations', function() {
           var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
 
           // then
-          expect(dataInputAssociation).to.be.defined;
-          expect(dataOutputAssociation).to.be.defined;
+          expect(dataInputAssociation).to.exist;
+          expect(dataOutputAssociation).to.exist;
 
           done();
         })();

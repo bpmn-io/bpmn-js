@@ -37,8 +37,8 @@ describe('features/modeling - create connection', function() {
       var sequenceFlow = sequenceFlowConnection.businessObject;
 
       // then
-      expect(sequenceFlowConnection).to.be.defined;
-      expect(sequenceFlow).to.be.defined;
+      expect(sequenceFlowConnection).to.exist;
+      expect(sequenceFlow).to.exist;
 
       expect(sequenceFlow.sourceRef).to.eql(task);
       expect(sequenceFlow.targetRef).to.eql(gateway);

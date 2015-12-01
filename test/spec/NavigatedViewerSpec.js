@@ -38,7 +38,7 @@ describe('NavigatedViewer', function() {
     it('should include zoomScroll', function(done) {
 
       createViewer(xml, function(err, warnings, viewer) {
-        expect(viewer.get('zoomScroll')).to.be.defined;
+        expect(viewer.get('zoomScroll')).to.exist;
 
         done(err);
       });
@@ -47,7 +47,7 @@ describe('NavigatedViewer', function() {
 
     it('should include moveCanvas', function(done) {
       createViewer(xml, function(err, warnings, viewer) {
-        expect(viewer.get('moveCanvas')).to.be.defined;
+        expect(viewer.get('moveCanvas')).to.exist;
 
         done(err);
       });

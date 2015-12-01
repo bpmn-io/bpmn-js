@@ -23,7 +23,7 @@ function expectConnected(source, target, connectionOrType) {
 }
 
 function expectNotConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).not.to.be.defined;
+  expect(getConnection(source, target, connectionOrType)).not.to.exist;
 }
 
 

@@ -93,7 +93,7 @@ describe('features/popup-menu', function() {
         openPopup(task);
 
         // then
-        expect(loopCharacteristics.isSequential).to.be.undefined;
+        expect(loopCharacteristics.isSequential).not.to.exist;
         expect(popupMenu._getEntry('toggle-loop').active).to.be.true;
         expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.false;
       }));
@@ -192,7 +192,7 @@ describe('features/popup-menu', function() {
         var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
         // then
-        expect(task.businessObject.loopCharacteristics).to.be.undefined;
+        expect(task.businessObject.loopCharacteristics).not.to.exist;
         expect(domClasses(parallelEntry).has('active')).to.be.false;
       }));
 
@@ -282,7 +282,7 @@ describe('features/popup-menu', function() {
         var sequentialEntry = queryEntry(popupMenu, 'toggle-sequential-mi');
 
         // then
-        expect(task.businessObject.loopCharacteristics).to.be.undefined;
+        expect(task.businessObject.loopCharacteristics).not.to.exist;
         expect(domClasses(sequentialEntry).has('active')).to.be.false;
       }));
 
@@ -373,7 +373,7 @@ describe('features/popup-menu', function() {
 
         // then
         expect(domClasses(loopEntry).has('active')).to.be.false;
-        expect(is(task.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.undefined;
+        expect(is(task.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).not.to.exist;
       }));
 
 
@@ -461,7 +461,7 @@ describe('features/popup-menu', function() {
       var sendTask = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
-      expect(sendTask.businessObject.loopCharacteristics).to.be.defined;
+      expect(sendTask.businessObject.loopCharacteristics).to.exist;
       expect(sendTask.businessObject.loopCharacteristics.isSequential).to.be.true;
       expect(is(sendTask.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
     }));
@@ -482,7 +482,7 @@ describe('features/popup-menu', function() {
       var callActivity = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
-      expect(callActivity.businessObject.loopCharacteristics).to.be.defined;
+      expect(callActivity.businessObject.loopCharacteristics).to.exist;
       expect(callActivity.businessObject.loopCharacteristics.isSequential).to.be.true;
       expect(is(callActivity.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
     }));
@@ -635,7 +635,7 @@ describe('features/popup-menu', function() {
 
       // then
       expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.null;
-      expect(queryEntry(popupMenu, 'replace-with-message-start')).to.be.defined;
+      expect(queryEntry(popupMenu, 'replace-with-message-start')).to.exist;
       expect(entriesContainer.childNodes.length).to.equal(11);
     }));
 
@@ -658,7 +658,7 @@ describe('features/popup-menu', function() {
       var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
 
       // then
-      expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.be.defined;
+      expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.exist;
       expect(queryEntry(popupMenu, 'replace-with-non-interrupting-conditional-start')).to.be.null;
       expect(entriesContainer.childNodes.length).to.equal(11);
     }));

@@ -23,7 +23,7 @@ describe('features - bpmn-factory', function() {
     it('should return instance', inject(function(bpmnFactory) {
 
       var task = bpmnFactory.create('bpmn:Task');
-      expect(task).to.be.defined;
+      expect(task).to.exist;
       expect(task.$type).to.equal('bpmn:Task');
     }));
 
