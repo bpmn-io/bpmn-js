@@ -77,15 +77,15 @@ describe('command/CommandInterceptor', function() {
   }));
 
   function traceCommand(e) {
-    expect(e).to.be.defined;
+    expect(e).to.exist;
 
     e.context.element.trace.push(e.command);
   }
 
   function traceUnwrappedCommand(context, command, event) {
-    expect(context).to.be.defined;
-    expect(command).to.be.defined;
-    expect(event).to.be.defined;
+    expect(context).to.exist;
+    expect(command).to.exist;
+    expect(event).to.exist;
 
     context.element.trace.push(command);
   }

@@ -110,7 +110,7 @@ describe('features/Replace', function() {
       var newShape = replace.replaceElement(originalShape, replacement);
 
       // then
-      expect(newShape).to.be.defined;
+      expect(newShape).to.exist;
       expect(newShape.id).to.equal('replacement');
     }));
 
@@ -176,7 +176,7 @@ describe('features/Replace', function() {
       var replacedShape = replace.replaceElement(sourceShape, replacement);
 
       // then
-      expect(replacedShape.outgoing[0]).to.be.defined;
+      expect(replacedShape.outgoing[0]).to.exist;
     }));
 
 
@@ -193,7 +193,7 @@ describe('features/Replace', function() {
       var replacedShape = replace.replaceElement(targetShape, replacement);
 
       // then
-      expect(replacedShape.incoming[0]).to.be.defined;
+      expect(replacedShape.incoming[0]).to.exist;
     }));
 
 

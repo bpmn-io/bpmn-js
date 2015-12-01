@@ -856,7 +856,7 @@ describe('features/attach-support', function() {
       var newShape = replace.replaceElement(attacher, replacement);
 
       // then
-      expect(newShape.host).to.be.defined;
+      expect(newShape.host).to.exist;
       expect(host.attachers).to.include(newShape);
       expect(newShape.host).to.eql(host);
     }));
@@ -895,7 +895,7 @@ describe('features/attach-support', function() {
       var newShape = replace.replaceElement(host, replacement);
 
       // then
-      expect(attacher).to.be.defined;
+      expect(attacher).to.exist;
       expect(newShape.attachers).to.include(attacher);
       expect(attacher.host).to.eql(newShape);
     }));

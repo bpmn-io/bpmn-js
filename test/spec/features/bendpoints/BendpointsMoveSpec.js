@@ -88,7 +88,7 @@ describe('features/bendpoints - move', function() {
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
-      expect(bendpoint).to.be.defined;
+      expect(bendpoint).to.exist;
     }));
 
 
@@ -103,7 +103,7 @@ describe('features/bendpoints - move', function() {
 
       // then
       var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
-      expect(bendpoint).to.be.defined;
+      expect(bendpoint).to.exist;
     }));
 
 
@@ -164,7 +164,7 @@ describe('features/bendpoints - move', function() {
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-ok');
 
-      expect(hoverNode).to.be.defined;
+      expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape2.id);
     }));
 
@@ -180,7 +180,7 @@ describe('features/bendpoints - move', function() {
       // then
       var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-not-ok');
 
-      expect(hoverNode).to.be.defined;
+      expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape3.id);
     }));
 

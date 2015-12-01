@@ -99,7 +99,7 @@ describe('features/lasso-tool', function() {
       dragging.move(canvasEvent({ x: 200, y: 300 }));
 
       // then
-      expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).to.be.defined;
+      expect(canvas._svg.node.querySelector('.djs-lasso-overlay')).to.exist;
     }));
 
 

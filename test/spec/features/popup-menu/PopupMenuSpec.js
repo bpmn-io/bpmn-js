@@ -30,8 +30,8 @@ describe('features/popup', function() {
   describe('bootstrap', function() {
 
     it('overlay to be defined', inject(function(popupMenu) {
-      expect(popupMenu).to.be.defined;
-      expect(popupMenu.open).to.be.defined;
+      expect(popupMenu).to.exist;
+      expect(popupMenu.open).to.exist;
     }));
 
   });
@@ -61,7 +61,7 @@ describe('features/popup', function() {
       var popup = popupMenu.open({ position: { x: 100, y: 100, }, entries: [] });
 
       // then
-      expect(popup).to.be.defined;
+      expect(popup).to.exist;
     }));
 
 

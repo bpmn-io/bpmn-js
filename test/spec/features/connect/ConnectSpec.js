@@ -69,7 +69,7 @@ describe('features/connect', function() {
       var newConnection = shape1.outgoing[0];
 
       // then
-      expect(newConnection).not.to.be.undefined;
+      expect(newConnection).to.exist;
       expect(newConnection.target).to.equal(shape2);
     }));
 

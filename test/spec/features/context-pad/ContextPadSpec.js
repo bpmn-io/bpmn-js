@@ -35,7 +35,7 @@ describe('features/context-pad', function() {
       canvas.addShape({ id: 's2', width: 50, height: 50, x: 200, y: 10 });
       canvas.addShape({ id: 's3', width: 150, height: 150, x: 300, y: 300 });
 
-      expect(contextPad).to.be.defined;
+      expect(contextPad).to.exist;
     }));
 
   });

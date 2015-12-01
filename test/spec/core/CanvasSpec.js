@@ -245,7 +245,7 @@ describe('Canvas', function() {
 
       // then
       expect(shape.parent).to.be.null;
-      expect(elementRegistry.get('a')).to.be.undefined;
+      expect(elementRegistry.get('a')).to.not.exist;
 
       expect(listener).to.have.been.called;
     }));
@@ -260,7 +260,7 @@ describe('Canvas', function() {
       canvas.removeShape('a');
 
       // then
-      expect(elementRegistry.get('a')).to.be.undefined;
+      expect(elementRegistry.get('a')).to.not.exist;
     }));
 
 
@@ -397,7 +397,7 @@ describe('Canvas', function() {
     it('should always return root element', inject(function(canvas) {
       // when
       // accessing root element for the first time
-      expect(canvas.getRootElement()).to.be.defined;
+      expect(canvas.getRootElement()).to.exist;
 
       // expect
       // the canvas to be correctly wired
@@ -427,7 +427,7 @@ describe('Canvas', function() {
       expect(canvas.getRootElement()).to.equal(rootElement);
 
       // new root element is registered
-      expect(elementRegistry.get('XXXX')).to.be.defined;
+      expect(elementRegistry.get('XXXX')).to.exist;
       expect(elementRegistry.getGraphics('XXXX')).to.equal(canvas.getDefaultLayer());
 
       // root element is returned from setter?
@@ -1359,7 +1359,7 @@ describe('Canvas', function() {
           secondaryGfx = canvas.getGraphics(shape, true);
 
       // then
-      expect(gfx).to.be.defined;
+      expect(gfx).to.exist;
       expect(secondaryGfx).to.not.be.defined;
     }));
 
@@ -1373,10 +1373,10 @@ describe('Canvas', function() {
           secondaryGfx = canvas.getGraphics(root, true);
 
       // then
-      expect(gfx).to.be.defined;
+      expect(gfx).to.exist;
       expect(gfx.type).to.equal('g');
 
-      expect(secondaryGfx).to.be.defined;
+      expect(secondaryGfx).to.exist;
       expect(secondaryGfx.type).to.equal('svg');
     }));
 

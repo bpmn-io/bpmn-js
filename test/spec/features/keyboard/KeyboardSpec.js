@@ -23,7 +23,7 @@ describe('features/keyboard', function() {
 
 
   it('should bootstrap diagram with keyboard', inject(function(keyboard) {
-    expect(keyboard).to.be.defined;
+    expect(keyboard).to.exist;
   }));
 
 

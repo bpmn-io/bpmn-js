@@ -33,7 +33,7 @@ describe('features/outline/Outline', function() {
       var outline = gfx.select('.djs-outline');
 
 
-      expect(outline).to.be.defined; // OUTLINE EXISTS
+      expect(outline).to.exist; // OUTLINE EXISTS
       expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
 
@@ -49,7 +49,7 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.be.defined; // OUTLINE EXISTS
+      expect(outline).to.exist; // OUTLINE EXISTS
       expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
 
@@ -76,7 +76,7 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(shape);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.be.defined; // OUTLINE box is not removed
+      expect(outline).to.exist; // OUTLINE box is not removed
       expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
 
@@ -93,7 +93,7 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.be.defined; // OUTLINE box is not removed
+      expect(outline).to.exist; // OUTLINE box is not removed
       expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
   });

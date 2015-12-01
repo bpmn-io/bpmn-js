@@ -41,7 +41,7 @@ describe('features/selection/Selections', function() {
   describe('bootstrap', function() {
 
     it('should bootstrap diagram with component', inject(function(selection) {
-      expect(selection).to.be.defined;
+      expect(selection).to.exist;
     }));
   });
 

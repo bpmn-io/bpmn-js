@@ -24,7 +24,7 @@ describe('util/IdGenerator', function() {
     var foos = new IdGenerator();
 
     // then
-    expect(foos._prefix).to.be.defined;
+    expect(foos._prefix).to.exist;
 
     expect(foos.next()).to.match(/^(\d+)-1$/);
     expect(foos.next()).to.match(/^(\d+)-2$/);

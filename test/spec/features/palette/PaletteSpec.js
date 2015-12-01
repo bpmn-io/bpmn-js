@@ -119,17 +119,17 @@ describe('features/palette', function() {
 
       // then data structure should set
       var pEntries = palette.getEntries();
-      expect(pEntries.entryA).to.be.defined;
-      expect(pEntries.entryB).to.be.defined;
+      expect(pEntries.entryA).to.exist;
+      expect(pEntries.entryB).to.exist;
 
       // then DOM should contain entries
       var entryA = domQuery('[data-action="entryA"]', palette._container);
-      expect(entryA).to.be.defined;
+      expect(entryA).to.exist;
       expect(domClasses(entryA).has('FOO')).to.be.true;
 
       var entryB = domQuery('[data-action="entryB"]', palette._container);
-      expect(entryB).to.be.defined;
-      expect(domQuery('img', entryB)).to.be.defined;
+      expect(entryB).to.exist;
+      expect(domQuery('img', entryB)).to.exist;
     }));
 
   });

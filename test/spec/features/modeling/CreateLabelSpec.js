@@ -74,7 +74,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel).to.be.defined;
+      expect(newLabel).to.exist;
       expect(newLabel.parent).to.equal(parentShape);
     }));
 
@@ -85,7 +85,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphics(newLabel)).to.be.defined;
+      expect(elementRegistry.getGraphics(newLabel)).to.exist;
     }));
 
 
@@ -111,7 +111,7 @@ describe('features/modeling - create label', function() {
       // then
       expect(newLabel.parent).to.be.null;
       expect(newLabel.labelTarget).to.be.null;
-      expect(childShape.label).to.be.undefined;
+      expect(childShape.label).to.not.exist;
 
       expect(elementRegistry.getGraphics(newLabel)).to.not.be.defined;
     }));
@@ -136,7 +136,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(newLabel).to.be.defined;
+      expect(newLabel).to.exist;
     }));
 
 
@@ -146,7 +146,7 @@ describe('features/modeling - create label', function() {
       // label added
 
       // then
-      expect(elementRegistry.getGraphics(newLabel)).to.be.defined;
+      expect(elementRegistry.getGraphics(newLabel)).to.exist;
     }));
 
 
@@ -172,7 +172,7 @@ describe('features/modeling - create label', function() {
       // then
       expect(newLabel.parent).to.be.null;
       expect(newLabel.labelTarget).to.be.null;
-      expect(connection.label).to.be.undefined;
+      expect(connection.label).to.not.exist;
 
       expect(elementRegistry.getGraphics(newLabel)).to.not.be.defined;
     }));

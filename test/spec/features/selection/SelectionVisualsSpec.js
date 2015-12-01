@@ -61,7 +61,7 @@ describe('features/selection/SelectionVisuals', function() {
       var gfx = canvas.getGraphics(connection),
           outline = gfx.select('.djs-outline');
 
-      expect(outline).to.be.defined;
+      expect(outline).to.exist;
     }));
 
   });

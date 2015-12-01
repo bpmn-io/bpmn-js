@@ -54,10 +54,10 @@ describe('features/overlays', function() {
 
 
     it('should expose api', inject(function(overlays) {
-      expect(overlays).to.be.defined;
-      expect(overlays.get).to.be.defined;
-      expect(overlays.add).to.be.defined;
-      expect(overlays.remove).to.be.defined;
+      expect(overlays).to.exist;
+      expect(overlays.get).to.exist;
+      expect(overlays.add).to.exist;
+      expect(overlays.remove).to.exist;
     }));
 
   });
@@ -89,7 +89,7 @@ describe('features/overlays', function() {
       });
 
       // then
-      expect(id).to.be.defined;
+      expect(id).to.exist;
       expect(overlays.get(id)).to.exist;
       expect(queryOverlay(id)).to.exist;
     }));
@@ -118,7 +118,7 @@ describe('features/overlays', function() {
       // then
       var overlay = overlays.get(id);
 
-      expect(overlay).to.be.defined;
+      expect(overlay).to.exist;
       expect(isVisible(overlays._overlayRoot)).to.be.true;
       expect(isVisible(overlay.html)).to.be.true;
 
@@ -718,7 +718,7 @@ describe('features/overlays', function() {
       // diagram got newly created
 
       // then
-      expect(transformMatrix(overlays._overlayRoot)).to.be.undefined;
+      expect(transformMatrix(overlays._overlayRoot)).to.not.exist;
     }));
 
 

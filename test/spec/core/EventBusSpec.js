@@ -75,7 +75,7 @@ describe('core/EventBus', function() {
         var returnValue = eventBus.fire('foo');
 
         // then
-        expect(returnValue).to.be.undefined;
+        expect(returnValue).to.not.exist;
       });
 
 
@@ -88,7 +88,7 @@ describe('core/EventBus', function() {
         var returnValue = eventBus.fire('foo');
 
         // then
-        expect(returnValue).to.be.undefined;
+        expect(returnValue).to.not.exist;
       });
 
 
@@ -118,7 +118,7 @@ describe('core/EventBus', function() {
         var returnValue = eventBus.fire('foo');
 
         // then
-        expect(returnValue).to.be.undefined;
+        expect(returnValue).to.not.exist;
       });
 
     });

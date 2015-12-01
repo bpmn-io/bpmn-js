@@ -79,9 +79,9 @@ describe('features/modeling - #removeElements', function() {
       commandStack.undo();
 
       // then
-      expect(elementRegistry.get(connection.id)).to.be.defined;
-      expect(elementRegistry.get(childShape.id)).to.be.defined;
-      expect(elementRegistry.get(parentShape.id)).to.be.defined;
+      expect(elementRegistry.get(connection.id)).to.exist;
+      expect(elementRegistry.get(childShape.id)).to.exist;
+      expect(elementRegistry.get(parentShape.id)).to.exist;
     }));
 
 

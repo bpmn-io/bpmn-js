@@ -55,10 +55,10 @@ describe('features/tooltips', function() {
 
 
     it('should expose api', inject(function(tooltips) {
-      expect(tooltips).to.be.defined;
-      expect(tooltips.get).to.be.defined;
-      expect(tooltips.add).to.be.defined;
-      expect(tooltips.remove).to.be.defined;
+      expect(tooltips).to.exist;
+      expect(tooltips.get).to.exist;
+      expect(tooltips.add).to.exist;
+      expect(tooltips.remove).to.exist;
     }));
 
   });
@@ -81,7 +81,7 @@ describe('features/tooltips', function() {
       });
 
       // then
-      expect(id).to.be.defined;
+      expect(id).to.exist;
       expect(tooltips.get(id)).to.exist;
       expect(queryTooltip(id)).to.exist;
     }));
@@ -101,7 +101,7 @@ describe('features/tooltips', function() {
       // then
       var tooltip = tooltips.get(id);
 
-      expect(tooltip).to.be.defined;
+      expect(tooltip).to.exist;
       expect(isVisible(tooltips._tooltipRoot)).to.be.true;
       expect(isVisible(tooltip.html)).to.be.true;
 
@@ -124,7 +124,7 @@ describe('features/tooltips', function() {
         });
 
         // then
-        expect(id).to.be.defined;
+        expect(id).to.exist;
         expect(tooltips.get(id)).to.exist;
 
         // but when
@@ -359,7 +359,7 @@ describe('features/tooltips', function() {
       // diagram got newly created
 
       // then
-      expect(transformMatrix(tooltips._tooltipRoot)).to.be.undefined;
+      expect(transformMatrix(tooltips._tooltipRoot)).to.not.exist;
     }));
 
 

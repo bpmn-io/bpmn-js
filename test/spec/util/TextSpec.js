@@ -94,7 +94,7 @@ describe('Text', function() {
       // when
       var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-      expect(text).to.be.defined;
+      expect(text).to.exist;
       expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
     });
 
@@ -107,7 +107,7 @@ describe('Text', function() {
       // when
       var text = createText(container, label, { box: { width: 0, height: 0 }});
 
-      expect(text).to.be.defined;
+      expect(text).to.exist;
       expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 275 })).to.be.true;
     });
 
@@ -120,7 +120,7 @@ describe('Text', function() {
       // when
       var text = createText(container, label, { box: { width: 25, height: 25 }});
 
-      expect(text).to.be.defined;
+      expect(text).to.exist;
       expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 170 })).to.be.true;
     });
 
@@ -139,7 +139,7 @@ describe('Text', function() {
       // make visible (for bounds check)
       container.attr('display', '');
 
-      expect(text).to.be.defined;
+      expect(text).to.exist;
       expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
     });
 
@@ -153,7 +153,7 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
       });
 
@@ -166,7 +166,7 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
       });
 
@@ -179,7 +179,7 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
       });
 
@@ -196,7 +196,7 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: -40, width: 100, height: 190 })).to.be.true;
       });
 
@@ -213,7 +213,7 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
@@ -226,7 +226,7 @@ describe('Text', function() {
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 }});
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 5, y: 0, width: 150, height: 100 })).to.be.true;
       });
     });
@@ -248,7 +248,7 @@ describe('Text', function() {
 
 
 
-        // expect(text).to.be.defined;
+        // expect(text).to.exist;
         // expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
@@ -265,7 +265,7 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: -10, width: 100, height: 130 })).to.be.true;
       });
 
@@ -282,7 +282,7 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: -30, width: 100, height: 180 })).to.be.true;
       });
 
@@ -299,7 +299,7 @@ describe('Text', function() {
           padding: 5
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: -30, width: 100, height: 180 })).to.be.true;
       });
     });
@@ -326,7 +326,7 @@ describe('Text', function() {
           align: 'center-middle'
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
@@ -349,7 +349,7 @@ describe('Text', function() {
           align: 'center-top'
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
@@ -372,7 +372,7 @@ describe('Text', function() {
           align: 'center-top'
         });
 
-        expect(text).to.be.defined;
+        expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
