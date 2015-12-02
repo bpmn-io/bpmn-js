@@ -7,8 +7,55 @@ var rulesModule = require('./rules'),
     priorityRulesModule = require('./priority-rules'),
     modelingModule = require('../../../../lib/features/modeling');
 
+var RuleProvider = require('../../../../lib/features/rules/RuleProvider');
+
+var inherits = require('inherits');
+
 
 describe('features/rules - RuleProvider', function() {
+
+
+  describe('inheritance', function() {
+
+    it('should allow sub-classing', function() {
+
+      // given
+      var CustomRules = function(eventBus) {
+        RuleProvider.call(this, eventBus);
+      };
+
+      inherits(CustomRules, RuleProvider);
+
+      // when
+      var customRules = new CustomRules(null);
+
+      // then
+      expect(customRules).to.exist;
+    });
+
+
+    it('should initialize rule via RuleProvider#init', function() {
+
+      // given
+      var CustomRules = function(eventBus) {
+        RuleProvider.call(this, eventBus);
+      };
+
+      inherits(CustomRules, RuleProvider);
+
+      CustomRules.prototype.init = function() {
+        this._initialized = true;
+      };
+
+
+      // when
+      var customRules = new CustomRules(null);
+
+      // then
+      expect(customRules._initialized).to.be.true;
+    });
+
+  });
 
 
   describe('rule execution', function() {
