@@ -14,7 +14,7 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
     modelingModule = require('../../../../lib/features/modeling'),
     popupModule = require('diagram-js/lib/features/popup-menu'),
     replaceModule = require('diagram-js/lib/features/replace'),
-    rulesModule = require('./rules');
+    rulesModule = require('../../../util/custom-rules');
 
 
 describe('features - context-pad', function() {
