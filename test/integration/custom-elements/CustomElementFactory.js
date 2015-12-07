@@ -51,12 +51,12 @@ CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle' ];
  *
  * @example
  *
- *	var shapes = {
- * 	  triangle: { width: 40, height: 40 },
- * 	  rectangle: { width: 100, height: 20 }
+ *  var shapes = {
+ *     triangle: { width: 40, height: 40 },
+ *     rectangle: { width: 100, height: 20 }
  *  };
  *
- * 	return shapes[type];
+ *   return shapes[type];
  *
  *
  * @param  {String} type
