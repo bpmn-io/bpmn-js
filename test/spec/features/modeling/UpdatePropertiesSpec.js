@@ -54,7 +54,7 @@ describe('features/modeling - update properties', function() {
     }));
 
 
-    it('updating default flow', inject(function(elementRegistry, modeling) {
+    it('unsetting default flow', inject(function(elementRegistry, modeling) {
 
       // given
       var gatewayShape = elementRegistry.get('ExclusiveGateway_1');
@@ -67,6 +67,24 @@ describe('features/modeling - update properties', function() {
 
       // flow got updated, too
       expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
+    }));
+
+
+    it('updating default flow', inject(function(elementRegistry, modeling) {
+
+      // given
+      var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+          newDefaultFlowConnection = elementRegistry.get('SequenceFlow_2'),
+          newDefaultFlow = newDefaultFlowConnection.businessObject;
+
+      // when
+      modeling.updateProperties(gatewayShape, { 'default': newDefaultFlow });
+
+      // then
+      expect(gatewayShape.businessObject['default']).to.eql(newDefaultFlow);
+
+      // flow got updated, too
+      expect(updatedElements).to.include(newDefaultFlowConnection);
     }));
 
 
@@ -173,20 +191,43 @@ describe('features/modeling - update properties', function() {
     }));
 
 
-    it('updating default flow', inject(function(elementRegistry, commandStack, modeling) {
+    it('unsetting default flow', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
-      var gatewayShape = elementRegistry.get('ExclusiveGateway_1');
+      var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+          oldDefaultFlow = gatewayShape.businessObject['default'];
 
       // when
       modeling.updateProperties(gatewayShape, { 'default': undefined });
       commandStack.undo();
 
       // then
-      expect(gatewayShape.businessObject['default']).to.exist;
+      expect(gatewayShape.businessObject['default']).to.eql(oldDefaultFlow);
 
       // flow got updated, too
-      expect(updatedElements).to.include(elementRegistry.get('SequenceFlow_1'));
+      expect(updatedElements).to.include(elementRegistry.get(oldDefaultFlow.id));
+    }));
+
+
+    it('updating default flow', inject(function(elementRegistry, commandStack, modeling) {
+
+      // given
+      var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+          newDefaultFlowConnection = elementRegistry.get('SequenceFlow_2'),
+          newDefaultFlow = newDefaultFlowConnection.businessObject,
+          oldDefaultFlowConnection = elementRegistry.get('SequenceFlow_1'),
+          oldDefaultFlow = oldDefaultFlowConnection.businessObject;
+
+      // when
+      modeling.updateProperties(gatewayShape, { 'default': newDefaultFlow });
+      commandStack.undo();
+
+      // then
+      expect(gatewayShape.businessObject['default']).to.eql(oldDefaultFlow);
+
+      // flow got updated, too
+      expect(updatedElements).to.include(newDefaultFlowConnection);
+      expect(updatedElements).to.include(oldDefaultFlowConnection);
     }));
 
 
@@ -330,6 +371,27 @@ describe('features/modeling - update properties', function() {
 
       // then
       expect(flowConnection.businessObject.name).not.to.exist;
+    }));
+
+  });
+
+
+  describe('unwrap diagram elements', function() {
+
+    it('updating default flow with connection', inject(function(elementRegistry, modeling) {
+
+      // given
+      var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+          newDefaultFlowConnection = elementRegistry.get('SequenceFlow_2');
+
+      // when
+      modeling.updateProperties(gatewayShape, { 'default': newDefaultFlowConnection });
+
+      // then
+      expect(gatewayShape.businessObject['default']).to.eql(newDefaultFlowConnection.businessObject);
+
+      // flow got updated, too
+      expect(updatedElements).to.include(newDefaultFlowConnection);
     }));
 
   });
