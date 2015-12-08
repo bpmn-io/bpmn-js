@@ -43,7 +43,41 @@ describe('import - Importer', function() {
   }
 
 
-  describe('event emitter', function() {
+  describe('events', function() {
+
+    it('should fire <import.start> and <import.success>', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/process.bpmn');
+
+      var eventCount = 0;
+
+      var eventBus = diagram.get('eventBus');
+
+      // log events
+      eventBus.on('import.start', function(event) {
+        expect(event.definitions).to.exist;
+
+        eventCount++;
+      });
+
+      eventBus.on('import.success', function(event) {
+        expect(event).to.have.property('error');
+        expect(event).to.have.property('warnings');
+
+        eventCount++;
+      });
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        // then
+        expect(eventCount).to.equal(2);
+
+        done(err);
+      });
+    });
+
 
     it('should fire <bpmnElement.added> during import', function(done) {
 
