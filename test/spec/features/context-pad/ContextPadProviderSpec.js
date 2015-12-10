@@ -13,6 +13,7 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
     coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
     popupModule = require('diagram-js/lib/features/popup-menu'),
+    replaceMenuProvider = require('../../../../lib/features/popup-menu'),
     replaceModule = require('diagram-js/lib/features/replace'),
     rulesModule = require('../../../util/custom-rules');
 
@@ -21,14 +22,15 @@ describe('features - context-pad', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
-  var testModules = [ contextPadModule, coreModule, modelingModule, popupModule, replaceModule, rulesModule ];
+  var testModules = [ contextPadModule, coreModule, modelingModule, popupModule,
+                      replaceModule, rulesModule, replaceMenuProvider ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(contextPadProvider) {
+    it('should bootstrap', inject(function(contextPadProvider, replaceMenuProvider) {
       expect(contextPadProvider).to.exist;
     }));
 
@@ -60,7 +62,8 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should include delete action when rule returns true', inject(function (elementRegistry, contextPad, customRules) {
+    it('should include delete action when rule returns true',
+      inject(function (elementRegistry, contextPad, customRules) {
 
       // given
       customRules.addRule('elements.delete', function() {
@@ -77,7 +80,8 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should NOT include delete action when rule returns false', inject(function(elementRegistry, contextPad, customRules) {
+    it('should NOT include delete action when rule returns false',
+      inject(function(elementRegistry, contextPad, customRules) {
 
       // given
       customRules.addRule('elements.delete', function() {
@@ -114,7 +118,8 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should include delete action when [ element ] is returned from rule', inject(function(elementRegistry, contextPad, customRules) {
+    it('should include delete action when [ element ] is returned from rule',
+      inject(function(elementRegistry, contextPad, customRules) {
 
       // given
       customRules.addRule('elements.delete', function(context) {
@@ -131,7 +136,8 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should NOT include delete action when [ ] is returned from rule', inject(function(elementRegistry, contextPad, customRules) {
+    it('should NOT include delete action when [ ] is returned from rule',
+      inject(function(elementRegistry, contextPad, customRules) {
 
       // given
       customRules.addRule('elements.delete', function() {
@@ -176,7 +182,7 @@ describe('features - context-pad', function() {
 
       // when
       contextPad.trigger('click', event);
-      replaceMenuRect = domQuery('.replace-menu', container).getBoundingClientRect();
+      replaceMenuRect = domQuery('.bpmn-replace', container).getBoundingClientRect();
 
       // then
       expect(replaceMenuRect.left).to.be.at.most(padMenuRect.left);
