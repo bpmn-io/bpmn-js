@@ -22,6 +22,14 @@ function queryPopup(popupMenu, selector) {
   return domQuery(selector, popupMenu._current.container);
 }
 
+var menuProvider = {
+  getHeaderEntries: function() {
+    return [ { id: 'entry1', label: 'foo' } ];
+  },
+  getEntries: function() {
+    return [ { id: 'entry2', label: 'foo' }, { id: 'entry3', label: 'bar' } ];
+  }
+};
 
 describe('features/popup', function() {
 
@@ -37,77 +45,158 @@ describe('features/popup', function() {
   });
 
 
+  describe('#registerProvider', function() {
+    it('should register provider', inject(function(popupMenu) {
+
+      // given
+      var provider = {};
+
+      // when
+      popupMenu.registerProvider('provider', provider);
+
+      // then
+      expect(popupMenu._providers.provider).to.exist;
+
+    }));
+  });
+
+  describe('#create', function() {
+    it('should create menu for specific element', inject(function(popupMenu) {
+
+      // when
+      popupMenu.registerProvider('menu', menuProvider);
+
+      popupMenu.create('menu', {});
+
+      // then
+      expect(popupMenu._current.provider.getHeaderEntries()).to.include({ id: 'entry1', label: 'foo' });
+      expect(popupMenu._current.provider.getEntries()).to.include({ id: 'entry2', label: 'foo' });
+
+    }));
+
+
+    it('should throw error when no provider', inject(function(popupMenu) {
+
+      // when not registering a provider
+
+      // then
+      expect(function() { popupMenu.create('foo'); }).to.throw('Provider is not registered: foo');
+
+    }));
+
+
+    it('should throw error when element is missing', inject(function(popupMenu) {
+
+      popupMenu.registerProvider('menu', menuProvider);
+
+      expect(function() { popupMenu.create('menu'); }).to.throw('Element is missing');
+
+    }));
+
+  });
+
+  describe('#isEmpty', function() {
+
+    it('should return true if empty', inject(function(popupMenu){
+      // given
+      popupMenu.registerProvider('empty-menu', {
+        getEntries: function() { return []; },
+        getHeaderEntries: function() { return []; }
+      });
+
+      // when
+      popupMenu.create('empty-menu', {});
+
+      // then
+      expect(popupMenu.isEmpty()).to.be.true;
+    }));
+
+
+    it('should return false if entries', inject(function(popupMenu){
+      // given
+      popupMenu.registerProvider('entry-menu', {
+        getEntries: function() { return [ { id: 1 } ]; }
+      });
+
+      // when
+      popupMenu.create('entry-menu', {});
+
+      // then
+      expect(popupMenu.isEmpty()).to.be.false;
+    }));
+
+
+    it('should return false if header entries', inject(function(popupMenu){
+      // given
+      popupMenu.registerProvider('header-entry-menu', {
+        getEntries: function() { return [ { id: 1 } ]; }
+      });
+
+      // when
+      popupMenu.create('header-entry-menu', {});
+
+      // then
+      expect(popupMenu.isEmpty()).to.be.false;
+    }));
+  });
+
   describe('#open', function() {
 
-    it('should throw an exception when the entries argument is missing', inject(function(popupMenu) {
-
-      expect(function() {
-        popupMenu.open({ position: { x: 100, y: 100 } });
-      }).to.throw('the entries argument is missing');
+    beforeEach(inject(function(popupMenu) {
+      popupMenu.registerProvider('menu', menuProvider);
     }));
-
-
-    it('should throw an exception when the entry id argument is missing', inject(function(popupMenu) {
-
-      expect(function() {
-        popupMenu.open({ position: { x: 100, y: 100 }, entries: [{ label: 'foo' }]});
-      }).to.throw('every entry must have the id property set');
-    }));
-
 
     it('should return popup instance', inject(function(popupMenu) {
 
       // when
-      var popup = popupMenu.open({ position: { x: 100, y: 100, }, entries: [] });
+      var popup = popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
       // then
       expect(popup).to.exist;
+      expect(popup._current).to.exist;
     }));
 
 
     it('should attach popup to html', inject(function(popupMenu) {
 
       // when
-      popupMenu.open({ position: { x: 100, y: 100, }, entries: [], className: 'test-popup' });
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
-      // then
       var container = popupMenu._current.container;
 
+      // then
       expect(domClasses(container).has('djs-popup')).to.be.true;
-      expect(domClasses(container).has('test-popup')).to.be.true;
+      expect(domClasses(container).has('menu')).to.be.true;
     }));
 
 
     it('should add entries to menu', inject(function(popupMenu) {
 
       // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        entries: [
-          { id: 'id1', label: 'Entry 1', className:'firstEntry' },
-          { id: 'id2', label: 'Entry 2' },
-          { id: 'id3', label: 'Entry 3' }
-        ]
-      });
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
       // then
-      var element = queryPopup(popupMenu, '.firstEntry');
+      var domEntry = queryEntry(popupMenu, 'entry1');
 
-      expect(element.textContent).to.eql('Entry 1');
+      expect(domEntry.textContent).to.eql('foo');
     }));
 
 
     it('should add action-id to entry', inject(function(popupMenu) {
 
       // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        entries: [
-          {id: 'save', label: 'SAVE' },
-          {id: 'load', label: 'LOAD' },
-          {id: 'undo', label: 'UNDO' }
-        ]
+      popupMenu.registerProvider('item-menu', {
+        getEntries: function() {
+          return [
+            {id: 'save', label: 'SAVE' },
+            {id: 'load', label: 'LOAD' },
+            {id: 'undo', label: 'UNDO' }
+          ];
+        },
+        getHeaderEntries: function() {}
       });
+
+      popupMenu.create('item-menu', {}).open({ x: 100, y: 100 });
 
       // then
       var parent = queryPopup(popupMenu, '.djs-popup-body');
@@ -124,13 +213,12 @@ describe('features/popup', function() {
 
   describe('#close', function() {
 
-    it('should remove DOM', inject(function(popupMenu) {
+    beforeEach(inject(function(popupMenu) {
+      popupMenu.registerProvider('menu', menuProvider);
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
+    }));
 
-      // given
-      popupMenu.open({
-        position: { x: 100, y: 100, },
-        entries: []
-      });
+    it('should remove DOM', inject(function(popupMenu) {
 
       // when
       popupMenu.close();
@@ -144,12 +232,6 @@ describe('features/popup', function() {
 
     it('should not fail if already closed', inject(function(popupMenu){
 
-      // given
-      popupMenu.open({
-        position: { x: 100, y: 100, },
-        entries: []
-      });
-
       // when
       popupMenu.close();
 
@@ -159,45 +241,85 @@ describe('features/popup', function() {
 
   });
 
+  describe('#isOpen', function(){
+
+    it('should not be open initially', inject(function(popupMenu){
+
+      // when
+      popupMenu.registerProvider('menu', menuProvider);
+      popupMenu.create('menu', {});
+
+      // then
+      expect(popupMenu.isOpen()).to.be.false;
+    }));
+
+
+    it('should be open after opening', inject(function(popupMenu){
+
+      // when
+      popupMenu.registerProvider('menu', menuProvider);
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
+
+      // then
+      expect(popupMenu.isOpen()).to.be.true;
+    }));
+
+
+    it('should be closed after closing', inject(function(popupMenu){
+
+      // given
+      popupMenu.registerProvider('menu', menuProvider);
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
+
+      // when
+      popupMenu.close();
+
+      // then
+      expect(popupMenu.isOpen()).to.be.false;
+    }));
+
+  });
+
   describe('#trigger', function () {
 
     it('should trigger the right action handler', inject(function(popupMenu) {
 
-      var entry, trigger;
-
       // given
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        entries: [
-          {
-            id: '1',
-            label: 'Entry 1',
-            className: 'Entry_1',
-            action: function(event, entry) {
-              return 'Entry 1';
+      popupMenu.registerProvider('test-menu', {
+        getEntries: function() {
+          return [
+            {
+              id: '1',
+              label: 'Entry 1',
+              className: 'Entry_1',
+              action: function(event, entry) {
+                return 'Entry 1';
+              }
+            }, {
+              id: '2',
+              label: 'Entry 2',
+              className: 'Entry_2',
+              action: function(event, entry) {
+                return 'Entry 2';
+              }
             }
-          }, {
-            id: '2',
-            label: 'Entry 2',
-            className: 'Entry_2',
-            action: function(event, entry) {
-              return 'Entry 2';
-            }
-          }
-        ]
+          ];
+        }
       });
 
-      entry = queryPopup(popupMenu, '.Entry_2');
+      popupMenu.create('test-menu', {});
+      popupMenu.open({ x: 100, y: 100 });
+
+      var entry = queryPopup(popupMenu, '.Entry_2');
 
       // when
-      trigger = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+      var trigger = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
       // then
       expect(trigger).to.eql('Entry 2');
     }));
 
   });
-
 
   describe('integration', function() {
 
@@ -206,10 +328,9 @@ describe('features/popup', function() {
       it('should close menu (contextPad.close)', inject(function(popupMenu, eventBus) {
 
         // given
-        popupMenu.open({
-          position: { x: 100, y: 100, },
-          entries: []
-        });
+        popupMenu.registerProvider('menu', menuProvider);
+
+        popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
         // when
         eventBus.fire('contextPad.close');
@@ -224,10 +345,9 @@ describe('features/popup', function() {
       it('should close menu (canvas.viewbox.changing)', inject(function(popupMenu, eventBus) {
 
         // given
-        popupMenu.open({
-          position: { x: 100, y: 100, },
-          entries: []
-        });
+        popupMenu.registerProvider('menu', menuProvider);
+
+        popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
         // when
         eventBus.fire('canvas.viewbox.changing');
@@ -242,21 +362,24 @@ describe('features/popup', function() {
 
   });
 
-
   describe('menu styling', function() {
 
     it('should add standard class to entry', inject(function(popupMenu) {
 
-      // when
-      popupMenu.open(
-        {
-          position: { x: 100, y: 100, },
-          entries: [
+      // given
+      var testMenuProvider = {
+        getEntries: function() {
+          return [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2' }
-          ]
+          ];
         }
-      );
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+
+      // when
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       var elements = domQuery.all('.entry', popupMenu._current.container);
@@ -267,15 +390,20 @@ describe('features/popup', function() {
 
     it('should add custom class to entry if specfied', inject(function(popupMenu) {
 
-      popupMenu.open(
-        {
-          position: { x: 100, y: 100, },
-          entries: [
+      // given
+      var testMenuProvider = {
+        getEntries: function() {
+          return [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2 - special', className: 'special-entry' }
-          ]
+          ];
         }
-      );
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+
+      // when
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       var element = queryPopup(popupMenu, '.special-entry');
@@ -286,17 +414,23 @@ describe('features/popup', function() {
 
     it('should name the css classes correctly', inject(function(popupMenu) {
 
-      // when
-      popupMenu.open(
-        {
-          position: { x: 100, y: 100 },
-          entries: [
+      // given
+      var testMenuProvider = {
+        getEntries: function() {
+          return [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2' }
-          ],
-          headerEntries: [{ id: 'A', label: 'Header Entry A' }]
+          ];
+        },
+        getHeaderEntries: function() {
+          return [{ id: 'A', label: 'Header Entry A' }];
         }
-      );
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+
+      // when
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       var popupBody = queryPopup(popupMenu, '.djs-popup-body');
       var popupHeader = queryPopup(popupMenu, '.djs-popup-header');
@@ -309,26 +443,32 @@ describe('features/popup', function() {
 
     it('should look awesome', inject(function(popupMenu) {
 
-      // when
-      popupMenu.open(
-        {
-          position: { x: 100, y: 100 },
-          entries: [
+      // given
+      var testMenuProvider = {
+        getEntries: function() {
+          return [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2', active: true },
             { id: '3', label: 'Entry 3' },
             { id: '4', label: 'Entry 4', disabled: true },
             { id: '5', label: 'Entry 5' }
-          ],
-          headerEntries: [
+          ];
+        },
+        getHeaderEntries: function() {
+          return [
             { id: 'A', label: 'A' },
             { id: 'B', label: 'B' },
             { id: 'C', label: 'C', active: true },
             { id: 'D', label: 'D', disabled: true },
             { id: 'E', label: 'E', disabled: true }
-          ]
+          ];
         }
-      );
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+
+      // when
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       // looks awesome?
@@ -340,26 +480,35 @@ describe('features/popup', function() {
 
     it('should update the popup menu, when it is opened again' , inject(function(popupMenu) {
 
-      // when
-      popupMenu.open({
-          className: 'popup-menu1',
-          position: { x: 100, y: 100, },
-          entries: [
+      // given
+      var popupMenu1 = {
+        getEntries: function() {
+          return [
             { id: '1', label: 'Entry 1' },
             { id: '2', label: 'Entry 2' }
-          ]
-      });
-
-      popupMenu.open(
-        {
-          className: 'popup-menu2',
-          position: { x: 200, y: 200, },
-          entries: [
-            { id: '1', label: 'Entry A' },
-            { id: '2', label: 'Entry B' }
-          ]
+          ];
         }
-      );
+      };
+
+      popupMenu.registerProvider('popup-menu1', popupMenu1);
+
+      var popupMenu2 = {
+        getEntries: function() {
+          return [
+            { id: '3', label: 'Entry A' },
+            { id: '4', label: 'Entry B' }
+          ];
+        }
+      };
+
+      popupMenu.registerProvider('popup-menu2', popupMenu2);
+
+      // when
+      var popup1 = popupMenu.create('popup-menu1', {});
+      var popup2 = popupMenu.create('popup-menu2', {});
+
+      popup1.open({ x: 100, y: 100 });
+      popup2.open({ x: 200, y: 200 });
 
       var container = popupMenu._current.container,
           entriesContainer = domQuery('.djs-popup-body', container);
@@ -379,55 +528,23 @@ describe('features/popup', function() {
 
   });
 
-  describe('#isOpen', function(){
-
-    it('should not be open initially', inject(function(popupMenu){
-
-      // when
-      // at initial state
-
-      // then
-      expect(popupMenu.isOpen()).to.be.false;
-    }));
-
-
-    it('should be open after opening', inject(function(popupMenu){
-      // when
-       popupMenu.open({ position: { x: 100, y: 100, }, entries: [] });
-
-      // then
-      expect(popupMenu.isOpen()).to.be.true;
-    }));
-
-
-    it('should be closed after closing', inject(function(popupMenu){
-
-      // given
-      popupMenu.open({ position: { x: 100, y: 100, }, entries: [] });
-
-      // when
-      popupMenu.close();
-
-      // then
-      expect(popupMenu.isOpen()).to.be.false;
-    }));
-
-  });
 
   describe('header', function() {
 
     it('should throw an error, if the id of a header entry is not set', inject(function(popupMenu){
 
       // when
-      var menu = {
-        position: { x: 100, y: 100 },
-        headerEntries: [{ className: 'header-entry-1' }],
-        entries: []
-      };
+      popupMenu.registerProvider('test-menu', {
+        getEntries: function() {
+          return { label: 'foo' };
+        }
+      });
+
+      var testMenu = popupMenu.create('test-menu', {});
 
       // then
       expect(function(){
-        popupMenu.open(menu);
+        testMenu.open({ x: 100, y: 100 });
       }).to.throw('every entry must have the id property set');
     }));
 
@@ -435,11 +552,8 @@ describe('features/popup', function() {
     it('should be attached to the top of the popup menu, if set' , inject(function(popupMenu) {
 
       // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        headerEntries: [{ id: '1', className: 'header-entry-1' }],
-        entries: []
-      });
+      popupMenu.registerProvider('menu', menuProvider);
+      popupMenu.create('menu', {}).open({ x: 100, y: 100 });
 
       // then
       expect(queryPopup(popupMenu, '.djs-popup-header')).to.exist;
@@ -448,12 +562,17 @@ describe('features/popup', function() {
 
     it('should add a custom css class to the header section, if specified', inject(function(popupMenu){
 
-      // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        headerEntries: [{ id: '1', className: 'header-entry-1' }],
-        entries: []
-      });
+      var testMenuProvider = {
+        getHeaderEntries: function() {
+          return [ { id: '1', className: 'header-entry-1' } ];
+        },
+        getEntries: function() {
+          return [ { id: '2', label: 'foo' } ];
+        }
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       expect(queryPopup(popupMenu, '.header-entry-1')).to.exist;
@@ -465,18 +584,21 @@ describe('features/popup', function() {
       // given
       var testImage = 'data:image/png;base64,' + fs.readFileSync(__dirname + '/resources/a.png', 'base64');
 
-      // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        headerEntries: [
-          {
-            id: '1',
-            imageUrl: testImage,
-            className: 'image-1'
-          }
-        ],
-        entries: []
-      });
+      var testMenuProvider = {
+        getHeaderEntries: function() {
+          return [
+            {
+              id: '1',
+              imageUrl: testImage,
+              className: 'image-1'
+            }
+          ];
+        },
+        getEntries: function() { return []; }
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       var img = queryPopup(popupMenu, '.image-1 img');
@@ -488,12 +610,15 @@ describe('features/popup', function() {
 
     it('should add a labeled element to the header section, if specified', inject(function(popupMenu){
 
-      // when
-      popupMenu.open({
-        position: { x: 100, y: 100 },
-        headerEntries: [{ id: '1', label: 'foo', className: 'label-1' }],
-        entries: []
-      });
+      var testMenuProvider = {
+        getHeaderEntries: function() {
+          return [ { id: '1', label: 'foo', className: 'label-1' } ];
+        },
+        getEntries: function() { return []; }
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       var headerEntry = queryPopup(popupMenu, '.label-1');
@@ -504,14 +629,11 @@ describe('features/popup', function() {
 
     it('should throw an error if the position argument is missing', inject(function(popupMenu){
 
-      // when
-      var menu = {
-        entries: []
-      };
+      popupMenu.registerProvider('menu', menuProvider);
 
       // then
       expect(function(){
-        popupMenu.open(menu);
+        popupMenu.create('menu', {}).open();
       }).to.throw('the position argument is missing');
     }));
 
@@ -519,10 +641,12 @@ describe('features/popup', function() {
     it('should attach only the entries if no header entries is set', inject(function(popupMenu){
 
       // when
-      popupMenu.open({
-        entries: [],
-        position: { x: 100, y: 100 }
-      });
+      var testMenuProvider = {
+        getEntries: function() { return []; }
+      };
+
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       expect(queryPopup(popupMenu, '.djs-popup-header')).not.to.exist;
@@ -535,15 +659,19 @@ describe('features/popup', function() {
       // given
       var actionListener = sinon.spy();
 
-      popupMenu.open({
-        entries: [],
-        headerEntries: [{
-          id: '1',
-          action: actionListener,
-          label: 'foo'
-        }],
-        position: { x: 100, y: 100 }
-      });
+      var testProvider = {
+        getHeaderEntries: function() {
+          return [{
+            id: '1',
+            action: actionListener,
+            label: 'foo'
+          }];
+        },
+        getEntries: function() { return []; }
+      };
+
+      popupMenu.registerProvider('test-menu', testProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       var entry = queryPopup(popupMenu, '.entry');
 
@@ -560,22 +688,23 @@ describe('features/popup', function() {
       // given
       var entry;
 
-      var menu = {
-        className: 'myPopup',
-        position: { x: 100, y: 100 },
-        entries: [],
-        headerEntries: [
-          {
-            id: 'foo',
-            active: true,
-            disabled: true,
-            label: 'foo'
-          }
-        ]
+      var testMenuProvider = {
+        getHeaderEntries: function() {
+          return [
+            {
+              id: 'foo',
+              active: true,
+              disabled: true,
+              label: 'foo'
+            }
+          ];
+        },
+        getEntries: function() { return []; }
       };
 
       // when
-      popupMenu.open(menu);
+      popupMenu.registerProvider('test-menu', testMenuProvider);
+      popupMenu.create('test-menu', {}).open({ x: 100, y: 100 });
 
       // then
       entry = queryEntry(popupMenu, 'foo');
