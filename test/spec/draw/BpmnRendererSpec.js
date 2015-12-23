@@ -123,29 +123,80 @@ describe('draw - bpmn renderer', function() {
     bootstrapViewer(xml)(done);
   });
 
+
   it('should render xor gateways blank and with X', function(done) {
     var xml = require('../../fixtures/bpmn/draw/xor.bpmn');
     bootstrapViewer(xml)(done);
   });
+
 
   it('should render boundary events with correct z-index', function(done) {
     var xml = require('../../fixtures/bpmn/draw/boundary-event-z-index.bpmn');
     bootstrapViewer(xml)(done);
   });
 
+
   it('should render boundary events without flowNodeRef', function(done) {
    var xml = require('../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn');
    bootstrapViewer(xml)(done);
   });
+
 
   it('should render boundary event only once if referenced incorrectly via flowNodeRef (robustness)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/boundary-event-with-refnode.bpmn');
     bootstrapViewer(xml)(done);
   });
 
+
   it('should render gateway event if attribute is missing in XML', function(done) {
     var xml = require('../../fixtures/bpmn/draw/gateway-type-default.bpmn');
     bootstrapViewer(xml)(done);
+  });
+
+
+  it('should render call activity', function(done) {
+    var xml = require('../../fixtures/bpmn/draw/call-activity.bpmn');
+
+    bootstrapViewer(xml)(function(err) {
+
+      if (err) {
+        return done(err);
+      }
+
+      inject(function(elementRegistry) {
+
+        var callActivityGfx = elementRegistry.getGraphics('CallActivity');
+
+        // make sure the + marker is shown
+        expect(callActivityGfx.select('[data-marker=sub-process]')).to.exist;
+
+        done();
+      })();
+    });
+
+  });
+
+
+  it('should render adhoc sub process', function(done) {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    bootstrapViewer(xml)(function(err) {
+
+      if (err) {
+        return done(err);
+      }
+
+      inject(function(elementRegistry) {
+
+        var callActivityGfx = elementRegistry.getGraphics('AdHocSubProcess');
+
+        // make sure the + marker is shown
+        expect(callActivityGfx.select('[data-marker=adhoc]')).to.exist;
+
+        done();
+      })();
+    });
+
   });
 
 
@@ -158,7 +209,6 @@ describe('draw - bpmn renderer', function() {
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     describe('circle', function () {
-
 
       it('should return a circle path', inject(function(canvas, elementRegistry, graphicsFactory) {
 
