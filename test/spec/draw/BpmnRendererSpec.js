@@ -215,5 +215,58 @@ describe('draw - bpmn renderer', function() {
     });
 
   });
+  
+  describe('inspect rendered svg-element of a callActivity', function () {
+
+    var xml = require('../../fixtures/bpmn/draw/call-activity.bpmn');
+    beforeEach(bootstrapViewer(xml));
+
+    it('verify the subprocess-marker on the callActivity', inject(function(canvas, elementRegistry, graphicsFactory) {
+      
+      var callActivityElement = elementRegistry.get('CallActivity_1');
+      var callActivitySVG = elementRegistry.getGraphics('CallActivity_1');
+      
+      var contain = false;
+
+      /* position of (+) sign */
+      var mx = callActivityElement.width / 2 - 7.5;
+      var my = callActivityElement.height - 20;
+
+      /* rectangle object that is covering the plus */
+      var rect = {'x': mx, 'y': my, 'width': 14, 'height': 14}; 
+
+      /* checking if this rect is among the rendered ones */
+      var possibleElements = callActivitySVG.selectAll('rect');
+
+      for(var i = 0; i < possibleElements.length; i++){
+        var bBox = possibleElements[i].getBBox();
+        var compareObj = {'x':bBox.x , 'y': bBox.y, 'width': bBox.width, 'height': bBox.height};  
+        var equal = true;
+
+        for (var prop in rect){
+          equal = equal && (rect[prop] === compareObj[prop]);
+        }
+        
+        contain = contain || equal;
+      }
+
+      expect(contain).to.be.true;
+      contain = false;
+
+      /* the plus is unambiguously defined by its path*/
+      var plusMarkerPath = 'm' + mx + ',' + my + ' m 7,2 l 0,10 m -5,-5 l 10,0';
+      
+      /* checking if plusMarkerPath is substring of a path element*/
+      possibleElements = callActivitySVG.selectAll('path');
+
+      for(var i = 0; i < possibleElements.length; i++){
+        contain = contain || (possibleElements[i].toString().indexOf(plusMarkerPath) != 0);
+      }
+
+      expect(contain).to.be.true;
+
+    }));
+
+  });
 
 });
