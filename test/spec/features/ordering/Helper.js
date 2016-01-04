@@ -55,8 +55,41 @@ function move(elementIds, delta, targetId, isAttach) {
   });
 }
 
-
 module.exports.move = move;
+
+
+function add(attrs, position, target, isAttach) {
+
+  return TestHelper.getBpmnJS().invoke(function(canvas, elementRegistry, modeling) {
+
+    function getElement(id) {
+
+      var element = elementRegistry.get(id);
+
+      expect(element).to.exist;
+
+      return element;
+    }
+
+    if (!target) {
+      target = canvas.getRootElement();
+    } else
+    if (typeof target === 'string') {
+      target = getElement(target);
+    }
+
+    return modeling.createShape(attrs, position, target, isAttach);
+  });
+}
+
+module.exports.add = add;
+
+
+function attach(attrs, position, target) {
+  return add(attrs, position, target, true);
+}
+
+module.exports.attach = attach;
 
 
 function getAncestors(element) {

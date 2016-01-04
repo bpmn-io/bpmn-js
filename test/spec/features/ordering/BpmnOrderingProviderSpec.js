@@ -5,6 +5,7 @@ var Helper = require('./Helper');
 /* global bootstrapModeler, inject */
 
 var move = Helper.move,
+    attach = Helper.attach,
     expectZOrder = Helper.expectZOrder;
 
 var modelingModule = require('../../../../lib/features/modeling'),
@@ -15,38 +16,65 @@ describe('features/modeling - ordering', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
+
   describe('boundary events', function() {
 
-    var diagramXML = require('./ordering.bpmn');
+    describe('move', function() {
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      var diagramXML = require('./ordering.bpmn');
 
-    it('should stay in front of Task', inject(function() {
-
-      // when
-      move('Task_With_Boundary');
-
-      // then
-      expectZOrder('Task_With_Boundary', 'BoundaryEvent');
-    }));
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-    it('should stay in front of Task, moving both', inject(function() {
+      it('should stay in front of Task', inject(function() {
 
-      // when
-      move([ 'BoundaryEvent', 'Task_With_Boundary' ], 'Participant_StartEvent');
+        // when
+        move('Task_With_Boundary');
 
-      // then
-      expectZOrder('Task_With_Boundary', 'BoundaryEvent');
-    }));
+        // then
+        expectZOrder('Task_With_Boundary', 'BoundaryEvent');
+      }));
+
+
+      it('should stay in front of Task, moving both', inject(function() {
+
+        // when
+        move([ 'BoundaryEvent', 'Task_With_Boundary' ], 'Participant_StartEvent');
+
+        // then
+        expectZOrder('Task_With_Boundary', 'BoundaryEvent');
+      }));
+
+    });
+
+
+    describe('add', function() {
+
+      var diagramXML = require('./ordering-start-event.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should add in front of Task', inject(function() {
+
+        // when
+        var boundaryShape = attach({ type: 'bpmn:BoundaryEvent' }, { x: 300, y: 80 }, 'Task');
+
+        // then
+        expectZOrder('Task', boundaryShape.id);
+      }));
+
+    });
 
   });
+
 
   describe('participants', function() {
 
     var diagramXML = require('./ordering.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should stay behind MessageFlow', inject(function() {
 
@@ -65,6 +93,7 @@ describe('features/modeling - ordering', function() {
     var diagramXML = require('./ordering-subprocesses.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     it('should stay behind boundary events', inject(function() {
 
