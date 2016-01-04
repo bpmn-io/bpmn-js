@@ -245,7 +245,7 @@ describe('features/replace', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-    it('should keep copy label',
+    it('should keep interior labels',
       inject(function(elementRegistry, bpmnReplace) {
 
       // given
@@ -260,6 +260,26 @@ describe('features/replace', function() {
 
       // then
       expect(newElement.businessObject.name).to.equal('Task Caption');
+    }));
+
+
+    it('should keep exterior labels',
+      inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      var newElementData =  {
+        type: 'bpmn:EndEvent'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
+
+      // then
+      expect(newElement.label.hidden).to.equal(false);
+      expect(newElement.label.labelTarget).to.equal(newElement);
+      expect(newElement.businessObject.name).to.equal('KEEP ME');
     }));
 
   });
