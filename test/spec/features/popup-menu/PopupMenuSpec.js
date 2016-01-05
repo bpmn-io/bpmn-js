@@ -715,4 +715,77 @@ describe('features/popup', function() {
 
   });
 
+  // different browsers, different outcomes
+  describe('position', function () {
+
+    beforeEach(inject(function(popupMenu, elementRegistry) {
+
+      var customProvider = {
+        getEntries: function() {
+          return [
+            { id: '1', label: 'Entry 1' },
+            { id: '2', label: 'Entry 2', active: true },
+            { id: '3', label: 'Entry 3' },
+            { id: '4', label: 'Entry 4', disabled: true },
+            { id: '5', label: 'Entry 5' }
+          ];
+        },
+        getHeaderEntries: function() {
+          return [
+            { id: 'A', label: 'A' },
+            { id: 'B', label: 'B' },
+            { id: 'C', label: 'C', active: true },
+            { id: 'D', label: 'D', disabled: true },
+            { id: 'E', label: 'E', disabled: true }
+          ];
+        }
+      };
+
+      popupMenu.registerProvider('custom-provider', customProvider);
+
+      popupMenu.create('custom-provider', {});
+    }));
+
+
+    it('should open within bounds above', inject(function(popupMenu, canvas) {
+      // given
+      var clientRect = canvas._container.getBoundingClientRect();
+
+      var cursorPosition = { x: clientRect.left + 100, y: clientRect.top + 500 };
+
+      // when
+      popupMenu.open({ x: 100, y: 500, cursor: cursorPosition });
+
+      var menu = popupMenu._current.container;
+
+      var menuDimensions = {
+        width: menu.scrollWidth,
+        height: menu.scrollHeight
+      };
+
+      expect(menu.offsetTop).to.equal(500 - menuDimensions.height);
+    }));
+
+
+    it('should open within bounds to the left', inject(function(popupMenu, canvas) {
+      // given
+      var clientRect = canvas._container.getBoundingClientRect();
+
+      var cursorPosition = { x: clientRect.left + 2000, y: clientRect.top + 100 };
+
+      // when
+      popupMenu.open({ x: 2000, y: 100, cursor: cursorPosition });
+
+      var menu = popupMenu._current.container;
+
+      var menuDimensions = {
+        width: menu.scrollWidth,
+        height: menu.scrollHeight
+      };
+
+      expect(menu.offsetLeft).to.equal(2000 - menuDimensions.width);
+    }));
+
+  });
+
 });
