@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:Task id="Task_A" name="Task_A">
+      <bpmn:dataInputAssociation id="DataInputAssociation">
+        <bpmn:sourceRef>DataObjectReference</bpmn:sourceRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:Task>
+    <bpmn:dataObjectReference id="DataObjectReference" name="DataObjectReference" dataObjectRef="DataObject" />
+    <bpmn:dataObject id="DataObject" />
+    <bpmn:Task id="Task_B" name="Task_B" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
+      <bpmndi:BPMNShape id="Task_A_di" bpmnElement="Task_A">
+        <dc:Bounds x="249" y="22" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="100" y="201" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="73" y="251" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_B_di" bpmnElement="Task_B">
+        <dc:Bounds x="249" y="186" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="136" y="210" />
+        <di:waypoint xsi:type="dc:Point" x="257" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
