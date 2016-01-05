@@ -433,15 +433,13 @@ svg.new-parent {
  * bendpoints
  */
 .djs-segment-dragger .djs-visual {
-  pointer-events: none;
-  fill: rgba(255, 255, 121, 0.4);
+  fill: rgba(255, 255, 121, 0.2);
   stroke-width: 1px;
-  stroke-opacity: 0.0;
-  stroke: black;
+  stroke-opacity: 1;
+  stroke: rgba(255, 255, 121, 0.3);
 }
 
 .djs-bendpoint .djs-visual {
-  pointer-events: none;
   fill: rgba(255, 255, 121, 0.8);
   stroke-width: 1px;
   stroke-opacity: 0.5;
@@ -462,10 +460,12 @@ svg.new-parent {
 }
 
 .djs-segment-dragger:hover .djs-visual,
+.djs-segment-dragger.djs-dragging .djs-visual,
 .djs-bendpoint:hover .djs-visual,
 .djs-bendpoint.floating .djs-visual {
   fill: yellow;
   stroke-opacity: 0.5;
+  stroke: black;
 }
 
 .djs-bendpoint.floating .djs-hit {
@@ -484,6 +484,10 @@ svg.new-parent {
 
 .djs-segment-dragger.vertical .djs-hit {
   cursor: ew-resize;
+}
+
+.djs-segment-dragger.djs-dragging .djs-hit {
+  pointer-events: none;
 }
 
 .djs-updating,
