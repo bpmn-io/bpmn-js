@@ -129,6 +129,46 @@ describe('Dragging', function() {
     }));
 
 
+    describe('djs-drag-active marker', function() {
+
+      it('should not add to root on drag start', inject(function(dragging, canvas, elementRegistry) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            rootGfx = elementRegistry.getGraphics(rootElement);
+
+        // when
+        dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+
+        // then
+        expect(rootGfx.hasClass('djs-drag-active')).to.be.false;
+
+        // but when
+        dragging.move(canvasEvent({ x: 30, y: 20 }));
+
+        // then
+        expect(rootGfx.hasClass('djs-drag-active')).to.be.true;
+      }));
+
+
+      it('should remove from root on drag end', inject(function(dragging, canvas, elementRegistry) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            rootGfx = elementRegistry.getGraphics(rootElement);
+
+        // when
+        dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+        dragging.move(canvasEvent({ x: 30, y: 20 }));
+        dragging.cancel();
+
+        // then
+        expect(rootGfx.hasClass('djs-drag-active')).to.be.false;
+      }));
+
+    });
+
+
     it('should adjust positions to local point', inject(function(dragging) {
 
       // given
