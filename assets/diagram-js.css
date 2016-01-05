@@ -455,6 +455,10 @@ svg.new-parent {
   display: block;
 }
 
+.djs-drag-active .djs-bendpoints * {
+  display: none;
+}
+
 .djs-bendpoints:not(.hover) .floating {
   display: none;
 }
