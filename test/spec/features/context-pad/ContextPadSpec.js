@@ -4,7 +4,6 @@
 var globalEvent = require('../../../util/MockEvents').createEvent;
 
 
-
 /* global bootstrapDiagram, inject, sinon */
 
 var domQuery = require('min-dom/lib/query');
@@ -189,6 +188,45 @@ describe('features/context-pad', function() {
       // then
       expectEntries(contextPad, shape, [ 'action.c', 'action.no-image' ]);
     }));
+
+
+    it('should reopen if current element changed', inject(function(eventBus, canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+
+      contextPad.open(shape);
+
+      var open = sinon.spy(contextPad, 'open');
+
+      // when
+      eventBus.fire('element.changed', { element: shape });
+
+      // then
+      expect(open).to.have.been.calledWith(shape, true);
+    }));
+
+
+    it('should not reopen if other element changed', inject(function(eventBus, canvas, contextPad) {
+
+      // given
+      var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+      canvas.addShape(shape);
+
+      contextPad.open(shape);
+
+      var open = sinon.spy(contextPad, 'open');
+
+      // when
+      eventBus.fire('element.changed', { element: canvas.getRootElement() });
+
+      // then
+      expect(open).to.not.have.been.called;
+    }));
+
 
   });
 
