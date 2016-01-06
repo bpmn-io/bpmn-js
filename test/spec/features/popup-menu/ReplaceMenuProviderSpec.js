@@ -1441,6 +1441,7 @@ describe('features/replace-menu', function() {
       // then
       expect(callCount).to.equal(1);
     }));
+
   });
 
 });

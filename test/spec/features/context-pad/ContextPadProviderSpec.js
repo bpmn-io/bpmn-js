@@ -15,7 +15,7 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
     popupModule = require('diagram-js/lib/features/popup-menu'),
     replaceMenuProvider = require('../../../../lib/features/popup-menu'),
     replaceModule = require('diagram-js/lib/features/replace'),
-    rulesModule = require('../../../util/custom-rules');
+    customRulesModule = require('../../../util/custom-rules');
 
 
 describe('features - context-pad', function() {
@@ -23,7 +23,7 @@ describe('features - context-pad', function() {
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [ contextPadModule, coreModule, modelingModule, popupModule,
-                      replaceModule, rulesModule, replaceMenuProvider ];
+                      replaceModule, customRulesModule, replaceMenuProvider ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
@@ -44,7 +44,7 @@ describe('features - context-pad', function() {
     beforeEach(inject(function (contextPad) {
 
       deleteAction = function(element) {
-        return domQuery('[data-action="delete"]', contextPad.getPad(element).html);
+        return padEntry(contextPad.getPad(element).html, 'delete');
       };
     }));
 
@@ -156,14 +156,16 @@ describe('features - context-pad', function() {
   });
 
 
-  describe('should show replace popup menu in the correct position ', function() {
+  describe('replace', function() {
 
     var container;
+
     beforeEach(function() {
       container = TestContainer.get(this);
     });
 
-    it('for a diagram element', inject(function(elementRegistry, contextPad, popupMenu) {
+
+    it('should show popup menu in the correct position', inject(function(elementRegistry, contextPad) {
 
       // given
       var element = elementRegistry.get('StartEvent_1'),
@@ -176,7 +178,7 @@ describe('features - context-pad', function() {
 
       // mock event
       var event = {
-        target: domQuery('[data-action="replace"]', container),
+        target: padEntry(container, 'replace'),
         preventDefault: function(){}
       };
 
@@ -189,6 +191,35 @@ describe('features - context-pad', function() {
       expect(replaceMenuRect.top).to.be.at.most(padMenuRect.bottom + padding);
     }));
 
+
+    it('should not inclide control if replacement is disallowed',
+      inject(function(elementRegistry, contextPad, customRules) {
+
+      // given
+      var element = elementRegistry.get('StartEvent_1'),
+          padding = 5,
+          replaceMenuRect,
+          padMenuRect;
+
+      // disallow replacement
+      customRules.addRule('shape.replace', function() {
+        return false;
+      });
+
+      // when
+      contextPad.open(element);
+
+      var padNode = contextPad.getPad(element).html;
+
+      // then
+      expect(padEntry(padNode, 'replace')).not.to.exist;
+    }));
+
   });
 
 });
+
+
+function padEntry(element, name) {
+  return domQuery('[data-action="' + name + '"]', element);
+}
