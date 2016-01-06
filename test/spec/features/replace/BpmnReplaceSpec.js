@@ -7,8 +7,7 @@ var TestHelper = require('../../../TestHelper');
 var modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
     moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('../../../../lib/core'),
-    customRulesModule = require('../../../util/custom-rules');
+    coreModule = require('../../../../lib/core');
 
 var is = require('../../../../lib/util/ModelUtil').is,
     isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
@@ -900,91 +899,6 @@ describe('features/replace', function() {
 
       expect(parent).to.exist;
       expect(parent).to.equal(messageEvent.businessObject);
-    }));
-  });
-
-  describe('getReplaceOptions', function () {
-
-    var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules.concat([ customRulesModule ]) }));
-
-    it('should get replacement options by default', inject(function(elementRegistry, bpmnReplace) {
-
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
-
-      // when
-      var options = bpmnReplace.getReplaceOptions(startEvent);
-
-      // then
-      expect(options).to.have.length.above(0);
-    }));
-
-    it('should get replacement options when custom rule returns true', inject(function(elementRegistry, bpmnReplace, customRules) {
-
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
-
-      customRules.addRule('shape.replace', function () {
-        return true;
-      });
-
-      // when
-      var options = bpmnReplace.getReplaceOptions(startEvent);
-
-      // then
-      expect(options).to.have.length.above(0);
-    }));
-
-    it('should get no replacement options when custom rule returns false', inject(function(elementRegistry, bpmnReplace, customRules) {
-
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
-
-      customRules.addRule('shape.replace', function () {
-        return false;
-      });
-
-      // when
-      var options = bpmnReplace.getReplaceOptions(startEvent);
-
-      // then
-      expect(options).to.have.length(0);
-    }));
-
-    it('should provide element to custom rules', inject(function(elementRegistry, bpmnReplace, customRules) {
-
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
-      var actual;
-
-      customRules.addRule('shape.replace', function (context) {
-        actual = context.element;
-      });
-
-      // when
-      bpmnReplace.getReplaceOptions(startEvent);
-
-      // then
-      expect(actual).to.equal(startEvent);
-    }));
-
-    it('should evaluate rule once', inject(function(elementRegistry, bpmnReplace, customRules) {
-
-      // given
-      var callCount = 0;
-      var startEvent = elementRegistry.get('StartEvent_1');
-
-      customRules.addRule('shape.replace', function () {
-        callCount++;
-      });
-
-      // when
-      bpmnReplace.getReplaceOptions(startEvent);
-
-      // then
-      expect(callCount).to.equal(1);
     }));
   });
 

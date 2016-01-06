@@ -10,7 +10,8 @@ var coreModule = require('../../../../lib/core'),
     popupMenuModule = require('diagram-js/lib/features/popup-menu'),
     modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
-    replaceMenuProviderModule = require('../../../../lib/features/popup-menu');
+    replaceMenuProviderModule = require('../../../../lib/features/popup-menu'),
+    customRulesModule = require('../../../util/custom-rules');
 
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes');
@@ -45,7 +46,14 @@ describe('features/replace-menu', function() {
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
       diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-  var testModules = [ coreModule, modelingModule, popupMenuModule, replaceModule, replaceMenuProviderModule ];
+  var testModules = [
+    coreModule,
+    modelingModule,
+    popupMenuModule,
+    replaceModule,
+    replaceMenuProviderModule,
+    customRulesModule
+  ];
 
   var openPopup = function(element, offset) {
     offset = offset || 100;
@@ -1335,6 +1343,104 @@ describe('features/replace-menu', function() {
 
     });
 
+  });
+
+
+  describe('rules', function () {
+
+    var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules.concat([ customRulesModule ]) }));
+
+    it('should get entries by default', inject(function(elementRegistry, popupMenu) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      // when
+      openPopup(startEvent);
+
+      var entries = getEntries(popupMenu);
+
+      // then
+      expect(entries).to.have.length.above(0);
+    }));
+
+
+    it('should get entries when custom rule returns true',
+      inject(function(elementRegistry, popupMenu, customRules) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      customRules.addRule('shape.replace', function () {
+        return true;
+      });
+
+      //when
+      openPopup(startEvent);
+
+      var entries = getEntries(popupMenu);
+
+      // then
+      expect(entries).to.have.length.above(0);
+    }));
+
+
+    it('should get no entries when custom rule returns false',
+      inject(function(elementRegistry, popupMenu, customRules) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      customRules.addRule('shape.replace', function () {
+        return false;
+      });
+
+      // when
+      openPopup(startEvent);
+
+      var entries = getEntries(popupMenu);
+
+      // then
+      expect(entries).to.have.length(0);
+    }));
+
+
+    it('should provide element to custom rules', inject(function(elementRegistry, popupMenu, customRules) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+      var actual;
+
+      customRules.addRule('shape.replace', function (context) {
+        actual = context.element;
+      });
+
+      // when
+      openPopup(startEvent);
+
+      // then
+      expect(actual).to.equal(startEvent);
+    }));
+
+
+    it('should evaluate rule once', inject(function(elementRegistry, popupMenu, customRules) {
+
+      // given
+      var callCount = 0;
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      customRules.addRule('shape.replace', function () {
+        callCount++;
+      });
+
+      // when
+      openPopup(startEvent);
+
+      // then
+      expect(callCount).to.equal(1);
+    }));
   });
 
 });
