@@ -6,15 +6,16 @@ var TestContainer = require('mocha-test-container-support');
 
 var domQuery = require('min-dom/lib/query');
 
+var is = require('../../../../lib/util/ModelUtil').is;
+
+
 /* global bootstrapViewer, inject */
 
 
 var contextPadModule = require('../../../../lib/features/context-pad'),
     coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
-    popupModule = require('diagram-js/lib/features/popup-menu'),
-    replaceMenuProvider = require('../../../../lib/features/popup-menu'),
-    replaceModule = require('diagram-js/lib/features/replace'),
+    replaceMenuModule = require('../../../../lib/features/popup-menu'),
     customRulesModule = require('../../../util/custom-rules');
 
 
@@ -22,15 +23,20 @@ describe('features - context-pad', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
-  var testModules = [ contextPadModule, coreModule, modelingModule, popupModule,
-                      replaceModule, customRulesModule, replaceMenuProvider ];
+  var testModules = [
+    coreModule,
+    modelingModule,
+    contextPadModule,
+    replaceMenuModule,
+    customRulesModule
+  ];
 
-  beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
   describe('bootstrap', function() {
 
-    it('should bootstrap', inject(function(contextPadProvider, replaceMenuProvider) {
+    it('should bootstrap', inject(function(contextPadProvider) {
       expect(contextPadProvider).to.exist;
     }));
 
@@ -192,18 +198,15 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should not inclide control if replacement is disallowed',
+    it('should not include control if replacement is disallowed',
       inject(function(elementRegistry, contextPad, customRules) {
 
       // given
-      var element = elementRegistry.get('StartEvent_1'),
-          padding = 5,
-          replaceMenuRect,
-          padMenuRect;
+      var element = elementRegistry.get('StartEvent_1');
 
       // disallow replacement
-      customRules.addRule('shape.replace', function() {
-        return false;
+      customRules.addRule('shape.replace', function(context) {
+        return !is(context.element, 'bpmn:StartEvent');
       });
 
       // when
@@ -213,6 +216,27 @@ describe('features - context-pad', function() {
 
       // then
       expect(padEntry(padNode, 'replace')).not.to.exist;
+    }));
+
+
+    it('should include control if replacement is allowed',
+      inject(function(elementRegistry, contextPad, customRules) {
+
+      // given
+      var element = elementRegistry.get('EndEvent_1');
+
+      // disallow replacement
+      customRules.addRule('shape.replace', function(context) {
+        return !is(context.element, 'bpmn:StartEvent');
+      });
+
+      // when
+      contextPad.open(element);
+
+      var padNode = contextPad.getPad(element).html;
+
+      // then
+      expect(padEntry(padNode, 'replace')).to.exist;
     }));
 
   });
