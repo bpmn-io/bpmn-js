@@ -1001,10 +1001,115 @@ describe('features/replace-menu', function() {
       }));
 
 
+      it('should morph DefaultFlow into a SequenceFlow [task]', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            entries;
+
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-default-flow');
+
+        // when
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-sequence-flow');
+
+        var task = elementRegistry.get('Task_1ei94kl');
+
+        // then
+        expect(task.businessObject.default).to.not.exist;
+      }));
+
+
+      it('should morph DefaultFlow into a SequenceFlow [task] -> undo',
+        inject(function(elementRegistry, popupMenu, commandStack) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            entries;
+
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-default-flow');
+
+        // when
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-sequence-flow');
+
+        commandStack.undo();
+
+        var task = elementRegistry.get('Task_1ei94kl');
+
+        // then
+        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+      }));
+
+
+      it('should morph DefaultFlow into a ConditionalFlow [task]', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            task = elementRegistry.get('Task_1ei94kl'),
+            entries;
+
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-default-flow');
+
+        // when
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-conditional-flow');
+
+        // then
+        expect(task.businessObject.default).to.not.exist;
+      }));
+
+
+      it('should morph DefaultFlow into a ConditionalFlow [task] -> undo',
+        inject(function(elementRegistry, popupMenu, commandStack) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            task = elementRegistry.get('Task_1ei94kl'),
+            entries;
+
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-default-flow');
+
+        // when
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
+
+        triggerAction(entries, 'replace-with-conditional-flow');
+
+        commandStack.undo();
+
+        // then
+        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+      }));
+
+
       it('should replace SequenceFlow with DefaultFlow [gateway] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
         // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+            gateway = elementRegistry.get('ExclusiveGateway_1');
 
         // when
         openPopup(sequenceFlow);
@@ -1014,8 +1119,6 @@ describe('features/replace-menu', function() {
         triggerAction(entries, 'replace-with-default-flow');
 
         commandStack.undo();
-
-        var gateway = elementRegistry.get('ExclusiveGateway_1');
 
         // then
         expect(gateway.businessObject.default).to.not.exist;
@@ -1247,11 +1350,15 @@ describe('features/replace-menu', function() {
       }));
 
 
-      it('should keep DefaultFlow when morphing Task -> undo',
-        inject(function(elementRegistry, bpmnReplace, popupMenu, commandStack) {
+      it('should remove any conditionExpression when morphing to DefaultFlow',
+        inject(function(elementRegistry, modeling, popupMenu, moddle) {
         // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
-            task = elementRegistry.get('Task_1ei94kl');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+            exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
+
+        var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
+
+        modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
 
         // when
         openPopup(sequenceFlow);
@@ -1259,16 +1366,37 @@ describe('features/replace-menu', function() {
         var entries = getEntries(popupMenu);
 
         // trigger DefaultFlow replacement
-        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+        triggerAction(entries, 'replace-with-default-flow');
 
-        replaceDefaultFlow.action();
+        // then
+        expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+      }));
 
-        bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask'});
+
+      it('should remove any conditionExpression when morphing to DefaultFlow -> undo',
+        inject(function(elementRegistry, modeling, popupMenu, moddle, commandStack) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+            exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
+
+        var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
+
+        modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entries = getEntries(popupMenu);
+
+        // trigger DefaultFlow replacement
+        entries[0].action();
 
         commandStack.undo();
 
         // then
-        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+        expect(exclusiveGateway.businessObject.default).to.not.exist;
+        expect(sequenceFlow.businessObject.conditionExpression).to.equal(conditionExpression);
       }));
 
     });
