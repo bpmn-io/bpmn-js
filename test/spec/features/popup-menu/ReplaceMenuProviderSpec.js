@@ -14,7 +14,8 @@ var coreModule = require('../../../../lib/core'),
     customRulesModule = require('../../../util/custom-rules');
 
 var domQuery = require('min-dom/lib/query'),
-    domClasses = require('min-dom/lib/classes');
+    domClasses = require('min-dom/lib/classes'),
+    find = require('lodash/collection/find');
 
 var is = require('../../../../lib/util/ModelUtil').is,
     isExpanded = require('../../../../lib/util/DiUtil').isExpanded;
@@ -819,7 +820,7 @@ describe('features/replace-menu', function() {
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-      it('should show default replace option', inject(function(elementRegistry, popupMenu) {
+      it('should show default replace option [gateway]', inject(function(elementRegistry, popupMenu) {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -830,6 +831,20 @@ describe('features/replace-menu', function() {
 
         // then
         expect(entriesContainer.childNodes.length).to.equal(1);
+      }));
+
+
+      it('should show Default replace option [task]', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+
+        // then
+        expect(entriesContainer.childNodes).to.have.length(2);
       }));
 
 
@@ -939,7 +954,7 @@ describe('features/replace-menu', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('should replace SequenceFlow with DefaultFlow', inject(function(elementRegistry, popupMenu) {
+      it('should replace SequenceFlow with DefaultFlow [gateway]', inject(function(elementRegistry, popupMenu) {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -958,7 +973,28 @@ describe('features/replace-menu', function() {
       }));
 
 
-      it('should replace SequenceFlow with DefaultFlow -> undo',
+      it('should replace SequenceFlow with DefaultFlow [task]', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entries = getEntries(popupMenu);
+
+        // trigger DefaultFlow replacement
+        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+
+        replaceDefaultFlow.action();
+
+        var task = elementRegistry.get('Task_1ei94kl');
+
+        // then
+        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+      }));
+
+
+      it('should replace SequenceFlow with DefaultFlow [gateway] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
@@ -977,6 +1013,30 @@ describe('features/replace-menu', function() {
 
         // then
         expect(gateway.businessObject.default).to.not.exist;
+      }));
+
+
+      it('should replace SequenceFlow with DefaultFlow [task] -> undo',
+        inject(function(elementRegistry, popupMenu, commandStack) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entries = getEntries(popupMenu);
+
+        // trigger DefaultFlow replacement
+        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+
+        replaceDefaultFlow.action();
+
+        commandStack.undo();
+
+        var task = elementRegistry.get('Task_1ei94kl');
+
+        // then
+        expect(task.businessObject.default).to.not.exist;
       }));
 
 
@@ -1145,6 +1205,28 @@ describe('features/replace-menu', function() {
       }));
 
 
+      it('should keep DefaultFlow when morphing Task', inject(function(elementRegistry, bpmnReplace, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            task = elementRegistry.get('Task_1ei94kl');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entries = getEntries(popupMenu);
+
+        // trigger DefaultFlow replacement
+        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+
+        replaceDefaultFlow.action();
+
+        var sendTask = bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask'});
+
+        // then
+        expect(sendTask.businessObject.default).to.equal(sequenceFlow.businessObject);
+      }));
+
+
       it('should keep DefaultFlow when morphing Gateway -> undo',
         inject(function(elementRegistry, bpmnReplace, popupMenu, commandStack) {
         // given
@@ -1166,6 +1248,32 @@ describe('features/replace-menu', function() {
         // then
         expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
       }));
+
+
+      it('should keep DefaultFlow when morphing Task -> undo',
+        inject(function(elementRegistry, bpmnReplace, popupMenu, commandStack) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+            task = elementRegistry.get('Task_1ei94kl');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var entries = getEntries(popupMenu);
+
+        // trigger DefaultFlow replacement
+        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+
+        replaceDefaultFlow.action();
+
+        bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask'});
+
+        commandStack.undo();
+
+        // then
+        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+      }));
+      
     });
 
 
