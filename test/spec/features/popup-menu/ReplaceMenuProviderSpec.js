@@ -41,6 +41,16 @@ function getEntries(popupMenu) {
   return popupMenu._current.provider.getEntries(element);
 }
 
+function triggerAction(entries, id) {
+  var entry = find(entries, { id: id });
+
+  if (!entry) {
+    throw new Error('entry "'+ id +'" not found in replace menu');
+  }
+
+  entry.action();
+}
+
 
 describe('features/replace-menu', function() {
 
@@ -922,7 +932,8 @@ describe('features/replace-menu', function() {
 
         // then
         expect(conditionalFlowEntry).to.exist;
-        expect(entriesContainer.childNodes.length).to.equal(1);
+
+        expect(entriesContainer.childNodes).to.have.length(2);
       }));
 
 
@@ -963,8 +974,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         var gateway = elementRegistry.get('ExclusiveGateway_1');
 
@@ -982,10 +992,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
-
-        replaceDefaultFlow.action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         var task = elementRegistry.get('Task_1ei94kl');
 
@@ -1004,8 +1011,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         commandStack.undo();
 
@@ -1026,10 +1032,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
-
-        replaceDefaultFlow.action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         commandStack.undo();
 
@@ -1053,14 +1056,14 @@ describe('features/replace-menu', function() {
 
         entries = getEntries(popupMenu);
 
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         // trigger morphing sequenceFlow to default flow
         openPopup(sequenceFlow);
 
         entries = getEntries(popupMenu);
 
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         var gateway = elementRegistry.get('ExclusiveGateway_1');
 
@@ -1077,10 +1080,9 @@ describe('features/replace-menu', function() {
 
         openPopup(sequenceFlow);
 
-        var sequenceFlowEntries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        sequenceFlowEntries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         // when
         modeling.reconnectStart(sequenceFlow, task, [
@@ -1103,10 +1105,9 @@ describe('features/replace-menu', function() {
 
         openPopup(sequenceFlow);
 
-        var sequenceFlowEntries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        sequenceFlowEntries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         // when
         modeling.reconnectStart(sequenceFlow, task, [
@@ -1135,10 +1136,9 @@ describe('features/replace-menu', function() {
 
         openPopup(sequenceFlow);
 
-        var sequenceFlowEntries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        sequenceFlowEntries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         // when
         modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1165,10 +1165,9 @@ describe('features/replace-menu', function() {
 
         openPopup(sequenceFlow);
 
-        var sequenceFlowEntries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        sequenceFlowEntries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         // when
         modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1195,8 +1194,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         var inclusiveGateway = bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
 
@@ -1238,8 +1236,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger DefaultFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-default-flow');
 
         bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
 
@@ -1273,7 +1270,7 @@ describe('features/replace-menu', function() {
         // then
         expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
       }));
-      
+
     });
 
 
@@ -1293,8 +1290,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         // then
         expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
@@ -1310,8 +1306,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         commandStack.undo();
 
@@ -1330,12 +1325,14 @@ describe('features/replace-menu', function() {
         var entries = getEntries(popupMenu);
 
         // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
-        var conditionalEntries = getEntries(popupMenu, sequenceFlow);
+        openPopup(sequenceFlow);
+
+        entries = getEntries(popupMenu);
 
         // replace with SequenceFlow
-        conditionalEntries[0].action();
+        triggerAction(entries, 'replace-with-sequence-flow');
 
         // then
         expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
@@ -1353,8 +1350,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         // when
         modeling.reconnectStart(sequenceFlow, startEvent, [
@@ -1378,8 +1374,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         // when
         modeling.reconnectStart(sequenceFlow, startEvent, [
@@ -1407,8 +1402,7 @@ describe('features/replace-menu', function() {
 
         var entries = getEntries(popupMenu);
 
-        // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         // when
         modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1435,7 +1429,7 @@ describe('features/replace-menu', function() {
         var entries = getEntries(popupMenu);
 
         // trigger ConditionalFlow replacement
-        entries[0].action();
+        triggerAction(entries, 'replace-with-conditional-flow');
 
         // when
         modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
