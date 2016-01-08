@@ -826,7 +826,7 @@ describe('features/replace-menu', function() {
 
     describe('default flows', function() {
 
-      var diagramXML = require('./BpmnReplace.defaultFlows.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -876,7 +876,7 @@ describe('features/replace-menu', function() {
 
     describe('default flows from inclusive gateways', function() {
 
-      var diagramXML = require('./BpmnReplace.defaultFlowsFromInclusiveGateways.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.defaultFlowsFromInclusiveGateways.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -916,7 +916,7 @@ describe('features/replace-menu', function() {
 
     describe('conditional flows', function() {
 
-      var diagramXML = require('./BpmnReplace.conditionalFlows.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -960,7 +960,7 @@ describe('features/replace-menu', function() {
 
     describe('default flows', function() {
 
-      var diagramXML = require('./BpmnReplace.defaultFlows.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -1404,7 +1404,7 @@ describe('features/replace-menu', function() {
 
     describe('conditional flows', function() {
 
-      var diagramXML = require('./BpmnReplace.conditionalFlows.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
