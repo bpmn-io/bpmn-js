@@ -185,6 +185,37 @@ describe('Modeler', function() {
   });
 
 
+  describe('configuration', function() {
+
+    // given
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    it('should configure Canvas', function(done) {
+
+      // given
+      var modeler = new Modeler({
+        container: container,
+        canvas: {
+          deferUpdate: true
+        }
+      });
+
+      // when
+      modeler.importXML(xml, function(err) {
+
+        var canvasConfig = modeler.get('config.canvas');
+
+        // then
+        expect(canvasConfig.deferUpdate).to.be.true;
+
+        done();
+      });
+
+    });
+
+  });
+
+
   it('should handle errors', function(done) {
 
     var xml = 'invalid stuff';
