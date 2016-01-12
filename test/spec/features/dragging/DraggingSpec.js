@@ -35,7 +35,20 @@ describe('Dragging', function() {
       recordEvents = function(prefix) {
         var events = [];
 
-        [ 'start', 'move', 'end', 'hover', 'out', 'cancel', 'cleanup', 'activate' ].forEach(function(type) {
+        var eventTypes = [
+          'start',
+          'move',
+          'end',
+          'ended',
+          'hover',
+          'out',
+          'cancel',
+          'canceled',
+          'cleanup',
+          'activate'
+        ];
+
+        eventTypes.forEach(function(type) {
           eventBus.on(prefix + '.' + type, function(e) {
             events.push(assign({}, e));
           });
@@ -83,6 +96,31 @@ describe('Dragging', function() {
     }));
 
 
+    it('should fire life-cycle on successful drag', inject(function(dragging, canvas) {
+
+      // given
+      var events = recordEvents('foo');
+
+      // when
+      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+      dragging.move(canvasEvent({ x: 30, y: 20 }));
+      dragging.move(canvasEvent({ x: 5, y: 10 }));
+
+      dragging.end();
+
+      // then
+      expect(events.map(raw)).to.eql([
+        { type: 'foo.activate' },
+        { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
+        { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.end' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.ended' }
+      ]);
+    }));
+
+
     it('should fire life-cycle events', inject(function(dragging, canvas) {
 
       // given
@@ -102,7 +140,8 @@ describe('Dragging', function() {
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cancel' },
-        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' }
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.canceled' }
       ]);
     }));
 
@@ -123,6 +162,7 @@ describe('Dragging', function() {
       expect(events.map(raw)).to.eql([
         { element: 'a', type: 'foo.activate' },
         { element: 'a', type: 'foo.cleanup' },
+        { element: 'a', type: 'foo.canceled' },
         { element: 'b', type: 'foo.activate' }
       ]);
 
@@ -188,7 +228,8 @@ describe('Dragging', function() {
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cancel' },
-        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' }
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.cleanup' },
+        { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.canceled' }
       ]);
     }));
 
