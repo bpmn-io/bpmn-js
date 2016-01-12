@@ -173,6 +173,35 @@ describe('core/EventBus', function() {
       });
 
 
+      it('should pass context to listener and provide priority -> once', function() {
+        // given
+        Dog.prototype.bindListener = function(priority, msg) {
+          eventBus.once('bark', priority, function(event) {
+            return this.bark(msg);
+          }, this);
+        };
+
+        var bobby = new Dog();
+        var bull = new Dog();
+
+        eventBus.once('bark', function(event) {
+            return this.bark('FOO');
+        }, bobby);
+
+        bull.bindListener(1500, 'BOO');
+
+        // when
+        var returnA = eventBus.fire('bark');
+        var returnB = eventBus.fire('bark');
+        var returnC = eventBus.fire('bark');
+
+        // then
+        expect(returnA).to.equal('BOO');
+        expect(returnB).to.equal('FOO');
+        expect(returnC).to.not.exist;
+      });
+
+
       it('should fire only once', function() {
         // given
         Dog.prototype.barks = [];
