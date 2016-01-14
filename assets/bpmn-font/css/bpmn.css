@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bpmn';
-  src: url('../font/bpmn.eot?28098072');
-  src: url('../font/bpmn.eot?28098072#iefix') format('embedded-opentype'),
-       url('../font/bpmn.woff?28098072') format('woff'),
-       url('../font/bpmn.ttf?28098072') format('truetype'),
-       url('../font/bpmn.svg?28098072#bpmn') format('svg');
+  src: url('../font/bpmn.eot?70672887');
+  src: url('../font/bpmn.eot?70672887#iefix') format('embedded-opentype'),
+       url('../font/bpmn.woff?70672887') format('woff'),
+       url('../font/bpmn.ttf?70672887') format('truetype'),
+       url('../font/bpmn.svg?70672887#bpmn') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'bpmn';
-    src: url('../font/bpmn.svg?28098072#bpmn') format('svg');
+    src: url('../font/bpmn.svg?70672887#bpmn') format('svg');
   }
 }
 */
@@ -158,4 +158,5 @@
 .bpmn-icon-lane-divide-two:before { content: '\e865'; } /* '' */
 .bpmn-icon-data-input:before { content: '\e866'; } /* '' */
 .bpmn-icon-data-output:before { content: '\e867'; } /* '' */
+.bpmn-icon-hand-tool:before { content: '\e868'; } /* '' */
 .bpmn-icon-transaction:before { content: '\e8c4'; } /* '' */
