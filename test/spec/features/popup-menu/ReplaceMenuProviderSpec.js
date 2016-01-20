@@ -545,6 +545,25 @@ describe('features/replace-menu', function() {
     }));
 
 
+    it('should replace sub processes -> event sub process',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+      // given
+      var subProcess = elementRegistry.get('SubProcess');
+
+      openPopup(subProcess);
+
+      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+
+      // when
+      // replacing the expanded sub process with a eventSubProcess
+      var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+
+      // then
+      expect(eventSubProcess.businessObject.triggeredByEvent).to.be.true;
+    }));
+
+
     it('should retain the loop characteristics and the expanded status for transactions',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
