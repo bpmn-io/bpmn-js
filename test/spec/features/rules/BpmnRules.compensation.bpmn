@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_9X-DgL31EeWxRuodBysTLQ" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="Process_1" isExecutable="false">
+    <bpmn2:task id="Task"/>
+    <bpmn2:boundaryEvent id="CompensationBoundary" attachedToRef="Task">
+      <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_2" waitForCompletion="false"/>
+    </bpmn2:boundaryEvent>
+    <bpmn2:task id="TaskForCompensation" isForCompensation="true"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_1">
+      <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_3" waitForCompletion="false"/>
+    </bpmn2:intermediateThrowEvent>
+    <bpmn2:subProcess id="SubProcess_1" isForCompensation="true" triggeredByEvent="true">
+      <bpmn2:startEvent id="StartEvent_1">
+        <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_4" waitForCompletion="false"/>
+      </bpmn2:startEvent>
+    </bpmn2:subProcess>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_5" waitForCompletion="false"/>
+    </bpmn2:endEvent>
+    <bpmn2:exclusiveGateway id="Gateway"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateEvent"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_TaskForCompensation" bpmnElement="Task">
+        <dc:Bounds height="80.0" width="100.0" x="43.0" y="99.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="CompensationBoundary">
+        <dc:Bounds height="36.0" width="36.0" x="87.0" y="161.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="TaskForCompensation">
+        <dc:Bounds height="80.0" width="100.0" x="142.0" y="240.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_2" bpmnElement="IntermediateThrowEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="192.0" y="121.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="210.0" y="162.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds height="150.0" width="200.0" x="142.0" y="369.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="180.0" y="408.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="198.0" y="449.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="298.0" y="120.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="Gateway" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="316.0" y="254.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="341.0" y="309.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_4" bpmnElement="IntermediateEvent">
+        <dc:Bounds height="36.0" width="36.0" x="432.0" y="262.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="450.0" y="303.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

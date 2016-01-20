@@ -445,6 +445,86 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('compensation', function() {
+
+    var testXML = require('./BpmnRules.compensation.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('connect CompensationBoundary -> Task', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect CompensationBoundary -> TaskForCompensation', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'TaskForCompensation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect CompensationBoundary -> Gateway', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'Gateway', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect CompensationBoundary -> IntermediateEvent', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'IntermediateEvent', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect Task -> TaskForCompensation', inject(function() {
+
+      expectCanConnect('Task', 'TaskForCompensation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect TaskForCompensation -> Task', inject(function() {
+
+      expectCanConnect('TaskForCompensation', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+
+    }));
+
+  });
+
+
   describe('on collaboration diagram', function() {
 
     var testXML = require('./BpmnRules.collaboration.bpmn');
@@ -776,7 +856,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('attach IntermediateEvent to Task', inject(function(elementFactory, bpmnRules) {
+    it('attach IntermediateEvent to Task', inject(function(elementFactory) {
 
       // given
       var eventShape = elementFactory.createShape({
@@ -787,6 +867,22 @@ describe('features/modeling/rules - BpmnRules', function() {
       // then
       expectCanMove([ eventShape ], 'Task_1', {
         attach: 'attach',
+        move: false
+      });
+    }));
+
+
+    it('not attach IntermediateEvent to CompensationTask', inject(function(elementFactory) {
+
+      // given
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 413, y: 254
+      });
+
+      // then
+      expectCanMove([ eventShape ], 'CompensationTask', {
+        attach: false,
         move: false
       });
     }));
@@ -833,6 +929,28 @@ describe('features/modeling/rules - BpmnRules', function() {
 
       // then
       expect(canAttach).to.equal('attach');
+    }));
+
+
+    it('not attach IntermediateEvent to compensation activity', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+      // given
+      var compensationTask = elementRegistry.get('CompensationTask');
+      var eventShape = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        x: 0, y: 0
+      });
+
+      var position = {
+        x: compensationTask.x + compensationTask.width / 2,
+        y: compensationTask.y + compensationTask.height
+      };
+
+      // when
+      var canAttach = bpmnRules.canAttach([ eventShape ], compensationTask, null, position);
+
+      // then
+      expect(canAttach).to.be.false;
     }));
 
 
