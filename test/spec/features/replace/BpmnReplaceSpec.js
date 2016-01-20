@@ -15,7 +15,7 @@ var is = require('../../../../lib/util/ModelUtil').is,
     isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess;
 
 
-describe('features/replace', function() {
+describe('features/replace - bpmn replace', function() {
 
   var testModules = [ coreModule, modelingModule, replaceModule, moveModule ];
 
@@ -129,7 +129,7 @@ describe('features/replace', function() {
       var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
           newElementData = {
             type: 'bpmn:BoundaryEvent',
-            eventDefinition: 'bpmn:EscalationEventDefinition'
+            eventDefinitionType: 'bpmn:EscalationEventDefinition'
           };
 
       // when
@@ -150,7 +150,7 @@ describe('features/replace', function() {
       var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
           newElementData = {
             type: 'bpmn:BoundaryEvent',
-            eventDefinition: 'bpmn:SignalEventDefinition',
+            eventDefinitionType: 'bpmn:SignalEventDefinition',
             cancelActivity: false
           };
 
@@ -159,7 +159,7 @@ describe('features/replace', function() {
 
       // then
       expect(newElement).to.exist;
-      expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+      expect(is(newElement, 'bpmn:BoundaryEvent')).to.be.true;
       expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
       expect(newElement.businessObject.cancelActivity).to.be.false;
     }));
@@ -173,7 +173,7 @@ describe('features/replace', function() {
           host = elementRegistry.get('Task_1'),
           newElementData = {
             type: 'bpmn:BoundaryEvent',
-            eventDefinition: 'bpmn:ErrorEventDefinition',
+            eventDefinitionType: 'bpmn:ErrorEventDefinition',
           };
 
       // when
@@ -717,6 +717,31 @@ describe('features/replace', function() {
   });
 
 
+  describe('compensation activity', function() {
+
+    var diagramXML = require('./BpmnReplace.compensation.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should keep isForCompensation attr', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var newElementData =  {
+        type: 'bpmn:ServiceTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      expect(newElement.businessObject.isForCompensation).to.be.true;
+    }));
+
+  });
+
+
   describe('event sub processes', function() {
 
     var diagramXML = require('./BpmnReplace.eventSubProcesses.bpmn');
@@ -892,7 +917,7 @@ describe('features/replace', function() {
 
       var messageEvent = bpmnReplace.replaceElement(startEvent, {
         type: 'bpmn:StartEvent',
-        eventDefinition: 'bpmn:MessageEventDefinition'
+        eventDefinitionType: 'bpmn:MessageEventDefinition'
       });
 
       var parent = messageEvent.businessObject.eventDefinitions[0].$parent;

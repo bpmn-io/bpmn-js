@@ -113,7 +113,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         bpmnReplace.replaceElement(endEvent, {
           type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
@@ -122,7 +122,7 @@ describe('features/modeling - move start event behavior', function() {
 
         // then
         expect(subProcess.children).to.have.length(2);
-        expect(newEndEvent.eventDefinitions).to.not.exist;
+        expect(newEndEvent.eventDefinitionTypes).to.not.exist;
       }));
 
 
@@ -135,7 +135,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         bpmnReplace.replaceElement(endEvent, {
           type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
@@ -162,7 +162,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         var cancelEvent = bpmnReplace.replaceElement(endEvent, {
           type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
@@ -187,7 +187,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         var cancelEvent = bpmnReplace.replaceElement(endEvent, {
           type: 'bpmn:EndEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
@@ -216,7 +216,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         bpmnReplace.replaceElement(boundaryEvent, {
           type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
@@ -224,7 +224,7 @@ describe('features/modeling - move start event behavior', function() {
         var newBoundaryEvent = subProcess.attachers[0].businessObject;
 
         // then
-        expect(newBoundaryEvent.eventDefinitions).to.not.exist;
+        expect(newBoundaryEvent.eventDefinitionTypes).to.not.exist;
         expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
         expect(elementRegistry.get('Transaction_1')).to.not.exist;
       }));
@@ -239,7 +239,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         bpmnReplace.replaceElement(boundaryEvent, {
           type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
@@ -268,7 +268,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
           type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
@@ -298,7 +298,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
           type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
@@ -327,7 +327,7 @@ describe('features/modeling - move start event behavior', function() {
         // when
         var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
           type: 'bpmn:BoundaryEvent',
-          eventDefinition: 'bpmn:CancelEventDefinition'
+          eventDefinitionType: 'bpmn:CancelEventDefinition'
         });
 
         move.start(canvasEvent({ x: 0, y: 0 }), newBoundaryEvent);

@@ -33,7 +33,7 @@ function queryPopup(popupMenu, selector) {
  *
  * @param  {PopupMenu} popupMenu
  *
- * @return {<Array>}           [description]
+ * @return {<Array>}
  */
 function getEntries(popupMenu) {
   var element = popupMenu._current.element;
@@ -52,7 +52,7 @@ function triggerAction(entries, id) {
 }
 
 
-describe('features/replace-menu', function() {
+describe('features/popup-menu - replace menu provider', function() {
 
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
       diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
@@ -83,6 +83,15 @@ describe('features/replace-menu', function() {
 
     beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
 
+    var toggleActive;
+
+    beforeEach(inject(function(popupMenu) {
+      toggleActive = function(entryCls) {
+        return popupMenu._getEntry(entryCls).active;
+      };
+    }));
+
+
     describe('active attribute', function(){
 
       it('should be true for parallel marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
@@ -91,16 +100,17 @@ describe('features/replace-menu', function() {
         var task = elementRegistry.get('ParallelTask'),
             loopCharacteristics = task.businessObject.loopCharacteristics;
 
+        // assume
+        expect(loopCharacteristics.isSequential).to.be.false;
+        expect(loopCharacteristics.isSequential).to.exist;
+
         // when
         openPopup(task);
 
         // then
         expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
 
-        expect(loopCharacteristics.isSequential).to.be.false;
-        expect(loopCharacteristics.isSequential).to.exist;
-
-        expect(popupMenu._getEntry('toggle-parallel-mi').active).to.be.true;
+        expect(toggleActive('toggle-parallel-mi')).to.be.true;
       }));
 
 
@@ -110,13 +120,15 @@ describe('features/replace-menu', function() {
         var task = elementRegistry.get('SequentialTask'),
             loopCharacteristics = task.businessObject.loopCharacteristics;
 
+        // assume
+        expect(loopCharacteristics.isSequential).to.be.true;
+        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+
         // when
         openPopup(task);
 
         // then
-        expect(loopCharacteristics.isSequential).to.be.true;
-        expect(popupMenu._getEntry('toggle-sequential-mi').active).to.be.true;
-        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(toggleActive('toggle-sequential-mi')).to.be.true;
       }));
 
 
@@ -126,13 +138,15 @@ describe('features/replace-menu', function() {
         var task = elementRegistry.get('LoopTask'),
             loopCharacteristics = task.businessObject.loopCharacteristics;
 
+        // assume
+        expect(loopCharacteristics.isSequential).not.to.exist;
+        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.false;
+
         // when
         openPopup(task);
 
         // then
-        expect(loopCharacteristics.isSequential).not.to.exist;
-        expect(popupMenu._getEntry('toggle-loop').active).to.be.true;
-        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.false;
+        expect(toggleActive('toggle-loop')).to.be.true;
       }));
 
 
@@ -145,7 +159,7 @@ describe('features/replace-menu', function() {
         openPopup(AdHocSubProcess);
 
         // then
-        expect(popupMenu._getEntry('toggle-adhoc').active).to.be.true;
+        expect(toggleActive('toggle-adhoc')).to.be.true;
       }));
 
     });
@@ -172,6 +186,7 @@ describe('features/replace-menu', function() {
       }));
 
     });
+
 
     describe('non exclusive toggle buttons', function(){
 
@@ -641,11 +656,9 @@ describe('features/replace-menu', function() {
         // when
         openPopup(startEvent);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-none-start')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(6);
+        expect(getEntries(popupMenu)).to.have.length(6);
       }));
 
 
@@ -658,12 +671,11 @@ describe('features/replace-menu', function() {
         // when
         openPopup(startEvent);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.null;
         expect(queryEntry(popupMenu, 'replace-with-message-start')).to.exist;
-        expect(entriesContainer.childNodes.length).to.equal(11);
+
+        expect(getEntries(popupMenu)).to.have.length(11);
       }));
 
 
@@ -675,19 +687,18 @@ describe('features/replace-menu', function() {
 
         var newElement = bpmnReplace.replaceElement(startEvent, {
           type: 'bpmn:StartEvent',
-          eventDefinition: 'bpmn:ConditionalEventDefinition',
+          eventDefinitionType: 'bpmn:ConditionalEventDefinition',
           isInterrupting: false
         });
 
         // when
         openPopup(newElement);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.exist;
         expect(queryEntry(popupMenu, 'replace-with-non-interrupting-conditional-start')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(11);
+
+        expect(getEntries(popupMenu)).to.have.length(11);
       }));
 
 
@@ -700,11 +711,10 @@ describe('features/replace-menu', function() {
         // when
         openPopup(intermediateEvent);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-none-intermediate-throw')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(12);
+
+        expect(getEntries(popupMenu)).to.have.length(12);
       }));
 
 
@@ -717,11 +727,10 @@ describe('features/replace-menu', function() {
         // when
         openPopup(endEvent);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(8);
+
+        expect(getEntries(popupMenu)).to.have.length(9);
       }));
 
     });
@@ -734,18 +743,16 @@ describe('features/replace-menu', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
       it('should contain cancel event replace option',
-
         inject(function(elementRegistry, bpmnReplace, popupMenu, replaceMenuProvider) {
+
         // given
         var endEvent = elementRegistry.get('EndEvent_1');
 
         // when
         openPopup(endEvent);
 
-        var entries = getEntries(popupMenu);
-
         // then
-        expect(entries).to.have.length(9);
+        expect(getEntries(popupMenu)).to.have.length(9);
       }));
 
 
@@ -755,15 +762,11 @@ describe('features/replace-menu', function() {
         // given
         var endEvent = elementRegistry.get('EndEvent_2');
 
-
-
         // when
         openPopup(endEvent);
 
-        var entries = getEntries(popupMenu);
-
         // then
-        expect(entries).to.have.length(8);
+        expect(getEntries(popupMenu)).to.have.length(9);
       }));
 
 
@@ -773,14 +776,11 @@ describe('features/replace-menu', function() {
         // given
         var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
+        // when
         openPopup(boundaryEvent);
 
-        // when
-        var entries = getEntries(popupMenu);
-
         // then
-        expect(entries).to.have.length(12);
-
+        expect(getEntries(popupMenu)).to.have.length(13);
       }));
 
 
@@ -793,11 +793,8 @@ describe('features/replace-menu', function() {
         // when
         openPopup(boundaryEvent, 40);
 
-        var entries = getEntries(popupMenu);
-
         // then
-        expect(entries).to.have.length(11);
-
+        expect(getEntries(popupMenu)).to.have.length(13);
       }));
 
     });
@@ -816,11 +813,9 @@ describe('features/replace-menu', function() {
         // when
         openPopup(boundaryEvent, 40);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-conditional-intermediate-catch')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(10);
+        expect(getEntries(popupMenu)).to.have.length(12);
       }));
 
 
@@ -833,11 +828,23 @@ describe('features/replace-menu', function() {
         // when
         openPopup(boundaryEvent, 40);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
         expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
-        expect(entriesContainer.childNodes.length).to.equal(10);
+        expect(getEntries(popupMenu)).to.have.length(12);
+      }));
+
+
+      it('should contain compensation boundary event',
+        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+        // when
+        openPopup(boundaryEvent, 40);
+
+        // then
+        expect(queryEntry(popupMenu, 'replace-with-compensation-boundary')).to.exist;
       }));
 
     });
@@ -856,10 +863,8 @@ describe('features/replace-menu', function() {
         // when
         openPopup(sequenceFlow);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
-        expect(entriesContainer.childNodes.length).to.equal(1);
+        expect(getEntries(popupMenu)).to.have.length(1);
       }));
 
 
@@ -870,10 +875,8 @@ describe('features/replace-menu', function() {
         // when
         openPopup(sequenceFlow);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
-        expect(entriesContainer.childNodes).to.have.length(2);
+        expect(getEntries(popupMenu)).to.have.length(2);
       }));
 
 
@@ -884,10 +887,8 @@ describe('features/replace-menu', function() {
         // when
         openPopup(sequenceFlow);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
-
         // then
-        expect(entriesContainer.childNodes.length).to.equal(0);
+        expect(getEntries(popupMenu)).to.have.length(0);
       }));
 
     });
@@ -946,13 +947,12 @@ describe('features/replace-menu', function() {
         // when
         openPopup(sequenceFlow);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body'),
-            conditionalFlowEntry = queryEntry(popupMenu, 'replace-with-conditional-flow');
+        var conditionalFlowEntry = queryEntry(popupMenu, 'replace-with-conditional-flow');
 
         // then
         expect(conditionalFlowEntry).to.exist;
 
-        expect(entriesContainer.childNodes).to.have.length(2);
+        expect(getEntries(popupMenu)).to.have.length(2);
       }));
 
 
@@ -960,13 +960,37 @@ describe('features/replace-menu', function() {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
-        //when
+        // when
         openPopup(sequenceFlow);
 
-        var entriesContainer = queryPopup(popupMenu, '.djs-popup-body');
+        // then
+        expect(getEntries(popupMenu)).to.have.length(0);
+      }));
+
+    });
+
+
+    describe('compensate activities', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.compensation-activity.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should exclude non-activities from options', inject(function(elementRegistry, popupMenu) {
+
+        // given
+        var taskElement = elementRegistry.get('Task_1');
+
+        // when
+        openPopup(taskElement);
+
+        var callActivityEntry = queryEntry(popupMenu, 'replace-with-call-activity'),
+            subProcessEntry = queryEntry(popupMenu, 'replace-with-collapsed-subprocess');
 
         // then
-        expect(entriesContainer.childNodes.length).to.equal(0);
+        expect(callActivityEntry).to.not.exist;
+        expect(subProcessEntry).to.not.exist;
       }));
 
     });

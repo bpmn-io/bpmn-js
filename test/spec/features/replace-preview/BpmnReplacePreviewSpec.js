@@ -147,7 +147,7 @@ describe('features/replace-preview', function() {
     var startEventGfx = getGfx({
       type: 'bpmn:StartEvent',
       isInterrupting: false,
-      _eventDefinitionType: 'bpmn:MessageEventDefinition'
+      eventDefinitionType: 'bpmn:MessageEventDefinition'
     });
 
     expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
@@ -188,7 +188,7 @@ describe('features/replace-preview', function() {
     var startEventGfx = getGfx({
       type: 'bpmn:StartEvent',
       isInterrupting: false,
-      _eventDefinitionType: 'bpmn:MessageEventDefinition'
+      eventDefinitionType: 'bpmn:MessageEventDefinition'
     });
 
     expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
@@ -252,13 +252,13 @@ describe('features/replace-preview', function() {
     var messageStartEventGfx = getGfx({
       type: 'bpmn:StartEvent',
       isInterrupting: false,
-      _eventDefinitionType: 'bpmn:MessageEventDefinition'
+      eventDefinitionType: 'bpmn:MessageEventDefinition'
     });
 
     var timerStartEventGfx = getGfx({
       type: 'bpmn:StartEvent',
       isInterrupting: false,
-      _eventDefinitionType: 'bpmn:TimerEventDefinition'
+      eventDefinitionType: 'bpmn:TimerEventDefinition'
     });
 
     var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });

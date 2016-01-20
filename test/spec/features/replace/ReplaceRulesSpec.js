@@ -10,7 +10,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 
 
-describe('features/replace', function() {
+describe('features/replace - rules', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/features/replace/association-gateways.bpmn');
 
