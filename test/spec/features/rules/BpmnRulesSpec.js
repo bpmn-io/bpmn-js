@@ -756,6 +756,32 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('data association move', function() {
+
+    var testXML = require('./BpmnRules.dataAssociation.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('mode selection including data association', inject(function(elementRegistry) {
+
+      // when
+      var elements = [
+        elementRegistry.get('Task'),
+        elementRegistry.get('DataAssociation'),
+        elementRegistry.get('DataObjectReference')
+      ];
+
+      // then
+      expectCanMove(elements, 'Process', {
+        attach: false,
+        move: true
+      });
+    }));
+
+  });
+
+
   describe('event move', function() {
 
     var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
