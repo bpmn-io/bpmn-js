@@ -16,6 +16,12 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render association markers', function(done) {
+    var xml = require('../../fixtures/bpmn/draw/associations.bpmn');
+    bootstrapViewer(xml)(done);
+  });
+
+
   it('should render activity markers (combination)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/activity-markers-combination.bpmn');
     bootstrapViewer(xml)(done);
