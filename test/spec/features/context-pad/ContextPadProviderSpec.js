@@ -21,8 +21,6 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
 
 describe('features - context-pad', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
   var testModules = [
     coreModule,
     modelingModule,
@@ -31,19 +29,13 @@ describe('features - context-pad', function() {
     customRulesModule
   ];
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
-
-  describe('bootstrap', function() {
-
-    it('should bootstrap', inject(function(contextPadProvider) {
-      expect(contextPadProvider).to.exist;
-    }));
-
-  });
-
 
   describe('remove action rules', function () {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
     var deleteAction;
 
@@ -162,7 +154,105 @@ describe('features - context-pad', function() {
   });
 
 
+  describe('available entries', function() {
+
+    var diagramXML = require('./ContextPad.activation.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    function expectContextPadEntries(elementOrId, expectedEntries) {
+
+      TestHelper.getBpmnJS().invoke(function(elementRegistry, contextPad) {
+
+        var element = typeof elementOrId === 'string' ? elementRegistry.get(elementOrId) : elementOrId;
+
+        contextPad.open(element, true);
+
+        var entries = contextPad._current.entries;
+
+        expectedEntries.forEach(function(name) {
+
+          if (name.charAt(0) === '!') {
+            name = name.substring(1);
+
+            expect(entries).not.to.have.property(name);
+          } else {
+            expect(entries).to.have.property(name);
+          }
+        });
+      });
+    }
+
+
+    it('should provide Task entries', inject(function() {
+
+      expectContextPadEntries('Task_1', [
+        'connect',
+        'replace',
+        'append.end-event',
+        'append.gateway',
+        'append.append-task',
+        'append.intermediate-event',
+        'append.text-annotation'
+      ]);
+    }));
+
+
+    it('should provide EventBasedGateway entries', inject(function() {
+
+      expectContextPadEntries('EventBasedGateway_1', [
+        'connect',
+        'replace',
+        'append.receive-task',
+        'append.message-intermediate-event',
+        'append.timer-intermediate-event',
+        'append.condtion-intermediate-event',
+        'append.signal-intermediate-event',
+        'append.text-annotation',
+        '!append.task'
+      ]);
+    }));
+
+
+    it('should provide EndEvent entries', inject(function() {
+
+      expectContextPadEntries('EndEvent_1', [
+        'connect',
+        'replace',
+        '!append.task'
+      ]);
+    }));
+
+
+    it('should provide Compensation Activity entries', inject(function() {
+
+      expectContextPadEntries('Task_2', [
+        'connect',
+        'replace',
+        '!append.end-event',
+        'append.text-annotation'
+      ]);
+    }));
+
+
+    it('should provide Compensate Boundary entries', inject(function() {
+
+      expectContextPadEntries('BoundaryEvent_1', [
+        'connect',
+        'replace',
+        'append.compensation-activity',
+        '!append.end-event'
+      ]);
+    }));
+
+  });
+
+
   describe('replace', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     var container;
 
