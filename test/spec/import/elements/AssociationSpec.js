@@ -120,6 +120,34 @@ describe('import - associations', function() {
       });
     });
 
+
+    it('catch event -> data object -> throw event', function(done) {
+
+      var xml = require('../../../fixtures/bpmn/import/association/data-association-events.bpmn');
+
+      // given
+      bootstrapViewer(xml)(function(err) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // when
+        inject(function(elementRegistry) {
+
+          var dataInputAssociation = elementRegistry.get('DataInputAssociation');
+          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation');
+
+          // then
+          expect(dataInputAssociation).to.exist;
+          expect(dataOutputAssociation).to.exist;
+
+          done();
+        })();
+
+      });
+    });
+
   });
 
 });

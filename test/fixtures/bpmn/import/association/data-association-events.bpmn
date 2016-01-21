@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:intermediateCatchEvent id="CatchEvent">
+      <bpmn:dataOutputAssociation id="DataOutputAssociation">
+        <bpmn:targetRef>DataObjectReference</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="ThrowEvent">
+      <bpmn:property id="Property_1vxbjyx" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation">
+        <bpmn:sourceRef>DataObjectReference</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1vxbjyx</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject_1032kkx" />
+    <bpmn:dataObject id="DataObject_1032kkx" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
+      <bpmndi:BPMNShape id="CatchEvent_di" bpmnElement="CatchEvent">
+        <dc:Bounds x="44" y="76" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="17" y="112" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="78" y="100" />
+        <di:waypoint xsi:type="dc:Point" x="164" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ThrowEvent_di" bpmnElement="ThrowEvent">
+        <dc:Bounds x="280" y="76" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="253" y="112" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="164" y="117" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="137" y="167" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="200" y="135" />
+        <di:waypoint xsi:type="dc:Point" x="282" y="101" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
