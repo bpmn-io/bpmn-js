@@ -9,7 +9,7 @@ var domQuery = require('min-dom/lib/query');
 var is = require('../../../../lib/util/ModelUtil').is;
 
 
-/* global bootstrapViewer, inject */
+/* global bootstrapModeler, inject */
 
 
 var contextPadModule = require('../../../../lib/features/context-pad'),
@@ -242,6 +242,17 @@ describe('features - context-pad', function() {
         'replace',
         'append.compensation-activity',
         '!append.end-event'
+      ]);
+    }));
+
+
+    it('should provide DataStoreReference entries', inject(function() {
+
+      expectContextPadEntries('DataStoreReference', [
+        'connect',
+        '!replace',
+        '!append.end-event',
+        '!append.text-annotation'
       ]);
     }));
 

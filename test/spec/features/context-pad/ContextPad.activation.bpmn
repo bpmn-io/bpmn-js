@@ -8,6 +8,9 @@
     <bpmn2:boundaryEvent id="BoundaryEvent_1" name="" attachedToRef="Task_1">
       <bpmn2:compensateEventDefinition id="CompensateEventDefinition_1" waitForCompletion="true"/>
     </bpmn2:boundaryEvent>
+    <bpmn2:dataStoreReference id="DataStoreReference" />
+    <bpmn2:dataObject id="DataObject_1" name="Data Object 1"/>
+    <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject_1"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -31,6 +34,18 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="BoundaryEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="109.0" y="242.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_DataStoreReference_2" bpmnElement="DataStoreReference">
+        <dc:Bounds height="50.0" width="50.0" x="109.0" y="312.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="21.0" width="79.0" x="95.0" y="367.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_2" bpmnElement="DataObjectReference">
+        <dc:Bounds height="50.0" width="36.0" x="313.0" y="312.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="21.0" width="149.0" x="257.0" y="367.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
