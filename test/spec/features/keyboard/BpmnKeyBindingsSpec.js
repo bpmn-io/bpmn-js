@@ -10,6 +10,7 @@ var coreModule = require('../../../../lib/core'),
     selectionModule = require('diagram-js/lib/features/selection'),
     spaceToolModule = require('diagram-js/lib/features/space-tool'),
     lassoToolModule = require('diagram-js/lib/features/lasso-tool'),
+    handToolModule = require('diagram-js/lib/features/hand-tool'),
     zoomScrollModule = require('diagram-js/lib/navigation/zoomscroll'),
     editorActionsModule = require('diagram-js/lib/features/editor-actions');
 
@@ -27,6 +28,7 @@ describe('features - keyboard', function() {
     selectionModule,
     spaceToolModule,
     lassoToolModule,
+    handToolModule,
     keyboardModule,
     zoomScrollModule,
     editorActionsModule
@@ -44,7 +46,7 @@ describe('features - keyboard', function() {
 
     it('should include triggers inside editorActions', inject(function(editorActions) {
       // then
-      expect(editorActions.length()).to.equal(10);
+      expect(editorActions.length()).to.equal(11);
     }));
 
 
