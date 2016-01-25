@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="Definitions_1" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant" processRef="Process"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:task id="Task">
+      <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:startEvent id="StartEvent">
+      <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent">
+      <bpmn:incoming>SequenceFlow_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataStoreReference id="DataStoreReference" name="Data Store" dataStoreRef="DataStore_1"/>
+    <bpmn:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent" targetRef="Task"/>
+    <bpmn:sequenceFlow id="SequenceFlow_2" name="" sourceRef="Task" targetRef="EndEvent"/>
+  </bpmn:process>
+  <bpmn:dataStore id="DataStore_1" name="Data Store 1"/>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant" isHorizontal="false">
+        <dc:Bounds height="250.0" width="600.0" x="84.0" y="48.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task">
+        <dc:Bounds height="76.0" width="97.0" x="264.0" y="98.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent">
+        <dc:Bounds height="36.0" width="36.0" x="144.0" y="118.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="162.0" y="159.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent">
+        <dc:Bounds height="36.0" width="36.0" x="468.0" y="118.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="486.0" y="159.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_DataStoreReference_3" bpmnElement="DataStoreReference">
+        <dc:Bounds height="50.0" width="50.0" x="311.0" y="204.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="21.0" width="79.0" x="297.0" y="259.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_Task_8">
+        <di:waypoint xsi:type="dc:Point" x="180.0" y="136.0"/>
+        <di:waypoint xsi:type="dc:Point" x="264.0" y="136.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_Task_8" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="360.0" y="136.0"/>
+        <di:waypoint xsi:type="dc:Point" x="468.0" y="136.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
