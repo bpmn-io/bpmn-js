@@ -9,7 +9,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
 
-describe('features/modeling/behavior - data objects -', function() {
+describe('features/modeling/behavior - data object', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -18,7 +18,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
   describe('DataObjectReference', function() {
 
-    var processDiagramXML = require('./CreateDataObjectBehavior.data-object-reference.bpmn');
+    var processDiagramXML = require('./DataObjectBehavior.data-object-reference.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
@@ -45,6 +45,9 @@ describe('features/modeling/behavior - data objects -', function() {
     }));
 
 
+    it('should create the corresponding DataObject / undo');
+
+
     it('should have the right parents', inject(function(modeling) {
 
       // when
@@ -69,7 +72,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
   describe('create', function() {
 
-    var processDiagramXML = require('./CreateDataObjectBehavior.create-data-association.bpmn');
+    var processDiagramXML = require('./DataObjectBehavior.create-data-association.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
@@ -128,6 +131,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
     });
 
+
     describe('dataInputAssociation', function() {
 
       it('should execute', inject(function(modeling) {
@@ -178,7 +182,7 @@ describe('features/modeling/behavior - data objects -', function() {
 
   describe('remove', function() {
 
-    var processDiagramXML = require('./CreateDataObjectBehavior.remove-data-association.bpmn');
+    var processDiagramXML = require('./DataObjectBehavior.remove-data-association.bpmn');
 
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
