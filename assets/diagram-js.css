@@ -295,6 +295,10 @@ svg.new-parent {
   color: rgb(255, 116, 0);
 }
 
+.highlighted-entry {
+  color: rgb(255, 116, 0) !important; 
+}
+
 /**
  * context-pad
  */
