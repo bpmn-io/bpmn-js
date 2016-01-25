@@ -188,6 +188,95 @@ describe('features/modeling/rules - BpmnRules', function() {
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
+
+
+    it('connect DataStoreReference -> StartEvent_None', inject(function() {
+
+      expectCanConnect('DataStoreReference', 'StartEvent_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect StartEvent_None -> DataStoreReference', inject(function() {
+
+      expectCanConnect('StartEvent_None', 'DataStoreReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataStoreReference -> EndEvent_None', inject(function() {
+
+      expectCanConnect('DataStoreReference', 'EndEvent_None', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
+
+
+    it('connect EndEvent_None -> DataStoreReference', inject(function() {
+
+      expectCanConnect('EndEvent_None', 'DataStoreReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect Task -> DataStoreReference', inject(function() {
+
+      expectCanConnect('Task', 'DataStoreReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataStoreReference -> Task', inject(function() {
+
+      expectCanConnect('DataStoreReference', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
+
+
+    it('connect SubProcess -> DataStoreReference', inject(function() {
+
+      expectCanConnect('SubProcess', 'DataStoreReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataOutputAssociation' }
+      });
+    }));
+
+
+    it('connect DataStoreReference -> SubProcess', inject(function() {
+
+      expectCanConnect('DataStoreReference', 'SubProcess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: { type: 'bpmn:DataInputAssociation' }
+      });
+    }));
+
   });
 
 
