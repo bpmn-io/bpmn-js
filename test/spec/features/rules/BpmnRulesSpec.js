@@ -96,6 +96,12 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('drop TextAnnotation -> SubProcess', inject(function() {
+
+      expectCanDrop('TextAnnotation', 'SubProcess', true);
+    }));
+
+
     it('connect DataObjectReference -> StartEvent_None', inject(function() {
 
       expectCanConnect('DataObjectReference', 'StartEvent_None', {
