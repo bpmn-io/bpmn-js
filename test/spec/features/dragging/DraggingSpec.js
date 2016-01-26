@@ -13,7 +13,7 @@ var assign = require('lodash/object/assign'),
 var dragModule = require('../../../../lib/features/dragging');
 
 
-describe('Dragging', function() {
+describe('features/dragging - Dragging', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ dragModule ] }));
 
