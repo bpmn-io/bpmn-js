@@ -990,7 +990,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(callActivityEntry).to.not.exist;
-        expect(subProcessEntry).to.not.exist;
+        expect(subProcessEntry).to.exist;
       }));
 
     });
