@@ -12,10 +12,10 @@ var browserify = require('browserify'),
 var BANNER = fs.readFileSync(__dirname + '/banner.txt', 'utf8'),
     BANNER_MIN = fs.readFileSync(__dirname + '/banner-min.txt', 'utf8');
 
+var SOURCE_MAP_HEADER = '//# sourceMappingURL=data:application/json;charset=utf-8;base64,';
+
 
 function extractSourceMap(content) {
-
-  var SOURCE_MAP_HEADER = '//# sourceMappingURL=data:application/json;base64,';
 
   var idx = content.indexOf(SOURCE_MAP_HEADER),
       map, code;
