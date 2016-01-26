@@ -2,6 +2,7 @@
 
 var EventBus = require('../../../lib/core/EventBus');
 
+var EventBusEvent = EventBus.Event;
 
 /* global sinon */
 
@@ -19,7 +20,7 @@ describe('core/EventBus', function() {
     it('should fire listener', function() {
 
       // given
-      var listener = sinon.spy();//createSpy('listener');
+      var listener = sinon.spy();
 
       eventBus.on('foo', listener);
 
@@ -76,6 +77,21 @@ describe('core/EventBus', function() {
 
         // then
         expect(returnValue).to.not.exist;
+      });
+
+
+      it('should be undefined on event if no listeners', function() {
+
+        // given
+        var event = new EventBusEvent();
+
+        event.init({ type: 'foo' });
+
+        // when
+        eventBus.fire(event);
+
+        // then
+        expect(event).not.to.have.property('returnValue');
       });
 
 
