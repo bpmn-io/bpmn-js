@@ -74,7 +74,7 @@ describe('features/replace-preview', function() {
     moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
 
     // then
-    var dragGroup = dragging.active().data.context.dragGroup;
+    var dragGroup = dragging.context().data.context.dragGroup;
 
     dragGroup[0].attr('display', 'inline');
 
@@ -91,7 +91,7 @@ describe('features/replace-preview', function() {
     moveShape(startEvent_1, rootElement, { x: 285, y: 120 });
 
     // then
-    var visualReplacements = dragging.active().data.context.visualReplacements;
+    var visualReplacements = dragging.context().data.context.visualReplacements;
 
     expect(visualReplacements[startEvent_1.id]).to.exist;
     expect(Object.keys(visualReplacements).length).to.equal(1);
@@ -110,7 +110,7 @@ describe('features/replace-preview', function() {
     moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
 
     // then
-    var visualReplacements = dragging.active().data.context.visualReplacements;
+    var visualReplacements = dragging.context().data.context.visualReplacements;
 
     expect(visualReplacements).to.be.empty;
 
@@ -124,7 +124,7 @@ describe('features/replace-preview', function() {
     moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
 
     // then
-    var dragGroup = dragging.active().data.context.dragGroup;
+    var dragGroup = dragging.context().data.context.dragGroup;
 
     expect(dragGroup[0].attr('display')).to.equal('none');
 
@@ -140,7 +140,7 @@ describe('features/replace-preview', function() {
     // when
     moveShape(startEvent_1, subProcess_1, { x: 210, y: 180 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     // check if the visual representation remains a non interrupting message start event
@@ -161,7 +161,7 @@ describe('features/replace-preview', function() {
     // when
     moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     // check if the visual replacement is a blank interrupting start event
@@ -181,7 +181,7 @@ describe('features/replace-preview', function() {
     // when
     moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     // check if the visual representation remains a non interrupting message start event
@@ -205,7 +205,7 @@ describe('features/replace-preview', function() {
     // when
     moveShape(startEvent_1, subProcess_3, { x: 600, y: 120 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     // check if the visual representation remains a non interrupting message start event
@@ -228,7 +228,7 @@ describe('features/replace-preview', function() {
 
     moveShape(startEvent_1, rootElement, { x: 150, y: 250 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     // check if the visual replacements are blank interrupting start events
@@ -268,7 +268,7 @@ describe('features/replace-preview', function() {
 
     moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
 
-    var context = dragging.active().data.context;
+    var context = dragging.context().data.context;
 
     // then
     expect(context.dragGroup[0].innerSVG()).to.equal(messageStartEventGfx.innerSVG());

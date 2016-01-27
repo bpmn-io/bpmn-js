@@ -338,7 +338,7 @@ describe('features/modeling - move start event behavior', function() {
         });
         dragging.move(canvasEvent({ x: 450, y: -50 }));
 
-        var canExecute = dragging.active().data.context.canExecute;
+        var canExecute = dragging.context().data.context.canExecute;
 
         // then
         expect(canExecute).to.be.false;
