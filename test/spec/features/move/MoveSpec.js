@@ -70,7 +70,7 @@ describe('features/move - Move', function() {
       function recordEvents(prefix) {
         var events = [];
 
-        [ 'start', 'move', 'end', 'hover', 'out', 'cancel', 'cleanup', 'activate' ].forEach(function(type) {
+        [ 'start', 'move', 'end', 'hover', 'out', 'cancel', 'cleanup', 'init' ].forEach(function(type) {
           eventBus.on(prefix + '.' + type, function(e) {
             events.push(assign({}, e));
           });

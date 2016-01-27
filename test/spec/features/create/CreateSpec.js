@@ -146,7 +146,7 @@ describe('features/create - Create', function () {
 
       dragging.move(canvasEvent({ x: 50, y: 50 }));
 
-      var ctx = dragging.active();
+      var ctx = dragging.context();
 
       // then
       expect(ctx.data.context.visual.hasClass('djs-drag-group')).to.be.true;
@@ -163,7 +163,7 @@ describe('features/create - Create', function () {
       dragging.hover({ element: parentShape, gfx: parentGfx});
       dragging.move(canvasEvent({ x: 150, y: 150 }));
 
-      var ctx = dragging.active();
+      var ctx = dragging.context();
 
       dragging.end();
 

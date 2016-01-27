@@ -181,7 +181,7 @@ describe('features/label-support - Label', function() {
 
       dragging.move(canvasEvent({ x: 225, y: 150 }));
 
-      var ctx = dragging.active().data.context;
+      var ctx = dragging.context().data.context;
 
       var children = ctx.dragGroup.children();
 

@@ -989,7 +989,7 @@ describe('features/attach-support', function() {
 
       dragging.move(canvasEvent({ x: 575, y: 75 }));
 
-      var ctx = dragging.active();
+      var ctx = dragging.context();
 
       // then
       expect(ctx.data.context.canExecute).to.equal('attach');
@@ -1035,7 +1035,7 @@ describe('features/attach-support', function() {
 
       // then
       // expect the label to be included in the dragGroup
-      var dragGroup = dragging.active().data.context.dragGroup;
+      var dragGroup = dragging.context().data.context.dragGroup;
 
       expect(dragGroup.select('[data-element-id=' + label.id + ']')).to.exist;
 

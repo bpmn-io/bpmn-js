@@ -124,7 +124,7 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(canvasEvent({ x: 22, y: 22 }));
 
       // then
-      var ctx = dragging.active();
+      var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(true);
 
       expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).to.equal(true);
@@ -146,7 +146,7 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(canvasEvent({ x: 22, y: 22 }));
 
       // then
-      var ctx = dragging.active();
+      var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(false);
 
       expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).to.equal(true);
@@ -187,7 +187,7 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(canvasEvent({ x: 120, y: 180 }));
 
       // then
-      var ctx = dragging.active();
+      var ctx = dragging.context();
       expect(ctx.data.context.differentParents).to.equal(true);
 
       expect(elementRegistry.getGraphics(parentShape).hasClass('new-parent')).to.equal(true);
@@ -213,7 +213,7 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(canvasEvent({ x: 120, y: 180 }));
 
       // then
-      var ctx = dragging.active();
+      var ctx = dragging.context();
       expect(ctx.data.context.differentParents).to.equal(true);
 
       expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(false);
@@ -239,7 +239,7 @@ describe('features/move - MoveVisuals', function() {
       dragging.move(canvasEvent({ x: 150, y: 15 }));
 
       // then
-      var ctx = dragging.active();
+      var ctx = dragging.context();
       expect(ctx.data.context.differentParents).to.equal(true);
 
       var childGfx = elementRegistry.getGraphics(childShape);

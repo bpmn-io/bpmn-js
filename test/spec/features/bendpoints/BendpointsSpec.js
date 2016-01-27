@@ -120,7 +120,7 @@ describe('features/bendpoints', function() {
         originalEvent: canvasEvent({ x: 500, y: 250 })
       });
 
-      var draggingContext = dragging.active();
+      var draggingContext = dragging.context();
 
       // then
       expect(draggingContext).to.exist;
@@ -146,7 +146,7 @@ describe('features/bendpoints', function() {
         originalEvent: canvasEvent({ x: intersectionMid, y: 250 })
       });
 
-      var draggingContext = dragging.active();
+      var draggingContext = dragging.context();
 
       // then
       expect(draggingContext).to.exist;

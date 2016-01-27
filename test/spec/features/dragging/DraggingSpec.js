@@ -45,7 +45,7 @@ describe('features/dragging - Dragging', function() {
           'cancel',
           'canceled',
           'cleanup',
-          'activate'
+          'init'
         ];
 
         eventTypes.forEach(function(type) {
@@ -64,13 +64,13 @@ describe('features/dragging - Dragging', function() {
     }
 
 
-    it('should cancel original event on activate', inject(function(dragging) {
+    it('should cancel original event on init', inject(function(dragging) {
 
       // given
       var event = canvasEvent({ x: 10, y: 10 });
 
       // when
-      dragging.activate(event, 'foo');
+      dragging.init(event, 'foo');
 
       // then
       expect(event.defaultPrevented).to.be.true;
@@ -83,7 +83,7 @@ describe('features/dragging - Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', {
+      dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo', {
         data: { foo: 'BAR' }
       });
 
@@ -91,7 +91,7 @@ describe('features/dragging - Dragging', function() {
       expect(events.length).to.equal(1);
 
       expect(events).to.eql([
-        { foo: 'BAR', type: 'foo.activate' }
+        { foo: 'BAR', type: 'foo.init' }
       ]);
     }));
 
@@ -102,7 +102,7 @@ describe('features/dragging - Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+      dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');
       dragging.move(canvasEvent({ x: 30, y: 20 }));
       dragging.move(canvasEvent({ x: 5, y: 10 }));
 
@@ -110,7 +110,7 @@ describe('features/dragging - Dragging', function() {
 
       // then
       expect(events.map(raw)).to.eql([
-        { type: 'foo.activate' },
+        { type: 'foo.init' },
         { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
@@ -127,7 +127,7 @@ describe('features/dragging - Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+      dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');
       dragging.move(canvasEvent({ x: 30, y: 20 }));
       dragging.move(canvasEvent({ x: 5, y: 10 }));
 
@@ -135,7 +135,7 @@ describe('features/dragging - Dragging', function() {
 
       // then
       expect(events.map(raw)).to.eql([
-        { type: 'foo.activate' },
+        { type: 'foo.init' },
         { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
@@ -152,18 +152,17 @@ describe('features/dragging - Dragging', function() {
       var events = recordEvents('foo');
 
       // a is active
-      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
+      dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'a' } });
 
       // when
       // activate b
-      dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
+      dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo', { data: { element: 'b' } });
 
       // then
       expect(events.map(raw)).to.eql([
-        { element: 'a', type: 'foo.activate' },
+        { element: 'a', type: 'foo.init' },
         { element: 'a', type: 'foo.cleanup' },
-        { element: 'a', type: 'foo.canceled' },
-        { element: 'b', type: 'foo.activate' }
+        { element: 'b', type: 'foo.init' }
       ]);
 
     }));
@@ -178,7 +177,7 @@ describe('features/dragging - Dragging', function() {
             rootGfx = elementRegistry.getGraphics(rootElement);
 
         // when
-        dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+        dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');
 
         // then
         expect(rootGfx.hasClass('djs-drag-active')).to.be.false;
@@ -198,7 +197,7 @@ describe('features/dragging - Dragging', function() {
             rootGfx = elementRegistry.getGraphics(rootElement);
 
         // when
-        dragging.activate(canvasEvent({ x: 10, y: 10 }), 'foo');
+        dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');
         dragging.move(canvasEvent({ x: 30, y: 20 }));
         dragging.cancel();
 
@@ -215,7 +214,7 @@ describe('features/dragging - Dragging', function() {
       var events = recordEvents('foo');
 
       // when
-      dragging.activate(canvasEvent({ x: 0, y: 0 }), { x: 10, y: 10 }, 'foo');
+      dragging.init(canvasEvent({ x: 0, y: 0 }), { x: 10, y: 10 }, 'foo');
       dragging.move(canvasEvent({ x: 20, y: 10 }));
       dragging.move(canvasEvent({ x: -5, y: 0 }));
 
@@ -223,7 +222,7 @@ describe('features/dragging - Dragging', function() {
 
       // then
       expect(events.map(raw)).to.eql([
-        { type: 'foo.activate' },
+        { type: 'foo.init' },
         { x: 10, y: 10, dx: 0, dy: 0, type: 'foo.start' },
         { x: 30, y: 20, dx: 20, dy: 10, type: 'foo.move' },
         { x: 5, y: 10, dx: -5, dy: 0, type: 'foo.move' },
@@ -249,7 +248,7 @@ describe('features/dragging - Dragging', function() {
 
       dragging.move(canvasEvent({ x: 100, y: 100 }));
 
-      var elementBefore = dragging.active().data.context.visual.getBBox();
+      var elementBefore = dragging.context().data.context.visual.getBBox();
 
       zoomScroll.stepZoom(-1.25);
 
@@ -257,7 +256,7 @@ describe('features/dragging - Dragging', function() {
 
       dragging.move(canvasEvent({ x: 100, y: 100 }));
 
-      var elementAfter = dragging.active().data.context.visual.getBBox();
+      var elementAfter = dragging.context().data.context.visual.getBBox();
 
       expect(elementBefore).to.eql(elementAfter);
     }));
