@@ -185,6 +185,12 @@ svg.new-parent {
   fill: none;
 }
 
+.djs-cursor-grab {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+}
+
 .djs-cursor-grabbing {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
