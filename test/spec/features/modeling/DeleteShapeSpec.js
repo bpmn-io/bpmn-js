@@ -3,34 +3,37 @@
 /* global bootstrapDiagram, inject */
 
 
-var modelingModule = require('../../../../lib/features/modeling');
+var modelingModule = require('../../../../lib/features/modeling'),
+    contextPadModule = require('../../../../lib/features/context-pad'),
+    selectionModule = require('../../../../lib/features/selection');
 
 describe('features/modeling - #removeShape', function() {
 
-  var rootShape, parentShape;
-
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
-
-  beforeEach(inject(function(elementFactory, canvas) {
-
-    rootShape = elementFactory.createRoot({
-      id: 'root'
-    });
-
-    canvas.setRootElement(rootShape);
-
-    parentShape = elementFactory.createShape({
-      id: 'parent',
-      x: 100, y: 100, width: 300, height: 300
-    });
-
-    canvas.addShape(parentShape, rootShape);
-  }));
-
-
   describe('basics', function () {
 
-    var childShape, childShape2, connection;
+    var rootShape,
+        parentShape,
+        childShape,
+        childShape2,
+        connection;
+
+    beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
+
+    beforeEach(inject(function(elementFactory, canvas) {
+
+      rootShape = elementFactory.createRoot({
+        id: 'root'
+      });
+
+      canvas.setRootElement(rootShape);
+
+      parentShape = elementFactory.createShape({
+        id: 'parent',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      canvas.addShape(parentShape, rootShape);
+    }));
 
     beforeEach(inject(function(elementFactory, canvas) {
 
@@ -158,6 +161,30 @@ describe('features/modeling - #removeShape', function() {
       // then
       expect(label.parent).to.be.null;
       expect(childShape.label).to.be.null;
+    }));
+
+  });
+
+
+  describe('context pad interaction', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ modelingModule, contextPadModule, selectionModule ] }));
+
+    it('should close context pad on remove shape', inject(function(canvas, modeling, contextPad, selection) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'shape',
+        x: 100, y: 100, width: 300, height: 300
+      });
+
+      selection.select(shape);
+
+      // when
+      modeling.removeShape(shape);
+
+      // then
+      expect(contextPad.isOpen()).to.be.false;
     }));
 
   });
