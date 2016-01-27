@@ -281,12 +281,6 @@ svg.new-parent {
   text-align: center;
 }
 
-@media(max-height: 620px) {
-  .djs-palette .entry {
-    display: inline-block;
-  }
-}
-
 .djs-palette .entry img {
   max-width: 100%;
 }
