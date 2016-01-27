@@ -102,6 +102,12 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('drop Start Event -> Collapsed Sub Process', function(){
+
+      expectCanDrop('StartEvent_None', 'CollapsedSubProcess', false);
+    });
+
+
     it('connect DataObjectReference -> StartEvent_None', inject(function() {
 
       expectCanConnect('DataObjectReference', 'StartEvent_None', {

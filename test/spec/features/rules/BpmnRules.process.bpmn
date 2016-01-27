@@ -21,6 +21,7 @@
     <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject"/>
     <bpmn2:dataObject id="DataObject"/>
     <bpmn2:dataStoreReference id="DataStoreReference" name="" dataStoreRef="DataStore_1"/>
+    <bpmn2:subProcess id="CollapsedSubProcess"/>
     <bpmn2:textAnnotation id="TextAnnotation"/>
   </bpmn2:process>
   <bpmn2:dataStore id="DataStore_1" name="Data Store 1"/>
@@ -82,6 +83,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds height="21.0" width="79.0" x="657.0" y="216.0"/>
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CollapsedSubProcess_di" bpmnElement="CollapsedSubProcess">
+        <dc:Bounds x="756" y="358" width="100" height="80"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
