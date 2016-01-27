@@ -255,8 +255,8 @@ svg.new-parent {
 
 .djs-palette .separator {
   margin: 3px 5px 5px 5px;
-  border: solid 1px #DDD;
-  border-radius: 1px;
+  border: none;
+  border-top: solid 1px #DDD;
 };
 
 .djs-palette .entry:before {
@@ -273,6 +273,12 @@ svg.new-parent {
   font-size: 30px;
 
   text-align: center;
+}
+
+@media(max-height: 620px) {
+  .djs-palette .entry {
+    display: inline-block;
+  }
 }
 
 .djs-palette .entry img {
@@ -296,7 +302,7 @@ svg.new-parent {
 }
 
 .highlighted-entry {
-  color: rgb(255, 116, 0) !important; 
+  color: rgb(255, 116, 0) !important;
 }
 
 /**
@@ -416,7 +422,7 @@ svg.new-parent {
   background: #FAFAFA;
   border: solid 1px #CCC;
   border-radius: 2px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 /**
@@ -545,7 +551,7 @@ svg.new-parent {
   background: rgb(252, 236, 240);
   color: rgb(158, 76, 76);
   padding: 3px 7px;
-  box-shadow: 0 1px 3px rgba(0,0,0, 0.2);
+  box-shadow: 0 1px 2px rgba(0,0,0, 0.2);
   border-radius: 5px;
   border-left: solid 5px rgb(174, 73, 73);
 }
