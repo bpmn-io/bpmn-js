@@ -40,7 +40,7 @@
     "load-grunt-tasks": "^0.3.0",
     "mocha": "^2.2.5",
     "mocha-test-container-support": "~0.1.0",
-    "phantomjs": "^2.1.2",
+    "phantomjs": "^1.9.19",
     "sinon": "~1.14.1",
     "sinon-chai": "~2.7.0",
     "time-grunt": "^0.3.0",
