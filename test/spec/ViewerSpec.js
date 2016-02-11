@@ -297,6 +297,36 @@ describe('Viewer', function() {
     }
 
 
+    it('should export XML', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // when
+        viewer.saveXML({ format: true }, function(err, xml) {
+
+          if (err) {
+            return done(err);
+          }
+
+          // then
+          expect(xml).to.contain('<?xml version="1.0" encoding="UTF-8"?>');
+          expect(xml).to.contain('<bpmn2:definitions');
+          expect(xml).to.contain('  ');
+
+          done();
+        });
+      });
+      
+    });
+    
+    
     it('should export svg', function(done) {
 
       // given
