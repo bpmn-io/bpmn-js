@@ -626,6 +626,68 @@ describe('Viewer', function() {
   });
 
 
+  describe.only('#off', function() {
+    
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+    
+    it('should remove listener permanently', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var handler = function() {
+        return 'bar';
+      };
+      
+      viewer.on('foo', 1000, handler);
+
+      // when
+      viewer.off('foo');
+      
+      // then
+      viewer.importXML(xml, function(err) {
+        var eventBus = viewer.get('eventBus');
+
+        var result = eventBus.fire('foo');
+
+        expect(result).not.to.exist;
+
+        done();
+      });
+
+    });
+    
+    
+    it('should remove listener on existing diagram instance', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var handler = function() {
+        return 'bar';
+      };
+      
+      viewer.on('foo', 1000, handler);
+      
+      // when
+      viewer.importXML(xml, function(err) {
+        var eventBus = viewer.get('eventBus');
+        
+        // when
+        viewer.off('foo', handler);
+        
+        var result = eventBus.fire('foo');
+
+        expect(result).not.to.exist;
+
+        done();
+      });
+
+    });
+
+  });
+  
+  
   describe('#destroy', function() {
 
     it('should remove traces in document tree', function() {
