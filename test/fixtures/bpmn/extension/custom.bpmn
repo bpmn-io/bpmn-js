@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:custom="http://customdescriptor.com/bpmn2" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_FVEpwO_VEeOtYvXzz5ksgw" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="testProcess" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sendTask id="send" name="send">
+      <bpmn2:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="var1">
+            <camunda:map>
+              <camunda:entry key="a">
+                <camunda:list>
+                  <camunda:value>stringInListNestedInMap</camunda:value>
+                  <camunda:value>${ 'b' }</camunda:value>
+                </camunda:list>
+              </camunda:entry>
+            </camunda:map>
+          </camunda:inputParameter>
+          <camunda:inputParameter name="var2">stringConstantValue</camunda:inputParameter>
+        </camunda:inputOutput>
+        <custom:customSendElement name="custom" value="1" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:sendTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="send"/>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="send" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testProcess">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="128.0" y="178.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="send">
+        <dc:Bounds height="80.0" width="100.0" x="214.0" y="156.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="164.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="214.0" y="196.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="364.0" y="178.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="314.0" y="196.0"/>
+        <di:waypoint xsi:type="dc:Point" x="364.0" y="196.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
