@@ -5,5 +5,5 @@ script:
   - grunt jshint test
 
 before_install:
-  - npm install -g grunt-cli wiredeps
+  - npm install -g wiredeps
   - wiredeps --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose

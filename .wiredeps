@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.8.0",
+  "version": "0.13.0",
   "dependencies": {
     "diagram-js": {
       "version": "bpmn-io/diagram-js",
@@ -13,6 +13,9 @@
         },
         "snapsvg": {
           "version": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
+        },
+        "didi": {
+          "version": "0.1.0"
         }
       }
     },
@@ -47,11 +50,8 @@
     "diagram-js-direct-editing": {
       "version": "bpmn-io/diagram-js-direct-editing"
     },
-    "didi": {
-      "version": "0.1.0"
-    },
     "ids": {
-      "version": "0.1.1",
+      "version": "0.1.2",
       "dependencies": {
         "hat": {
           "version": "0.0.3"

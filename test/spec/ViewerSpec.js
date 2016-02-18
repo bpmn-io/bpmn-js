@@ -323,10 +323,10 @@ describe('Viewer', function() {
           done();
         });
       });
-      
+
     });
-    
-    
+
+
     it('should export svg', function(done) {
 
       // given
@@ -544,6 +544,53 @@ describe('Viewer', function() {
 
     });
 
+    it('should allow to add default custom moddle extensions', function(done) {
+
+      var xml = require('../fixtures/bpmn/extension/custom.bpmn'),
+        additionalModdleDescriptors = {
+          custom: require('../fixtures/json/model/custom')
+        };
+
+      Viewer.prototype._moddleExtensions = additionalModdleDescriptors;
+
+      // given
+      viewer = new Viewer({
+        container: container,
+        moddleExtensions: {
+          camunda: camundaPackage
+        }
+      });
+
+      // when
+      viewer.importXML(xml, function(err, warnings) {
+
+        var elementRegistry = viewer.get('elementRegistry');
+
+        var taskShape = elementRegistry.get('send'),
+          sendTask = taskShape.businessObject;
+
+        // then
+        expect(sendTask).to.exist;
+
+        var extensionElements = sendTask.extensionElements;
+
+        // receive task should be moddle extended
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.exist;
+        expect(sendTask.$instanceOf('custom:ServiceTaskGroup')).to.exist;
+
+        // extension elements should provide typed element
+        expect(extensionElements).to.exist;
+
+        expect(extensionElements.values.length).to.equal(2);
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.exist;
+
+        expect(extensionElements.values[1].$instanceOf('custom:CustomSendElement')).to.exist;
+
+        done(err);
+      });
+
+    });
+
 
     it('should throw error due to missing diagram', function(done) {
 
@@ -626,10 +673,10 @@ describe('Viewer', function() {
   });
 
 
-  describe.only('#off', function() {
-    
+  describe('#off', function() {
+
     var xml = require('../fixtures/bpmn/simple.bpmn');
-    
+
     it('should remove listener permanently', function(done) {
 
       // given
@@ -638,12 +685,12 @@ describe('Viewer', function() {
       var handler = function() {
         return 'bar';
       };
-      
+
       viewer.on('foo', 1000, handler);
 
       // when
       viewer.off('foo');
-      
+
       // then
       viewer.importXML(xml, function(err) {
         var eventBus = viewer.get('eventBus');
@@ -656,8 +703,8 @@ describe('Viewer', function() {
       });
 
     });
-    
-    
+
+
     it('should remove listener on existing diagram instance', function(done) {
 
       // given
@@ -666,16 +713,16 @@ describe('Viewer', function() {
       var handler = function() {
         return 'bar';
       };
-      
+
       viewer.on('foo', 1000, handler);
-      
+
       // when
       viewer.importXML(xml, function(err) {
         var eventBus = viewer.get('eventBus');
-        
+
         // when
         viewer.off('foo', handler);
-        
+
         var result = eventBus.fire('foo');
 
         expect(result).not.to.exist;
@@ -686,8 +733,8 @@ describe('Viewer', function() {
     });
 
   });
-  
-  
+
+
   describe('#destroy', function() {
 
     it('should remove traces in document tree', function() {
