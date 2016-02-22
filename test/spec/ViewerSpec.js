@@ -323,10 +323,10 @@ describe('Viewer', function() {
           done();
         });
       });
-      
+
     });
-    
-    
+
+
     it('should export svg', function(done) {
 
       // given
@@ -626,10 +626,10 @@ describe('Viewer', function() {
   });
 
 
-  describe.only('#off', function() {
-    
+  describe('#off', function() {
+
     var xml = require('../fixtures/bpmn/simple.bpmn');
-    
+
     it('should remove listener permanently', function(done) {
 
       // given
@@ -638,12 +638,12 @@ describe('Viewer', function() {
       var handler = function() {
         return 'bar';
       };
-      
+
       viewer.on('foo', 1000, handler);
 
       // when
       viewer.off('foo');
-      
+
       // then
       viewer.importXML(xml, function(err) {
         var eventBus = viewer.get('eventBus');
@@ -656,8 +656,8 @@ describe('Viewer', function() {
       });
 
     });
-    
-    
+
+
     it('should remove listener on existing diagram instance', function(done) {
 
       // given
@@ -666,16 +666,16 @@ describe('Viewer', function() {
       var handler = function() {
         return 'bar';
       };
-      
+
       viewer.on('foo', 1000, handler);
-      
+
       // when
       viewer.importXML(xml, function(err) {
         var eventBus = viewer.get('eventBus');
-        
+
         // when
         viewer.off('foo', handler);
-        
+
         var result = eventBus.fire('foo');
 
         expect(result).not.to.exist;
@@ -686,8 +686,8 @@ describe('Viewer', function() {
     });
 
   });
-  
-  
+
+
   describe('#destroy', function() {
 
     it('should remove traces in document tree', function() {
