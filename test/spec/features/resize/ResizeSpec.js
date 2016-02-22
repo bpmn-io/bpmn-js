@@ -1,5 +1,7 @@
 'use strict';
 
+var TestHelper = require('../../../TestHelper');
+
 
 /* global bootstrapDiagram, inject */
 
@@ -42,13 +44,19 @@ describe('features/resize - Resize', function() {
 
   describe('handles', function() {
 
-    it('should add on selection', inject(function(selection, resizeHandles, canvas) {
+    function getResizeHandles() {
+      return TestHelper.inject(function(resizeHandles) {
+        return resizeHandles._getResizersParent().selectAll('.djs-resizer');
+      })();
+    }
+
+    it('should add on selection', inject(function(selection, canvas) {
 
       // when
       selection.select(shape);
 
       // then
-      var resizeAnchors = resizeHandles._getResizersParent().selectAll('.djs-resizer');
+      var resizeAnchors = getResizeHandles();
 
       expect(resizeAnchors.length).to.equal(4);
     }));
@@ -61,13 +69,28 @@ describe('features/resize - Resize', function() {
       selection.deselect(shape, false);
 
       // then
-      var resizeAnchors = gfx.selectAll('.resize');
+      var resizeAnchors = getResizeHandles();
 
       expect(resizeAnchors.length).to.equal(0);
     }));
 
 
-    it('should update on shape change');
+    it('should update on shape change', inject(function(selection, eventBus, elementRegistry) {
+
+      // when
+      selection.select(shape, false);
+
+      // change
+      elementRegistry.updateId(shape, 'BAR');
+
+      // trigger change
+      eventBus.fire('element.changed', { element: shape });
+
+      // then
+      var resizeAnchors = getResizeHandles();
+
+      expect(resizeAnchors.length).to.equal(4);
+    }));
 
   });
 
