@@ -391,6 +391,67 @@ describe('core/EventBus', function() {
     });
 
 
+    it('should remove once listener by callback', function() {
+
+      // given
+      var listener1 = sinon.spy();
+      var listener2 = sinon.spy();
+
+      eventBus.once('foo', listener1);
+      eventBus.on('foo', listener2);
+
+      // when
+      eventBus.off('foo', listener1);
+      eventBus.fire({ type: 'foo' });
+
+      // then
+      expect(listener1).to.not.have.been.called;
+      expect(listener2).to.have.been.called;
+    });
+
+
+    it('should remove bound listener by callback', function() {
+
+      // given
+      var self = {};
+
+      var listener1 = sinon.spy();
+      var listener2 = sinon.spy();
+
+      eventBus.on('foo', listener1, self);
+      eventBus.on('foo', listener2);
+
+      // when
+      eventBus.off('foo', listener1);
+      eventBus.fire({ type: 'foo' });
+
+      // then
+      expect(listener1).to.not.have.been.called;
+      expect(listener2).to.have.been.called;
+    });
+
+
+    it('should remove bound once listener by callback', function() {
+
+      // given
+      var self = {};
+
+      var listener1 = sinon.spy();
+      var listener2 = sinon.spy();
+
+      eventBus.once('foo', listener1, self);
+      eventBus.on('foo', listener2);
+
+      // when
+      eventBus.off('foo', listener1);
+      eventBus.fire({ type: 'foo' });
+
+      // then
+      expect(listener1).to.not.have.been.called;
+      expect(listener2).to.have.been.called;
+    });
+
+
     it('should fire event by name', function() {
 
       // given
