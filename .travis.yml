@@ -3,6 +3,3 @@ node_js: '4.0'
 
 script:
   - grunt
-
-before_install:
-  - npm install -g grunt-cli

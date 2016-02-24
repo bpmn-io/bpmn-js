@@ -22,6 +22,7 @@
     "browserify": "^13.0.0",
     "chai": "~2.2.0",
     "grunt": "~0.4.4",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.7.2",
     "grunt-karma": "^0.12.0",
     "grunt-release": "^0.7.0",
