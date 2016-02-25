@@ -544,6 +544,53 @@ describe('Viewer', function() {
 
     });
 
+    it('should allow to add default custom moddle extensions', function(done) {
+
+      var xml = require('../fixtures/bpmn/extension/custom.bpmn'),
+        additionalModdleDescriptors = {
+          custom: require('../fixtures/json/model/custom')
+        };
+
+      Viewer.prototype._moddleExtensions = additionalModdleDescriptors;
+
+      // given
+      viewer = new Viewer({
+        container: container,
+        moddleExtensions: {
+          camunda: camundaPackage
+        }
+      });
+
+      // when
+      viewer.importXML(xml, function(err, warnings) {
+
+        var elementRegistry = viewer.get('elementRegistry');
+
+        var taskShape = elementRegistry.get('send'),
+          sendTask = taskShape.businessObject;
+
+        // then
+        expect(sendTask).to.exist;
+
+        var extensionElements = sendTask.extensionElements;
+
+        // receive task should be moddle extended
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.exist;
+        expect(sendTask.$instanceOf('custom:ServiceTaskGroup')).to.exist;
+
+        // extension elements should provide typed element
+        expect(extensionElements).to.exist;
+
+        expect(extensionElements.values.length).to.equal(2);
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.exist;
+
+        expect(extensionElements.values[1].$instanceOf('custom:CustomSendElement')).to.exist;
+
+        done(err);
+      });
+
+    });
+
 
     it.only('should allow to add default custom moddle extensions', function(done) {
 
