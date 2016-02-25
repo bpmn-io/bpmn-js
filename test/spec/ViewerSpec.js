@@ -4,6 +4,8 @@ var TestContainer = require('mocha-test-container-support');
 
 var Viewer = require('../../lib/Viewer');
 
+var inherits = require('inherits');
+
 
 describe('Viewer', function() {
 
@@ -545,17 +547,23 @@ describe('Viewer', function() {
     });
 
 
-    it.only('should allow to add default custom moddle extensions', function(done) {
+    it('should allow to add default custom moddle extensions', function(done) {
 
+      // given
       var xml = require('../fixtures/bpmn/extension/custom.bpmn'),
           additionalModdleDescriptors = {
             custom: require('../fixtures/json/model/custom')
           };
 
-      Viewer.prototype._moddleExtensions = additionalModdleDescriptors;
+      function CustomViewer(options) {
+        Viewer.call(this, options);
+      }
 
-      // given
-      viewer = new Viewer({
+      inherits(CustomViewer, Viewer);
+
+      CustomViewer.prototype._moddleExtensions = additionalModdleDescriptors;
+
+      viewer = new CustomViewer({
         container: container,
         moddleExtensions: {
           camunda: camundaPackage
