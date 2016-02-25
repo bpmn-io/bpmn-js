@@ -1,0 +1,39 @@
+{
+  "name": "Custom descriptor Override",
+  "uri": "http://customdescriptor.com/bpmn2",
+  "prefix": "custom",
+  "xml": {
+    "tagAlias": "lowerCase"
+  },
+  "associations": [],
+  "types": [
+    {
+      "name": "CustomSendElementOverride",
+      "superClass": [
+        "Element"
+      ],
+      "properties": [
+        {
+          "name": "name",
+          "isAttr": true,
+          "type": "String"
+        },
+        {
+          "name": "value",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "ServiceTaskGroupOverride",
+      "extends": [
+        "bpmn:ServiceTask",
+        "bpmn:BusinessRuleTask",
+        "bpmn:SendTask",
+        "bpmn:MessageEventDefinition"
+      ]
+    }
+  ],
+  "emumerations": [ ]
+}

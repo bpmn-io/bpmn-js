@@ -533,13 +533,13 @@ describe('Viewer', function() {
         var extensionElements = sendTask.extensionElements;
 
         // receive task should be moddle extended
-        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.exist;
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.be.true;
 
         // extension elements should provide typed element
         expect(extensionElements).to.exist;
 
         expect(extensionElements.values.length).to.equal(1);
-        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.exist;
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.true;
 
         done(err);
       });
@@ -584,16 +584,72 @@ describe('Viewer', function() {
         var extensionElements = sendTask.extensionElements;
 
         // receive task should be moddle extended
-        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.exist;
-        expect(sendTask.$instanceOf('custom:ServiceTaskGroup')).to.exist;
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.be.true;
+        expect(sendTask.$instanceOf('custom:ServiceTaskGroup')).to.be.true;
 
         // extension elements should provide typed element
         expect(extensionElements).to.exist;
 
         expect(extensionElements.values.length).to.equal(2);
-        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.exist;
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.true;
 
-        expect(extensionElements.values[1].$instanceOf('custom:CustomSendElement')).to.exist;
+        expect(extensionElements.values[1].$instanceOf('custom:CustomSendElement')).to.be.true;
+
+        done(err);
+      });
+
+    });
+
+
+    it('should allow user to override default custom moddle extensions', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/extension/custom-override.bpmn'),
+          additionalModdleDescriptors = {
+            custom: require('../fixtures/json/model/custom')
+          },
+          customOverride = require('../fixtures/json/model/custom-override');
+
+      function CustomViewer(options) {
+        Viewer.call(this, options);
+      }
+
+      inherits(CustomViewer, Viewer);
+
+      CustomViewer.prototype._moddleExtensions = additionalModdleDescriptors;
+
+      viewer = new CustomViewer({
+        container: container,
+        moddleExtensions: {
+          camunda: camundaPackage,
+          custom : customOverride
+        }
+      });
+
+      // when
+      viewer.importXML(xml, function(err, warnings) {
+
+        var elementRegistry = viewer.get('elementRegistry');
+
+        var taskShape = elementRegistry.get('send'),
+            sendTask = taskShape.businessObject;
+
+        // then
+        expect(sendTask).to.exist;
+
+        var extensionElements = sendTask.extensionElements;
+
+        // receive task should be moddle extended
+        expect(sendTask.$instanceOf('camunda:ServiceTaskLike')).to.be.true;
+        expect(sendTask.$instanceOf('custom:ServiceTaskGroupOverride')).to.be.true;
+
+        // extension elements should provide typed element
+        expect(extensionElements).to.exist;
+
+        expect(extensionElements.values.length).to.equal(2);
+        expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.true;
+
+        expect(extensionElements.values[1].$instanceOf('custom:CustomSendElementOverride')).to.be.true;
 
         done(err);
       });
