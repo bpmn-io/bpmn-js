@@ -107,17 +107,45 @@ describe('Modeler', function() {
   });
 
 
+  describe('translate support', function() {
+
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    it('should allow translation of multi-lingual strings', function(done) {
+
+      createModeler(xml, function(err, warnings, modeler) {
+
+        // given
+        var translate = modeler.get('translate');
+
+        // assume
+        expect(translate).to.exist;
+
+        // when
+        var interpolatedString = translate('HELLO {you}!', { you: 'WALT' });
+
+        // then
+        expect(interpolatedString).to.eql('HELLO WALT!');
+
+        done(err);
+      });
+
+    });
+
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, viewer) {
+      createModeler(xml, function(err, warnings, modeler) {
 
         // given
-        var overlays = viewer.get('overlays'),
-            elementRegistry = viewer.get('elementRegistry');
+        var overlays = modeler.get('overlays'),
+            elementRegistry = modeler.get('elementRegistry');
 
         // assume
         expect(overlays).to.exist;
@@ -162,13 +190,13 @@ describe('Modeler', function() {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, viewer) {
+      createModeler(xml, function(err, warnings, modeler) {
 
         // given
-        var bendpointMove = viewer.get('bendpointMove'),
-            dragging = viewer.get('dragging'),
-            elementRegistry = viewer.get('elementRegistry'),
-            canvas = viewer.get('canvas');
+        var bendpointMove = modeler.get('bendpointMove'),
+            dragging = modeler.get('dragging'),
+            elementRegistry = modeler.get('elementRegistry'),
+            canvas = modeler.get('canvas');
 
         // assume
         expect(bendpointMove).to.exist;
