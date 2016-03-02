@@ -50,9 +50,6 @@
     "diagram-js-direct-editing": {
       "version": "bpmn-io/diagram-js-direct-editing"
     },
-    "i18next": {
-      "version": "2.2.0"
-    },
     "ids": {
       "version": "0.1.2",
       "dependencies": {
