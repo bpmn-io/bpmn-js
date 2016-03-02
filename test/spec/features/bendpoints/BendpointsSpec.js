@@ -153,6 +153,75 @@ describe('features/bendpoints', function() {
       expect(draggingContext.prefix).to.eql('connectionSegment.move');
     }));
 
+
+    describe('should trigger interaction events', function() {
+
+      function triggerMouseEvent(type, gfx) {
+
+        var event = document.createEvent('MouseEvent');
+        event.initMouseEvent(type, true, true, window);
+
+        return gfx.node.dispatchEvent(event);
+      }
+
+
+      var bendpointGfx,
+          listenerSpy;
+
+      beforeEach(inject(function(bendpoints, eventBus) {
+        bendpoints.addHandles(connection);
+
+        bendpointGfx = bendpoints.getBendpointsContainer(connection)
+                                 .select('.djs-bendpoint');
+
+        listenerSpy = sinon.spy(function(event) {
+          expect(event.originalEvent.target).to.equal(bendpointGfx.node);
+          expect(event.element).to.equal(connection);
+        });
+
+      }));
+
+
+      it('element.click', inject(function(eventBus, bendpoints){
+
+        // given
+        eventBus.once('element.click', listenerSpy);
+
+        // when
+        triggerMouseEvent('click', bendpointGfx);
+
+        // then
+        expect(listenerSpy).to.have.been.called;
+      }));
+
+
+      it('element.dblclick', inject(function(eventBus, bendpoints){
+
+        // given
+        eventBus.once('element.dblclick', listenerSpy);
+
+        // when
+        triggerMouseEvent('dblclick', bendpointGfx);
+
+        // then
+        expect(listenerSpy).to.have.been.called;
+      }));
+
+
+      it('element.mousedown', inject(function(eventBus, bendpoints){
+
+        // given
+        eventBus.once('element.mousedown', listenerSpy);
+
+        // when
+        triggerMouseEvent('mousedown', bendpointGfx);
+
+        // then
+        expect(listenerSpy).to.have.been.called;
+      }));
+
+    });
+
   });
 
 });
