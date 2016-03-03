@@ -416,7 +416,7 @@ describe('features/snapping - BpmnSnapping', function() {
       dragging.end();
 
       expect(textAnnotation.width).to.equal(50);
-      expect(textAnnotation.height).to.equal(50);
+      expect(textAnnotation.height).to.equal(30);
     }));
 
   });
