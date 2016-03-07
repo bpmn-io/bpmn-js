@@ -25,7 +25,6 @@ function triggerKeyEvent(element, event, code) {
   return element.dispatchEvent(e);
 }
 
-
 describe('features - label-editing', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
@@ -336,6 +335,53 @@ describe('features - label-editing', function() {
       it('lane without label', directEdit('nested-lane-no-label'));
 
     });
+  });
+
+
+  describe('sizing', function() {
+
+    var testModules = [ labelEditingModule, coreModule ];
+
+    beforeEach(bootstrapViewer(diagramXML, {
+      modules: testModules,
+      canvas: { deferUpdate: false }
+    }));
+
+
+    describe('textbox should have minimum size', function() {
+
+      function testTextboxSizing(elementId, zoom, width, height) {
+        return inject(function(canvas, elementRegistry, directEditing){
+          // zoom in
+          canvas.zoom(zoom);
+          // grab one element
+          var shape = elementRegistry.get(elementId);
+          // activate label editing
+          directEditing.activate(shape);
+          // grab the textarea
+          var textbox = directEditing._textbox;
+          // then
+          expect(textbox.textarea.offsetWidth).to.be.equal(width);
+          expect(textbox.textarea.offsetHeight).to.be.equal(height);
+        });
+      }
+
+      it('task', testTextboxSizing('task-nested-embedded', 1, 100, 80));
+      it('task, low zoom', testTextboxSizing('task-nested-embedded', 1, 100, 80));
+
+      it('call activity', testTextboxSizing('call-activity', 1, 100, 80));
+      it('call activity, low zoom', testTextboxSizing('call-activity', 0.4, 100, 80));
+
+      it('subprocess collapsed', testTextboxSizing('subprocess-collapsed', 1, 100, 80));
+      it('subprocess collapsed, low zoom', testTextboxSizing('subprocess-collapsed', 0.4, 100, 80));
+
+      it('subprocess expanded', testTextboxSizing('subprocess-expanded', 1, 200, 50));
+      it('subprocess expanded, low zoom', testTextboxSizing('subprocess-expanded', 0.4, 200, 50));
+
+      it('collapsed pool expanded', testTextboxSizing('collapsed-pool', 1, 385, 50));
+      it('collapsed pool, low zoom', testTextboxSizing('collapsed-pool', 0.4, 385, 50));
+    });
+
   });
 
 });
