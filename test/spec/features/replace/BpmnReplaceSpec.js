@@ -187,6 +187,43 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
+  describe('should replace in collaboration', function() {
+
+    var diagramXML = require('./BpmnReplace.collaboration.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('expanded with collapsed pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('Participant_1');
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, { type: 'bpmn:Participant', isExpanded: false });
+
+      // then
+      expect(isExpanded(newShape)).to.be.false; // collapsed
+      expect(newShape.children).to.be.empty;
+    }));
+
+
+    it('collapsed with expande pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('Participant_2');
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, { type: 'bpmn:Participant', isExpanded: true });
+
+      // then
+      expect(isExpanded(newShape)).to.be.true; // expanded
+      expect(newShape.children).to.be.empty;
+    }));
+
+  });
+
+
   describe('position and size', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');

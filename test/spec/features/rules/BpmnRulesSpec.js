@@ -839,6 +839,13 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));
 
+    it('drop element -> collapsed Participant', inject(function(canvas){
+      expectCanDrop('StartEvent_None', 'CollapsedParticipant', false);
+      expectCanDrop('SubProcess', 'CollapsedParticipant', false);
+      expectCanDrop('Task_in_SubProcess', 'CollapsedParticipant', false);
+      expectCanDrop('TextAnnotation_Global', 'CollapsedParticipant', false);
+    }));
+
   });
 
 

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_biH3sOTeEeS2YerRfpjPrw" targetNamespace="http://activiti.org/bpmn" exporter="camunda modeler" exporterVersion="2.6.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:collaboration id="Collaboration">
-    <bpmn2:textAnnotation id="TextAnnotation_Global" />
     <bpmn2:participant id="Participant" name="Pool" processRef="Process" />
     <bpmn2:participant id="OtherParticipant" name="Pool" processRef="OtherProcess" />
+    <bpmn2:participant id="CollapsedParticipant" name="Pool" />
+    <bpmn2:textAnnotation id="TextAnnotation_Global" />
   </bpmn2:collaboration>
   <bpmn2:process id="Process" isExecutable="false">
     <bpmn2:startEvent id="StartEvent_None" />
@@ -39,6 +40,7 @@
     <bpmn2:task id="Task_in_OtherParticipant" />
     <bpmn2:textAnnotation id="TextAnnotation_OtherParticipant" />
   </bpmn2:process>
+  <bpmn2:process id="Process_18q5tmq" isExecutable="false" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_3" bpmnElement="Participant" isHorizontal="true">
@@ -127,6 +129,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="299" y="114" width="90" height="20" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_09perow_di" bpmnElement="CollapsedParticipant">
+        <dc:Bounds x="125" y="704" width="594" height="117" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
