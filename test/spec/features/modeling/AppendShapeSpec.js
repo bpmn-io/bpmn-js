@@ -4,14 +4,9 @@
 
 var find = require('lodash/collection/find');
 
-var assign = require('lodash/object/assign');
-
 
 var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
-
-
-var LabelUtil = require('../../../../lib/util/LabelUtil');
 
 
 describe('features/modeling - append shape', function() {
@@ -72,44 +67,6 @@ describe('features/modeling - append shape', function() {
       // then
       expect(subProcess.get('flowElements')).to.include(target);
     }));
-
-
-    describe('should add external label', function() {
-
-      it('correctly wired and positioned', inject(function(elementRegistry, modeling, commandStack) {
-
-        // given
-        var startEventShape = elementRegistry.get('StartEvent_1');
-
-        // when
-        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' });
-
-        var label = targetShape.label;
-
-        // then
-        expect(label).to.exist;
-        expect(elementRegistry.get(label.id)).to.exist;
-
-        expect(label).to.have.bounds(assign({ x: 441, y: 278 }, LabelUtil.DEFAULT_LABEL_SIZE));
-      }));
-
-
-      it('with di', inject(function(elementRegistry, modeling, commandStack) {
-
-        // given
-        var startEventShape = elementRegistry.get('StartEvent_1');
-
-        // when
-        var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:EndEvent' }),
-            target = targetShape.businessObject;
-
-        // then
-        expect(target.di.label).to.exist;
-
-        expect(target.di.label).to.have.bounds(targetShape.label);
-      }));
-
-    });
 
 
     it('should add connection', inject(function(elementRegistry, modeling) {
