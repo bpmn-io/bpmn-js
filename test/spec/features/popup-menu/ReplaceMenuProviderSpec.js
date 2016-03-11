@@ -7,9 +7,7 @@ var TestHelper = require('../../../TestHelper');
 var globalEvent = require('../../../util/MockEvents.js').createEvent;
 
 var coreModule = require('../../../../lib/core'),
-    popupMenuModule = require('diagram-js/lib/features/popup-menu'),
     modelingModule = require('../../../../lib/features/modeling'),
-    replaceModule = require('../../../../lib/features/replace'),
     replaceMenuProviderModule = require('../../../../lib/features/popup-menu'),
     customRulesModule = require('../../../util/custom-rules');
 
@@ -60,8 +58,6 @@ describe('features/popup-menu - replace menu provider', function() {
   var testModules = [
     coreModule,
     modelingModule,
-    popupMenuModule,
-    replaceModule,
     replaceMenuProviderModule,
     customRulesModule
   ];
