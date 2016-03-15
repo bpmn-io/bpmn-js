@@ -2,15 +2,24 @@
 
 require('../../../TestHelper');
 
+var is = require('../../../../lib/util/ModelUtil').is;
+
 /* global bootstrapViewer, inject */
 
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
     coreModule = require('../../../../lib/core'),
-    draggingModule = require('diagram-js/lib/features/dragging');
+    draggingModule = require('diagram-js/lib/features/dragging'),
+    modelingModule = require('../../../../lib/features/modeling');
+
 
 var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
 
+var minBoundsLabel = require('../../../../lib/util/LabelUtil').DEFAULT_LABEL_SIZE,
+    minBoundsTextbox = {
+      width: 150,
+      height: 50
+    };
 
 function triggerKeyEvent(element, event, code) {
   var e = document.createEvent('Events');
@@ -32,13 +41,12 @@ describe('features - label-editing', function() {
 
   describe('basics', function() {
 
-    var testModules = [ labelEditingModule, coreModule, draggingModule ];
+    var testModules = [ labelEditingModule, coreModule, draggingModule, modelingModule ];
 
     beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
 
     it('should register on dblclick', inject(function(elementRegistry, directEditing, eventBus) {
-
       // given
       var shape = elementRegistry.get('task-nested-embedded');
 
@@ -51,7 +59,6 @@ describe('features - label-editing', function() {
 
 
     it('should cancel on <ESC>', inject(function(elementRegistry, directEditing, eventBus) {
-
       // given
       var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
@@ -76,7 +83,6 @@ describe('features - label-editing', function() {
 
 
     it('should complete on drag start', inject(function(elementRegistry, directEditing, dragging) {
-
       // given
       var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
@@ -94,7 +100,6 @@ describe('features - label-editing', function() {
 
 
     it('should submit on root element click', inject(function(elementRegistry, directEditing, canvas, eventBus) {
-
       // given
       var shape = elementRegistry.get('task-nested-embedded'),
           task = shape.businessObject;
@@ -123,7 +128,7 @@ describe('features - label-editing', function() {
 
   describe('details', function() {
 
-    var testModules = [ labelEditingModule, coreModule ];
+    var testModules = [ labelEditingModule, coreModule, modelingModule ];
 
     beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
@@ -131,13 +136,13 @@ describe('features - label-editing', function() {
         eventBus,
         directEditing;
 
-
-    beforeEach(inject([ 'elementRegistry', 'eventBus', 'directEditing', function(_elementRegistry, _eventBus, _directEditing) {
-      elementRegistry = _elementRegistry;
-      eventBus = _eventBus;
-      directEditing = _directEditing;
-    }]));
-
+    beforeEach(inject([ 'elementRegistry', 'eventBus', 'directEditing',
+      function(_elementRegistry, _eventBus, _directEditing) {
+        elementRegistry = _elementRegistry;
+        eventBus = _eventBus;
+        directEditing = _directEditing;
+      }
+    ]));
 
     function directEditActivate(element) {
       if (element.waypoints) {
@@ -147,59 +152,271 @@ describe('features - label-editing', function() {
       }
     }
 
-    function directEditUpdate(value) {
+    function directEditUpdateLabel(value) {
       directEditing._textbox.textarea.value = value;
     }
 
-    function directEditComplete(value) {
-      directEditUpdate(value);
+    function directEditUpdateShape(bounds) {
+      var textarea = directEditing._textbox.textarea;
+      if (bounds.x && bounds.y) {
+        textarea.style.left = bounds.x + 'px';
+        textarea.style.top = bounds.y + 'px';
+      }
+      textarea.style.height = bounds.height + 'px';
+      textarea.style.width = bounds.width + 'px';
+    }
+
+    function directEditComplete(value, bounds) {
+      if (value) {
+        directEditUpdateLabel(value);
+      }
+      if (bounds) {
+        directEditUpdateShape(bounds);
+      }
       directEditing.complete();
     }
 
-    function directEditCancel(value) {
-      directEditUpdate(value);
+    function directEditCancel(value, bounds) {
+      if (value) {
+        directEditUpdateLabel(value);
+      }
+      if (bounds) {
+        directEditUpdateShape(bounds);
+      }
       directEditing.cancel();
     }
 
 
     describe('command support', function() {
 
-      it('should update via command stack', function() {
+      describe('- label', function() {
 
-        // given
-        var diagramElement = elementRegistry.get('user-task');
+        it('should update via command stack', function() {
+          // given
+          var diagramElement = elementRegistry.get('user-task');
 
-        var listenerCalled;
+          var listenerCalled;
 
-        eventBus.on('commandStack.changed', function(e) {
-          listenerCalled = true;
+          eventBus.on('commandStack.changed', function(e) {
+            listenerCalled = true;
+          });
+
+          // when
+          directEditActivate(diagramElement);
+          directEditComplete('BAR', {});
+
+          // then
+          expect(listenerCalled).to.be.true;
         });
 
-        // when
-        directEditActivate(diagramElement);
-        directEditComplete('BAR');
 
-        // then
-        expect(listenerCalled).to.be.true;
+        it('should be undone via command stack', inject(function(commandStack) {
+          // given
+          var diagramElement = elementRegistry.get('user-task');
+
+          var oldLabel = LabelUtil.getLabel(diagramElement);
+
+          // when
+          directEditActivate(diagramElement);
+          directEditComplete('BAR', {});
+
+          commandStack.undo();
+
+          // then
+          var label = LabelUtil.getLabel(diagramElement);
+          expect(label).to.eql(oldLabel);
+        }));
+
       });
 
 
-      it('should undo via command stack', inject(function(commandStack) {
+      describe('- shape', function() {
 
+        it('of TextAnnotation should update via commandStack', function() {
+          // given
+          var diagramElement = elementRegistry.get('text-annotation');
+          var oldPosition = { x: diagramElement.x, y: diagramElement.y };
+          var newBounds = { height: 100, width: 150 };
+
+          // when
+          directEditActivate(diagramElement);
+
+          // then expect textarea to be autosizing
+          expect(directEditing._textbox.textarea.autosizing).to.be.true;
+
+          // when resizing textarea
+          directEditComplete('', newBounds);
+
+          // then element should have new bounds
+          expect(diagramElement.x).to.eql(oldPosition.x);
+          expect(diagramElement.y).to.eql(oldPosition.y);
+          expect(diagramElement.height).to.eql(newBounds.height);
+          expect(diagramElement.width).to.eql(newBounds.width);
+        });
+
+
+        it('of TextAnnotation should be undone via commandStack', inject(function(commandStack) {
+          // given
+          var diagramElement = elementRegistry.get('text-annotation');
+          var oldBounds = {
+            x: diagramElement.x,
+            y: diagramElement.y,
+            width: diagramElement.width,
+            height: diagramElement.height
+          };
+          var newBounds = {  height: 100, width: 150 };
+
+          directEditActivate(diagramElement);
+          directEditComplete('', newBounds);
+
+          // when
+          commandStack.undo();
+
+          // then element should have old bounds
+          expect(diagramElement.x).to.eql(oldBounds.x);
+          expect(diagramElement.y).to.eql(oldBounds.y);
+          expect(diagramElement.height).to.eql(oldBounds.height);
+          expect(diagramElement.width).to.eql(oldBounds.width);
+        }));
+
+
+        describe('of external label should update via commandStack', function() {
+
+          it('to newBounds if newBoundsTextbox > minBoundsTextbox', function() {
+            // given
+            var diagramElement = elementRegistry.get('exclusive-gateway').label;
+            var newBounds = { height: minBoundsTextbox.height + 10, width: minBoundsTextbox.width + 10 };
+
+            // when
+            directEditActivate(diagramElement);
+
+            // then expect textarea to be autosizing
+            expect(directEditing._textbox.textarea.autosizing).to.be.true;
+
+            // when resizing textarea
+            directEditComplete('', newBounds);
+
+            // then element should have new bounds
+            expect(diagramElement.height).to.eql(minBoundsTextbox.height + 10);
+            expect(diagramElement.width).to.eql(minBoundsTextbox.width + 10);
+          });
+
+
+          it('to minBoundsLabel.width and correct height if newBoundsTextbox <= minBoundsTextbox', function() {
+            // given
+            var diagramElement = elementRegistry.get('exclusive-gateway').label;
+            var newBounds = { height: minBoundsTextbox.height - 10, width: minBoundsTextbox.width - 10 };
+
+            // when resizing textarea
+            directEditActivate(diagramElement);
+            directEditComplete('', newBounds);
+
+            // then element should have minBoundsLabel.width
+            expect(diagramElement.width).to.eql(minBoundsLabel.width);
+
+            // then element should have max(minBoundsLabel.height, newBounds.height)
+            expect(diagramElement.height).to.eql(Math.max(minBoundsLabel.height, newBounds.height));
+          });
+        });
+
+
+        it('of external label should be undone via commandStack', inject(function(commandStack) {
+          // given
+          var diagramElement = elementRegistry.get('exclusive-gateway').label;
+          var oldBounds = {
+            x: diagramElement.x,
+            y: diagramElement.y,
+            width: diagramElement.width,
+            height: diagramElement.height
+          };
+          var newBounds = { height: 100, width: 200 };
+
+          directEditActivate(diagramElement);
+          directEditComplete('', newBounds);
+
+          // when
+          commandStack.undo();
+
+          // then element should have old bounds
+          expect(diagramElement.height).to.eql(oldBounds.height);
+          expect(diagramElement.width).to.eql(oldBounds.width);
+        }));
+
+
+        it('of element without autosizing textarea should not update', function() {
+          // given
+          var diagramElement = elementRegistry.get('user-task');
+          var bounds = {
+            x: diagramElement.x,
+            y: diagramElement.y,
+            width: diagramElement.width,
+            height: diagramElement.height
+          };
+          var newBounds = { width: 120, height: 100 };
+
+          // when
+          directEditActivate(diagramElement);
+
+          // then expect textarea to be not autosizing
+          expect(!!directEditing._textbox.textarea.autosizing).to.be.false;
+
+          // when resizing textarea
+          directEditComplete('', newBounds);
+
+          // then expect bounds to stay the same
+          expect(diagramElement.x).to.eql(bounds.x);
+          expect(diagramElement.y).to.eql(bounds.y);
+          expect(diagramElement.height).to.eql(bounds.height);
+          expect(diagramElement.width).to.eql(bounds.width);
+        });
+
+      });
+
+    });
+
+
+    describe('- position', function() {
+
+      it('of external label should stay centered if completing', function() {
         // given
-        var diagramElement = elementRegistry.get('user-task');
+        var diagramElement = elementRegistry.get('exclusive-gateway').label;
+        var newBounds = { height: 100, width: 200 };
+        var midXOldLabel = diagramElement.x + diagramElement.width / 2;
+        var oldY = diagramElement.y;
 
-        var oldLabel = LabelUtil.getLabel(diagramElement);
+        // when resizing textarea
+        directEditActivate(diagramElement);
+        directEditComplete('', newBounds);
+
+        //then new label should be centered and y remaining the same
+        var midXNewLabel = diagramElement.x + newBounds.width / 2;
+        expect(midXNewLabel).to.eql(midXOldLabel);
+        expect(diagramElement.y).to.eql(oldY);
+      });
+
+
+      it('of old external label should be centered if undoing', inject(function(commandStack){
+        // given
+        var diagramElement = elementRegistry.get('exclusive-gateway').label;
+        var oldBounds = {
+          x: diagramElement.x,
+          y: diagramElement.y,
+          width: diagramElement.width,
+          height: diagramElement.height
+        };
+        var newBounds = { height: 100, width: 200 };
+        var midXOldLabel = diagramElement.x + diagramElement.width / 2;
+
+        directEditActivate(diagramElement);
+        directEditComplete('', newBounds);
 
         // when
-        directEditActivate(diagramElement);
-        directEditComplete('BAR');
-
         commandStack.undo();
 
         // then
-        var label = LabelUtil.getLabel(diagramElement);
-        expect(label).to.eql(oldLabel);
+        var midXUndoneLabel = diagramElement.x + diagramElement.width / 2;
+        expect(midXUndoneLabel).to.eql(midXOldLabel);
+        expect(diagramElement.y).to.eql(oldBounds.y);
       }));
 
     });
@@ -208,7 +425,6 @@ describe('features - label-editing', function() {
     describe('should trigger redraw', function() {
 
       it('on shape change', function() {
-
         // given
         var diagramElement = elementRegistry.get('user-task');
 
@@ -222,7 +438,7 @@ describe('features - label-editing', function() {
 
         // when
         directEditActivate(diagramElement);
-        directEditComplete('BAR');
+        directEditComplete('BAR', {});
 
         // then
         expect(listenerCalled).to.be.true;
@@ -244,7 +460,7 @@ describe('features - label-editing', function() {
 
         // when
         directEditActivate(diagramElement);
-        directEditComplete('BAR');
+        directEditComplete('BAR', {});
 
         // then
         expect(listenerCalled).to.be.true;
@@ -256,13 +472,11 @@ describe('features - label-editing', function() {
     describe('element support, should edit', function() {
 
       function directEdit(elementId) {
-
         return inject(function(elementRegistry, eventBus, directEditing) {
 
           var diagramElement = elementRegistry.get(elementId);
 
           var label = LabelUtil.getLabel(diagramElement);
-
 
           // when
           directEditActivate(diagramElement);
@@ -273,18 +487,23 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
 
 
-          // when
-          directEditComplete('B');
+          // when element has external label or is a textannotation
+          var LabelOrTextAnnotation =
+              is(diagramElement, 'bpmn:TextAnnotation') ||
+              !!diagramElement.label || diagramElement.type ==='label';
 
           // then
-          // expect update to have happened
-          label = LabelUtil.getLabel(diagramElement);
-          expect(label).to.equal('B');
+          //expect textarea to be autosizing
+          //else to be not autosizing
+          expect(!!directEditing._textbox.textarea.autosizing).to.eql(LabelOrTextAnnotation);
 
+          // when
+          directEditComplete('B', {});
 
           // when
           directEditActivate(diagramElement);
           directEditCancel('C');
+
 
           // expect no label update to have happened
           label = LabelUtil.getLabel(diagramElement);
@@ -299,7 +518,6 @@ describe('features - label-editing', function() {
       it('gateway', directEdit('exclusive-gateway'));
 
       it('gateway via label', directEdit('exclusive-gateway_label'));
-
 
       it('event', directEdit('intermediate-throw-event'));
 
@@ -335,12 +553,13 @@ describe('features - label-editing', function() {
       it('lane without label', directEdit('nested-lane-no-label'));
 
     });
+
   });
 
 
   describe('sizing', function() {
 
-    var testModules = [ labelEditingModule, coreModule ];
+    var testModules = [ labelEditingModule, coreModule, modelingModule ];
 
     beforeEach(bootstrapViewer(diagramXML, {
       modules: testModules,
@@ -351,7 +570,7 @@ describe('features - label-editing', function() {
     describe('textbox should have minimum size', function() {
 
       function testTextboxSizing(elementId, zoom, width, height) {
-        return inject(function(canvas, elementRegistry, directEditing){
+        return inject(function(canvas, elementRegistry, directEditing) {
           // zoom in
           canvas.zoom(zoom);
           // grab one element
