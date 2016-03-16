@@ -47,13 +47,46 @@ describe('Canvas', function() {
 
     beforeEach(createDiagram());
 
-    it('should remove created elements', inject(function(eventBus, canvas) {
+
+    it('should detach diagram container', inject(function(eventBus, canvas) {
 
       // when
       eventBus.fire('diagram.destroy');
 
       // then
       expect(container.childNodes.length).to.equal(0);
+    }));
+
+  });
+
+
+  describe('clear', function() {
+
+    beforeEach(createDiagram());
+
+
+    it('should remove elements', inject(function(canvas, elementRegistry) {
+
+      // given
+      canvas.setRootElement({ id: 'FOO' });
+
+      canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
+      canvas.addShape({ id: 'b', x: 100, y: 20, width: 50, height: 50 });
+
+      var baseLayer = canvas.getDefaultLayer();
+
+      // when
+      canvas._clear();
+
+      // then
+      expect(canvas._rootElement).not.to.exist;
+
+      // all elements got removed
+      expect(baseLayer.selectAll('*')).to.be.empty;
+
+      expect(elementRegistry.getAll()).to.be.empty;
+
+      expect(canvas._cachedViewbox).not.to.exist;
     }));
 
   });
@@ -456,6 +489,24 @@ describe('Canvas', function() {
     }));
 
 
+    it('should unset root element with override flag', inject(function(canvas, elementRegistry) {
+
+      // given
+      canvas.setRootElement({ id: 'root' });
+
+      // when
+      canvas.setRootElement(null, true);
+
+      // then
+      expect(canvas._rootElement).to.equal(null);
+
+      // root is unbound from canvas
+      expect(canvas._svg.attr('data-element-id')).not.to.exist;
+
+      expect(elementRegistry.getAll()).to.be.empty;
+    }));
+
+
     it('should use explicitly defined root element', inject(function(canvas, elementRegistry) {
 
       // given
@@ -466,31 +517,6 @@ describe('Canvas', function() {
 
       // then
       expect(shape.parent).to.equal(rootElement);
-    }));
-
-  });
-
-
-  describe('update behavior', function() {
-
-    beforeEach(function() {
-      container = TestContainer.get(this);
-    });
-    beforeEach(createDiagram());
-
-    var a, b, c;
-
-    beforeEach(inject(function(canvas) {
-      a = canvas.addShape({ id: 'a', x: 10, y: 20, width: 50, height: 50 });
-      b = canvas.addShape({ id: 'b', x: 20, y: 30, width: 50, height: 50 });
-      c = canvas.addShape({ id: 'c', x: 30, y: 40, width: 50, height: 50 });
-    }));
-
-    it('should update shape z-index', inject(function(canvas, eventBus) {
-
-      // when
-
-      // then
     }));
 
   });
