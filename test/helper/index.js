@@ -74,7 +74,13 @@ function bootstrapDiagram(options, locals) {
       _locals = _locals();
     }
 
-    _options = merge({ canvas: { container: testContainer } }, OPTIONS, _options);
+    _options = merge({
+      canvas: {
+        container: testContainer,
+        deferUpdate: false
+      },
+    }, OPTIONS, _options);
+
 
     var mockModule = {};
 
