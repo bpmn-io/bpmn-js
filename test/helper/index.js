@@ -84,6 +84,9 @@ function bootstrapDiagram(options, locals) {
 
     _options.modules = unique([].concat(_options.modules || [], [ mockModule ]));
 
+    // remove previous instance
+    cleanup();
+
     DIAGRAM_JS = new Diagram(_options);
   };
 }
@@ -121,6 +124,13 @@ function inject(fn) {
   };
 }
 
+function cleanup() {
+  if (!DIAGRAM_JS) {
+    return;
+  }
+
+  DIAGRAM_JS.destroy();
+}
 
 module.exports.bootstrapDiagram = (window || global).bootstrapDiagram = bootstrapDiagram;
 module.exports.inject = (window || global).inject = inject;
