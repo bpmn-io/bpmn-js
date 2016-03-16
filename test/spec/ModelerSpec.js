@@ -107,6 +107,37 @@ describe('Modeler', function() {
   });
 
 
+  describe('ids', function() {
+
+    it('should populate ids on import', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var modeler = new Modeler({ container: container });
+
+
+      // when
+      modeler.importXML(xml, function(err) {
+
+        var moddle = modeler.get('moddle');
+        var elementRegistry = modeler.get('elementRegistry');
+
+        var subProcess = elementRegistry.get('SubProcess_1').businessObject;
+        var bpmnEdge = elementRegistry.get('SequenceFlow_3').businessObject.di;
+
+        // then
+        expect(moddle.ids.assigned('SubProcess_1')).to.eql(subProcess);
+        expect(moddle.ids.assigned('BPMNEdge_SequenceFlow_3')).to.eql(bpmnEdge);
+
+        done();
+      });
+
+    });
+
+  });
+
+
   describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');

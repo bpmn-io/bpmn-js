@@ -51,7 +51,7 @@
       "version": "bpmn-io/diagram-js-direct-editing"
     },
     "ids": {
-      "version": "0.1.2",
+      "version": "0.2.0",
       "dependencies": {
         "hat": {
           "version": "0.0.3"
