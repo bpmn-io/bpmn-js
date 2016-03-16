@@ -98,10 +98,10 @@ describe('features/modeling - ordering', function() {
     it('should stay behind boundary events', inject(function() {
 
       // when
-      move('BoundaryEvent_1', { x: 50, y: 0 }, 'SubProcess_1', true);
+      move('BoundaryEvent_SubProcess', { x: 50, y: 0 }, 'SubProcess_1', true);
 
       // then
-      expectZOrder('SubProcess_1', 'BoundaryEvent_1');
+      expectZOrder('SubProcess_1', 'BoundaryEvent_SubProcess');
     }));
 
 
@@ -122,6 +122,45 @@ describe('features/modeling - ordering', function() {
 
       // then
       expectZOrder('Task_1', 'Task_2', 'SubProcess_1');
+    }));
+
+  });
+
+
+  describe('transaction', function() {
+
+    var diagramXML = require('./ordering-subprocesses.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should stay behind boundary events', inject(function() {
+
+      // when
+      move('BoundaryEvent_Transaction', { x: 50, y: 0 }, 'Transaction_1', true);
+
+      // then
+      expectZOrder('Transaction_1', 'BoundaryEvent_Transaction');
+    }));
+
+
+    it('should stay behind tasks', inject(function() {
+
+      // when
+      move(['Task_1', 'Task_2'], { x: 50, y: 0 }, 'Transaction_1');
+
+      // then
+      expectZOrder('Transaction_1', 'Task_1', 'Task_2');
+    }));
+
+
+    it('should be in front of tasks if task is not a child', inject(function() {
+
+      // when
+      move(['Task_1', 'Task_2'], { x: 200, y: 0 }, 'Root');
+
+      // then
+      expectZOrder('Task_1', 'Task_2', 'Transaction_1');
     }));
 
   });
