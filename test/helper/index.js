@@ -76,7 +76,12 @@ function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
       _locals = _locals();
     }
 
-    _options = merge({ container: testContainer }, OPTIONS, _options);
+    _options = merge({
+      container: testContainer,
+      canvas: {
+        deferUpdate: false
+      }
+    }, OPTIONS, _options);
 
     if (_locals) {
       var mockModule = {};
