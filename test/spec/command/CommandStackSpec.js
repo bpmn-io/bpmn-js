@@ -670,7 +670,7 @@ describe('command/CommandStack', function() {
   });
 
 
-  describe('stack information ', function() {
+  describe('stack information', function() {
 
     var Handler = function(eventBus) {
 
@@ -743,6 +743,32 @@ describe('command/CommandStack', function() {
         expect(commandStack.canRedo()).to.be.false;
       }));
     });
+
+  });
+
+
+  describe('diagram life-cycle integration', function() {
+
+    function verifyClearOn(eventName) {
+
+      return function(eventBus, commandStack) {
+
+        // given
+        commandStack._stack.push('FOO');
+        commandStack._stackIdx = 10;
+
+        // when
+        eventBus.fire(eventName);
+
+        // then
+        expect(commandStack._stack).to.be.empty;
+        expect(commandStack._stackIdx).to.eql(-1);
+      };
+    }
+
+    it('should clear on diagram.destroy', inject(verifyClearOn('diagram.destroy')));
+
+    it('should clear on diagram.clear', inject(verifyClearOn('diagram.clear')));
 
   });
 
