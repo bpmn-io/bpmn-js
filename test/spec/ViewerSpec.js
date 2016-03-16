@@ -2,6 +2,8 @@
 
 var TestContainer = require('mocha-test-container-support');
 
+var Diagram = require('diagram-js/lib/Diagram');
+
 var Viewer = require('../../lib/Viewer');
 
 var inherits = require('inherits');
@@ -46,14 +48,27 @@ describe('Viewer', function() {
       // mimic re-import of same diagram
       viewer.importXML(xml, function(err, warnings) {
 
+        if (err) {
+          return done(err);
+        }
+
         // then
-        expect(err).to.exist;
         expect(warnings.length).to.equal(0);
 
         done();
       });
 
     });
+  });
+
+
+  it('should be instance of Diagram', function() {
+
+    // when
+    var viewer = new Viewer({ container: container });
+
+    // then
+    expect(viewer).to.be.instanceof(Diagram);
   });
 
 
@@ -259,7 +274,7 @@ describe('Viewer', function() {
 
   describe('dependency injection', function() {
 
-    it('should be available via di as <bpmnjs>', function(done) {
+    it('should provide self as <bpmnjs>', function(done) {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
@@ -271,6 +286,48 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should allow Diagram#get before import', function() {
+
+      // when
+      var viewer = new Viewer({ container: container });
+
+      // then
+      var eventBus = viewer.get('eventBus');
+
+      expect(eventBus).to.exist;
+    });
+
+
+    it('should keep references to services across re-import', function(done) {
+
+      // given
+      var someXML = require('../fixtures/bpmn/simple.bpmn'),
+          otherXML = require('../fixtures/bpmn/basic.bpmn');
+
+      var viewer = new Viewer({ container: container });
+
+      var eventBus = viewer.get('eventBus'),
+          canvas = viewer.get('canvas');
+
+      // when
+      viewer.importXML(someXML, function() {
+
+        // then
+        expect(viewer.get('canvas')).to.equal(canvas);
+        expect(viewer.get('eventBus')).to.equal(eventBus);
+
+        viewer.importXML(otherXML, function() {
+
+          // then
+          expect(viewer.get('canvas')).to.equal(canvas);
+          expect(viewer.get('eventBus')).to.equal(eventBus);
+
+          done();
+        });
+      });
+
+    });
   });
 
 

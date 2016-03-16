@@ -107,37 +107,6 @@ describe('Modeler', function() {
   });
 
 
-  describe('ids', function() {
-
-    it('should populate ids on import', function(done) {
-
-      // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      var modeler = new Modeler({ container: container });
-
-
-      // when
-      modeler.importXML(xml, function(err) {
-
-        var moddle = modeler.get('moddle');
-        var elementRegistry = modeler.get('elementRegistry');
-
-        var subProcess = elementRegistry.get('SubProcess_1').businessObject;
-        var bpmnEdge = elementRegistry.get('SequenceFlow_3').businessObject.di;
-
-        // then
-        expect(moddle.ids.assigned('SubProcess_1')).to.eql(subProcess);
-        expect(moddle.ids.assigned('BPMNEdge_SequenceFlow_3')).to.eql(bpmnEdge);
-
-        done();
-      });
-
-    });
-
-  });
-
-
   describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -275,6 +244,81 @@ describe('Modeler', function() {
   });
 
 
+  describe('ids', function() {
+
+    it('should provide ids with moddle', function() {
+
+      // given
+      var modeler = new Modeler({ container: container });
+
+      // when
+      var moddle = modeler.get('moddle');
+
+      // then
+      expect(moddle.ids).to.exist;
+    });
+
+
+    it('should populate ids on import', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var modeler = new Modeler({ container: container });
+
+      var moddle = modeler.get('moddle');
+      var elementRegistry = modeler.get('elementRegistry');
+
+      // when
+      modeler.importXML(xml, function(err) {
+
+        var subProcess = elementRegistry.get('SubProcess_1').businessObject;
+        var bpmnEdge = elementRegistry.get('SequenceFlow_3').businessObject.di;
+
+        // then
+        expect(moddle.ids.assigned('SubProcess_1')).to.eql(subProcess);
+        expect(moddle.ids.assigned('BPMNEdge_SequenceFlow_3')).to.eql(bpmnEdge);
+
+        done();
+      });
+
+    });
+
+
+    it('should clear ids before re-import', function(done) {
+
+      // given
+      var someXML = require('../fixtures/bpmn/simple.bpmn'),
+          otherXML = require('../fixtures/bpmn/basic.bpmn');
+
+      var modeler = new Modeler({ container: container });
+
+      var moddle = modeler.get('moddle');
+      var elementRegistry = modeler.get('elementRegistry');
+
+      // when
+      modeler.importXML(someXML, function() {
+
+        modeler.importXML(otherXML, function() {
+
+          var task = elementRegistry.get('Task_1').businessObject;
+
+          // then
+          // not in other.bpmn
+          expect(moddle.ids.assigned('SubProcess_1')).to.be.false;
+
+          // in other.bpmn
+          expect(moddle.ids.assigned('Task_1')).to.eql(task);
+
+          done();
+        });
+      });
+
+    });
+
+  });
+
+
   it('should handle errors', function(done) {
 
     var xml = 'invalid stuff';
@@ -298,7 +342,7 @@ describe('Modeler', function() {
 
   describe('dependency injection', function() {
 
-    it('should be available via di as <bpmnjs>', function(done) {
+    it('should provide self as <bpmnjs>', function(done) {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
@@ -308,6 +352,49 @@ describe('Modeler', function() {
 
         done(err);
       });
+    });
+
+
+    it('should allow Diagram#get before import', function() {
+
+      // when
+      var modeler = new Modeler({ container: container });
+
+      // then
+      var eventBus = modeler.get('eventBus');
+
+      expect(eventBus).to.exist;
+    });
+
+
+    it('should keep references to services across re-import', function(done) {
+
+      // given
+      var someXML = require('../fixtures/bpmn/simple.bpmn'),
+          otherXML = require('../fixtures/bpmn/basic.bpmn');
+
+      var modeler = new Modeler({ container: container });
+
+      var eventBus = modeler.get('eventBus'),
+          canvas = modeler.get('canvas');
+
+      // when
+      modeler.importXML(someXML, function() {
+
+        // then
+        expect(modeler.get('canvas')).to.equal(canvas);
+        expect(modeler.get('eventBus')).to.equal(eventBus);
+
+        modeler.importXML(otherXML, function() {
+
+          // then
+          expect(modeler.get('canvas')).to.equal(canvas);
+          expect(modeler.get('eventBus')).to.equal(eventBus);
+
+          done();
+        });
+      });
+
     });
 
   });
