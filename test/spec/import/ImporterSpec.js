@@ -45,7 +45,7 @@ describe('import - Importer', function() {
 
   describe('events', function() {
 
-    it('should fire <import.start> and <import.success>', function(done) {
+    it('should fire <import.render.start> and <import.render.complete>', function(done) {
 
       // given
       var xml = require('../../fixtures/bpmn/import/process.bpmn');
@@ -55,13 +55,13 @@ describe('import - Importer', function() {
       var eventBus = diagram.get('eventBus');
 
       // log events
-      eventBus.on('import.start', function(event) {
+      eventBus.on('import.render.start', function(event) {
         expect(event.definitions).to.exist;
 
         eventCount++;
       });
 
-      eventBus.on('import.success', function(event) {
+      eventBus.on('import.render.complete', function(event) {
         expect(event).to.have.property('error');
         expect(event).to.have.property('warnings');
 

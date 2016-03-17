@@ -91,45 +91,6 @@ describe('Viewer', function() {
   });
 
 
-  describe('import events', function() {
-
-    it('should fire <import.*> events', function(done) {
-
-      // given
-      var viewer = new Viewer({ container: container });
-
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      var events = [];
-
-      viewer.on('import.start', function() {
-        events.push('import.start');
-      });
-
-      viewer.on('import.success', function() {
-        events.push('import.success');
-      });
-
-      viewer.on('import.error', function() {
-        events.push('import.error');
-      });
-
-      // when
-      viewer.importXML(xml, function(err) {
-
-        // then
-        expect(events).to.eql([
-          'import.start',
-          'import.success'
-        ]);
-
-        done(err);
-      });
-    });
-
-  });
-
-
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
@@ -760,6 +721,52 @@ describe('Viewer', function() {
         done();
       });
 
+    });
+
+  });
+
+
+  describe('#importXML', function() {
+
+    it('should emit <import.*> events', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var events = [];
+
+      viewer.on([
+        'import.parse.start',
+        'import.parse.complete',
+        'import.render.start',
+        'import.render.complete',
+        'import.done'
+      ], function(e) {
+        // log event type + event arguments
+        events.push([
+          e.type,
+          Object.keys(e).filter(function(key) {
+            return key !== 'type';
+          })
+        ]);
+      });
+
+      // when
+      viewer.importXML(xml, function(err) {
+
+        // then
+        expect(events).to.eql([
+          [ 'import.parse.start', [ 'xml' ] ],
+          [ 'import.parse.complete', ['error', 'definitions', 'context' ] ],
+          [ 'import.render.start', [ 'definitions' ] ],
+          [ 'import.render.complete', [ 'error', 'warnings' ] ],
+          [ 'import.done', [ 'error', 'warnings' ] ]
+        ]);
+
+        done(err);
+      });
     });
 
   });
