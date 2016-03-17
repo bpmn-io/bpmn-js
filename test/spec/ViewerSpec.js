@@ -769,6 +769,23 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should work without callback', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      // when
+      viewer.importXML(xml);
+
+      // then
+      viewer.on('import.done', function(event) {
+        done();
+      });
+    });
+
   });
 
 
