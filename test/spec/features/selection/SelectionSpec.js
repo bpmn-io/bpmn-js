@@ -45,7 +45,9 @@ describe('features/selection/Selections', function() {
     }));
   });
 
+
   describe('#select', function() {
+
     it('should add shape to selection', inject(function(selection) {
 
       // when
@@ -55,6 +57,7 @@ describe('features/selection/Selections', function() {
       var selectedElements = selection.get();
       expect(selectedElements[0]).to.equal(shape1);
     }));
+
 
     it('should add connection to selection', inject(function(selection) {
 
@@ -78,6 +81,7 @@ describe('features/selection/Selections', function() {
       expect(selectedElements[1]).to.equal(connection1);
     }));
   });
+
 
   describe('#deselect', function() {
 
@@ -106,4 +110,28 @@ describe('features/selection/Selections', function() {
       expect(selectedElements.length).to.equal(0);
     }));
   });
+
+
+  describe('clear', function() {
+
+    it('should remove selection', inject(function(selection, eventBus) {
+
+      // given
+      selection.select(shape1);
+
+      var changedSpy = sinon.spy(function() {});
+
+      eventBus.on('selection.changed', changedSpy);
+
+      // when
+      eventBus.fire('diagram.clear');
+
+      // then
+      expect(selection._selectedElements).to.be.empty;
+
+      expect(changedSpy).to.have.been.called;
+    }));
+
+  });
+
 });
