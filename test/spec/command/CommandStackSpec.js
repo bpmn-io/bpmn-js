@@ -757,12 +757,18 @@ describe('command/CommandStack', function() {
         commandStack._stack.push('FOO');
         commandStack._stackIdx = 10;
 
+        var changedSpy = sinon.spy(function() {});
+
+        eventBus.on('commandStack.changed', changedSpy);
+
         // when
         eventBus.fire(eventName);
 
         // then
         expect(commandStack._stack).to.be.empty;
         expect(commandStack._stackIdx).to.eql(-1);
+
+        expect(changedSpy).to.have.been.called;
       };
     }
 
