@@ -374,10 +374,15 @@ describe('features/snapping - BpmnSnapping', function() {
 
   describe('on SubProcess resize', function() {
 
-
     var diagramXML = require('./BpmnSnapping.subProcess-resize.bpmn');
 
-    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+    var testResizeModules = [
+      coreModule,
+      modelingModule,
+      resizeModule,
+      rulesModule,
+      snappingModule
+    ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
 
@@ -399,15 +404,20 @@ describe('features/snapping - BpmnSnapping', function() {
 
   describe('on TextAnnotation resize', function() {
 
-
     var diagramXML = require('./BpmnSnapping.textAnnotation-resize.bpmn');
 
-    var testResizeModules = [ coreModule, resizeModule, rulesModule, snappingModule ];
+    var testResizeModules = [
+      coreModule,
+      modelingModule,
+      resizeModule,
+      rulesModule,
+      snappingModule
+    ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
 
 
-    it('should snap a TextAnnotation to minimum bounds', inject(function(elementRegistry, resize, dragging) {
+    it('should snap to minimum bounds', inject(function(elementRegistry, resize, dragging) {
 
       var textAnnotation = elementRegistry.get('TextAnnotation');
 
