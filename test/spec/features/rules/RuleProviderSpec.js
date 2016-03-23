@@ -2,9 +2,10 @@
 
 /* global bootstrapDiagram, inject */
 
-var rulesModule = require('./rules'),
+var testRulesModule = require('./rules'),
     sayNoRulesModule = require('./say-no-rules'),
     priorityRulesModule = require('./priority-rules'),
+    rulesModule = require('../../../../lib/features/rules'),
     modelingModule = require('../../../../lib/features/modeling');
 
 var RuleProvider = require('../../../../lib/features/rules/RuleProvider');
@@ -13,6 +14,25 @@ var inherits = require('inherits');
 
 
 describe('features/rules - RuleProvider', function() {
+
+  describe('basics', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ rulesModule ] }));
+
+
+    it('should work standalone', inject(function(injector, rules) {
+
+      // assume
+      expect(injector.get('commandStack', false)).not.to.exists;
+
+      // when
+      var allowed = rules.allowed('foo', {});
+
+      // then
+      expect(allowed).to.be.true;
+    }));
+
+  });
 
 
   describe('inheritance', function() {
@@ -60,7 +80,7 @@ describe('features/rules - RuleProvider', function() {
 
   describe('rule execution', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ rulesModule, modelingModule ] }));
+    beforeEach(bootstrapDiagram({ modules: [ testRulesModule, modelingModule ] }));
 
 
     var resizableShape, nonResizableShape, ignoreResizeShape, unspecifiedShape, customResizableShape;
@@ -167,7 +187,7 @@ describe('features/rules - RuleProvider', function() {
 
   describe('rule module overrides', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ sayNoRulesModule, rulesModule, modelingModule ] }));
+    beforeEach(bootstrapDiagram({ modules: [ sayNoRulesModule, testRulesModule, modelingModule ] }));
 
     var shape;
 
