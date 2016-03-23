@@ -10,6 +10,7 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 var pick = require('lodash/object/pick');
 
 var resizeModule = require('../../../../lib/features/resize'),
+    modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules'),
     selectModule = require('../../../../lib/features/selection');
 
@@ -19,7 +20,14 @@ function bounds(b) {
 
 describe('features/resize - Resize', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ resizeModule, rulesModule, selectModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      resizeModule,
+      rulesModule,
+      modelingModule,
+      selectModule
+    ]
+  }));
 
 
   var shape, gfx, rootShape;
