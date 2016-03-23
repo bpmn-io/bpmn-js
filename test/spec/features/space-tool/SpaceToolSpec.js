@@ -6,6 +6,7 @@ var TestHelper = require('../../../TestHelper'),
 /* global bootstrapDiagram, inject */
 
 var spaceTool = require('../../../../lib/features/space-tool'),
+    modelingModule = require('../../../../lib/features/modeling'),
     isMac = require('../../../../lib/util/Mouse').isMac,
     rulesModule = require('./rules');
 
@@ -15,7 +16,7 @@ var keyModifier = isMac() ? { altKey: true } : { ctrlKey: true };
 describe('features/space-tool', function() {
 
   beforeEach(bootstrapDiagram({
-    modules: [ spaceTool, rulesModule ]
+    modules: [ spaceTool, modelingModule, rulesModule ]
   }));
 
 
