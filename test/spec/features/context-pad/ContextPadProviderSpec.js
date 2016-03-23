@@ -64,7 +64,7 @@ describe('features - context-pad', function() {
       inject(function (elementRegistry, contextPad, customRules) {
 
       // given
-      customRules.addRule('elements.delete', function() {
+      customRules.addRule('elements.delete', 1500, function() {
         return true;
       });
 
@@ -82,7 +82,7 @@ describe('features - context-pad', function() {
       inject(function(elementRegistry, contextPad, customRules) {
 
       // given
-      customRules.addRule('elements.delete', function() {
+      customRules.addRule('elements.delete', 1500, function() {
         return false;
       });
 
@@ -101,7 +101,7 @@ describe('features - context-pad', function() {
       // given
       var element = elementRegistry.get('StartEvent_1');
 
-      customRules.addRule('elements.delete', function(context) {
+      customRules.addRule('elements.delete', 1500, function(context) {
 
         // element array is actually passed
         expect(context.elements).to.eql([ element ]);
@@ -120,7 +120,7 @@ describe('features - context-pad', function() {
       inject(function(elementRegistry, contextPad, customRules) {
 
       // given
-      customRules.addRule('elements.delete', function(context) {
+      customRules.addRule('elements.delete', 1500, function(context) {
         return context.elements;
       });
 
@@ -138,7 +138,7 @@ describe('features - context-pad', function() {
       inject(function(elementRegistry, contextPad, customRules) {
 
       // given
-      customRules.addRule('elements.delete', function() {
+      customRules.addRule('elements.delete', 1500, function() {
         return [];
       });
 
