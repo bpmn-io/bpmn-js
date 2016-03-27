@@ -1,12 +1,11 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 var TestContainer = require('mocha-test-container-support');
 
 var coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
     keyboardModule = require('../../../../lib/features/keyboard'),
+    bpmnSearchModule = require('../../../../lib/features/search'),
     selectionModule = require('diagram-js/lib/features/selection'),
     spaceToolModule = require('diagram-js/lib/features/space-tool'),
     lassoToolModule = require('diagram-js/lib/features/lasso-tool'),
@@ -27,6 +26,7 @@ describe('features - keyboard', function() {
     modelingModule,
     selectionModule,
     spaceToolModule,
+    bpmnSearchModule,
     lassoToolModule,
     handToolModule,
     keyboardModule,
@@ -46,7 +46,7 @@ describe('features - keyboard', function() {
 
     it('should include triggers inside editorActions', inject(function(editorActions) {
       // then
-      expect(editorActions.length()).to.equal(11);
+      expect(editorActions.length()).to.equal(12);
     }));
 
 
@@ -115,6 +115,21 @@ describe('features - keyboard', function() {
 
       expect(selectedElements).to.have.length.of(allElements.length - 1);
       expect(selectedElements).not.to.contain(rootElement);
+    }));
+
+
+    it('should trigger search for labels', inject(function(canvas, keyboard, searchPad, elementRegistry) {
+
+      sinon.spy(searchPad, 'toggle');
+
+      // given
+      var e = createKeyEvent(container, 70, true);
+
+      // when
+      keyboard._keyHandler(e);
+
+      // then
+      expect(searchPad.toggle).calledOnce;
     }));
 
   });
