@@ -4,7 +4,9 @@
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js)
 
-[bpmn-js](https://github.com/bpmn-io/bpmn-js) is the BPMN 2.0 diagram modeling and rendering toolkit that powers [bpmn.io](http://bpmn.io).
+[bpmn-js](https://github.com/bpmn-io/bpmn-js) is a BPMN 2.0 diagram rendering toolkit and web modeler.
+
+[![bpmn-js in action](https://github.com/bpmn-io/bpmn-js/blob/master/resources/screencast.gif)](http://demo.bpmn.io/s/start)
 
 
 ## Usage
