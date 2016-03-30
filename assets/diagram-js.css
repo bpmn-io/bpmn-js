@@ -559,3 +559,94 @@ svg.new-parent {
 .djs-tooltip-error:hover {
   opacity: 1;
 }
+
+
+/**
+ * search pad
+ */
+.djs-search-container {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 25%;
+  min-width: 300px;
+  max-width: 400px;
+  z-index: 10;
+
+  font-size: 1.05em;
+  opacity: 0.9;
+  background: #FAFAFA;
+  border: solid 1px #CCC;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.djs-search-container:not(.open) {
+  display: none;
+}
+
+.djs-search-input input {
+  font-size: 1.05em;
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+}
+
+.djs-search-input input:focus{
+  outline: none;
+  border-color: #52B415;
+  box-shadow: 0 0 1px 2px rgba(82, 180, 21, 0.2);
+}
+
+.djs-search-results {
+  position: relative;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.djs-search-results:hover {
+  /*background: #fffdd7;*/
+  cursor: pointer;
+}
+
+.djs-search-result {
+  width: 100%;
+  padding: 6px 10px;
+  background: white;
+  border-bottom: solid 1px #AAA;
+  border-radius: 1px;
+}
+
+.djs-search-highlight {
+  color: black;
+}
+
+.djs-search-result-primary {
+  margin: 0 0 10px;
+}
+
+.djs-search-result-secondary {
+  font-family: monospace;
+  margin: 0;
+}
+
+.djs-search-result:hover {
+  background: #fdffd6;
+}
+
+.djs-search-result-selected {
+  background: #fffcb0;
+}
+
+.djs-search-result-selected:hover {
+  background: #f7f388;
+}
+
+.djs-search-overlay {
+  background: yellow;
+  opacity: 0.3;
+}
