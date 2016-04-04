@@ -169,6 +169,19 @@ describe('command/CommandStack', function() {
     }));
 
 
+    it('should still allow unregistered commands on interceptor response', inject(function(eventBus, commandStack) {
+      eventBus.on('commandStack.foo.canExecute', function() {
+        return true;
+      });
+
+      // when
+      var canExecute = commandStack.canExecute('foo');
+
+      // then
+      expect(canExecute).to.be.true;
+    }));
+
+
     describe('should forward to handler', function() {
 
       function testCanExecute(commandStack, accept) {
