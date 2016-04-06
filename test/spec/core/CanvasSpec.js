@@ -1,5 +1,6 @@
 'use strict';
 
+require('../../TestHelper');
 
 /* global bootstrapDiagram, inject, sinon */
 
@@ -19,6 +20,7 @@ describe('Canvas', function() {
       return merge({ canvas: { container: container, deferUpdate: false } }, options);
     }, {});
   }
+
 
   describe('initialize', function() {
 
@@ -527,6 +529,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 
@@ -739,6 +742,77 @@ describe('Canvas', function() {
   });
 
 
+  describe('viewbox - debounce', function() {
+
+    var clock;
+
+    beforeEach(function() {
+      container = TestContainer.get(this);
+
+      clock = sinon.useFakeTimers();
+    });
+
+    afterEach(function() {
+      clock.restore();
+    });
+
+
+    beforeEach(createDiagram({
+      canvas: {
+        width: 300,
+        height: 300,
+        deferUpdate: true
+      }
+    }));
+
+
+    // NOTE(nikku): this relies on fake timers properly set up
+    // to work with lodash (see TestHelper)
+
+    it('should debounce viewbox update', inject(function(eventBus, canvas) {
+
+      // given
+      var changedListener = sinon.spy(function(event) {
+        var viewbox = event.viewbox;
+
+        expect(viewbox).to.exist;
+        expect(viewbox.scale).to.eql(0.5);
+      });
+
+      eventBus.on('canvas.viewbox.changed', changedListener);
+
+      // when
+      canvas.zoom(0.5);
+
+      // then
+      expect(changedListener).not.to.have.been.called;
+
+      // but when...
+      // letting the viewbox changed timeout of 300ms kick in
+      clock.tick(300);
+
+      // then
+      expect(changedListener).to.have.been.called;
+    }));
+
+
+    it('should provide new viewbox immediately via getter', inject(function(canvas) {
+
+      // given
+      canvas.zoom();
+
+      // when
+      canvas.zoom(0.5);
+
+      // then
+      var newZoom = canvas.zoom();
+
+      expect(newZoom).to.eql(0.5);
+    }));
+
+  });
+
+
   describe('scroll', function() {
 
     beforeEach(function() {
@@ -825,6 +899,7 @@ describe('Canvas', function() {
     beforeEach(function() {
       container = TestContainer.get(this);
     });
+
     beforeEach(createDiagram({ canvas: { width: 300, height: 300 } }));
 
 

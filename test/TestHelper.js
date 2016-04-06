@@ -1,3 +1,13 @@
+'use strict';
+
+// make sinon fake timers work with lodash #debounce, #now
+// and friends by overriding the native Date#now.
+//
+// it would otherwise be cached by lodash in `lodash/date/now`
+Date.now = function() {
+  return new Date().getTime();
+};
+
 var TestHelper = module.exports = require('./helper');
 
 var fs = require('fs');
