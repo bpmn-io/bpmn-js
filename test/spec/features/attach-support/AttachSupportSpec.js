@@ -9,6 +9,7 @@ var pick = require('lodash/object/pick');
 var attachSupportModule = require('../../../../lib/features/attach-support'),
     modelingModule = require('../../../../lib/features/modeling'),
     replaceModule = require('../../../../lib/features/replace'),
+    spaceToolModule = require('../../../../lib/features/space-tool'),
     rulesModule = require('./rules');
 
 var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAttachShapeDelta;
@@ -16,7 +17,9 @@ var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAt
 
 describe('features/attach-support', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ attachSupportModule, modelingModule, rulesModule, replaceModule ] }));
+  var modules = [ attachSupportModule, modelingModule, rulesModule, replaceModule, spaceToolModule ];
+
+  beforeEach(bootstrapDiagram({ modules: modules }));
 
 
   beforeEach(inject(function(dragging) {
@@ -1538,6 +1541,113 @@ describe('features/attach-support', function() {
       });
     }));
 
-});
+  });
+
+  describe('space tool', function() {
+
+    var createAttacher;
+
+    beforeEach(inject(function(elementFactory, canvas, modeling, dragging) {
+
+      createAttacher = function(position) {
+        var attacher = elementFactory.createShape({
+          id: 'attacher',
+          x: position.x,
+          y: position.y,
+          width: 50,
+          height: 50
+        });
+
+        modeling.createShape(attacher, position, parentShape, true);
+
+        return attacher;
+      };
+
+    }));
+
+    it('should resize host and move attacher to the right', inject(function(spaceTool, dragging) {
+
+      // given
+      var attacher = createAttacher({ x: 400, y: 200 });
+
+      // when
+      spaceTool.activateMakeSpace(canvasEvent({ x: 340, y: 100 }));
+
+      dragging.move(canvasEvent({ x: 440, y: 100 }));
+      dragging.end();
+
+      // then
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 400, height: 300 });
+      expect(attacher).to.have.bounds({ x: 475, y: 175, width: 50, height: 50 });
+    }));
+
+
+    it('should resize host and move attacher to the left', inject(function(spaceTool, dragging) {
+
+      // given
+      var attacher = createAttacher({ x: 100, y: 200 });
+
+      // when
+      spaceTool.activateMakeSpace(canvasEvent({ x: 300, y: 100 }));
+
+      dragging.move(canvasEvent({ x: 260, y: 100 }));
+      dragging.end();
+
+      // then
+      expect(parentShape).to.have.bounds({ x: 60, y: 100, width: 340, height: 300 });
+      expect(attacher).to.have.bounds({ x: 35, y: 175, width: 50, height: 50 });
+    }));
+
+
+    it('should resize host and move attacher up', inject(function(spaceTool, dragging) {
+
+      // given
+      var attacher = createAttacher({ x: 250, y: 100 });
+
+      // when
+      spaceTool.activateMakeSpace(canvasEvent({ x: 360, y: 200 }));
+
+      dragging.move(canvasEvent({ x: 360, y: 180 }));
+      dragging.end();
+
+      // then
+      expect(parentShape).to.have.bounds({ x: 100, y: 80, width: 300, height: 320 });
+      expect(attacher).to.have.bounds({ x: 225, y: 55, width: 50, height: 50 });
+    }));
+
+
+    it('should resize host and move attacher down', inject(function(spaceTool, dragging) {
+
+      // given
+      var attacher = createAttacher({ x: 250, y: 400 });
+
+      // when
+      spaceTool.activateMakeSpace(canvasEvent({ x: 250, y: 200 }));
+
+      dragging.move(canvasEvent({ x: 250, y: 220 }));
+      dragging.end();
+
+      // then
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 300, height: 320 });
+      expect(attacher).to.have.bounds({ x: 225, y: 395, width: 50, height: 50 });
+    }));
+
+
+    it('should resize host when cursor is inside attacher´s bounds', inject(function(spaceTool, dragging) {
+
+      // given
+      var attacher = createAttacher({ x: 400, y: 250 });
+
+      // when
+      spaceTool.activateMakeSpace(canvasEvent({ x: 390, y: 100 }));
+
+      dragging.move(canvasEvent({ x: 420, y: 100 }));
+      dragging.end();
+
+      // then
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 330, height: 300 });
+      expect(attacher).to.have.bounds({ x: 405, y: 225, width: 50, height: 50 });
+    }));
+  });
 
 });

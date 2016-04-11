@@ -61,6 +61,13 @@ MoveRules.prototype.init = function() {
     }
     return true;
   });
+
+  // restrict resizing only for hosts (defaults to allow all)
+  this.addRule('shape.resize', function(context) {
+    var shape = context.shape;
+
+    return shape.attachers.length > 0;
+  });
 };
 
 
