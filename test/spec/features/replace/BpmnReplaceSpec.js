@@ -772,6 +772,86 @@ describe('features/replace - bpmn replace', function() {
 
   });
 
+  describe('morphing collapsed tasks / sub processes into expanded sub processes', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should allow morphing task into expanded sub process', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+      var newElementData = {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.true;
+    }));
+
+
+    it('should allow morphing collapsed sup process into expanded sub process', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('SubProcessCollapsed');
+      var newElementData = {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.true;
+    }));
+
+
+    it('should allow morphing collapsed ad hoc into expanded ad hoc', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('AdHocSubProcessCollapsed');
+      var newElementData = {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.true;
+    }));
+
+
+    it('should keep boundary events', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+      var newElementData = {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.true;
+      expect(newElement.attachers.length).to.be.equal(2);
+    }));
+
+  });
 
   describe('compensation activity', function() {
 
