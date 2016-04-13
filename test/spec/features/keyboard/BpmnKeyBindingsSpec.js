@@ -46,7 +46,22 @@ describe('features - keyboard', function() {
 
     it('should include triggers inside editorActions', inject(function(editorActions) {
       // then
-      expect(editorActions.length()).to.equal(12);
+      expect(editorActions.length()).to.equal(13);
+    }));
+
+
+    it('should trigger lasso tool', inject(function(keyboard, globalConnect) {
+
+      sinon.spy(globalConnect, 'toggle');
+
+      // given
+      var e = createKeyEvent(container, 67, false);
+
+      // when
+      keyboard._keyHandler(e);
+
+      // then
+      expect(globalConnect.toggle.calledOnce).to.be.true;
     }));
 
 
