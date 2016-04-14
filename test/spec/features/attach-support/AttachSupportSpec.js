@@ -934,6 +934,28 @@ describe('features/attach-support', function() {
       expect(newShape.attachers).not.to.include(attacher2);
     }));
 
+
+    it('should move an attachment on replace elements with different size/position',
+      inject(function(modeling, elementFactory, canvas) {
+
+        // given
+        var replacement = {
+          id: 'replacement',
+          width: host.width + 50,
+          height: host.height + 50,
+          x: host.x + host.width / 2,
+          y: host.y + host.height / 2,
+          retainAttachmentIds: ['attacher']
+        };
+
+        // when
+        modeling.replaceShape(host, replacement);
+
+        // then
+        expect(attacher.x).to.be.equal(150);
+        expect(attacher.y).to.be.equal(150);
+    }));
+
   });
 
 
