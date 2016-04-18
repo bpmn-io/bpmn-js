@@ -247,6 +247,25 @@ describe('features/replace - bpmn replace', function() {
       expect(newElement.y).to.equal(task.y);
     }));
 
+    it('should keep label position', inject(function (elementRegistry, bpmnReplace, modeling) {
+
+      // given
+      var exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
+      var label = elementRegistry.get('ExclusiveGateway_1_label');
+
+      var newElementData =  {
+        type: 'bpmn:InclusiveGateway'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(exclusiveGateway, newElementData);
+
+      // then
+      expect(newElement.label.x).to.equal(label.x);
+      expect(newElement.label.y).to.equal(label.y);
+
+    }));
+
   });
 
 
