@@ -146,7 +146,7 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(flowConnection, { id: 'FOO_BAR' });
 
       // then
-      expect(ids.assigned('FOO_BAR')).to.exist;
+      expect(ids.assigned('FOO_BAR')).to.eql(flowConnection.businessObject);
       expect(ids.assigned('SequenceFlow_1')).to.be.false;
 
       expect(flowConnection.businessObject.id).to.equal('FOO_BAR');
@@ -275,7 +275,7 @@ describe('features/modeling - update properties', function() {
 
       // then
       expect(ids.assigned('FOO_BAR')).to.be.false;
-      expect(ids.assigned('SequenceFlow_1')).to.exist;
+      expect(ids.assigned('SequenceFlow_1')).to.eql(flowConnection.businessObject);
 
       expect(flowConnection.businessObject.id).to.equal('SequenceFlow_1');
       expect(flowConnection.id).to.equal('SequenceFlow_1');
@@ -409,7 +409,7 @@ describe('features/modeling - update properties', function() {
       modeling.updateProperties(flowConnection, { id: 'SequenceFlow_1' });
 
       // then
-      expect(ids.assigned('SequenceFlow_1')).to.exist;
+      expect(ids.assigned('SequenceFlow_1')).to.eql(flowConnection.businessObject);
 
       expect(flowConnection.businessObject.id).to.equal('SequenceFlow_1');
     }));
