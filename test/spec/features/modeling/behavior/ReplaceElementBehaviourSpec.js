@@ -62,7 +62,6 @@ describe('features/modeling - move start event behavior', function() {
       // then
       expect(selection.get()).to.include(replacement);
       expect(selection.get()).not.to.include(startEvent);
-
     }));
 
 
@@ -103,6 +102,43 @@ describe('features/modeling - move start event behavior', function() {
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     describe('- normal -', function() {
+
+
+      it('should unclaim old element ID and claim new ID',
+        inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var transaction = elementRegistry.get('Transaction_1');
+
+        var ids = transaction.businessObject.$model.ids;
+
+        // when
+        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+
+        // then
+        expect(ids.assigned(transaction.id)).to.be.false;
+        expect(ids.assigned(subProcess.id)).to.eql(subProcess.businessObject);
+      }));
+
+
+      it('should REVERT unclaim old element ID and claim new ID on UNDO',
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
+
+        // given
+        var transaction = elementRegistry.get('Transaction_1');
+
+        var ids = transaction.businessObject.$model.ids;
+
+        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(ids.assigned(transaction.id)).to.eql(transaction.businessObject);
+        expect(ids.assigned(subProcess.id)).to.be.false;
+      }));
+
 
       it('should replace CancelEvent when morphing transaction',
         inject(function(elementRegistry, bpmnReplace) {
