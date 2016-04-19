@@ -138,6 +138,80 @@ describe('behavior - LabelBehavior', function() {
       expect(startEvent.di.label).to.have.position({ x: 156, y: 128 });
     }));
 
+    it('should move connection label on waypoints update if still hidden', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startEventShape = elementRegistry.get('StartEvent_1'),
+          taskShape = elementRegistry.get('Task_1');
+
+      var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+        type: 'bpmn:SequenceFlow',
+      }, startEventShape.parent);
+
+      // when
+      modeling.updateWaypoints(sequenceFlowConnection, [
+        sequenceFlowConnection.waypoints[0],
+        {
+          x: sequenceFlowConnection.waypoints[0].x,
+          y: 200
+        },
+        {
+          x: sequenceFlowConnection.waypoints[1].x,
+          y: 200
+        },
+        sequenceFlowConnection.waypoints[1]
+      ]);
+
+      // then
+      var expected = {
+        x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+        y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+      };
+
+      expect({
+        x: sequenceFlowConnection.label.x,
+        y: sequenceFlowConnection.label.y
+      }).to.eql(expected);
+    }));
+
+    it('should not move connection label on waypoints change if not hidden', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startEventShape = elementRegistry.get('StartEvent_1'),
+          taskShape = elementRegistry.get('Task_1');
+
+      var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+        type: 'bpmn:SequenceFlow',
+      }, startEventShape.parent);
+
+      var labelPosition = {
+        x: sequenceFlowConnection.label.x,
+        y: sequenceFlowConnection.label.y
+      };
+
+      // when
+      sequenceFlowConnection.label.hidden = false;
+
+      modeling.updateWaypoints(sequenceFlowConnection, [
+        sequenceFlowConnection.waypoints[0],
+        {
+          x: sequenceFlowConnection.waypoints[0].x,
+          y: 200
+        },
+        {
+          x: sequenceFlowConnection.waypoints[1].x,
+          y: 200
+        },
+        sequenceFlowConnection.waypoints[1]
+      ]);
+
+      // then
+      expect({
+        x: sequenceFlowConnection.label.x,
+        y: sequenceFlowConnection.label.y
+      }).to.eql(labelPosition);
+    }));
+
   });
 
 
