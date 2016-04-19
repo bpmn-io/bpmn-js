@@ -1,6 +1,5 @@
 'use strict';
 
-
 var globalEvent = require('../../../util/MockEvents').createEvent;
 
 
@@ -153,13 +152,12 @@ describe('features/context-pad', function() {
     }));
 
 
-    it('should close', inject(function(canvas, contextPad) {
+    it('should close', inject(function(canvas, contextPad, overlays) {
 
       // given
       var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
 
       canvas.addShape(shape);
-
 
       contextPad.open(shape);
 
@@ -167,6 +165,7 @@ describe('features/context-pad', function() {
       contextPad.close();
 
       // then
+      expect(overlays.get({ element: shape })).to.have.length(0);
       expect(!!contextPad.isOpen()).to.be.false;
     }));
 

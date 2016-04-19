@@ -64,7 +64,7 @@ describe('features/overlay - integration', function() {
       modeling.moveShape(shape, { x: -20, y: +20 });
 
       // then
-      var html = domQuery('.djs-overlays-test', canvas.getContainer());
+      var html = domQuery('[data-container-id=test]', canvas.getContainer());
 
       expect(parseInt(html.style.top)).to.equal(70);
       expect(parseInt(html.style.left)).to.equal(30);
@@ -96,7 +96,7 @@ describe('features/overlay - integration', function() {
       commandStack.undo();
 
       // then
-      var html = domQuery('.djs-overlays-test', canvas.getContainer());
+      var html = domQuery('[data-container-id=test]', canvas.getContainer());
 
       expect(parseInt(html.style.top)).to.equal(50);
       expect(parseInt(html.style.left)).to.equal(50);
@@ -127,7 +127,7 @@ describe('features/overlay - integration', function() {
       modeling.resizeShape(shape, resizeBounds(shape, 'nw', { x: 5, y: -15 }));
 
       // then
-      var html = domQuery('.djs-overlays-test', canvas.getContainer());
+      var html = domQuery('[data-container-id=test]', canvas.getContainer());
 
       expect(parseInt(html.style.top)).to.equal(35);
       expect(parseInt(html.style.left)).to.equal(55);
@@ -161,7 +161,7 @@ describe('features/overlay - integration', function() {
       commandStack.undo();
 
       // then
-      var html = domQuery('.djs-overlays-test', canvas.getContainer());
+      var html = domQuery('[data-container-id=test]', canvas.getContainer());
 
       expect(parseInt(html.style.top)).to.equal(50);
       expect(parseInt(html.style.left)).to.equal(50);

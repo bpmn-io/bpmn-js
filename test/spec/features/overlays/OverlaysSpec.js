@@ -254,6 +254,41 @@ describe('features/overlays', function() {
       expect(queryOverlay(id)).not.to.exist;
     }));
 
+
+    it('should reattach overlays on element ID change', inject(function(overlays, canvas, elementRegistry) {
+
+      // given
+      var oldId = 'old',
+          newId = 'new';
+
+      var shape = canvas.addShape({
+        id: oldId,
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      var id = overlays.add(shape, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay"></div>'
+      });
+
+      var overlay = overlays.get(id);
+
+      // when
+      elementRegistry.updateId(shape, newId);
+
+      // then
+      expect(overlays.get(id)).to.eql(overlay);
+      expect(queryOverlay(id)).to.exist;
+
+      expect(overlays.get({ element: shape })).to.eql([ overlay ]);
+    }));
+
   });
 
 
