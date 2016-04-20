@@ -168,7 +168,7 @@ describe('features/editor-actions', function() {
       var actionsLength = editorActions.length();
 
       // then
-      expect(actionsLength).to.equal(6);
+      expect(actionsLength).to.equal(8);
     }));
 
 

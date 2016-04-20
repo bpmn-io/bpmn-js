@@ -43,6 +43,7 @@ describe('util/Elements', function() {
     ]
   };
 
+
   function ids(array) {
     return array.map(function(e) {
       return e.id;
@@ -216,6 +217,9 @@ describe('util/Elements', function() {
         height: 15,
         width:  20
       });
+
     });
+
   });
+
 });
