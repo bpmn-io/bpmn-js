@@ -7,9 +7,6 @@ require('../../TestHelper');
 var coreModule = require('../../../lib/core'),
     modelingModule = require('../../../lib/features/modeling');
 
-var ModelUtil = require('../../../lib/util/ModelUtil'),
-    LabelUtil = require('../../../lib/util/LabelUtil');
-
 
 describe('LabelUtil', function() {
 
@@ -29,7 +26,7 @@ describe('LabelUtil', function() {
 
     // then
     expect(connection.label.x).to.be.equal(427);
-    expect(connection.label.y).to.be.equal(357);
+    expect(connection.label.y).to.be.equal(332);
   }));
 
 
@@ -43,7 +40,7 @@ describe('LabelUtil', function() {
     var connection = modeling.connect(element1, element2);
 
     // then
-    expect(connection.label.x).to.be.equal(322);
+    expect(connection.label.x).to.be.equal(292);
     expect(connection.label.y).to.be.equal(219.5);
   }));
 
