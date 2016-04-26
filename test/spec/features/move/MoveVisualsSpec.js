@@ -6,12 +6,13 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move'),
+    attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
 
 describe('features/move - MoveVisuals', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ moveModule, rulesModule, modelingModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ moveModule, attachSupportModule, rulesModule, modelingModule ] }));
 
   beforeEach(inject(function(canvas, dragging) {
     dragging.setOptions({ manual: true });
@@ -259,6 +260,86 @@ describe('features/move - MoveVisuals', function() {
       // then
       expect(dragger).to.exist;
       expect(dragger.node).to.exist;
+    }));
+
+  });
+
+  describe('connections', function () {
+    var host, attacher, parentShape2, shape, connectionA, connectionB;
+
+    beforeEach(inject(function(elementFactory, canvas, modeling) {
+
+      parentShape2 = elementFactory.createShape({
+        id: 'parentShape2',
+        x: 450, y: 50, width: 400, height: 200
+      });
+
+      canvas.addShape(parentShape2, rootShape);
+
+      host = elementFactory.createShape({
+        id: 'host',
+        x: 500, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(host, parentShape2);
+
+      attacher = elementFactory.createShape({
+        id: 'attacher',
+        x: 0, y: 0, width: 50, height: 50
+      });
+
+      modeling.createShape(attacher, { x: 600, y: 100 }, host, true);
+
+      shape = elementFactory.createShape({
+        id: 'shape',
+        x: 700, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(shape, parentShape2);
+
+      connectionA = elementFactory.createConnection({
+        id: 'connectionA',
+        waypoints: [ { x: 500, y: 100 }, { x: 750, y: 150 } ],
+        source: host,
+        target: shape
+      });
+
+      canvas.addConnection(connectionA, parentShape2);
+
+      connectionB = elementFactory.createConnection({
+        id: 'connectionB',
+        waypoints: [ { x: 600, y: 100 }, { x: 750, y: 150 } ],
+        source: attacher,
+        target: shape
+      });
+
+      canvas.addConnection(connectionB, parentShape2);
+    }));
+
+
+    it('should add connections to dragGroup',
+      inject(function(canvas, elementFactory, move, dragging, elementRegistry, selection, modeling) {
+      var rootGfx = elementRegistry.getGraphics(rootShape),
+          dragGroup;
+
+      // when
+      selection.select([ host, shape ]);
+
+
+      move.start(canvasEvent({ x: 0, y: 0 }), host);
+
+      dragging.hover({
+        element: rootShape,
+        gfx: rootGfx
+      });
+
+      dragging.move(canvasEvent({ x: 150, y: 200 }));
+
+      dragGroup = dragging.context().data.context.dragGroup;
+
+      // then
+      expect(dragGroup.select('[data-element-id="connectionA"]')).to.exist;
+      expect(dragGroup.select('[data-element-id="connectionB"]')).to.exist;
     }));
 
   });
