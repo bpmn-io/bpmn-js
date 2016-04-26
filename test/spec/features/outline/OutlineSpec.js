@@ -1,9 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
-
 /* global bootstrapDiagram, inject */
-
 
 var selectionModule = require('../../../../lib/features/selection');
 
@@ -11,6 +8,14 @@ var selectionModule = require('../../../../lib/features/selection');
 describe('features/outline/Outline', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ selectionModule ] }));
+
+  it('should expose API', inject(function(outline) {
+
+    expect(outline).to.exist;
+    expect(outline.updateShapeOutline).to.exist;
+    expect(outline.updateConnectionOutline).to.exist;
+  }));
+
 
   describe('select', function() {
 
@@ -32,10 +37,10 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(shape);
       var outline = gfx.select('.djs-outline');
 
-
-      expect(outline).to.exist; // OUTLINE EXISTS
+      expect(outline).to.exist;
       expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
+
 
     it('should add outline to connection', inject(function(selection, canvas, elementRegistry) {
 
@@ -49,11 +54,12 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.exist; // OUTLINE EXISTS
+      expect(outline).to.exist;
       expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
     }));
 
   });
+
 
   describe('deselect', function() {
 
@@ -76,9 +82,10 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(shape);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.exist; // OUTLINE box is not removed
+      expect(outline).to.exist;
       expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
+
 
     it('should remove outline class from connection', inject(function(selection, canvas, elementRegistry) {
 
@@ -93,9 +100,10 @@ describe('features/outline/Outline', function() {
       var gfx = elementRegistry.getGraphics(connection);
       var outline = gfx.select('.djs-outline');
 
-      expect(outline).to.exist; // OUTLINE box is not removed
+      expect(outline).to.exist;
       expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
     }));
+
   });
 
 });
