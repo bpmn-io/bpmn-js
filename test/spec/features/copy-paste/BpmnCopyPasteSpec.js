@@ -2,10 +2,11 @@
 
 var TestHelper = require('../../../TestHelper');
 
-/* global bootstrapModeler, inject */
+/* global bootstrapModeler, inject, sinon */
 
 var bpmnCopyPasteModule = require('../../../../lib/features/copy-paste'),
     copyPasteModule = require('diagram-js/lib/features/copy-paste'),
+    tooltipsModule = require('diagram-js/lib/features/tooltips'),
     modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
@@ -40,7 +41,7 @@ function expectCollection(collA, collB, contains) {
 
 describe('features/copy-paste', function() {
 
-  var testModules = [ bpmnCopyPasteModule, copyPasteModule, modelingModule, coreModule ];
+  var testModules = [ bpmnCopyPasteModule, copyPasteModule, tooltipsModule, modelingModule, coreModule ];
 
   var basicXML = require('../../../fixtures/bpmn/features/copy-paste/basic.bpmn'),
       collaborationXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration.bpmn'),
@@ -319,6 +320,38 @@ describe('features/copy-paste', function() {
           tree = new DescriptorTree(copyPaste._tree);
 
           expect(tree.getLength()).to.equal(0);
+        }));
+
+
+        it('pasting on a collaboration is disallowed when NOT every element is a Participant',
+        inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus) {
+          var task = elementRegistry.get('Task_13xbgyg'),
+              participant = elementRegistry.get('Participant_145muai'),
+              collaboration = canvas.getRootElement(),
+              tree;
+
+          var pasteRejected = sinon.spy(function() {});
+
+          // when
+          copyPaste.copy([ task, participant ]);
+
+          tree = new DescriptorTree(copyPaste._tree);
+
+          // then
+          expect(tree.getDepthLength(0)).to.equal(2);
+
+          // when
+          eventBus.on('elements.paste.rejected', pasteRejected);
+
+          copyPaste.paste({
+            element: collaboration,
+            point: {
+              x: 1000,
+              y: 1000
+            }
+          });
+
+          expect(pasteRejected).to.have.been.called;
         }));
 
       });
