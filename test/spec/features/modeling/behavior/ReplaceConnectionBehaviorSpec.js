@@ -10,6 +10,8 @@ var is = require('../../../../../lib/util/ModelUtil').is,
 var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
+var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
+
 
 function getConnection(source, target, connectionOrType) {
   return find(source.outgoing, function(c) {
@@ -304,21 +306,22 @@ describe('features/modeling - replace connection', function() {
 
   });
 
+
   describe('boundary events', function() {
 
-    var processDiagramXML = require('./ReplaceConnectionBehavior.boundary-events.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
-
-    var element;
-
-    beforeEach(inject(function(elementRegistry) {
-      element = function(id) {
-        return elementRegistry.get(id);
-      };
-    }));
-
     describe('moving host', function() {
+
+      var processDiagramXML = require('./ReplaceConnectionBehavior.boundary-events.bpmn');
+
+      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+      var element;
+
+      beforeEach(inject(function(elementRegistry) {
+        element = function(id) {
+          return elementRegistry.get(id);
+        };
+      }));
 
       it('should remove invalid connections', inject(function(modeling) {
 
@@ -371,6 +374,50 @@ describe('features/modeling - replace connection', function() {
         expectNotConnected(taskShape, targetShape, sequenceFlow);
       }));
 
+    });
+
+
+    describe('moving along host with outgoing', function () {
+      var processDiagramXML = require('../../../../fixtures/bpmn/features/replace/connection.bpmn');
+
+      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+      it('should move connections outgoing from an attacher',
+        inject(function(canvas, elementFactory, move, dragging, elementRegistry, selection) {
+          var rootShape = canvas.getRootElement(),
+              rootGfx = elementRegistry.getGraphics(rootShape),
+              host = elementRegistry.get('Task_1'),
+              task = elementRegistry.get('Task_2'),
+              boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              connection = elementRegistry.get('SequenceFlow_1');
+
+        // given
+        selection.select([ host, boundaryEvent, task ]);
+
+        // when
+        move.start(canvasEvent({ x: 0, y: 0 }), host);
+
+        dragging.hover({
+          element: rootShape,
+          gfx: rootGfx
+        });
+
+        dragging.move(canvasEvent({ x: 0, y: 300 }));
+        dragging.end();
+
+        // then
+        expect(connection.waypoints[0].x).to.equal(165);
+        expect(connection.waypoints[0].y).to.equal(477);
+
+        expect(connection.waypoints[1].x).to.equal(165);
+        expect(connection.waypoints[1].y).to.equal(544);
+
+        expect(connection.waypoints[2].x).to.equal(234);
+        expect(connection.waypoints[2].y).to.equal(544);
+
+        expect(connection.source).to.eql(boundaryEvent);
+        expect(connection.target).to.eql(task);
+      }));
     });
 
   });
