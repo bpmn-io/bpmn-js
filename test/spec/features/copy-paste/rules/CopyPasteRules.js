@@ -35,4 +35,12 @@ CopyPasteRules.prototype.init = function() {
 
     return true;
   });
+
+  this.addRule('elements.paste', function(context) {
+    if (context.target.id === 'parent2') {
+      return false;
+    }
+
+    return true;
+  });
 };

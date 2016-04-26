@@ -3,7 +3,7 @@
 var TestHelper = require('../../../TestHelper'),
     canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 var forEach = require('lodash/collection/forEach');
 
@@ -200,6 +200,28 @@ describe('features/copy-paste - ', function() {
 
         // then
         expect(parentShape.children).to.have.length(2);
+      }));
+
+
+      it('should reject overall paste of elements based on rules', inject(function(copyPaste, clipboard, eventBus) {
+        // given
+        var listener = sinon.spy();
+
+        eventBus.on('elements.paste.rejected', listener);
+
+        // when
+        copyPaste.copy([ childShape, childShape2 ]);
+
+        copyPaste.paste({
+          element: parentShape2,
+          point: {
+            x: 900,
+            y: 350
+          }
+        });
+
+        // then
+        expect(listener).to.have.been.called;
       }));
 
     });
