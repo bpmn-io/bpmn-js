@@ -1604,7 +1604,7 @@ describe('features/attach-support', function() {
     }));
 
 
-    it('should resize host and move attacher to the left', inject(function(spaceTool, dragging) {
+    it('should resize host without moving attacher to the left', inject(function(spaceTool, dragging) {
 
       // given
       var attacher = createAttacher({ x: 100, y: 200 });
@@ -1616,8 +1616,8 @@ describe('features/attach-support', function() {
       dragging.end();
 
       // then
-      expect(parentShape).to.have.bounds({ x: 60, y: 100, width: 340, height: 300 });
-      expect(attacher).to.have.bounds({ x: 35, y: 175, width: 50, height: 50 });
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 260, height: 300 });
+      expect(attacher).to.have.bounds({ x: 75, y: 175, width: 50, height: 50 });
     }));
 
 
@@ -1633,8 +1633,8 @@ describe('features/attach-support', function() {
       dragging.end();
 
       // then
-      expect(parentShape).to.have.bounds({ x: 100, y: 80, width: 300, height: 320 });
-      expect(attacher).to.have.bounds({ x: 225, y: 55, width: 50, height: 50 });
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 300, height: 280 });
+      expect(attacher).to.have.bounds({ x: 225, y: 75, width: 50, height: 50 });
     }));
 
 

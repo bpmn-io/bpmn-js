@@ -163,44 +163,44 @@ describe('features/space-tool', function() {
       }));
 
 
-      it('should make space to the left and resize parent', inject(function(spaceTool, dragging) {
+      it('should remove space from the left and resize parent', inject(function(spaceTool, dragging) {
 
         // when
-        spaceTool.activateMakeSpace(canvasEvent({ x: 300, y: 150 }));
+        spaceTool.activateMakeSpace(canvasEvent({ x: 200, y: 150 }));
 
-        dragging.move(canvasEvent({ x: 250, y: 150 }));
-        dragging.end();
-
-        // then
-        expect(childShape.x).to.equal(60);
-        expect(childShape.y).to.equal(110);
-
-        expect(childShape2.x).to.equal(400);
-        expect(childShape2.y).to.equal(250);
-
-        expect(connection.waypoints).to.eql([
-          { x: 110, y: 160, original: {x: 110, y: 160 } }, { x: 450, y: 300 }
-        ]);
-      }));
-
-
-      it('should make space at the top and resize parent', inject(function(spaceTool, dragging) {
-
-        // when
-        spaceTool.activateMakeSpace(canvasEvent({ x: 300,y: 300 }));
-
-        dragging.move(canvasEvent({ x: 300, y: 250 }));
+        dragging.move(canvasEvent({ x: 150, y: 150 }));
         dragging.end();
 
         // then
         expect(childShape.x).to.equal(110);
-        expect(childShape.y).to.equal(60);
+        expect(childShape.y).to.equal(110);
 
-        expect(childShape2.x).to.equal(400);
+        expect(childShape2.x).to.equal(350);
         expect(childShape2.y).to.equal(250);
 
         expect(connection.waypoints).to.eql([
-          { x: 160, y: 110, original: { x: 160, y: 110 } }, { x: 450, y: 300 }
+          { x: 160, y: 160}, { x: 400, y: 300, original: {x: 400, y: 300 } }
+        ]);
+      }));
+
+
+      it('should remove space from the top and resize parent', inject(function(spaceTool, dragging) {
+
+        // when
+        spaceTool.activateMakeSpace(canvasEvent({ x: 300,y: 150 }));
+
+        dragging.move(canvasEvent({ x: 300, y: 120 }));
+        dragging.end();
+
+        // then
+        expect(childShape.x).to.equal(110);
+        expect(childShape.y).to.equal(110);
+
+        expect(childShape2.x).to.equal(400);
+        expect(childShape2.y).to.equal(220);
+
+        expect(connection.waypoints).to.eql([
+          { x: 160, y: 160 }, { x: 450, y: 270, original: { x: 450, y: 270 } }
         ]);
       }));
 
@@ -246,7 +246,7 @@ describe('features/space-tool', function() {
       }));
 
 
-      it('should remove space with objects to the left', inject(function(spaceTool, dragging) {
+      it('should add space with objects to the left', inject(function(spaceTool, dragging) {
         // when
         spaceTool.activateMakeSpace(canvasEvent({ x: 350, y: 150 }));
 
@@ -254,14 +254,14 @@ describe('features/space-tool', function() {
         dragging.end();
 
         // then
-        expect(childShape.x).to.equal(110);
+        expect(childShape.x).to.equal(60);
         expect(childShape.y).to.equal(110);
 
-        expect(childShape2.x).to.equal(350);
+        expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(250);
 
         expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 400, y: 300, original: { x: 400, y: 300 } }
+          { x: 110, y: 160, original: { x: 110, y: 160 } }, { x: 450, y: 300 }
         ]);
       }));
 
@@ -286,7 +286,7 @@ describe('features/space-tool', function() {
       }));
 
 
-      it('should remove space with objects that are below', inject(function(spaceTool, dragging) {
+      it('should add space with objects that are below', inject(function(spaceTool, dragging) {
         // when
         spaceTool.activateMakeSpace(canvasEvent({ x: 350, y: 230 }));
 
@@ -295,13 +295,13 @@ describe('features/space-tool', function() {
 
         // then
         expect(childShape.x).to.equal(110);
-        expect(childShape.y).to.equal(110);
+        expect(childShape.y).to.equal(60);
 
         expect(childShape2.x).to.equal(400);
-        expect(childShape2.y).to.equal(200);
+        expect(childShape2.y).to.equal(250);
 
         expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 450, y: 250, original: { x: 450, y: 250 } }
+          { x: 160, y: 110, original: { x: 160, y: 110 } }, { x: 450, y: 300 }
         ]);
       }));
 
@@ -515,7 +515,7 @@ describe('features/space-tool', function() {
       // when
       spaceTool.activateMakeSpace(canvasEvent({ x: 280, y: 155 }));
 
-      dragging.move(canvasEvent({ x: 0, y: 155 }, keyModifier));
+      dragging.move(canvasEvent({ x: 0, y: 155 }));
       dragging.end();
 
       // then
@@ -547,7 +547,7 @@ describe('features/space-tool', function() {
       // when
       spaceTool.activateMakeSpace(canvasEvent({ x: 280, y: 155 }));
 
-      dragging.move(canvasEvent({ x: 280, y: 0 }, keyModifier));
+      dragging.move(canvasEvent({ x: 280, y: 0 }));
       dragging.end();
 
       // then
