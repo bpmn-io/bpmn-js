@@ -31,8 +31,16 @@ describe('util/Elements', function() {
     children: [
       { id: 'c.0' },
       { id: 'c.1' }
-    ]
+    ],
+    attachers: []
   };
+
+  var attacher = {
+    id: 'attacher',
+    host: shapeC
+  };
+
+  shapeC.attachers.push(attacher);
 
   var shapeD = {
     id: 'd',
@@ -43,6 +51,12 @@ describe('util/Elements', function() {
     ]
   };
 
+  var shapeE = {
+    id: 'e',
+    children: [
+      shapeC
+    ]
+  };
 
   function ids(array) {
     return array.map(function(e) {
@@ -109,8 +123,17 @@ describe('util/Elements', function() {
 
 
   describe('getClosure', function() {
-    it('should test getClosure');
+
+    it('should test getClosure', function() {
+      var closure = Elements.getClosure([ shapeE ]);
+
+      expect(closure.allShapes).to.have.keys('e', 'c', 'c.0', 'c.1');
+      expect(closure.enclosedElements).to.have.keys('e', 'c', 'c.0', 'c.1');
+      expect(closure.topLevel).to.have.keys('e');
+    });
+
   });
+
 
   describe('#getBBox', function() {
 
