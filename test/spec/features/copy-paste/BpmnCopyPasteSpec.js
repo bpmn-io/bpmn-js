@@ -93,10 +93,12 @@ describe('features/copy-paste', function() {
       commandStack.undo();
       commandStack.undo();
 
+      elements = elementRegistry.getAll();
+
       currentContext = {
-        type: mapProperty(shapes, 'type'),
-        ids: mapProperty(shapes, 'id'),
-        length: shapes.length
+        type: mapProperty(elements, 'type'),
+        ids: mapProperty(elements, 'id'),
+        length: elements.length
       };
 
       // then
@@ -109,10 +111,12 @@ describe('features/copy-paste', function() {
       commandStack.redo();
       commandStack.redo();
 
+      elements = elementRegistry.getAll();
+
       currentContext = {
-        type: mapProperty(elementRegistry.getAll(), 'type'),
-        ids: mapProperty(elementRegistry.getAll(), 'id'),
-        length: shapes.length
+        type: mapProperty(elements, 'type'),
+        ids: mapProperty(elements, 'id'),
+        length: elements.length
       };
 
       // then
@@ -361,6 +365,35 @@ describe('features/copy-paste', function() {
     describe('complex collaboration', function() {
 
       beforeEach(bootstrapModeler(collaborationMultipleXML, { modules: testModules }));
+
+      describe('basics', function() {
+
+        it('pasting on lane', inject(function(elementRegistry, copyPaste) {
+          // given
+          var lane = elementRegistry.get('Lane_1yo0kyz'),
+              task = elementRegistry.get('Task_0n0k2nj'),
+              participant = elementRegistry.get('Participant_0pgdgt4');
+
+          // when
+          copyPaste.copy(task);
+
+          copyPaste.paste({
+            element: lane,
+            point: {
+              x: 200,
+              y: 75
+            }
+          });
+
+          // then
+          expect(lane.children).to.be.empty;
+          expect(lane.businessObject.flowNodeRef).to.have.length(2);
+
+          expect(lane.parent.children).to.have.length(2);
+          expect(participant.children).to.have.length(5);
+        }));
+
+      });
 
       describe('integration', function() {
 
