@@ -44,6 +44,8 @@ function createEvent(target, position, data) {
 
   data = assign({
     target: target,
+    x: position.x,
+    y: position.y,
     clientX: position.x,
     clientY: position.y,
     offsetX: position.x,
