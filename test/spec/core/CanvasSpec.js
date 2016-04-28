@@ -41,6 +41,28 @@ describe('Canvas', function() {
   });
 
 
+  describe('events', function() {
+
+    beforeEach(function() {
+      container = TestContainer.get(this);
+    });
+
+
+    it('should fire "canvas.resized" event', inject(function(eventBus, canvas) {
+      // given
+      var listener = sinon.spy();
+      eventBus.on('canvas.resized', listener);
+
+      // when
+      canvas.resized();
+
+      // then
+      expect(listener).to.have.been.called;
+    }));
+
+  });
+
+
   describe('destroy', function() {
 
     beforeEach(function() {

@@ -177,4 +177,49 @@ describe('features/palette', function() {
 
   });
 
+
+  describe('resizing', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ paletteModule ] }));
+
+    beforeEach(inject(function(palette) {
+      palette.registerProvider(new Provider());
+    }));
+
+
+    it('should turn the palette into a two columns layout', inject(function(canvas, palette) {
+      // given
+      var parent = canvas.getContainer(),
+          container = palette._container;
+
+      parent.style.height = '649px';
+
+      // when
+      canvas.resized();
+
+      // then
+      expect(domClasses(container).has('two-column')).to.be.true;
+    }));
+
+
+    it('should turn the palette into a one column layout', inject(function(canvas, palette) {
+      var parent = canvas.getContainer(),
+          container = palette._container;
+
+      parent.style.height = '649px';
+
+      // when
+      canvas.resized();
+
+      parent.style.height = '650px';
+
+      canvas.resized();
+
+      // then
+      expect(domClasses(container).has('two-column')).to.be.false;
+    }));
+
+  });
+
+
 });

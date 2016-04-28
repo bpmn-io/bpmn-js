@@ -247,18 +247,6 @@ svg.new-parent {
   top: 20px;
 }
 
-.djs-palette:not(.open) {
-  overflow: hidden;
-}
-
-.djs-palette .entry,
-.djs-palette .djs-palette-toggle {
-  width: 46px;
-  height: 46px;
-  line-height: 46px;
-  cursor: default;
-}
-
 .djs-palette .separator {
   margin: 3px 5px 5px 5px;
   border: none;
@@ -304,6 +292,43 @@ svg.new-parent {
 .highlighted-entry {
   color: rgb(255, 116, 0) !important;
 }
+
+.djs-palette:not(.open) {
+  overflow: hidden;
+}
+
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
+  width: 46px;
+  height: 46px;
+  line-height: 46px;
+  cursor: default;
+}
+
+.open .djs-palette-toggle {
+  width: 100%;
+}
+
+/**
+ * .two-column is added through the palette,
+ * when the scrollHeight is less than 650px
+ */
+.djs-palette.two-column .djs-palette-toggle,
+.djs-palette.two-column .djs-palette-entries [data-group="tools"] .entry:nth-child(-n+2),
+.djs-palette.two-column .djs-palette-entries [data-group="event"],
+.djs-palette.two-column .djs-palette-entries [data-group="gateway"] {
+  float: left;
+  clear: both;
+}
+
+.djs-palette.two-column .djs-palette-entries [data-group="tools"] .entry:nth-last-child(n+2),
+.djs-palette.two-column .djs-palette-entries [data-group="activity"],
+.djs-palette.two-column .djs-palette-entries [data-group="data-store"],
+.djs-palette.two-column .djs-palette-entries [data-group="data-object"],
+.djs-palette.two-column .djs-palette-entries [data-group="collaboration"] {
+  overflow: auto;
+}
+
 
 /**
  * context-pad
