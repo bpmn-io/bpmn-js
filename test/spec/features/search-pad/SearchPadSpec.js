@@ -350,6 +350,52 @@ describe('features/searchPad', function() {
       ]);
     }));
 
+
+    it('should not move input cursor on arrow down', inject(function(canvas, eventBus, searchPad) {
+      // given
+      typeText(input_node, 'two');
+
+      // when press 'down'
+      var e = triggerKeyEvent(input_node, 'keydown', 40);
+      expect(e.defaultPrevented).to.be.true;
+    }));
+
+
+    it('should not move input cursor on arrow up', inject(function(canvas, eventBus, searchPad) {
+      // given
+      typeText(input_node, 'two');
+
+      // when press 'up'
+      var e = triggerKeyEvent(input_node, 'keydown', 38);
+      expect(e.defaultPrevented).to.be.true;
+    }));
+
+
+    it('should not search while navigating text in input box left', inject(function(canvas, eventBus, searchPad) {
+      // given
+      var find = sinon.spy(searchProvider, 'find');
+      typeText(input_node, 'two');
+
+      // when press 'left'
+      triggerKeyEvent(input_node, 'keyup', 37);
+
+      // then
+      expect(find).callCount('two'.length);
+    }));
+
+
+    it('should not search while navigating text in input box right', inject(function(canvas, eventBus, searchPad) {
+      // given
+      var find = sinon.spy(searchProvider, 'find');
+      typeText(input_node, 'two');
+
+      // when press 'right'
+      triggerKeyEvent(input_node, 'keyup', 39);
+
+      // then
+      expect(find).callCount('two'.length);
+    }));
+
   });
 
 });
@@ -364,8 +410,8 @@ function triggerKeyEvent(element, event, code) {
 
   e.keyCode = code;
   e.which = code;
-
-  return element.dispatchEvent(e);
+  element.dispatchEvent(e);
+  return e;
 }
 
 
