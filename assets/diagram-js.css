@@ -245,12 +245,20 @@ svg.new-parent {
   position: absolute;
   left: 20px;
   top: 20px;
+
+  width: 46px;
+}
+
+.djs-palette.two-column.open {
+  width: 94px;
 }
 
 .djs-palette .separator {
   margin: 3px 5px 5px 5px;
   border: none;
   border-top: solid 1px #DDD;
+
+  clear: both;
 };
 
 .djs-palette .entry:before {
@@ -269,12 +277,22 @@ svg.new-parent {
   text-align: center;
 }
 
+.djs-palette .entry {
+  float: left;
+}
+
 .djs-palette .entry img {
   max-width: 100%;
 }
 
 .djs-palette.open .djs-palette-toggle {
   height: 10px;
+}
+
+.djs-palette .djs-palette-entries:after {
+  content: '';
+  display: table;
+  clear: both;
 }
 
 .djs-palette:not(.open) .djs-palette-entries {
@@ -305,30 +323,9 @@ svg.new-parent {
   cursor: default;
 }
 
-.open .djs-palette-toggle {
+.djs-palette.open .djs-palette-toggle {
   width: 100%;
 }
-
-/**
- * .two-column is added through the palette,
- * when the scrollHeight is less than 650px
- */
-.djs-palette.two-column .djs-palette-toggle,
-.djs-palette.two-column .djs-palette-entries [data-group="tools"] .entry:nth-child(-n+2),
-.djs-palette.two-column .djs-palette-entries [data-group="event"],
-.djs-palette.two-column .djs-palette-entries [data-group="gateway"] {
-  float: left;
-  clear: both;
-}
-
-.djs-palette.two-column .djs-palette-entries [data-group="tools"] .entry:nth-last-child(n+2),
-.djs-palette.two-column .djs-palette-entries [data-group="activity"],
-.djs-palette.two-column .djs-palette-entries [data-group="data-store"],
-.djs-palette.two-column .djs-palette-entries [data-group="data-object"],
-.djs-palette.two-column .djs-palette-entries [data-group="collaboration"] {
-  overflow: auto;
-}
-
 
 /**
  * context-pad
