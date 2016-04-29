@@ -53,11 +53,14 @@ describe('Canvas', function() {
       var listener = sinon.spy();
       eventBus.on('canvas.resized', listener);
 
+      canvas._cachedViewbox = 'FOO';
+
       // when
       canvas.resized();
 
       // then
       expect(listener).to.have.been.called;
+      expect(canvas._cachedViewbox).not.to.exist;
     }));
 
   });
