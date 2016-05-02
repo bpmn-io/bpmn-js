@@ -32,7 +32,14 @@ describe('features/copy-paste - ', function() {
 
   describe('basics', function() {
 
-    var rootShape, parentShape, parentShape2, host, attacher, childShape, childShape2, connection;
+    var rootShape,
+        parentShape,
+        parentShape2,
+        host,
+        attacher,
+        childShape,
+        childShape2,
+        connection;
 
     beforeEach(inject(function(elementFactory, canvas, modeling) {
 
@@ -59,7 +66,7 @@ describe('features/copy-paste - ', function() {
       canvas.addShape(parentShape2, rootShape);
 
       host = elementFactory.createShape({
-        id:'host',
+        id: 'host',
         x: 300, y: 50,
         width: 100, height: 100
       });
@@ -167,6 +174,7 @@ describe('features/copy-paste - ', function() {
 
     });
 
+
     describe('paste', function () {
 
       it('should paste', inject(function(copyPaste, selection, elementFactory, canvas) {
@@ -224,11 +232,45 @@ describe('features/copy-paste - ', function() {
         expect(listener).to.have.been.called;
       }));
 
+
+      it('should create non-root elements with { root: false } hint', inject(function(copyPaste, eventBus) {
+
+        // given
+        var listener = sinon.spy(function(event) {
+          var context = event.context;
+
+          expect(context.hints).to.exist;
+
+          if (context.parent === parentShape) {
+            expect(context.hints.root).not.to.exist;
+          } else {
+            expect(context.hints.root).to.be.false;
+          }
+        });
+
+        // when
+        eventBus.on('commandStack.shape.create.preExecute', listener);
+
+        copyPaste.copy([ parentShape2, childShape2 ]);
+
+        copyPaste.paste({
+          element: parentShape,
+          point: {
+            x: 900,
+            y: 350
+          }
+        });
+
+        // then
+        expect(listener).to.have.been.called;
+      }));
     });
 
   });
 
+
   describe('#createTree', function () {
+
     var sB = { id: 'b', parent: { id: 'a' }, x: 0, y: 0, width: 100, height: 100 },
         sC = { id: 'c', parent: sB, x: 0, y: 0, width: 100, height: 100 },
         sD = { id: 'd', parent: sB, x: 0, y: 0, width: 100, height: 100 },
