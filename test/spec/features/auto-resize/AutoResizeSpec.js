@@ -27,20 +27,20 @@ describe('features/auto-resize', function() {
 
     var diagramXML = require('./AutoResize.participant.bpmn');
 
-    var task,
-        participant,
-        startEvent,
+    var taskShape,
+        participantShape,
+        startEventShape,
         originalBounds;
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     beforeEach(inject(function(elementRegistry) {
 
-      task = elementRegistry.get('Task_1');
-      participant = elementRegistry.get('Participant_1');
-      startEvent = elementRegistry.get('StartEvent_1');
+      taskShape = elementRegistry.get('Task_1');
+      participantShape = elementRegistry.get('Participant_1');
+      startEventShape = elementRegistry.get('StartEvent_1');
 
-      originalBounds = getBounds(participant);
+      originalBounds = getBounds(participantShape);
 
       expect(originalBounds).to.eql({ x: 247, y: 160, width: 371, height: 178 });
 
@@ -53,70 +53,70 @@ describe('features/auto-resize', function() {
           inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 100, y: 0 }, participant);
+        modeling.moveElements([ taskShape ], { x: 100, y: 0 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { width: 525 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the top edge', inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 0, y: -50 }, participant);
+        modeling.moveElements([ taskShape ], { x: 0, y: -50 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { y: 99, height: 239 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the bottom edge', inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 0, y: 50 }, participant);
+        modeling.moveElements([ taskShape ], { x: 0, y: 50 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { height: 239 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the left edge', inject(function(modeling) {
 
         // when
-        modeling.moveElements([ startEvent ], { x: -100, y: 0 }, participant);
+        modeling.moveElements([ startEventShape ], { x: -100, y: 0 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { x: 122, width: 496 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the bottom right edges', inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 50, y: 50 }, participant);
+        modeling.moveElements([ taskShape ], { x: 50, y: 50 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { width: 475, height: 239 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the top left edges', inject(function(modeling) {
 
         // when
-        modeling.moveElements([ startEvent ], { x: -100, y: -100 }, participant);
+        modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
 
         // then
-        expect(participant).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
+        expect(participantShape).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
       }));
 
 
@@ -124,12 +124,12 @@ describe('features/auto-resize', function() {
           inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 0, y: 49 }, participant);
+        modeling.moveElements([ taskShape ], { x: 0, y: 49 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { height: 238 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
@@ -137,60 +137,61 @@ describe('features/auto-resize', function() {
           inject(function(modeling) {
 
         // when
-        modeling.moveElements([ task ], { x: 0, y: 47 }, participant);
+        modeling.moveElements([ taskShape ], { x: 0, y: 47 }, participantShape);
 
         // then
-        expect(participant).to.have.bounds(originalBounds);
+        expect(participantShape).to.have.bounds(originalBounds);
       }));
 
 
       it('should undo resizing', inject(function(modeling, commandStack) {
 
         // when
-        modeling.moveElements([ startEvent ], { x: -100, y: -100 }, participant);
+        modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
         commandStack.undo();
 
         // then
-        expect(participant).to.have.bounds(originalBounds);
+        expect(participantShape).to.have.bounds(originalBounds);
       }));
 
 
       it('should redo resizing', inject(function(modeling, commandStack) {
 
         // when
-        modeling.moveElements([ startEvent ], { x: -100, y: -100 }, participant);
+        modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
         commandStack.undo();
         commandStack.redo();
 
         // then
-        expect(participant).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
+        expect(participantShape).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
       }));
 
     });
+
 
     describe('after moving multiple elements', function() {
 
       it('should expand the right edge', inject(function(modeling, selection) {
 
         // when
-        modeling.moveElements([ task, startEvent ], { x: 200, y: 0 }, participant);
+        modeling.moveElements([ taskShape, startEventShape ], { x: 200, y: 0 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { width: 625 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should expand the bottom edge', inject(function(modeling, selection) {
 
         // when
-        modeling.moveElements([ task, startEvent ], { x: 0, y: 48 }, participant);
+        modeling.moveElements([ taskShape, startEventShape ], { x: 0, y: 48 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { height: 237 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
     });
@@ -201,25 +202,25 @@ describe('features/auto-resize', function() {
       it('should expand the bottom right edges', inject(function(modeling) {
 
         // when
-        modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 350 }, participant);
+        modeling.appendShape(taskShape, { type: 'bpmn:Task' }, { x: 660, y: 350 }, participantShape);
 
         // then
         var expectedBounds = assign(originalBounds, { width: 563, height: 290 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
       }));
 
 
       it('should undo resizing', inject(function(modeling, commandStack) {
 
         // given
-        modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participant);
+        modeling.appendShape(taskShape, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participantShape);
 
         // when
         commandStack.undo();
 
         // then
-        expect(participant).to.have.bounds(originalBounds);
+        expect(participantShape).to.have.bounds(originalBounds);
       }));
 
 
@@ -227,7 +228,7 @@ describe('features/auto-resize', function() {
         inject(function(modeling, commandStack) {
 
         // given
-        var task2 = modeling.appendShape(task, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participant);
+        var taskShape2 = modeling.appendShape(taskShape, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participantShape);
 
         // when
         commandStack.undo();
@@ -236,11 +237,11 @@ describe('features/auto-resize', function() {
         // then
         var expectedBounds = assign(originalBounds, { width: 563 });
 
-        expect(participant).to.have.bounds(expectedBounds);
+        expect(participantShape).to.have.bounds(expectedBounds);
 
-        expect(task2).to.exist;
-        expect(task.outgoing).not.to.be.empty;
-        expect(task2.incoming).not.to.be.empty;
+        expect(taskShape2).to.exist;
+        expect(taskShape.outgoing).not.to.be.empty;
+        expect(taskShape2.incoming).not.to.be.empty;
       }));
 
     });
@@ -256,10 +257,23 @@ describe('features/auto-resize', function() {
       };
 
       // when
-      modeling.createShape(laneAttrs, { x: 280, y: 200 }, participant);
+      modeling.createShape(laneAttrs, { x: 280, y: 200 }, participantShape);
 
       // then
-      expect(participant).to.have.bounds(originalBounds);
+      expect(participantShape).to.have.bounds(originalBounds);
+    }));
+
+
+    it('should not auto-resize when creating with { root: false } hint', inject(function(modeling) {
+
+      // given
+      var taskAttrs = { type: 'bpmn:Task' };
+
+      // when
+      modeling.createShape(taskAttrs, { x: 600, y: 320 }, participantShape, { root: false });
+
+      // then
+      expect(participantShape).to.have.bounds(originalBounds);
     }));
 
   });
