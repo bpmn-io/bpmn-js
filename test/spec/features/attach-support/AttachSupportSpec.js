@@ -15,7 +15,7 @@ var attachSupportModule = require('../../../../lib/features/attach-support'),
 var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAttachShapeDelta,
     isMac = require('../../../../lib/util/Mouse').isMac;
 
-var keyModifier = isMac() ? { altKey: true } : { ctrlKey: true };
+var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
 describe('features/attach-support', function() {
 

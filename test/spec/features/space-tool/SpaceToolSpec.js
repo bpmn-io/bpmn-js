@@ -9,7 +9,7 @@ var spaceTool = require('../../../../lib/features/space-tool'),
     isMac = require('../../../../lib/util/Mouse').isMac,
     rulesModule = require('./rules');
 
-var keyModifier = isMac() ? { altKey: true } : { ctrlKey: true };
+var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
 
 describe('features/space-tool', function() {
