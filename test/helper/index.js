@@ -40,6 +40,9 @@ var Modeler = require('../../lib/Modeler'),
 
 var OPTIONS, BPMN_JS;
 
+var translationModule = require('./TranslationCollector');
+
+
 function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
   return function(done) {
@@ -97,6 +100,12 @@ function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
     if (!_options.modules.length) {
       _options.modules = undefined;
+    }
+
+    // used to extract translations used during tests
+    if (window.__env__ && window.__env__.TRANSLATIONS === 'enabled') {
+      _options.additionalModules = [].concat(_options.additionalModules || [], [ translationModule ]);
+      _options.additionalModules = unique(_options.additionalModules);
     }
 
     BPMN_JS = new BpmnJS(_options);

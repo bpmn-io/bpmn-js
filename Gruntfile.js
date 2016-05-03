@@ -51,6 +51,23 @@ module.exports = function(grunt) {
       },
       unit: {
         browsers: TEST_BROWSERS
+      },
+      translations: {
+        singleRun: true,
+        autoWatch: false,
+
+        reporters: [ 'dots', 'translation-reporter' ],
+
+        plugins: [
+          'karma-*',
+          require('./test/config/translation-reporter')
+        ],
+
+        envPreprocessor: [
+          'TRANSLATIONS'
+        ],
+
+        browsers: TEST_BROWSERS
       }
     },
 
@@ -91,6 +108,7 @@ module.exports = function(grunt) {
 
 
   // tasks
+  grunt.registerTask('extract-translations', [ 'karma:translations' ]);
 
   grunt.registerTask('test', [ 'karma:single' ]);
 

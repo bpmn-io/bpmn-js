@@ -1,5 +1,10 @@
 'use strict';
 
+if (window.__env__ && window.__env__.TRANSLATIONS === 'enabled') {
+  // skipping during translation extraction
+  return;
+}
+
 require('test/TestHelper');
 
 /* global bootstrapModeler, inject */
@@ -15,6 +20,7 @@ var diagramXML = require('test/fixtures/bpmn/simple.bpmn');
 
 
 describe('i18n - translate', function() {
+
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

@@ -24,7 +24,7 @@ module.exports = function(karma) {
     ],
 
     preprocessors: {
-      'test/**/*Spec.js': [ 'browserify' ]
+      'test/**/*Spec.js': [ 'browserify', 'env' ]
     },
 
     reporters: [ 'dots' ],
