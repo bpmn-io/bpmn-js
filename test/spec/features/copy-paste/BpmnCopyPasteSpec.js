@@ -125,7 +125,7 @@ describe('features/copy-paste', function() {
       expectCollection(initialContext.type, currentContext.type, true);
       expectCollection(initialContext.ids, currentContext.ids, false);
     };
-  };
+  }
 
 
   describe('basic diagram', function() {
@@ -407,7 +407,32 @@ describe('features/copy-paste', function() {
 
     describe('basics', function() {
 
-      it('pasting on lane', inject(function(elementRegistry, copyPaste) {
+      it('pasting on a lane', inject(function(elementRegistry, copyPaste) {
+        // given
+        var lane = elementRegistry.get('Lane_0aws6ii'),
+            task = elementRegistry.get('Task_1pamrp2'),
+            participant = elementRegistry.get('Participant_1id96b4');
+
+        // when
+        copyPaste.copy(task);
+
+        copyPaste.paste({
+          element: lane,
+          point: {
+            x: 400,
+            y: 450
+          }
+        });
+
+        // then
+        expect(lane.children).to.be.empty;
+        expect(lane.businessObject.flowNodeRef).to.have.length(2);
+
+        expect(participant.children).to.have.length(10);
+      }));
+
+
+      it('pasting on a nested lane', inject(function(elementRegistry, copyPaste) {
         // given
         var lane = elementRegistry.get('Lane_1yo0kyz'),
             task = elementRegistry.get('Task_0n0k2nj'),
