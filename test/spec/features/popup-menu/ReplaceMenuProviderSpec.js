@@ -1266,33 +1266,72 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should replace DefaultFlow with SequenceFlow when changing target',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            root = canvas.getRootElement();
+      [
+        'bpmn:StartEvent'
+      ].forEach(function(type) {
+        it('should replace DefaultFlow with SequenceFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              root = canvas.getRootElement();
 
-        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+          var intermediateEvent = elementFactory.createShape({ type: type});
 
-        modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+          modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
 
-        openPopup(sequenceFlow);
+          openPopup(sequenceFlow);
 
-        var entries = getEntries(popupMenu);
+          var entries = getEntries(popupMenu);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          triggerAction(entries, 'replace-with-default-flow');
 
-        // when
-        modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-          { x: 686, y: 267, original: { x: 686, y: 307 } },
-          { x: 686, y: 50, original: { x: 686, y: 75 } }
-        ]);
+          // when
+          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+            { x: 686, y: 267, original: { x: 686, y: 307 } },
+            { x: 686, y: 50, original: { x: 686, y: 75 } }
+          ]);
 
-        var gateway = elementRegistry.get('ExclusiveGateway_1');
+          var gateway = elementRegistry.get('ExclusiveGateway_1');
 
-        // then
-        expect(gateway.businessObject.default).to.not.exist;
-      }));
+          // then
+          expect(gateway.businessObject.default).to.not.exist;
+        }));
+      });
+
+
+      [
+        'bpmn:Activity',
+        'bpmn:EndEvent',
+        'bpmn:IntermediateThrowEvent'
+      ].forEach(function(type) {
+        it('should keep DefaultFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              root = canvas.getRootElement();
+
+          var intermediateEvent = elementFactory.createShape({ type: type});
+
+          modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+
+          openPopup(sequenceFlow);
+
+          var entries = getEntries(popupMenu);
+
+          triggerAction(entries, 'replace-with-default-flow');
+
+          // when
+          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+            { x: 686, y: 267, original: { x: 686, y: 307 } },
+            { x: 686, y: 50, original: { x: 686, y: 75 } }
+          ]);
+
+          var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+          // then
+          expect(gateway.businessObject.default).to.exist;
+        }));
+      });
 
 
       it('should replace DefaultFlow with SequenceFlow when changing target -> undo',
@@ -1301,7 +1340,7 @@ describe('features/popup-menu - replace menu provider', function() {
         var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             root = canvas.getRootElement();
 
-        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent'});
 
         modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
 
@@ -1556,30 +1595,66 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should replace ConditionalFlow with SequenceFlow when changing target',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            root = canvas.getRootElement(),
-            intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+      [
+        'bpmn:StartEvent'
+      ].forEach(function(type) {
+        it('should replace ConditionalFlow with SequenceFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              root = canvas.getRootElement(),
+              intermediateEvent = elementFactory.createShape({ type: type });
 
-        modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+          modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
 
-        openPopup(sequenceFlow);
+          openPopup(sequenceFlow);
 
-        var entries = getEntries(popupMenu);
+          var entries = getEntries(popupMenu);
 
-        triggerAction(entries, 'replace-with-conditional-flow');
+          triggerAction(entries, 'replace-with-conditional-flow');
 
-        // when
-        modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-          { x: 389, y: 197, original: { x: 389, y: 197 } },
-          { x: 497, y: 197, original: { x: 497, y: 197 } }
-        ]);
+          // when
+          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+            { x: 389, y: 197, original: { x: 389, y: 197 } },
+            { x: 497, y: 197, original: { x: 497, y: 197 } }
+          ]);
 
-        // then
-        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
-      }));
+          // then
+          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+        }));
+      });
+
+
+      [
+        'bpmn:Activity',
+        'bpmn:EndEvent',
+        'bpmn:IntermediateThrowEvent'
+      ].forEach(function(type) {
+        it('should keep ConditionalFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              root = canvas.getRootElement(),
+              intermediateEvent = elementFactory.createShape({ type: type });
+
+          modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+
+          openPopup(sequenceFlow);
+
+          var entries = getEntries(popupMenu);
+
+          triggerAction(entries, 'replace-with-conditional-flow');
+
+          // when
+          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+            { x: 389, y: 197, original: { x: 389, y: 197 } },
+            { x: 497, y: 197, original: { x: 497, y: 197 } }
+          ]);
+
+          // then
+          expect(sequenceFlow.businessObject.conditionExpression).to.exist;
+        }));
+      });
 
 
       it('should replace ConditionalFlow with SequenceFlow when changing target -> undo',
@@ -1587,7 +1662,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
             root = canvas.getRootElement(),
-            intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent'});
+            intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent'});
 
         modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
 
