@@ -4,7 +4,7 @@ require('../../../TestHelper');
 
 var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 var bendpointsModule = require('../../../../lib/features/bendpoints'),
     modelingModule = require('../../../../lib/features/modeling'),
@@ -19,6 +19,95 @@ var layoutModule = {
 
 
 describe('features/bendpoints - segment move', function() {
+
+  describe('hints', function() {
+
+    beforeEach(bootstrapDiagram({
+      modules: [
+        bendpointsModule,
+        modelingModule,
+        selectModule
+      ]
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+    var sourceShape, targetShape, connection;
+
+    beforeEach(inject(function(elementFactory, canvas) {
+      sourceShape = elementFactory.createShape({
+        id: 'sourceShape', type: 'A',
+        x: 100, y: 100,
+        width: 200, height: 100
+      });
+      canvas.addShape(sourceShape);
+
+      targetShape = elementFactory.createShape({
+        id: 'targetShape', type: 'A',
+        x: 600, y: 100,
+        width: 100, height: 200
+      });
+      canvas.addShape(targetShape);
+
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [
+          { x: 200, y: 150 },
+          { x: 200, y: 300 },
+          { x: 600, y: 300 },
+          { x: 600, y: 150 }
+        ],
+        source: sourceShape,
+        target: targetShape
+      });
+      canvas.addConnection(connection);
+    }));
+
+
+    it('should provide segment move in hints', inject(function(canvas, connectionSegmentMove, dragging, eventBus) {
+
+      // given
+      var spy = sinon.spy(function(e) {
+        expect(e.context.hints).to.have.property('segmentMove');
+      });
+
+      eventBus.once('commandStack.execute', spy);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+      dragging.move(canvasEvent({ x: 0, y: 50 }));
+      dragging.end();
+
+      // then
+      expect(spy).to.have.been.called;
+
+    }));
+
+    it('removes a segment in front', inject(function(canvas, connectionSegmentMove, dragging, eventBus) {
+
+      // given
+      var spy = sinon.spy(function(e) {
+        expect(e.context.hints.segmentMove).to.be.eql({
+          segmentStartIndex: 1,
+          newSegmentStartIndex: 0
+        });
+      });
+
+      eventBus.once('commandStack.execute', spy);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 0, y: -150 }));
+      dragging.end();
+
+      // then
+      expect(spy).to.have.been.called;
+
+    }));
+
+  });
 
   describe('without docking', function() {
 
@@ -434,6 +523,8 @@ describe('features/bendpoints - segment move', function() {
         expect(connection).to.have.endDocking(oldEnd.original);
       })
     );
+
+
 
   });
 
