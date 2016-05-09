@@ -22,6 +22,10 @@ ConnectRules.prototype.init = function() {
     var source = context.source,
         target = context.target;
 
-    return source && target && source.parent === target.parent;
+    if (source && target && source.parent === target.parent) {
+      return { type: 'test:Connection'};
+    }
+
+    return false;
   });
 };

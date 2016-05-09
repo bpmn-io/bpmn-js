@@ -96,6 +96,27 @@ describe('features/connect', function() {
       expect(shape2.incoming.length).to.equal(0);
     }));
 
+
+    it('should pass rule meta-data to modeling', inject(function(connect, dragging) {
+
+      // assume
+      // connect rule returns { type: 'test:Connection' }
+
+      // when
+      connect.start(canvasEvent({ x: 0, y: 0 }), shape1);
+
+      dragging.move(canvasEvent({ x: 40, y: 30 }));
+
+      dragging.hover(canvasEvent({ x: 10, y: 10 }, { element: shape2 }));
+      dragging.end();
+
+      var newConnection = shape1.outgoing[0];
+
+      // then
+      expect(newConnection).to.exist;
+      expect(newConnection.type).to.equal('test:Connection');
+    }));
+
   });
 
 });
