@@ -85,6 +85,50 @@ describe('features/modeling - ordering', function() {
       expectZOrder('Participant_StartEvent', 'Participant', 'MessageFlow');
     }));
 
+
+    it('should stay behind DataInputAssociation when moving Participant with DataStore', inject(function() {
+
+      // when
+      move('Participant', { x: 5, y: 5 });
+
+      // then
+      expectZOrder('Participant', 'DataInputAssociation');
+      expectZOrder('Participant_StartEvent', 'DataInputAssociation');
+    }));
+
+
+    it('should stay behind DataInputAssociation when moving Participant with Task', inject(function() {
+
+      // when
+      move('Participant_StartEvent', { x: 5, y: 5 });
+
+      // then
+      expectZOrder('Participant', 'DataInputAssociation');
+      expectZOrder('Participant_StartEvent', 'DataInputAssociation');
+    }));
+
+
+    it('should stay behind DataOutputAssociation when moving Participant with DataStore', inject(function() {
+
+      // when
+      move('Participant', { x: 5, y: 5 });
+
+      // then
+      expectZOrder('Participant', 'DataOutputAssociation');
+      expectZOrder('Participant_StartEvent', 'DataOutputAssociation');
+    }));
+
+
+    it('should stay behind DataOutputAssociation when moving Participant with Task', inject(function() {
+
+      // when
+      move('Participant_StartEvent', { x: 5, y: 5 });
+
+      // then
+      expectZOrder('Participant', 'DataOutputAssociation');
+      expectZOrder('Participant_StartEvent', 'DataOutputAssociation');
+    }));
+
   });
 
 
