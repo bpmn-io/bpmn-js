@@ -36,6 +36,7 @@ var Snap = require('../../../vendor/snapsvg'),
 
 var TestContainer = require('mocha-test-container-support');
 
+
 describe('Text', function() {
 
   var container;
@@ -108,7 +109,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 0, height: 0 }});
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 275 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 320 })).to.be.true;
     });
 
 
@@ -121,7 +122,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 25, height: 25 }});
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 170 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 195 })).to.be.true;
     });
 
 
@@ -142,6 +143,7 @@ describe('Text', function() {
       expect(text).to.exist;
       expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
     });
+
 
     describe('should line break', function() {
 
@@ -248,8 +250,8 @@ describe('Text', function() {
 
 
 
-        // expect(text).to.exist;
-        // expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
+        expect(text).to.exist;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
       });
 
 
