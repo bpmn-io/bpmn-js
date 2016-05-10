@@ -1,7 +1,7 @@
 'use strict';
 
 require('../../TestHelper');
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 
 var cmdModule = require('../../../lib/command');
@@ -788,6 +788,65 @@ describe('command/CommandStack', function() {
     it('should clear on diagram.destroy', inject(verifyClearOn('diagram.destroy')));
 
     it('should clear on diagram.clear', inject(verifyClearOn('diagram.clear')));
+
+  });
+
+
+  describe('atomic commands', function() {
+
+    var ERROR_MESSAGE = 'illegal invocation in <execute> or <revert> phase (action: simple-command)';
+
+
+    describe('should protect against illegal invocation', function() {
+
+      it('during <execute>', inject(function(eventBus, commandStack) {
+
+        // given
+        var invokeNested = sinon.spy(function invokeNested(event) {
+
+          // then
+          expect(function() {
+            commandStack.execute('simple-command', {});
+          }).to.throw(ERROR_MESSAGE);
+        });
+
+        commandStack.registerHandler('simple-command', SimpleCommand);
+
+        eventBus.on('commandStack.execute', invokeNested);
+
+        // when
+        commandStack.execute('simple-command', { element: { trace: [] } });
+
+        // then
+        expect(invokeNested).to.have.been.called;
+      }));
+
+
+      it('during <revert>', inject(function(eventBus, commandStack) {
+
+        // given
+        var invokeNested = sinon.spy(function invokeNested(event) {
+
+          // then
+          expect(function() {
+            commandStack.execute('simple-command', {});
+          }).to.throw(ERROR_MESSAGE);
+        });
+
+        commandStack.registerHandler('simple-command', SimpleCommand);
+
+        eventBus.on('commandStack.revert', invokeNested);
+
+        commandStack.execute('simple-command', { element: { trace: [] } });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(invokeNested).to.have.been.called;
+      }));
+
+    });
 
   });
 
