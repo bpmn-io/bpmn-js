@@ -135,6 +135,66 @@ describe('features/Replace', function() {
       expect(replacementShape.height).to.equal(200);
     }));
 
+
+    it('should retain position when setting odd height', inject(function(elementFactory, replace, elementRegistry) {
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 200,
+        height: 201
+      };
+
+      // shape replacement
+      replace.replaceElement(originalShape, replacement);
+
+      // then
+      var replacementShape = elementRegistry.get('replacement');
+      expect(replacementShape.x).to.equal(110);
+      expect(replacementShape.y).to.equal(110);
+      expect(replacementShape.width).to.equal(200);
+      expect(replacementShape.height).to.equal(201);
+    }));
+
+
+    it('should retain position when setting odd width', inject(function(elementFactory, replace, elementRegistry) {
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 201,
+        height: 200
+      };
+
+      // shape replacement
+      replace.replaceElement(originalShape, replacement);
+
+      // then
+      var replacementShape = elementRegistry.get('replacement');
+      expect(replacementShape.x).to.equal(110);
+      expect(replacementShape.y).to.equal(110);
+      expect(replacementShape.width).to.equal(201);
+      expect(replacementShape.height).to.equal(200);
+    }));
+
+
+    it('should retain position when setting odd width and height', inject(function(elementFactory, replace, elementRegistry) {
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 201,
+        height: 201
+      };
+
+      // shape replacement
+      replace.replaceElement(originalShape, replacement);
+
+      // then
+      var replacementShape = elementRegistry.get('replacement');
+      expect(replacementShape.x).to.equal(110);
+      expect(replacementShape.y).to.equal(110);
+      expect(replacementShape.width).to.equal(201);
+      expect(replacementShape.height).to.equal(201);
+    }));
+
   });
 
 
