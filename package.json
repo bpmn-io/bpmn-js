@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.14.1",
+  "version": "0.15.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "test": "grunt test"
@@ -65,10 +65,10 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
-    "bpmn-moddle": "^0.11.0",
-    "diagram-js": "^0.14.0",
-    "diagram-js-direct-editing": "^0.14.0",
-    "diagram-js-origin": "^0.13.0",
+    "bpmn-moddle": "^0.12.0",
+    "diagram-js": "^0.15.0",
+    "diagram-js-direct-editing": "^0.15.0",
+    "diagram-js-origin": "^0.14.0",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
