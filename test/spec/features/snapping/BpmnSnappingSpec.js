@@ -381,8 +381,7 @@ describe('features/snapping - BpmnSnapping', function() {
       modelingModule,
       resizeModule,
       rulesModule,
-      snappingModule,
-      modelingModule
+      snappingModule
     ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
@@ -412,8 +411,7 @@ describe('features/snapping - BpmnSnapping', function() {
       modelingModule,
       resizeModule,
       rulesModule,
-      snappingModule,
-      modelingModule
+      snappingModule
     ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));

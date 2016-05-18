@@ -21,7 +21,7 @@ describe('features/modeling - update label', function() {
     var startEvent_1 = elementRegistry.get('StartEvent_1');
 
     // when
-    modeling.updateLabel(startEvent_1, 'bar', null);
+    modeling.updateLabel(startEvent_1, 'bar');
 
     // then
     expect(startEvent_1.businessObject.name).to.equal('bar');
@@ -35,7 +35,7 @@ describe('features/modeling - update label', function() {
     var startEvent_2 = elementRegistry.get('StartEvent_2');
 
     // when
-    modeling.updateLabel(startEvent_2, 'bar', null);
+    modeling.updateLabel(startEvent_2, 'bar');
 
     // then
     expect(startEvent_2.businessObject.name).to.equal('bar');
@@ -49,7 +49,7 @@ describe('features/modeling - update label', function() {
     var startEvent_1 = elementRegistry.get('StartEvent_1');
 
     // when
-    modeling.updateLabel(startEvent_1, '', null);
+    modeling.updateLabel(startEvent_1, '');
 
     // then
     expect(startEvent_1.businessObject.name).to.equal('');
@@ -64,41 +64,11 @@ describe('features/modeling - update label', function() {
     var startEvent_1_label = elementRegistry.get('StartEvent_1_label');
 
     // when
-    modeling.updateLabel(startEvent_1_label, 'bar', null);
+    modeling.updateLabel(startEvent_1_label, 'bar');
 
     // then
     expect(startEvent_1.businessObject.name).to.equal('bar');
     expect(startEvent_1.label.hidden).to.be.false;
-  }));
-
-
-  it('should resize label when bounds given', inject(function(modeling, elementRegistry) {
-    // given
-    var startEvent_1_label = elementRegistry.get('StartEvent_1_label');
-    var newBounds = { x: startEvent_1_label.x, y: startEvent_1_label.y, height: 100, width: 150 };
-
-    // when
-    modeling.updateLabel(startEvent_1_label, 'bar', newBounds);
-
-    // then
-    expect(startEvent_1_label.width).to.eql(150);
-    expect(startEvent_1_label.height).to.eql(100);
-  }));
-
-
-  it('should fail bounds given in incorrect form', inject(function(modeling, elementRegistry) {
-
-    // given
-    var startEvent_1_label = elementRegistry.get('StartEvent_1_label');
-    var newBounds = {};
-
-    // when
-    function updateLabel() {
-      modeling.updateLabel(startEvent_1_label, 'bar', newBounds);
-    }
-
-    // then
-    expect(updateLabel).to.throw('newBounds must have {x, y, width, height} properties');
   }));
 
 
@@ -129,7 +99,7 @@ describe('features/modeling - update label', function() {
     });
 
     // when
-    modeling.updateLabel(startEvent_1, 'foo', null);
+    modeling.updateLabel(startEvent_1, 'foo');
 
     // then
     expect(changedEvent.elements).to.include(startEvent_1);
@@ -150,7 +120,7 @@ describe('features/modeling - update label', function() {
     });
 
     // when
-    modeling.updateLabel(startEvent_1_label, 'foo', null);
+    modeling.updateLabel(startEvent_1_label, 'foo');
 
     // then
     expect(changedEvent.elements).to.include(startEvent_1);
