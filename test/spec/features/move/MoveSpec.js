@@ -7,8 +7,6 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 var assign = require('lodash/object/assign'),
     pick = require('lodash/object/pick');
 
-var getOriginalEvent = require('../../../../lib/util/Event').getOriginal;
-
 var modelingModule = require('../../../../lib/features/modeling'),
     moveModule = require('../../../../lib/features/move');
 
@@ -103,10 +101,10 @@ describe('features/move - Move', function() {
 
   });
 
-
   describe('modeling', function() {
 
     it('should round movement to pixels', inject(function(move, dragging, elementRegistry) {
+
       // given
       move.start(canvasEvent({ x: 0, y: 0 }), childShape);
 
@@ -126,24 +124,6 @@ describe('features/move - Move', function() {
       expect(childShape.y).to.eql(210);
     }));
 
-  });
-
-
-  describe('activation', function(){
-
-    it('should not happen if no originalEvent exists', inject(function(move, dragging, eventBus, canvas){
-      // given
-      var e;
-      eventBus.once('element.mousedown', function(event){
-        e = event;
-      });
-
-      // when mousedown happens
-      eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
-
-      // then move should not be started
-      expect(getOriginalEvent(e)).to.not.exist;
-    }));
   });
 
 });
