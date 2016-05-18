@@ -13,7 +13,7 @@ var copyPasteModule = require('../../../../lib/features/copy-paste'),
     rulesModule = require('./rules');
 
 
-describe('features/copy-paste - ', function() {
+describe('features/copy-paste', function() {
 
   beforeEach(bootstrapDiagram({
     modules: [ rulesModule, modelingModule, copyPasteModule, selectionModule ]
@@ -22,6 +22,10 @@ describe('features/copy-paste - ', function() {
 
   function toObjectBranch(branch) {
     var newBranch = {};
+
+    if (!branch) {
+      return false;
+    }
 
     forEach(branch, function(elem) {
       newBranch[elem.id] = elem;
@@ -40,6 +44,10 @@ describe('features/copy-paste - ', function() {
         childShape,
         childShape2,
         connection;
+
+    beforeEach(inject(function(clipboard) {
+      clipboard.clear();
+    }));
 
     beforeEach(inject(function(elementFactory, canvas, modeling) {
 
@@ -113,7 +121,45 @@ describe('features/copy-paste - ', function() {
     }));
 
 
-    describe('copy', function () {
+    describe('events', function() {
+
+      it('should fire "elements.copy" when copying elements', inject(function(eventBus, clipboard, copyPaste) {
+
+        eventBus.on('elements.copy', function(event) {
+          var context = event.context,
+              tree = context.tree;
+
+          // then
+          expect(toObjectBranch(tree[0])).to.have.keys('parent2');
+
+          expect(toObjectBranch(tree[1])).to.have.keys('host', 'childShape', 'childShape2', 'connection');
+        });
+
+        // when
+        copyPaste.copy([ parentShape2 ]);
+      }));
+
+
+      it('should have an empty clipboard on "elements.copy" when no element was alloed to be copied',
+        inject(function(eventBus, clipboard, copyPaste) {
+
+        // given
+        var listener = sinon.spy();
+
+        eventBus.on('elements.copy', listener);
+
+        // when
+        copyPaste.copy(attacher);
+
+        // then
+        expect(listener).to.have.been.called;
+        expect(clipboard.isEmpty()).to.be.true;
+      }));
+
+    });
+
+
+    describe('copy', function() {
 
       it('should copy parent + children, when element is selected', inject(function(copyPaste, clipboard) {
         // when
@@ -169,13 +215,13 @@ describe('features/copy-paste - ', function() {
         var tree = clipboard.get();
 
         // then
-        expect(toObjectBranch(tree[0])).to.not.have.keys('attacher');
+        expect(tree).to.not.exist;
       }));
 
     });
 
 
-    describe('paste', function () {
+    describe('paste', function() {
 
       it('should paste', inject(function(copyPaste, selection, elementFactory, canvas) {
         // when
@@ -269,7 +315,7 @@ describe('features/copy-paste - ', function() {
   });
 
 
-  describe('#createTree', function () {
+  describe('#createTree', function() {
 
     var sB = { id: 'b', parent: { id: 'a' }, x: 0, y: 0, width: 100, height: 100 },
         sC = { id: 'c', parent: sB, x: 0, y: 0, width: 100, height: 100 },
