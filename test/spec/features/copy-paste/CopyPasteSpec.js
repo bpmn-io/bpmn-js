@@ -1,7 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper'),
-    canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject, sinon */
 
@@ -140,7 +139,7 @@ describe('features/copy-paste', function() {
       }));
 
 
-      it('should have an empty clipboard on "elements.copy" when no element was alloed to be copied',
+      it('should have an empty clipboard on "elements.copy" when no element was allowed to be copied',
         inject(function(eventBus, clipboard, copyPaste) {
 
         // given
@@ -154,6 +153,28 @@ describe('features/copy-paste', function() {
         // then
         expect(listener).to.have.been.called;
         expect(clipboard.isEmpty()).to.be.true;
+      }));
+
+
+      it('should fire "elements.copied" after elements have been copied',
+        inject(function(eventBus, clipboard, copyPaste) {
+
+        var called = false;
+
+        eventBus.on('elements.copied', function(event) {
+          var context = event.context,
+              tree = context.tree;
+
+          // then
+          expect(clipboard.isEmpty()).to.be.false;
+          expect(clipboard.get()).to.eql(tree);
+
+          called = true;
+        });
+
+        // when
+        copyPaste.copy([ parentShape2 ]);
+        expect(called).to.be.true;
       }));
 
     });
