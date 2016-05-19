@@ -309,6 +309,48 @@ describe('features/copy-paste', function() {
       }));
 
 
+      it('should select top level element', inject(function(copyPaste, clipboard, selection) {
+        var selectedElement;
+
+        // when
+        copyPaste.copy([ parentShape2 ]);
+
+        copyPaste.paste({
+          element: parentShape,
+          point: {
+            x: 900,
+            y: 350
+          }
+        });
+
+        selectedElement = selection.get();
+
+        // then
+        expect(selectedElement).to.have.length(1);
+      }));
+
+
+      it('should select a group of top level element', inject(function(copyPaste, clipboard, selection) {
+        var selectedElements;
+
+        // when
+        copyPaste.copy([ childShape, childShape2 ]);
+
+        copyPaste.paste({
+          element: parentShape,
+          point: {
+            x: 900,
+            y: 350
+          }
+        });
+
+        selectedElements = selection.get();
+
+        // then
+        expect(selectedElements).to.have.length(2);
+      }));
+
+
       it('should create non-root elements with { root: false } hint', inject(function(copyPaste, eventBus) {
 
         // given
