@@ -21,7 +21,7 @@ describe('features/bendpoints - move', function() {
   }));
 
 
-  var rootShape, shape1, shape2, shape3, connection, connection2;
+  var rootShape, shape1, shape2, shape3, connection, connection2, connection3;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -72,6 +72,16 @@ describe('features/bendpoints - move', function() {
     });
 
     canvas.addConnection(connection2, rootShape);
+
+    connection3 = elementFactory.createConnection({
+      id: 'connection3',
+      waypoints: [ { x: 575, y: 425 }, { x: 700, y: 350 }, { x: 650, y: 250 } ,{ x: 575, y: 175 } ],
+      source: shape3,
+      target: shape2
+    });
+
+    canvas.addConnection(connection3, rootShape);
+
   }));
 
 
@@ -244,6 +254,24 @@ describe('features/bendpoints - move', function() {
 
       // then
       expect(connection.waypoints[0]).to.eql({ x: 230, y: 120 });
+    }));
+
+
+    it('should keep one bendpoint, if two are overlapping', inject(function(canvas, bendpointMove, dragging){
+
+      // given
+      bendpointMove.start(canvasEvent({ x: 650, y: 250 }), connection3, 2);
+
+      // when
+      dragging.move(canvasEvent({ x: 700, y: 350 }));
+      dragging.end();
+
+      // then
+      expect(connection3.waypoints).to.eql([
+        { x: 575, y: 425 },
+        { x: 700, y: 350 },
+        { x: 575, y: 175 }
+      ]);
     }));
 
   });
