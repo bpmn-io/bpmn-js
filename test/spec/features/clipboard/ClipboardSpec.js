@@ -7,16 +7,14 @@ var TestHelper = require('../../../TestHelper');
 var clipboardModule = require('../../../../lib/features/clipboard');
 
 
-describe('features/clipboard - ', function() {
+describe('features/clipboard', function() {
+
   var contents = { foo: 'bar' };
 
   beforeEach(bootstrapDiagram({
     modules: [ clipboardModule ]
   }));
 
-  beforeEach(inject(function(clipboard) {
-    clipboard.clear();
-  }));
 
   it('should set element to clipboard', inject(function(clipboard) {
     // when
@@ -40,6 +38,5 @@ describe('features/clipboard - ', function() {
     expect(clipboard.isEmpty()).to.be.true;
     expect(oldClipboard).to.contain(contents);
   }));
-
 
 });

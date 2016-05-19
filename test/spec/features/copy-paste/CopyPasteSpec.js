@@ -44,9 +44,6 @@ describe('features/copy-paste', function() {
         childShape2,
         connection;
 
-    beforeEach(inject(function(clipboard) {
-      clipboard.clear();
-    }));
 
     beforeEach(inject(function(elementFactory, canvas, modeling) {
 
@@ -181,6 +178,18 @@ describe('features/copy-paste', function() {
 
 
     describe('copy', function() {
+
+      it('should return copied elements', inject(function(copyPaste, clipboard) {
+
+        // when
+        var copyResult = copyPaste.copy([ parentShape2 ]);
+
+        // then
+        expect(copyResult).to.exist;
+
+        expect(copyResult).to.equal(clipboard.get());
+      }));
+
 
       it('should copy parent + children, when element is selected', inject(function(copyPaste, clipboard) {
         // when
