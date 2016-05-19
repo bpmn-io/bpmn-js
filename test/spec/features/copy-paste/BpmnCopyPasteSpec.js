@@ -16,29 +16,6 @@ var map = require('lodash/collection/map'),
 var DescriptorTree = require('./DescriptorTree');
 
 
-function mapProperty(shapes, prop) {
-  return map(shapes, function(shape) {
-    return shape[prop];
-  });
-}
-
-function expectCollection(collA, collB, contains) {
-  expect(collA).to.have.length(collB.length);
-
-  forEach(collB, function(element) {
-    if (!element.parent) {
-      return;
-    }
-
-    if (contains) {
-      expect(collA).to.contain(element);
-    } else {
-      expect(collA).to.not.contain(element);
-    }
-  });
-}
-
-
 describe('features/copy-paste', function() {
 
   var testModules = [ bpmnCopyPasteModule, copyPasteModule, tooltipsModule, modelingModule, coreModule ];
@@ -137,13 +114,15 @@ describe('features/copy-paste', function() {
       it('selected elements', inject(function(elementRegistry, copyPaste) {
 
         // given
-        var subProcess, startEvent, boundaryEvent, textAnnotation, conditionalFlow, defaultFlow,
-            tree;
+        var subProcess,
+            startEvent,
+            boundaryEvent,
+            textAnnotation,
+            conditionalFlow,
+            defaultFlow;
 
         // when
-        copyPaste.copy(elementRegistry.get('SubProcess_1kd6ist'));
-
-        tree = new DescriptorTree(copyPaste._tree);
+        var tree = copy([ 'SubProcess_1kd6ist' ]);
 
         startEvent = tree.getElement('StartEvent_1');
         boundaryEvent = tree.getElement('BoundaryEvent_1c94bi9');
@@ -287,13 +266,10 @@ describe('features/copy-paste', function() {
       it('disallow individual boundary events copying', inject(function(copyPaste, elementRegistry, canvas) {
 
         var boundaryEventA = elementRegistry.get('BoundaryEvent_1404oxd'),
-            boundaryEventB = elementRegistry.get('BoundaryEvent_1c94bi9'),
-            tree;
+            boundaryEventB = elementRegistry.get('BoundaryEvent_1c94bi9');
 
         // when
-        copyPaste.copy([ boundaryEventA, boundaryEventB ]);
-
-        tree = new DescriptorTree(copyPaste._tree);
+        var tree = copy([ boundaryEventA, boundaryEventB ]);
 
         expect(tree.getLength()).to.equal(0);
       }));
@@ -319,32 +295,23 @@ describe('features/copy-paste', function() {
 
       it('disallow individual lanes copying', inject(function(copyPaste, elementRegistry, canvas) {
 
-        var laneA = elementRegistry.get('Lane_13h648l'),
-            laneB = elementRegistry.get('Lane_1gl63sa'),
-            tree;
-
         // when
-        copyPaste.copy([ laneA, laneB ]);
+        var tree = copy([ 'Lane_13h648l', 'Lane_1gl63sa' ]);
 
-        tree = new DescriptorTree(copyPaste._tree);
-
+        // then
         expect(tree.getLength()).to.equal(0);
       }));
 
 
       it('pasting on a collaboration is disallowed when NOT every element is a Participant',
-      inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus) {
-        var task = elementRegistry.get('Task_13xbgyg'),
-            participant = elementRegistry.get('Participant_145muai'),
-            collaboration = canvas.getRootElement(),
-            tree;
+        inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus) {
+
+        var collaboration = canvas.getRootElement();
 
         var pasteRejected = sinon.spy(function() {});
 
         // when
-        copyPaste.copy([ task, participant ]);
-
-        tree = new DescriptorTree(copyPaste._tree);
+        var tree = copy([ 'Task_13xbgyg', 'Participant_145muai' ]);
 
         // then
         expect(tree.getDepthLength(0)).to.equal(2);
@@ -414,7 +381,7 @@ describe('features/copy-paste', function() {
             participant = elementRegistry.get('Participant_1id96b4');
 
         // when
-        copyPaste.copy(task);
+        copyPaste.copy([ task ]);
 
         copyPaste.paste({
           element: lane,
@@ -439,7 +406,7 @@ describe('features/copy-paste', function() {
             participant = elementRegistry.get('Participant_0pgdgt4');
 
         // when
-        copyPaste.copy(task);
+        copyPaste.copy([ task ]);
 
         copyPaste.paste({
           element: lane,
@@ -469,3 +436,51 @@ describe('features/copy-paste', function() {
   });
 
 });
+
+
+/**
+ * Copy elements (or elements with given ids).
+ *
+ * @param {Array<String|djs.model.Base} ids
+ *
+ * @return {DescriptorTree}
+ */
+function copy(ids) {
+
+  return TestHelper.getBpmnJS().invoke(function(copyPaste, elementRegistry) {
+
+    var elements = ids.map(function(e) {
+      var element = elementRegistry.get(e.id || e);
+
+      expect(element).to.exist;
+
+      return element;
+    });
+
+    var copyResult = copyPaste.copy(elements);
+
+    return new DescriptorTree(copyResult);
+  });
+}
+
+function mapProperty(shapes, prop) {
+  return map(shapes, function(shape) {
+    return shape[prop];
+  });
+}
+
+function expectCollection(collA, collB, contains) {
+  expect(collA).to.have.length(collB.length);
+
+  forEach(collB, function(element) {
+    if (!element.parent) {
+      return;
+    }
+
+    if (contains) {
+      expect(collA).to.contain(element);
+    } else {
+      expect(collA).to.not.contain(element);
+    }
+  });
+}
