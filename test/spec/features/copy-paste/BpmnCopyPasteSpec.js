@@ -11,7 +11,8 @@ var bpmnCopyPasteModule = require('../../../../lib/features/copy-paste'),
     coreModule = require('../../../../lib/core');
 
 var map = require('lodash/collection/map'),
-    forEach = require('lodash/collection/forEach');
+    forEach = require('lodash/collection/forEach'),
+    uniq = require('lodash/array/uniq');
 
 var DescriptorTree = require('./DescriptorTree');
 
@@ -432,23 +433,52 @@ describe('features/copy-paste', function() {
 
       it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
 
+      it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
     });
 
   });
 
 
-  describe('data associations', function() {
+  describe('participants', function() {
 
     beforeEach(bootstrapModeler(collaborationAssociations, { modules: testModules }));
 
 
-    describe('integration', function() {
+    it('copying participant should copy process as well', inject(function(elementRegistry, copyPaste, canvas) {
+      // given
+      var participants = map([ 'Participant_Input', 'Participant_Output' ], function (e) {
+        return elementRegistry.get(e);
+      });
+      var rootElement = canvas.getRootElement();
 
-      it('participant with OutputDataAssociation', inject(integrationTest([ 'Participant_Output' ])));
+      // when
+      copyPaste.copy(participants);
 
-      it('participant with InputDataAssociation', inject(integrationTest([ 'Participant_Input' ])));
+      copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 4000,
+          y: 4500
+        }
+      });
 
-    });
+      // then
+      var elements = elementRegistry.filter(function(element) {
+        return element.type === 'bpmn:Participant';
+      });
+
+      var processIds = map(elements, function (e) {
+        return e.businessObject.processRef.id;
+      });
+
+      expect(uniq(processIds)).to.have.length(4);
+    }));
+
+
+    it('participant with OutputDataAssociation', inject(integrationTest([ 'Participant_Output' ])));
+
+
+    it('participant with InputDataAssociation', inject(integrationTest([ 'Participant_Input' ])));
 
   });
 
