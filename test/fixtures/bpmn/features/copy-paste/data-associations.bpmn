@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="0.7.0-dev">
+  <bpmn:collaboration id="Collaboration_09rf7ug">
+    <bpmn:participant id="Participant_Output" processRef="Process_Output" />
+    <bpmn:participant id="Participant_Input" processRef="Process_Input" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Output" isExecutable="false">
+    <bpmn:task id="Task_17elucr">
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0bncpb8">
+        <bpmn:targetRef>DataStoreReference_1muhdww</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataStoreReference id="DataStoreReference_1muhdww" />
+  </bpmn:process>
+  <bpmn:process id="Process_Input" isExecutable="false">
+    <bpmn:dataStoreReference id="DataStoreReference_0q26vzn" />
+    <bpmn:task id="Task_10pzi8y">
+      <bpmn:property id="Property_0l7g57i" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1sf5ecg">
+        <bpmn:sourceRef>DataStoreReference_0q26vzn</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0l7g57i</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_09rf7ug">
+      <bpmndi:BPMNShape id="Participant_166hvof_di" bpmnElement="Participant_Output">
+        <dc:Bounds x="302" y="60" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_17elucr_di" bpmnElement="Task_17elucr">
+        <dc:Bounds x="416" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1muhdww_di" bpmnElement="DataStoreReference_1muhdww">
+        <dc:Bounds x="746" y="216" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="726" y="266" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0bncpb8_di" bpmnElement="DataOutputAssociation_0bncpb8">
+        <di:waypoint xsi:type="dc:Point" x="516" y="157" />
+        <di:waypoint xsi:type="dc:Point" x="746" y="233" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_1duzt5k_di" bpmnElement="Participant_Input">
+        <dc:Bounds x="302" y="354" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_0q26vzn_di" bpmnElement="DataStoreReference_0q26vzn">
+        <dc:Bounds x="758" y="491" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="738" y="541" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_10pzi8y_di" bpmnElement="Task_10pzi8y">
+        <dc:Bounds x="426" y="375" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1sf5ecg_di" bpmnElement="DataInputAssociation_1sf5ecg">
+        <di:waypoint xsi:type="dc:Point" x="758" y="508" />
+        <di:waypoint xsi:type="dc:Point" x="526" y="431" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -22,7 +22,8 @@ describe('features/copy-paste', function() {
 
   var basicXML = require('../../../fixtures/bpmn/features/copy-paste/basic.bpmn'),
       collaborationXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration.bpmn'),
-      collaborationMultipleXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration-multiple.bpmn');
+      collaborationMultipleXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration-multiple.bpmn'),
+      collaborationAssociations = require('../../../fixtures/bpmn/features/copy-paste/data-associations.bpmn');
 
 
   function integrationTest(ids) {
@@ -430,6 +431,22 @@ describe('features/copy-paste', function() {
     describe('integration', function() {
 
       it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
+
+    });
+
+  });
+
+
+  describe('data associations', function() {
+
+    beforeEach(bootstrapModeler(collaborationAssociations, { modules: testModules }));
+
+
+    describe('integration', function() {
+
+      it('participant with OutputDataAssociation', inject(integrationTest([ 'Participant_Output' ])));
+
+      it('participant with InputDataAssociation', inject(integrationTest([ 'Participant_Input' ])));
 
     });
 
