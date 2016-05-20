@@ -1,4 +1,4 @@
-> The project is still in an early stage. Documentation may be missing and examples may be broken.
+> The project is still in an early stage. Documentation may be missing and [examples](https://github.com/bpmn-io/bpmn-js-examples) may be broken.
 
 # bpmn-js - BPMN 2.0 for the web
 
@@ -33,20 +33,27 @@ viewer.importXML(xml, function(err) {
 ```
 
 
-## Install bpmn-js
+## Installation
 
-### via bower
+Fetch [bpmn-js prebuilt](https://github.com/bpmn-io/bower-bpmn-js) or install it via [npm](https://www.npmjs.com/package/bpmn-js).
+
+
+#### Fetch Prebuilt
+
+The [bower-bpmn-js](https://github.com/bpmn-io/bower-bpmn-js) repository contains pre-built bundles of bpmn-js. 
+
+Download them directly _or_ fetch them with [Bower](http://bower.io/):
 
 ```
 bower install bpmn-js
 ```
 
-Make sure to include the library + all dependencies into the website.
-
-Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-bower) that shows how to use the library in web applications.
+Checkout the [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-bower) to get started.
 
 
-### via npm
+#### Install via npm
+
+Fetch the library via npm to get fine grained access to the parts you need:
 
 ```
 npm install --save bpmn-js
@@ -54,7 +61,7 @@ npm install --save bpmn-js
 
 Make sure you use [browserify](http://browserify.org) or the like to bundle your project and bpmn-js for the browser.
 
-Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-commonjs) that shows how to use bpmn-js in node-style web applications.
+Checkout the [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-commonjs) to learn more.
 
 
 ## Resources
@@ -65,17 +72,25 @@ Checkout an [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/m
 *   [Forum](https://forum.bpmn.io)
 
 
-## Tools
+## Building the Project
 
-bpmn-js builds on top of a few additional powerful tools
+Perform the following steps to build the library, including running all tests:
+
+```
+cd bpmn-js
+npm install
+grunt
+```
+
+When building the latest development snapshot you may need to perform [additional project setup](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md).
+
+
+## Related
+
+bpmn-js builds on top of a few additional powerful tools:
 
 * [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
 * [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
-
-
-## Building the Project
-
-As long as the project is in alpha stage, you must make sure you setup the whole development environment, including a number of [project dependencies](https://github.com/bpmn-io) according to [our development setup](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md).
 
 
 ## License
