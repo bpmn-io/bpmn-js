@@ -8,6 +8,11 @@ var CommandInterceptor = require('diagram-js/lib/command/CommandInterceptor');
 
 
 function isCustom(element, type) {
+
+  if (!type) {
+    return /custom:/.test(element.type);
+  }
+
   return element && element.type === type;
 }
 
@@ -26,7 +31,7 @@ function ifCustomElement(fn) {
  * A handler responsible for updating the custom element's businessObject
  * once changes on the diagram happen
  */
-function CustomUpdater(eventBus, bpmnFactory, connectionDocking) {
+function CustomUpdater(eventBus, modeling) {
 
   CommandInterceptor.call(this, eventBus);
 
@@ -82,10 +87,29 @@ function CustomUpdater(eventBus, bpmnFactory, connectionDocking) {
     'shape.create'
   ], ifCustomElement(updateTriangle));
 
+
+  /**
+   * When morphing a Process into a Collaboration or vice-versa,
+   * make sure that the existing custom elements get their parents updated.
+   */
+  function updateCustomElementsRoot(event) {
+    var context = event.context,
+        oldRoot = context.oldRoot,
+        newRoot = context.newRoot,
+        children = oldRoot.children;
+
+    var customChildren = children.filter(isCustom);
+
+    if (customChildren.length) {
+      modeling.moveElements(customChildren, { x: 0, y: 0 }, newRoot);
+    }
+  }
+
+  this.postExecute('canvas.updateRoot', updateCustomElementsRoot);
 }
 
 inherits(CustomUpdater, CommandInterceptor);
 
 module.exports = CustomUpdater;
 
-CustomUpdater.$inject = [ 'eventBus' ];
+CustomUpdater.$inject = [ 'eventBus', 'modeling' ];
