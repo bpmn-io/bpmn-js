@@ -252,6 +252,69 @@ describe('features/overlays', function() {
       // then
       expect(overlays.get(id)).not.to.exist;
       expect(queryOverlay(id)).not.to.exist;
+      expect(overlays._overlayContainers).to.be.empty;
+    }));
+
+
+    it('should remove cached container on <*.remove>', inject(function(eventBus, overlays, canvas) {
+
+      // given
+      var shape1 = canvas.addShape({
+        id: 'test1',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      overlays.add(shape1, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay"></div>'
+      });
+
+      var shape2 = canvas.addShape({
+        id: 'test2',
+        x: 150,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      overlays.add(shape2, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay"></div>'
+      });
+
+
+      var shape3 = canvas.addShape({
+        id: 'test3',
+        x: 300,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      overlays.add(shape3, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay"></div>'
+      });
+
+      // when
+      eventBus.fire('shape.remove', { element: shape2 });
+
+      // then
+      expect(overlays._getOverlayContainer(shape1, true)).to.exist;
+      expect(overlays._getOverlayContainer(shape2, true)).not.to.exist;
+      expect(overlays._getOverlayContainer(shape3, true)).to.exist;
     }));
 
 
