@@ -250,9 +250,20 @@ describe('features - context-pad', function() {
 
       expectContextPadEntries('DataStoreReference', [
         'connect',
+        'append.text-annotation',
         '!replace',
-        '!append.end-event',
-        '!append.text-annotation'
+        '!append.end-event'
+      ]);
+    }));
+
+
+    it('should provide DataObjectReference entries', inject(function() {
+
+      expectContextPadEntries('DataObjectReference', [
+        'connect',
+        'append.text-annotation',
+        '!replace',
+        '!append.end-event'
       ]);
     }));
 
