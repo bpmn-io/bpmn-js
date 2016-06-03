@@ -257,7 +257,7 @@ describe('features/Replace', function() {
     }));
 
 
-    it('should adopt children', inject(function(elementFactory, replace, elementRegistry) {
+    it('should adopt children', inject(function(elementFactory, replace, elementRegistry, eventBus) {
 
       // given
       var replacement = {
@@ -301,6 +301,28 @@ describe('features/Replace', function() {
       // then
       expect(domQuery('[data-element-id="originalShape"]', newShapeContainer.parentNode)).to.exist;
       expect(domQuery('[data-element-id="targetShape"]', newShapeContainer.parentNode)).to.exist;
+    }));
+
+
+    it('should retain moved children in command context', inject(function(replace, eventBus) {
+
+      // given
+      var replacement = {
+        id: 'replacement',
+        width: 300,
+        height: 300
+      };
+
+      eventBus.on('commandStack.elements.move.postExecuted', function(event) {
+        // then
+        var shapes = event.context.shapes;
+        expect(shapes).not.to.be.empty;
+        expect(shapes).to.have.length(3);
+      });
+
+      // when
+      var newShape = replace.replaceElement(parentShape, replacement);
+
     }));
 
   });
