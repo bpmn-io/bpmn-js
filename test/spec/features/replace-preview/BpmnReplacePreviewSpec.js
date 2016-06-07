@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -68,6 +68,7 @@ describe('features/replace-preview', function() {
 
   }));
 
+
   it('should replace visuals at the same position as the replaced visual', inject(function(dragging) {
 
     // when
@@ -79,7 +80,6 @@ describe('features/replace-preview', function() {
     dragGroup[0].attr('display', 'inline');
 
     expect(dragGroup[0].getBBox()).to.eql(dragGroup[1].getBBox());
-
   }));
 
 
@@ -113,12 +113,10 @@ describe('features/replace-preview', function() {
     var visualReplacements = dragging.context().data.context.visualReplacements;
 
     expect(visualReplacements).to.be.empty;
-
   }));
 
 
-  it('should hide the replaced visual',
-    inject(function(dragging) {
+  it('should hide the replaced visual', inject(function(dragging) {
 
     // when
     moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
@@ -127,176 +125,176 @@ describe('features/replace-preview', function() {
     var dragGroup = dragging.context().data.context.dragGroup;
 
     expect(dragGroup[0].attr('display')).to.equal('none');
-
   }));
 
 
   it('should not replace non-interrupting start event while hover over same event sub process',
     inject(function(dragging, elementRegistry) {
 
-    // given
-    var subProcess_1 = elementRegistry.get('SubProcess_1');
+      // given
+      var subProcess_1 = elementRegistry.get('SubProcess_1');
 
-    // when
-    moveShape(startEvent_1, subProcess_1, { x: 210, y: 180 });
+      // when
+      moveShape(startEvent_1, subProcess_1, { x: 210, y: 180 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    // check if the visual representation remains a non interrupting message start event
-    var startEventGfx = getGfx({
-      type: 'bpmn:StartEvent',
-      isInterrupting: false,
-      eventDefinitionType: 'bpmn:MessageEventDefinition'
-    });
+      // then
+      // check if the visual representation remains a non interrupting message start event
+      var startEventGfx = getGfx({
+        type: 'bpmn:StartEvent',
+        isInterrupting: false,
+        eventDefinitionType: 'bpmn:MessageEventDefinition'
+      });
 
-    expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
-
-  }));
+      expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
+    })
+  );
 
 
   it('should replace non-interrupting start event while hover over root element',
     inject(function(dragging, elementRegistry) {
 
-    // when
-    moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
+      // when
+      moveShape(startEvent_1, rootElement, { x: 280, y: 120 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    // check if the visual replacement is a blank interrupting start event
-    var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
+      // then
+      // check if the visual replacement is a blank interrupting start event
+      var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-    expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-
-  }));
+      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+    })
+  );
 
 
   it('should not replace non-interrupting start event while hover over another event sub process',
     inject(function(dragging, elementRegistry) {
 
-    // given
-    var subProcess_2 = elementRegistry.get('SubProcess_2');
+      // given
+      var subProcess_2 = elementRegistry.get('SubProcess_2');
 
-    // when
-    moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
+      // when
+      moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    // check if the visual representation remains a non interrupting message start event
-    var startEventGfx = getGfx({
-      type: 'bpmn:StartEvent',
-      isInterrupting: false,
-      eventDefinitionType: 'bpmn:MessageEventDefinition'
-    });
+      // then
+      // check if the visual representation remains a non interrupting message start event
+      var startEventGfx = getGfx({
+        type: 'bpmn:StartEvent',
+        isInterrupting: false,
+        eventDefinitionType: 'bpmn:MessageEventDefinition'
+      });
 
-    expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
-
-  }));
+      expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
+    })
+  );
 
 
   it('should replace non-interrupting start event while hover over regular sub process',
     inject(function(dragging, elementRegistry) {
 
-    // given
-    var subProcess_3 = elementRegistry.get('SubProcess_3');
+      // given
+      var subProcess_3 = elementRegistry.get('SubProcess_3');
 
-    // when
-    moveShape(startEvent_1, subProcess_3, { x: 600, y: 120 });
+      // when
+      moveShape(startEvent_1, subProcess_3, { x: 600, y: 120 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    // check if the visual representation remains a non interrupting message start event
-    var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
+      // then
+      // check if the visual representation remains a non interrupting message start event
+      var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-    expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-
-  }));
+      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+    })
+  );
 
 
   it('should replace all non-interrupting start events in a selection of multiple elements',
     inject(function(move, dragging, elementRegistry, selection) {
 
-    // given
-    var startEvent_2 = elementRegistry.get('StartEvent_2'),
-        startEvent_3 = elementRegistry.get('StartEvent_3');
+      // given
+      var startEvent_2 = elementRegistry.get('StartEvent_2'),
+          startEvent_3 = elementRegistry.get('StartEvent_3');
 
-    // when
-    selection.select([ startEvent_1, startEvent_2, startEvent_3 ]);
+      // when
+      selection.select([ startEvent_1, startEvent_2, startEvent_3 ]);
 
-    moveShape(startEvent_1, rootElement, { x: 150, y: 250 });
+      moveShape(startEvent_1, rootElement, { x: 150, y: 250 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    // check if the visual replacements are blank interrupting start events
-    var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
+      // then
+      // check if the visual replacements are blank interrupting start events
+      var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-    expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-    expect(context.dragGroup[3].innerSVG()).to.equal(startEventGfx.innerSVG());
-    expect(context.dragGroup[4].innerSVG()).to.equal(startEventGfx.innerSVG());
-
-  }));
+      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(context.dragGroup[3].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(context.dragGroup[4].innerSVG()).to.equal(startEventGfx.innerSVG());
+    })
+  );
 
 
   it('should not replace any non-interrupting start events in a selection of multiple elements',
     inject(function(move, dragging, elementRegistry, selection) {
 
-    // given
-    var startEvent_2 = elementRegistry.get('StartEvent_2'),
-        startEvent_3 = elementRegistry.get('StartEvent_3'),
-        subProcess_2 = elementRegistry.get('SubProcess_2');
+      // given
+      var startEvent_2 = elementRegistry.get('StartEvent_2'),
+          startEvent_3 = elementRegistry.get('StartEvent_3'),
+          subProcess_2 = elementRegistry.get('SubProcess_2');
 
-    var messageStartEventGfx = getGfx({
-      type: 'bpmn:StartEvent',
-      isInterrupting: false,
-      eventDefinitionType: 'bpmn:MessageEventDefinition'
-    });
+      var messageStartEventGfx = getGfx({
+        type: 'bpmn:StartEvent',
+        isInterrupting: false,
+        eventDefinitionType: 'bpmn:MessageEventDefinition'
+      });
 
-    var timerStartEventGfx = getGfx({
-      type: 'bpmn:StartEvent',
-      isInterrupting: false,
-      eventDefinitionType: 'bpmn:TimerEventDefinition'
-    });
+      var timerStartEventGfx = getGfx({
+        type: 'bpmn:StartEvent',
+        isInterrupting: false,
+        eventDefinitionType: 'bpmn:TimerEventDefinition'
+      });
 
-    var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
+      var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-    // when
-    selection.select([ startEvent_1, startEvent_2, startEvent_3 ]);
+      // when
+      selection.select([ startEvent_1, startEvent_2, startEvent_3 ]);
 
-    moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
+      moveShape(startEvent_1, subProcess_2, { x: 350, y: 120 });
 
-    var context = dragging.context().data.context;
+      var context = dragging.context().data.context;
 
-    // then
-    expect(context.dragGroup[0].innerSVG()).to.equal(messageStartEventGfx.innerSVG());
-    expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-    expect(context.dragGroup[2].innerSVG()).to.equal(timerStartEventGfx.innerSVG());
-
-  }));
+      // then
+      expect(context.dragGroup[0].innerSVG()).to.equal(messageStartEventGfx.innerSVG());
+      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(context.dragGroup[2].innerSVG()).to.equal(timerStartEventGfx.innerSVG());
+    })
+  );
 
 
   it('should not throw TypeError when moving boundaryEvent',
     inject(function(move, dragging, elementRegistry, elementFactory, selection, modeling) {
 
-    // given
-    var startEvent_1 = elementRegistry.get('StartEvent_1'),
-        subProcess_3 = elementRegistry.get('SubProcess_3');
+      // given
+      var startEvent_1 = elementRegistry.get('StartEvent_1'),
+          subProcess_3 = elementRegistry.get('SubProcess_3');
 
-    var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+      var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
-    var boundaryEvent = modeling.createShape(intermediateEvent, { x: 550, y: 180 }, subProcess_3, true);
+      var boundaryEvent = modeling.createShape(intermediateEvent, { x: 550, y: 180 }, subProcess_3, true);
 
-    // when
-    selection.select([ startEvent_1 ]);
+      // when
+      selection.select([ startEvent_1 ]);
 
-    moveShape(boundaryEvent, subProcess_3, { x: 580, y: 210 });
-    moveShape(boundaryEvent, subProcess_3, { x: 580, y: 180 });
+      moveShape(boundaryEvent, subProcess_3, { x: 580, y: 210 });
+      moveShape(boundaryEvent, subProcess_3, { x: 580, y: 180 });
 
-    // then
-    // expect not to throw TypeError: Cannot read property 'oldElementId' of undefined
-  }));
+      // then
+      // expect not to throw TypeError: Cannot read property 'oldElementId' of undefined
+    })
+  );
 
 });

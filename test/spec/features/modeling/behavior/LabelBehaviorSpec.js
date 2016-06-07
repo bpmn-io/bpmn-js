@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -145,7 +145,7 @@ describe('behavior - LabelBehavior', function() {
           taskShape = elementRegistry.get('Task_1');
 
       var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
-        type: 'bpmn:SequenceFlow',
+        type: 'bpmn:SequenceFlow'
       }, startEventShape.parent);
 
       // when
@@ -181,7 +181,7 @@ describe('behavior - LabelBehavior', function() {
           taskShape = elementRegistry.get('Task_1');
 
       var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
-        type: 'bpmn:SequenceFlow',
+        type: 'bpmn:SequenceFlow'
       }, startEventShape.parent);
 
       var labelPosition = {

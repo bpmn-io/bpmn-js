@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -64,17 +64,17 @@ describe('features/move - drop', function() {
         inject(function(elementRegistry, modeling) {
 
       // given
-      var task_1 = elementRegistry.get('ID_Task_1'),
-          parent = elementRegistry.get('ID_SubProcess_1'),
-          flow   = elementRegistry.get('ID_Sequenceflow_1');
+          var task_1 = elementRegistry.get('ID_Task_1'),
+              parent = elementRegistry.get('ID_SubProcess_1'),
+              flow   = elementRegistry.get('ID_Sequenceflow_1');
 
       // when
-      modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
+          modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
 
       // then
-      expect(flow.parent).to.be.null;
-      expect(flow.businessObject.$parent).to.be.null;
-    }));
+          expect(flow.parent).to.be.null;
+          expect(flow.businessObject.$parent).to.be.null;
+        }));
 
 
     it('should update flow parent if target and source have same parents', inject(function(elementRegistry, modeling) {

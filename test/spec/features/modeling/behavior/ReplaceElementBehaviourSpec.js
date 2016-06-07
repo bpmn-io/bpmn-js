@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -15,14 +15,24 @@ var is = require('../../../../../lib/util/ModelUtil').is,
 
 describe('features/modeling - move start event behavior', function() {
 
-  var testModules = [ replacePreviewModule, modelingModule, coreModule, moveModule ];
+  var testModules = [
+    replacePreviewModule,
+    modelingModule,
+    coreModule,
+    moveModule
+  ];
+
 
   describe('Start Events', function() {
+
     var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
 
-    var moveShape;
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    var moveShape;
 
     beforeEach(inject(function(move, dragging, elementRegistry) {
 
@@ -44,341 +54,369 @@ describe('features/modeling - move start event behavior', function() {
     it('should select the replacement after replacing the start event',
       inject(function(elementRegistry, canvas, dragging, move, selection) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1'),
-          rootElement = canvas.getRootElement();
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1'),
+            rootElement = canvas.getRootElement();
 
-      // when
-      moveShape(startEvent, rootElement, { x: 140, y: 250 });
+        // when
+        moveShape(startEvent, rootElement, { x: 140, y: 250 });
 
-      dragging.end();
+        dragging.end();
 
-      var replacement = elementRegistry.filter(function(element) {
-        if(is(element, 'bpmn:StartEvent') && element.parent === rootElement) {
-          return true;
-        }
-      })[0];
+        var replacement = elementRegistry.filter(function(element) {
+          if (is(element, 'bpmn:StartEvent') && element.parent === rootElement) {
+            return true;
+          }
+        })[0];
 
-      // then
-      expect(selection.get()).to.include(replacement);
-      expect(selection.get()).not.to.include(startEvent);
-    }));
+        // then
+        expect(selection.get()).to.include(replacement);
+        expect(selection.get()).not.to.include(startEvent);
+      })
+    );
 
 
     it('should select all moved shapes after some of them got replaced',
       inject(function(elementRegistry, canvas, dragging, move, selection) {
 
-      // given
-      var startEvent1 = elementRegistry.get('StartEvent_1'),
-          startEvent2 = elementRegistry.get('StartEvent_2'),
-          startEvent3 = elementRegistry.get('StartEvent_3'),
-          rootElement = canvas.getRootElement();
+        // given
+        var startEvent1 = elementRegistry.get('StartEvent_1'),
+            startEvent2 = elementRegistry.get('StartEvent_2'),
+            startEvent3 = elementRegistry.get('StartEvent_3'),
+            rootElement = canvas.getRootElement();
 
-      // when
-      selection.select([ startEvent1, startEvent2, startEvent3 ]);
-      moveShape(startEvent1, rootElement, { x: 140, y: 250 });
+        // when
+        selection.select([ startEvent1, startEvent2, startEvent3 ]);
+        moveShape(startEvent1, rootElement, { x: 140, y: 250 });
 
-      dragging.end();
+        dragging.end();
 
-      var replacements = elementRegistry.filter(function(element) {
-        if(is(element, 'bpmn:StartEvent') && element.type !== 'label') {
-          return true;
-        }
-      });
+        var replacements = elementRegistry.filter(function(element) {
+          if (is(element, 'bpmn:StartEvent') && element.type !== 'label') {
+            return true;
+          }
+        });
 
-      // then
-      expect(selection.get()).to.include(replacements[0]);
-      expect(selection.get()).to.include(replacements[1]);
-      expect(selection.get()).to.include(replacements[2]);
+        // then
+        expect(selection.get()).to.include(replacements[0]);
+        expect(selection.get()).to.include(replacements[1]);
+        expect(selection.get()).to.include(replacements[2]);
 
-    }));
+      })
+    );
 
   });
 
-  describe('Cancel Events', function () {
+
+  describe('Cancel Events', function() {
 
     var diagramXML = require('../../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-    describe('- normal -', function() {
+
+    describe('normal', function() {
 
 
       it('should unclaim old element ID and claim new ID',
         inject(function(elementRegistry, bpmnReplace) {
 
-        // given
-        var transaction = elementRegistry.get('Transaction_1');
+          // given
+          var transaction = elementRegistry.get('Transaction_1');
 
-        var ids = transaction.businessObject.$model.ids;
+          var ids = transaction.businessObject.$model.ids;
 
-        // when
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          // when
+          var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        // then
-        expect(ids.assigned(transaction.id)).to.be.false;
-        expect(ids.assigned(subProcess.id)).to.eql(subProcess.businessObject);
-      }));
+          // then
+          expect(ids.assigned(transaction.id)).to.be.false;
+          expect(ids.assigned(subProcess.id)).to.eql(subProcess.businessObject);
+        })
+      );
 
 
       it('should REVERT unclaim old element ID and claim new ID on UNDO',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var transaction = elementRegistry.get('Transaction_1');
+          // given
+          var transaction = elementRegistry.get('Transaction_1');
 
-        var ids = transaction.businessObject.$model.ids;
+          var ids = transaction.businessObject.$model.ids;
 
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        // when
-        commandStack.undo();
+          // when
+          commandStack.undo();
 
-        // then
-        expect(ids.assigned(transaction.id)).to.eql(transaction.businessObject);
-        expect(ids.assigned(subProcess.id)).to.be.false;
-      }));
+          // then
+          expect(ids.assigned(transaction.id)).to.eql(transaction.businessObject);
+          expect(ids.assigned(subProcess.id)).to.be.false;
+        })
+      );
 
 
       it('should replace CancelEvent when morphing transaction',
         inject(function(elementRegistry, bpmnReplace) {
-        // given
-        var transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var transaction = elementRegistry.get('Transaction_1'),
+              endEvent = elementRegistry.get('EndEvent_1');
 
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          // when
+          bpmnReplace.replaceElement(endEvent, {
+            type: 'bpmn:EndEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        var newEndEvent = subProcess.children[0].businessObject;
+          var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        // then
-        expect(subProcess.children).to.have.length(2);
-        expect(newEndEvent.eventDefinitionTypes).to.not.exist;
-      }));
+          var newEndEvent = subProcess.children[0].businessObject;
+
+          // then
+          expect(subProcess.children).to.have.length(2);
+          expect(newEndEvent.eventDefinitionTypes).to.not.exist;
+        })
+      );
 
 
       it('should replace CancelEvent when morphing transaction -> undo',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
-        // given
-        var transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var transaction = elementRegistry.get('Transaction_1'),
+              endEvent = elementRegistry.get('EndEvent_1');
 
-        bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          // when
+          bpmnReplace.replaceElement(endEvent, {
+            type: 'bpmn:EndEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        commandStack.undo();
+          bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
-        })[0];
+          commandStack.undo();
 
-        // then
-        expect(transaction.children).to.have.length(2);
-        expect(endEventAfter.businessObject.eventDefinitions).to.exist;
-      }));
+          var endEventAfter = elementRegistry.filter(function(element) {
+            return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
+          })[0];
+
+          // then
+          expect(transaction.children).to.have.length(2);
+          expect(endEventAfter.businessObject.eventDefinitions).to.exist;
+        })
+      );
 
 
       it('should replace a CancelEvent when moving outside of a transaction',
         inject(function(elementRegistry, bpmnReplace, modeling) {
-        // given
-        var process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        var cancelEvent = bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var process = elementRegistry.get('Process_1'),
+              transaction = elementRegistry.get('Transaction_1'),
+              endEvent = elementRegistry.get('EndEvent_1');
 
-        modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
+          // when
+          var cancelEvent = bpmnReplace.replaceElement(endEvent, {
+            type: 'bpmn:EndEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.parent === process && element.type === 'bpmn:EndEvent');
-        })[0];
+          modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
 
-        // then
-        expect(transaction.children).to.have.length(0);
-        expect(endEventAfter.businessObject.eventDefinitions).to.not.exist;
-      }));
+          var endEventAfter = elementRegistry.filter(function(element) {
+            return (element.parent === process && element.type === 'bpmn:EndEvent');
+          })[0];
+
+          // then
+          expect(transaction.children).to.have.length(0);
+          expect(endEventAfter.businessObject.eventDefinitions).to.not.exist;
+        })
+      );
 
 
       it('should replace a CancelEvent when moving outside of a transaction -> undo',
         inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
-        // given
-        var process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        var cancelEvent = bpmnReplace.replaceElement(endEvent, {
-          type: 'bpmn:EndEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var process = elementRegistry.get('Process_1'),
+              transaction = elementRegistry.get('Transaction_1'),
+              endEvent = elementRegistry.get('EndEvent_1');
 
-        modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
+          // when
+          var cancelEvent = bpmnReplace.replaceElement(endEvent, {
+            type: 'bpmn:EndEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        commandStack.undo();
+          modeling.moveElements([ cancelEvent ], { x: 0, y: 150 }, process);
 
-        var endEventAfter = elementRegistry.filter(function(element) {
-          return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
-        })[0];
+          commandStack.undo();
 
-        // then
-        expect(transaction.children).to.have.length(2);
-        expect(endEventAfter.businessObject.eventDefinitions).to.exist;
-      }));
+          var endEventAfter = elementRegistry.filter(function(element) {
+            return (element.id !== 'EndEvent_2' && element.type === 'bpmn:EndEvent');
+          })[0];
+
+          // then
+          expect(transaction.children).to.have.length(2);
+          expect(endEventAfter.businessObject.eventDefinitions).to.exist;
+        })
+      );
 
     });
 
-    describe('- boundary events -', function() {
+
+    describe('boundary events', function() {
 
       it('should replace CancelBoundaryEvent when morphing from a transaction',
         inject(function(elementRegistry, bpmnReplace) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1');
 
-        // when
-        bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              transaction = elementRegistry.get('Transaction_1');
 
-        var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          // when
+          bpmnReplace.replaceElement(boundaryEvent, {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        var newBoundaryEvent = subProcess.attachers[0].businessObject;
+          var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        // then
-        expect(newBoundaryEvent.eventDefinitionTypes).to.not.exist;
-        expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
-        expect(elementRegistry.get('Transaction_1')).to.not.exist;
-      }));
+          var newBoundaryEvent = subProcess.attachers[0].businessObject;
+
+          // then
+          expect(newBoundaryEvent.eventDefinitionTypes).to.not.exist;
+          expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
+          expect(elementRegistry.get('Transaction_1')).to.not.exist;
+        })
+      );
 
 
       it('should replace CancelBoundaryEvent when morphing from a transaction -> undo',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1');
 
-        // when
-        bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              transaction = elementRegistry.get('Transaction_1');
 
-        bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
+          // when
+          bpmnReplace.replaceElement(boundaryEvent, {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        commandStack.undo();
+          bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
-        var afterBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
+          commandStack.undo();
 
-        // then
-        expect(afterBoundaryEvent.businessObject.eventDefinitions).exist;
-        expect(afterBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
-        expect(transaction.attachers).to.have.length(1);
-      }));
+          var afterBoundaryEvent = elementRegistry.filter(function(element) {
+            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+          })[0];
+
+          // then
+          expect(afterBoundaryEvent.businessObject.eventDefinitions).exist;
+          expect(afterBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
+          expect(transaction.attachers).to.have.length(1);
+        })
+      );
 
 
       it('should replace CancelBoundaryEvent when attaching to a NON-transaction',
         inject(function(elementRegistry, bpmnReplace, modeling) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            subProcess = elementRegistry.get('SubProcess_1'),
-            process = elementRegistry.get('Process_1'),
-            transaction = elementRegistry.get('Transaction_1');
 
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              subProcess = elementRegistry.get('SubProcess_1'),
+              process = elementRegistry.get('Process_1'),
+              transaction = elementRegistry.get('Transaction_1');
 
-        modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
+          // when
+          var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        var movedBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
+          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
 
-        // then
-        expect(movedBoundaryEvent.businessObject.eventDefinitions).to.not.exist;
-        expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
-        expect(movedBoundaryEvent.parent).to.equal(process);
+          var movedBoundaryEvent = elementRegistry.filter(function(element) {
+            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+          })[0];
 
-        expect(movedBoundaryEvent.host).to.equal(subProcess);
-        expect(subProcess.attachers).to.contain(movedBoundaryEvent);
-        expect(transaction.attachers).to.be.empty;
-      }));
+          // then
+          expect(movedBoundaryEvent.businessObject.eventDefinitions).to.not.exist;
+          expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
+          expect(movedBoundaryEvent.parent).to.equal(process);
+
+          expect(movedBoundaryEvent.host).to.equal(subProcess);
+          expect(subProcess.attachers).to.contain(movedBoundaryEvent);
+          expect(transaction.attachers).to.be.empty;
+        })
+      );
 
 
       it('should replace CancelBoundaryEvent when attaching to a NON-transaction -> undo',
         inject(function(elementRegistry, bpmnReplace, modeling, commandStack) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            transaction = elementRegistry.get('Transaction_1'),
-            subProcess = elementRegistry.get('SubProcess_1');
 
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              transaction = elementRegistry.get('Transaction_1'),
+              subProcess = elementRegistry.get('SubProcess_1');
 
-        modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
+          // when
+          var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        commandStack.undo();
+          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
 
-        var movedBoundaryEvent = elementRegistry.filter(function(element) {
-          return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
-        })[0];
+          commandStack.undo();
 
-        // then
-        expect(movedBoundaryEvent.businessObject.eventDefinitions).to.exist;
-        expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
+          var movedBoundaryEvent = elementRegistry.filter(function(element) {
+            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+          })[0];
 
-        expect(movedBoundaryEvent.host).to.equal(transaction);
-        expect(transaction.attachers).to.contain(movedBoundaryEvent);
-        expect(subProcess.attachers).to.have.length(1);
-      }));
+          // then
+          expect(movedBoundaryEvent.businessObject.eventDefinitions).to.exist;
+          expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
+
+          expect(movedBoundaryEvent.host).to.equal(transaction);
+          expect(transaction.attachers).to.contain(movedBoundaryEvent);
+          expect(subProcess.attachers).to.have.length(1);
+        })
+      );
+
 
       it('should NOT allow morphing into an IntermediateEvent',
         inject(function(elementRegistry, bpmnReplace, commandStack, move, dragging) {
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            subProcess = elementRegistry.get('SubProcess_1');
 
-        // when
-        var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
-          type: 'bpmn:BoundaryEvent',
-          eventDefinitionType: 'bpmn:CancelEventDefinition'
-        });
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              subProcess = elementRegistry.get('SubProcess_1');
 
-        move.start(canvasEvent({ x: 0, y: 0 }), newBoundaryEvent);
+          // when
+          var newBoundaryEvent = bpmnReplace.replaceElement(boundaryEvent, {
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:CancelEventDefinition'
+          });
 
-        dragging.hover({
-          gfx: elementRegistry.getGraphics(subProcess),
-          element: subProcess
-        });
-        dragging.move(canvasEvent({ x: 450, y: -50 }));
+          move.start(canvasEvent({ x: 0, y: 0 }), newBoundaryEvent);
 
-        var canExecute = dragging.context().data.context.canExecute;
+          dragging.hover({
+            gfx: elementRegistry.getGraphics(subProcess),
+            element: subProcess
+          });
+          dragging.move(canvasEvent({ x: 450, y: -50 }));
 
-        // then
-        expect(canExecute).to.be.false;
-      }));
+          var canExecute = dragging.context().data.context.canExecute;
+
+          // then
+          expect(canExecute).to.be.false;
+        })
+      );
 
     });
 

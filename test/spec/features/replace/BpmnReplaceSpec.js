@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -17,7 +17,13 @@ var is = require('../../../../lib/util/ModelUtil').is,
 
 describe('features/replace - bpmn replace', function() {
 
-  var testModules = [ coreModule, modelingModule, replaceModule, moveModule ];
+  var testModules = [
+    coreModule,
+    modelingModule,
+    replaceModule,
+    moveModule
+  ];
+
 
   describe('should replace', function() {
 
@@ -125,64 +131,67 @@ describe('features/replace - bpmn replace', function() {
     it('non interrupting boundary event by interrupting boundary event',
       inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
-      // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-          newElementData = {
-            type: 'bpmn:BoundaryEvent',
-            eventDefinitionType: 'bpmn:EscalationEventDefinition'
-          };
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+            newElementData = {
+              type: 'bpmn:BoundaryEvent',
+              eventDefinitionType: 'bpmn:EscalationEventDefinition'
+            };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
 
-      // then
-      expect(newElement).to.exist;
-      expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
-      expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
-      expect(newElement.businessObject.cancelActivity).to.be.true;
-    }));
+        // then
+        expect(newElement).to.exist;
+        expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+        expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
+        expect(newElement.businessObject.cancelActivity).to.be.true;
+      })
+    );
 
 
     it('interrupting boundary event by non interrupting boundary event',
       inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
-      // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
-          newElementData = {
-            type: 'bpmn:BoundaryEvent',
-            eventDefinitionType: 'bpmn:SignalEventDefinition',
-            cancelActivity: false
-          };
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
+            newElementData = {
+              type: 'bpmn:BoundaryEvent',
+              eventDefinitionType: 'bpmn:SignalEventDefinition',
+              cancelActivity: false
+            };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
 
-      // then
-      expect(newElement).to.exist;
-      expect(is(newElement, 'bpmn:BoundaryEvent')).to.be.true;
-      expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
-      expect(newElement.businessObject.cancelActivity).to.be.false;
-    }));
+        // then
+        expect(newElement).to.exist;
+        expect(is(newElement, 'bpmn:BoundaryEvent')).to.be.true;
+        expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
+        expect(newElement.businessObject.cancelActivity).to.be.false;
+      })
+    );
 
 
     it('boundary event and update host',
       inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
-      // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-          host = elementRegistry.get('Task_1'),
-          newElementData = {
-            type: 'bpmn:BoundaryEvent',
-            eventDefinitionType: 'bpmn:ErrorEventDefinition',
-          };
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+            host = elementRegistry.get('Task_1'),
+            newElementData = {
+              type: 'bpmn:BoundaryEvent',
+              eventDefinitionType: 'bpmn:ErrorEventDefinition'
+            };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
 
-      // then
-      expect(newElement.host).to.exist;
-      expect(newElement.host).to.eql(host);
-    }));
+        // then
+        expect(newElement.host).to.exist;
+        expect(newElement.host).to.eql(host);
+      })
+    );
 
   });
 
@@ -191,7 +200,9 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('./BpmnReplace.collaboration.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
     it('expanded with collapsed pool', inject(function(elementRegistry, bpmnReplace) {
@@ -247,7 +258,8 @@ describe('features/replace - bpmn replace', function() {
       expect(newElement.y).to.equal(task.y);
     }));
 
-    it('should keep label position', inject(function (elementRegistry, bpmnReplace, modeling) {
+
+    it('should keep label position', inject(function(elementRegistry, bpmnReplace, modeling) {
 
       // given
       var exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
@@ -263,7 +275,6 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(newElement.label.x).to.equal(label.x);
       expect(newElement.label.y).to.equal(label.y);
-
     }));
 
   });
@@ -279,18 +290,19 @@ describe('features/replace - bpmn replace', function() {
     it('should select after replace',
       inject(function(elementRegistry, selection, bpmnReplace) {
 
-      // given
-      var task = elementRegistry.get('Task_1');
-      var newElementData =  {
-        type: 'bpmn:UserTask'
-      };
+        // given
+        var task = elementRegistry.get('Task_1');
+        var newElementData =  {
+          type: 'bpmn:UserTask'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(task, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(task, newElementData);
 
-      // then
-      expect(selection.get()).to.include(newElement);
-    }));
+        // then
+        expect(selection.get()).to.include(newElement);
+      })
+    );
 
   });
 
@@ -304,39 +316,41 @@ describe('features/replace - bpmn replace', function() {
     it('should keep interior labels',
       inject(function(elementRegistry, bpmnReplace) {
 
-      // given
-      var task = elementRegistry.get('Task_1');
+        // given
+        var task = elementRegistry.get('Task_1');
 
-      var newElementData =  {
-        type: 'bpmn:UserTask'
-      };
+        var newElementData =  {
+          type: 'bpmn:UserTask'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(task, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(task, newElementData);
 
-      // then
-      expect(newElement.businessObject.name).to.equal('Task Caption');
-    }));
+        // then
+        expect(newElement.businessObject.name).to.equal('Task Caption');
+      })
+    );
 
 
     it('should keep exterior labels',
       inject(function(elementRegistry, bpmnReplace) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
 
-      var newElementData =  {
-        type: 'bpmn:EndEvent'
-      };
+        var newElementData =  {
+          type: 'bpmn:EndEvent'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
 
-      // then
-      expect(newElement.label.hidden).to.equal(false);
-      expect(newElement.label.labelTarget).to.equal(newElement);
-      expect(newElement.businessObject.name).to.equal('KEEP ME');
-    }));
+        // then
+        expect(newElement.label.hidden).to.equal(false);
+        expect(newElement.label.labelTarget).to.equal(newElement);
+        expect(newElement.businessObject.name).to.equal('KEEP ME');
+      })
+    );
 
   });
 
@@ -345,11 +359,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
-    it('should undo replace',
-      inject(function(elementRegistry, bpmnReplace, commandStack) {
+    it('should undo', inject(function(elementRegistry, bpmnReplace, commandStack) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -371,8 +386,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should redo replace',
-      inject(function(elementRegistry, bpmnReplace, commandStack) {
+    it('should redo', inject(function(elementRegistry, bpmnReplace, commandStack) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -407,11 +421,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
-    it('should reconnect valid connections',
-      inject(function(elementRegistry, bpmnReplace) {
+    it('should reconnect valid', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('Task_1');
@@ -428,7 +443,6 @@ describe('features/replace - bpmn replace', function() {
           source = incoming.source,
           target = outgoing.target;
 
-
       expect(incoming).to.exist;
       expect(outgoing).to.exist;
       expect(source).to.eql(elementRegistry.get('StartEvent_1'));
@@ -436,8 +450,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should remove invalid incomming connections',
-      inject(function(elementRegistry, bpmnReplace) {
+    it('should remove invalid (incoming)', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('StartEvent_1');
@@ -449,17 +462,11 @@ describe('features/replace - bpmn replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      var incoming = newElement.incoming[0],
-          outgoing = newElement.outgoing[0];
-
-
-      expect(incoming).not.to.exist;
-      expect(outgoing).not.to.exist;
+      expect(newElement.incoming).to.be.empty;
     }));
 
 
-    it('should remove invalid outgoing connections',
-      inject(function(elementRegistry, bpmnReplace) {
+    it('should remove invalid (outgoing)', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var task = elementRegistry.get('EndEvent_1');
@@ -471,19 +478,13 @@ describe('features/replace - bpmn replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      var incoming = newElement.incoming[0],
-          outgoing = newElement.outgoing[0];
-
-
-      expect(incoming).not.to.exist;
-      expect(outgoing).not.to.exist;
+      expect(newElement.outgoing).to.be.empty;
     }));
 
 
     describe('undo support', function() {
 
-      it('should reconnect valid connections',
-        inject(function(elementRegistry, bpmnReplace, commandStack) {
+      it('should reconnect valid', inject(function(elementRegistry, bpmnReplace, commandStack) {
 
         // given
         var task = elementRegistry.get('Task_1');
@@ -503,7 +504,6 @@ describe('features/replace - bpmn replace', function() {
             source = incoming.source,
             target = outgoing.target;
 
-
         expect(incoming).to.exist;
         expect(outgoing).to.exist;
         expect(source).to.eql(elementRegistry.get('StartEvent_1'));
@@ -511,58 +511,59 @@ describe('features/replace - bpmn replace', function() {
       }));
 
 
-      it('should remove invalid incoming connections',
+      it('should remove invalid (invalid)',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1');
-        var newElementData =  {
-          type: 'bpmn:EndEvent'
-        };
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1');
+          var newElementData =  {
+            type: 'bpmn:EndEvent'
+          };
 
-        bpmnReplace.replaceElement(startEvent, newElementData);
+          bpmnReplace.replaceElement(startEvent, newElementData);
 
-        // when
-        commandStack.undo();
+          // when
+          commandStack.undo();
 
-        // then
-        var newEvent = elementRegistry.get('StartEvent_1');
-        var incoming = newEvent.incoming[0],
-            outgoing = newEvent.outgoing[0],
-            target = outgoing.target;
+          // then
+          var newEvent = elementRegistry.get('StartEvent_1');
+          var incoming = newEvent.incoming[0],
+              outgoing = newEvent.outgoing[0],
+              target = outgoing.target;
 
 
-        expect(incoming).not.to.exist;
-        expect(outgoing).to.exist;
-        expect(target).to.eql(elementRegistry.get('Task_1'));
-      }));
+          expect(incoming).not.to.exist;
+          expect(outgoing).to.exist;
+          expect(target).to.eql(elementRegistry.get('Task_1'));
+        })
+      );
 
 
       it('should remove invalid outgoing connections',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var endEvent = elementRegistry.get('EndEvent_1');
-        var newElementData =  {
-          type: 'bpmn:StartEvent'
-        };
+          // given
+          var endEvent = elementRegistry.get('EndEvent_1');
+          var newElementData =  {
+            type: 'bpmn:StartEvent'
+          };
 
-        bpmnReplace.replaceElement(endEvent, newElementData);
+          bpmnReplace.replaceElement(endEvent, newElementData);
 
-        // when
-        commandStack.undo();
+          // when
+          commandStack.undo();
 
-        // then
-        var newEvent = elementRegistry.get('EndEvent_1');
-        var incoming = newEvent.incoming[0],
-            outgoing = newEvent.outgoing[0],
-            source   = incoming.source;
+          // then
+          var newEvent = elementRegistry.get('EndEvent_1');
+          var incoming = newEvent.incoming[0],
+              outgoing = newEvent.outgoing[0],
+              source   = incoming.source;
 
-
-        expect(incoming).to.exist;
-        expect(outgoing).not.to.exist;
-        expect(source).to.eql(elementRegistry.get('Transaction_1'));
-      }));
+          expect(incoming).to.exist;
+          expect(outgoing).not.to.exist;
+          expect(source).to.eql(elementRegistry.get('Transaction_1'));
+        })
+      );
 
     });
 
@@ -572,77 +573,80 @@ describe('features/replace - bpmn replace', function() {
       it('should reconnect valid connections',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var task = elementRegistry.get('Task_1');
-        var newElementData =  {
-          type: 'bpmn:UserTask'
-        };
-        var newElement = bpmnReplace.replaceElement(task, newElementData);
+          // given
+          var task = elementRegistry.get('Task_1');
+          var newElementData =  {
+            type: 'bpmn:UserTask'
+          };
+          var newElement = bpmnReplace.replaceElement(task, newElementData);
 
-        // when
-        commandStack.undo();
-        commandStack.redo();
+          // when
+          commandStack.undo();
+          commandStack.redo();
 
-        // then
-        var incoming = newElement.incoming[0],
-            outgoing = newElement.outgoing[0],
-            source = incoming.source,
-            target = outgoing.target;
+          // then
+          var incoming = newElement.incoming[0],
+              outgoing = newElement.outgoing[0],
+              source = incoming.source,
+              target = outgoing.target;
 
 
-        expect(incoming).to.exist;
-        expect(outgoing).to.exist;
-        expect(source).to.eql(elementRegistry.get('StartEvent_1'));
-        expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
-      }));
+          expect(incoming).to.exist;
+          expect(outgoing).to.exist;
+          expect(source).to.eql(elementRegistry.get('StartEvent_1'));
+          expect(target).to.eql(elementRegistry.get('ExclusiveGateway_1'));
+        })
+      );
 
 
       it('should remove invalid incoming connections',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1');
-        var newElementData =  {
-          type: 'bpmn:EndEvent'
-        };
-        var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1');
+          var newElementData =  {
+            type: 'bpmn:EndEvent'
+          };
+          var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
 
-        // when
-        commandStack.undo();
-        commandStack.redo();
+          // when
+          commandStack.undo();
+          commandStack.redo();
 
-        // then
-        var incoming = newElement.incoming[0],
-            outgoing = newElement.outgoing[0];
+          // then
+          var incoming = newElement.incoming[0],
+              outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).not.to.exist;
-        expect(outgoing).not.to.exist;
-      }));
+          expect(incoming).not.to.exist;
+          expect(outgoing).not.to.exist;
+        })
+      );
 
 
       it('should remove invalid outgoing connections',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
-        // given
-        var endEvent = elementRegistry.get('EndEvent_1');
-        var newElementData =  {
-          type: 'bpmn:StartEvent'
-        };
-        var newElement = bpmnReplace.replaceElement(endEvent, newElementData);
+          // given
+          var endEvent = elementRegistry.get('EndEvent_1');
+          var newElementData =  {
+            type: 'bpmn:StartEvent'
+          };
+          var newElement = bpmnReplace.replaceElement(endEvent, newElementData);
 
-        // when
-        commandStack.undo();
-        commandStack.redo();
+          // when
+          commandStack.undo();
+          commandStack.redo();
 
-        // then
-        var incoming = newElement.incoming[0],
-            outgoing = newElement.outgoing[0];
+          // then
+          var incoming = newElement.incoming[0],
+              outgoing = newElement.outgoing[0];
 
 
-        expect(incoming).not.to.exist;
-        expect(outgoing).not.to.exist;
-      }));
+          expect(incoming).not.to.exist;
+          expect(outgoing).not.to.exist;
+        })
+      );
 
     });
 
@@ -700,86 +704,93 @@ describe('features/replace - bpmn replace', function() {
     it('should allow morphing expanded into expanded ad hoc',
       inject(function(bpmnReplace, elementRegistry) {
 
-      // given
-      var element = elementRegistry.get('SubProcess_1');
-      var newElementData = {
-        type: 'bpmn:AdHocSubProcess'
-      };
+        // given
+        var element = elementRegistry.get('SubProcess_1');
+        var newElementData = {
+          type: 'bpmn:AdHocSubProcess'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
 
-      // then
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
-      expect(isExpanded(newElement)).to.be.true;
-    }));
+        // then
+        expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+        expect(isExpanded(newElement)).to.be.true;
+      })
+    );
 
 
     it('should allow morphing expanded ad hoc into expanded',
       inject(function(bpmnReplace, elementRegistry) {
 
-      // given
-      var element = elementRegistry.get('AdHocSubProcessExpanded');
-      var newElementData = {
-        type: 'bpmn:SubProcess'
-      };
+        // given
+        var element = elementRegistry.get('AdHocSubProcessExpanded');
+        var newElementData = {
+          type: 'bpmn:SubProcess'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
 
-      // then
-      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
-      expect(isExpanded(newElement)).to.be.true;
-    }));
+        // then
+        expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+        expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
+        expect(isExpanded(newElement)).to.be.true;
+      })
+    );
 
 
     it('should allow morphing collapsed into collapsed ad hoc',
       inject(function(bpmnReplace, elementRegistry) {
 
-      // given
-      var element = elementRegistry.get('SubProcessCollapsed');
-      var newElementData = {
-        type: 'bpmn:AdHocSubProcess'
-      };
+        // given
+        var element = elementRegistry.get('SubProcessCollapsed');
+        var newElementData = {
+          type: 'bpmn:AdHocSubProcess'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
 
-      // then
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
-      expect(isExpanded(newElement)).not.to.be.true;
-    }));
+        // then
+        expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+        expect(isExpanded(newElement)).not.to.be.true;
+      })
+    );
 
 
     it('should allow morphing collapsed ad hoc into collapsed',
       inject(function(bpmnReplace, elementRegistry) {
 
-      // given
-      var element = elementRegistry.get('AdHocSubProcessCollapsed');
-      var newElementData = {
-        type: 'bpmn:SubProcess'
-      };
+        // given
+        var element = elementRegistry.get('AdHocSubProcessCollapsed');
+        var newElementData = {
+          type: 'bpmn:SubProcess'
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
 
-      // then
-      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
-      expect(isExpanded(newElement)).not.to.be.true;
-    }));
+        // then
+        expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+        expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.false;
+        expect(isExpanded(newElement)).not.to.be.true;
+      })
+    );
 
   });
 
-  describe('morphing collapsed tasks / sub processes into expanded sub processes', function() {
+
+  describe('collapsed to expanded', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
-    it('should allow morphing task into expanded sub process', inject(function(bpmnReplace, elementRegistry) {
+    it('should morph task -> expanded sub process', inject(function(bpmnReplace, elementRegistry) {
 
       // given
       var element = elementRegistry.get('Task_1');
@@ -797,7 +808,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should allow morphing collapsed sup process into expanded sub process', inject(function(bpmnReplace, elementRegistry) {
+    it('should expand sub-process', inject(function(bpmnReplace, elementRegistry) {
 
       // given
       var element = elementRegistry.get('SubProcessCollapsed');
@@ -815,7 +826,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should allow morphing collapsed ad hoc into expanded ad hoc', inject(function(bpmnReplace, elementRegistry) {
+    it('should expand ad hoc sub-process', inject(function(bpmnReplace, elementRegistry) {
 
       // given
       var element = elementRegistry.get('AdHocSubProcessCollapsed');
@@ -853,11 +864,14 @@ describe('features/replace - bpmn replace', function() {
 
   });
 
+
   describe('compensation activity', function() {
 
     var diagramXML = require('./BpmnReplace.compensation.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
     it('should keep isForCompensation attr', inject(function(elementRegistry, bpmnReplace) {
@@ -888,155 +902,162 @@ describe('features/replace - bpmn replace', function() {
     it('should remove connections',
       inject(function(elementRegistry, bpmnReplace) {
 
-      // given
-      var transaction = elementRegistry.get('SubProcess_1');
-      var newElementData =  {
-        type: 'bpmn:SubProcess',
-        triggeredByEvent: true
-      };
+        // given
+        var transaction = elementRegistry.get('SubProcess_1');
+        var newElementData =  {
+          type: 'bpmn:SubProcess',
+          triggeredByEvent: true
+        };
 
-      // when
-      var newElement = bpmnReplace.replaceElement(transaction, newElementData);
+        // when
+        var newElement = bpmnReplace.replaceElement(transaction, newElementData);
 
-      // then
-      var incoming = newElement.incoming[0],
-          outgoing = newElement.outgoing[0];
+        // then
+        var incoming = newElement.incoming[0],
+            outgoing = newElement.outgoing[0];
 
-      expect(incoming).not.to.exist;
-      expect(outgoing).not.to.exist;
-    }));
+        expect(incoming).not.to.exist;
+        expect(outgoing).not.to.exist;
+      })
+    );
 
 
     it('should replace non-interrupting start event after moving it outside event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_2'),
-          root = elementRegistry.get('Process_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_2'),
+            root = elementRegistry.get('Process_1');
 
-      // when
-      modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
+        // when
+        modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
 
-      var startEventAfter = elementRegistry.filter(function(element) {
-        return is(element, 'bpmn:StartEvent') && element.parent === root;
-      })[0];
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === root;
+        })[0];
 
-      // then
-      expect(isInterrupting(startEventAfter)).to.be.true;
-      expect(startEventAfter.parent).to.equal(root);
+        // then
+        expect(isInterrupting(startEventAfter)).to.be.true;
+        expect(startEventAfter.parent).to.equal(root);
 
-    }));
+      })
+    );
 
 
     it('should replace non-interrupting start event after moving it to a regular sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_2'),
-          subProcess = elementRegistry.get('SubProcess_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_2'),
+            subProcess = elementRegistry.get('SubProcess_1');
 
-      // when
-      modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
+        // when
+        modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
 
-      var startEventAfter = elementRegistry.filter(function(element) {
-        return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
-      })[0];
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
+        })[0];
 
-      // then
-      expect(isInterrupting(startEventAfter)).to.be.true;
-      expect(startEventAfter.parent).to.equal(subProcess);
+        // then
+        expect(isInterrupting(startEventAfter)).to.be.true;
+        expect(startEventAfter.parent).to.equal(subProcess);
 
-    }));
+      })
+    );
 
 
     it('should not replace non-interrupting start event after moving it to another event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_2'),
-          subProcess = elementRegistry.get('SubProcess_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_2'),
+            subProcess = elementRegistry.get('SubProcess_1');
 
-      var eventSubProcess = bpmnReplace.replaceElement(subProcess, {
-        type: 'bpmn:SubProcess',
-        triggeredByEvent: true,
-        isExpanded: true
-      });
+        var eventSubProcess = bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          triggeredByEvent: true,
+          isExpanded: true
+        });
 
-      // when
-      modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
+        // when
+        modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
 
-      var startEventAfter = elementRegistry.filter(function(element) {
-        return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
-      })[1];
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
+        })[1];
 
-      // then
-      expect(startEvent.id).to.equal(startEventAfter.id);
-      expect(startEventAfter.parent).to.equal(eventSubProcess);
+        // then
+        expect(startEvent.id).to.equal(startEventAfter.id);
+        expect(startEventAfter.parent).to.equal(eventSubProcess);
 
-    }));
+      })
+    );
 
 
     it('should not replace interrupting start event after moving it outside event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_2'),
-          root = elementRegistry.get('Process_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_2'),
+            root = elementRegistry.get('Process_1');
 
-      var interruptingStartEvent = bpmnReplace.replaceElement(startEvent, { type: 'bpmn:StartEvent' });
+        var interruptingStartEvent = bpmnReplace.replaceElement(startEvent, { type: 'bpmn:StartEvent' });
 
-      // when
-      modeling.moveElements([interruptingStartEvent], { x: 0, y: 200 }, root);
+        // when
+        modeling.moveElements([interruptingStartEvent], { x: 0, y: 200 }, root);
 
-      var startEventAfter = elementRegistry.filter(function(element) {
-        return is(element, 'bpmn:StartEvent') && element.parent === root;
-      })[0];
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === root;
+        })[0];
 
-      // then
-      expect(startEventAfter).to.equal(interruptingStartEvent);
-      expect(startEventAfter.parent).to.equal(root);
+        // then
+        expect(startEventAfter).to.equal(interruptingStartEvent);
+        expect(startEventAfter.parent).to.equal(root);
 
-    }));
+      })
+    );
 
 
     it('should replace non-interrupting start event when replacing parent event sub process',
-      inject(function(elementRegistry, bpmnReplace){
+      inject(function(elementRegistry, bpmnReplace) {
 
-      // given
-      var eventSubProcess = elementRegistry.get('SubProcess_2');
+        // given
+        var eventSubProcess = elementRegistry.get('SubProcess_2');
 
-      // when
-      var subProcess = bpmnReplace.replaceElement(eventSubProcess, { type: 'bpmn:SubProcess' });
+        // when
+        var subProcess = bpmnReplace.replaceElement(eventSubProcess, { type: 'bpmn:SubProcess' });
 
-      // then
-      var replacedStartEvent = elementRegistry.filter(function (element) {
-        return (element.parent === subProcess && element.type !== 'label');
-      })[0];
+        // then
+        var replacedStartEvent = elementRegistry.filter(function(element) {
+          return (element.parent === subProcess && element.type !== 'label');
+        })[0];
 
-      expect(isInterrupting(replacedStartEvent)).to.be.true;
-      expect(replacedStartEvent.parent).to.equal(subProcess);
-    }));
+        expect(isInterrupting(replacedStartEvent)).to.be.true;
+        expect(replacedStartEvent.parent).to.equal(subProcess);
+      })
+    );
 
 
     it('should not replace non-interrupting start event when moving parent event sub process',
-      inject(function(elementRegistry, bpmnReplace, modeling){
+      inject(function(elementRegistry, bpmnReplace, modeling) {
 
-      // given
-      var eventSubProcess = elementRegistry.get('SubProcess_2'),
-          startEvent = elementRegistry.get('StartEvent_2');
+        // given
+        var eventSubProcess = elementRegistry.get('SubProcess_2'),
+            startEvent = elementRegistry.get('StartEvent_2');
 
-      // when
-      modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
+        // when
+        modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
 
-      // start event after moving parent
-      var startEventAfter = elementRegistry.filter(function (element) {
-        return (element.parent === eventSubProcess && element.type !== 'label');
-      })[0];
+        // start event after moving parent
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return (element.parent === eventSubProcess && element.type !== 'label');
+        })[0];
 
-      // then
-      expect(startEventAfter).to.equal(startEvent);
-      expect(startEventAfter.parent).to.eql(eventSubProcess);
-    }));
+        // then
+        expect(startEventAfter).to.equal(startEvent);
+        expect(startEventAfter.parent).to.eql(eventSubProcess);
+      })
+    );
 
   });
 
@@ -1045,7 +1066,10 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
 
     it('should properly set parent of event definitions', inject(function(elementRegistry, modeling, bpmnReplace) {
 
@@ -1061,6 +1085,7 @@ describe('features/replace - bpmn replace', function() {
       expect(parent).to.exist;
       expect(parent).to.equal(messageEvent.businessObject);
     }));
+
   });
 
 });

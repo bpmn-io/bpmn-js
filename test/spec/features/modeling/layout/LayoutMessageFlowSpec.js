@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -77,24 +77,25 @@ describe('features/modeling - layout message flows', function() {
 
 
   it('should layout manhattan after Participant move beyond EndEvent bounds',
-      inject(function(elementRegistry, modeling) {
+    inject(function(elementRegistry, modeling) {
 
-    // given
-    var participantShape = elementRegistry.get('Participant_1'),
-        messageFlowConnection = elementRegistry.get('MessageFlow_5');
+      // given
+      var participantShape = elementRegistry.get('Participant_1'),
+          messageFlowConnection = elementRegistry.get('MessageFlow_5');
 
-    // when
-    modeling.moveElements([ participantShape ], { x: -200, y: 0 });
+      // when
+      modeling.moveElements([ participantShape ], { x: -200, y: 0 });
 
-    // then
+      // then
 
-    // expect cropped, repaired manhattan connection
-    expect(messageFlowConnection.waypoints).eql([
-      { original: { x: 671, y: 214 }, x: 671, y: 214 },
-      { x: 671, y: 315 },
-      { x: 471, y: 315 },
-      { original: { x: 471, y: 415 }, x: 471, y: 415 }
-    ]);
-  }));
+      // expect cropped, repaired manhattan connection
+      expect(messageFlowConnection.waypoints).eql([
+        { original: { x: 671, y: 214 }, x: 671, y: 214 },
+        { x: 671, y: 315 },
+        { x: 471, y: 315 },
+        { original: { x: 471, y: 415 }, x: 471, y: 415 }
+      ]);
+    })
+  );
 
 });

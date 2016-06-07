@@ -156,16 +156,16 @@ describe('features/modeling - create participant', function() {
       it('should detach DI on update canvas root', inject(function(canvas, elementFactory, commandStack, modeling, elementRegistry) {
 
           // when
-          modeling.makeCollaboration();
+        modeling.makeCollaboration();
 
-          var startEventElement = elementRegistry.get('StartEvent_1'),
-              startEventDi = startEventElement.businessObject.di,
-              rootElement = canvas.getRootElement(),
-              rootShapeDi = rootElement.businessObject.di;
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            startEventDi = startEventElement.businessObject.di,
+            rootElement = canvas.getRootElement(),
+            rootShapeDi = rootElement.businessObject.di;
 
           // then
-          expect(startEventDi.$parent).to.not.be.ok;
-          expect(rootShapeDi.planeElement).not.to.include(startEventDi);
+        expect(startEventDi.$parent).to.not.be.ok;
+        expect(rootShapeDi.planeElement).not.to.include(startEventDi);
       }));
 
     });

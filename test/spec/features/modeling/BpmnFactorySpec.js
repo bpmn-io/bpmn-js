@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -61,8 +61,8 @@ describe('features - bpmn-factory', function() {
 
       // then
       expect(result).eql([
-        bpmnFactory.create('dc:Point', {x: 0, y: 0 }),
-        bpmnFactory.create('dc:Point', {x: 0, y: 0 })
+        bpmnFactory.create('dc:Point', { x: 0, y: 0 }),
+        bpmnFactory.create('dc:Point', { x: 0, y: 0 })
       ]);
 
       // expect original not to have been accidently serialized

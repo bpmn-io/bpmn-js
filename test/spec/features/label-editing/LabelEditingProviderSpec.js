@@ -351,7 +351,7 @@ describe('features - label-editing', function() {
     describe('textbox should have minimum size', function() {
 
       function testTextboxSizing(elementId, zoom, width, height) {
-        return inject(function(canvas, elementRegistry, directEditing){
+        return inject(function(canvas, elementRegistry, directEditing) {
           // zoom in
           canvas.zoom(zoom);
           // grab one element

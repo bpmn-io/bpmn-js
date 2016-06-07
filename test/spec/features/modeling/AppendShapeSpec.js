@@ -281,7 +281,7 @@ describe('features/modeling - append shape', function() {
 
         // when
         var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:ExclusiveGateway' }),
-          target = targetShape.businessObject;
+            target = targetShape.businessObject;
 
         // then
         expect(targetShape).to.exist;
@@ -315,7 +315,7 @@ describe('features/modeling - append shape', function() {
         var subProcess = subProcessShape.businessObject;
 
         var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:ExclusiveGateway' }),
-          target = targetShape.businessObject;
+            target = targetShape.businessObject;
 
         // when
         commandStack.undo();

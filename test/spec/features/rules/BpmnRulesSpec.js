@@ -102,7 +102,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('drop Start Event -> Collapsed Sub Process', function(){
+    it('drop Start Event -> Collapsed Sub Process', function() {
 
       expectCanDrop('StartEvent_None', 'CollapsedSubProcess', false);
     });
@@ -839,7 +839,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));
 
-    it('drop element -> collapsed Participant', inject(function(canvas){
+    it('drop element -> collapsed Participant', inject(function(canvas) {
       expectCanDrop('StartEvent_None', 'CollapsedParticipant', false);
       expectCanDrop('SubProcess', 'CollapsedParticipant', false);
       expectCanDrop('Task_in_SubProcess', 'CollapsedParticipant', false);
@@ -946,7 +946,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(function (elementRegistry) {
+    it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(function(elementRegistry) {
       // when
       var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
           boundaryEvent2 = elementRegistry.get('BoundaryEvent_2');
@@ -963,7 +963,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('attach/move SubProcess, BoundaryEvent and label -> Process', inject(function (elementRegistry) {
+    it('attach/move SubProcess, BoundaryEvent and label -> Process', inject(function(elementRegistry) {
       // when
       var subProcess = elementRegistry.get('SubProcess_1'),
           boundaryEvent = elementRegistry.get('BoundaryEvent_1'),

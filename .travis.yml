@@ -2,7 +2,7 @@ language: node_js
 node_js: '4.0'
 
 script:
-  - grunt jshint test
+  - npm run all
 
 before_install:
   - npm install -g wiredeps

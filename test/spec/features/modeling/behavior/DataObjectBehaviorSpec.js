@@ -1,6 +1,7 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
+
 /* global bootstrapModeler, inject */
 
 var is = require('../../../../../lib/util/ModelUtil').is;

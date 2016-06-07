@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -31,7 +31,7 @@ describe('features/modeling - create connection', function() {
 
       // when
       var sequenceFlowConnection = modeling.createConnection(taskShape, gatewayShape, {
-        type: 'bpmn:SequenceFlow',
+        type: 'bpmn:SequenceFlow'
       }, taskShape.parent);
 
       var sequenceFlow = sequenceFlowConnection.businessObject;
@@ -51,10 +51,10 @@ describe('features/modeling - create connection', function() {
 
       // expect cropped connection
       expect(sequenceFlowConnection.waypoints).eql([
-        { original: { x: 242, y: 376 }, x: 292, y: 376},
+        { original: { x: 242, y: 376 }, x: 292, y: 376 },
         { x: 410, y: 376 },
         { x: 410, y: 341 },
-        { original: { x: 553, y: 341 }, x: 528, y: 341}
+        { original: { x: 553, y: 341 }, x: 528, y: 341 }
       ]);
 
       var diWaypoints = bpmnFactory.createDiWaypoints([
@@ -83,7 +83,7 @@ describe('features/modeling - create connection', function() {
 
 
       var sequenceFlowConnection = modeling.createConnection(taskShape, gatewayShape, {
-        type: 'bpmn:SequenceFlow',
+        type: 'bpmn:SequenceFlow'
       }, taskShape.parent);
 
       var sequenceFlow = sequenceFlowConnection.businessObject;
@@ -115,7 +115,7 @@ describe('features/modeling - create connection', function() {
 
 
       var sequenceFlowConnection = modeling.createConnection(taskShape, gatewayShape, {
-        type: 'bpmn:SequenceFlow',
+        type: 'bpmn:SequenceFlow'
       }, taskShape.parent);
 
       var sequenceFlow = sequenceFlowConnection.businessObject;

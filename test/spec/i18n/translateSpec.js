@@ -1,9 +1,7 @@
 'use strict';
 
-if (window.__env__ && window.__env__.TRANSLATIONS === 'enabled') {
-  // skipping during translation extraction
-  return;
-}
+// skipping this file during translation extraction
+var skip = window.__env__ && window.__env__.TRANSLATIONS === 'enabled';
 
 require('test/TestHelper');
 
@@ -19,7 +17,7 @@ var coreModule = require('lib/core'),
 var diagramXML = require('test/fixtures/bpmn/simple.bpmn');
 
 
-describe('i18n - translate', function() {
+skip ? describe.only : describe('i18n - translate', function() {
 
 
   beforeEach(bootstrapModeler(diagramXML, {

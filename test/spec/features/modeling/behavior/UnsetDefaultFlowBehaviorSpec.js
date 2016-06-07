@@ -16,13 +16,11 @@ describe('features/modeling - delete default connection', function() {
 
   var gateway,
       defaultConnection,
-      defaultTask,
       normalConnection;
 
   beforeEach(inject(function(elementRegistry) {
     gateway = elementRegistry.get('exclusive-gateway');
     defaultConnection = elementRegistry.get('flow-default');
-    defaultTask = elementRegistry.get('task-default');
     normalConnection = elementRegistry.get('flow-normal');
   }));
 

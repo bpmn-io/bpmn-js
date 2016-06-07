@@ -27,89 +27,10 @@ describe('features/copy-paste', function() {
       collaborationAssociations = require('../../../fixtures/bpmn/features/copy-paste/data-associations.bpmn');
 
 
-  function integrationTest(ids) {
-    return function(canvas, elementRegistry, modeling, copyPaste, commandStack) {
-      // given
-      var shapes = elementRegistry.getAll(),
-          rootElement;
-
-      var initialContext = {
-            type: mapProperty(shapes, 'type'),
-            ids: mapProperty(shapes, 'id'),
-            length: shapes.length
-          },
-          currentContext;
-
-      var elements = map(ids, function(id) {
-        return elementRegistry.get(id);
-      });
-
-      copyPaste.copy(elements);
-
-      modeling.removeElements(elements);
-
-      rootElement = canvas.getRootElement();
-
-      copyPaste.paste({
-        element: rootElement,
-        point: {
-          x: 1100,
-          y: 250
-        }
-      });
-
-      elements = elementRegistry.getAll();
-
-      // remove root
-      elements = elementRegistry.filter(function(element) {
-        return !!element.parent;
-      });
-
-      modeling.moveElements(elements, { x: 50, y: -50 });
-
-      // when
-      commandStack.undo();
-      commandStack.undo();
-      commandStack.undo();
-
-      elements = elementRegistry.getAll();
-
-      currentContext = {
-        type: mapProperty(elements, 'type'),
-        ids: mapProperty(elements, 'id'),
-        length: elements.length
-      };
-
-      // then
-      expect(initialContext).to.have.length(currentContext.length);
-
-      expectCollection(initialContext.ids, currentContext.ids, true);
-
-      // when
-      commandStack.redo();
-      commandStack.redo();
-      commandStack.redo();
-
-      elements = elementRegistry.getAll();
-
-      currentContext = {
-        type: mapProperty(elements, 'type'),
-        ids: mapProperty(elements, 'id'),
-        length: elements.length
-      };
-
-      // then
-      expect(initialContext).to.have.length(currentContext.length);
-
-      expectCollection(initialContext.type, currentContext.type, true);
-      expectCollection(initialContext.ids, currentContext.ids, false);
-    };
-  }
-
-
   describe('basic diagram', function() {
 
     beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
+
 
     describe('copy', function() {
 
@@ -119,9 +40,7 @@ describe('features/copy-paste', function() {
         var subProcess,
             startEvent,
             boundaryEvent,
-            textAnnotation,
-            conditionalFlow,
-            defaultFlow;
+            textAnnotation;
 
         // when
         var tree = copy([ 'SubProcess_1kd6ist' ]);
@@ -130,8 +49,6 @@ describe('features/copy-paste', function() {
         boundaryEvent = tree.getElement('BoundaryEvent_1c94bi9');
         subProcess = tree.getElement('SubProcess_1kd6ist');
         textAnnotation = tree.getElement('TextAnnotation_0h1hhgg');
-        conditionalFlow = tree.getElement('SequenceFlow_07vo2r8');
-        defaultFlow = tree.getElement('Task_1fo63a7');
 
         // then
         expect(tree.getLength()).to.equal(3);
@@ -153,109 +70,115 @@ describe('features/copy-paste', function() {
 
       it('should retain label\'s relative position',
         inject(function(modeling, copyPaste, canvas, elementRegistry) {
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1'),
-            startEventLabel = startEvent.label,
-            seqFlow = elementRegistry.get('SequenceFlow_1rtr33r'),
-            seqFlowLabel = seqFlow.label,
-            task = elementRegistry.get('Task_1fo63a7'),
-            rootElement = canvas.getRootElement(),
-            newStrtEvt, newSeqFlow;
 
-        // when
-        copyPaste.copy([ startEvent, task ]);
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1'),
+              startEventLabel = startEvent.label,
+              seqFlow = elementRegistry.get('SequenceFlow_1rtr33r'),
+              seqFlowLabel = seqFlow.label,
+              task = elementRegistry.get('Task_1fo63a7'),
+              rootElement = canvas.getRootElement(),
+              newStrtEvt, newSeqFlow;
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 1100,
-            y: 250
-          }
-        });
+          // when
+          copyPaste.copy([ startEvent, task ]);
 
-        newStrtEvt = elementRegistry.filter(function(element) {
-          return element.parent === rootElement && element.type === 'bpmn:StartEvent';
-        })[0];
+          copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1100,
+              y: 250
+            }
+          });
 
-        newSeqFlow = elementRegistry.filter(function(element) {
-          return element.parent === rootElement && element.type === 'bpmn:SequenceFlow';
-        })[0];
+          newStrtEvt = elementRegistry.filter(function(element) {
+            return element.parent === rootElement && element.type === 'bpmn:StartEvent';
+          })[0];
 
-        // then
-        expect(newStrtEvt.label.x - newStrtEvt.x).to.equal(startEventLabel.x - startEvent.x);
-        expect(newStrtEvt.label.y - newStrtEvt.y).to.equal(startEventLabel.y - startEvent.y);
+          newSeqFlow = elementRegistry.filter(function(element) {
+            return element.parent === rootElement && element.type === 'bpmn:SequenceFlow';
+          })[0];
 
-        expect(newSeqFlow.label.x - newSeqFlow.waypoints[0].x).to.equal(seqFlowLabel.x - seqFlow.waypoints[0].x);
-        expect(newSeqFlow.label.y - newSeqFlow.waypoints[0].y).to.equal(seqFlowLabel.y - seqFlow.waypoints[0].y);
-      }));
+          // then
+          expect(newStrtEvt.label.x - newStrtEvt.x).to.equal(startEventLabel.x - startEvent.x);
+          expect(newStrtEvt.label.y - newStrtEvt.y).to.equal(startEventLabel.y - startEvent.y);
+
+          expect(newSeqFlow.label.x - newSeqFlow.waypoints[0].x).to.equal(seqFlowLabel.x - seqFlow.waypoints[0].x);
+          expect(newSeqFlow.label.y - newSeqFlow.waypoints[0].y).to.equal(seqFlowLabel.y - seqFlow.waypoints[0].y);
+        })
+      );
 
 
       it('should retain default & conditional flow property',
         inject(function(elementRegistry, copyPaste, canvas, modeling) {
-        // given
-        var subProcess = elementRegistry.get('SubProcess_1kd6ist'),
-            rootElement = canvas.getRootElement(),
-            task, defaultFlow, conditionalFlow;
 
-        // when
-        copyPaste.copy(subProcess);
+          // given
+          var subProcess = elementRegistry.get('SubProcess_1kd6ist'),
+              rootElement = canvas.getRootElement(),
+              task, defaultFlow, conditionalFlow;
 
-        modeling.removeElements([ subProcess ]);
+          // when
+          copyPaste.copy(subProcess);
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 1100,
-            y: 250
-          }
-        });
+          modeling.removeElements([ subProcess ]);
 
-        task = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:Task';
-        })[0];
+          copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1100,
+              y: 250
+            }
+          });
 
-        defaultFlow = elementRegistry.filter(function(element) {
-          return !!(element.type === 'bpmn:SequenceFlow' && task.businessObject.default.id === element.id);
-        })[0];
+          task = elementRegistry.filter(function(element) {
+            return element.type === 'bpmn:Task';
+          })[0];
 
-        conditionalFlow = elementRegistry.filter(function(element) {
-          return !!(element.type === 'bpmn:SequenceFlow' && element.businessObject.conditionExpression);
-        })[0];
+          defaultFlow = elementRegistry.filter(function(element) {
+            return !!(element.type === 'bpmn:SequenceFlow' && task.businessObject.default.id === element.id);
+          })[0];
 
-        expect(defaultFlow).to.exist;
-        expect(conditionalFlow).to.exist;
-      }));
+          conditionalFlow = elementRegistry.filter(function(element) {
+            return !!(element.type === 'bpmn:SequenceFlow' && element.businessObject.conditionExpression);
+          })[0];
+
+          expect(defaultFlow).to.exist;
+          expect(conditionalFlow).to.exist;
+        })
+      );
 
 
       it('should retain loop characteristics',
         inject(function(elementRegistry, copyPaste, canvas, modeling) {
-        // given
-        var subProcess = elementRegistry.get('SubProcess_0gev7mx'),
-            rootElement = canvas.getRootElement(),
-            loopCharacteristics;
 
-        // when
-        copyPaste.copy(subProcess);
+          // given
+          var subProcess = elementRegistry.get('SubProcess_0gev7mx'),
+              rootElement = canvas.getRootElement(),
+              loopCharacteristics;
 
-        modeling.removeElements([ subProcess ]);
+          // when
+          copyPaste.copy(subProcess);
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 1100,
-            y: 250
-          }
-        });
+          modeling.removeElements([ subProcess ]);
 
-        subProcess = elementRegistry.filter(function(element) {
-          return !!(element.id !== 'SubProcess_1kd6ist' && element.type === 'bpmn:SubProcess');
-        })[0];
+          copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1100,
+              y: 250
+            }
+          });
 
-        loopCharacteristics = subProcess.businessObject.loopCharacteristics;
+          subProcess = elementRegistry.filter(function(element) {
+            return !!(element.id !== 'SubProcess_1kd6ist' && element.type === 'bpmn:SubProcess');
+          })[0];
 
-        expect(loopCharacteristics.$type).to.equal('bpmn:MultiInstanceLoopCharacteristics');
-        expect(loopCharacteristics.isSequential).to.be.true;
-      }));
+          loopCharacteristics = subProcess.businessObject.loopCharacteristics;
+
+          expect(loopCharacteristics.$type).to.equal('bpmn:MultiInstanceLoopCharacteristics');
+          expect(loopCharacteristics.isSequential).to.be.true;
+        })
+      );
 
 
       it('selected elements', inject(integrationTest([ 'SubProcess_1kd6ist' ])));
@@ -284,6 +207,7 @@ describe('features/copy-paste', function() {
 
     beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
+
     describe('integration', function() {
 
       it('participant with including lanes + elements', inject(integrationTest([ 'Participant_0uu1rvj' ])));
@@ -293,7 +217,7 @@ describe('features/copy-paste', function() {
     });
 
 
-    describe('rules', function () {
+    describe('rules', function() {
 
       it('disallow individual lanes copying', inject(function(copyPaste, elementRegistry, canvas) {
 
@@ -308,62 +232,64 @@ describe('features/copy-paste', function() {
       it('pasting on a collaboration is disallowed when NOT every element is a Participant',
         inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus) {
 
-        var collaboration = canvas.getRootElement();
+          var collaboration = canvas.getRootElement();
 
-        var pasteRejected = sinon.spy(function() {});
+          var pasteRejected = sinon.spy(function() {});
 
-        // when
-        var tree = copy([ 'Task_13xbgyg', 'Participant_145muai' ]);
+          // when
+          var tree = copy([ 'Task_13xbgyg', 'Participant_145muai' ]);
 
-        // then
-        expect(tree.getDepthLength(0)).to.equal(2);
+          // then
+          expect(tree.getDepthLength(0)).to.equal(2);
 
-        // when
-        eventBus.on('elements.paste.rejected', pasteRejected);
+          // when
+          eventBus.on('elements.paste.rejected', pasteRejected);
 
-        copyPaste.paste({
-          element: collaboration,
-          point: {
-            x: 1000,
-            y: 1000
-          }
-        });
+          copyPaste.paste({
+            element: collaboration,
+            point: {
+              x: 1000,
+              y: 1000
+            }
+          });
 
-        expect(pasteRejected).to.have.been.called;
-      }));
+          expect(pasteRejected).to.have.been.called;
+        })
+      );
 
 
       it('pasting participants on a process is disallowed when it\'s not a collaboration',
         inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus, modeling, elementFactory) {
 
-        var participant = elementRegistry.get('Participant_145muai'),
-            otherParticipant = elementRegistry.get('Participant_0uu1rvj'),
-            startEvent = elementFactory.create('shape', { type: 'bpmn:StartEvent' }),
-            rootElement;
+          var participant = elementRegistry.get('Participant_145muai'),
+              otherParticipant = elementRegistry.get('Participant_0uu1rvj'),
+              startEvent = elementFactory.create('shape', { type: 'bpmn:StartEvent' }),
+              rootElement;
 
-        var pasteRejected = sinon.spy(function() {});
+          var pasteRejected = sinon.spy(function() {});
 
-        // when
-        copyPaste.copy([ participant ]);
+          // when
+          copyPaste.copy([ participant ]);
 
-        modeling.removeElements([ participant, otherParticipant ]);
+          modeling.removeElements([ participant, otherParticipant ]);
 
-        rootElement = canvas.getRootElement();
+          rootElement = canvas.getRootElement();
 
-        modeling.createShape(startEvent, { x: 50, y: 50 }, rootElement);
+          modeling.createShape(startEvent, { x: 50, y: 50 }, rootElement);
 
-        eventBus.on('elements.paste.rejected', pasteRejected);
+          eventBus.on('elements.paste.rejected', pasteRejected);
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 500,
-            y: 200
-          }
-        });
+          copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 500,
+              y: 200
+            }
+          });
 
-        expect(pasteRejected).to.have.been.called;
-      }));
+          expect(pasteRejected).to.have.been.called;
+        })
+      );
 
     });
 
@@ -377,6 +303,7 @@ describe('features/copy-paste', function() {
     describe('basics', function() {
 
       it('pasting on a lane', inject(function(elementRegistry, copyPaste) {
+
         // given
         var lane = elementRegistry.get('Lane_0aws6ii'),
             task = elementRegistry.get('Task_1pamrp2'),
@@ -445,8 +372,9 @@ describe('features/copy-paste', function() {
 
 
     it('copying participant should copy process as well', inject(function(elementRegistry, copyPaste, canvas) {
+
       // given
-      var participants = map([ 'Participant_Input', 'Participant_Output' ], function (e) {
+      var participants = map([ 'Participant_Input', 'Participant_Output' ], function(e) {
         return elementRegistry.get(e);
       });
       var rootElement = canvas.getRootElement();
@@ -467,7 +395,7 @@ describe('features/copy-paste', function() {
         return element.type === 'bpmn:Participant';
       });
 
-      var processIds = map(elements, function (e) {
+      var processIds = map(elements, function(e) {
         return e.businessObject.processRef.id;
       });
 
@@ -483,6 +411,91 @@ describe('features/copy-paste', function() {
   });
 
 });
+
+
+
+////// test helpers //////////////////////////////////////////////////
+
+
+function integrationTest(ids) {
+
+  return function(canvas, elementRegistry, modeling, copyPaste, commandStack) {
+    // given
+    var shapes = elementRegistry.getAll(),
+        rootElement;
+
+    var initialContext = {
+          type: mapProperty(shapes, 'type'),
+          ids: mapProperty(shapes, 'id'),
+          length: shapes.length
+        },
+        currentContext;
+
+    var elements = map(ids, function(id) {
+      return elementRegistry.get(id);
+    });
+
+    copyPaste.copy(elements);
+
+    modeling.removeElements(elements);
+
+    rootElement = canvas.getRootElement();
+
+    copyPaste.paste({
+      element: rootElement,
+      point: {
+        x: 1100,
+        y: 250
+      }
+    });
+
+    elements = elementRegistry.getAll();
+
+    // remove root
+    elements = elementRegistry.filter(function(element) {
+      return !!element.parent;
+    });
+
+    modeling.moveElements(elements, { x: 50, y: -50 });
+
+    // when
+    commandStack.undo();
+    commandStack.undo();
+    commandStack.undo();
+
+    elements = elementRegistry.getAll();
+
+    currentContext = {
+      type: mapProperty(elements, 'type'),
+      ids: mapProperty(elements, 'id'),
+      length: elements.length
+    };
+
+    // then
+    expect(initialContext).to.have.length(currentContext.length);
+
+    expectCollection(initialContext.ids, currentContext.ids, true);
+
+    // when
+    commandStack.redo();
+    commandStack.redo();
+    commandStack.redo();
+
+    elements = elementRegistry.getAll();
+
+    currentContext = {
+      type: mapProperty(elements, 'type'),
+      ids: mapProperty(elements, 'id'),
+      length: elements.length
+    };
+
+    // then
+    expect(initialContext).to.have.length(currentContext.length);
+
+    expectCollection(initialContext.type, currentContext.type, true);
+    expectCollection(initialContext.ids, currentContext.ids, false);
+  };
+}
 
 
 /**

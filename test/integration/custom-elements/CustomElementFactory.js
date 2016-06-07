@@ -63,7 +63,7 @@ CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle' ];
  *
  * @return {Bounds} { width, height}
  */
-CustomElementFactory.prototype._getCustomElementSize = function (type) {
+CustomElementFactory.prototype._getCustomElementSize = function(type) {
   if (!type) {
     return { width: 100, height: 80 };
   }

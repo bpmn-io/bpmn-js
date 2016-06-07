@@ -7,7 +7,7 @@ require('../../../../TestHelper');
 var modelingModule = require('../../../../../lib/features/modeling');
 
 
-describe('modeling/behavior - drop on connection', function(){
+describe('modeling/behavior - drop on connection', function() {
 
   var diagramXML = require('./CreateOnFlowBehavior.bpmn');
 

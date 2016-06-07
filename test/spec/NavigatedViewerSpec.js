@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../TestHelper');
+require('../TestHelper');
 
 var NavigatedViewer = require('../../lib/NavigatedViewer');
 

@@ -22,12 +22,19 @@ module.exports = function(grunt) {
       dist: '../bower-bpmn-js/dist'
     },
 
-    jshint: {
-      src: [
-        ['<%=config.sources %>']
-      ],
-      options: {
-        jshintrc: true
+    eslint: {
+      check: {
+        src: [
+          '{lib,test}/**/*.js'
+        ]
+      },
+      fix: {
+        src: [
+          '{lib,test}/**/*.js'
+        ],
+        options: {
+          fix: true
+        }
       }
     },
 
@@ -116,5 +123,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [ 'bundle', 'copy' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test', 'build' ]);
+  grunt.registerTask('default', [ 'eslint:check', 'test', 'build' ]);
 };

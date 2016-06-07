@@ -1,10 +1,8 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
-
-var is = require('../../../../../lib/util/ModelUtil').is;
 
 var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
@@ -83,9 +81,7 @@ describe('features/modeling/behavior - data store', function() {
     it('should move DataStoreReference', inject(function(elementRegistry, modeling, bpmnjs) {
 
       // give
-      var subProcessElement = elementRegistry.get('SubProcess'),
-          subProcessBo = subProcessElement.businessObject,
-          participantElement = elementRegistry.get('Participant'),
+      var participantElement = elementRegistry.get('Participant'),
           participantBo = participantElement.businessObject,
           dataStoreReference = elementRegistry.get('DataStoreReference'),
           dataStoreReferenceBo = dataStoreReference.businessObject;

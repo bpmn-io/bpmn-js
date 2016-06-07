@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../../TestHelper');
+require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -20,7 +20,7 @@ describe('features/modeling - layout data association', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-  beforeEach(inject(function(elementRegistry, canvas){
+  beforeEach(inject(function(elementRegistry, canvas) {
     rootShape = canvas.getRootElement();
     taskShape = elementRegistry.get('Task_1');
   }));

@@ -10,9 +10,9 @@ describe('features/modeling - update label', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/features/modeling/update-label.bpmn');
 
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [ coreModule, modelingModule ]
+  }));
 
 
   it('should change name of start event', inject(function(modeling, elementRegistry, eventBus) {
@@ -89,41 +89,43 @@ describe('features/modeling - update label', function() {
   it('should propertly fire events.changed after event name change',
     inject(function(modeling, elementRegistry, eventBus) {
 
-    // given
-    var startEvent_1 = elementRegistry.get('StartEvent_1');
+      // given
+      var startEvent_1 = elementRegistry.get('StartEvent_1');
 
-    var changedEvent;
+      var changedEvent;
 
-    eventBus.on('elements.changed', function(event) {
-      changedEvent = event;
-    });
+      eventBus.on('elements.changed', function(event) {
+        changedEvent = event;
+      });
 
-    // when
-    modeling.updateLabel(startEvent_1, 'foo');
+      // when
+      modeling.updateLabel(startEvent_1, 'foo');
 
-    // then
-    expect(changedEvent.elements).to.include(startEvent_1);
-  }));
+      // then
+      expect(changedEvent.elements).to.include(startEvent_1);
+    })
+  );
 
 
   it('should propertly fire events.changed after event label change',
     inject(function(modeling, elementRegistry, eventBus) {
 
-    // given
-    var startEvent_1 = elementRegistry.get('StartEvent_1');
-    var startEvent_1_label = elementRegistry.get('StartEvent_1_label');
+      // given
+      var startEvent_1 = elementRegistry.get('StartEvent_1');
+      var startEvent_1_label = elementRegistry.get('StartEvent_1_label');
 
-    var changedEvent;
+      var changedEvent;
 
-    eventBus.on('elements.changed', function(event) {
-      changedEvent = event;
-    });
+      eventBus.on('elements.changed', function(event) {
+        changedEvent = event;
+      });
 
-    // when
-    modeling.updateLabel(startEvent_1_label, 'foo');
+      // when
+      modeling.updateLabel(startEvent_1_label, 'foo');
 
-    // then
-    expect(changedEvent.elements).to.include(startEvent_1);
-  }));
+      // then
+      expect(changedEvent.elements).to.include(startEvent_1);
+    })
+  );
 
 });

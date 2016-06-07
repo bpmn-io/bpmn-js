@@ -14,7 +14,7 @@ describe('Viewer', function() {
   var container;
 
   beforeEach(function() {
-      container = TestContainer.get(this);
+    container = TestContainer.get(this);
   });
 
 

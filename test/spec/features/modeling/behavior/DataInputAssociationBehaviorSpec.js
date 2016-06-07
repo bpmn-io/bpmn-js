@@ -9,7 +9,7 @@ var find = require('lodash/collection/find');
 var modelingModule = require('../../../../../lib/features/modeling');
 
 
-describe('modeling/behavior - fix DataInputAssociation#targetRef', function(){
+describe('modeling/behavior - fix DataInputAssociation#targetRef', function() {
 
   var diagramXML = require('./DataInputAssociationBehavior.bpmn');
 

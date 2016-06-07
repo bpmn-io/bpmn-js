@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -30,10 +30,10 @@ describe('features/modeling - move connection', function() {
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
 
       var waypoints = [
-        {x: 598, y: 351 },
-        {x: 954, y: 351 },
-        {x: 954, y: 446 },
-        {x: 852, y: 446 }
+        { x: 598, y: 351 },
+        { x: 954, y: 351 },
+        { x: 954, y: 446 },
+        { x: 852, y: 446 }
       ];
 
       // then

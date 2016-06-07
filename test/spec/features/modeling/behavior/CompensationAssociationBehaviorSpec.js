@@ -4,12 +4,10 @@ require('../../../../TestHelper');
 
 /* global inject, bootstrapModeler */
 
-var find = require('lodash/collection/find');
-
 var modelingModule = require('../../../../../lib/features/modeling');
 
 
-describe('modeling/behavior - CompensationAssociation', function(){
+describe('modeling/behavior - CompensationAssociation', function() {
 
   var diagramXML = require('./CompensationAssociationBehavior.bpmn');
 

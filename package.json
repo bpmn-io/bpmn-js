@@ -3,6 +3,7 @@
   "version": "0.15.2",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
+    "all": "grunt",
     "test": "grunt test"
   },
   "repository": {
@@ -34,10 +35,12 @@
     "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
     "chai": "~2.2.0",
+    "eslint": "^2.11.1",
+    "eslint-plugin-mocha": "^2.2.0",
     "grunt": "^0.4.4",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-copy": "^0.7.0",
-    "grunt-contrib-jshint": "^0.7.2",
+    "grunt-eslint": "^18.1.0",
     "grunt-karma": "^0.12.0",
     "grunt-release": "^0.7.0",
     "jsondiffpatch": "^0.1.26",

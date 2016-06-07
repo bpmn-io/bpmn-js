@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../TestHelper');
+require('../../TestHelper');
 
 var coreModule = require('../../../lib/core'),
     rendererModule = require('../../../lib/draw');
@@ -143,8 +143,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render boundary events without flowNodeRef', function(done) {
-   var xml = require('../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn');
-   bootstrapViewer(xml)(done);
+    var xml = require('../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn');
+    bootstrapViewer(xml)(done);
   });
 
 
@@ -206,7 +206,7 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  describe('path', function () {
+  describe('path', function() {
 
     var diagramXML = require('../../fixtures/bpmn/simple-cropping.bpmn');
 
@@ -214,7 +214,7 @@ describe('draw - bpmn renderer', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-    describe('circle', function () {
+    describe('circle', function() {
 
       it('should return a circle path', inject(function(canvas, elementRegistry, graphicsFactory) {
 

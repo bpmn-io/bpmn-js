@@ -4,7 +4,7 @@
 
 var TestHelper = require('../../../TestHelper');
 
-var globalEvent = require('../../../util/MockEvents.js').createEvent;
+var globalEvent = require('../../../util/MockEvents').createEvent;
 
 var coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
@@ -65,7 +65,7 @@ describe('features/popup-menu - replace menu provider', function() {
   var openPopup = function(element, offset) {
     offset = offset || 100;
 
-    TestHelper.getBpmnJS().invoke(function(popupMenu){
+    TestHelper.getBpmnJS().invoke(function(popupMenu) {
 
       popupMenu.create('bpmn-replace', element);
 
@@ -75,7 +75,7 @@ describe('features/popup-menu - replace menu provider', function() {
   };
 
 
-  describe('toggle', function(){
+  describe('toggle', function() {
 
     beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
 
@@ -88,7 +88,7 @@ describe('features/popup-menu - replace menu provider', function() {
     }));
 
 
-    describe('active attribute', function(){
+    describe('active attribute', function() {
 
       it('should be true for parallel marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
@@ -161,7 +161,7 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
-    describe('exclusive toggle buttons', function(){
+    describe('exclusive toggle buttons', function() {
 
       it('should not toggle non exclusive buttons off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
         var subProcess = elementRegistry.get('AdHocSubProcess');
@@ -184,65 +184,68 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
-    describe('non exclusive toggle buttons', function(){
+    describe('non exclusive toggle buttons', function() {
 
       it('should not toggle exclusive buttons off',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var subProcess = elementRegistry.get('SubProcess');
+          // given
+          var subProcess = elementRegistry.get('SubProcess');
 
-        // when
+          // when
 
-        // toggle parallel on
-        openPopup(subProcess);
+          // toggle parallel on
+          openPopup(subProcess);
 
-        var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
+          var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
-        popupMenu.trigger(globalEvent(parallelEntry, { x: 0, y: 0 }));
+          popupMenu.trigger(globalEvent(parallelEntry, { x: 0, y: 0 }));
 
-        // toggle ad hoc on
-        openPopup(subProcess);
+          // toggle ad hoc on
+          openPopup(subProcess);
 
-        var adHocEntry = queryEntry(popupMenu, 'toggle-adhoc');
+          var adHocEntry = queryEntry(popupMenu, 'toggle-adhoc');
 
-        var adHocSubProcess = popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          var adHocSubProcess = popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
 
-        openPopup(adHocSubProcess);
+          openPopup(adHocSubProcess);
 
-        // then
-        parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
-        adHocEntry = queryEntry(popupMenu, 'toggle-adhoc');
+          // then
+          parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
+          adHocEntry = queryEntry(popupMenu, 'toggle-adhoc');
 
-        expect(domClasses(parallelEntry).has('active')).to.be.true;
-        expect(domClasses(adHocEntry).has('active')).to.be.true;
-      }));
+          expect(domClasses(parallelEntry).has('active')).to.be.true;
+          expect(domClasses(adHocEntry).has('active')).to.be.true;
+        })
+      );
 
     });
 
-    describe('parallel toggle button', function(){
+
+    describe('parallel toggle button', function() {
 
       it('should toggle parallel marker off',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var task = elementRegistry.get('ParallelTask');
+          // given
+          var task = elementRegistry.get('ParallelTask');
 
-        openPopup(task);
+          openPopup(task);
 
-        var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
+          var entry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
-        // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+          // when
+          popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-        openPopup(task);
+          openPopup(task);
 
-        var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
+          var parallelEntry = queryEntry(popupMenu, 'toggle-parallel-mi');
 
-        // then
-        expect(task.businessObject.loopCharacteristics).not.to.exist;
-        expect(domClasses(parallelEntry).has('active')).to.be.false;
-      }));
+          // then
+          expect(task.businessObject.loopCharacteristics).not.to.exist;
+          expect(domClasses(parallelEntry).has('active')).to.be.false;
+        })
+      );
 
 
       it('should toggle parallel marker on', inject(function(popupMenu, bpmnReplace, elementRegistry) {
@@ -311,7 +314,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
-    describe('sequential toggle button', function(){
+
+    describe('sequential toggle button', function() {
 
       it('should toggle sequential marker off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
@@ -401,7 +405,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
-    describe('loop toggle button', function(){
+
+    describe('loop toggle button', function() {
 
       it('should toggle loop marker off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
@@ -425,7 +430,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should toggle loop marker on', inject(function(popupMenu, bpmnReplace, elementRegistry){
+      it('should toggle loop marker on', inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
@@ -519,119 +524,125 @@ describe('features/popup-menu - replace menu provider', function() {
     it('should retain the loop characteristics for call activites',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-      // given
-      var task = elementRegistry.get('SequentialTask');
+        // given
+        var task = elementRegistry.get('SequentialTask');
 
-      openPopup(task);
+        openPopup(task);
 
-      var entry = queryEntry(popupMenu, 'replace-with-call-activity');
+        var entry = queryEntry(popupMenu, 'replace-with-call-activity');
 
-      // when
-      // replacing the task with a call activity
-      var callActivity = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the task with a call activity
+        var callActivity = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(callActivity.businessObject.loopCharacteristics).to.exist;
-      expect(callActivity.businessObject.loopCharacteristics.isSequential).to.be.true;
-      expect(is(callActivity.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
-    }));
+        // then
+        expect(callActivity.businessObject.loopCharacteristics).to.exist;
+        expect(callActivity.businessObject.loopCharacteristics.isSequential).to.be.true;
+        expect(is(callActivity.businessObject.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+      })
+    );
 
 
     it('should retain expanded status for sub processes',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-      // given
-      var subProcess = elementRegistry.get('SubProcess');
+        // given
+        var subProcess = elementRegistry.get('SubProcess');
 
-      openPopup(subProcess);
+        openPopup(subProcess);
 
-      var entry = queryEntry(popupMenu, 'replace-with-transaction');
+        var entry = queryEntry(popupMenu, 'replace-with-transaction');
 
-      // when
-      // replacing the expanded sub process with a transaction
-      var transaction = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the expanded sub process with a transaction
+        var transaction = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(isExpanded(transaction)).to.equal(isExpanded(subProcess));
-    }));
+        // then
+        expect(isExpanded(transaction)).to.equal(isExpanded(subProcess));
+      })
+    );
 
 
     it('should replace sub processes -> event sub process',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-      // given
-      var subProcess = elementRegistry.get('SubProcess');
+        // given
+        var subProcess = elementRegistry.get('SubProcess');
 
-      openPopup(subProcess);
+        openPopup(subProcess);
 
-      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+        var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
 
-      // when
-      // replacing the expanded sub process with a eventSubProcess
-      var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the expanded sub process with a eventSubProcess
+        var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(eventSubProcess.businessObject.triggeredByEvent).to.be.true;
-    }));
+        // then
+        expect(eventSubProcess.businessObject.triggeredByEvent).to.be.true;
+      })
+    );
 
 
     it('should retain the loop characteristics and the expanded status for transactions',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-      // given
-      var transaction = elementRegistry.get('Transaction');
+        // given
+        var transaction = elementRegistry.get('Transaction');
 
-      openPopup(transaction);
+        openPopup(transaction);
 
-      var entry = queryEntry(popupMenu, 'replace-with-subprocess');
+        var entry = queryEntry(popupMenu, 'replace-with-subprocess');
 
-      // when
-      // replacing the transaction with an expanded sub process
-      var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the transaction with an expanded sub process
+        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
-    }));
+        // then
+        expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
+      })
+    );
 
 
     it('should not retain the loop characteristics morphing to an event sub process',
       inject(function(popupMenu, bpmnReplace, elementRegistry, modeling) {
 
-      // given
-      var transaction = elementRegistry.get('Transaction');
+        // given
+        var transaction = elementRegistry.get('Transaction');
 
-      modeling.updateProperties(transaction, { loopCharacteristics: { isparallel: true } });
+        modeling.updateProperties(transaction, { loopCharacteristics: { isparallel: true } });
 
-      openPopup(transaction);
+        openPopup(transaction);
 
-      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+        var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
 
-      // when
-      // replacing the transaction with an event sub process
-      var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the transaction with an event sub process
+        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
-    }));
+        // then
+        expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
+      })
+    );
 
 
     it('should retain the expanded property morphing to an event sub processes',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-      // given
-      var transaction = elementRegistry.get('Transaction');
+        // given
+        var transaction = elementRegistry.get('Transaction');
 
-      openPopup(transaction);
+        openPopup(transaction);
 
-      var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
+        var entry = queryEntry(popupMenu, 'replace-with-event-subprocess');
 
-      // when
-      // replacing the transaction with an expanded sub process
-      var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        // when
+        // replacing the transaction with an expanded sub process
+        var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 
-      // then
-      expect(isExpanded(eventSubProcess)).to.equal(isExpanded(transaction));
-    }));
+        // then
+        expect(isExpanded(eventSubProcess)).to.equal(isExpanded(transaction));
+      })
+    );
 
   });
 
@@ -646,88 +657,93 @@ describe('features/popup-menu - replace menu provider', function() {
       it('should contain all except the current one',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1');
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1');
 
-        // when
-        openPopup(startEvent);
+          // when
+          openPopup(startEvent);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-none-start')).to.be.null;
-        expect(getEntries(popupMenu)).to.have.length(6);
-      }));
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-none-start')).to.be.null;
+          expect(getEntries(popupMenu)).to.have.length(6);
+        })
+      );
 
 
       it('should contain all start events inside event sub process except the current one',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_3');
+          // given
+          var startEvent = elementRegistry.get('StartEvent_3');
 
-        // when
-        openPopup(startEvent);
+          // when
+          openPopup(startEvent);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.null;
-        expect(queryEntry(popupMenu, 'replace-with-message-start')).to.exist;
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-start')).to.be.null;
+          expect(queryEntry(popupMenu, 'replace-with-message-start')).to.exist;
 
-        expect(getEntries(popupMenu)).to.have.length(11);
-      }));
+          expect(getEntries(popupMenu)).to.have.length(11);
+        })
+      );
 
 
       it('should contain all non interrupting start events inside event sub process except the current one',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_3');
+          // given
+          var startEvent = elementRegistry.get('StartEvent_3');
 
-        var newElement = bpmnReplace.replaceElement(startEvent, {
-          type: 'bpmn:StartEvent',
-          eventDefinitionType: 'bpmn:ConditionalEventDefinition',
-          isInterrupting: false
-        });
+          var newElement = bpmnReplace.replaceElement(startEvent, {
+            type: 'bpmn:StartEvent',
+            eventDefinitionType: 'bpmn:ConditionalEventDefinition',
+            isInterrupting: false
+          });
 
-        // when
-        openPopup(newElement);
+          // when
+          openPopup(newElement);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.exist;
-        expect(queryEntry(popupMenu, 'replace-with-non-interrupting-conditional-start')).to.be.null;
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-conditional-start')).to.exist;
+          expect(queryEntry(popupMenu, 'replace-with-non-interrupting-conditional-start')).to.be.null;
 
-        expect(getEntries(popupMenu)).to.have.length(11);
-      }));
+          expect(getEntries(popupMenu)).to.have.length(11);
+        })
+      );
 
 
       it('should contain all intermediate events except the current one',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var intermediateEvent = elementRegistry.get('IntermediateThrowEvent_1');
+          // given
+          var intermediateEvent = elementRegistry.get('IntermediateThrowEvent_1');
 
-        // when
-        openPopup(intermediateEvent);
+          // when
+          openPopup(intermediateEvent);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-none-intermediate-throw')).to.be.null;
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-none-intermediate-throw')).to.be.null;
 
-        expect(getEntries(popupMenu)).to.have.length(12);
-      }));
+          expect(getEntries(popupMenu)).to.have.length(12);
+        })
+      );
 
 
       it('should contain all end events except the current one',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var endEvent = elementRegistry.get('EndEvent_1');
+          // given
+          var endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        openPopup(endEvent);
+          // when
+          openPopup(endEvent);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
 
-        expect(getEntries(popupMenu)).to.have.length(9);
-      }));
+          expect(getEntries(popupMenu)).to.have.length(9);
+        })
+      );
 
     });
 
@@ -741,57 +757,61 @@ describe('features/popup-menu - replace menu provider', function() {
       it('should contain cancel event replace option',
         inject(function(elementRegistry, bpmnReplace, popupMenu, replaceMenuProvider) {
 
-        // given
-        var endEvent = elementRegistry.get('EndEvent_1');
+          // given
+          var endEvent = elementRegistry.get('EndEvent_1');
 
-        // when
-        openPopup(endEvent);
+          // when
+          openPopup(endEvent);
 
-        // then
-        expect(getEntries(popupMenu)).to.have.length(9);
-      }));
+          // then
+          expect(getEntries(popupMenu)).to.have.length(9);
+        })
+      );
 
 
       it('should NOT contain cancel event replace option',
-
         inject(function(elementRegistry, bpmnReplace, popupMenu, replaceMenuProvider) {
-        // given
-        var endEvent = elementRegistry.get('EndEvent_2');
 
-        // when
-        openPopup(endEvent);
+          // given
+          var endEvent = elementRegistry.get('EndEvent_2');
 
-        // then
-        expect(getEntries(popupMenu)).to.have.length(9);
-      }));
+          // when
+          openPopup(endEvent);
+
+          // then
+          expect(getEntries(popupMenu)).to.have.length(9);
+        })
+      );
 
 
       it('should contain cancel event replace option (boundary events)',
         inject(function(elementRegistry, bpmnReplace, popupMenu) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-        // when
-        openPopup(boundaryEvent);
+          // when
+          openPopup(boundaryEvent);
 
-        // then
-        expect(getEntries(popupMenu)).to.have.length(13);
-      }));
+          // then
+          expect(getEntries(popupMenu)).to.have.length(13);
+        })
+      );
 
 
       it('should NOT contain cancel event replace option (boundary events)',
         inject(function(elementRegistry, bpmnReplace, popupMenu) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
 
-        // when
-        openPopup(boundaryEvent, 40);
+          // when
+          openPopup(boundaryEvent, 40);
 
-        // then
-        expect(getEntries(popupMenu)).to.have.length(13);
-      }));
+          // then
+          expect(getEntries(popupMenu)).to.have.length(13);
+        })
+      );
 
     });
 
@@ -803,45 +823,48 @@ describe('features/popup-menu - replace menu provider', function() {
       it('should contain all boundary events for an interrupting boundary event',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-        // when
-        openPopup(boundaryEvent, 40);
+          // when
+          openPopup(boundaryEvent, 40);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-conditional-intermediate-catch')).to.be.null;
-        expect(getEntries(popupMenu)).to.have.length(12);
-      }));
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-conditional-intermediate-catch')).to.be.null;
+          expect(getEntries(popupMenu)).to.have.length(12);
+        })
+      );
 
 
       it('should contain all boundary events for a non interrupting boundary event',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
 
-        // when
-        openPopup(boundaryEvent, 40);
+          // when
+          openPopup(boundaryEvent, 40);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
-        expect(getEntries(popupMenu)).to.have.length(12);
-      }));
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
+          expect(getEntries(popupMenu)).to.have.length(12);
+        })
+      );
 
 
       it('should contain compensation boundary event',
         inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-        // when
-        openPopup(boundaryEvent, 40);
+          // when
+          openPopup(boundaryEvent, 40);
 
-        // then
-        expect(queryEntry(popupMenu, 'replace-with-compensation-boundary')).to.exist;
-      }));
+          // then
+          expect(queryEntry(popupMenu, 'replace-with-compensation-boundary')).to.exist;
+        })
+      );
 
     });
 
@@ -850,7 +873,10 @@ describe('features/popup-menu - replace menu provider', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
 
       it('should show default replace option [gateway]', inject(function(elementRegistry, popupMenu) {
         // given
@@ -894,7 +920,10 @@ describe('features/popup-menu - replace menu provider', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.defaultFlowsFromInclusiveGateways.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
 
       it('should show default replace option', inject(function(elementRegistry, popupMenu) {
         // given
@@ -934,7 +963,10 @@ describe('features/popup-menu - replace menu provider', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
 
       it('should show ConditionalFlow replace option', inject(function(elementRegistry, popupMenu) {
         // given
@@ -1067,30 +1099,32 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should morph DefaultFlow into a SequenceFlow [task] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
-            entries;
 
-        openPopup(sequenceFlow);
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+              entries;
 
-        entries = getEntries(popupMenu);
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          entries = getEntries(popupMenu);
 
-        // when
-        openPopup(sequenceFlow);
+          triggerAction(entries, 'replace-with-default-flow');
 
-        entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-sequence-flow');
+          entries = getEntries(popupMenu);
 
-        commandStack.undo();
+          triggerAction(entries, 'replace-with-sequence-flow');
 
-        var task = elementRegistry.get('Task_1ei94kl');
+          commandStack.undo();
 
-        // then
-        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
-      }));
+          var task = elementRegistry.get('Task_1ei94kl');
+
+          // then
+          expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+        })
+      );
 
 
       it('should morph DefaultFlow into a ConditionalFlow [task]', inject(function(elementRegistry, popupMenu) {
@@ -1119,70 +1153,76 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should morph DefaultFlow into a ConditionalFlow [task] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
-            task = elementRegistry.get('Task_1ei94kl'),
-            entries;
 
-        openPopup(sequenceFlow);
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
+              task = elementRegistry.get('Task_1ei94kl'),
+              entries;
 
-        entries = getEntries(popupMenu);
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          entries = getEntries(popupMenu);
 
-        // when
-        openPopup(sequenceFlow);
+          triggerAction(entries, 'replace-with-default-flow');
 
-        entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-conditional-flow');
+          entries = getEntries(popupMenu);
 
-        commandStack.undo();
+          triggerAction(entries, 'replace-with-conditional-flow');
 
-        // then
-        expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
-      }));
+          commandStack.undo();
+
+          // then
+          expect(task.businessObject.default).to.equal(sequenceFlow.businessObject);
+        })
+      );
 
 
       it('should replace SequenceFlow with DefaultFlow [gateway] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            gateway = elementRegistry.get('ExclusiveGateway_1');
 
-        // when
-        openPopup(sequenceFlow);
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              gateway = elementRegistry.get('ExclusiveGateway_1');
 
-        var entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          var entries = getEntries(popupMenu);
 
-        commandStack.undo();
+          triggerAction(entries, 'replace-with-default-flow');
 
-        // then
-        expect(gateway.businessObject.default).to.not.exist;
-      }));
+          commandStack.undo();
+
+          // then
+          expect(gateway.businessObject.default).to.not.exist;
+        })
+      );
 
 
       it('should replace SequenceFlow with DefaultFlow [task] -> undo',
         inject(function(elementRegistry, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
-        // when
-        openPopup(sequenceFlow);
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
-        var entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          var entries = getEntries(popupMenu);
 
-        commandStack.undo();
+          triggerAction(entries, 'replace-with-default-flow');
 
-        var task = elementRegistry.get('Task_1ei94kl');
+          commandStack.undo();
 
-        // then
-        expect(task.businessObject.default).to.not.exist;
-      }));
+          var task = elementRegistry.get('Task_1ei94kl');
+
+          // then
+          expect(task.businessObject.default).to.not.exist;
+        })
+      );
 
 
       it('should only have one DefaultFlow', inject(function(elementRegistry, popupMenu) {
@@ -1216,68 +1256,10 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should replace DefaultFlow with SequenceFlow when changing source',
         inject(function(elementRegistry, popupMenu, modeling) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            task = elementRegistry.get('Task_2');
 
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        triggerAction(entries, 'replace-with-default-flow');
-
-        // when
-        modeling.reconnectStart(sequenceFlow, task, [
-          { x: 686, y: 267, original: { x: 686, y: 307 } },
-          { x: 686, y: 207, original: { x: 686, y: 187 } }
-        ]);
-
-        var gateway = elementRegistry.get('ExclusiveGateway_1');
-
-        // then
-        expect(gateway.businessObject.default).to.not.exist;
-      }));
-
-
-      it('should replace DefaultFlow with SequenceFlow when changing source -> undo',
-        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            task = elementRegistry.get('Task_2');
-
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        triggerAction(entries, 'replace-with-default-flow');
-
-        // when
-        modeling.reconnectStart(sequenceFlow, task, [
-          { x: 686, y: 267, original: { x: 686, y: 307 } },
-          { x: 686, y: 207, original: { x: 686, y: 187 } }
-        ]);
-
-        commandStack.undo();
-
-        var gateway = elementRegistry.get('ExclusiveGateway_1');
-
-        // then
-        expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
-      }));
-
-
-      [
-        'bpmn:StartEvent'
-      ].forEach(function(type) {
-        it('should replace DefaultFlow with SequenceFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-              root = canvas.getRootElement();
-
-          var intermediateEvent = elementFactory.createShape({ type: type});
-
-          modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+              task = elementRegistry.get('Task_2');
 
           openPopup(sequenceFlow);
 
@@ -1286,16 +1268,81 @@ describe('features/popup-menu - replace menu provider', function() {
           triggerAction(entries, 'replace-with-default-flow');
 
           // when
-          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+          modeling.reconnectStart(sequenceFlow, task, [
             { x: 686, y: 267, original: { x: 686, y: 307 } },
-            { x: 686, y: 50, original: { x: 686, y: 75 } }
+            { x: 686, y: 207, original: { x: 686, y: 187 } }
           ]);
 
           var gateway = elementRegistry.get('ExclusiveGateway_1');
 
           // then
           expect(gateway.businessObject.default).to.not.exist;
-        }));
+        })
+      );
+
+
+      it('should replace DefaultFlow with SequenceFlow when changing source -> undo',
+        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
+
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              task = elementRegistry.get('Task_2');
+
+          openPopup(sequenceFlow);
+
+          var entries = getEntries(popupMenu);
+
+          triggerAction(entries, 'replace-with-default-flow');
+
+          // when
+          modeling.reconnectStart(sequenceFlow, task, [
+            { x: 686, y: 267, original: { x: 686, y: 307 } },
+            { x: 686, y: 207, original: { x: 686, y: 187 } }
+          ]);
+
+          commandStack.undo();
+
+          var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+          // then
+          expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
+        })
+      );
+
+
+      [
+        'bpmn:StartEvent'
+      ].forEach(function(type) {
+
+        it('should replace DefaultFlow with SequenceFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+
+            // given
+            var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+                root = canvas.getRootElement();
+
+            var intermediateEvent = elementFactory.createShape({ type: type });
+
+            modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+
+            openPopup(sequenceFlow);
+
+            var entries = getEntries(popupMenu);
+
+            triggerAction(entries, 'replace-with-default-flow');
+
+            // when
+            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+              { x: 686, y: 267, original: { x: 686, y: 307 } },
+              { x: 686, y: 50, original: { x: 686, y: 75 } }
+            ]);
+
+            var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+            // then
+            expect(gateway.businessObject.default).to.not.exist;
+          })
+        );
       });
 
 
@@ -1304,15 +1351,49 @@ describe('features/popup-menu - replace menu provider', function() {
         'bpmn:EndEvent',
         'bpmn:IntermediateThrowEvent'
       ].forEach(function(type) {
+
         it('should keep DefaultFlow when changing target to ' + type,
           inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+
+            // given
+            var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+                root = canvas.getRootElement();
+
+            var intermediateEvent = elementFactory.createShape({ type: type });
+
+            modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+
+            openPopup(sequenceFlow);
+
+            var entries = getEntries(popupMenu);
+
+            triggerAction(entries, 'replace-with-default-flow');
+
+            // when
+            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+              { x: 686, y: 267, original: { x: 686, y: 307 } },
+              { x: 686, y: 50, original: { x: 686, y: 75 } }
+            ]);
+
+            var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+            // then
+            expect(gateway.businessObject.default).to.exist;
+          })
+        );
+      });
+
+
+      it('should replace DefaultFlow with SequenceFlow when changing target -> undo',
+        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
+
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-              root = canvas.getRootElement();
+              rootElement = canvas.getRootElement();
 
-          var intermediateEvent = elementFactory.createShape({ type: type});
+          var intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
 
-          modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
+          modeling.createShape(intermediateEvent, { x: 686, y: 50 }, rootElement);
 
           openPopup(sequenceFlow);
 
@@ -1326,43 +1407,14 @@ describe('features/popup-menu - replace menu provider', function() {
             { x: 686, y: 50, original: { x: 686, y: 75 } }
           ]);
 
+          commandStack.undo();
+
           var gateway = elementRegistry.get('ExclusiveGateway_1');
 
           // then
-          expect(gateway.businessObject.default).to.exist;
-        }));
-      });
-
-
-      it('should replace DefaultFlow with SequenceFlow when changing target -> undo',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            root = canvas.getRootElement();
-
-        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent'});
-
-        modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
-
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        triggerAction(entries, 'replace-with-default-flow');
-
-        // when
-        modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-          { x: 686, y: 267, original: { x: 686, y: 307 } },
-          { x: 686, y: 50, original: { x: 686, y: 75 } }
-        ]);
-
-        commandStack.undo();
-
-        var gateway = elementRegistry.get('ExclusiveGateway_1');
-
-        // then
-        expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
-      }));
+          expect(gateway.businessObject.default).equal(sequenceFlow.businessObject);
+        })
+      );
 
 
       it('should keep DefaultFlow when morphing Gateway', inject(function(elementRegistry, popupMenu, bpmnReplace) {
@@ -1377,7 +1429,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         triggerAction(entries, 'replace-with-default-flow');
 
-        var inclusiveGateway = bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
+        var inclusiveGateway = bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway' });
 
         // then
         expect(inclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
@@ -1399,7 +1451,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         replaceDefaultFlow.action();
 
-        var sendTask = bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask'});
+        var sendTask = bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask' });
 
         // then
         expect(sendTask.businessObject.default).to.equal(sequenceFlow.businessObject);
@@ -1408,74 +1460,80 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should keep DefaultFlow when morphing Gateway -> undo',
         inject(function(elementRegistry, bpmnReplace, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        // when
-        openPopup(sequenceFlow);
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        var entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        triggerAction(entries, 'replace-with-default-flow');
+          var entries = getEntries(popupMenu);
 
-        bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway'});
+          triggerAction(entries, 'replace-with-default-flow');
 
-        commandStack.undo();
+          bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway' });
 
-        // then
-        expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
-      }));
+          commandStack.undo();
+
+          // then
+          expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+        })
+      );
 
 
       it('should remove any conditionExpression when morphing to DefaultFlow',
         inject(function(elementRegistry, modeling, popupMenu, moddle) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
+          var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
 
-        // when
-        openPopup(sequenceFlow);
+          modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
 
-        var entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        // trigger DefaultFlow replacement
-        triggerAction(entries, 'replace-with-default-flow');
+          var entries = getEntries(popupMenu);
 
-        // then
-        expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
-        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
-      }));
+          // trigger DefaultFlow replacement
+          triggerAction(entries, 'replace-with-default-flow');
+
+          // then
+          expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
+          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+        })
+      );
 
 
       it('should remove any conditionExpression when morphing to DefaultFlow -> undo',
         inject(function(elementRegistry, modeling, popupMenu, moddle, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-        modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
+          var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
 
-        // when
-        openPopup(sequenceFlow);
+          modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
 
-        var entries = getEntries(popupMenu);
+          // when
+          openPopup(sequenceFlow);
 
-        // trigger DefaultFlow replacement
-        entries[0].action();
+          var entries = getEntries(popupMenu);
 
-        commandStack.undo();
+          // trigger DefaultFlow replacement
+          entries[0].action();
 
-        // then
-        expect(exclusiveGateway.businessObject.default).to.not.exist;
-        expect(sequenceFlow.businessObject.conditionExpression).to.equal(conditionExpression);
-      }));
+          commandStack.undo();
+
+          // then
+          expect(exclusiveGateway.businessObject.default).to.not.exist;
+          expect(sequenceFlow.businessObject.conditionExpression).to.equal(conditionExpression);
+        })
+      );
 
     });
 
@@ -1484,7 +1542,9 @@ describe('features/popup-menu - replace menu provider', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
 
 
       it('should morph into a ConditionalFlow', inject(function(elementRegistry, popupMenu) {
@@ -1547,66 +1607,12 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should replace ConditionalFlow with SequenceFlow when changing source',
         inject(function(elementRegistry, popupMenu, modeling) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            startEvent = elementRegistry.get('StartEvent_1');
 
-        // when
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        triggerAction(entries, 'replace-with-conditional-flow');
-
-        // when
-        modeling.reconnectStart(sequenceFlow, startEvent, [
-          { x: 196, y: 197, original: { x: 178, y: 197 } },
-          { x: 497, y: 278, original: { x: 547, y: 278 } }
-        ]);
-
-        // then
-        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
-      }));
-
-
-      it('should replace ConditionalFlow with SequenceFlow when changing source -> undo',
-        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            startEvent = elementRegistry.get('StartEvent_1');
-
-        // when
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        triggerAction(entries, 'replace-with-conditional-flow');
-
-        // when
-        modeling.reconnectStart(sequenceFlow, startEvent, [
-          { x: 196, y: 197, original: { x: 178, y: 197 } },
-          { x: 497, y: 278, original: { x: 547, y: 278 } }
-        ]);
-
-        commandStack.undo();
-
-        // then
-        expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
-      }));
-
-
-      [
-        'bpmn:StartEvent'
-      ].forEach(function(type) {
-        it('should replace ConditionalFlow with SequenceFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-              root = canvas.getRootElement(),
-              intermediateEvent = elementFactory.createShape({ type: type });
+              startEvent = elementRegistry.get('StartEvent_1');
 
-          modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
-
+          // when
           openPopup(sequenceFlow);
 
           var entries = getEntries(popupMenu);
@@ -1614,14 +1620,76 @@ describe('features/popup-menu - replace menu provider', function() {
           triggerAction(entries, 'replace-with-conditional-flow');
 
           // when
-          modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-            { x: 389, y: 197, original: { x: 389, y: 197 } },
-            { x: 497, y: 197, original: { x: 497, y: 197 } }
+          modeling.reconnectStart(sequenceFlow, startEvent, [
+            { x: 196, y: 197, original: { x: 178, y: 197 } },
+            { x: 497, y: 278, original: { x: 547, y: 278 } }
           ]);
 
           // then
           expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
-        }));
+        })
+      );
+
+
+      it('should replace ConditionalFlow with SequenceFlow when changing source -> undo',
+        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
+
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+              startEvent = elementRegistry.get('StartEvent_1');
+
+          // when
+          openPopup(sequenceFlow);
+
+          var entries = getEntries(popupMenu);
+
+          triggerAction(entries, 'replace-with-conditional-flow');
+
+          // when
+          modeling.reconnectStart(sequenceFlow, startEvent, [
+            { x: 196, y: 197, original: { x: 178, y: 197 } },
+            { x: 497, y: 278, original: { x: 547, y: 278 } }
+          ]);
+
+          commandStack.undo();
+
+          // then
+          expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
+        })
+      );
+
+
+      [
+        'bpmn:StartEvent'
+      ].forEach(function(type) {
+
+        it('should replace ConditionalFlow with SequenceFlow when changing target to ' + type,
+          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+
+            // given
+            var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+                root = canvas.getRootElement(),
+                intermediateEvent = elementFactory.createShape({ type: type });
+
+            modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+
+            openPopup(sequenceFlow);
+
+            var entries = getEntries(popupMenu);
+
+            triggerAction(entries, 'replace-with-conditional-flow');
+
+            // when
+            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+              { x: 389, y: 197, original: { x: 389, y: 197 } },
+              { x: 497, y: 197, original: { x: 497, y: 197 } }
+            ]);
+
+            // then
+            expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+          })
+        );
+
       });
 
 
@@ -1630,12 +1698,44 @@ describe('features/popup-menu - replace menu provider', function() {
         'bpmn:EndEvent',
         'bpmn:IntermediateThrowEvent'
       ].forEach(function(type) {
+
         it('should keep ConditionalFlow when changing target to ' + type,
           inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+
+            // given
+            var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+                root = canvas.getRootElement(),
+                intermediateEvent = elementFactory.createShape({ type: type });
+
+            modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
+
+            openPopup(sequenceFlow);
+
+            var entries = getEntries(popupMenu);
+
+            triggerAction(entries, 'replace-with-conditional-flow');
+
+            // when
+            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
+              { x: 389, y: 197, original: { x: 389, y: 197 } },
+              { x: 497, y: 197, original: { x: 497, y: 197 } }
+            ]);
+
+            // then
+            expect(sequenceFlow.businessObject.conditionExpression).to.exist;
+          })
+        );
+
+      });
+
+
+      it('should replace ConditionalFlow with SequenceFlow when changing target -> undo',
+        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
+
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
               root = canvas.getRootElement(),
-              intermediateEvent = elementFactory.createShape({ type: type });
+              intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
 
           modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
 
@@ -1643,6 +1743,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           var entries = getEntries(popupMenu);
 
+          // trigger ConditionalFlow replacement
           triggerAction(entries, 'replace-with-conditional-flow');
 
           // when
@@ -1651,50 +1752,26 @@ describe('features/popup-menu - replace menu provider', function() {
             { x: 497, y: 197, original: { x: 497, y: 197 } }
           ]);
 
+          commandStack.undo();
+
           // then
-          expect(sequenceFlow.businessObject.conditionExpression).to.exist;
-        }));
-      });
-
-
-      it('should replace ConditionalFlow with SequenceFlow when changing target -> undo',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            root = canvas.getRootElement(),
-            intermediateEvent = elementFactory.createShape({ type: 'bpmn:StartEvent'});
-
-        modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
-
-        openPopup(sequenceFlow);
-
-        var entries = getEntries(popupMenu);
-
-        // trigger ConditionalFlow replacement
-        triggerAction(entries, 'replace-with-conditional-flow');
-
-        // when
-        modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-          { x: 389, y: 197, original: { x: 389, y: 197 } },
-          { x: 497, y: 197, original: { x: 497, y: 197 } }
-        ]);
-
-        commandStack.undo();
-
-        // then
-        expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
-      }));
+          expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
+        })
+      );
 
     });
 
   });
 
 
-  describe('rules', function () {
+  describe('rules', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules.concat([ customRulesModule ]) }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat([ customRulesModule ])
+    }));
+
 
     it('should get entries by default', inject(function(elementRegistry, popupMenu) {
 
@@ -1714,41 +1791,43 @@ describe('features/popup-menu - replace menu provider', function() {
     it('should get entries when custom rule returns true',
       inject(function(elementRegistry, popupMenu, customRules) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
 
-      customRules.addRule('shape.replace', function () {
-        return true;
-      });
+        customRules.addRule('shape.replace', function() {
+          return true;
+        });
 
-      //when
-      openPopup(startEvent);
+        //when
+        openPopup(startEvent);
 
-      var entries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-      // then
-      expect(entries).to.have.length.above(0);
-    }));
+        // then
+        expect(entries).to.have.length.above(0);
+      })
+    );
 
 
     it('should get no entries when custom rule returns false',
       inject(function(elementRegistry, popupMenu, customRules) {
 
-      // given
-      var startEvent = elementRegistry.get('StartEvent_1');
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
 
-      customRules.addRule('shape.replace', function () {
-        return false;
-      });
+        customRules.addRule('shape.replace', function() {
+          return false;
+        });
 
-      // when
-      openPopup(startEvent);
+        // when
+        openPopup(startEvent);
 
-      var entries = getEntries(popupMenu);
+        var entries = getEntries(popupMenu);
 
-      // then
-      expect(entries).to.have.length(0);
-    }));
+        // then
+        expect(entries).to.have.length(0);
+      })
+    );
 
 
     it('should provide element to custom rules', inject(function(elementRegistry, popupMenu, customRules) {
@@ -1757,7 +1836,7 @@ describe('features/popup-menu - replace menu provider', function() {
       var startEvent = elementRegistry.get('StartEvent_1');
       var actual;
 
-      customRules.addRule('shape.replace', function (context) {
+      customRules.addRule('shape.replace', function(context) {
         actual = context.element;
       });
 
@@ -1775,7 +1854,7 @@ describe('features/popup-menu - replace menu provider', function() {
       var callCount = 0;
       var startEvent = elementRegistry.get('StartEvent_1');
 
-      customRules.addRule('shape.replace', function () {
+      customRules.addRule('shape.replace', function() {
         callCount++;
       });
 

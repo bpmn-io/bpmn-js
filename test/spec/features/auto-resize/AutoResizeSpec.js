@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
@@ -49,8 +49,7 @@ describe('features/auto-resize', function() {
 
     describe('after moving', function() {
 
-      it('should expand the right edge',
-          inject(function(modeling) {
+      it('should expand the right edge', inject(function(modeling) {
 
         // when
         modeling.moveElements([ taskShape ], { x: 100, y: 0 }, participantShape);
@@ -120,8 +119,7 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should resize the parent if element and parent edge intersect',
-          inject(function(modeling) {
+      it('should resize the parent on element/parent edge intersect', inject(function(modeling) {
 
         // when
         modeling.moveElements([ taskShape ], { x: 0, y: 49 }, participantShape);
@@ -133,8 +131,7 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should not resize the parent if element is placed near the bottom',
-          inject(function(modeling) {
+      it('should not resize the parent if element is placed near the bottom', inject(function(modeling) {
 
         // when
         modeling.moveElements([ taskShape ], { x: 0, y: 47 }, participantShape);
@@ -144,27 +141,31 @@ describe('features/auto-resize', function() {
       }));
 
 
-      it('should undo resizing', inject(function(modeling, commandStack) {
+      describe('undo / redo support', function() {
 
-        // when
-        modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
-        commandStack.undo();
+        it('should undo', inject(function(modeling, commandStack) {
 
-        // then
-        expect(participantShape).to.have.bounds(originalBounds);
-      }));
+          // when
+          modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
+          commandStack.undo();
+
+          // then
+          expect(participantShape).to.have.bounds(originalBounds);
+        }));
 
 
-      it('should redo resizing', inject(function(modeling, commandStack) {
+        it('should redo', inject(function(modeling, commandStack) {
 
-        // when
-        modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
-        commandStack.undo();
-        commandStack.redo();
+          // when
+          modeling.moveElements([ startEventShape ], { x: -100, y: -100 }, participantShape);
+          commandStack.undo();
+          commandStack.redo();
 
-        // then
-        expect(participantShape).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
-      }));
+          // then
+          expect(participantShape).to.have.bounds({ x: 122, y: 71, width: 496, height: 267 });
+        }));
+
+      });
 
     });
 
@@ -197,7 +198,7 @@ describe('features/auto-resize', function() {
     });
 
 
-    describe('after appending', function(){
+    describe('after appending', function() {
 
       it('should expand the bottom right edges', inject(function(modeling) {
 
@@ -227,22 +228,23 @@ describe('features/auto-resize', function() {
       it('should redo resizing and restore shapes and connections',
         inject(function(modeling, commandStack) {
 
-        // given
-        var taskShape2 = modeling.appendShape(taskShape, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participantShape);
+          // given
+          var taskShape2 = modeling.appendShape(taskShape, { type: 'bpmn:Task' }, { x: 660, y: 250 }, participantShape);
 
-        // when
-        commandStack.undo();
-        commandStack.redo();
+          // when
+          commandStack.undo();
+          commandStack.redo();
 
-        // then
-        var expectedBounds = assign(originalBounds, { width: 563 });
+          // then
+          var expectedBounds = assign(originalBounds, { width: 563 });
 
-        expect(participantShape).to.have.bounds(expectedBounds);
+          expect(participantShape).to.have.bounds(expectedBounds);
 
-        expect(taskShape2).to.exist;
-        expect(taskShape.outgoing).not.to.be.empty;
-        expect(taskShape2.incoming).not.to.be.empty;
-      }));
+          expect(taskShape2).to.exist;
+          expect(taskShape.outgoing).not.to.be.empty;
+          expect(taskShape2.incoming).not.to.be.empty;
+        })
+      );
 
     });
 
@@ -295,7 +297,7 @@ describe('features/auto-resize', function() {
       modeling.createShape({ type: 'bpmn:Task' }, { x: 600, y: 320 }, participantShape);
 
       // then
-      expect(participantShape).to.have.bounds({ x: 247, y: 160, width: 503, height: 260});
+      expect(participantShape).to.have.bounds({ x: 247, y: 160, width: 503, height: 260 });
     }));
 
 
@@ -365,64 +367,67 @@ describe('features/auto-resize', function() {
     it('should auto-resize after dropping selection inside',
       inject(function(selection, move, dragging, elementRegistry, modeling) {
 
-      // given
-      var subProcessShape = elementRegistry.get('SubProcess_1'),
-          taskShape = elementRegistry.get('Task_1'),
-          startEventShape = elementRegistry.get('StartEvent_1');
+        // given
+        var subProcessShape = elementRegistry.get('SubProcess_1'),
+            taskShape = elementRegistry.get('Task_1'),
+            startEventShape = elementRegistry.get('StartEvent_1');
 
-      var originalBounds = getBounds(subProcessShape);
+        var originalBounds = getBounds(subProcessShape);
 
-      // when
-      selection.select([ taskShape, startEventShape ]);
+        // when
+        selection.select([ taskShape, startEventShape ]);
 
-      move.start(canvasEvent({ x: 265, y: 235 }), startEventShape);
+        move.start(canvasEvent({ x: 265, y: 235 }), startEventShape);
 
-      dragging.hover({
-        element: subProcessShape,
-        gfx: elementRegistry.getGraphics(subProcessShape)
-      });
+        dragging.hover({
+          element: subProcessShape,
+          gfx: elementRegistry.getGraphics(subProcessShape)
+        });
 
-      dragging.move(canvasEvent({ x: 450, y: 235 }));
+        dragging.move(canvasEvent({ x: 450, y: 235 }));
 
-      dragging.end();
+        dragging.end();
 
-      // then
-      var expectedBounds = assign(originalBounds, { width: 552 });
+        // then
+        var expectedBounds = assign(originalBounds, { width: 552 });
 
-      expect(subProcessShape).to.have.bounds(expectedBounds);
-    }));
+        expect(subProcessShape).to.have.bounds(expectedBounds);
+      })
+    );
 
 
     it('should not auto-resize after dropping selection outside',
       inject(function(selection, canvas, move, dragging, elementRegistry, modeling) {
 
-      // given
-      var subProcessShape = elementRegistry.get('SubProcess_1'),
-          taskShape = elementRegistry.get('Task_1'),
-          startEventShape = elementRegistry.get('StartEvent_1'),
-          rootShape = canvas.getRootElement();
+        // given
+        var subProcessShape = elementRegistry.get('SubProcess_1'),
+            taskShape = elementRegistry.get('Task_1'),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            rootShape = canvas.getRootElement();
 
-      var originalBounds = getBounds(subProcessShape);
+        var originalBounds = getBounds(subProcessShape);
 
-      // when
-      selection.select([ taskShape, startEventShape ]);
+        // when
+        selection.select([ taskShape, startEventShape ]);
 
-      move.start(canvasEvent({ x: 390, y: 110 }), taskShape);
+        move.start(canvasEvent({ x: 390, y: 110 }), taskShape);
 
-      dragging.hover({
-        element: rootShape,
-        gfx: elementRegistry.getGraphics(rootShape)
-      });
+        dragging.hover({
+          element: rootShape,
+          gfx: elementRegistry.getGraphics(rootShape)
+        });
 
-      dragging.move(canvasEvent({ x: 600, y: 110 }));
+        dragging.move(canvasEvent({ x: 600, y: 110 }));
 
-      dragging.end();
+        dragging.end();
 
-      // then
-      expect(subProcessShape).to.have.bounds(originalBounds);
-    }));
+        // then
+        expect(subProcessShape).to.have.bounds(originalBounds);
+      })
+    );
 
   });
+
 
   describe('after moving multiple elements', function() {
 
@@ -443,8 +448,7 @@ describe('features/auto-resize', function() {
     }));
 
 
-    it('should not expand, if elements keep their parents (different original parents)',
-      inject(function(modeling) {
+    it('should not expand, if elements keep their parents (different original parents)', inject(function(modeling) {
 
       // given
       var originalBounds = getBounds(subProcessShape_1);
@@ -455,12 +459,10 @@ describe('features/auto-resize', function() {
 
       // then
       expect(subProcessShape_1).to.have.bounds(originalBounds);
-
     }));
 
 
-    it('should expand non-primary parents',
-      inject(function(modeling) {
+    it('should expand non-primary parents', inject(function(modeling) {
 
       // given
       var originalBounds = getBounds(subProcessShape_1);
@@ -472,7 +474,6 @@ describe('features/auto-resize', function() {
       // then
       var expectedBounds = assign(originalBounds, { width: 525 });
       expect(subProcessShape_1).to.have.bounds(expectedBounds);
-
     }));
 
 
@@ -489,11 +490,10 @@ describe('features/auto-resize', function() {
       // then
       var expectedBounds = assign(originalBounds, { x: 0, width: 444 });
       expect(subProcessShape_1).to.have.bounds(expectedBounds);
-
     }));
 
 
-    it('should expand, if primary shape changes parent', inject(function(modeling){
+    it('should expand, if primary shape changes parent', inject(function(modeling) {
 
       // given
       var originalBounds = getBounds(subProcessShape_1);
@@ -505,11 +505,10 @@ describe('features/auto-resize', function() {
       // then
       var expectedBounds = assign(originalBounds, { y: 80, height: 317 });
       expect(subProcessShape_1).to.have.bounds(expectedBounds);
-
     }));
 
 
-    it('should expand top and bottom edge, if primary shape changes parent', inject(function(modeling){
+    it('should expand top and bottom edge, if primary shape changes parent', inject(function(modeling) {
 
       // given
       var originalBounds = getBounds(subProcessShape_1);
@@ -521,18 +520,21 @@ describe('features/auto-resize', function() {
       // then
       var expectedBounds = assign(originalBounds, { y: 130, height: 334 });
       expect(subProcessShape_1).to.have.bounds(expectedBounds);
-
     }));
 
   });
+
 
   describe('nested sub processes', function() {
 
     var diagramXML = require('./AutoResize.nested-sub-processes.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-    it('should recursively expand parent element', inject(function(elementRegistry, modeling){
+
+    it('should recursively expand parent element', inject(function(elementRegistry, modeling) {
 
       var taskShape = elementRegistry.get('Task_1'),
           subProcessShape_2 = elementRegistry.get('SubProcess_2'),
@@ -547,7 +549,8 @@ describe('features/auto-resize', function() {
       expect(subProcessShape_2).to.have.bounds(expectedBounds);
     }));
 
-    it('should recursively expand last parent element', inject(function(elementRegistry, modeling){
+
+    it('should recursively expand last parent element', inject(function(elementRegistry, modeling) {
 
       var taskShape = elementRegistry.get('Task_1'),
           subProcessShape_1 = elementRegistry.get('SubProcess_1'),
