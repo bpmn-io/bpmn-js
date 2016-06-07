@@ -17,11 +17,18 @@ var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAt
 
 var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
+
 describe('features/attach-support', function() {
 
-  var modules = [ attachSupportModule, modelingModule, rulesModule, replaceModule, spaceToolModule ];
+  var testModules = [
+    attachSupportModule,
+    modelingModule,
+    rulesModule,
+    replaceModule,
+    spaceToolModule
+  ];
 
-  beforeEach(bootstrapDiagram({ modules: modules }));
+  beforeEach(bootstrapDiagram({ modules: testModules }));
 
 
   beforeEach(inject(function(dragging) {
@@ -575,7 +582,7 @@ describe('features/attach-support', function() {
       }));
 
 
-    it('should remove invalid outgoing attacher connections',
+    it('should remove invalid outgoing attacher connection',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
       // given
@@ -617,7 +624,61 @@ describe('features/attach-support', function() {
       }));
 
 
-    it('should remove invalid incoming attacher connections',
+    it('should remove invalid outgoing attacher connections',
+      inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
+
+      // given
+      var parentGfx = elementRegistry.getGraphics(parentShape);
+
+      var element = elementFactory.createShape({
+        id: 'element',
+        x: 700, y: 50, width: 100, height: 100
+      });
+
+      canvas.addShape(element, rootShape);
+
+      var connection1 = elementFactory.createConnection({
+        id: 'connection1',
+        source: element,
+        target: attacher,
+        waypoints: [
+          { x: 700, y: 100 },
+          { x: 625, y: 100 }
+        ]
+      });
+
+      canvas.addConnection(connection1, rootShape);
+
+      var connection2 = elementFactory.createConnection({
+        id: 'connection2',
+        source: element,
+        target: attacher,
+        waypoints: [
+          { x: 700, y: 100 },
+          { x: 625, y: 100 }
+        ]
+      });
+
+      canvas.addConnection(connection2, rootShape);
+
+      // when
+      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+
+      dragging.hover({
+        element: parentShape,
+        gfx: parentGfx
+      });
+
+      dragging.move(canvasEvent({ x: 250, y: 150 }));
+      dragging.end();
+
+      // then
+      expect(attacher.outgoing).to.be.empty;
+
+    }));
+
+
+    it('should remove invalid incoming attacher connection',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
       // given
@@ -657,6 +718,60 @@ describe('features/attach-support', function() {
         expect(attacher.incoming).to.be.empty;
 
       }));
+
+
+    it('should remove invalid incoming attacher connections',
+      inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
+
+      // given
+      var parentGfx = elementRegistry.getGraphics(parentShape);
+
+      var element = elementFactory.createShape({
+        id: 'element',
+        x: 700, y: 50, width: 100, height: 100
+      });
+
+      canvas.addShape(element, rootShape);
+
+      var connection1 = elementFactory.createConnection({
+        id: 'connection1',
+        source: element,
+        target: attacher,
+        waypoints: [
+          { x: 700, y: 100 },
+          { x: 625, y: 100 }
+        ]
+      });
+
+      canvas.addConnection(connection1, rootShape);
+
+      var connection2 = elementFactory.createConnection({
+        id: 'connection2',
+        source: element,
+        target: attacher,
+        waypoints: [
+          { x: 700, y: 100 },
+          { x: 625, y: 100 }
+        ]
+      });
+
+      canvas.addConnection(connection2, rootShape);
+
+      // when
+      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+
+      dragging.hover({
+        element: parentShape,
+        gfx: parentGfx
+      });
+
+      dragging.move(canvasEvent({ x: 250, y: 150 }));
+      dragging.end();
+
+      // then
+      expect(attacher.incoming).to.be.empty;
+
+    }));
 
 
     it('should not remove valid outgoing attacher connections',
