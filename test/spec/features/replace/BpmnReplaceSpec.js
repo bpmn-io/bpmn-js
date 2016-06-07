@@ -1007,7 +1007,9 @@ describe('features/replace - bpmn replace', function() {
         modeling.moveElements([interruptingStartEvent], { x: 0, y: 200 }, root);
 
         var startEventAfter = elementRegistry.filter(function(element) {
-          return is(element, 'bpmn:StartEvent') && element.parent === root;
+          return is(element, 'bpmn:StartEvent')
+            && element.type !== 'label'
+            && element.parent === root;
         })[0];
 
         // then

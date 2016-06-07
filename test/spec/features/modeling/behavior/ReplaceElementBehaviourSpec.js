@@ -31,7 +31,6 @@ describe('features/modeling - move start event behavior', function() {
       modules: testModules
     }));
 
-
     var moveShape;
 
     beforeEach(inject(function(move, dragging, elementRegistry) {
@@ -63,11 +62,7 @@ describe('features/modeling - move start event behavior', function() {
 
         dragging.end();
 
-        var replacement = elementRegistry.filter(function(element) {
-          if (is(element, 'bpmn:StartEvent') && element.parent === rootElement) {
-            return true;
-          }
-        })[0];
+        var replacement = elementRegistry.get('StartEvent_1');
 
         // then
         expect(selection.get()).to.include(replacement);
@@ -112,15 +107,13 @@ describe('features/modeling - move start event behavior', function() {
 
     var diagramXML = require('../../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
-    }));
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
     describe('normal', function() {
 
 
-      it('should unclaim old element ID and claim new ID',
+      it('should unclaim ID and claim same ID with new element',
         inject(function(elementRegistry, bpmnReplace) {
 
           // given
@@ -132,13 +125,14 @@ describe('features/modeling - move start event behavior', function() {
           var subProcess = bpmnReplace.replaceElement(transaction, { type: 'bpmn:SubProcess' });
 
           // then
-          expect(ids.assigned(transaction.id)).to.be.false;
+          expect(ids.assigned(transaction.id)).to.eql(subProcess.businessObject);
           expect(ids.assigned(subProcess.id)).to.eql(subProcess.businessObject);
+          expect(subProcess.id).to.eql(transaction.id);
         })
       );
 
 
-      it('should REVERT unclaim old element ID and claim new ID on UNDO',
+      it('should REVERT unclaim ID and claim same ID with new element on UNDO',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
           // given
@@ -153,7 +147,7 @@ describe('features/modeling - move start event behavior', function() {
 
           // then
           expect(ids.assigned(transaction.id)).to.eql(transaction.businessObject);
-          expect(ids.assigned(subProcess.id)).to.be.false;
+          expect(subProcess.id).not.to.equal(transaction.id);
         })
       );
 
@@ -290,7 +284,7 @@ describe('features/modeling - move start event behavior', function() {
           // then
           expect(newBoundaryEvent.eventDefinitionTypes).to.not.exist;
           expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
-          expect(elementRegistry.get('Transaction_1')).to.not.exist;
+          expect(elementRegistry.get('Transaction_1')).to.eql(subProcess);
         })
       );
 
