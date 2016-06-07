@@ -2,15 +2,7 @@
 
 /* global bootstrapDiagram, inject */
 
-
-var pick = require('lodash/object/pick'),
-    map = require('lodash/collection/map');
-
 var modelingModule = require('../../../../lib/features/modeling');
-
-function containment(element) {
-  return pick(element, [ 'x', 'y', 'parent' ]);
-}
 
 
 describe('features/modeling - move shape', function() {

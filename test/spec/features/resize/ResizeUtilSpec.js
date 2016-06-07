@@ -207,7 +207,7 @@ describe('resize/ResizeUtil', function() {
   });
 
 
-  describe('getMinResizeBounds', function () {
+  describe('getMinResizeBounds', function() {
 
     describe('using minDimensions', function() {
 
@@ -325,7 +325,7 @@ describe('resize/ResizeUtil', function() {
   });
 
 
-  describe('getMinResizeBounds', function () {
+  describe('getMinResizeBounds', function() {
 
     var currentBounds = {
       x: 100, y: 100,
@@ -342,7 +342,7 @@ describe('resize/ResizeUtil', function() {
       var newBounds = ResizeUtil.getMinResizeBounds('nw', currentBounds, minDimensions);
 
       // then
-      expect(newBounds).to.eql({x: 150, y: 150, width: 50, height: 50});
+      expect(newBounds).to.eql({ x: 150, y: 150, width: 50, height: 50 });
     });
 
 
@@ -351,7 +351,7 @@ describe('resize/ResizeUtil', function() {
       var newBounds = ResizeUtil.getMinResizeBounds('sw', currentBounds, minDimensions);
 
       // then
-      expect(newBounds).to.eql({x: 150, y: 100, width: 50, height: 50});
+      expect(newBounds).to.eql({ x: 150, y: 100, width: 50, height: 50 });
     });
 
 
@@ -360,7 +360,7 @@ describe('resize/ResizeUtil', function() {
       var newBounds = ResizeUtil.getMinResizeBounds('ne', currentBounds, minDimensions);
 
       // then
-      expect(newBounds).to.eql({x: 100, y: 150, width: 50, height: 50});
+      expect(newBounds).to.eql({ x: 100, y: 150, width: 50, height: 50 });
     });
 
 
@@ -369,14 +369,14 @@ describe('resize/ResizeUtil', function() {
       var newBounds = ResizeUtil.getMinResizeBounds('se', currentBounds, minDimensions);
 
       // then
-      expect(newBounds).to.eql({x: 100, y: 100, width: 50, height: 50});
+      expect(newBounds).to.eql({ x: 100, y: 100, width: 50, height: 50 });
     });
 
 
   });
 
 
-  describe('addPadding', function () {
+  describe('addPadding', function() {
 
     var bounds = {
       x: -50, y: -50, width: 100, height: 100

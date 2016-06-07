@@ -529,7 +529,7 @@ describe('features/overlays', function() {
 
       var html = createOverlay();
 
-      var connection = canvas.addConnection({ id: 'select1', waypoints: [ { x: 10, y: 10 }, {x: 110, y: 10} ]});
+      var connection = canvas.addConnection({ id: 'select1', waypoints: [ { x: 10, y: 10 }, { x: 110, y: 10 } ] });
 
       // when
       overlays.add(connection, {

@@ -243,8 +243,8 @@ describe('layout/ManhattanLayout', function() {
         // layouted h:h
         expectConnection(connection, [
           { original: { x: 150, y: 150 }, x: 200, y: 150 },
-          { x: 215, y: 150},
-          { x: 215, y: 25},
+          { x: 215, y: 150 },
+          { x: 215, y: 25 },
           { original: { x: 255, y: 25 }, x: 230, y: 25 }
         ]);
       });
@@ -263,7 +263,7 @@ describe('layout/ManhattanLayout', function() {
         // expect
         // still layouted v:v due to tolerance
         expectConnection(connection, [
-          { original: { x: 150, y: 150}, x: 150, y: 100 },
+          { original: { x: 150, y: 150 }, x: 150, y: 100 },
           { x: 150, y: 75 },
           { x: 210, y: 75 },
           { original: { x: 210, y: 25 }, x: 210, y: 50 }
@@ -353,7 +353,7 @@ describe('layout/ManhattanLayout', function() {
           { original: { x: 150, y: 150 }, x: 150, y: 200 },
           { x: 150, y: 300 }, // vertical intermediate
           { x: 300, y: 300 }, // line segment
-          { original: {x: 300, y: 450 }, x: 300, y: 400 }
+          { original: { x: 300, y: 450 }, x: 300, y: 400 }
         ]);
       });
 

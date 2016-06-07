@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../TestHelper');
+require('../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -79,31 +79,31 @@ describe('util/Elements', function() {
 
       connection1 = elementFactory.createRoot({
         id: 'connection1',
-        waypoints: [ { x: 60, y: 35 }, {x: 100, y: 35} ]
+        waypoints: [ { x: 60, y: 35 }, { x: 100, y: 35 } ]
       });
       canvas.addConnection(connection1);
 
       connection2 = elementFactory.createRoot({
         id: 'connection2',
-        waypoints: [ { x: 150, y: 35 }, {x: 190, y: 35} ]
+        waypoints: [ { x: 150, y: 35 }, { x: 190, y: 35 } ]
       });
       canvas.addConnection(connection2);
 
       connection3 = elementFactory.createRoot({
         id: 'connection3',
-        waypoints: [ { x: 240, y: 35 }, {x: 280, y: 35} ]
+        waypoints: [ { x: 240, y: 35 }, { x: 280, y: 35 } ]
       });
       canvas.addConnection(connection3);
 
       connection2a = elementFactory.createRoot({
         id: 'connection2a',
-        waypoints: [ { x: 215, y: 60 }, {x: 215, y: 100} ]
+        waypoints: [ { x: 215, y: 60 }, { x: 215, y: 100 } ]
       });
       canvas.addConnection(connection2a);
 
       connection2b = elementFactory.createRoot({
         id: 'connection2b',
-        waypoints: [ { x: 215, y: 150 }, {x: 215, y: 190} ]
+        waypoints: [ { x: 215, y: 150 }, { x: 215, y: 190 } ]
       });
       canvas.addConnection(connection2b);
 
@@ -167,7 +167,7 @@ describe('util/Elements', function() {
         x: 0,
         y: 0,
         width:  250,
-        height: 200,
+        height: 200
       };
 
       // when
@@ -197,7 +197,7 @@ describe('util/Elements', function() {
           x: -300,
           y: -300,
           width:  550,
-          height: 500,
+          height: 500
         };
 
         // when
@@ -234,7 +234,7 @@ describe('util/Elements', function() {
           x: -110,
           y: -20,
           width:  180,
-          height: 90,
+          height: 90
         };
         elements = elementRegistry.filter(function(element) {
           return element;
@@ -258,7 +258,7 @@ describe('util/Elements', function() {
           x: 190,
           y: 0,
           width:  200,
-          height: 100,
+          height: 100
         };
 
         // when

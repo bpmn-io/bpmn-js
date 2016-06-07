@@ -1,6 +1,6 @@
 'use strict';
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 
 var selectionModule = require('../../../../lib/features/selection');
@@ -33,7 +33,7 @@ describe('features/selection/Selections', function() {
 
     connection1 = canvas.addConnection({
       id: 'connection1',
-      waypoints: [ { x: 110, y: 60 }, {x: 150, y: 60} ]
+      waypoints: [ { x: 110, y: 60 }, { x: 150, y: 60 } ]
     });
   }));
 

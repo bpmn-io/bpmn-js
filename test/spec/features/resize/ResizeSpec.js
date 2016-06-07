@@ -103,7 +103,7 @@ describe('features/resize - Resize', function() {
   });
 
 
-  describe('modeling', function () {
+  describe('modeling', function() {
 
     it('should resize to minimum bounds', inject(function(canvas, resize, dragging, elementFactory) {
 
@@ -256,23 +256,24 @@ describe('features/resize - Resize', function() {
     it('should add resize handles only if allowed',
       inject(function(canvas, elementFactory, elementRegistry, selection) {
 
-      // given
-      var s = elementFactory.createShape({
-        id: 'c2',
-        resizable: false,
-        x: 300, y: 100, width: 100, height: 100
-      });
+        // given
+        var s = elementFactory.createShape({
+          id: 'c2',
+          resizable: false,
+          x: 300, y: 100, width: 100, height: 100
+        });
 
-      var nonResizable = canvas.addShape(s);
+        var nonResizable = canvas.addShape(s);
 
-      // when
-      selection.select(nonResizable);
+        // when
+        selection.select(nonResizable);
 
-      // then
-      var resizeAnchors = gfx.selectAll('.resize');
+        // then
+        var resizeAnchors = gfx.selectAll('.resize');
 
-      expect(resizeAnchors.length).to.equal(0);
-    }));
+        expect(resizeAnchors.length).to.equal(0);
+      })
+    );
 
 
     describe('live check, rejecting', function() {

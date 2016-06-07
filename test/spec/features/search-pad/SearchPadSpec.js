@@ -55,12 +55,12 @@ describe('features/searchPad', function() {
         if (pattern === 'one') {
           return [{
             primaryTokens: [
-              { normal: 'one'}
+              { normal: 'one' }
             ],
             secondaryTokens: [
-              { normal: 'some_'},
-              { matched: 'DataStore'},
-              { normal: '_123456_id'},
+              { normal: 'some_' },
+              { matched: 'DataStore' },
+              { normal: '_123456_id' }
             ],
             element: elements.one.a
           }];
@@ -69,22 +69,22 @@ describe('features/searchPad', function() {
         if (pattern === 'two') {
           return [{
             primaryTokens: [
-              { normal: 'one'}
+              { normal: 'one' }
             ],
             secondaryTokens: [
-              { normal: 'some_'},
-              { matched: 'DataStore'},
-              { normal: '_123456_id'},
+              { normal: 'some_' },
+              { matched: 'DataStore' },
+              { normal: '_123456_id' }
             ],
             element: elements.two.a
           },{
             primaryTokens: [
-              { normal: 'two'}
+              { normal: 'two' }
             ],
             secondaryTokens: [
-              { normal: 'some_'},
-              { matched: 'DataStore'},
-              { normal: '_123456_id'},
+              { normal: 'some_' },
+              { matched: 'DataStore' },
+              { normal: '_123456_id' }
             ],
             element: elements.two.b
           }];
@@ -132,7 +132,7 @@ describe('features/searchPad', function() {
     searchPad.registerProvider(undefined);
 
     // when
-    expect(function(){
+    expect(function() {
       searchPad.open();
     }).to.throw('no search provider registered');
 

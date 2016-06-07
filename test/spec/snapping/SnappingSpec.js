@@ -16,26 +16,27 @@ describe('features/snapping - Snapping', function() {
   beforeEach(bootstrapDiagram({ modules: [ snappingModule ] }));
 
 
-  var root, shapeA, shapeB;
+  var rootElement, shape;
 
   beforeEach(inject(function(canvas, elementFactory) {
 
-    root = elementFactory.createRoot({
+    rootElement = elementFactory.createRoot({
       id: 'root'
     });
 
-    canvas.setRootElement(root);
+    canvas.setRootElement(rootElement);
 
-    shapeA = canvas.addShape(elementFactory.createShape({
-      id: 'A',
+    shape = canvas.addShape(elementFactory.createShape({
+      id: 'shape',
       x: 100, y: 100, width: 100, height: 100
     }));
 
-    shapeB = canvas.addShape(elementFactory.createShape({
-      id: 'B',
+
+    // snap target
+    canvas.addShape(elementFactory.createShape({
+      id: 'snap-target',
       x: 400, y: 150, width: 50, height: 50
     }));
-
   }));
 
 
@@ -48,7 +49,7 @@ describe('features/snapping - Snapping', function() {
         x: 100,
         y: 100,
         context: {
-          shape: shapeA
+          shape: shape
         }
       };
 
@@ -70,7 +71,7 @@ describe('features/snapping - Snapping', function() {
         x: 100,
         y: 100,
         context: {
-          shape: shapeA,
+          shape: shape,
           snapContext: originalSnapContext
         }
       };
@@ -94,8 +95,8 @@ describe('features/snapping - Snapping', function() {
         x: 150,
         y: 150,
         context: {
-          shape: shapeA,
-          target: root
+          shape: shape,
+          target: rootElement
         }
       });
     });

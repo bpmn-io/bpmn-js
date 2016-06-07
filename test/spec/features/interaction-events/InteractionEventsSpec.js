@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -66,7 +66,7 @@ describe('features/interaction-events', function() {
 
     it('should emit element.(click|hover|out|dblclick) events', inject(function(eventBus) {
 
-      // FIXME(nre): automate this test
+      // TODO(nre): automate this test
       // we could mock raw dom events via custom events and ensure our correct synthetic events fire
 
       [ 'hover', 'out', 'click', 'dblclick' ].forEach(function(type) {

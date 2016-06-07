@@ -5,7 +5,7 @@ var CopyPasteUtil = require('../../../lib/util/CopyPasteUtil');
 
 describe('util/CopyPasteUtil', function() {
 
-  describe('#getTopLevel', function () {
+  describe('#getTopLevel', function() {
 
     var sA = { id: 'a', parent: { id: 'root' } },
         sB = { id: 'b', parent: sA },

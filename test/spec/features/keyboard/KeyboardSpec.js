@@ -93,7 +93,7 @@ describe('features/keyboard', function() {
       container = TestContainer.get(this);
     });
 
-    describe('zoom in', function(){
+    describe('zoom in', function() {
 
       it('should handle numpad plus', inject(function(canvas, keyboard) {
 
@@ -149,7 +149,7 @@ describe('features/keyboard', function() {
     });
 
 
-    describe('zoom out', function(){
+    describe('zoom out', function() {
 
       it('should handle numpad minus', inject(function(canvas, keyboard) {
 
@@ -192,7 +192,7 @@ describe('features/keyboard', function() {
     });
 
 
-    describe('default zoom level', function(){
+    describe('default zoom level', function() {
 
       it('should handle numpad zero', inject(function(canvas, keyboard) {
 
@@ -224,7 +224,7 @@ describe('features/keyboard', function() {
     });
 
 
-    describe('arrow keys', function(){
+    describe('arrow keys', function() {
 
       it('should handle left arrow', inject(function(canvas, keyboard) {
 
@@ -285,50 +285,52 @@ describe('features/keyboard', function() {
       describe('configurability', function() {
 
         it('should configure speed',
-            inject(function(canvas, keyboard, injector) {
+          inject(function(canvas, keyboard, injector) {
 
-          // given
-          var keyboardConfig = injector.get('config.keyboard');
+            // given
+            var keyboardConfig = injector.get('config.keyboard');
 
-          var keyDownEvent = createKeyEvent(container, 38, true);
+            var keyDownEvent = createKeyEvent(container, 38, true);
 
-          // when
-          keyboardConfig.speed = 23; // plenty of fuel needed
-          keyboard._keyHandler(keyDownEvent);
+            // when
+            keyboardConfig.speed = 23; // plenty of fuel needed
+            keyboard._keyHandler(keyDownEvent);
 
-          // then
-          expect(canvas.viewbox().x).to.eql(0);
-          expect(canvas.viewbox().y).to.eql(-23);
-        }));
+            // then
+            expect(canvas.viewbox().x).to.eql(0);
+            expect(canvas.viewbox().y).to.eql(-23);
+          })
+        );
 
 
         it('should configure natural scrolling',
-            inject(function(canvas, keyboard, injector) {
+          inject(function(canvas, keyboard, injector) {
 
-          // given
-          var keyboardConfig = injector.get('config.keyboard');
+            // given
+            var keyboardConfig = injector.get('config.keyboard');
 
-          var keyDownEvent = createKeyEvent(container, 38, true),
-              keyUpEvent = createKeyEvent(container, 40, true);
+            var keyDownEvent = createKeyEvent(container, 38, true),
+                keyUpEvent = createKeyEvent(container, 40, true);
 
-          // when
-          keyboardConfig.invertY = true;
-          keyboard._keyHandler(keyDownEvent);
+            // when
+            keyboardConfig.invertY = true;
+            keyboard._keyHandler(keyDownEvent);
 
-          // then
-          expect(canvas.viewbox().x).to.eql(0);
-          expect(canvas.viewbox().y).to.eql(5);
+            // then
+            expect(canvas.viewbox().x).to.eql(0);
+            expect(canvas.viewbox().y).to.eql(5);
 
 
-          // but does up work, too?
+            // but does up work, too?
 
-          // when
-          keyboard._keyHandler(keyUpEvent);
+            // when
+            keyboard._keyHandler(keyUpEvent);
 
-          // then
-          expect(canvas.viewbox().x).to.eql(0);
-          expect(canvas.viewbox().y).to.eql(0);
-        }));
+            // then
+            expect(canvas.viewbox().x).to.eql(0);
+            expect(canvas.viewbox().y).to.eql(0);
+          })
+        );
 
       });
 

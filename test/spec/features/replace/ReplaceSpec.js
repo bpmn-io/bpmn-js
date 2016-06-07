@@ -286,22 +286,23 @@ describe('features/Replace', function() {
     it('should adopt children and show them in the DOM',
       inject(function(canvas, elementFactory, replace, elementRegistry) {
 
-      // given
-      var replacement = {
-        id: 'replacement',
-        width: 300,
-        height: 300
-      };
+        // given
+        var replacement = {
+          id: 'replacement',
+          width: 300,
+          height: 300
+        };
 
-      // when
-      replace.replaceElement(parentShape, replacement);
+        // when
+        replace.replaceElement(parentShape, replacement);
 
-      var newShapeContainer = domQuery('[data-element-id="replacement"]', canvas.getContainer());
+        var newShapeContainer = domQuery('[data-element-id="replacement"]', canvas.getContainer());
 
-      // then
-      expect(domQuery('[data-element-id="originalShape"]', newShapeContainer.parentNode)).to.exist;
-      expect(domQuery('[data-element-id="targetShape"]', newShapeContainer.parentNode)).to.exist;
-    }));
+        // then
+        expect(domQuery('[data-element-id="originalShape"]', newShapeContainer.parentNode)).to.exist;
+        expect(domQuery('[data-element-id="targetShape"]', newShapeContainer.parentNode)).to.exist;
+      })
+    );
 
 
     it('should retain moved children in command context', inject(function(replace, eventBus) {
@@ -321,11 +322,11 @@ describe('features/Replace', function() {
       });
 
       // when
-      var newShape = replace.replaceElement(parentShape, replacement);
-
+      replace.replaceElement(parentShape, replacement);
     }));
 
   });
+
 
   describe('undo/redo support', function() {
 

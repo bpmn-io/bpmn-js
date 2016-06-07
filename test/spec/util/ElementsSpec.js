@@ -12,13 +12,13 @@ describe('util/Elements', function() {
       { id: 'a.1', children: [
         { id: 'a.1.0' },
         { id: 'a.1.1' }
-      ]},
+      ] },
       { id: 'a.2', children: [
         { id: 'a.2.0' },
         { id: 'a.2.1', children: [
           { id: 'a.2.1.0' }
-        ]}
-      ]}
+        ] }
+      ] }
     ]
   };
 
@@ -163,7 +163,7 @@ describe('util/Elements', function() {
 
     var connection1 = {
       id: 'connection1',
-      waypoints: [ { x: 110, y: 105 }, {x: 120, y: 115} ]
+      waypoints: [ { x: 110, y: 105 }, { x: 120, y: 115 } ]
     };
 
 

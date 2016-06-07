@@ -3,6 +3,8 @@
   "version": "0.15.3",
   "description": "A modeling framework for the web",
   "scripts": {
+    "all": "grunt",
+    "dev": "grunt auto-test",
     "test": "grunt test"
   },
   "repository": {
@@ -21,9 +23,11 @@
     "brfs": "~1.2.0",
     "browserify": "^13.0.0",
     "chai": "~2.2.0",
+    "eslint": "^2.11.1",
+    "eslint-plugin-mocha": "^3.0.0",
     "grunt": "~0.4.4",
     "grunt-cli": "^0.1.13",
-    "grunt-contrib-jshint": "^0.7.2",
+    "grunt-eslint": "^18.1.0",
     "grunt-karma": "^0.12.0",
     "grunt-release": "^0.7.0",
     "jquery": "^2.1.0",

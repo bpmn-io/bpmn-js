@@ -173,84 +173,86 @@ describe('features/move - MoveVisuals', function() {
     it('should indicate new target, if selected shapes have different parents',
       inject(function(move, dragging, elementRegistry, selection) {
 
-      // given
-      selection.select([ childShape, differentShape ]);
+        // given
+        selection.select([ childShape, differentShape ]);
 
-      move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
+        move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
 
-      // when
-      dragging.move(canvasEvent({ x: 200, y: 200 }));
-      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
-        element: parentShape,
-        gfx: elementRegistry.getGraphics(parentShape)
-      }));
+        // when
+        dragging.move(canvasEvent({ x: 200, y: 200 }));
+        dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+          element: parentShape,
+          gfx: elementRegistry.getGraphics(parentShape)
+        }));
 
-      dragging.move(canvasEvent({ x: 120, y: 180 }));
+        dragging.move(canvasEvent({ x: 120, y: 180 }));
 
-      // then
-      var ctx = dragging.context();
-      expect(ctx.data.context.differentParents).to.equal(true);
+        // then
+        var ctx = dragging.context();
+        expect(ctx.data.context.differentParents).to.equal(true);
 
-      expect(elementRegistry.getGraphics(parentShape).hasClass('new-parent')).to.equal(true);
-
-    }));
+        expect(elementRegistry.getGraphics(parentShape).hasClass('new-parent')).to.equal(true);
+      })
+    );
 
 
     it('should not indicate new target, if target does not change',
       inject(function(move, dragging, elementRegistry, selection) {
 
-      // given
-      selection.select([ childShape, differentShape ]);
+        // given
+        selection.select([ childShape, differentShape ]);
 
-      move.start(canvasEvent({ x: 10, y: 10 }), childShape);
+        move.start(canvasEvent({ x: 10, y: 10 }), childShape);
 
-      // when
-      dragging.move(canvasEvent({ x: 200, y: 200 }));
-      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
-        element: parentShape,
-        gfx: elementRegistry.getGraphics(parentShape)
-      }));
+        // when
+        dragging.move(canvasEvent({ x: 200, y: 200 }));
+        dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+          element: parentShape,
+          gfx: elementRegistry.getGraphics(parentShape)
+        }));
 
-      dragging.move(canvasEvent({ x: 120, y: 180 }));
+        dragging.move(canvasEvent({ x: 120, y: 180 }));
 
-      // then
-      var ctx = dragging.context();
-      expect(ctx.data.context.differentParents).to.equal(true);
+        // then
+        var ctx = dragging.context();
+        expect(ctx.data.context.differentParents).to.equal(true);
 
-      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(false);
-
-    }));
+        expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(false);
+      })
+    );
 
 
     it('should not indicate new target, if drop is not allowed',
       inject(function(move, dragging, elementRegistry, selection) {
 
-      // given
-      selection.select([ childShape, differentShape ]);
+        // given
+        selection.select([ childShape, differentShape ]);
 
-      move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
+        move.start(canvasEvent({ x: 10, y: 10 }), differentShape);
 
-      // when
-      dragging.move(canvasEvent({ x: 200, y: 200 }));
-      dragging.hover(canvasEvent({ x: 200, y: 200 }, {
-        element: childShape,
-        gfx: elementRegistry.getGraphics(childShape)
-      }));
+        // when
+        dragging.move(canvasEvent({ x: 200, y: 200 }));
+        dragging.hover(canvasEvent({ x: 200, y: 200 }, {
+          element: childShape,
+          gfx: elementRegistry.getGraphics(childShape)
+        }));
 
-      dragging.move(canvasEvent({ x: 150, y: 15 }));
+        dragging.move(canvasEvent({ x: 150, y: 15 }));
 
-      // then
-      var ctx = dragging.context();
-      expect(ctx.data.context.differentParents).to.equal(true);
+        // then
+        var ctx = dragging.context();
+        expect(ctx.data.context.differentParents).to.equal(true);
 
-      var childGfx = elementRegistry.getGraphics(childShape);
-      expect(childGfx.hasClass('drop-new-target')).to.equal(false);
-      expect(childGfx.hasClass('drop-not-ok')).to.equal(true);
-    }));
+        var childGfx = elementRegistry.getGraphics(childShape);
+        expect(childGfx.hasClass('drop-new-target')).to.equal(false);
+        expect(childGfx.hasClass('drop-not-ok')).to.equal(true);
+      })
+    );
 
   });
 
-  describe('addDragger', function(){
+
+  describe('addDragger', function() {
 
     it('should be exposed and return the added dragger', inject(function(moveVisuals) {
 
@@ -264,7 +266,9 @@ describe('features/move - MoveVisuals', function() {
 
   });
 
-  describe('connections', function () {
+
+  describe('connections', function() {
+
     var host, attacher, parentShape2, shape, connectionA, connectionB;
 
     beforeEach(inject(function(elementFactory, canvas, modeling) {
@@ -319,28 +323,30 @@ describe('features/move - MoveVisuals', function() {
 
     it('should add connections to dragGroup',
       inject(function(canvas, elementFactory, move, dragging, elementRegistry, selection, modeling) {
-      var rootGfx = elementRegistry.getGraphics(rootShape),
-          dragGroup;
 
-      // when
-      selection.select([ host, shape ]);
+        var rootGfx = elementRegistry.getGraphics(rootShape),
+            dragGroup;
+
+        // when
+        selection.select([ host, shape ]);
 
 
-      move.start(canvasEvent({ x: 0, y: 0 }), host);
+        move.start(canvasEvent({ x: 0, y: 0 }), host);
 
-      dragging.hover({
-        element: rootShape,
-        gfx: rootGfx
-      });
+        dragging.hover({
+          element: rootShape,
+          gfx: rootGfx
+        });
 
-      dragging.move(canvasEvent({ x: 150, y: 200 }));
+        dragging.move(canvasEvent({ x: 150, y: 200 }));
 
-      dragGroup = dragging.context().data.context.dragGroup;
+        dragGroup = dragging.context().data.context.dragGroup;
 
-      // then
-      expect(dragGroup.select('[data-element-id="connectionA"]')).to.exist;
-      expect(dragGroup.select('[data-element-id="connectionB"]')).to.exist;
-    }));
+        // then
+        expect(dragGroup.select('[data-element-id="connectionA"]')).to.exist;
+        expect(dragGroup.select('[data-element-id="connectionB"]')).to.exist;
+      })
+    );
 
   });
 

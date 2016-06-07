@@ -370,7 +370,7 @@ describe('Canvas', function() {
       eventBus.on('connection.added', listener);
 
       // when
-      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115 } ] });
 
       // then
       expect(listener).to.have.been.called;
@@ -402,7 +402,7 @@ describe('Canvas', function() {
 
       // when
       var connection = canvas.addConnection(
-        { id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]}, rootElement, 0);
+        { id: 'c1', waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115 } ] }, rootElement, 0);
 
       // then
       expect(rootElement.children).to.eql([ connection, childShape, otherChildShape ]);
@@ -431,7 +431,7 @@ describe('Canvas', function() {
 
       eventBus.on('connection.removed', listener);
 
-      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      canvas.addConnection({ id: 'c1', waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115 } ] });
 
       // when
       var connection = canvas.removeConnection('c1');

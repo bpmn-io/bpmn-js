@@ -1,10 +1,11 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper'),
-    canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
+
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules'),

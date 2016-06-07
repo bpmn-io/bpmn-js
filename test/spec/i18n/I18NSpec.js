@@ -2,7 +2,7 @@
 
 require('../../TestHelper');
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 
 var paletteModule = require('../../../lib/features/palette'),

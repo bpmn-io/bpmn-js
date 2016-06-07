@@ -29,12 +29,19 @@ module.exports = function(grunt) {
       }
     },
 
-    jshint: {
-      src: ['<%= config.sources %>'],
-
-      options: {
-        jshintrc: true,
-        ignores: [ '<%= config.sources %>/util/EventEmitter.js' ]
+    eslint: {
+      check: {
+        src: [
+          '{lib,test}/**/*.js'
+        ]
+      },
+      fix: {
+        src: [
+          '{lib,test}/**/*.js'
+        ],
+        options: {
+          fix: true
+        }
       }
     },
 
@@ -67,5 +74,5 @@ module.exports = function(grunt) {
 
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
-  grunt.registerTask('default', [ 'jshint', 'test' ]);
+  grunt.registerTask('default', [ 'eslint:check', 'test' ]);
 };

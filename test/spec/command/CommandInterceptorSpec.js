@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../TestHelper');
+require('../../TestHelper');
 
 /* global bootstrapDiagram, inject */
 
@@ -492,13 +492,13 @@ describe('command/CommandInterceptor', function() {
   });
 
 
-  describe('context', function () {
+  describe('context', function() {
 
     function Dog() {
       this.barks = [];
     }
 
-    Dog.prototype.bark = function () {
+    Dog.prototype.bark = function() {
       this.barks.push('WOOF WOOF');
     };
 

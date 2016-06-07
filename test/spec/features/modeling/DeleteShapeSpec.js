@@ -9,7 +9,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - #removeShape', function() {
 
-  describe('basics', function () {
+  describe('basics', function() {
 
     var rootShape,
         parentShape,

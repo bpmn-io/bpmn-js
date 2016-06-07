@@ -257,7 +257,7 @@ describe('features/bendpoints - move', function() {
     }));
 
 
-    it('should keep one bendpoint, if two are overlapping', inject(function(canvas, bendpointMove, dragging){
+    it('should keep one bendpoint, if two are overlapping', inject(function(canvas, bendpointMove, dragging) {
 
       // given
       bendpointMove.start(canvasEvent({ x: 650, y: 250 }), connection3, 2);

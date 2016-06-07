@@ -97,7 +97,7 @@ describe('features/popup', function() {
 
   describe('#isEmpty', function() {
 
-    it('should return true if empty', inject(function(popupMenu){
+    it('should return true if empty', inject(function(popupMenu) {
       // given
       popupMenu.registerProvider('empty-menu', {
         getEntries: function() { return []; },
@@ -112,7 +112,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should return false if entries', inject(function(popupMenu){
+    it('should return false if entries', inject(function(popupMenu) {
       // given
       popupMenu.registerProvider('entry-menu', {
         getEntries: function() { return [ { id: 1 } ]; }
@@ -126,7 +126,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should return false if header entries', inject(function(popupMenu){
+    it('should return false if header entries', inject(function(popupMenu) {
       // given
       popupMenu.registerProvider('header-entry-menu', {
         getEntries: function() { return [ { id: 1 } ]; }
@@ -188,9 +188,9 @@ describe('features/popup', function() {
       popupMenu.registerProvider('item-menu', {
         getEntries: function() {
           return [
-            {id: 'save', label: 'SAVE' },
-            {id: 'load', label: 'LOAD' },
-            {id: 'undo', label: 'UNDO' }
+            { id: 'save', label: 'SAVE' },
+            { id: 'load', label: 'LOAD' },
+            { id: 'undo', label: 'UNDO' }
           ];
         },
         getHeaderEntries: function() {}
@@ -230,7 +230,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should not fail if already closed', inject(function(popupMenu){
+    it('should not fail if already closed', inject(function(popupMenu) {
 
       // when
       popupMenu.close();
@@ -241,9 +241,9 @@ describe('features/popup', function() {
 
   });
 
-  describe('#isOpen', function(){
+  describe('#isOpen', function() {
 
-    it('should not be open initially', inject(function(popupMenu){
+    it('should not be open initially', inject(function(popupMenu) {
 
       // when
       popupMenu.registerProvider('menu', menuProvider);
@@ -254,7 +254,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should be open after opening', inject(function(popupMenu){
+    it('should be open after opening', inject(function(popupMenu) {
 
       // when
       popupMenu.registerProvider('menu', menuProvider);
@@ -265,7 +265,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should be closed after closing', inject(function(popupMenu){
+    it('should be closed after closing', inject(function(popupMenu) {
 
       // given
       popupMenu.registerProvider('menu', menuProvider);
@@ -280,7 +280,7 @@ describe('features/popup', function() {
 
   });
 
-  describe('#trigger', function () {
+  describe('#trigger', function() {
 
     it('should trigger the right action handler', inject(function(popupMenu) {
 
@@ -531,7 +531,7 @@ describe('features/popup', function() {
 
   describe('header', function() {
 
-    it('should throw an error, if the id of a header entry is not set', inject(function(popupMenu){
+    it('should throw an error, if the id of a header entry is not set', inject(function(popupMenu) {
 
       // when
       popupMenu.registerProvider('test-menu', {
@@ -543,7 +543,7 @@ describe('features/popup', function() {
       var testMenu = popupMenu.create('test-menu', {});
 
       // then
-      expect(function(){
+      expect(function() {
         testMenu.open({ x: 100, y: 100 });
       }).to.throw('every entry must have the id property set');
     }));
@@ -560,7 +560,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should add a custom css class to the header section, if specified', inject(function(popupMenu){
+    it('should add a custom css class to the header section, if specified', inject(function(popupMenu) {
 
       var testMenuProvider = {
         getHeaderEntries: function() {
@@ -579,7 +579,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should add an image to the header section, if specified', inject(function(popupMenu){
+    it('should add an image to the header section, if specified', inject(function(popupMenu) {
 
       // given
       var testImage = 'data:image/png;base64,' + fs.readFileSync(__dirname + '/resources/a.png', 'base64');
@@ -608,7 +608,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should add a labeled element to the header section, if specified', inject(function(popupMenu){
+    it('should add a labeled element to the header section, if specified', inject(function(popupMenu) {
 
       var testMenuProvider = {
         getHeaderEntries: function() {
@@ -627,18 +627,18 @@ describe('features/popup', function() {
     }));
 
 
-    it('should throw an error if the position argument is missing', inject(function(popupMenu){
+    it('should throw an error if the position argument is missing', inject(function(popupMenu) {
 
       popupMenu.registerProvider('menu', menuProvider);
 
       // then
-      expect(function(){
+      expect(function() {
         popupMenu.create('menu', {}).open();
       }).to.throw('the position argument is missing');
     }));
 
 
-    it('should attach only the entries if no header entries is set', inject(function(popupMenu){
+    it('should attach only the entries if no header entries is set', inject(function(popupMenu) {
 
       // when
       var testMenuProvider = {
@@ -654,7 +654,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should trigger action on click', inject(function(popupMenu){
+    it('should trigger action on click', inject(function(popupMenu) {
 
       // given
       var actionListener = sinon.spy();
@@ -683,7 +683,7 @@ describe('features/popup', function() {
     }));
 
 
-    it('should add disabled and active classes', inject(function(popupMenu){
+    it('should add disabled and active classes', inject(function(popupMenu) {
 
       // given
       var entry;
@@ -716,7 +716,7 @@ describe('features/popup', function() {
   });
 
   // different browsers, different outcomes
-  describe('position', function () {
+  describe('position', function() {
 
     beforeEach(inject(function(popupMenu, elementRegistry) {
 

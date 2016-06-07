@@ -93,7 +93,7 @@ describe('Text', function() {
       var label = 'I am a label';
 
       // when
-      var text = createText(container, label, { box: { width: 150, height: 100 }});
+      var text = createText(container, label, { box: { width: 150, height: 100 } });
 
       expect(text).to.exist;
       expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
@@ -106,7 +106,7 @@ describe('Text', function() {
       var label = 'I am ww mm WM WMW WMWM';
 
       // when
-      var text = createText(container, label, { box: { width: 0, height: 0 }});
+      var text = createText(container, label, { box: { width: 0, height: 0 } });
 
       expect(text).to.exist;
       expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 320 })).to.be.true;
@@ -119,7 +119,7 @@ describe('Text', function() {
       var label = 'I am ww mm WM WMW WMW';
 
       // when
-      var text = createText(container, label, { box: { width: 25, height: 25 }});
+      var text = createText(container, label, { box: { width: 25, height: 25 } });
 
       expect(text).to.exist;
       expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 195 })).to.be.true;
@@ -135,7 +135,7 @@ describe('Text', function() {
       container.attr('display', 'none');
 
       // when
-      var text = createText(container, label, { box: { width: 150, height: 100 }});
+      var text = createText(container, label, { box: { width: 150, height: 100 } });
 
       // make visible (for bounds check)
       container.attr('display', '');
@@ -153,7 +153,7 @@ describe('Text', function() {
         var label = 'I am a long label that should break on spaces';
 
         // when
-        var text = createText(container, label, { box: { width: 150, height: 100 }});
+        var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
@@ -166,7 +166,7 @@ describe('Text', function() {
         var label = 'I_am_a_long_label_that_should_break_forcibly';
 
         // when
-        var text = createText(container, label, { box: { width: 150, height: 100 }});
+        var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 160, height: 70 })).to.be.true;
@@ -179,7 +179,7 @@ describe('Text', function() {
         var label = 'I_am_a_lo-ng_label_that_sho-uld_break_on_hyphens';
 
         // when
-        var text = createText(container, label, { box: { width: 150, height: 100 }});
+        var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
@@ -226,7 +226,7 @@ describe('Text', function() {
         var label = 'I am\na long label that\r\nshould break on line breaks';
 
         // when
-        var text = createText(container, label, { box: { width: 150, height: 100 }});
+        var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 5, y: 0, width: 150, height: 100 })).to.be.true;

@@ -4,11 +4,12 @@
 
 var modelingModule = require('./custom/modeling');
 
-var map = require('lodash/collection/map');
 
 describe('features/modeling - layout connection', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [ modelingModule ]
+  }));
 
 
   describe('layout waypoints', function() {
@@ -51,6 +52,7 @@ describe('features/modeling - layout connection', function() {
 
       canvas.addConnection(connection);
     }));
+
 
     it('should execute and add new original waypoints', inject(function(modeling) {
       // when

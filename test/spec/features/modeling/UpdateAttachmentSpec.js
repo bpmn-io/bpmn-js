@@ -161,7 +161,7 @@ describe('features/modeling - attach shape', function() {
   });
 
 
-  describe('reattach attached shape', function () {
+  describe('reattach attached shape', function() {
 
     it('should execute', inject(function(modeling) {
 
@@ -212,7 +212,7 @@ describe('features/modeling - attach shape', function() {
   });
 
 
-  describe('connection handling', function () {
+  describe('connection handling', function() {
 
     var connectedShape, connectionToAttached, connectionToDetached;
 
@@ -230,7 +230,7 @@ describe('features/modeling - attach shape', function() {
         id: 'connectionToAttached',
         waypoints: [
           { x: 400, y: 110 },
-          { x: 750, y: 450 },
+          { x: 750, y: 450 }
         ],
         source: attachedShape,
         target: connectedShape
@@ -243,7 +243,7 @@ describe('features/modeling - attach shape', function() {
         id: 'connectionToDetached',
         waypoints: [
           { x: 425, y: 425 },
-          { x: 750, y: 450 },
+          { x: 750, y: 450 }
         ],
         source: detachedShape,
         target: connectedShape

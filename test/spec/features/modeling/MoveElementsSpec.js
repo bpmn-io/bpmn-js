@@ -263,7 +263,7 @@ describe('features/modeling - move elements', function() {
   }));
 
 
-  describe('multiple selection', function(){
+  describe('multiple selection', function() {
 
     it('should keep parent of secondary shape (scenario 1)', inject(function(modeling) {
       // scenario 1:

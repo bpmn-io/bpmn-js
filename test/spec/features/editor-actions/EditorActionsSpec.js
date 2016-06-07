@@ -1,8 +1,9 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject, sinon */
+
 
 var editorActionsModule = require('../../../../lib/features/editor-actions'),
     modelingModule = require('../../../../lib/features/modeling'),
@@ -236,7 +237,7 @@ describe('features/editor-actions', function() {
         it('should remove all when rule returns true', inject(function(editorActions, customRules) {
           selectedElements = ['a', 'b', 'c'];
 
-          customRules.addRule(RULE_NAME, function (context) {
+          customRules.addRule(RULE_NAME, function(context) {
             return true;
           });
 
@@ -252,7 +253,7 @@ describe('features/editor-actions', function() {
         it('should not remove anything when rule returns true', inject(function(editorActions, customRules) {
           selectedElements = ['a', 'b', 'c'];
 
-          customRules.addRule(RULE_NAME, function (context) {
+          customRules.addRule(RULE_NAME, function(context) {
             return false;
           });
 
@@ -267,7 +268,7 @@ describe('features/editor-actions', function() {
         it('should only remove items returned by rule', inject(function(editorActions, customRules) {
           selectedElements = ['a', 'b', 'c'];
 
-          customRules.addRule(RULE_NAME, function (context) {
+          customRules.addRule(RULE_NAME, function(context) {
             return ['a', 'c'];
           });
 

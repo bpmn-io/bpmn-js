@@ -50,7 +50,7 @@ describe('core/EventBus', function() {
     it('should stopPropagation', function() {
 
       // given
-      var listener1 = sinon.spy(function(event){
+      var listener1 = sinon.spy(function(event) {
         event.stopPropagation();
       });
 
@@ -139,7 +139,7 @@ describe('core/EventBus', function() {
 
     });
 
-    describe('passing context', function () {
+    describe('passing context', function() {
       function Dog() {}
 
       Dog.prototype.bark = function(msg) {
@@ -201,7 +201,7 @@ describe('core/EventBus', function() {
         var bull = new Dog();
 
         eventBus.once('bark', function(event) {
-            return this.bark('FOO');
+          return this.bark('FOO');
         }, bobby);
 
         bull.bindListener(1500, 'BOO');
@@ -306,7 +306,7 @@ describe('core/EventBus', function() {
       it('should stop propagation to other listeners', function() {
 
         // given
-        var listener1 = sinon.spy(function(event){
+        var listener1 = sinon.spy(function(event) {
           return false;
         });
 

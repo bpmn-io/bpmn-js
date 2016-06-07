@@ -1,8 +1,9 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
+
 
 var modelingModule = require('../../../../lib/features/modeling');
 
@@ -109,7 +110,7 @@ describe('features/modeling - replace shape', function() {
         id: 'connection',
         source: child1,
         target: child2,
-        waypoints: [],
+        waypoints: []
       });
 
       canvas.addShape(parent, root);
@@ -127,7 +128,7 @@ describe('features/modeling - replace shape', function() {
       var newShapeData = { x: 130, y: 130, width: 200, height: 200 };
 
       // when
-      var newShape = modeling.replaceShape(child2, newShapeData);
+      modeling.replaceShape(child2, newShapeData);
 
       // then
       expect(connection.waypoints[0]).to.be.eql({ x: 385, y: 55 });

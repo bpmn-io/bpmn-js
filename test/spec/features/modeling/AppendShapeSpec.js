@@ -1,8 +1,9 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+require('../../../TestHelper');
 
 /* global bootstrapDiagram, inject */
+
 
 var find = require('lodash/collection/find');
 

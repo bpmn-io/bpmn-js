@@ -23,6 +23,7 @@ function bounds(b) {
   return pick(b, [ 'x', 'y', 'width', 'height' ]);
 }
 
+
 describe('features/modeling - resize shape', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ modelingModule, layoutModule, resizeModule, attachModule ] }));
@@ -141,14 +142,14 @@ describe('features/modeling - resize shape', function() {
       canvas.addConnection(connection);
 
       eventBus.on('commandStack.connection.layout.executed', function(e) {
-          var context = e.context,
-              connection;
+        var context = e.context,
+            connection;
 
-          if (!context.cropped) {
-            connection = context.connection;
-            connection.waypoints = connectionDocking.getCroppedWaypoints(connection);
-            context.cropped = true;
-          }
+        if (!context.cropped) {
+          connection = context.connection;
+          connection.waypoints = connectionDocking.getCroppedWaypoints(connection);
+          context.cropped = true;
+        }
       });
 
       // when
@@ -156,9 +157,9 @@ describe('features/modeling - resize shape', function() {
 
       //then
       expect(connection.waypoints).to.deep.eql([
-          { x: 100, y: 150, original: { x: 75, y: 150 } },
-          { x: 200, y: 150, original: { x: 250, y: 150 } }
-        ]);
+        { x: 100, y: 150, original: { x: 75, y: 150 } },
+        { x: 200, y: 150, original: { x: 250, y: 150 } }
+      ]);
     }));
 
 
@@ -182,25 +183,26 @@ describe('features/modeling - resize shape', function() {
     it('should customize childrenBoxPadding on shape resize',
       inject(function(canvas, elementFactory, resize, dragging, eventBus) {
 
-      // given
-      var padding = 30;
+        // given
+        var padding = 30;
 
-      eventBus.on('resize.start', 1500, function(event) {
-        var context = event.context;
+        eventBus.on('resize.start', 1500, function(event) {
+          var context = event.context;
 
-        context.childrenBoxPadding = padding;
-      });
+          context.childrenBoxPadding = padding;
+        });
 
-      var getBBox = Elements.getBBox([shape1, shape2]);
+        var getBBox = Elements.getBBox([shape1, shape2]);
 
-      resize.activate(canvasEvent({ x: 300, y: 300 }), parentShape, 'se');
-      dragging.move(canvasEvent({ x: -100, y: -100 }));
-      dragging.end();
+        resize.activate(canvasEvent({ x: 300, y: 300 }), parentShape, 'se');
+        dragging.move(canvasEvent({ x: -100, y: -100 }));
+        dragging.end();
 
-      var childrenBoxPadding = parentShape.width - (getBBox.x + getBBox.width);
+        var childrenBoxPadding = parentShape.width - (getBBox.x + getBBox.width);
 
-      expect(childrenBoxPadding).to.equal(padding);
-    }));
+        expect(childrenBoxPadding).to.equal(padding);
+      })
+    );
 
   });
 
@@ -306,37 +308,39 @@ describe('features/modeling - resize shape', function() {
     }));
 
 
-   it('should update anchors on incoming connections after resize (undo)',
-    inject(function(modeling, commandStack) {
-      // when
-      modeling.resizeShape(parentShape, { x: 400, y: 50, width: 350, height: 350 });
+    it('should update anchors on incoming connections after resize (undo)',
+      inject(function(modeling, commandStack) {
+        // when
+        modeling.resizeShape(parentShape, { x: 400, y: 50, width: 350, height: 350 });
 
-      commandStack.undo();
+        commandStack.undo();
 
-      expect(connectionA.waypoints[1].original).to.eql({ x: 425, y: 475 });
-    }));
+        expect(connectionA.waypoints[1].original).to.eql({ x: 425, y: 475 });
+      })
+    );
 
 
-   it('should update anchors on outgoing connections after resize (undo -> redo)',
-    inject(function(modeling, commandStack) {
-      var parentOldBounds,
-          parentNewBounds,
-          resultWaypoints;
+    it('should update anchors on outgoing connections after resize (undo -> redo)',
+      inject(function(modeling, commandStack) {
+        var parentOldBounds,
+            parentNewBounds,
+            resultWaypoints;
 
-      parentOldBounds = bounds(parentShape);
+        parentOldBounds = bounds(parentShape);
 
-      parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
+        parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
 
-      // when
-      modeling.resizeShape(parentShape, parentNewBounds);
+        // when
+        modeling.resizeShape(parentShape, parentNewBounds);
 
-      resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
+        resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
 
-      commandStack.undo();
-      commandStack.redo();
+        commandStack.undo();
+        commandStack.redo();
 
-      expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
-    }));
+        expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
+      })
+    );
 
   });
 
@@ -521,7 +525,7 @@ describe('features/modeling - resize shape', function() {
   });
 
 
-  describe('error handling', function () {
+  describe('error handling', function() {
 
     var rootShape, shape1, shape2;
 

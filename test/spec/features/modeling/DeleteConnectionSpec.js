@@ -122,7 +122,7 @@ describe('features/modeling - remove connection', function() {
 
   describe('undo support', function() {
 
-    it('should revert', inject(function (modeling, elementRegistry, commandStack) {
+    it('should revert', inject(function(modeling, elementRegistry, commandStack) {
 
       // given
       modeling.removeConnection(connection);
@@ -135,7 +135,7 @@ describe('features/modeling - remove connection', function() {
     }));
 
 
-    it('should restore correct source/target', inject(function (modeling, elementRegistry, commandStack) {
+    it('should restore correct source/target', inject(function(modeling, elementRegistry, commandStack) {
 
       // given
       modeling.removeConnection(connection);
@@ -152,7 +152,7 @@ describe('features/modeling - remove connection', function() {
     }));
 
 
-    it('should restore reference after multiple undo', inject(function (modeling, elementRegistry, commandStack) {
+    it('should restore reference after multiple undo', inject(function(modeling, elementRegistry, commandStack) {
 
       // given
       modeling.removeConnection(connection);

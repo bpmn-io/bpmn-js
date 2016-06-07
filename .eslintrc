@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "keyword-spacing": [ 2 ],
+    "object-curly-spacing": [ 2, "always"],
+    "space-before-blocks": [ 2, "always"],
+    "indent": [ 2, 2, { "VariableDeclarator": { "var": 2, "let": 2, "const": 3 } } ],
+    "no-unused-vars": [ 2, { "args": "none" } ],
+    "space-before-function-paren": [ 2, "never" ],
+    "quotes": [ 2, "single" ],
+    "semi": [ 2, "always" ],
+    "no-console": 0,
+    "mocha/no-exclusive-tests": 2
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "mocha"
+  ],
+  "globals": {
+    "expect": false,
+    "it": false,
+    "describe": false,
+    "beforeEach": true,
+    "afterEach": true,
+    "before": true,
+    "after": true
+  }
+}

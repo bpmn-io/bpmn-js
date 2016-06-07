@@ -80,7 +80,7 @@ MoveRules.prototype.init = function() {
  */
 function retainmentAllowed(attachmentIds, shapes) {
   var allowed = 'attach';
-  forEach(shapes, function(shape){
+  forEach(shapes, function(shape) {
     if (attachmentIds.indexOf(shape.id) === -1) {
       allowed = false;
       return;

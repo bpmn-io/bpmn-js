@@ -2,7 +2,7 @@
 
 require('../../../TestHelper');
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
@@ -11,9 +11,17 @@ var modelingModule = require('../../../../lib/features/modeling'),
     interactionModule = require('../../../../lib/features/interaction-events'),
     canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
+
 describe('features/bendpoints', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, bendpointsModule, interactionModule, rulesModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      modelingModule,
+      bendpointsModule,
+      interactionModule,
+      rulesModule
+    ]
+  }));
 
   beforeEach(inject(function(dragging) {
     dragging.setOptions({ manual: true });
@@ -182,7 +190,7 @@ describe('features/bendpoints', function() {
       }));
 
 
-      it('element.click', inject(function(eventBus, bendpoints){
+      it('element.click', inject(function(eventBus, bendpoints) {
 
         // given
         eventBus.once('element.click', listenerSpy);
@@ -195,7 +203,7 @@ describe('features/bendpoints', function() {
       }));
 
 
-      it('element.dblclick', inject(function(eventBus, bendpoints){
+      it('element.dblclick', inject(function(eventBus, bendpoints) {
 
         // given
         eventBus.once('element.dblclick', listenerSpy);
@@ -208,7 +216,7 @@ describe('features/bendpoints', function() {
       }));
 
 
-      it('element.mousedown', inject(function(eventBus, bendpoints){
+      it('element.mousedown', inject(function(eventBus, bendpoints) {
 
         // given
         eventBus.once('element.mousedown', listenerSpy);

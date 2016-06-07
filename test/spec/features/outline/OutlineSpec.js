@@ -45,7 +45,7 @@ describe('features/outline/Outline', function() {
     it('should add outline to connection', inject(function(selection, canvas, elementRegistry) {
 
       // given
-      var connection = canvas.addConnection({ id: 'select1', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      var connection = canvas.addConnection({ id: 'select1', waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115 } ] });
 
       // when
       selection.select(connection);
@@ -90,7 +90,7 @@ describe('features/outline/Outline', function() {
     it('should remove outline class from connection', inject(function(selection, canvas, elementRegistry) {
 
       // given
-      var connection = canvas.addConnection({ id: 'select3', waypoints: [ { x: 25, y: 25 }, {x: 115, y: 115} ]});
+      var connection = canvas.addConnection({ id: 'select3', waypoints: [ { x: 25, y: 25 }, { x: 115, y: 115 } ] });
 
       // when
       selection.select(connection);

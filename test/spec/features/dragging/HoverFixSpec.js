@@ -2,13 +2,10 @@
 
 require('../../../TestHelper');
 
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 /* global bootstrapDiagram, inject */
 
-
-var assign = require('lodash/object/assign'),
-    omit = require('lodash/object/omit');
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var dragModule = require('../../../../lib/features/dragging');
 
