@@ -55,6 +55,7 @@
     "karma-phantomjs-launcher": "^0.2.0",
     "karma-safari-launcher": "^0.1.1",
     "karma-sinon-chai": "~0.3.0",
+    "karma-spec-reporter": "0.0.26",
     "load-grunt-tasks": "^0.3.0",
     "mocha": "^2.2.5",
     "mocha-test-container-support": "0.2.0",
