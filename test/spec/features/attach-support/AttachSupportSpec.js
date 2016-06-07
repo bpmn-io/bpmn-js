@@ -627,61 +627,61 @@ describe('features/attach-support', function() {
     it('should remove invalid outgoing attacher connections',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
-      // given
-      var parentGfx = elementRegistry.getGraphics(parentShape);
+        // given
+        var parentGfx = elementRegistry.getGraphics(parentShape);
 
-      var element = elementFactory.createShape({
-        id: 'element',
-        x: 700, y: 50, width: 100, height: 100
-      });
+        var element = elementFactory.createShape({
+          id: 'element',
+          x: 700, y: 50, width: 100, height: 100
+        });
 
-      canvas.addShape(element, rootShape);
+        canvas.addShape(element, rootShape);
 
-      var connection1 = elementFactory.createConnection({
-        id: 'connection1',
-        source: element,
-        target: attacher,
-        waypoints: [
-          { x: 700, y: 100 },
-          { x: 625, y: 100 }
-        ]
-      });
+        var connection1 = elementFactory.createConnection({
+          id: 'connection1',
+          source: element,
+          target: attacher,
+          waypoints: [
+            { x: 700, y: 100 },
+            { x: 625, y: 100 }
+          ]
+        });
 
-      canvas.addConnection(connection1, rootShape);
+        canvas.addConnection(connection1, rootShape);
 
-      var connection2 = elementFactory.createConnection({
-        id: 'connection2',
-        source: element,
-        target: attacher,
-        waypoints: [
-          { x: 700, y: 100 },
-          { x: 625, y: 100 }
-        ]
-      });
+        var connection2 = elementFactory.createConnection({
+          id: 'connection2',
+          source: element,
+          target: attacher,
+          waypoints: [
+            { x: 700, y: 100 },
+            { x: 625, y: 100 }
+          ]
+        });
 
-      canvas.addConnection(connection2, rootShape);
+        canvas.addConnection(connection2, rootShape);
 
-      // when
-      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+        // when
+        move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
-      dragging.hover({
-        element: parentShape,
-        gfx: parentGfx
-      });
+        dragging.hover({
+          element: parentShape,
+          gfx: parentGfx
+        });
 
-      dragging.move(canvasEvent({ x: 250, y: 150 }));
-      dragging.end();
+        dragging.move(canvasEvent({ x: 250, y: 150 }));
+        dragging.end();
 
-      // then
-      expect(attacher.outgoing).to.be.empty;
-
-    }));
+        // then
+        expect(attacher.outgoing).to.be.empty;
+      })
+    );
 
 
     it('should remove invalid incoming attacher connection',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
-      // given
+        // given
         var parentGfx = elementRegistry.getGraphics(parentShape);
 
         var element = elementFactory.createShape({
@@ -703,7 +703,7 @@ describe('features/attach-support', function() {
 
         canvas.addConnection(connection, rootShape);
 
-      // when
+        // when
         move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
         dragging.hover({
@@ -714,70 +714,71 @@ describe('features/attach-support', function() {
         dragging.move(canvasEvent({ x: 250, y: 150 }));
         dragging.end();
 
-      // then
+        // then
         expect(attacher.incoming).to.be.empty;
-
-      }));
+      })
+    );
 
 
     it('should remove invalid incoming attacher connections',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
-      // given
-      var parentGfx = elementRegistry.getGraphics(parentShape);
+        // given
+        var parentGfx = elementRegistry.getGraphics(parentShape);
 
-      var element = elementFactory.createShape({
-        id: 'element',
-        x: 700, y: 50, width: 100, height: 100
-      });
+        var element = elementFactory.createShape({
+          id: 'element',
+          x: 700, y: 50, width: 100, height: 100
+        });
 
-      canvas.addShape(element, rootShape);
+        canvas.addShape(element, rootShape);
 
-      var connection1 = elementFactory.createConnection({
-        id: 'connection1',
-        source: element,
-        target: attacher,
-        waypoints: [
-          { x: 700, y: 100 },
-          { x: 625, y: 100 }
-        ]
-      });
+        var connection1 = elementFactory.createConnection({
+          id: 'connection1',
+          source: element,
+          target: attacher,
+          waypoints: [
+            { x: 700, y: 100 },
+            { x: 625, y: 100 }
+          ]
+        });
 
-      canvas.addConnection(connection1, rootShape);
+        canvas.addConnection(connection1, rootShape);
 
-      var connection2 = elementFactory.createConnection({
-        id: 'connection2',
-        source: element,
-        target: attacher,
-        waypoints: [
-          { x: 700, y: 100 },
-          { x: 625, y: 100 }
-        ]
-      });
+        var connection2 = elementFactory.createConnection({
+          id: 'connection2',
+          source: element,
+          target: attacher,
+          waypoints: [
+            { x: 700, y: 100 },
+            { x: 625, y: 100 }
+          ]
+        });
 
-      canvas.addConnection(connection2, rootShape);
+        canvas.addConnection(connection2, rootShape);
 
-      // when
-      move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+        // when
+        move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
-      dragging.hover({
-        element: parentShape,
-        gfx: parentGfx
-      });
+        dragging.hover({
+          element: parentShape,
+          gfx: parentGfx
+        });
 
-      dragging.move(canvasEvent({ x: 250, y: 150 }));
-      dragging.end();
+        dragging.move(canvasEvent({ x: 250, y: 150 }));
+        dragging.end();
 
-      // then
-      expect(attacher.incoming).to.be.empty;
+        // then
+        expect(attacher.incoming).to.be.empty;
 
-    }));
+      })
+    );
 
 
     it('should not remove valid outgoing attacher connections',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
-      // given
+        // given
         var rootGfx = elementRegistry.getGraphics(rootShape);
 
         var element = elementFactory.createShape({
@@ -799,7 +800,7 @@ describe('features/attach-support', function() {
 
         canvas.addConnection(connection, rootShape);
 
-      // when
+        // when
         move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
         dragging.hover({
@@ -810,16 +811,16 @@ describe('features/attach-support', function() {
         dragging.move(canvasEvent({ x: 450, y: 150 }));
         dragging.end();
 
-      // then
+        // then
         expect(attacher.outgoing).to.include(connection);
-
-      }));
+      })
+    );
 
 
     it('should not remove valid incoming attacher connections',
       inject(function(elementFactory, elementRegistry, move, dragging, canvas) {
 
-      // given
+        // given
         var rootGfx = elementRegistry.getGraphics(rootShape);
 
         var element = elementFactory.createShape({
@@ -841,7 +842,7 @@ describe('features/attach-support', function() {
 
         canvas.addConnection(connection, rootShape);
 
-      // when
+        // when
         move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
         dragging.hover({
@@ -852,70 +853,71 @@ describe('features/attach-support', function() {
         dragging.move(canvasEvent({ x: 450, y: 150 }));
         dragging.end();
 
-      // then
+        // then
         expect(attacher.incoming).to.include(connection);
-
-      }));
+      })
+    );
 
 
     it('should move labels along with attachers when moving host',
-        inject(function(elementFactory, elementRegistry, modeling, move, dragging) {
+      inject(function(elementFactory, elementRegistry, modeling, move, dragging) {
 
-      // given
-          var label = elementFactory.createLabel({ width: 80, height: 40 });
+        // given
+        var label = elementFactory.createLabel({ width: 80, height: 40 });
 
-          modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
+        modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
 
-          var rootGfx = elementRegistry.getGraphics(rootShape);
+        var rootGfx = elementRegistry.getGraphics(rootShape);
 
-      // when
-          move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+        // when
+        move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
-          dragging.hover({
-            element: rootShape,
-            gfx: rootGfx
-          });
+        dragging.hover({
+          element: rootShape,
+          gfx: rootGfx
+        });
 
-          dragging.move(canvasEvent({ x: 600, y: 200 }));
-          dragging.end();
+        dragging.move(canvasEvent({ x: 600, y: 200 }));
+        dragging.end();
 
-      // then
-          expect(label.x).to.equal(650);
-          expect(label.y).to.equal(170);
-
-        }));
+        // then
+        expect(label.x).to.equal(650);
+        expect(label.y).to.equal(170);
+      })
+    );
 
 
     it('should move labels along with attachers when moving selection',
-        inject(function(elementFactory, elementRegistry, modeling, move, dragging, selection) {
+      inject(function(elementFactory, elementRegistry, modeling, move, dragging, selection) {
 
-      // given
-          var label = elementFactory.createLabel({ width: 80, height: 40 });
+        // given
+        var label = elementFactory.createLabel({ width: 80, height: 40 });
 
-          modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
+        modeling.createLabel(attacher, { x: 600, y: 100 }, label, rootShape);
 
-          var rootGfx = elementRegistry.getGraphics(rootShape);
+        var rootGfx = elementRegistry.getGraphics(rootShape);
 
-      // when
-          selection.select([ host, label ]);
+        // when
+        selection.select([ host, label ]);
 
-          move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
+        move.start(canvasEvent({ x: host.x+10, y: host.y+10 }), host);
 
-          dragging.hover({
-            element: rootShape,
-            gfx: rootGfx
-          });
+        dragging.hover({
+          element: rootShape,
+          gfx: rootGfx
+        });
 
-          dragging.move(canvasEvent({ x: 600, y: 200 }));
-          dragging.end();
+        dragging.move(canvasEvent({ x: 600, y: 200 }));
+        dragging.end();
 
-      // then
-          expect(label.x).to.equal(650);
-          expect(label.y).to.equal(170);
-
-        }));
+        // then
+        expect(label.x).to.equal(650);
+        expect(label.y).to.equal(170);
+      })
+    );
 
   });
+
 
   describe('replace', function() {
 
@@ -937,30 +939,30 @@ describe('features/attach-support', function() {
       });
 
       canvas.addShape(attacher, parentShape);
-
     }));
 
 
     it('should adopt children with attachments',
       inject(function(elementFactory, replace, elementRegistry, canvas) {
 
-      // given
+        // given
         var replacement = {
           id: 'replacement',
           width: 300,
           height: 300
         };
 
-      // when
+        // when
         var newShape = replace.replaceElement(parentShape, replacement);
 
-      // then
+        // then
         expect(newShape.children).to.include(attacher);
         expect(attacher.parent).to.equal(newShape);
 
         expect(host.attachers).to.include(attacher);
         expect(attacher.host).to.eql(host);
-      }));
+      })
+    );
 
 
     it('should update host after replacing attachment', inject(function(replace) {
@@ -985,20 +987,21 @@ describe('features/attach-support', function() {
     it('should remove attachments after replacing host',
       inject(function(rules, replace) {
 
-      // given
+        // given
         var replacement = {
           id: 'replacement',
           width: host.width,
           height: host.height
         };
 
-      // when
+        // when
         var newShape = replace.replaceElement(host, replacement);
 
-      // then
+        // then
         expect(newShape.attachers).not.to.include(attacher);
         expect(attacher.host).not.to.eql(newShape);
-      }));
+      })
+    );
 
 
     it('should retain attachments after replacing host if a rule exist', inject(function(replace) {
@@ -1024,7 +1027,7 @@ describe('features/attach-support', function() {
     it('should retain a subset of attachments after replacing host if a rule exist',
       inject(function(replace, elementFactory, canvas) {
 
-      // given
+        // given
         var attacher2 = elementFactory.createShape({
           id: 'attacher2',
           x: 225, y: 175, width: 50, height: 50,
@@ -1040,16 +1043,17 @@ describe('features/attach-support', function() {
           retainAttachmentIds: ['attacher']
         };
 
-      // when
+        // when
         var newShape = replace.replaceElement(host, replacement);
 
-      // then
+        // then
         expect(attacher.host).to.eql(newShape);
         expect(newShape.attachers).to.include(attacher);
 
         expect(attacher2.host).not.to.eql(newShape);
         expect(newShape.attachers).not.to.include(attacher2);
-      }));
+      })
+    );
 
 
     it('should move an attachment on replace elements with different size/position',
@@ -1071,7 +1075,8 @@ describe('features/attach-support', function() {
         // then
         expect(attacher.x).to.be.equal(150);
         expect(attacher.y).to.be.equal(150);
-      }));
+      })
+    );
 
   });
 
@@ -1162,10 +1167,10 @@ describe('features/attach-support', function() {
     it('should add attachment labels to dragGroup',
       inject(function(move, dragging, elementRegistry, elementFactory, modeling) {
 
-      // given
+        // given
         var rootGfx = elementRegistry.getGraphics(rootShape);
 
-      // when
+        // when
         move.start(canvasEvent({ x: 800, y: 100 }), host);
 
         dragging.hover({
@@ -1175,13 +1180,13 @@ describe('features/attach-support', function() {
 
         dragging.move(canvasEvent({ x: 850, y: 75 }));
 
-      // then
-      // expect the label to be included in the dragGroup
+        // then
+        // expect the label to be included in the dragGroup
         var dragGroup = dragging.context().data.context.dragGroup;
 
         expect(dragGroup.select('[data-element-id=' + label.id + ']')).to.exist;
-
-      }));
+      })
+    );
 
   });
 
@@ -1568,6 +1573,7 @@ describe('features/attach-support', function() {
 
   });
 
+
   describe('attachers', function() {
 
     var rootShape, host, attacher;
@@ -1722,6 +1728,7 @@ describe('features/attach-support', function() {
     }));
 
   });
+
 
   describe('space tool', function() {
 
