@@ -3,12 +3,26 @@
 /* global bootstrapDiagram, inject, sinon */
 
 
-var selectionModule = require('../../../../lib/features/selection');
+var coreModule = require('../../../../lib/core'),
+    draggingModule = require('../../../../lib/features/dragging'),
+    modelingModule = require('../../../../lib/features/modeling'),
+    moveModule = require('../../../../lib/features/move'),
+    selectionModule = require('../../../../lib/features/selection');
+
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 
 describe('features/selection/Selections', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ selectionModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      coreModule,
+      draggingModule,
+      modelingModule,
+      moveModule,
+      selectionModule
+    ]
+  }));
 
   var shape1, shape2, connection1;
 
@@ -33,6 +47,8 @@ describe('features/selection/Selections', function() {
 
     connection1 = canvas.addConnection({
       id: 'connection1',
+      source: 'shape1',
+      target: 'shape2',
       waypoints: [ { x: 110, y: 60 }, { x: 150, y: 60 } ]
     });
   }));
@@ -43,6 +59,7 @@ describe('features/selection/Selections', function() {
     it('should bootstrap diagram with component', inject(function(selection) {
       expect(selection).to.exist;
     }));
+
   });
 
 
@@ -69,6 +86,7 @@ describe('features/selection/Selections', function() {
       expect(selectedElements[0]).to.equal(connection1);
     }));
 
+
     it('should add multiple elements to selection', inject(function(selection) {
 
       // when
@@ -80,6 +98,36 @@ describe('features/selection/Selections', function() {
       expect(selectedElements[0]).to.equal(shape2);
       expect(selectedElements[1]).to.equal(connection1);
     }));
+
+
+    it('should select moved element if previously not in selection',
+      inject(function(dragging, elementRegistry, modeling, move, selection) {
+
+        // given
+        selection.select(shape1);
+
+        // when
+        move.start(canvasEvent({
+          x: shape2.x + 10 + shape2.width / 2,
+          y: shape2.y + 30 + shape2.height/2
+        }), shape2);
+
+        dragging.hover({
+          element: shape2,
+          gfx: elementRegistry.getGraphics(shape2)
+        });
+
+        dragging.move(canvasEvent({ x: 300, y: 300 }));
+
+        dragging.end();
+
+        // then
+        var selectedElements = selection.get();
+
+        expect(selectedElements[0]).to.equal(shape2);
+        expect(selectedElements.length).to.equal(1);
+      })
+    );
   });
 
 
@@ -90,25 +138,36 @@ describe('features/selection/Selections', function() {
       selection.select(connection1, true);
 
       selection.deselect(shape2);
+
+      // then
       var selectedElements = selection.get();
+
       expect(selectedElements[0]).to.equal(connection1);
       expect(selectedElements.length).to.equal(1);
     }));
+
 
     it('should remove all elements from selection', inject(function(selection) {
       selection.select(shape2);
       selection.select(connection1, true);
 
       selection.select();
+
+      // then
       var selectedElements = selection.get();
       expect(selectedElements.length).to.equal(0);
     }));
 
+
     it('should not fail on empty selection', inject(function(selection) {
       selection.select();
+
       var selectedElements = selection.get();
+
+      // then
       expect(selectedElements.length).to.equal(0);
     }));
+
   });
 
 
