@@ -10,6 +10,8 @@ var Diagram = require('diagram-js/lib/Diagram'),
     Importer = require('../../../lib/import/Importer'),
     Viewer = require('../../../lib/Viewer');
 
+var find = require('lodash/collection/find');
+
 
 describe('import - Importer', function() {
 
@@ -391,6 +393,34 @@ describe('import - Importer', function() {
 
         done(err);
       });
+    });
+
+  });
+
+
+  describe('hiding', function() {
+
+    it('should hide shapes and connections inside of collapsed subprocess', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/collapsed/processWithChildren.bpmn');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        var elementRegistry = diagram.get('elementRegistry');
+
+        var children = elementRegistry.get('SubProcess_1').children;
+        var visible = find(children, function(child) {
+          return !child.hidden;
+        });
+
+        // then
+        expect(visible).to.be.undefined;
+
+        done(err);
+      });
+
     });
 
   });
