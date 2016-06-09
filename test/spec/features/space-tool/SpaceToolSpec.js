@@ -61,6 +61,45 @@ describe('features/space-tool', function() {
         expect(spaceTool).to.exist;
       }));
 
+
+      it('should reactivate after usage', inject(function(canvas, spaceTool, dragging) {
+        var context;
+
+        // when
+        spaceTool.activateSelection(canvasEvent({ x: 100, y: 225 }));
+
+        dragging.move(canvasEvent({ x: 100, y: 250 }, keyModifier));
+        dragging.end();
+
+        context = dragging.context();
+
+        // then space tool should still be active
+        expect(context.prefix).to.eql('spaceTool');
+        expect(context.active).to.be.true;
+
+        expect(spaceTool.isActive()).to.be.true;
+      }));
+
+
+      it('should not be active on cancel', inject(function(canvas, spaceTool, dragging) {
+        var context;
+
+        // when
+        spaceTool.activateSelection(canvasEvent({ x: 100, y: 225 }));
+
+        dragging.move(canvasEvent({ x: 100, y: 250 }, keyModifier));
+        dragging.end();
+
+        dragging.cancel();
+
+        context = dragging.context();
+
+        // then
+        expect(context).to.not.exist;
+
+        expect(spaceTool.isActive()).to.not.exist;
+      }));
+
     });
 
 
@@ -312,6 +351,10 @@ describe('features/space-tool', function() {
 
   describe('resize containers', function() {
 
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
     var greatGrandParent, grandParent, parentShape, childShape, childShape2, connection,
         parentShape2, childShape3, childShape4, connection2;
 
@@ -404,11 +447,6 @@ describe('features/space-tool', function() {
       });
 
       canvas.addConnection(connection2);
-    }));
-
-
-    beforeEach(inject(function(dragging) {
-      dragging.setOptions({ manual: true });
     }));
 
 
@@ -562,6 +600,11 @@ describe('features/space-tool', function() {
 
   describe('redo / undo integration', function() {
 
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
     var shape1, shape2;
 
     beforeEach(inject(function(elementFactory, canvas) {
@@ -582,12 +625,6 @@ describe('features/space-tool', function() {
 
       canvas.addShape(shape2);
     }));
-
-
-    beforeEach(inject(function(dragging) {
-      dragging.setOptions({ manual: false });
-    }));
-
 
     it('should undo', inject(function(spaceTool, dragging, commandStack) {
 
@@ -630,6 +667,8 @@ describe('features/space-tool', function() {
       expect(shape2.y).to.equal(275);
     }));
 
+
   });
+
 
 });
