@@ -18,7 +18,7 @@ module.exports = function(chai, utils) {
   }
 
   /**
-   * A simple waypoints matcher, that verifies an connection
+   * A simple waypoints matcher, that verifies a connection
    * consists of the correct connection points.
    *
    * Does not take the original docking into account.
@@ -56,7 +56,7 @@ module.exports = function(chai, utils) {
   });
 
   /**
-   * A simple waypoints matcher, that verifies an a connection
+   * A simple waypoints matcher, that verifies a connection
    * has the given start docking.
    *
    * @example
@@ -89,7 +89,7 @@ module.exports = function(chai, utils) {
   });
 
   /**
-   * A simple waypoints matcher, that verifies an a connection
+   * A simple waypoints matcher, that verifies a connection
    * has the given start docking.
    *
    * @example
