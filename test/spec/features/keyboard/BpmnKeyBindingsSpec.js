@@ -46,7 +46,7 @@ describe('features - keyboard', function() {
 
     it('should include triggers inside editorActions', inject(function(editorActions) {
       // then
-      expect(editorActions.length()).to.equal(15);
+      expect(editorActions.length()).to.equal(16);
     }));
 
 
