@@ -583,6 +583,26 @@ describe('features/popup-menu - replace menu provider', function() {
     );
 
 
+    it('should replace event sub processes -> sub process',
+      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+
+        // given
+        var eventSubProcess = elementRegistry.get('EventSubProcess');
+
+        openPopup(eventSubProcess);
+
+        var entry = queryEntry(popupMenu, 'replace-with-subprocess');
+
+        // when
+        // replacing the expanded sub process with a eventSubProcess
+        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+
+        // then
+        expect(subProcess.businessObject.triggeredByEvent).to.be.false;
+      })
+    );
+
+
     it('should retain the loop characteristics and the expanded status for transactions',
       inject(function(popupMenu, bpmnReplace, elementRegistry) {
 
