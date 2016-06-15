@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<semantic:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" id="_1275940932088" targetNamespace="http://www.trisotech.com/definitions/_1275940932088" exporter="Camunda Modeler" exporterVersion="1.2.0-dev">
+  <semantic:message id="_1275940932310" />
+  <semantic:message id="_1275940932433" />
+  <semantic:message id="_1275940932198" />
+  <semantic:process id="_6-2" isExecutable="false">
+    <semantic:sequenceFlow id="SequenceFlow_08zyuyv" name="hello" sourceRef="Task_boundary_evt" targetRef="Task_hello" />
+    <semantic:boundaryEvent id="BoundaryEvent_0n2gx06" attachedToRef="Task_boundary_evt" />
+    <semantic:task id="Task_hello" name="hello">
+      <semantic:incoming>SequenceFlow_08zyuyv</semantic:incoming>
+    </semantic:task>
+    <semantic:task id="Task_boundary_evt">
+      <semantic:outgoing>SequenceFlow_08zyuyv</semantic:outgoing>
+    </semantic:task>
+  </semantic:process>
+  <semantic:collaboration id="C1275940932557">
+    <semantic:participant id="_6-53" name="" processRef="_6-2" />
+    <semantic:participant id="_6-438" name="" processRef="_6-1" />
+    <semantic:messageFlow id="MessageFlow_1pvlume" sourceRef="Task_boundary_evt" targetRef="Task_lane" />
+    <semantic:messageFlow id="MessageFlow_1omk2ha" sourceRef="Task_hello" targetRef="SubProcess_lane" />
+  </semantic:collaboration>
+  <semantic:process id="_6-1" isExecutable="false">
+    <semantic:laneSet id="ls_6-438">
+      <semantic:lane id="_6-650" name="">
+        <semantic:flowNodeRef>Task_lane</semantic:flowNodeRef>
+      </semantic:lane>
+      <semantic:lane id="_6-446" name="">
+        <semantic:flowNodeRef>SubProcess_lane</semantic:flowNodeRef>
+      </semantic:lane>
+      <semantic:lane id="_6-448" name="">
+        <semantic:flowNodeRef>EndEvent_lane</semantic:flowNodeRef>
+      </semantic:lane>
+    </semantic:laneSet>
+    <semantic:task id="Task_lane">
+      <semantic:outgoing>SequenceFlow_1nrce3c</semantic:outgoing>
+    </semantic:task>
+    <semantic:endEvent id="EndEvent_lane">
+      <semantic:incoming>SequenceFlow_0qa7db7</semantic:incoming>
+    </semantic:endEvent>
+    <semantic:subProcess id="SubProcess_lane">
+      <semantic:incoming>SequenceFlow_1nrce3c</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_0qa7db7</semantic:outgoing>
+    </semantic:subProcess>
+    <semantic:sequenceFlow id="SequenceFlow_1nrce3c" sourceRef="Task_lane" targetRef="SubProcess_lane" />
+    <semantic:sequenceFlow id="SequenceFlow_0qa7db7" sourceRef="SubProcess_lane" targetRef="EndEvent_lane" />
+  </semantic:process>
+  <bpmndi:BPMNDiagram id="Trisotech.Visio-_6" name="Untitled Diagram" documentation="" resolution="96.00000267028808">
+    <bpmndi:BPMNPlane bpmnElement="C1275940932557">
+      <bpmndi:BPMNShape id="Trisotech.Visio__6-53" bpmnElement="_6-53" isHorizontal="true">
+        <dc:Bounds x="12" y="12" width="1044" height="294" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Trisotech.Visio__6-438" bpmnElement="_6-438" isHorizontal="true">
+        <dc:Bounds x="68" y="358" width="825" height="539" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-448" bpmnElement="_6-448" isHorizontal="true">
+        <dc:Bounds x="98" y="712" width="795" height="185" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-446" bpmnElement="_6-446" isHorizontal="true">
+        <dc:Bounds x="98" y="472" width="795" height="240" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-650" bpmnElement="_6-650" isHorizontal="true">
+        <dc:Bounds x="98" y="358" width="795" height="114" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0qh67cn_di" bpmnElement="Task_lane">
+        <dc:Bounds x="136" y="375" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nrce3c_di" bpmnElement="SequenceFlow_1nrce3c">
+        <di:waypoint xsi:type="dc:Point" x="236" y="415" />
+        <di:waypoint xsi:type="dc:Point" x="275" y="415" />
+        <di:waypoint xsi:type="dc:Point" x="275" y="596" />
+        <di:waypoint xsi:type="dc:Point" x="314" y="596" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="242" y="468" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1jdsxxr_di" bpmnElement="EndEvent_lane">
+        <dc:Bounds x="784" y="805" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="757" y="841" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_06gy2ot_di" bpmnElement="SubProcess_lane" isExpanded="true">
+        <dc:Bounds x="314" y="496" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qa7db7_di" bpmnElement="SequenceFlow_0qa7db7">
+        <di:waypoint xsi:type="dc:Point" x="489" y="696" />
+        <di:waypoint xsi:type="dc:Point" x="489" y="823" />
+        <di:waypoint xsi:type="dc:Point" x="784" y="823" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="470.5" y="618.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_07vyznk_di" bpmnElement="Task_boundary_evt">
+        <dc:Bounds x="195.036" y="75.78999999999999" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1pvlume_di" bpmnElement="MessageFlow_1pvlume">
+        <di:waypoint xsi:type="dc:Point" x="245" y="156" />
+        <di:waypoint xsi:type="dc:Point" x="245" y="262" />
+        <di:waypoint xsi:type="dc:Point" x="184" y="262" />
+        <di:waypoint xsi:type="dc:Point" x="184" y="375" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="98" y="254.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_0n2gx06_di" bpmnElement="BoundaryEvent_0n2gx06">
+        <dc:Bounds x="196.036" y="137.79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="169.036" y="173.79" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0s45gnz_di" bpmnElement="Task_hello">
+        <dc:Bounds x="343.036" y="146.79" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_08zyuyv_di" bpmnElement="SequenceFlow_08zyuyv">
+        <di:waypoint xsi:type="dc:Point" x="295" y="116" />
+        <di:waypoint xsi:type="dc:Point" x="393" y="116" />
+        <di:waypoint xsi:type="dc:Point" x="393" y="147" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="298" y="89.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_1omk2ha_di" bpmnElement="MessageFlow_1omk2ha">
+        <di:waypoint xsi:type="dc:Point" x="393" y="227" />
+        <di:waypoint xsi:type="dc:Point" x="393" y="496" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="386" y="349" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>
