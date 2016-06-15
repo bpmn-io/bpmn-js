@@ -14,7 +14,14 @@ var bendpointsModule = require('../../../../lib/features/bendpoints'),
 
 describe('features/bendpoints - move', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ bendpointsModule, rulesModule, modelingModule, selectModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      bendpointsModule,
+      rulesModule,
+      modelingModule,
+      selectModule
+    ]
+  }));
 
   beforeEach(inject(function(dragging) {
     dragging.setOptions({ manual: true });
@@ -75,7 +82,7 @@ describe('features/bendpoints - move', function() {
 
     connection3 = elementFactory.createConnection({
       id: 'connection3',
-      waypoints: [ { x: 575, y: 425 }, { x: 700, y: 350 }, { x: 650, y: 250 } ,{ x: 575, y: 175 } ],
+      waypoints: [ { x: 575, y: 425 }, { x: 700, y: 350 }, { x: 650, y: 250 }, { x: 575, y: 175 } ],
       source: shape3,
       target: shape2
     });
@@ -198,6 +205,30 @@ describe('features/bendpoints - move', function() {
 
 
   describe('modeling', function() {
+
+    it('should add bendpoint', inject(function(canvas, bendpointMove, dragging) {
+
+      // when
+      bendpointMove.start(canvasEvent({ x: 550, y: 200 }), connection, 2, true);
+
+      // need hover for creating new bendpoint
+      dragging.hover({
+        element: connection,
+        gfx: canvas.getGraphics(connection)
+      });
+
+      dragging.move(canvasEvent({ x: 400, y: 100 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 250, y: 250 },
+        { x: 550, y: 250 },
+        { x: 400, y: 100 },
+        { x: 550, y: 150 }
+      ]);
+    }));
+
 
     it('should update bendpoint', inject(function(canvas, bendpointMove, dragging) {
 
