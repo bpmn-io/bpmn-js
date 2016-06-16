@@ -781,7 +781,7 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
-  describe('collapsed to expanded', function() {
+  describe('morph task with boundaryEvent', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
@@ -790,7 +790,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should morph task -> expanded sub process', inject(function(bpmnReplace, elementRegistry) {
+    it('to expanded sub process', inject(function(bpmnReplace, elementRegistry) {
 
       // given
       var element = elementRegistry.get('Task_1');
@@ -805,61 +805,30 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
       expect(isExpanded(newElement)).to.be.true;
-    }));
 
-
-    it('should expand sub-process', inject(function(bpmnReplace, elementRegistry) {
-
-      // given
-      var element = elementRegistry.get('SubProcessCollapsed');
-      var newElementData = {
-        type: 'bpmn:SubProcess',
-        isExpanded: true
-      };
-
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
-
-      // then
-      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
-      expect(isExpanded(newElement)).to.be.true;
-    }));
-
-
-    it('should expand ad hoc sub-process', inject(function(bpmnReplace, elementRegistry) {
-
-      // given
-      var element = elementRegistry.get('AdHocSubProcessCollapsed');
-      var newElementData = {
-        type: 'bpmn:SubProcess',
-        isExpanded: true
-      };
-
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
-
-      // then
-      expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
-      expect(isExpanded(newElement)).to.be.true;
-    }));
-
-
-    it('should keep boundary events', inject(function(bpmnReplace, elementRegistry) {
-
-      // given
-      var element = elementRegistry.get('Task_1');
-      var newElementData = {
-        type: 'bpmn:SubProcess',
-        isExpanded: true
-      };
-
-      // when
-      var newElement = bpmnReplace.replaceElement(element, newElementData);
-
-      // then
-      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
-      expect(isExpanded(newElement)).to.be.true;
+      // and keep boundaryEvent
       expect(newElement.attachers.length).to.be.equal(2);
+    }));
+
+
+    it('to collapsed sub process', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+      var newElementData = {
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+      // then
+      expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+      expect(isExpanded(newElement)).to.be.false;
+
+      // and keep boundaryEvent
+      expect(newElement.attachers.length).to.eql(2);
     }));
 
   });

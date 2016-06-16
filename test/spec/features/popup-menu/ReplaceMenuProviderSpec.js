@@ -1086,6 +1086,30 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+    describe('collapsed subprocesses', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('options do not include collapsed subprocesses itself', inject(function(elementRegistry, popupMenu) {
+
+        // given
+        var collapsedSubProcess = elementRegistry.get('Task_1');
+
+        // when
+        openPopup(collapsedSubProcess);
+
+        var collapsedSubProcessEntry = queryEntry(popupMenu, 'replace-with-collapsed-subprocess');
+
+        // then
+        expect(collapsedSubProcessEntry).to.not.exist;
+      }));
+
+    });
+
+
   });
 
 
