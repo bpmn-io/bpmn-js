@@ -88,6 +88,47 @@ describe('features/modeling - update properties', function() {
     }));
 
 
+    it('updating conditional flow on source replace', inject(function(bpmnReplace, elementRegistry) {
+
+      //given
+      var conditionalFlow = elementRegistry.get('SequenceFlow_3'),
+          serviceTask = elementRegistry.get('ServiceTask_1');
+
+      var conditionExpression = conditionalFlow.businessObject.conditionExpression;
+
+      var userTaskData =  {
+        type: 'bpmn:UserTask'
+      };
+
+      // when
+      bpmnReplace.replaceElement(serviceTask, userTaskData);
+
+      // then
+      expect(conditionalFlow.businessObject.conditionExpression).to.eql(conditionExpression);
+    }));
+
+
+    it('updating conditional flow on target replace', inject(function(bpmnReplace, elementRegistry) {
+
+      //given
+      var conditionalFlow = elementRegistry.get('SequenceFlow_3'),
+          endEvent = elementRegistry.get('EndEvent_1');
+
+      var conditionExpression = conditionalFlow.businessObject.conditionExpression;
+
+      var messageEndEventData =  {
+        type: 'bpmn:EndEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition'
+      };
+
+      // when
+      bpmnReplace.replaceElement(endEvent, messageEndEventData);
+
+      // then
+      expect(conditionalFlow.businessObject.conditionExpression).to.eql(conditionExpression);
+    }));
+
+
     it('setting name', inject(function(elementRegistry, modeling) {
 
       // given
