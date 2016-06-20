@@ -145,6 +145,19 @@ describe('Text', function() {
     });
 
 
+    it('should show text ending with a hyphen correctly', function() {
+
+      // given
+      var label = 'VeryVeryVeryVeryVeryVeryVeryVeryVeryLongString-';
+
+      // when
+      var text = createText(container, label, { box: { width: 150, height: 100 } });
+
+      expect(text).to.exist;
+      expect(text.node.textContent.substr(-1)).equals('-');
+    });
+
+
     describe('should line break', function() {
 
       it('at word boundary', function() {
