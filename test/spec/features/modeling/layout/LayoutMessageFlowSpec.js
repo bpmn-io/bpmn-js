@@ -11,7 +11,7 @@ var modelingModule = require('../../../../../lib/features/modeling'),
 
 describe('features/modeling - layout message flows', function() {
 
-  var diagramXML = require('../../../../fixtures/bpmn/collaboration-message-flows.bpmn');
+  var diagramXML = require('./LayoutMessageFlowSpec.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -72,6 +72,31 @@ describe('features/modeling - layout message flows', function() {
     expect(messageFlowConnection.waypoints).eql([
       { original: { x: 671, y: 214 }, x: 671, y: 214 },
       { original: { x: 671, y: 465 }, x: 671, y: 465 }
+    ]);
+  }));
+
+
+  it('should layout straight after Participant move, without moving Task\'s docking point',
+  inject(function(elementRegistry, modeling) {
+
+    // given
+    var participantShape = elementRegistry.get('Participant_1'),
+        messageFlow1 = elementRegistry.get('MessageFlow_1'),
+        messageFlow6 = elementRegistry.get('MessageFlow_6');
+
+    // when
+    modeling.moveElements([ participantShape ], { x: 300, y: 50 });
+    // then
+
+    // expect cropped, repaired manhattan connection
+    expect(messageFlow1.waypoints).eql([
+      { original: { x: 590, y: 214 }, x: 590, y: 214 },
+      { original: { x: 590, y: 465 }, x: 590, y: 465 }
+    ]);
+
+    expect(messageFlow6.waypoints).eql([
+      { original: { x: 773, y: 465 }, x: 773, y: 465 },
+      { original: { x: 773, y: 214 }, x: 773, y: 214 }
     ]);
   }));
 
