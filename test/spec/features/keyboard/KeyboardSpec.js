@@ -8,6 +8,7 @@ var TestContainer = require('mocha-test-container-support');
 
 
 var modelingModule = require('../../../../lib/features/modeling'),
+    editorActionsModule = require('../../../../lib/features/editor-actions'),
     keyboardModule = require('../../../../lib/features/keyboard');
 
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
@@ -16,7 +17,11 @@ var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 describe('features/keyboard', function() {
 
   beforeEach(bootstrapDiagram({
-    modules: [ modelingModule, keyboardModule ],
+    modules: [
+      modelingModule,
+      keyboardModule,
+      editorActionsModule
+    ],
     canvas: { deferUpdate: false },
     keyboard: { speed: 5, invertY: false }
   }));
