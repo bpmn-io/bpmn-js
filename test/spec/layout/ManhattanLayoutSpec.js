@@ -402,6 +402,28 @@ describe('layout/ManhattanLayout', function() {
       });
 
 
+      it('should layout straight line (horizontal), preserving target docking', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(300, 50, 100, 300);
+
+        var waypoints = [];
+
+        // when
+        var repaired = repair(start, end, waypoints, {
+          preferredLayouts: [ 'straight' ],
+          preserveDocking: 'target'
+        });
+
+        // then
+        expect(repaired).to.eql([
+          { x: 150, y: 200, original: { x: 150, y: 200 } },
+          { x: 350, y: 200 }
+        ]);
+      });
+
+
       it('should layout straight line (vertical)', function() {
 
         // given
@@ -417,6 +439,28 @@ describe('layout/ManhattanLayout', function() {
         expect(repaired).to.eql([
           { x: 150, y: 150 },
           { x: 150, y: 350, original: { x: 150, y: 350 }  }
+        ]);
+      });
+
+
+      it('should layout straight line (vertical), preserving target docking', function() {
+
+        // given
+        var start = rect(100, 100, 100, 100),
+            end = rect(50, 300, 200, 100);
+
+        var waypoints = [];
+
+        // when
+        var repaired = repair(start, end, waypoints, {
+          preferredLayouts: [ 'straight' ],
+          preserveDocking: 'target'
+        });
+
+        // then
+        expect(repaired).to.eql([
+          { x: 150, y: 150, original: { x: 150, y: 150 } },
+          { x: 150, y: 350 }
         ]);
       });
 
