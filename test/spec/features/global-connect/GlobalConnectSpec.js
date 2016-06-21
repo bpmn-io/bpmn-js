@@ -2,7 +2,7 @@
 
 var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 var modelingModule = require('../../../../lib/features/modeling'),
     globalConnectModule = require('../../../../lib/features/global-connect');
@@ -46,20 +46,31 @@ describe('features/global-connect-tool', function() {
 
 
   it('should start connect if allowed', inject(function(eventBus, globalConnect, dragging) {
+
     // given
+    var connectSpy = sinon.spy(function(event) {
+      expect(event.context).to.eql({
+        source: shape1,
+        sourcePosition: { x: 150, y: 130 }
+      });
+    });
+
     globalConnect.registerProvider(new Provider(true));
 
     // then
-    eventBus.once('connect.init', function(event) {
-      expect(event.context.source).to.eql(shape1);
-    });
+    eventBus.once('connect.init', connectSpy);
 
     // when
     globalConnect.start(canvasEvent({ x: 0, y: 0 }));
-    dragging.hover(canvasEvent({ x: 150, y: 150 }, { element: shape1 }));
+
+    dragging.move(canvasEvent({ x: 150, y: 130 }));
+    dragging.hover(canvasEvent({ x: 150, y: 130 }, { element: shape1 }));
     dragging.end(canvasEvent({ x: 0, y: 0 }));
 
     eventBus.fire('element.out', canvasEvent({ x: 99, y: 99 }, { element: shape1 }));
+
+    // then
+    expect(connectSpy).to.have.been.called;
   }));
 
 
