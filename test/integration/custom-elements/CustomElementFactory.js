@@ -7,8 +7,8 @@ var BpmnElementFactory = require('../../../lib/features/modeling/ElementFactory'
     LabelUtil = require('../../../lib/util/LabelUtil');
 
 
-function CustomElementFactory(bpmnFactory, moddle) {
-  BpmnElementFactory.call(this, bpmnFactory, moddle);
+function CustomElementFactory(injector) {
+  injector.invoke(BpmnElementFactory, this);
 
   var self = this;
 
@@ -40,7 +40,7 @@ inherits(CustomElementFactory, BpmnElementFactory);
 
 module.exports = CustomElementFactory;
 
-CustomElementFactory.$inject = [ 'bpmnFactory', 'moddle' ];
+CustomElementFactory.$inject = [ 'injector' ];
 
 
 /**
