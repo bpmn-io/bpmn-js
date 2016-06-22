@@ -213,7 +213,7 @@ describe('features/snapping - BpmnSnapping', function() {
       }));
 
 
-      it('should not snap', inject(function(canvas, create, dragging, elementFactory) {
+      it('should not snap to diagram contents', inject(function(canvas, create, dragging, elementFactory) {
 
         // given
         var participantShape = elementFactory.createParticipantShape(false),
@@ -231,6 +231,28 @@ describe('features/snapping - BpmnSnapping', function() {
         // then
         expect(participantShape).to.have.bounds({
           x: 100, y: 275, width: 600, height: 250
+        });
+      }));
+
+
+      it('should snap to participant border', inject(function(canvas, create, dragging, elementFactory) {
+
+        // given
+        var participantShape = elementFactory.createParticipantShape(false),
+            rootElement = canvas.getRootElement(),
+            rootGfx = canvas.getGraphics(rootElement);
+
+        // when
+        create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
+
+        dragging.hover({ element: rootElement, gfx: rootGfx });
+
+        dragging.move(canvasEvent({ x: 390, y: 400 }));
+        dragging.end(canvasEvent({ x: 390, y: 400 }));
+
+        // then
+        expect(participantShape).to.have.bounds({
+          x: 84, y: 275, width: 600, height: 250
         });
       }));
 
