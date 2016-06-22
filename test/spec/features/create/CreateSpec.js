@@ -27,15 +27,11 @@ describe('features/create - Create', function() {
     ]
   }));
 
-  var rootShape, parentShape, childShape, newShape;
-
   beforeEach(inject(function(dragging, elementRegistry) {
     dragging.setOptions({ manual: true });
   }));
 
-  afterEach(inject(function(dragging) {
-    dragging.setOptions({ manual: false });
-  }));
+  var rootShape, parentShape, childShape, newShape;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
