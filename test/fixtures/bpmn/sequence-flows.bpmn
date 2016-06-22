@@ -10,11 +10,11 @@
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="Sequence Flow 2" sourceRef="Gateway_1" targetRef="EndEvent_1"/>
-    <bpmn2:task id="Task_2" name="Task 3">
+    <bpmn2:task id="Task_2" name="Task 2">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="Sequence Flow 1" sourceRef="Gateway_1" targetRef="Task_2"/>
-    <bpmn2:task id="Task_3" name="Task 2"/>
+    <bpmn2:task id="Task_3" name="Task 3"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
