@@ -108,6 +108,11 @@ function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
       _options.additionalModules = unique(_options.additionalModules);
     }
 
+    // clean up old bpmn-js instance
+    if (BPMN_JS) {
+      BPMN_JS.destroy();
+    }
+
     BPMN_JS = new BpmnJS(_options);
 
     BPMN_JS.importXML(diagram, done);
