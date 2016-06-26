@@ -1,14 +1,17 @@
 'use strict';
 
-/* global bootstrapDiagram, inject */
+/* global bootstrapDiagram, inject, sinon */
 
 var modelingModule = require('../../../../lib/features/modeling');
 
 
 describe('features/modeling - move shape', function() {
 
-
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      modelingModule
+    ]
+  }));
 
 
   var rootShape, parentShape, childShape, childShape2, connection;
@@ -48,7 +51,7 @@ describe('features/modeling - move shape', function() {
     connection = elementFactory.createConnection({
       id: 'connection',
       waypoints: [
-        { x: 150, y: 150 },
+        { x: 150, y: 150, original: { x: 150, y: 150 } },
         { x: 150, y: 200 },
         { x: 350, y: 150 }
       ],
@@ -84,20 +87,6 @@ describe('features/modeling - move shape', function() {
       // then
       // update parent
       expect(childShape.parent).to.equal(rootShape);
-    }));
-
-
-    it('should layout connections after move', inject(function(modeling) {
-
-      // when
-      modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
-
-      // then
-      // update parent
-      expect(connection.waypoints).to.deep.equal([
-        { x: 140, y: 180, original: { x: 130, y: 170 } },
-        { x: 250, y: 160 }
-      ]);
     }));
 
 
@@ -224,17 +213,46 @@ describe('features/modeling - move shape', function() {
   });
 
 
-  it('should layout connections after move', inject(function(modeling) {
+  describe('layout connections', function() {
 
-    // when
-    modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
+    it('should layout after move', inject(function(modeling) {
 
-    // then
-    // update parent
-    expect(connection.waypoints).to.eql([
-      { x : 140, y : 180, original: { x: 130, y: 170 } },
-      { x : 250, y : 160 }
-    ]);
-  }));
+      // when
+      modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
+
+      // then
+      // update parent
+      expect(connection).to.have.waypoints([
+        { x: 130, y: 170 },
+        { x: 250, y: 160 }
+      ]);
+    }));
+
+
+    it('should provide original waypoints to layout', inject(function(eventBus, modeling) {
+
+      // given
+      var originalWaypoints = connection.waypoints;
+
+      var preLayoutSpy = sinon.spy(function(event) {
+
+        var context = event.context,
+            connection = context.connection;
+
+        expect(connection).to.have.waypoints(originalWaypoints);
+
+        expect(connection).to.have.startDocking({ x: 150, y: 150 });
+      });
+
+      eventBus.on('commandStack.connection.layout.preExecute', preLayoutSpy);
+
+      // when
+      modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
+
+      // then
+      expect(preLayoutSpy).to.have.been.called;
+    }));
+
+  });
 
 });

@@ -2,13 +2,15 @@
 
 /* global bootstrapDiagram, inject */
 
-var modelingModule = require('./custom/modeling');
+var customModelingModule = require('./custom');
 
 
 describe('features/modeling - layout connection', function() {
 
   beforeEach(bootstrapDiagram({
-    modules: [ modelingModule ]
+    modules: [
+      customModelingModule
+    ]
   }));
 
 
@@ -54,14 +56,48 @@ describe('features/modeling - layout connection', function() {
     }));
 
 
-    it('should execute and add new original waypoints', inject(function(modeling) {
+    it('should execute, adding new original waypoints', inject(function(modeling) {
       // when
       modeling.layoutConnection(connection);
 
       // then
       expect(connection.waypoints).to.eql([
-        { x: 150, y: 150, original: { x: 150, y: 150 } },
-        { x: 350, y: 350, original: { x: 325, y: 125 } }
+        { x: 200, y: 200, original: { x: 150, y: 150 } },
+        { x: 300, y: 300, original: { x: 350, y: 350 } }
+      ]);
+    }));
+
+
+    it('should execute with custom connectionStart', inject(function(modeling) {
+      // given
+      var hints = {
+        connectionStart: { x: 100, y: 100 }
+      };
+
+      // when
+      modeling.layoutConnection(connection, hints);
+
+      // then
+      expect(connection.waypoints).to.eql([
+        { x: 150, y: 150, original: { x: 100, y: 100 } },
+        { x: 300, y: 300, original: { x: 350, y: 350 } }
+      ]);
+    }));
+
+
+    it('should execute with custom connectionEnd', inject(function(modeling) {
+      // given
+      var hints = {
+        connectionEnd: { x: 400, y: 400 }
+      };
+
+      // when
+      modeling.layoutConnection(connection, hints);
+
+      // then
+      expect(connection.waypoints).to.eql([
+        { x: 200, y: 200, original: { x: 150, y: 150 } },
+        { x: 350, y: 350, original: { x: 400, y: 400 } }
       ]);
     }));
 

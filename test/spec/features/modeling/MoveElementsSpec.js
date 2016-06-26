@@ -241,8 +241,8 @@ describe('features/modeling - move elements', function() {
 
     // then
     // expect relayouted connection
-    expect(connection.waypoints).to.eql([
-      { x: 160, y: 110, original: { x: 160, y: 110 } },
+    expect(connection).to.have.waypoints([
+      { x: 160, y: 110 },
       { x: 300, y: 210 }
     ]);
   }));

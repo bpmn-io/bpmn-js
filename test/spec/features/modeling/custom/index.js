@@ -7,5 +7,5 @@ module.exports = {
   ],
   __init__: [ 'modeling' ],
   modeling: [ 'type', require('../../../../../lib/features/modeling/Modeling') ],
-  layouter: [ 'type', require('./layouter') ]
+  layouter: [ 'type', require('./CustomLayouter') ]
 };

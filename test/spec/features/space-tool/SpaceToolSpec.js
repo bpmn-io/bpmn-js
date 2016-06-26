@@ -155,8 +155,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(300);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 450, y: 350, original: { x: 450, y: 350 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 450, y: 350 }
         ]);
       }));
 
@@ -175,8 +176,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(450);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 500, y: 300, original: { x: 500, y: 300 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 500, y: 300 }
         ]);
       }));
 
@@ -196,8 +198,9 @@ describe('features/space-tool', function() {
         expect(childShape2.y).to.equal(250);
 
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 500, y: 300, original: { x: 500, y: 300 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 500, y: 300 }
         ]);
       }));
 
@@ -217,8 +220,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(350);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 400, y: 300, original: { x: 400, y: 300 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 400, y: 300 }
         ]);
       }));
 
@@ -238,8 +242,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(220);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 450, y: 270, original: { x: 450, y: 270 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 450, y: 270 }
         ]);
       }));
 
@@ -259,8 +264,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(300);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 160 }, { x: 450, y: 350, original: { x: 450, y: 350 } }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 160 },
+          { x: 450, y: 350 }
         ]);
       }));
 
@@ -279,8 +285,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 210, y: 160, original: { x: 210, y: 160 } }, { x: 450, y: 300 }
+        expect(connection).to.have.waypoints([
+          { x: 210, y: 160 },
+          { x: 450, y: 300 }
         ]);
       }));
 
@@ -299,8 +306,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 110, y: 160, original: { x: 110, y: 160 } }, { x: 450, y: 300 }
+        expect(connection).to.have.waypoints([
+          { x: 110, y: 160 },
+          { x: 450, y: 300 }
         ]);
       }));
 
@@ -319,8 +327,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 210, original: { x: 160, y: 210 } }, { x: 450, y: 300 }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 210 },
+          { x: 450, y: 300 }
         ]);
       }));
 
@@ -339,8 +348,9 @@ describe('features/space-tool', function() {
         expect(childShape2.x).to.equal(400);
         expect(childShape2.y).to.equal(250);
 
-        expect(connection.waypoints).to.eql([
-          { x: 160, y: 110, original: { x: 160, y: 110 } }, { x: 450, y: 300 }
+        expect(connection).to.have.waypoints([
+          { x: 160, y: 110 },
+          { x: 450, y: 300 }
         ]);
       }));
 
@@ -480,9 +490,9 @@ describe('features/space-tool', function() {
       expect(childShape2.x).to.equal(450); // changes
       expect(childShape2.y).to.equal(275);
 
-      expect(connection.waypoints).to.eql([
+      expect(connection).to.have.waypoints([
         { x: 250, y: 200 },
-        { x: 475, y: 300, original: { x: 475, y: 300 } }    // changes
+        { x: 475, y: 300 }    // changes
       ]);
 
       expect(parentShape2.x).to.equal(925); // changes
@@ -496,9 +506,9 @@ describe('features/space-tool', function() {
       expect(childShape4.x).to.equal(935); // changes
       expect(childShape4.y).to.equal(290);
 
-      expect(connection2.waypoints).to.eql([
-        { x: 1140, y: 235, original: { x: 1140, y: 235 } },  // changes
-        { x: 960, y: 315, original: { x: 960, y: 315 } }     // changes
+      expect(connection2).to.have.waypoints([
+        { x: 1140, y: 235 },  // changes
+        { x: 960, y: 315 }     // changes
       ]);
     }));
 

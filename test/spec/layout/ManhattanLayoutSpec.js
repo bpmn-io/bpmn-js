@@ -503,7 +503,7 @@ describe('layout/ManhattanLayout', function() {
         ];
 
         // when
-        var repaired = repair(start, end, waypoints, { endChanged: true });
+        var repaired = repair(start, end, waypoints, { connectionEnd: true });
 
         // then
         expect(repaired).to.eql([
@@ -532,7 +532,7 @@ describe('layout/ManhattanLayout', function() {
         ];
 
         // when
-        var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+        var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
         // then
         expect(repaired).to.eql([
@@ -562,7 +562,7 @@ describe('layout/ManhattanLayout', function() {
         ];
 
         // when
-        var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+        var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
         // then
         expect(repaired).to.eql([
@@ -593,7 +593,7 @@ describe('layout/ManhattanLayout', function() {
           ];
 
           // when
-          var repaired = repair(newStart, end, waypoints, { startChanged: true });
+          var repaired = repair(newStart, end, waypoints, { connectionStart: true });
 
           // then
           expect(repaired).to.eql([
@@ -619,7 +619,7 @@ describe('layout/ManhattanLayout', function() {
           ];
 
           // when
-          var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+          var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
           // then
           expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 350, y: 500 } ]));
@@ -641,7 +641,7 @@ describe('layout/ManhattanLayout', function() {
               newStart = moved(start, { x: 50 });
 
           // when
-          var repaired = repair(newStart, end, waypoints, { startChanged: true });
+          var repaired = repair(newStart, end, waypoints, { connectionStart: true });
 
           // then
           expect(repaired).to.eql([ { x: 200, y: 150 }, { x: 200, y: 300 } ].concat(waypoints.slice(2)));
@@ -655,7 +655,7 @@ describe('layout/ManhattanLayout', function() {
               newStart = moved(start, { y: 50 });
 
           // when
-          var repaired = repair(newStart, end, waypoints, { startChanged: true });
+          var repaired = repair(newStart, end, waypoints, { connectionStart: true });
 
           // then
           expect(repaired).to.eql([ { x: 150, y: 200 }, { x: 150, y: 300 } ].concat(waypoints.slice(2)));
@@ -669,7 +669,7 @@ describe('layout/ManhattanLayout', function() {
               newStart = moved(start, { x: 100, y: -50 });
 
           // when
-          var repaired = repair(newStart, end, waypoints, { startChanged: true });
+          var repaired = repair(newStart, end, waypoints, { connectionStart: true });
 
           // then
           expect(repaired).to.eql([ { x: 250, y: 100 }, { x: 250, y: 300 } ].concat(waypoints.slice(2)));
@@ -690,7 +690,7 @@ describe('layout/ManhattanLayout', function() {
               newEnd = moved(end, { x: 50 });
 
           // when
-          var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+          var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
           // then
           expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 250, y: 300 }, { x: 250, y: 450 } ]));
@@ -704,7 +704,7 @@ describe('layout/ManhattanLayout', function() {
               newEnd = moved(end, { y: 50 });
 
           // when
-          var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+          var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
           // then
           expect(repaired).to.eql(waypoints.slice(0, 3).concat([ { x: 200, y: 500 } ]));
@@ -718,7 +718,7 @@ describe('layout/ManhattanLayout', function() {
               newEnd = moved(end, { x: 100, y: -50 });
 
           // when
-          var repaired = repair(start, newEnd, waypoints, { endChanged: true });
+          var repaired = repair(start, newEnd, waypoints, { connectionEnd: true });
 
           // then
           expect(repaired).to.eql(waypoints.slice(0, 2).concat([ { x: 300, y: 300 }, { x: 300, y: 400 } ]));

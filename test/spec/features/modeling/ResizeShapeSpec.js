@@ -26,7 +26,14 @@ function bounds(b) {
 
 describe('features/modeling - resize shape', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ modelingModule, layoutModule, resizeModule, attachModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      modelingModule,
+      layoutModule,
+      resizeModule,
+      attachModule
+    ]
+  }));
 
 
   describe('basics', function() {
@@ -270,77 +277,76 @@ describe('features/modeling - resize shape', function() {
     }));
 
 
-    it('should update anchors on incoming connections after resize', inject(function(modeling) {
-      // given
-      var parentOldBounds,
-          parentNewBounds,
-          resultWaypoints;
+    describe('should update connection dockings', function() {
 
-      parentOldBounds = bounds(parentShape);
+      it('on incoming connections', inject(function(modeling) {
+        // given
+        var shapeOldBounds = bounds(parentShape),
+            shapeNewBounds = { x: 400, y: 50, width: 350, height: 350 };
 
-      parentNewBounds = { x: 400, y: 50, width: 350, height: 350 };
+        var expectedWaypoints = [
+          { x: 150, y: 150 }, // start unchanged
+          getNewAttachPoint({ x: 425, y: 475 }, shapeOldBounds, shapeNewBounds)
+        ];
 
-      // when
-      modeling.resizeShape(parentShape, parentNewBounds);
+        // when
+        modeling.resizeShape(parentShape, shapeNewBounds);
 
-      resultWaypoints = getNewAttachPoint({ x: 425, y: 475 }, parentOldBounds, parentNewBounds);
-
-      expect(connectionA.waypoints[1].original).to.eql(resultWaypoints);
-    }));
-
-
-    it('should update anchors on outgoing connections after resize', inject(function(modeling) {
-      // given
-      var parentOldBounds,
-          parentNewBounds,
-          resultWaypoints;
-
-      parentOldBounds = bounds(parentShape);
-
-      parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
-
-      // when
-      modeling.resizeShape(parentShape, parentNewBounds);
-
-      resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
-
-      expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
-    }));
+        expect(connectionA).to.have.waypoints(expectedWaypoints);
+      }));
 
 
-    it('should update anchors on incoming connections after resize (undo)',
-      inject(function(modeling, commandStack) {
+      it('on outgoing connections', inject(function(modeling) {
+        // given
+        var shapeOldBounds = bounds(parentShape),
+            shapeNewBounds = { x: 300, y: 150, width: 350, height: 350 };
+
+        var expectedWaypoints = [
+          getNewAttachPoint({ x: 825, y: 75 }, shapeOldBounds, shapeNewBounds),
+          { x: 1150, y: 350 } // end unchanged
+        ];
+
+        // when
+        modeling.resizeShape(parentShape, shapeNewBounds);
+
+        expect(connectionB).to.have.waypoints(expectedWaypoints);
+      }));
+
+
+      it('on incoming connections (undo)', inject(function(modeling, commandStack) {
+
+        // given
+        var originalWaypoints = connectionA.waypoints.slice();
+
         // when
         modeling.resizeShape(parentShape, { x: 400, y: 50, width: 350, height: 350 });
 
         commandStack.undo();
 
-        expect(connectionA.waypoints[1].original).to.eql({ x: 425, y: 475 });
-      })
-    );
+        // then
+        expect(connectionA.waypoints).to.eql(originalWaypoints);
+      }));
 
 
-    it('should update anchors on outgoing connections after resize (undo -> redo)',
-      inject(function(modeling, commandStack) {
-        var parentOldBounds,
-            parentNewBounds,
-            resultWaypoints;
+      it('on outgoing connections (undo -> redo)', inject(function(modeling, commandStack) {
 
-        parentOldBounds = bounds(parentShape);
+        // given
+        var shapeNewBounds = { x: 300, y: 150, width: 350, height: 350 },
+            layoutedWaypoints;
 
-        parentNewBounds = { x: 300, y: 150, width: 350, height: 350 };
+        modeling.resizeShape(parentShape, shapeNewBounds);
+
+        layoutedWaypoints = connectionB.waypoints.slice();
 
         // when
-        modeling.resizeShape(parentShape, parentNewBounds);
-
-        resultWaypoints = getNewAttachPoint({ x: 825, y: 75 }, parentOldBounds, parentNewBounds);
-
         commandStack.undo();
         commandStack.redo();
 
-        expect(connectionB.waypoints[0].original).to.eql(resultWaypoints);
-      })
-    );
+        // then
+        expect(connectionB.waypoints).to.eql(layoutedWaypoints);
+      }));
+
+    });
 
   });
 
