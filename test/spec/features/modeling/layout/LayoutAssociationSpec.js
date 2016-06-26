@@ -7,19 +7,25 @@ require('../../../../TestHelper');
 var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
+
 describe('features/modeling - layout association', function() {
 
   var diagramXML = require('../../../../fixtures/bpmn/basic.bpmn');
 
-  var testModules = [ coreModule, modelingModule ];
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
+
 
   var rootShape;
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
   beforeEach(inject(function(canvas) {
     rootShape = canvas.getRootElement();
   }));
+
 
   it('should layout straight after TextAnnotation creation', inject(function(elementRegistry, modeling) {
 

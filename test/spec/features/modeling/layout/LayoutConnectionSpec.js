@@ -26,6 +26,8 @@ describe('features/modeling - layout connection', function() {
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
           sequenceFlow = sequenceFlowConnection.businessObject;
 
+      var expectedWaypoints = sequenceFlowConnection.waypoints;
+
       // when
       modeling.layoutConnection(sequenceFlowConnection);
 
@@ -34,17 +36,10 @@ describe('features/modeling - layout connection', function() {
       // expect cropped, repaired connection
       // that was not actually modified
 
-      var waypoints = [
-        { original: { x: 578, y: 341 }, x: 578, y: 341 },
-        { x: 934, y: 341 },
-        { x: 934, y: 436 },
-        { original: { x: 832, y: 436 }, x: 832, y: 436 }
-      ];
-
-      expect(sequenceFlowConnection.waypoints).eql(waypoints);
+      expect(sequenceFlowConnection.waypoints).to.eql(expectedWaypoints);
 
       // expect cropped waypoints in di
-      var diWaypoints = bpmnFactory.createDiWaypoints(waypoints);
+      var diWaypoints = bpmnFactory.createDiWaypoints(expectedWaypoints);
 
       expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));

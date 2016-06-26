@@ -4,6 +4,8 @@ require('../../../../TestHelper');
 
 /* global inject, bootstrapModeler */
 
+var flatten = require('lodash/array/flatten');
+
 var modelingModule = require('../../../../../lib/features/modeling');
 
 
@@ -40,10 +42,12 @@ describe('modeling/behavior - drop on connection', function() {
           sequenceFlow = elementRegistry.get('SequenceFlow'),
           task = elementRegistry.get('Task');
 
-      var position = { x: 340, y: 120 }; // first bendpoint
+      var originalWaypoints = sequenceFlow.waypoints;
+
+      var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
       // when
-      var newShape = modeling.createShape(intermediateThrowEvent, position, sequenceFlow);
+      var newShape = modeling.createShape(intermediateThrowEvent, dropPosition, sequenceFlow);
 
       // then
 
@@ -62,16 +66,19 @@ describe('modeling/behavior - drop on connection', function() {
       expect(task.incoming[0]).to.equal(newShape.outgoing[0]);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).eql([
-        { original: { x: 209, y: 120 }, x: 209, y: 120 },
-        { original: { x: 340, y: 120 }, x: 322, y: 120 }
-      ]);
+      expect(sequenceFlow).to.have.waypoints(flatten([
+        originalWaypoints.slice(0, 1),
+        { x: 322, y: 120 }
+      ]));
 
-      expect(targetConnection.waypoints).eql([
-        { original: { x: 340, y: 120 }, x: 340, y: 138 },
-        { x: 340, y: 299 },
-        { original: { x: 502, y: 299 }, x: 502, y: 299 }
-      ]);
+      expect(sequenceFlow).to.have.endDocking(dropPosition);
+
+      expect(targetConnection).to.have.waypoints(flatten([
+        { x: 340, y: 138 },
+        originalWaypoints.slice(2)
+      ]));
+
+      expect(targetConnection).to.have.startDocking(dropPosition);
     }));
 
 
@@ -81,11 +88,12 @@ describe('modeling/behavior - drop on connection', function() {
       var endEventShape = elementFactory.createShape({ type: 'bpmn:EndEvent' });
 
       var sequenceFlow = elementRegistry.get('SequenceFlow');
+      var originalWaypoints = sequenceFlow.waypoints;
 
-      var position = { x: 340, y: 120 }; // first bendpoint
+      var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
       // when
-      var newShape = modeling.createShape(endEventShape, position, sequenceFlow);
+      var newShape = modeling.createShape(endEventShape, dropPosition, sequenceFlow);
 
       // then
 
@@ -97,10 +105,10 @@ describe('modeling/behavior - drop on connection', function() {
       expect(newShape.outgoing.length).to.equal(0);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).eql([
-        { original: { x: 209, y: 120 }, x: 209, y: 120 },
-        { original: { x: 340, y: 120 }, x: 322, y: 120 }
-      ]);
+      expect(sequenceFlow).to.have.waypoints(flatten([
+        originalWaypoints.slice(0, 1),
+        { x: 322, y: 120 }
+      ]));
     }));
 
 
@@ -110,11 +118,12 @@ describe('modeling/behavior - drop on connection', function() {
       var startEventShape = elementFactory.createShape({ type: 'bpmn:StartEvent' });
 
       var sequenceFlow = elementRegistry.get('SequenceFlow');
+      var originalWaypoints = sequenceFlow.waypoints;
 
-      var position = { x: 340, y: 120 }; // first bendpoint
+      var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
       // when
-      var newShape = modeling.createShape(startEventShape, position, sequenceFlow);
+      var newShape = modeling.createShape(startEventShape, dropPosition, sequenceFlow);
 
       // then
 
@@ -126,12 +135,12 @@ describe('modeling/behavior - drop on connection', function() {
       expect(newShape.outgoing[0]).to.eql(sequenceFlow);
 
       // split target at insertion point
-      expect(sequenceFlow.waypoints).eql([
-        { original: { x: 340, y: 120 }, x: 340, y: 138 },
-        { x: 340, y: 299 },
-        { original: { x: 502, y: 299 }, x: 502, y: 299 }
-      ]);
+      expect(sequenceFlow).to.have.waypoints(flatten([
+        { x: 340, y: 138 },
+        originalWaypoints.slice(2)
+      ]));
     }));
+
   });
 
 
@@ -144,13 +153,13 @@ describe('modeling/behavior - drop on connection', function() {
 
       var sequenceFlow = elementRegistry.get('SequenceFlow');
 
-      var position = { x: 340, y: 120 }; // first bendpoint
+      var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
       // when
       var canDrop = rules.allowed('shape.create', {
         shape: participantShape,
         parent: sequenceFlow,
-        position: position
+        dropPosition: dropPosition
       });
 
       // then

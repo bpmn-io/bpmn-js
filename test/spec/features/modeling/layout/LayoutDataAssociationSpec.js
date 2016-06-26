@@ -13,17 +13,22 @@ describe('features/modeling - layout data association', function() {
 
   var diagramXML = require('../../../../fixtures/bpmn/basic.bpmn');
 
-  var testModules = [ coreModule, modelingModule ];
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
+
 
   var rootShape,
       taskShape;
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
   beforeEach(inject(function(elementRegistry, canvas) {
     rootShape = canvas.getRootElement();
     taskShape = elementRegistry.get('Task_1');
   }));
+
 
   it('should layout straight after DataObjectReference creation', inject(function(modeling) {
 

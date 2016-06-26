@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_A" name="A">
+      <bpmn:incoming>SequenceFlow</bpmn:incoming>
+      <bpmn:property id="Property_09ddda9" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataAssociation_1">
+        <bpmn:sourceRef>DataStoreReference</bpmn:sourceRef>
+        <bpmn:targetRef>Property_09ddda9</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow" sourceRef="StartEvent_1" targetRef="Task_A" />
+    <bpmn:dataStoreReference id="DataStoreReference" />
+    <bpmn:task id="Task_B">
+      <bpmn:property id="Property_0vybrii" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataAssociation_2">
+        <bpmn:sourceRef>DataStoreReference</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0vybrii</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_A_di" bpmnElement="Task_A">
+        <dc:Bounds x="278" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <!-- off by 10px (x) -->
+      <bpmndi:BPMNEdge id="SequenceFlow_di" bpmnElement="SequenceFlow">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="268" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="198.5" y="95" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="412" y="344" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="392" y="394" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataAssociation_1_di" bpmnElement="DataAssociation_1">
+        <di:waypoint xsi:type="dc:Point" x="426" y="344" />
+        <di:waypoint xsi:type="dc:Point" x="346" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_B_di" bpmnElement="Task_B">
+        <dc:Bounds x="584" y="329" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <!-- off by 10px (x) -->
+      <bpmndi:BPMNEdge id="DataAssociation_2_di" bpmnElement="DataAssociation_2">
+        <di:waypoint xsi:type="dc:Point" x="462" y="369" />
+        <di:waypoint xsi:type="dc:Point" x="574" y="369" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

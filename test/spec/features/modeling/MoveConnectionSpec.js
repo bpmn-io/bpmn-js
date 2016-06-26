@@ -29,7 +29,7 @@ describe('features/modeling - move connection', function() {
       // when
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
 
-      var waypoints = [
+      var expectedWaypoints = [
         { x: 598, y: 351 },
         { x: 954, y: 351 },
         { x: 954, y: 446 },
@@ -39,10 +39,10 @@ describe('features/modeling - move connection', function() {
       // then
 
       // expect cropped connection
-      expect(sequenceFlowConnection.waypoints).eql(waypoints);
+      expect(sequenceFlowConnection).to.have.waypoints(expectedWaypoints);
 
       // expect cropped waypoints in di
-      var diWaypoints = bpmnFactory.createDiWaypoints(waypoints);
+      var diWaypoints = bpmnFactory.createDiWaypoints(expectedWaypoints);
 
       expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));

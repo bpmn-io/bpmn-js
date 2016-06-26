@@ -161,11 +161,11 @@ describe('features/modeling - layout', function() {
         reconnectEnd(connection, 'ExclusiveGateway_1', newDocking);
 
         // then
-        expect(connection.waypoints).to.eql([
-          { original:{ x:382,y:241 },x:382,y:241 },
-          { x:559,y:241 },
-          { x:559,y:138 },
-          { original:{ x:660,y:280 },x:660,y:280 }
+        expect(connection).to.have.waypoints([
+          { x: 382, y: 241 },
+          { x: 559, y: 241 },
+          { x: 559, y: 138 },
+          { x: 660, y: 280 }
         ]);
       }));
 
@@ -180,10 +180,11 @@ describe('features/modeling - layout', function() {
         move('ServiceTask_1', delta);
 
         // then
-        expect(connection.waypoints).to.eql([{ original:{ x:382,y:241 },x:382,y:241 },
-          { x:559,y:241 },
-          { x:559,y:158 },
-          { original:{ x:598,y:158 },x:598,y:158 }
+        expect(connection).to.have.waypoints([
+          { x: 382, y: 241 },
+          { x: 559, y: 241 },
+          { x: 559, y: 158 },
+          { x: 598, y: 158 }
         ]);
       }));
 
@@ -198,11 +199,11 @@ describe('features/modeling - layout', function() {
         move('Task_1', delta);
 
         // then
-        expect(connection.waypoints).to.eql([
-          { original:{ x:352,y:261 },x:352,y:261 },
-          { x:559,y:261 },
-          { x:559,y:138 },
-          { original:{ x:628,y:138 },x:628,y:138 }
+        expect(connection).to.have.waypoints([
+          { x: 352, y: 261 },
+          { x: 559, y: 261 },
+          { x: 559, y: 138 },
+          { x: 628, y: 138 }
         ]);
       }));
 
