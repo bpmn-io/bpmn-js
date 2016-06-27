@@ -40,6 +40,12 @@ describe('Modeler', function() {
   });
 
 
+  it.skip('should import complex', function(done) {
+    var xml = require('../fixtures/bpmn/complex.bpmn');
+    createModeler(xml, done);
+  });
+
+
   it('should not import empty definitions', function(done) {
     var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
 
