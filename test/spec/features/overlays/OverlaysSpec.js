@@ -871,4 +871,39 @@ describe('features/overlays', function() {
 
   });
 
+
+  describe('#clear', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ overlayModule ] }));
+
+
+    it('should add <div>', inject(function(overlays, eventBus, canvas) {
+
+      // given
+      var shape = canvas.addShape({
+        id: 'test',
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100
+      });
+
+      var id = overlays.add(shape, {
+        position: {
+          left: 0,
+          top: 0
+        },
+        html: '<div class="overlay"></div>'
+      });
+
+      // when
+      eventBus.fire('diagram.clear');
+
+      // then
+      expect(overlays.get(id)).not.to.exist;
+      expect(queryOverlay(id)).not.to.exist;
+    }));
+
+  });
+
 });
