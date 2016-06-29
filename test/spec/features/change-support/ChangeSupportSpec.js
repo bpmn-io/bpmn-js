@@ -62,6 +62,22 @@ describe('features/change-support', function() {
   }));
 
 
+  it('should omit element.changed event for deleted shape',
+    inject(function(eventBus, modeling) {
+
+      // given
+      modeling.removeShape(shapeA);
+      var affectedElements = recordEvents(eventBus, 'shape.changed');
+
+      // when
+      eventBus.fire('elements.changed', { elements: [ shapeA ] });
+
+      // then
+      expect(affectedElements.length).to.equal(0);
+    })
+  );
+
+
   it('should emit shape.changed event', inject(function(eventBus) {
 
     // given
