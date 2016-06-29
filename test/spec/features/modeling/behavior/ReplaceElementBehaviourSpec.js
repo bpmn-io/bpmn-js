@@ -416,4 +416,33 @@ describe('features/modeling - move start event behavior', function() {
 
   });
 
+
+  describe('outline', function() {
+
+    var diagramXML = require('../../../../fixtures/bpmn/features/replace/connection.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should update size of outline on replace', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var task = elementRegistry.get('Task_2');
+
+      // when
+      var subProcess = bpmnReplace.replaceElement(task, {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      });
+
+      // then
+      var gfx = elementRegistry.getGraphics(subProcess);
+      var outline = gfx.select('.djs-outline');
+
+      expect(outline.getBBox().width).to.equal(gfx.getBBox().width);
+      expect(outline.getBBox().height).to.equal(gfx.getBBox().height);
+    }));
+
+  });
+
 });
