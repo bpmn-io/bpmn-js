@@ -979,6 +979,49 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
+    describe('default flows from complex gateways', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.defaultFlowsFromComplexGateways.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should show default replace option', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var sequenceFlowEntry = queryEntry(popupMenu, 'replace-with-sequence-flow'),
+            defaultFlowEntry = queryEntry(popupMenu, 'replace-with-default-flow');
+
+        // then
+        expect(sequenceFlowEntry).to.not.exist;
+        expect(defaultFlowEntry).to.exist;
+      }));
+
+
+      it('should NOT show default replace option', inject(function(elementRegistry, popupMenu) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+        // when
+        openPopup(sequenceFlow);
+
+        var sequenceFlowEntry = queryEntry(popupMenu, 'replace-with-sequence-flow'),
+            defaultFlowEntry = queryEntry(popupMenu, 'replace-with-default-flow');
+
+        // then
+        expect(sequenceFlowEntry).to.exist;
+        expect(defaultFlowEntry).to.not.exist;
+      }));
+
+    });
+
+
     describe('conditional flows', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
