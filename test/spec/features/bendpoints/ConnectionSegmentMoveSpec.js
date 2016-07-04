@@ -20,7 +20,7 @@ var layoutModule = {
 
 describe('features/bendpoints - segment move', function() {
 
-  describe('hints', function() {
+  describe('should provide hints', function() {
 
     beforeEach(bootstrapDiagram({
       modules: [
@@ -37,6 +37,7 @@ describe('features/bendpoints - segment move', function() {
     var sourceShape, targetShape, connection;
 
     beforeEach(inject(function(elementFactory, canvas) {
+
       sourceShape = elementFactory.createShape({
         id: 'sourceShape', type: 'A',
         x: 100, y: 100,
@@ -50,7 +51,12 @@ describe('features/bendpoints - segment move', function() {
         width: 100, height: 200
       });
       canvas.addShape(targetShape);
+    }));
 
+
+    it('basic', inject(function(canvas, connectionSegmentMove, dragging, eventBus, elementFactory) {
+
+      // given
       connection = elementFactory.createConnection({
         id: 'connection',
         waypoints: [
@@ -63,12 +69,7 @@ describe('features/bendpoints - segment move', function() {
         target: targetShape
       });
       canvas.addConnection(connection);
-    }));
 
-
-    it('should provide segment move in hints', inject(function(canvas, connectionSegmentMove, dragging, eventBus) {
-
-      // given
       var spy = sinon.spy(function(e) {
         expect(e.context.hints).to.have.property('segmentMove');
       });
@@ -85,11 +86,25 @@ describe('features/bendpoints - segment move', function() {
 
     }));
 
-    it('removes a segment in front', inject(function(canvas, connectionSegmentMove, dragging, eventBus) {
+
+    it('remove start segment', inject(function(canvas, connectionSegmentMove, dragging, eventBus, elementFactory) {
 
       // given
+      connection = elementFactory.createConnection({
+        id: 'connection',
+        waypoints: [
+          { x: 200, y: 150 },
+          { x: 200, y: 300 },
+          { x: 600, y: 300 },
+          { x: 600, y: 150 }
+        ],
+        source: sourceShape,
+        target: targetShape
+      });
+      canvas.addConnection(connection);
+
       var spy = sinon.spy(function(e) {
-        expect(e.context.hints.segmentMove).to.be.eql({
+        expect(e.context.hints.segmentMove).to.eql({
           segmentStartIndex: 1,
           newSegmentStartIndex: 0
         });
@@ -107,7 +122,118 @@ describe('features/bendpoints - segment move', function() {
 
     }));
 
+
+    describe('remove skewed segments', function() {
+
+      it('start', inject(function(canvas, connectionSegmentMove, dragging, eventBus, elementFactory) {
+
+        // given
+        connection = elementFactory.createConnection({
+          id: 'connection',
+          waypoints: [
+            { x: 200, y: 150 },
+            { x: 50, y: 400 },
+            { x: 600, y: 400 },
+            { x: 600, y: 150 }
+          ],
+          source: sourceShape,
+          target: targetShape
+        });
+        canvas.addConnection(connection);
+
+        var spy = sinon.spy(function(e) {
+          expect(e.context.hints).to.have.property('segmentMove');
+          expect(e.context.hints.segmentMove.newSegmentStartIndex).to.eql(0);
+        });
+
+        eventBus.once('commandStack.execute', spy);
+
+        // when
+        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+        dragging.move(canvasEvent({ x: 0, y: -250 }));
+        dragging.end();
+
+        // then
+        expect(spy).to.have.been.called;
+      }));
+
+
+      it('mid (one bendpoint removed)', inject(function(canvas, connectionSegmentMove, dragging, eventBus, elementFactory) {
+
+        // given
+        connection = elementFactory.createConnection({
+          id: 'connection',
+          waypoints: [
+            { x: 200, y: 150 },
+            { x: 200, y: 400 },
+
+            { x: 300, y: 300 },
+            { x: 600, y: 300 },
+
+            { x: 600, y: 150 }
+          ],
+          source: sourceShape,
+          target: targetShape
+        });
+        canvas.addConnection(connection);
+
+        var spy = sinon.spy(function(e) {
+          expect(e.context.hints).to.have.property('segmentMove');
+          expect(e.context.hints.segmentMove.newSegmentStartIndex).to.eql(1);
+        });
+
+        eventBus.once('commandStack.execute', spy);
+
+        // when
+        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 3);
+        dragging.move(canvasEvent({ x: 0, y: 100 }));
+        dragging.end();
+
+        // then
+        expect(spy).to.have.been.called;
+      }));
+
+
+      it('mid (two bendpoints removed)', inject(function(canvas, connectionSegmentMove, dragging, eventBus, elementFactory) {
+
+        // given
+        connection = elementFactory.createConnection({
+          id: 'connection',
+          waypoints: [
+            { x: 200, y: 150 },
+            { x: 200, y: 400 },
+            { x: 250, y: 400 },
+
+            { x: 300, y: 300 },
+            { x: 600, y: 300 },
+
+            { x: 600, y: 150 }
+          ],
+          source: sourceShape,
+          target: targetShape
+        });
+        canvas.addConnection(connection);
+
+        var spy = sinon.spy(function(e) {
+          expect(e.context.hints).to.have.property('segmentMove');
+          expect(e.context.hints.segmentMove.newSegmentStartIndex).to.eql(1);
+        });
+
+        eventBus.once('commandStack.execute', spy);
+
+        // when
+        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 4);
+        dragging.move(canvasEvent({ x: 0, y: 100 }));
+        dragging.end();
+
+        // then
+        expect(spy).to.have.been.called;
+      }));
+
+    });
+
   });
+
 
   describe('without docking', function() {
 
