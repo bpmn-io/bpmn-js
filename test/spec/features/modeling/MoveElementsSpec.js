@@ -263,6 +263,23 @@ describe('features/modeling - move elements', function() {
   }));
 
 
+  // See https://github.com/bpmn-io/bpmn-js/issues/525
+  it('should keep parent of all elements if connection and prim. shape have different parents',
+      inject(function(modeling) {
+
+        //when
+        modeling.moveElements([ childShape, connection, otherChildShape, otherParentShape ], { x: 0, y: -50 },
+            rootShape, { primaryShape: otherParentShape });
+
+        //then
+        expect(childShape.parent.id).to.equal(parentShape.id);
+        expect(connection.parent.id).to.equal(parentShape.id);
+        expect(otherChildShape.parent.id).to.equal(parentShape.id);
+        expect(otherParentShape.parent.id).to.equal(rootShape.id);
+      })
+  );
+
+
   describe('multiple selection', function() {
 
     it('should keep parent of secondary shape (scenario 1)', inject(function(modeling) {
