@@ -79,10 +79,12 @@ Perform the following steps to build the library, including running all tests:
 ```
 cd bpmn-js
 npm install
-grunt
+npm run all
 ```
 
-When building the latest development snapshot you may need to perform [additional project setup](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md).
+You may need to perform [additional project setup](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md) when building the latest development snapshot.
+
+Please checkout our [contributing guidelines](https://github.com/bpmn-io/bpmn-js/blob/master/CONTRIBUTING.md) if you plan to file an issue or pull request.
 
 
 ## Related
