@@ -153,6 +153,7 @@ describe('Text', function() {
       // when
       var text = createText(container, label, { box: { width: 150, height: 100 } });
 
+      // then
       expect(text).to.exist;
       expect(text.node.textContent.substr(-1)).equals('-');
     });
