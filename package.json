@@ -5,6 +5,7 @@
   "scripts": {
     "all": "grunt",
     "dev": "grunt auto-test",
+    "distro": "grunt build",
     "test": "grunt test"
   },
   "repository": {
