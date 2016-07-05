@@ -1,6 +1,6 @@
 {
   "name": "diagram-js",
-  "version": "0.16.1",
+  "version": "0.16.2",
   "description": "A modeling framework for the web",
   "scripts": {
     "all": "grunt",
