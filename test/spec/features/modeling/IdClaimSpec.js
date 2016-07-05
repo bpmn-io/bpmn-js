@@ -10,7 +10,7 @@ describe('features/modeling - id claim management', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
-  var processDiagramXML = require('./IdClaimSpec.bpmn');
+  var processDiagramXML = require('./IdClaim.bpmn');
 
   beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
