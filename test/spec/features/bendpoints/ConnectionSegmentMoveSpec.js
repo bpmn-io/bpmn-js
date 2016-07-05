@@ -652,4 +652,326 @@ describe('features/bendpoints - segment move', function() {
 
   });
 
+  describe('width docking (skewed segments, no filteredWaypoints)', function() {
+
+    beforeEach(bootstrapDiagram({
+      modules: [
+        bendpointsModule,
+        modelingModule,
+        selectModule,
+        layoutModule
+      ]
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+    var sourceShape, targetShape, createConnection;
+
+    beforeEach(inject(function(elementFactory, canvas) {
+      sourceShape = elementFactory.createShape({
+        id: 'sourceShape', type: 'A',
+        x: 100, y: 100,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(sourceShape);
+
+      targetShape = elementFactory.createShape({
+        id: 'targetShape', type: 'A',
+        x: 600, y: 100,
+        width: 100, height: 100
+      });
+
+      canvas.addShape(targetShape);
+
+      createConnection = function(waypoints) {
+        return elementFactory.createConnection({
+          id: 'connection',
+          waypoints: waypoints,
+          source: sourceShape,
+          target: targetShape
+        });
+      };
+
+    }));
+
+
+    it('two skewed side segments', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 150 },
+        { x:  50, y: 400 },
+        { x: 750, y: 400 },
+        { x: 650, y: 150 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 0, y: -250 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 200, y: 150 },
+        { x: 600, y: 150 }
+      ]);
+    }));
+
+
+    it('4 manhatten waypoints in the middle', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  300, y: 400 },
+        { x:  300, y: 450 },
+        { x:  500, y: 450 },
+        { x:  500, y: 400 },
+
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 4);
+      dragging.move(canvasEvent({ x: 0, y: -50 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+
+    }));
+
+
+    it('4 waypoints in the middle, 2 skewed side-segments', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  300, y: 400 },
+        { x:  350, y: 450 },
+        { x:  450, y: 450 },
+        { x:  500, y: 400 },
+
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 4);
+      dragging.move(canvasEvent({ x: 0, y: -50 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('2 waypoints in the middle with skewed segments', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  300, y: 300 },
+        { x:  500, y: 300 },
+
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 3);
+      dragging.move(canvasEvent({ x: 0, y: 100 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('two horizontal segment in the middle, in front of last segment', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  500, y: 400 },
+        { x:  500, y: 450 },
+
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 0, y: 50 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 450 },
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('one skewed segment in the middle, in front of last segment', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  500, y: 400 },
+
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 0, y: 50 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 450 },
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('one skewed and one horizontal segment in the middle, in front of last segment', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+
+        { x:  500, y: 400 },
+        { x:  550, y: 450 },
+
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 0, y: 50 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 450 },
+        { x: 650, y: 450 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('skewed segment on start', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 50, y: 300 },
+
+        { x:  50, y: 400 },
+
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+      dragging.move(canvasEvent({ x: 100, y: 0 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+    it('skewed segment on end', inject(function(canvas, connectionSegmentMove, dragging) {
+
+      // given
+      var connection = createConnection([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 750, y: 400 },
+
+        { x: 750, y: 250 },
+        { x: 650, y: 200 }
+      ]);
+
+      canvas.addConnection(connection);
+
+      // when
+      connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 3);
+      dragging.move(canvasEvent({ x: -100, y: 0 }));
+      dragging.end();
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: 150, y: 200 },
+        { x: 150, y: 400 },
+        { x: 650, y: 400 },
+        { x: 650, y: 200 }
+      ]);
+    }));
+
+
+  });
+
 });
