@@ -650,8 +650,6 @@ describe('features/bendpoints - segment move', function() {
       })
     );
 
-
-
   });
 
 });
