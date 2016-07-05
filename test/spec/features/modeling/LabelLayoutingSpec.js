@@ -73,6 +73,27 @@ describe('modeling - label layouting', function() {
 
     describe('on segment move', function() {
 
+      it('label name not set -> move label to waypoints mid', inject(function(modeling, elementRegistry, connectionSegmentMove, dragging) {
+
+        // given
+        var connection = elementRegistry.get('SequenceFlow_C'),
+            labelPosition = getLabelPosition(connection);
+
+        connection.label.businessObject.name = false;
+        connection.label.hidden = true;
+
+        // when
+        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+
+        dragging.move(canvasEvent({ x: 0, y: 50 }));
+
+        dragging.end();
+
+        // then
+        expectLabelMoved(connection, labelPosition, { x: -82, y: 18 }); // waypoints mid
+
+      }));
+
       it('left - no relayout', inject(function(elementRegistry, connectionSegmentMove, dragging) {
 
         // given
@@ -181,6 +202,7 @@ describe('modeling - label layouting', function() {
         expectLabelMoved(connection, labelPosition, { x: -39, y: -85 });
 
       }));
+      
 
       // TODO(@janstuemmel): solve by connectionSegmentMove refactoring
       it.skip('up - remove two bendpoints - redundant waypoints', inject(function(elementRegistry, connectionSegmentMove, dragging, bendpointMove) {

@@ -138,79 +138,137 @@ describe('behavior - LabelBehavior', function() {
       expect(startEvent.di.label).to.have.position({ x: 156, y: 128 });
     }));
 
-    it('should move connection label on waypoints update if still hidden', inject(function(elementRegistry, modeling) {
 
-      // given
-      var startEventShape = elementRegistry.get('StartEvent_1'),
-          taskShape = elementRegistry.get('Task_1');
+    describe('connection labels', function() {
 
-      var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
-        type: 'bpmn:SequenceFlow'
-      }, startEventShape.parent);
+      it('should center position hidden on waypoint change', inject(function(elementRegistry, modeling) {
 
-      // when
-      modeling.updateWaypoints(sequenceFlowConnection, [
-        sequenceFlowConnection.waypoints[0],
-        {
-          x: sequenceFlowConnection.waypoints[0].x,
-          y: 200
-        },
-        {
-          x: sequenceFlowConnection.waypoints[1].x,
-          y: 200
-        },
-        sequenceFlowConnection.waypoints[1]
-      ]);
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskShape = elementRegistry.get('Task_1');
 
-      // then
-      var expected = {
-        x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
-        y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
-      };
+        var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+          type: 'bpmn:SequenceFlow'
+        }, startEventShape.parent);
 
-      expect({
-        x: sequenceFlowConnection.label.x,
-        y: sequenceFlowConnection.label.y
-      }).to.eql(expected);
-    }));
+        // when
+        modeling.updateWaypoints(sequenceFlowConnection, [
+          sequenceFlowConnection.waypoints[0],
+          {
+            x: sequenceFlowConnection.waypoints[0].x,
+            y: 200
+          },
+          {
+            x: sequenceFlowConnection.waypoints[1].x,
+            y: 200
+          },
+          sequenceFlowConnection.waypoints[1]
+        ]);
 
-    it('should not move connection label on waypoints change if not hidden', inject(function(elementRegistry, modeling) {
+        // then
+        var expected = {
+          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+        };
 
-      // given
-      var startEventShape = elementRegistry.get('StartEvent_1'),
-          taskShape = elementRegistry.get('Task_1');
+        expect({
+          x: sequenceFlowConnection.label.x,
+          y: sequenceFlowConnection.label.y
+        }).to.eql(expected);
+      }));
 
-      var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
-        type: 'bpmn:SequenceFlow'
-      }, startEventShape.parent);
 
-      var labelPosition = {
-        x: sequenceFlowConnection.label.x,
-        y: sequenceFlowConnection.label.y
-      };
+      it('should center position hidden on source move', inject(function(elementRegistry, modeling) {
 
-      // when
-      sequenceFlowConnection.label.hidden = false;
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskShape = elementRegistry.get('Task_1');
 
-      modeling.updateWaypoints(sequenceFlowConnection, [
-        sequenceFlowConnection.waypoints[0],
-        {
-          x: sequenceFlowConnection.waypoints[0].x,
-          y: 200
-        },
-        {
-          x: sequenceFlowConnection.waypoints[1].x,
-          y: 200
-        },
-        sequenceFlowConnection.waypoints[1]
-      ]);
+        var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+          type: 'bpmn:SequenceFlow'
+        }, startEventShape.parent);
 
-      // then
-      expect({
-        x: sequenceFlowConnection.label.x,
-        y: sequenceFlowConnection.label.y
-      }).to.eql(labelPosition);
-    }));
+        // when
+        modeling.moveElements([ startEventShape ], { x: 50, y: 0 });
+
+        // then
+        var expected = {
+          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+        };
+
+        expect({
+          x: sequenceFlowConnection.label.x,
+          y: sequenceFlowConnection.label.y
+        }).to.eql(expected);
+      }));
+
+
+      it('should center position hidden on target move', inject(function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskShape = elementRegistry.get('Task_1');
+
+        var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+          type: 'bpmn:SequenceFlow'
+        }, startEventShape.parent);
+
+        // when
+        modeling.moveElements([ taskShape ], { x: 50, y: 0 });
+
+        // then
+        var expected = {
+          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+        };
+
+        expect({
+          x: sequenceFlowConnection.label.x,
+          y: sequenceFlowConnection.label.y
+        }).to.eql(expected);
+      }));
+
+
+      it('should NOT center position visible', inject(function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskShape = elementRegistry.get('Task_1');
+
+        var sequenceFlowConnection = modeling.createConnection(startEventShape, taskShape, {
+          type: 'bpmn:SequenceFlow'
+        }, startEventShape.parent);
+
+        var oldLabelPosition = {
+          x: sequenceFlowConnection.label.x,
+          y: sequenceFlowConnection.label.y
+        };
+
+        // when
+        sequenceFlowConnection.label.hidden = false;
+
+        modeling.updateWaypoints(sequenceFlowConnection, [
+          sequenceFlowConnection.waypoints[0],
+          {
+            x: sequenceFlowConnection.waypoints[0].x,
+            y: 200
+          },
+          {
+            x: sequenceFlowConnection.waypoints[1].x,
+            y: 200
+          },
+          sequenceFlowConnection.waypoints[1]
+        ]);
+
+        // then
+        expect({
+          x: sequenceFlowConnection.label.x,
+          y: sequenceFlowConnection.label.y
+        }).to.eql(oldLabelPosition);
+      }));
+
+    });
 
   });
 
