@@ -8,7 +8,8 @@ require('../../../TestHelper');
 var coreModule = require('lib/core'),
     bendpointsModule = require('diagram-js/lib/features/bendpoints'),
     modelingModule = require('lib/features/modeling'),
-    labelEditingModule = require('lib/features/label-editing');
+    labelEditingModule = require('lib/features/label-editing'),
+    spaceTool = require('diagram-js/lib/features/space-tool');
 
 var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
@@ -16,7 +17,8 @@ var testModules = [
   coreModule,
   modelingModule,
   labelEditingModule,
-  bendpointsModule
+  bendpointsModule,
+  spaceTool
 ];
 
 
@@ -202,10 +204,10 @@ describe('modeling - label layouting', function() {
         expectLabelMoved(connection, labelPosition, { x: -39, y: -85 });
 
       }));
-      
+
 
       // TODO(@janstuemmel): solve by connectionSegmentMove refactoring
-      it.skip('up - remove two bendpoints - redundant waypoints', inject(function(elementRegistry, connectionSegmentMove, dragging, bendpointMove) {
+      it('up - remove two bendpoints - redundant waypoints', inject(function(elementRegistry, connectionSegmentMove, dragging, bendpointMove) {
 
         // given
         var connection = elementRegistry.get('SequenceFlow_C');
@@ -231,6 +233,7 @@ describe('modeling - label layouting', function() {
       }));
 
     });
+
 
     describe('on reconnect', function() {
 
@@ -267,6 +270,7 @@ describe('modeling - label layouting', function() {
 
     });
 
+
     describe('on shape move', function() {
 
       it('down', inject(function(elementRegistry, modeling) {
@@ -285,6 +289,7 @@ describe('modeling - label layouting', function() {
       }));
 
     });
+
 
     describe('on bendpoint add/delete/moving', function() {
 
@@ -448,6 +453,7 @@ describe('modeling - label layouting', function() {
 
     });
 
+
     describe('special cases', function() {
 
       it('should behave properly, right after importing', inject(function(elementRegistry, connectionSegmentMove, dragging, modeling) {
@@ -501,7 +507,6 @@ describe('modeling - label layouting', function() {
 
       describe.skip('label out of bounds', function() {
 
-
         it('should not move label that is out of bounds', inject(function(elementRegistry, connectionSegmentMove, dragging, modeling) {
 
           // given
@@ -546,6 +551,42 @@ describe('modeling - label layouting', function() {
         }));
 
       });
+
+    });
+
+  });
+
+
+  describe('integration', function() {
+
+    describe('space tool', function() {
+
+      var diagramXML = require('./LabelLayouting.special.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+      beforeEach(inject(function(dragging) {
+        dragging.setOptions({ manual: true });
+      }));
+
+
+      it('should move with a skewed line', inject(function(elementRegistry, spaceTool, dragging) {
+
+        // given
+        var connection = elementRegistry.get('SequenceFlow_1'),
+            labelPosition = getLabelPosition(connection);
+
+        // when
+        spaceTool.activateMakeSpace(canvasEvent({ x: 500, y: 225 }));
+
+        dragging.move(canvasEvent({ x: 550, y: 225 }));
+        dragging.end();
+
+        // then
+        expectLabelMoved(connection, labelPosition, { x: 25, y: 0 });
+      }));
 
     });
 

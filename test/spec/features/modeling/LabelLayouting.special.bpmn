@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:signavio="http://www.signavio.com" id="sid-d5a68e61-ca67-438f-971d-6843c39b383e" targetNamespace="http://www.signavio.com/bpmn20" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="6.2.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <dataStore id="sid-1f3b3b35-28a1-4fff-8835-ae271ef486d5" name="HR-Tool" capacity="0" isUnlimited="false" />
+  <collaboration id="sid-3524ea26-a8cb-4d8f-b997-347710bca219">
+    <extensionElements />
+    <participant id="sid-7BD88080-E847-40D9-9714-C838543CEC18" name="X" processRef="sid-35DD95AD-CA27-4826-8E4F-351207D0FA1A" />
+  </collaboration>
+  <process id="sid-35DD95AD-CA27-4826-8E4F-351207D0FA1A" name="Management Bewerbungsgespräche -&#10; Sachbearbeiter Personal" processType="None" isClosed="false" isExecutable="false">
+    <extensionElements />
+    <laneSet id="sid-8f563437-4bff-4b07-8408-606ed1134465">
+      <lane id="Pool_1">
+        <flowNodeRef>SubProcess_1</flowNodeRef>
+      </lane>
+    </laneSet>
+    <subProcess id="SubProcess_1">
+      <outgoing>SequenceFlow_1</outgoing>
+      <multiInstanceLoopCharacteristics id="sid-1c732dda-dc13-4c0a-816f-41b2616140c7" />
+      <exclusiveGateway id="GW2" name="GW2" gatewayDirection="Converging">
+        <incoming>SequenceFlow_1</incoming>
+      </exclusiveGateway>
+      <exclusiveGateway id="GW1" name="GW1" gatewayDirection="Diverging">
+        <incoming>SequenceFlow_2</incoming>
+        <outgoing>SequenceFlow_1</outgoing>
+      </exclusiveGateway>
+      <task id="sid-5695269D-E801-4953-B48D-EB281E7316F7" name="Task 1">
+        <outgoing>SequenceFlow_2</outgoing>
+      </task>
+      <sequenceFlow id="SequenceFlow_2" sourceRef="sid-5695269D-E801-4953-B48D-EB281E7316F7" targetRef="GW1" />
+      <sequenceFlow id="SequenceFlow_1" name="ja" sourceRef="GW1" targetRef="GW2" />
+    </subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-780f0a66-41b5-4f10-a81d-35e00c8c284d">
+    <bpmndi:BPMNPlane id="sid-1780a274-6bf1-44a0-9a08-01bd7c9ad080" bpmnElement="sid-3524ea26-a8cb-4d8f-b997-347710bca219">
+      <bpmndi:BPMNShape id="sid-7BD88080-E847-40D9-9714-C838543CEC18_gui" bpmnElement="sid-7BD88080-E847-40D9-9714-C838543CEC18" isHorizontal="true">
+        <omgdc:Bounds x="146" y="69" width="502" height="278" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-4A0FB2B3-2D67-46F7-ACB3-260FC62E3B5A_gui" bpmnElement="Pool_1" isHorizontal="true">
+        <omgdc:Bounds x="176" y="69" width="472" height="278" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-B1C30549-F180-4515-9926-F2036892B4C1_gui" bpmnElement="SubProcess_1" isExpanded="true">
+        <omgdc:Bounds x="196" y="97" width="410" height="211" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-544B758B-A75C-410C-98CA-C84E19CBC367_gui" bpmnElement="GW2" isMarkerVisible="true">
+        <omgdc:Bounds x="216" y="248" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="191" y="288" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-3D74C40A-91BA-4671-BB9F-8D03623CAF68_gui" bpmnElement="GW1" isMarkerVisible="true">
+        <omgdc:Bounds x="546" y="157" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="521" y="194" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sid-5695269D-E801-4953-B48D-EB281E7316F7_gui" bpmnElement="sid-5695269D-E801-4953-B48D-EB281E7316F7">
+        <omgdc:Bounds x="402" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="sid-4FA0508C-2BC1-4ABB-8F75-ED27215EE73D_gui" bpmnElement="SequenceFlow_2">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="501" y="176" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="546" y="177" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="479" y="167" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sid-373FAB4D-A45B-45EC-9F85-B1076ABBFBA6_gui" bpmnElement="SequenceFlow_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="566" y="156" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="566.6503114390325" y="112" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="236.81160975928947" y="112" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="236" y="247" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="357" y="102" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
