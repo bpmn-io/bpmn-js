@@ -12,7 +12,8 @@ var coreModule = require('../../../../lib/core'),
     createModule = require('diagram-js/lib/features/create'),
     resizeModule = require('diagram-js/lib/features/resize'),
     moveModule = require('diagram-js/lib/features/move'),
-    rulesModule = require('../../../../lib/features/rules');
+    rulesModule = require('../../../../lib/features/rules'),
+    connectModule = require('diagram-js/lib/features/connect');
 
 
 describe('features/snapping - BpmnSnapping', function() {
@@ -23,7 +24,8 @@ describe('features/snapping - BpmnSnapping', function() {
     modelingModule,
     createModule,
     rulesModule,
-    moveModule
+    moveModule,
+    connectModule
   ];
 
   describe('on Boundary Events', function() {
@@ -536,6 +538,216 @@ describe('features/snapping - BpmnSnapping', function() {
       dragging.end();
 
       expect(label.x).to.equal(161);
+
+    }));
+
+  });
+
+
+  describe('on connect', function() {
+
+    var diagramXML = require('./BpmnSnapping.connect.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should snap sequence flow on global connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1'),
+          task = elementRegistry.get('Task_1');
+
+      var mid = {
+        x: startEvent.x + startEvent.width / 2,
+        y: startEvent.y + startEvent.height / 2
+      };
+
+      // when
+      connect.start(canvasEvent({ x: mid.x + 10, y: mid.y + 10 }), startEvent);
+
+      dragging.hover({
+        element: task,
+        gfx: elementRegistry.getGraphics(task)
+      });
+
+      dragging.move(canvasEvent({
+        x: task.x + task.width / 2,
+        y: task.y + task.height / 2
+      }));
+
+      dragging.end();
+
+      // then
+      var expected = [
+        {
+          original:
+          {
+            x: startEvent.x + startEvent.width / 2,
+            y: startEvent.y + startEvent.height / 2
+          },
+          x: startEvent.x + startEvent.width,
+          y: startEvent.y + startEvent.height / 2
+        },
+        {
+          original:
+          {
+            x: task.x + task.width / 2,
+            y: task.y + task.height / 2
+          },
+          x: task.x,
+          y: task.y + task.height / 2
+        }
+      ];
+
+      expect(startEvent.outgoing[0].waypoints).to.eql(expected);
+
+    }));
+
+
+    it('should snap sequence flow on connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1'),
+          task = elementRegistry.get('Task_1');
+
+      var mid = { x: task.x + task.width / 2, y: task.y + task.height / 2 };
+
+      // when
+      connect.start(canvasEvent({ x: 0, y: 0 }), startEvent);
+
+      dragging.hover({
+        element: task,
+        gfx: elementRegistry.getGraphics(task)
+      });
+
+      dragging.move(canvasEvent({ x: mid.x + 10, y: mid.y + 10 }));
+
+      dragging.end();
+
+      // then
+      var expected = [
+        {
+          original:
+          {
+            x: startEvent.x + startEvent.width / 2,
+            y: startEvent.y + startEvent.height / 2
+          },
+          x: startEvent.x + startEvent.width,
+          y: startEvent.y + startEvent.height / 2
+        },
+        {
+          original:
+          {
+            x: task.x + task.width / 2,
+            y: task.y + task.height / 2
+          },
+          x: task.x,
+          y: task.y + task.height / 2
+        }
+      ];
+
+      expect(startEvent.outgoing[0].waypoints).to.eql(expected);
+
+    }));
+
+
+    it('should NOT snap message flow on global connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var task1 = elementRegistry.get('Task_1'),
+          task2 = elementRegistry.get('Task_2');
+
+      var task1Mid = { x: task1.x + task1.width / 2, y: task1.y + task1.height / 2 },
+          task2Mid = { x: task2.x + task2.width / 2, y: task2.y + task2.height / 2 };
+
+      // when
+      connect.start(null, task1, { x: 320, y: task1Mid.y + 20 });
+
+      dragging.hover({
+        element: task2,
+        gfx: elementRegistry.getGraphics(task2)
+      });
+
+      dragging.move(canvasEvent({
+        x: 320,
+        y: task2Mid.y - 20
+      }));
+
+      dragging.end();
+
+      // then
+      var expected = [
+        {
+          original:
+          {
+            x: 320,
+            y: task1Mid.y + 20
+          },
+          x: 320,
+          y: task1.y + task1.height
+        },
+        {
+          original:
+          {
+            x: 320,
+            y: task2Mid.y - 20
+          },
+          x: 320,
+          y: task2.y
+        }
+      ];
+
+      expect(task1.outgoing[0].waypoints).to.eql(expected);
+
+    }));
+
+
+    it('should NOT snap message flow on connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var task1 = elementRegistry.get('Task_1'),
+          task2 = elementRegistry.get('Task_2');
+
+      var task1Mid = { x: task1.x + task1.width / 2, y: task1.y + task1.height / 2 },
+          task2Mid = { x: task2.x + task2.width / 2, y: task2.y + task2.height / 2 };
+
+      // when
+      connect.start(canvasEvent({ x: 0, y: 0 }), task1);
+
+      dragging.hover({
+        element: task2,
+        gfx: elementRegistry.getGraphics(task2)
+      });
+
+      dragging.move(canvasEvent({
+        x: task2Mid.x + 20,
+        y: task2Mid.y - 20
+      }));
+
+      dragging.end();
+
+      // then
+      expect(task1.outgoing[0].waypoints.length).to.equal(4);
+
+      expect(task1.outgoing[0].waypoints[0]).to.eql({
+        original:
+        {
+          x: task1Mid.x,
+          y: task1Mid.y
+        },
+        x: task1Mid.x,
+        y: task1.y + task1.height
+      });
+
+      expect(task1.outgoing[0].waypoints[3]).to.eql({
+        original:
+        {
+          x: task2Mid.x + 20,
+          y: task2Mid.y - 20
+        },
+        x: task2Mid.x + 20,
+        y: task2.y
+      });
 
     }));
 
