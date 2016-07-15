@@ -763,7 +763,28 @@ describe('features/popup', function() {
         height: menu.scrollHeight
       };
 
+      // then
       expect(menu.offsetTop).to.equal(500 - menuDimensions.height);
+    }));
+
+
+    it('should open within bounds above (limited client rect height)', inject(function(popupMenu, canvas) {
+
+      // given
+      // limited client rect height
+      canvas._container.parentElement.style.height = '200px';
+
+      var clientRect = canvas._container.getBoundingClientRect();
+
+      var cursorPosition = { x: clientRect.left + 10, y: clientRect.top + 150 };
+
+      // when
+      popupMenu.open({ x: 100, y: 150, cursor: cursorPosition });
+
+      var menu = popupMenu._current.container;
+
+      // then
+      expect(menu.offsetTop).to.equal(10);
     }));
 
 
