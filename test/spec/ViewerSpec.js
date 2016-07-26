@@ -230,6 +230,25 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should handle duplicate ids', function(done) {
+
+      var xml = require('../fixtures/bpmn/error/duplicate-ids.bpmn');
+
+      // when
+      createViewer(xml, function(err, warnings) {
+
+        // then
+        expect(err).not.to.exist;
+
+        expectWarnings(warnings, [
+          /duplicate ID <test>/
+        ]);
+
+        done();
+      });
+    });
+
   });
 
 
