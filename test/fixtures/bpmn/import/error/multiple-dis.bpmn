@@ -16,7 +16,7 @@
         <dc:Bounds height="50.0" width="50.0" x="114.0" y="99.0"/>
       </bpmndi:BPMNShape>
       <!-- second DI element for InclusiveGateway_1 -->
-      <bpmndi:BPMNShape id="_BPMNShape_InclusiveGateway_2" bpmnElement="InclusiveGateway_1">
+      <bpmndi:BPMNShape id="_BPMNShape_InclusiveGateway_3" bpmnElement="InclusiveGateway_1">
         <dc:Bounds height="50.0" width="50.0" x="114.0" y="129.0"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
