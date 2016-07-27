@@ -137,6 +137,64 @@ describe('features - keyboard', function() {
       expect(searchPad.toggle).calledOnce;
     }));
 
+
+    describe('readOnly.changed - while read-only', function () {
+
+      beforeEach(inject(function (eventBus) {
+        eventBus.fire('readOnly.changed', { readOnly: true });
+      }));
+
+
+      it('should NOT trigger globalConnect tool', inject(function(keyboard, globalConnect) {
+
+        sinon.spy(globalConnect, 'toggle');
+
+        // given
+        var e = createKeyEvent(container, 67, false);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(globalConnect.toggle).to.not.have.been.called;
+      }));
+
+
+      it('should NOT trigger space tool', inject(function(keyboard, spaceTool) {
+
+        sinon.spy(spaceTool, 'toggle');
+
+        // given
+        var e = createKeyEvent(container, 83, false);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(spaceTool.toggle).to.not.have.been.called;
+      }));
+
+
+      it('should NOT trigger direct editing tool', inject(function(keyboard, selection, elementRegistry, directEditing) {
+
+        sinon.spy(directEditing, 'activate');
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        selection.select(task);
+
+        var e = createKeyEvent(container, 69, false);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(directEditing.activate).to.not.have.been.called;
+      }));
+
+    });
+
   });
 
 });
