@@ -118,6 +118,45 @@ describe('features - label-editing', function() {
       expect(task.name).to.equal(newName);
     }));
 
+
+    it('should NOT register on dblclick while read-only', inject(function(elementRegistry, directEditing, eventBus) {
+
+      // given
+      var shape = elementRegistry.get('task-nested-embedded');
+      eventBus.fire('readOnly.changed', { readOnly: true });
+
+      // when
+      eventBus.fire('element.dblclick', { element: shape });
+
+      // then
+      expect(directEditing.isActive()).to.be.false;
+    }));
+
+
+    it('should cancel on readOnly.changed', inject(function(elementRegistry, directEditing, eventBus) {
+
+      // given
+      var shape = elementRegistry.get('task-nested-embedded'),
+          task = shape.businessObject;
+
+      var oldName = task.name;
+
+      // activate
+      eventBus.fire('element.dblclick', { element: shape });
+
+      // a <textarea /> element
+      var textarea = directEditing._textbox.textarea;
+
+      // when
+      // change + readOnly.Changed
+      textarea.value = 'new value';
+      eventBus.fire('readOnly.changed', { readOnly: true });
+
+      // then
+      expect(directEditing.isActive()).to.be.false;
+      expect(task.name).to.equal(oldName);
+    }));
+
   });
 
 
