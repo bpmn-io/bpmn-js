@@ -10,7 +10,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules');
 
 
-describe('features/move - MoveVisuals', function() {
+describe('features/move - MovePreview', function() {
 
   beforeEach(bootstrapDiagram({ modules: [ moveModule, attachSupportModule, rulesModule, modelingModule ] }));
 
@@ -248,21 +248,6 @@ describe('features/move - MoveVisuals', function() {
         expect(childGfx.hasClass('drop-not-ok')).to.equal(true);
       })
     );
-
-  });
-
-
-  describe('addDragger', function() {
-
-    it('should be exposed and return the added dragger', inject(function(moveVisuals) {
-
-      // when
-      var dragger = moveVisuals.addDragger({}, childShape);
-
-      // then
-      expect(dragger).to.exist;
-      expect(dragger.node).to.exist;
-    }));
 
   });
 
