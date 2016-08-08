@@ -200,6 +200,25 @@ describe('features/auto-resize', function() {
   });
 
 
+  describe('hints', function() {
+
+    it('should not resize on autoResize=false hint', inject(function(modeling) {
+
+      // when
+      modeling.moveElements(
+        [ childShape ],
+        { x: -20, y: 0 },
+        parentShape,
+        { autoResize: false });
+
+      // then
+      // parent has original bounds
+      expect(parentShape).to.have.bounds({ x: 100, y: 100, width: 300, height: 300 });
+    }));
+
+  });
+
+
   it('should provide extension points', inject(function(autoResize, modeling) {
 
     // given

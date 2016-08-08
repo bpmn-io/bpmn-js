@@ -6,6 +6,7 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var spaceTool = require('../../../../lib/features/space-tool'),
     modelingModule = require('../../../../lib/features/modeling'),
+    autoResizeModule = require('../../../../lib/features/auto-resize'),
     isMac = require('../../../../lib/util/Mouse').isMac,
     rulesModule = require('./rules');
 
@@ -14,12 +15,11 @@ var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
 describe('features/space-tool', function() {
 
-  beforeEach(bootstrapDiagram({
-    modules: [ spaceTool, modelingModule, rulesModule ]
-  }));
-
-
   describe('create/remove space', function() {
+
+    beforeEach(bootstrapDiagram({
+      modules: [ spaceTool, modelingModule, rulesModule ]
+    }));
 
     var childShape, childShape2, connection;
 
@@ -361,6 +361,10 @@ describe('features/space-tool', function() {
 
   describe('resize containers', function() {
 
+    beforeEach(bootstrapDiagram({
+      modules: [ spaceTool, modelingModule, rulesModule ]
+    }));
+
     beforeEach(inject(function(dragging) {
       dragging.setOptions({ manual: true });
     }));
@@ -610,6 +614,10 @@ describe('features/space-tool', function() {
 
   describe('redo / undo integration', function() {
 
+    beforeEach(bootstrapDiagram({
+      modules: [ spaceTool, modelingModule, rulesModule ]
+    }));
+
     beforeEach(inject(function(dragging) {
       dragging.setOptions({ manual: true });
     }));
@@ -680,5 +688,51 @@ describe('features/space-tool', function() {
 
   });
 
+
+  describe('integration', function() {
+
+    beforeEach(bootstrapDiagram({
+      modules: [
+        spaceTool,
+        modelingModule,
+        autoResizeModule,
+        require('./auto-resize')
+      ]
+    }));
+
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should not auto-resize', inject(function(elementFactory, canvas, spaceTool) {
+
+      // given
+      var parent = canvas.addShape(elementFactory.createShape({
+        id: 'parent',
+        x: 100, y: 50,
+        width: 200, height: 200
+      }));
+
+      var outsideChild = canvas.addShape(elementFactory.createShape({
+        id: 'child',
+        x: 50, y: 50,
+        width: 50, height: 50
+      }), parent);
+
+
+      // when
+      spaceTool.makeSpace([ outsideChild ], [ ], { x: 20, y: 0 }, 'e');
+
+      // then
+      // expect parent with original bounds
+      expect(parent).to.have.bounds({
+        x: 100, y: 50,
+        width: 200, height: 200
+      });
+    }));
+
+  });
 
 });
