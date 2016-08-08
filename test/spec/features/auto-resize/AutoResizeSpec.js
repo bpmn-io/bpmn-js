@@ -567,4 +567,41 @@ describe('features/auto-resize', function() {
 
   });
 
+  describe('space-tool', function() {
+
+    var diagramXML = require('./AutoResize.space-tool.bpmn');
+
+    var taskShape,
+        participantShape,
+        originalBounds;
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    beforeEach(inject(function(elementRegistry) {
+
+      taskShape = elementRegistry.get('Task_1');
+      participantShape = elementRegistry.get('Participant_1');
+
+      originalBounds = getBounds(participantShape);
+
+    }));
+
+
+    it('should not expand after space-tool', inject(function(modeling) {
+
+      // given
+      var delta = { x: 50, y: 0 },
+          direction = 'e';
+
+      // when
+      modeling.createSpace([ taskShape ], [], delta, direction);
+
+      // then
+      var newBounds = getBounds(participantShape);
+
+      expect(originalBounds).to.eql(newBounds);
+    }));
+
+  });
+
 });
