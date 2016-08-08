@@ -761,7 +761,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // then
           expect(queryEntry(popupMenu, 'replace-with-none-end')).to.be.null;
 
-          expect(getEntries(popupMenu)).to.have.length(9);
+          expect(getEntries(popupMenu)).to.have.length(8);
         })
       );
 
@@ -799,7 +799,7 @@ describe('features/popup-menu - replace menu provider', function() {
           openPopup(endEvent);
 
           // then
-          expect(getEntries(popupMenu)).to.have.length(9);
+          expect(getEntries(popupMenu)).to.have.length(8);
         })
       );
 
