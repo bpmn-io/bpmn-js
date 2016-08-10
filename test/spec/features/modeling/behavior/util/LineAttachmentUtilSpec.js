@@ -2,6 +2,7 @@
 
 var getAttachment = require('lib/features/modeling/behavior/util/LineAttachmentUtil').getAttachment;
 
+var EPSILON = 0.1;
 
 describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function() {
 
@@ -182,6 +183,62 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
         bendpointIndex: 0,
         segmentIndex: 0
       });
+    });
+
+  });
+
+
+  describe('should handle float values', function() {
+
+    // test line
+    //
+    // *--*
+    //    |
+    //    *
+    //     \
+    //      *
+    //
+    var otherLine = [
+      { x: 10.141592, y: 10.653589 },
+      // -
+      { x: 30.793238, y: 10.462643 },
+      // |
+      { x: 30.383279, y: 30.502884 },
+      // \
+      { x: 130.197169, y: 130.399375 }
+    ];
+
+
+    it('float value segment', function() {
+
+      // when
+      var attachment = getAttachment({ x: 20.197169, y: 5.399375 }, otherLine);
+
+      // then
+      expect(attachment.type).to.equal('segment');
+      expect(attachment.segmentIndex).to.equal(0);
+
+      // expect values to be roughly equal
+      expect(attachment.relativeLocation).to.be.within(0.5 - EPSILON, 0.5 + EPSILON);
+      expect(attachment.position.x).to.be.within(20.25 - EPSILON, 20.25 + EPSILON);
+      expect(attachment.position.y).to.be.within(10.5 - EPSILON, 10.5 + EPSILON);
+    });
+
+
+    it('float value bendboint', function() {
+
+      // when
+      var attachment = getAttachment({ x: 35.197169, y: 5.399375 }, otherLine);
+
+      // then
+      // expext values to be rounded to 3 decimal places
+      expect(attachment).to.eql({
+        type: 'bendpoint',
+        position: { x: 30.793, y: 10.463 },
+        bendpointIndex: 1,
+        segmentIndex: 0
+      });
+
     });
 
   });
