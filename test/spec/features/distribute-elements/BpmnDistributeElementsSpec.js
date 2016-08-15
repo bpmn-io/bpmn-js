@@ -16,12 +16,13 @@ function last(arr) {
 describe('features/distribute-elements', function() {
 
   var testModules = [ bpmnDistributeElements, modelingModule, coreModule ];
-  var basicXML = require('../../../fixtures/bpmn/distribute-elements.bpmn');
-
-  beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
   describe('basics', function() {
+
+    var basicXML = require('../../../fixtures/bpmn/distribute-elements.bpmn');
+
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
     var elements;
 
@@ -33,6 +34,7 @@ describe('features/distribute-elements', function() {
 
 
     it('should align horizontally', inject(function(distributeElements) {
+
       // when
       var rangeGroups = distributeElements.trigger(elements, 'horizontal'),
           margin = rangeGroups[1].range.min - rangeGroups[0].range.max;
@@ -49,10 +51,12 @@ describe('features/distribute-elements', function() {
       expect(last(rangeGroups).range).to.eql({
         min: 1195, max: 1221
       });
+
     }));
 
 
     it('should align vertically', inject(function(distributeElements) {
+
       // when
       var rangeGroups = distributeElements.trigger(elements, 'vertical'),
           margin = rangeGroups[1].range.min - rangeGroups[0].range.max;
@@ -69,6 +73,39 @@ describe('features/distribute-elements', function() {
       expect(last(rangeGroups).range).to.eql({
         min: 373, max: 413
       });
+
+    }));
+
+  });
+
+  describe('filtering elements', function() {
+
+    var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.bpmn');
+
+    beforeEach(bootstrapModeler(xml, { modules: testModules }));
+
+    var elements;
+
+    beforeEach(inject(function(elementRegistry, canvas) {
+      elements = elementRegistry.filter(function(element) {
+        return element.parent;
+      });
+    }));
+
+
+    it('should not distribute boundary events', inject(function(distributeElements, elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+      // when
+      var rangeGroups = distributeElements.trigger(elements, 'horizontal');
+
+      // then
+      expect(rangeGroups).to.have.length(3);
+
+      expect(rangeGroups[1].elements).to.not.include(boundaryEvent);
+
     }));
 
   });
