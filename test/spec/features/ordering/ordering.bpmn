@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_Sp0bEEZWEeW8AbPIK3dKxg" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="0.7.0-dev" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_Sp0bEEZWEeW8AbPIK3dKxg" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.2" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:collaboration id="Collaboration">
     <bpmn2:participant id="Participant" name="Participant" processRef="Process_Tasks" />
     <bpmn2:participant id="Participant_StartEvent" name="Participant_StartEvent" processRef="Process_StartEvent" />
     <bpmn2:messageFlow id="MessageFlow" name="" sourceRef="Task_With_Boundary" targetRef="Participant_StartEvent" />
   </bpmn2:collaboration>
   <bpmn2:process id="Process_Tasks" isExecutable="false">
-    <bpmn2:sequenceFlow id="SequenceFlow" name="" sourceRef="BoundaryEvent" targetRef="Task" />
+    <bpmn2:sequenceFlow id="SequenceFlow" name="SequenceFlow" sourceRef="BoundaryEvent" targetRef="Task" />
     <bpmn2:boundaryEvent id="BoundaryEvent" name="" attachedToRef="Task_With_Boundary">
       <bpmn2:outgoing>SequenceFlow</bpmn2:outgoing>
     </bpmn2:boundaryEvent>

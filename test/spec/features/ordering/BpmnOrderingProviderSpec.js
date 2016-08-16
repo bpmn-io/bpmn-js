@@ -209,4 +209,23 @@ describe('features/modeling - ordering', function() {
 
   });
 
+
+  describe('labels', function() {
+
+    var diagramXML = require('./ordering.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should always be in front', inject(function() {
+
+      // when
+      move('SequenceFlow_label', { x: 500, y: 0 }, 'Collaboration', false);
+
+      // then
+      expectZOrder('Collaboration', 'Participant', 'SequenceFlow_label');
+    }));
+
+  });
+
 });
