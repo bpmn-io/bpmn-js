@@ -1068,7 +1068,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('should exclude non-activities from options', inject(function(elementRegistry, popupMenu) {
+      it('options should include subProcesses and callActivity', inject(function(elementRegistry, popupMenu) {
 
         // given
         var taskElement = elementRegistry.get('Task_1');
@@ -1080,7 +1080,7 @@ describe('features/popup-menu - replace menu provider', function() {
             subProcessEntry = queryEntry(popupMenu, 'replace-with-collapsed-subprocess');
 
         // then
-        expect(callActivityEntry).to.not.exist;
+        expect(callActivityEntry).to.exist;
         expect(subProcessEntry).to.exist;
       }));
 
