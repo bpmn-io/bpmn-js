@@ -8,6 +8,8 @@ var domQuery = require('min-dom/lib/query');
 
 var is = require('../../../../lib/util/ModelUtil').is;
 
+var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+
 
 /* global bootstrapModeler, inject */
 
@@ -16,6 +18,7 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
     coreModule = require('../../../../lib/core'),
     modelingModule = require('../../../../lib/features/modeling'),
     replaceMenuModule = require('../../../../lib/features/popup-menu'),
+    createModule = require('diagram-js/lib/features/create'),
     customRulesModule = require('../../../util/custom-rules');
 
 
@@ -26,7 +29,8 @@ describe('features - context-pad', function() {
     modelingModule,
     contextPadModule,
     replaceMenuModule,
-    customRulesModule
+    customRulesModule,
+    createModule
   ];
 
 
@@ -332,8 +336,7 @@ describe('features - context-pad', function() {
 
         // then
         expect(padEntry(padNode, 'replace')).not.to.exist;
-      })
-    );
+      }));
 
 
     it('should include control if replacement is allowed',
@@ -354,8 +357,53 @@ describe('features - context-pad', function() {
 
         // then
         expect(padEntry(padNode, 'replace')).to.exist;
-      })
-    );
+      }));
+
+
+    it('should open the replace menu after an element is created',
+      inject(function(create, dragging, canvas, elementFactory) {
+        // given
+        var rootShape = canvas.getRootElement(),
+            startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' }),
+            replaceMenu;
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), startEvent);
+
+        dragging.move(canvasEvent({ x: 50, y: 50 }));
+        dragging.hover({ element: rootShape });
+        dragging.move(canvasEvent({ x: 75, y: 75 }));
+
+        dragging.end();
+
+        replaceMenu = domQuery('.bpmn-replace', container);
+
+        // then
+        expect(replaceMenu).to.exist;
+      }));
+
+
+    it('should not open the replace menu after an element is created when there is none',
+      inject(function(create, dragging, canvas, elementFactory) {
+        // given
+        var rootShape = canvas.getRootElement(),
+            dataObject = elementFactory.createShape({ type: 'bpmn:DataObjectReference' }),
+            replaceMenu;
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), dataObject);
+
+        dragging.move(canvasEvent({ x: 50, y: 50 }));
+        dragging.hover({ element: rootShape });
+        dragging.move(canvasEvent({ x: 75, y: 75 }));
+
+        dragging.end();
+
+        replaceMenu = domQuery('.bpmn-replace', container);
+
+        // then
+        expect(replaceMenu).to.not.exist;
+      }));
 
   });
 
