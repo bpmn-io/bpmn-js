@@ -1,16 +1,19 @@
 'use strict';
 
-require('../../../TestHelper');
+var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
 
+TestHelper.insertCSS('diagram-js-label-editing.css',
+  'div { box-sizing: border-box; }' +
+  'div[contenteditable=true] { line-height: 14px; font-family: Arial; font-size: 12px }'
+);
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
     coreModule = require('../../../../lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging');
 
 var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
-
 
 function triggerKeyEvent(element, event, code) {
   var e = document.createEvent('Events');
@@ -61,13 +64,12 @@ describe('features - label-editing', function() {
       // activate
       eventBus.fire('element.dblclick', { element: shape });
 
-      // a <textarea /> element
-      var textarea = directEditing._textbox.textarea;
+      var textbox = directEditing._textbox.content;
 
       // when
       // change + ESC is pressed
-      textarea.value = 'new value';
-      triggerKeyEvent(textarea, 'keydown', 27);
+      textbox.innerText = 'new value';
+      triggerKeyEvent(textbox, 'keydown', 27);
 
       // then
       expect(directEditing.isActive()).to.be.false;
@@ -83,7 +85,7 @@ describe('features - label-editing', function() {
 
       directEditing.activate(shape);
 
-      directEditing._textbox.textarea.value = 'FOO BAR';
+      directEditing._textbox.content.innerText = 'FOO BAR';
 
       // when
       dragging.init(null, { x: 0, y: 0 }, 'foo');
@@ -105,11 +107,12 @@ describe('features - label-editing', function() {
       var newName = 'new value';
 
       // a <textarea /> element
-      var textarea = directEditing._textbox.textarea;
+      var content = directEditing._textbox.content;
+
+      content.innerText = newName;
 
       // when
       // change + <element.mousedown>
-      textarea.value = newName;
 
       eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
 
@@ -148,7 +151,7 @@ describe('features - label-editing', function() {
     }
 
     function directEditUpdate(value) {
-      directEditing._textbox.textarea.value = value;
+      directEditing._textbox.content.innerText = value;
     }
 
     function directEditComplete(value) {
@@ -342,44 +345,224 @@ describe('features - label-editing', function() {
 
     var testModules = [ labelEditingModule, coreModule ];
 
+
+
+    function testTextboxSizing(elementId, zoom, width, height, content) {
+      return inject(function(canvas, elementRegistry, directEditing) {
+        // zoom in
+        canvas.zoom(zoom);
+        // grab one element
+        var shape = elementRegistry.get(elementId);
+        // activate label editing
+        directEditing.activate(shape);
+        // grab the textarea
+        var textbox = directEditing._textbox;
+        // optionally set content text
+        if (content) {
+          textbox.content.innerText = content;
+        }
+
+        if (width === 'auto') {
+          width = shape.width;
+        }
+
+        if (height === 'auto') {
+          height = shape.height;
+        }
+
+        // then
+        if (typeof width === 'object' && width.min) {
+          expect(textbox.content.offsetWidth).to.be.at.least(width.min);
+        } else {
+          expect(textbox.content.offsetWidth).to.be.equal(width);
+        }
+
+        if (typeof height === 'object' && height.min) {
+          expect(textbox.content.offsetHeight).to.be.at.least(height.min);
+        } else {
+          expect(textbox.content.offsetHeight).to.be.equal(height);
+        }
+      });
+    }
+
     beforeEach(bootstrapViewer(diagramXML, {
       modules: testModules,
       canvas: { deferUpdate: false }
     }));
 
 
-    describe('textbox should have minimum size', function() {
+    describe('height', function() {
 
-      function testTextboxSizing(elementId, zoom, width, height) {
-        return inject(function(canvas, elementRegistry, directEditing) {
-          // zoom in
-          canvas.zoom(zoom);
-          // grab one element
-          var shape = elementRegistry.get(elementId);
-          // activate label editing
-          directEditing.activate(shape);
-          // grab the textarea
-          var textbox = directEditing._textbox;
-          // then
-          expect(textbox.textarea.offsetWidth).to.be.equal(width);
-          expect(textbox.textarea.offsetHeight).to.be.equal(height);
-        });
-      }
+      var oneLineText = 'One line',
+          twoLineText = 'Two\nlines',
+          tenLineText = '1\n2\n3\n4\n5\n6\n7\n8\n9\n0';
 
-      it('task', testTextboxSizing('task-nested-embedded', 1, 100, 80));
-      it('task, low zoom', testTextboxSizing('task-nested-embedded', 1, 100, 80));
+      describe('external labels', function() {
 
-      it('call activity', testTextboxSizing('call-activity', 1, 100, 80));
-      it('call activity, low zoom', testTextboxSizing('call-activity', 0.4, 100, 80));
+        it('[no text] should have min height', testTextboxSizing('start-event', 1, 150, 20));
 
-      it('subprocess collapsed', testTextboxSizing('subprocess-collapsed', 1, 100, 80));
-      it('subprocess collapsed, low zoom', testTextboxSizing('subprocess-collapsed', 0.4, 100, 80));
+        it('[1 line text] should be 1 line high', testTextboxSizing('start-event', 1, 150, 20, oneLineText));
 
-      it('subprocess expanded', testTextboxSizing('subprocess-expanded', 1, 200, 50));
-      it('subprocess expanded, low zoom', testTextboxSizing('subprocess-expanded', 0.4, 200, 50));
+        it('[2 line text] should be 2 line high', testTextboxSizing('start-event', 1, 150, 34, twoLineText));
 
-      it('collapsed pool expanded', testTextboxSizing('collapsed-pool', 1, 385, 50));
-      it('collapsed pool, low zoom', testTextboxSizing('collapsed-pool', 0.4, 385, 50));
+        it('[10 line text] should be 10 line high', testTextboxSizing('start-event', 1, 150, 146, tenLineText));
+
+      });
+
+
+      describe('internal labels', function() {
+
+        it('[no text] should have fixed dimensions', testTextboxSizing('empty-task', 1, 'auto', 'auto'));
+
+        it('[1 line text] should have fixed dimensions', testTextboxSizing('empty-task', 1, 'auto', 'auto', oneLineText));
+
+        it('[2 line text] should have fixed dimensions', testTextboxSizing('empty-task', 1, 'auto', 'auto', twoLineText));
+
+        it('[10 line text] should have fixed dimensions', testTextboxSizing('empty-task', 1, 'auto', 'auto', tenLineText));
+
+      });
+
+
+      describe('sequence flows', function() {
+
+        it('[no text] should have min height', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 20));
+
+        it('[1 line text] should be 1 line high', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 20, oneLineText));
+
+        it('[2 line text] should be 2 line high', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 34, twoLineText));
+
+        it('[10 line text] should be 10 line high', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 146, tenLineText));
+
+      });
+
+
+      describe('text annotation', function() {
+
+        it('[no text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98));
+
+        it('[1 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, oneLineText));
+
+        it('[2 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, twoLineText));
+
+        it('[10 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, tenLineText));
+
+      });
+
+
+      describe('expanded sub process', function() {
+
+        it('[no text] should have min height', testTextboxSizing('subprocess-expanded', 1, 200, 20));
+
+        it('[1 line text] should be 1 line high', testTextboxSizing('subprocess-expanded', 1, 200, 20, oneLineText));
+
+        it('[2 line text] should be 2 line high', testTextboxSizing('subprocess-expanded', 1, 200, 34, twoLineText));
+
+        it('[10 line text] should be max 3 line high', testTextboxSizing('subprocess-expanded', 1, 200, 48, tenLineText));
+
+      });
+
+
+      describe('pools/lanes', function() {
+
+        it('[no text] should have min height', testTextboxSizing('expanded-pool', 1, 150, 20));
+
+        it('[1 line text] should be 1 line high', testTextboxSizing('expanded-pool', 1, 150, 20, oneLineText));
+
+        it('[2 line text] should be 2 line high', testTextboxSizing('expanded-pool', 1, 150, 34, twoLineText));
+
+        it('[10 line text] should be max 2 line high', testTextboxSizing('expanded-pool', 1, 150, 34, tenLineText));
+
+      });
+
+    });
+
+    describe('width', function() {
+
+      var oneWord = 'foobar',
+          fiveWords = 'lorem ipsum dolor foobar foobar',
+          longWord = 'loremipsumdolorfoobar';
+
+      describe('external labels', function() {
+
+        it('[no text] should have fixed width', testTextboxSizing('start-event', 1, 150, 20));
+
+        it('[one word] should have fixed width', testTextboxSizing('start-event', 1, 150, 20, oneWord));
+
+        it('[five words] should have fixed width, line break', testTextboxSizing('start-event', 1, 150, { min: 34 }, fiveWords));
+
+        it('[long word] should have fixed width', testTextboxSizing('start-event', 1, 150, { min: 20 }, longWord));
+
+      });
+
+
+      describe('internal labels', function() {
+
+        it('[no text] should have fixed dimensions (task)', testTextboxSizing('empty-task', 1, 100, 80));
+
+        it('[no text] should have fixed dimensions (call activity)', testTextboxSizing('call-activity', 1, 100, 80));
+
+        it('[no text] should have fixed dimensions (collapsed sub process)', testTextboxSizing('subprocess-collapsed', 1, 100, 80));
+
+        it('[one word] should have fixed dimensions', testTextboxSizing('empty-task', 1, 100, 80, oneWord));
+
+        it('[five words] should have fixed dimensions', testTextboxSizing('empty-task', 1, 100, 80, fiveWords));
+
+        it('[long word] should have fixed dimensions', testTextboxSizing('empty-task', 1, 100, 80, longWord));
+
+      });
+
+
+      describe('sequence flows', function() {
+
+        it('[no text] should have fixed width', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 20));
+
+        it('[one word] should have fixed width', testTextboxSizing('sequenceflow-unlabeled', 1, 150, 20, oneWord));
+
+        it('[five words] should have fixed width, line break', testTextboxSizing('sequenceflow-unlabeled', 1, 150, { min: 34 }, fiveWords));
+
+        it('[long word] should have fixed width', testTextboxSizing('sequenceflow-unlabeled', 1, 150, { min: 20 }, longWord));
+
+      });
+
+
+      describe('text annotation', function() {
+
+        it('[no text] should have min width', testTextboxSizing('text-annotation', 1, 100, 98));
+
+        it('[one word] should have min width', testTextboxSizing('text-annotation', 1, 100, 98, oneWord));
+
+        it('[five words] should expand width', testTextboxSizing('text-annotation', 1, { min: 176 }, 98, fiveWords));
+
+        it('[long word] should expand width', testTextboxSizing('text-annotation', 1, { min: 129 }, 98, longWord));
+
+      });
+
+
+      describe('expanded sub process', function() {
+
+        it('[no text] should have fixed width', testTextboxSizing('subprocess-expanded', 1, 200, 20));
+
+        it('[one word] should have fixed width', testTextboxSizing('subprocess-expanded', 1, 200, 20, oneWord));
+
+        it('[five words] should have fixed width, line break', testTextboxSizing('subprocess-expanded', 1, 200, 20, fiveWords));
+
+        it('[long word] should have fixed width', testTextboxSizing('subprocess-expanded', 1, 200, 20, longWord));
+
+      });
+
+
+      describe('pools/lanes', function() {
+
+        it('[no text] should have fixed width', testTextboxSizing('expanded-pool', 1, 150, 20));
+
+        it('[one word] should have fixed width', testTextboxSizing('expanded-pool', 1, 150, 20, oneWord));
+
+        it('[five words] should have fixed width, line break', testTextboxSizing('expanded-pool', 1, 150, 34, fiveWords));
+
+        it('[long word] should have fixed width', testTextboxSizing('expanded-pool', 1, 150, { min: 20 }, longWord));
+
+      });
+
     });
 
   });
