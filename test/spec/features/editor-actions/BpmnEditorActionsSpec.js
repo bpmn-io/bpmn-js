@@ -14,7 +14,7 @@ var bpmnEditorActionsModule = require('../../../../lib/features/editor-actions')
     coreModule = require('../../../../lib/core');
 
 var basicXML = require('../../../fixtures/bpmn/simple.bpmn'),
-    collaborationXML = require('../../../fixtures/bpmn/complex.bpmn');
+    collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');
 
 
 
