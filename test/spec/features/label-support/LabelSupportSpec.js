@@ -176,6 +176,7 @@ describe('features/label-support - Label', function() {
 
 
     it('should be inside dragGroup', inject(function(elementRegistry, move, dragging) {
+
       // when
       move.start(canvasEvent({ x: 225, y: 275 }), childShape);
 
@@ -183,7 +184,7 @@ describe('features/label-support - Label', function() {
 
       var ctx = dragging.context().data.context;
 
-      var children = ctx.dragGroup.children();
+      var children = ctx.dragGroup.children;
 
       // then
       expect(children).to.have.lengthOf(2);

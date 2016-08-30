@@ -9,6 +9,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
     attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/move - MovePreview', function() {
 
@@ -309,7 +311,7 @@ describe('features/move - MovePreview', function() {
     it('should add connections to dragGroup',
       inject(function(canvas, elementFactory, move, dragging, elementRegistry, selection, modeling) {
 
-        var rootGfx = elementRegistry.getGraphics(rootShape),
+        var rootGfx = elementRegistry.getNativeGraphics(rootShape),
             dragGroup;
 
         // when
@@ -328,8 +330,8 @@ describe('features/move - MovePreview', function() {
         dragGroup = dragging.context().data.context.dragGroup;
 
         // then
-        expect(dragGroup.select('[data-element-id="connectionA"]')).to.exist;
-        expect(dragGroup.select('[data-element-id="connectionB"]')).to.exist;
+        expect(domQuery('[data-element-id="connectionA"]', dragGroup)).to.exist;
+        expect(domQuery('[data-element-id="connectionB"]', dragGroup)).to.exist;
       })
     );
 

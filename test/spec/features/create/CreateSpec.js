@@ -13,6 +13,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
     attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
+var domClasses = require('min-dom/lib/classes');
+
 
 describe('features/create - Create', function() {
 
@@ -145,7 +147,8 @@ describe('features/create - Create', function() {
       var ctx = dragging.context();
 
       // then
-      expect(ctx.data.context.visual.hasClass('djs-drag-group')).to.be.true;
+      // TODO repair
+      expect(domClasses(ctx.data.context.visual).has('djs-drag-group')).to.be.true;
     }));
 
 
@@ -164,7 +167,7 @@ describe('features/create - Create', function() {
       dragging.end();
 
       // then
-      expect(ctx.data.context.visual.parent()).to.not.exist;
+      expect(ctx.data.context.visual.parentNode).to.not.exist;
     }));
 
   });

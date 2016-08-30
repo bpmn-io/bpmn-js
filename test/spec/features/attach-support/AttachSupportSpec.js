@@ -17,6 +17,8 @@ var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAt
 
 var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/attach-support', function() {
 
@@ -1184,7 +1186,7 @@ describe('features/attach-support', function() {
         // expect the label to be included in the dragGroup
         var dragGroup = dragging.context().data.context.dragGroup;
 
-        expect(dragGroup.select('[data-element-id=' + label.id + ']')).to.exist;
+        expect(domQuery('[data-element-id=' + label.id + ']', dragGroup)).to.exist;
       })
     );
 

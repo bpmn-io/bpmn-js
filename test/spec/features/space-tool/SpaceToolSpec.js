@@ -12,6 +12,8 @@ var spaceTool = require('../../../../lib/features/space-tool'),
 
 var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/space-tool', function() {
 
@@ -133,7 +135,7 @@ describe('features/space-tool', function() {
         dragging.move(canvasEvent({ x: 50, y: 50 }));
         dragging.end();
 
-        var spaceLayer = canvas.getLayer('space').select('.djs-crosshair-group');
+        var spaceLayer = domQuery('.djs-crosshair-group', canvas.getNativeLayer('space'));
 
         // then
         expect(spaceLayer).to.be.null;
