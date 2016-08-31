@@ -360,7 +360,7 @@ describe('features - context-pad', function() {
       }));
 
 
-    it('should open the replace menu after an element is created',
+    it('should open the replace menu after an element is created if it has modifier key',
       inject(function(create, dragging, canvas, elementFactory) {
         // given
         var rootShape = canvas.getRootElement(),
@@ -374,7 +374,7 @@ describe('features - context-pad', function() {
         dragging.hover({ element: rootShape });
         dragging.move(canvasEvent({ x: 75, y: 75 }));
 
-        dragging.end();
+        dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
         replaceMenu = domQuery('.bpmn-replace', container);
 
@@ -397,7 +397,7 @@ describe('features - context-pad', function() {
         dragging.hover({ element: rootShape });
         dragging.move(canvasEvent({ x: 75, y: 75 }));
 
-        dragging.end();
+        dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
         replaceMenu = domQuery('.bpmn-replace', container);
 
