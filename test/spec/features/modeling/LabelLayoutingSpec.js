@@ -43,7 +43,7 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      expect(connection.label.x).to.be.equal(427);
+      expect(connection.label.x).to.be.equal(472);
       expect(connection.label.y).to.be.equal(332);
     }));
 
@@ -58,7 +58,7 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      expect(connection.label.x).to.be.equal(292);
+      expect(connection.label.x).to.be.equal(337);
       expect(connection.label.y).to.be.equal(219.5);
     }));
 
@@ -92,9 +92,11 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expectLabelMoved(connection, labelPosition, { x: -82, y: 18 }); // waypoints mid
+        expect(connection.label.y - labelPosition.y).to.be.within(13, 16);
+        expect(connection.label.x - labelPosition.x).to.be.within(-82, -81);
 
       }));
+
 
       it('left - no relayout', inject(function(elementRegistry, connectionSegmentMove, dragging) {
 
@@ -128,7 +130,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expectLabelMoved(connection, labelPosition, { x: -70, y: 23 });
+        expectLabelMoved(connection, labelPosition, { x: -70, y: 24 });
       }));
 
 
@@ -164,7 +166,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expectLabelMoved(connection, labelPosition, { x: 70, y: -17 });
+        expectLabelMoved(connection, labelPosition, { x: 70, y: -16 });
       }));
 
 
@@ -247,8 +249,8 @@ describe('modeling - label layouting', function() {
         modeling.reconnectStart(connection, shape, { x: 0, y: 0 });
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(528);
-        expect(Math.round(connection.label.y)).to.be.equal(137);
+        expect(Math.round(connection.label.x)).to.be.within(573, 575);
+        expect(Math.round(connection.label.y)).to.be.within(138, 139);
 
       }));
 
@@ -263,8 +265,8 @@ describe('modeling - label layouting', function() {
         modeling.reconnectEnd(connection, shape, { x: 294, y: 270 });
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(215);
-        expect(Math.round(connection.label.y)).to.be.equal(184);
+        expect(Math.round(connection.label.x)).to.be.within(258, 260);
+        expect(Math.round(connection.label.y)).to.be.within(185, 186);
 
       }));
 
@@ -307,8 +309,8 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(425);
-        expect(Math.round(connection.label.y)).to.be.equal(170);
+        expect(Math.round(connection.label.x)).to.be.equal(467);
+        expect(Math.round(connection.label.y)).to.be.within(170, 171);
 
       }));
 
@@ -329,7 +331,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(477);
+        expect(Math.round(connection.label.x)).to.be.equal(518);
         expect(Math.round(connection.label.y)).to.be.equal(507);
 
       }));
@@ -348,8 +350,8 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(380);
-        expect(Math.round(connection.label.y)).to.be.equal(190);
+        expect(Math.round(connection.label.x)).to.be.within(419, 421);
+        expect(Math.round(connection.label.y)).to.be.equal(191);
 
       }));
 
@@ -372,7 +374,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(211);
+        expect(Math.round(connection.label.x)).to.be.within(250, 251);
         expect(Math.round(connection.label.y)).to.be.equal(152);
 
       }));
@@ -396,8 +398,8 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(197);
-        expect(Math.round(connection.label.y)).to.be.equal(147);
+        expect(Math.round(connection.label.x)).to.be.within(240, 242);
+        expect(Math.round(connection.label.y)).to.be.equal(148);
 
 
       }));
@@ -419,8 +421,8 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(426);
-        expect(Math.round(connection.label.y)).to.be.equal(287);
+        expect(Math.round(connection.label.x)).to.be.within(463, 465);
+        expect(Math.round(connection.label.y)).to.be.within(290, 293);
 
       }));
 
@@ -500,7 +502,8 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expectLabelMoved(connection, labelPosition, { x: -45, y: -70 });
+        expect(connection.label.y - labelPosition.y).to.be.within(-76, -72);
+        expect(connection.label.x - labelPosition.x).to.be.within(-53, -51);
 
       }));
 

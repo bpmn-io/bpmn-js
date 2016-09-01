@@ -28,7 +28,7 @@ function triggerKeyEvent(element, event, code) {
   return element.dispatchEvent(e);
 }
 
-describe.only('features - label-editing', function() {
+describe('features - label-editing', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
 

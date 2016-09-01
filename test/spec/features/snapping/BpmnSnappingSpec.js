@@ -537,7 +537,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
       dragging.end();
 
-      expect(label.x).to.equal(161);
+      expect(label.x).to.be.within(192, 193);
 
     }));
 

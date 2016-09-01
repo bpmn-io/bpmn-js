@@ -104,7 +104,9 @@ describe('features/copy-paste', function() {
           expect(newEvent.label.x - newEvent.x).to.equal(startEventLabel.x - startEvent.x);
           expect(newEvent.label.y - newEvent.y).to.equal(startEventLabel.y - startEvent.y);
 
-          expect(newFlow.label.x - newFlow.waypoints[0].x).to.equal(seqFlowLabel.x - seqFlow.waypoints[0].x);
+          var seqFlowDeltaX = seqFlow.label.x - seqFlow.waypoints[0].x;
+
+          expect(newFlow.label.x - newFlow.waypoints[0].x).to.be.within(seqFlowDeltaX, seqFlowDeltaX + 1);
           expect(newFlow.label.y - newFlow.waypoints[0].y).to.equal(seqFlowLabel.y - seqFlow.waypoints[0].y);
         })
       );
