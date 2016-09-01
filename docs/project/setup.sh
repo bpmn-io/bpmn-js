@@ -19,23 +19,20 @@ echo setup diagram-js
 
 cd $base/diagram-js
 npm install
-npm link
 
 
 echo setup bpmn-moddle
 
 cd $base/bpmn-moddle
 npm install
-npm link
 
 
 echo setup bpmn-js
 
 cd $base/bpmn-js
 npm install
-npm link diagram-js
-npm link bpmn-moddle
-npm link
+npm link ../diagram-js
+npm link ../bpmn-moddle
 
 
 cd $base

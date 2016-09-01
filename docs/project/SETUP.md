@@ -58,7 +58,7 @@ Execute `npm install` on each of the projects to grab their dependencies.
 
 ### Verify Things are O.K.
 
-Execute `grunt` on each project. Things should be fine.
+Execute `npm run all` on each project. Things should be fine.
 
 
 ## Setup via Script
