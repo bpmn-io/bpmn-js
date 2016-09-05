@@ -1,5 +1,7 @@
 'use strict';
 
+var TestContainer = require('mocha-test-container-support');
+
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
@@ -8,6 +10,7 @@ TestHelper.insertCSS('diagram-js-label-editing.css',
   'div { box-sizing: border-box; }' +
   'div[contenteditable=true] { line-height: 14px; font-family: Arial; font-size: 12px }'
 );
+
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
     coreModule = require('../../../../lib/core'),
@@ -31,7 +34,6 @@ function triggerKeyEvent(element, event, code) {
 describe('features - label-editing', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
-
 
   describe('basics', function() {
 
@@ -508,6 +510,45 @@ describe('features - label-editing', function() {
         it('[five words] should have fixed dimensions', testTextboxSizing('empty-task', 1, 100, 80, fiveWords));
 
         it('[long word] should have fixed dimensions', testTextboxSizing('empty-task', 1, 100, 80, longWord));
+
+        describe('zoom', function() {
+
+          var container;
+
+          beforeEach(function() {
+            container = TestContainer.get(this);
+          });
+
+          it('should have fixed dimensions (low zoom)', testTextboxSizing('empty-task', 0.5, 100, 80, oneWord));
+
+          it('should have fixed dimensions (high zoom)', testTextboxSizing('empty-task', 1.5, 150, 120, oneWord));
+
+          it('should center text box position (low zoom)', inject(function(canvas, elementRegistry, directEditing) {
+
+            // given
+            canvas.zoom(0.5);
+
+            var shape = elementRegistry.get('empty-task');
+
+            // when
+            directEditing.activate(shape);
+
+            // then
+            var textbox = directEditing._textbox,
+                gfx = elementRegistry.getGraphics('empty-task'),
+                shapeClientRect = gfx.node.parentNode.getBoundingClientRect();
+
+            var shapeRect = {
+              top: shapeClientRect.top - container.offsetTop,
+              left: shapeClientRect.left - container.offsetLeft
+            };
+
+            expect(textbox.content.offsetLeft).to.be.within(shapeRect.left - 28, shapeRect.left - 22);
+            expect(textbox.content.offsetTop).to.be.within(shapeRect.top - 22, shapeRect.top - 17);
+
+          }));
+
+        });
 
       });
 
