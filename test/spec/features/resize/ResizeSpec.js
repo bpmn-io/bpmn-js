@@ -57,7 +57,7 @@ describe('features/resize - Resize', function() {
 
     function getResizeHandles() {
       return TestHelper.inject(function(resizeHandles) {
-        return resizeHandles._getResizersParent().selectAll('.djs-resizer');
+        return domQuery.all('.djs-resizer', resizeHandles._getResizersParent());
       })();
     }
 
