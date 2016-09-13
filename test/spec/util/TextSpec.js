@@ -155,7 +155,7 @@ describe('Text', function() {
 
       // then
       expect(text).to.exist;
-      expect(text.node.textContent.substr(-1)).equals('-');
+      expect(text.textContent.substr(-1)).equals('-');
     });
 
 
