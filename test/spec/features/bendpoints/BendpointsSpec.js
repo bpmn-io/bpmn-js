@@ -11,6 +11,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     interactionModule = require('../../../../lib/features/interaction-events'),
     canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
+var domQuery = require('min-dom/lib/query');
 
 describe('features/bendpoints', function() {
 
@@ -87,38 +88,38 @@ describe('features/bendpoints', function() {
     it('should show on hover', inject(function(eventBus, canvas, elementRegistry) {
 
       // given
-      var layer = canvas.getLayer('overlays');
+      var layer = canvas.getNativeLayer('overlays');
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
 
 
       // then
       // 3 visible + 1 invisible bendpoint are shown
-      expect(layer.node.querySelectorAll('.djs-bendpoint').length).to.equal(4);
-      expect(layer.node.querySelectorAll('.djs-segment-dragger').length).to.equal(2);
+      expect(domQuery.all('.djs-bendpoint', layer).length).to.equal(4);
+      expect(domQuery.all('.djs-segment-dragger', layer).length).to.equal(2);
     }));
 
 
     it('should show on select', inject(function(selection, canvas, elementRegistry) {
 
       // given
-      var layer = canvas.getLayer('overlays');
+      var layer = canvas.getNativeLayer('overlays');
 
       // when
       selection.select(connection);
 
       // then
       // 3 visible + 1 invisible bendpoint are shown
-      expect(layer.node.querySelectorAll('.djs-bendpoint').length).to.equal(4);
-      expect(layer.node.querySelectorAll('.djs-segment-dragger').length).to.equal(2);
+      expect(domQuery.all('.djs-bendpoint', layer).length).to.equal(4);
+      expect(domQuery.all('.djs-segment-dragger', layer).length).to.equal(2);
     }));
 
 
     it('should activate bendpoint move', inject(function(dragging, eventBus, elementRegistry, bendpoints) {
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
       eventBus.fire('element.mousemove', {
         element: connection,
         originalEvent: canvasEvent({ x: 500, y: 250 })
@@ -144,7 +145,7 @@ describe('features/bendpoints', function() {
           intersectionMid = intersectionEnd - (intersectionEnd - intersectionStart) / 2;
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
       eventBus.fire('element.mousemove', {
         element: connection,
         originalEvent: canvasEvent({ x: intersectionMid, y: 250 })
@@ -169,7 +170,7 @@ describe('features/bendpoints', function() {
         var event = document.createEvent('MouseEvent');
         event.initMouseEvent(type, true, true, window);
 
-        return gfx.node.dispatchEvent(event);
+        return gfx.dispatchEvent(event);
       }
 
 
@@ -179,11 +180,10 @@ describe('features/bendpoints', function() {
       beforeEach(inject(function(bendpoints, eventBus) {
         bendpoints.addHandles(connection);
 
-        bendpointGfx = bendpoints.getBendpointsContainer(connection)
-                                 .select('.djs-bendpoint');
+        bendpointGfx = domQuery('.djs-bendpoint', bendpoints.getBendpointsContainer(connection));
 
         listenerSpy = sinon.spy(function(event) {
-          expect(event.originalEvent.target).to.equal(bendpointGfx.node);
+          expect(event.originalEvent.target).to.equal(bendpointGfx);
           expect(event.element).to.equal(connection);
         });
 

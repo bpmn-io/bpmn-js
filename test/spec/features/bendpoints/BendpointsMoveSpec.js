@@ -11,6 +11,10 @@ var bendpointsModule = require('../../../../lib/features/bendpoints'),
     modelingModule = require('../../../../lib/features/modeling'),
     selectModule = require('../../../../lib/features/selection');
 
+var domQuery = require('min-dom/lib/query');
+
+var unwrapSnapSvg = require('../../../../lib/util/SnapSvgUtil').unwrapSnapSvg;
+
 
 describe('features/bendpoints - move', function() {
 
@@ -97,14 +101,14 @@ describe('features/bendpoints - move', function() {
     it('should show on activate', inject(function(canvas, bendpointMove, dragging) {
 
       // given
-      var layer = canvas.getLayer('overlays');
+      var layer = canvas.getNativeLayer('overlays');
 
       // when
       bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
       dragging.move(canvasEvent({ x: 400, y: 200 }));
 
       // then
-      var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
+      var bendpoint = domQuery('.djs-bendpoint.djs-dragging', layer);
       expect(bendpoint).to.exist;
     }));
 
@@ -112,14 +116,14 @@ describe('features/bendpoints - move', function() {
     it('should update during move', inject(function(canvas, bendpointMove, dragging) {
 
       // given
-      var layer = canvas.getLayer('overlays');
+      var layer = canvas.getNativeLayer('overlays');
 
       // when
       bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
       dragging.move(canvasEvent({ x: 100, y: 100 }));
 
       // then
-      var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
+      var bendpoint = domQuery('.djs-bendpoint.djs-dragging', layer);
       expect(bendpoint).to.exist;
     }));
 
@@ -127,17 +131,17 @@ describe('features/bendpoints - move', function() {
     it('should hide after resize', inject(function(canvas, bendpointMove, dragging) {
 
       // given
-      var layer = canvas.getLayer('overlays');
+      var layer = canvas.getNativeLayer('overlays');
 
       // when
       bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
       dragging.move(canvasEvent({ x: 100, y: 100 }));
 
-      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.hover({ element: rootShape, gfx: canvas.getNativeGraphics(rootShape) });
       dragging.cancel();
 
       // then
-      var bendpoint = layer.node.querySelector('.djs-bendpoint.djs-dragging');
+      var bendpoint = domQuery('.djs-bendpoint.djs-dragging', layer);
       expect(bendpoint).to.be.null;
     }));
 
@@ -146,20 +150,20 @@ describe('features/bendpoints - move', function() {
 
       // when
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
-      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.hover({ element: rootShape, gfx: canvas.getNativeGraphics(rootShape) });
       dragging.move(canvasEvent({ x: 550, y: 150 }));
       dragging.out();
-      dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
+      dragging.hover({ element: shape2, gfx: canvas.getNativeGraphics(shape2) });
       dragging.move(canvasEvent({ x: 530, y: 120 }));
       dragging.out();
-      dragging.hover({ element: shape3, gfx: canvas.getGraphics(shape3) });
+      dragging.hover({ element: shape3, gfx: canvas.getNativeGraphics(shape3) });
       dragging.move(canvasEvent({ x: 530, y: 420 }));
       dragging.out();
-      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.hover({ element: rootShape, gfx: canvas.getNativeGraphics(rootShape) });
       dragging.move(canvasEvent({ x: 610, y: 310 }));
 
       // then
-      var hoverNodes = canvas._svg.node.querySelectorAll('.connect-hover, .connect-ok, .connect-not-ok');
+      var hoverNodes = domQuery.all('.connect-hover, .connect-ok, .connect-not-ok', unwrapSnapSvg(canvas._svg));
 
       // connect-hover indicator
       expect(hoverNodes.length).to.equal(1);
@@ -175,11 +179,11 @@ describe('features/bendpoints - move', function() {
       // when
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
       dragging.move(canvasEvent({ x: 550, y: 150 }));
-      dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
+      dragging.hover({ element: shape2, gfx: canvas.getNativeGraphics(shape2) });
       dragging.move(canvasEvent({ x: 530, y: 120 }));
 
       // then
-      var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-ok');
+      var hoverNode = domQuery('.connect-hover.connect-ok', unwrapSnapSvg(canvas._svg));
 
       expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape2.id);
@@ -191,11 +195,11 @@ describe('features/bendpoints - move', function() {
       // when
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
       dragging.move(canvasEvent({ x: 550, y: 450 }));
-      dragging.hover({ element: shape3, gfx: canvas.getGraphics(shape3) });
+      dragging.hover({ element: shape3, gfx: canvas.getNativeGraphics(shape3) });
       dragging.move(canvasEvent({ x: 530, y: 420 }));
 
       // then
-      var hoverNode = canvas._svg.node.querySelector('.connect-hover.connect-not-ok');
+      var hoverNode = domQuery('.connect-hover.connect-not-ok', unwrapSnapSvg(canvas._svg));
 
       expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape3.id);
@@ -224,7 +228,7 @@ describe('features/bendpoints - move', function() {
 
       dragging.hover({
         element: connection,
-        gfx: canvas.getGraphics(connection)
+        gfx: canvas.getNativeGraphics(connection)
       });
 
       dragging.move(canvasEvent({ x: 400, y: 100 }));
@@ -248,7 +252,7 @@ describe('features/bendpoints - move', function() {
       // need hover for creating new bendpoint
       dragging.hover({
         element: connection,
-        gfx: canvas.getGraphics(connection)
+        gfx: canvas.getNativeGraphics(connection)
       });
 
       dragging.move(canvasEvent({ x: 400, y: 100 }));
@@ -269,7 +273,7 @@ describe('features/bendpoints - move', function() {
       // when
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 1);
       dragging.move(canvasEvent({ x: 450, y: 430 }));
-      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.hover({ element: rootShape, gfx: canvas.getNativeGraphics(rootShape) });
       dragging.move(canvasEvent({ x: 530, y: 420 }));
       dragging.end();
 
@@ -283,7 +287,7 @@ describe('features/bendpoints - move', function() {
       // when
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 1);
       dragging.move(canvasEvent({ x: 450, y: 430 }));
-      dragging.hover({ element: rootShape, gfx: canvas.getGraphics(rootShape) });
+      dragging.hover({ element: rootShape, gfx: canvas.getNativeGraphics(rootShape) });
       dragging.move(canvasEvent({ x: 530.3, y: 419.8 }));
       dragging.end();
 
@@ -296,7 +300,7 @@ describe('features/bendpoints - move', function() {
 
       // given
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 2);
-      dragging.hover({ element: shape2, gfx: canvas.getGraphics(shape2) });
+      dragging.hover({ element: shape2, gfx: canvas.getNativeGraphics(shape2) });
       dragging.move(canvasEvent({ x: 530, y: 120 }));
 
       // when
@@ -311,7 +315,7 @@ describe('features/bendpoints - move', function() {
 
       // given
       bendpointMove.start(canvasEvent({ x: 500, y: 500 }), connection, 0);
-      dragging.hover({ element: shape1, gfx: canvas.getGraphics(shape1) });
+      dragging.hover({ element: shape1, gfx: canvas.getNativeGraphics(shape1) });
       dragging.move(canvasEvent({ x: 230, y: 120 }));
 
       // when
