@@ -4,6 +4,8 @@ var assign = require('lodash/object/assign');
 
 var pick = require('lodash/object/pick');
 
+var unwrapSnapSvg = require('../../../lib/util/SnapSvgUtil').unwrapSnapSvg;
+
 
 function toFitBBox(actual, expected) {
 
@@ -155,7 +157,7 @@ describe('Text', function() {
 
       // then
       expect(text).to.exist;
-      expect(text.textContent.substr(-1)).equals('-');
+      expect(unwrapSnapSvg(text).textContent.substr(-1)).equals('-');
     });
 
 
