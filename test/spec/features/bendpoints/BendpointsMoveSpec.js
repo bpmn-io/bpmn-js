@@ -13,8 +13,6 @@ var bendpointsModule = require('../../../../lib/features/bendpoints'),
 
 var domQuery = require('min-dom/lib/query');
 
-var unwrapSnapSvg = require('../../../../lib/util/SnapSvgUtil').unwrapSnapSvg;
-
 
 describe('features/bendpoints - move', function() {
 
@@ -163,7 +161,7 @@ describe('features/bendpoints - move', function() {
       dragging.move(canvasEvent({ x: 610, y: 310 }));
 
       // then
-      var hoverNodes = domQuery.all('.connect-hover, .connect-ok, .connect-not-ok', unwrapSnapSvg(canvas._svg));
+      var hoverNodes = domQuery.all('.connect-hover, .connect-ok, .connect-not-ok', canvas._svg);
 
       // connect-hover indicator
       expect(hoverNodes.length).to.equal(1);
@@ -183,7 +181,7 @@ describe('features/bendpoints - move', function() {
       dragging.move(canvasEvent({ x: 530, y: 120 }));
 
       // then
-      var hoverNode = domQuery('.connect-hover.connect-ok', unwrapSnapSvg(canvas._svg));
+      var hoverNode = domQuery('.connect-hover.connect-ok', canvas._svg);
 
       expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape2.id);
@@ -199,7 +197,7 @@ describe('features/bendpoints - move', function() {
       dragging.move(canvasEvent({ x: 530, y: 420 }));
 
       // then
-      var hoverNode = domQuery('.connect-hover.connect-not-ok', unwrapSnapSvg(canvas._svg));
+      var hoverNode = domQuery('.connect-hover.connect-not-ok', canvas._svg);
 
       expect(hoverNode).to.exist;
       expect(hoverNode.getAttribute('data-element-id')).to.equal(shape3.id);

@@ -9,6 +9,7 @@ var labelSupportModule = require('../../../../lib/features/label-support'),
     modelingModule = require('../../../../lib/features/modeling'),
     rulesModule = require('./rules');
 
+var domClasses = require('min-dom/lib/classes');
 
 describe('features/label-support - Label', function() {
 
@@ -157,7 +158,7 @@ describe('features/label-support - Label', function() {
       dragging.move(canvasEvent({ x: 225, y: 150 }));
 
       // then
-      expect(labelGfx.hasClass('djs-dragging')).to.be.true;
+      expect(domClasses(labelGfx).has('djs-dragging')).to.be.true;
     }));
 
 
@@ -171,7 +172,7 @@ describe('features/label-support - Label', function() {
 
       var labelGfx = elementRegistry.getGraphics(label);
       // then
-      expect(labelGfx.hasClass('djs-dragging')).to.be.false;
+      expect(domClasses(labelGfx).has('djs-dragging')).to.be.false;
     }));
 
 

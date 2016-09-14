@@ -4,6 +4,9 @@
 
 var selectionModule = require('../../../../lib/features/selection');
 
+var domClasses = require('min-dom/lib/classes'),
+    domQuery = require('min-dom/lib/query');
+
 
 describe('features/outline/Outline', function() {
 
@@ -35,10 +38,10 @@ describe('features/outline/Outline', function() {
 
       // then
       var gfx = elementRegistry.getGraphics(shape);
-      var outline = gfx.select('.djs-outline');
+      var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
+      expect(domClasses(gfx).has('selected')).to.be.true; // Outline class is set
     }));
 
 
@@ -52,10 +55,10 @@ describe('features/outline/Outline', function() {
 
       // then
       var gfx = elementRegistry.getGraphics(connection);
-      var outline = gfx.select('.djs-outline');
+      var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(gfx.hasClass('selected')).to.be.true; // Outline class is set
+      expect(domClasses(gfx).has('selected')).to.be.true; // Outline class is set
     }));
 
   });
@@ -80,10 +83,10 @@ describe('features/outline/Outline', function() {
 
       // then
       var gfx = elementRegistry.getGraphics(shape);
-      var outline = gfx.select('.djs-outline');
+      var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
+      expect(domClasses(gfx).has('selected')).to.be.false; // Outline class is not set
     }));
 
 
@@ -98,10 +101,10 @@ describe('features/outline/Outline', function() {
 
       // then
       var gfx = elementRegistry.getGraphics(connection);
-      var outline = gfx.select('.djs-outline');
+      var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(gfx.hasClass('selected')).to.be.false; // Outline class is not set
+      expect(domClasses(gfx).has('selected')).to.be.false; // Outline class is not set
     }));
 
   });

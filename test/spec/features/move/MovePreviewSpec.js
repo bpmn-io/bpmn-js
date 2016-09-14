@@ -9,7 +9,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
     attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
-var domQuery = require('min-dom/lib/query');
+var domClasses = require('min-dom/lib/classes'),
+    domQuery = require('min-dom/lib/query');
 
 
 describe('features/move - MovePreview', function() {
@@ -74,8 +75,8 @@ describe('features/move - MovePreview', function() {
       dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
-      expect(elementRegistry.getGraphics(childShape).hasClass('djs-dragging')).to.equal(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(childShape)).has('djs-dragging')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
     }));
 
 
@@ -88,8 +89,8 @@ describe('features/move - MovePreview', function() {
       dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(true);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
     }));
 
 
@@ -103,8 +104,8 @@ describe('features/move - MovePreview', function() {
       dragging.end();
 
       // then
-      expect(elementRegistry.getGraphics(childShape2).hasClass('djs-dragging')).to.equal(false);
-      expect(elementRegistry.getGraphics(connection).hasClass('djs-dragging')).to.equal(false);
+      expect(domClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(false);
+      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(false);
     }));
 
   });
@@ -130,7 +131,7 @@ describe('features/move - MovePreview', function() {
       var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(true);
 
-      expect(elementRegistry.getGraphics(parentShape).hasClass('drop-ok')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(parentShape)).has('drop-ok')).to.equal(true);
     }));
 
 
@@ -152,7 +153,7 @@ describe('features/move - MovePreview', function() {
       var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(false);
 
-      expect(elementRegistry.getGraphics(childShape).hasClass('drop-not-ok')).to.equal(true);
+      expect(domClasses(elementRegistry.getGraphics(childShape)).has('drop-not-ok')).to.equal(true);
     }));
 
   });
@@ -193,7 +194,7 @@ describe('features/move - MovePreview', function() {
         var ctx = dragging.context();
         expect(ctx.data.context.differentParents).to.equal(true);
 
-        expect(elementRegistry.getGraphics(parentShape).hasClass('new-parent')).to.equal(true);
+        expect(domClasses(elementRegistry.getGraphics(parentShape)).has('new-parent')).to.equal(true);
       })
     );
 
@@ -219,7 +220,7 @@ describe('features/move - MovePreview', function() {
         var ctx = dragging.context();
         expect(ctx.data.context.differentParents).to.equal(true);
 
-        expect(elementRegistry.getGraphics(parentShape).hasClass('drop-new-target')).to.equal(false);
+        expect(domClasses(elementRegistry.getGraphics(parentShape)).has('drop-new-target')).to.equal(false);
       })
     );
 
@@ -246,8 +247,8 @@ describe('features/move - MovePreview', function() {
         expect(ctx.data.context.differentParents).to.equal(true);
 
         var childGfx = elementRegistry.getGraphics(childShape);
-        expect(childGfx.hasClass('drop-new-target')).to.equal(false);
-        expect(childGfx.hasClass('drop-not-ok')).to.equal(true);
+        expect(domClasses(childGfx).has('drop-new-target')).to.equal(false);
+        expect(domClasses(childGfx).has('drop-not-ok')).to.equal(true);
       })
     );
 
@@ -311,7 +312,7 @@ describe('features/move - MovePreview', function() {
     it('should add connections to dragGroup',
       inject(function(canvas, elementFactory, move, dragging, elementRegistry, selection, modeling) {
 
-        var rootGfx = elementRegistry.getNativeGraphics(rootShape),
+        var rootGfx = elementRegistry.getGraphics(rootShape),
             dragGroup;
 
         // when

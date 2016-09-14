@@ -5,6 +5,8 @@
 
 var selectionModule = require('../../../../lib/features/selection');
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/selection/SelectionVisuals', function() {
 
@@ -59,7 +61,7 @@ describe('features/selection/SelectionVisuals', function() {
 
       // then
       var gfx = canvas.getGraphics(connection),
-          outline = gfx.select('.djs-outline');
+          outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
     }));

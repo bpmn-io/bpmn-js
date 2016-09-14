@@ -7,6 +7,11 @@ require('../../TestHelper');
 var merge = require('lodash/object/merge');
 var TestContainer = require('mocha-test-container-support');
 
+var domClasses = require('min-dom/lib/classes'),
+    domQuery = require('min-dom/lib/query');
+
+var svgAttr = require('tiny-svg/lib/attr');
+
 
 describe('Canvas', function() {
 
@@ -109,7 +114,7 @@ describe('Canvas', function() {
       expect(canvas._rootElement).not.to.exist;
 
       // all elements got removed
-      expect(baseLayer.selectAll('*')).to.be.empty;
+      expect(domQuery.all('*', baseLayer).length).to.equal(0);
 
       expect(elementRegistry.getAll()).to.be.empty;
 
@@ -225,7 +230,7 @@ describe('Canvas', function() {
       var gfx = elementRegistry.getGraphics(shape);
 
       // then
-      expect(gfx.attr('display')).to.equal('none');
+      expect(svgAttr(gfx, 'display')).to.equal('none');
     }));
 
 
@@ -247,7 +252,7 @@ describe('Canvas', function() {
       canvas.addShape(childShape, parentShape);
 
       // then
-      expect(parentShape.children).to.contain( childShape );
+      expect(parentShape.children).to.contain(childShape);
       expect(childShape.parent).to.equal(parentShape);
     }));
 
@@ -461,7 +466,7 @@ describe('Canvas', function() {
 
       // expect
       // the canvas to be correctly wired
-      expect(canvas._svg.attr('data-element-id')).to.equal('__implicitroot');
+      expect(svgAttr(canvas._svg, 'data-element-id')).to.equal('__implicitroot');
     }));
 
 
@@ -528,7 +533,7 @@ describe('Canvas', function() {
       expect(canvas._rootElement).to.equal(null);
 
       // root is unbound from canvas
-      expect(canvas._svg.attr('data-element-id')).not.to.exist;
+      expect(svgAttr(canvas._svg, 'data-element-id')).to.equal('');
 
       expect(elementRegistry.getAll()).to.be.empty;
     }));
@@ -1495,15 +1500,15 @@ describe('Canvas', function() {
       var root = canvas.getRootElement();
 
       // when
-      var gfx = canvas.getGraphics(root),
-          secondaryGfx = canvas.getGraphics(root, true);
+      var gfx = canvas.getNativeGraphics(root),
+          secondaryGfx = canvas.getNativeGraphics(root, true);
 
       // then
       expect(gfx).to.exist;
-      expect(gfx.type).to.equal('g');
+      expect(gfx.nodeName).to.equal('g');
 
       expect(secondaryGfx).to.exist;
-      expect(secondaryGfx.type).to.equal('svg');
+      expect(secondaryGfx.nodeName).to.equal('svg');
     }));
 
   });
@@ -1532,7 +1537,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.true;
-      expect(gfx.hasClass('foo')).to.be.true;
+      expect(domClasses(gfx).has('foo')).to.be.true;
     }));
 
 
@@ -1546,7 +1551,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(root, 'foo')).to.be.true;
-      expect(svgGfx.hasClass('foo')).to.be.true;
+      expect(domClasses(svgGfx).has('foo')).to.be.true;
     }));
 
 
@@ -1560,7 +1565,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.false;
-      expect(gfx.hasClass('foo')).to.be.false;
+      expect(domClasses(gfx).has('foo')).to.be.false;
     }));
 
 
@@ -1571,14 +1576,14 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.true;
-      expect(gfx.hasClass('foo')).to.be.true;
+      expect(domClasses(gfx).has('foo')).to.be.true;
 
       // but when
       canvas.toggleMarker(shape, 'foo');
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.false;
-      expect(gfx.hasClass('foo')).to.be.false;
+      expect(domClasses(gfx).has('foo')).to.be.false;
 
     }));
 

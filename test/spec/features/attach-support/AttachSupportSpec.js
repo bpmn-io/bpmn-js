@@ -17,7 +17,8 @@ var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAt
 
 var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
-var domQuery = require('min-dom/lib/query');
+var domClasses = require('min-dom/lib/classes'),
+    domQuery = require('min-dom/lib/query');
 
 
 describe('features/attach-support', function() {
@@ -1126,7 +1127,7 @@ describe('features/attach-support', function() {
 
     it('should add attachment marker', inject(function(move, dragging, elementRegistry) {
       // given
-      var hostGfx = elementRegistry.getGraphics(host);
+      var hostGfx = elementRegistry.getNativeGraphics(host);
 
       // when
       move.start(canvasEvent({ x: 800, y: 100 }), attacher);
@@ -1142,7 +1143,7 @@ describe('features/attach-support', function() {
 
       // then
       expect(ctx.data.context.canExecute).to.equal('attach');
-      expect(elementRegistry.getGraphics(host).hasClass('attach-ok')).to.be.true;
+      expect(domClasses(elementRegistry.getNativeGraphics(host)).has('attach-ok')).to.be.true;
     }));
 
 
@@ -1162,7 +1163,7 @@ describe('features/attach-support', function() {
       dragging.end();
 
       // then
-      expect(elementRegistry.getGraphics(host).hasClass('attach-ok')).to.be.false;
+      expect(domClasses(elementRegistry.getNativeGraphics(host)).has('attach-ok')).to.be.false;
     }));
 
 

@@ -211,7 +211,7 @@ describe('features/resize - Resize', function() {
       dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
-      var frames = canvas.getDefaultLayer().selectAll('.djs-resize-overlay');
+      var frames = domQuery.all('.djs-resize-overlay', canvas.getDefaultLayer());
 
       expect(frames.length).to.equal(1);
     }));
@@ -225,7 +225,7 @@ describe('features/resize - Resize', function() {
       dragging.move(canvasEvent({ x: 100, y: 200 }));
 
       // then
-      var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
+      var frame = domQuery('.djs-resize-overlay', canvas.getDefaultLayer());
 
       var bbox = frame.getBBox();
 
@@ -246,7 +246,7 @@ describe('features/resize - Resize', function() {
       dragging.end();
 
       // then
-      var frame = canvas.getDefaultLayer().select('.djs-resize-overlay');
+      var frame = domQuery('.djs-resize-overlay', canvas.getDefaultLayer());
 
       expect(frame).to.be.null;
     }));
@@ -272,7 +272,7 @@ describe('features/resize - Resize', function() {
         selection.select(nonResizable);
 
         // then
-        var resizeAnchors = gfx.selectAll('.resize');
+        var resizeAnchors = domQuery.all('.resize', gfx);
 
         expect(resizeAnchors.length).to.equal(0);
       })

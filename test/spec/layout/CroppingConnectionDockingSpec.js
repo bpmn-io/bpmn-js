@@ -4,6 +4,10 @@
 
 var TestHelper = require('../../TestHelper');
 
+var svgAppend = require('tiny-svg/lib/append'),
+    svgAttr = require('tiny-svg/lib/attr'),
+    svgCreate = require('tiny-svg/lib/create');
+
 var layoutModule = {
   connectionDocking: [ 'type', require('../../../lib/layout/CroppingConnectionDocking') ]
 };
@@ -17,16 +21,33 @@ function mid(shape) {
 }
 
 function visualizeExpected(canvas, point) {
-  return canvas._svg.circle(point.x, point.y, 4);
+  var circle = svgCreate('circle');
+  svgAttr(circle, {
+    dx: point.x,
+    dy: point.y,
+    r: 4
+  });
+
+  svgAppend(canvas._svg, circle);
+
+  return circle;
 }
 
 function visualizeActual(canvas, point) {
-  return canvas._svg.circle(point.x, point.y, 4).attr({
+  var circle = svgCreate('circle');
+  svgAttr(circle, {
+    dx: point.x,
+    dy: point.y,
+    r: 4,
     fill: 'orange',
     'stroke': 'black',
     'stroke-width': '1px',
     'shapeRendering': 'crisp-edges'
   });
+
+  svgAppend(canvas._svg, circle);
+
+  return circle;
 }
 
 function expectDockingPoint(connection, shape, expected) {
