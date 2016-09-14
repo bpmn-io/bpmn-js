@@ -12,6 +12,10 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var assign = require('lodash/object/assign');
 
+var svgAttr = require('tiny-svg/lib/attr'),
+    svgClone = require('tiny-svg/lib/clone'),
+    innerSVG = require('tiny-svg/lib/innerSVG');
+
 
 describe('features/replace-preview', function() {
 
@@ -46,7 +50,7 @@ describe('features/replace-preview', function() {
 
       canvas.addShape(tempShape, rootElement);
 
-      var gfx = elementRegistry.getGraphics(tempShape).clone();
+      var gfx = svgClone(elementRegistry.getGraphics(tempShape));
 
       canvas.removeShape(tempShape);
 
@@ -77,9 +81,9 @@ describe('features/replace-preview', function() {
     // then
     var dragGroup = dragging.context().data.context.dragGroup;
 
-    dragGroup[0].attr('display', 'inline');
+    svgAttr(dragGroup.childNodes[0], 'display', 'inline');
 
-    expect(dragGroup[0].getBBox()).to.eql(dragGroup[1].getBBox());
+    expect(dragGroup.childNodes[0].getBBox()).to.eql(dragGroup.childNodes[1].getBBox());
   }));
 
 
@@ -124,7 +128,7 @@ describe('features/replace-preview', function() {
     // then
     var dragGroup = dragging.context().data.context.dragGroup;
 
-    expect(dragGroup[0].attr('display')).to.equal('none');
+    expect(svgAttr(dragGroup.childNodes[0], 'display')).to.equal('none');
   }));
 
 
@@ -147,7 +151,7 @@ describe('features/replace-preview', function() {
         eventDefinitionType: 'bpmn:MessageEventDefinition'
       });
 
-      expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(startEventGfx));
     })
   );
 
@@ -164,7 +168,7 @@ describe('features/replace-preview', function() {
       // check if the visual replacement is a blank interrupting start event
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
     })
   );
 
@@ -188,7 +192,7 @@ describe('features/replace-preview', function() {
         eventDefinitionType: 'bpmn:MessageEventDefinition'
       });
 
-      expect(context.dragGroup[0].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(startEventGfx));
     })
   );
 
@@ -208,7 +212,7 @@ describe('features/replace-preview', function() {
       // check if the visual representation remains a non interrupting message start event
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
     })
   );
 
@@ -231,9 +235,9 @@ describe('features/replace-preview', function() {
       // check if the visual replacements are blank interrupting start events
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-      expect(context.dragGroup[3].innerSVG()).to.equal(startEventGfx.innerSVG());
-      expect(context.dragGroup[4].innerSVG()).to.equal(startEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
+      expect(innerSVG(context.dragGroup.childNodes[3])).to.equal(innerSVG(startEventGfx));
+      expect(innerSVG(context.dragGroup.childNodes[4])).to.equal(innerSVG(startEventGfx));
     })
   );
 
@@ -268,9 +272,9 @@ describe('features/replace-preview', function() {
       var context = dragging.context().data.context;
 
       // then
-      expect(context.dragGroup[0].innerSVG()).to.equal(messageStartEventGfx.innerSVG());
-      expect(context.dragGroup[1].innerSVG()).to.equal(startEventGfx.innerSVG());
-      expect(context.dragGroup[2].innerSVG()).to.equal(timerStartEventGfx.innerSVG());
+      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(messageStartEventGfx));
+      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
+      expect(innerSVG(context.dragGroup.childNodes[2])).to.equal(innerSVG(timerStartEventGfx));
     })
   );
 

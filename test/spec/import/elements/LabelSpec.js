@@ -50,13 +50,13 @@ describe('import - labels', function() {
           // then
           expect(endEvent.label.x).to.be.within(236, 237);
           expect(endEvent.label.y).to.be.within(256, 256);
-          expect(endEvent.label.width).to.be.within(68, 69);
+          expect(endEvent.label.width).to.be.within(67, 69);
           expect(endEvent.label.height).to.be.within(23, 30);
 
           expect(sequenceFlow.label.x).to.be.within(441, 442);
           expect(sequenceFlow.label.y).to.be.within(316, 317);
           expect(sequenceFlow.label.width).to.be.within(79, 82);
-          expect(sequenceFlow.label.height).to.be.within(11, 15);
+          expect(sequenceFlow.label.height).to.be.within(12, 15);
 
           done();
         })();

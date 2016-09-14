@@ -6,6 +6,9 @@ var Modeler = require('../../../../lib/Modeler');
 
 var TestContainer = require('mocha-test-container-support');
 
+var domQuery = require('min-dom/lib/query');
+
+
 describe('label bounds', function() {
 
   function createModeler(xml, done) {
@@ -198,7 +201,7 @@ describe('label bounds', function() {
           // given
           var shape = elementRegistry.get('StartEvent_1'),
               gfx = elementRegistry.getGraphics('StartEvent_1_label'),
-              hit = gfx.select('.djs-hit');
+              hit = domQuery('.djs-hit', gfx);
 
           var interactionEventSpy = sinon.spy(hit, 'attr'),
               rendererSpy = sinon.spy(bpmnRenderer, 'drawShape');

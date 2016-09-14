@@ -61,7 +61,7 @@
     "load-grunt-tasks": "^0.3.0",
     "mocha": "^2.2.5",
     "mocha-test-container-support": "0.2.0",
-    "phantomjs": "^1.9.19",
+    "phantomjs": "^2.1.7",
     "sinon": "~1.14.1",
     "sinon-chai": "~2.7.0",
     "source-map-concat": "^1.0.0",
@@ -79,6 +79,7 @@
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
     "min-dom": "^0.2.0",
-    "object-refs": "^0.1.1"
+    "object-refs": "^0.1.1",
+    "tiny-svg": "0.0.1"
   }
 }

@@ -12,6 +12,8 @@ var replacePreviewModule = require('../../../../../lib/features/replace-preview'
 var is = require('../../../../../lib/util/ModelUtil').is,
     canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
 
+var domQuery = require('min-dom/lib/query');
+
 
 describe('features/modeling - move start event behavior', function() {
 
@@ -437,7 +439,7 @@ describe('features/modeling - move start event behavior', function() {
 
       // then
       var gfx = elementRegistry.getGraphics(subProcess);
-      var outline = gfx.select('.djs-outline');
+      var outline = domQuery('.djs-outline', gfx);
 
       expect(outline.getBBox().width).to.equal(gfx.getBBox().width);
       expect(outline.getBBox().height).to.equal(gfx.getBBox().height);

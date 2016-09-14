@@ -5,6 +5,8 @@ require('../../TestHelper');
 var coreModule = require('../../../lib/core'),
     rendererModule = require('../../../lib/draw');
 
+var domQuery = require('min-dom/lib/query');
+
 /* global bootstrapViewer, bootstrapModeler, inject */
 
 
@@ -174,7 +176,7 @@ describe('draw - bpmn renderer', function() {
         var callActivityGfx = elementRegistry.getGraphics('CallActivity');
 
         // make sure the + marker is shown
-        expect(callActivityGfx.select('[data-marker=sub-process]')).to.exist;
+        expect(domQuery('[data-marker=sub-process]', callActivityGfx)).to.exist;
 
         done();
       })();
@@ -197,7 +199,7 @@ describe('draw - bpmn renderer', function() {
         var callActivityGfx = elementRegistry.getGraphics('AdHocSubProcess');
 
         // make sure the + marker is shown
-        expect(callActivityGfx.select('[data-marker=adhoc]')).to.exist;
+        expect(domQuery('[data-marker=adhoc]', callActivityGfx)).to.exist;
 
         done();
       })();

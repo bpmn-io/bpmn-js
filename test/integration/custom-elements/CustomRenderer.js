@@ -6,6 +6,10 @@ var BaseRenderer = require('diagram-js/lib/draw/BaseRenderer');
 
 var componentsToPath = require('diagram-js/lib/util/RenderUtil').componentsToPath;
 
+var svgAppend = require('tiny-svg/lib/append'),
+    svgAttr = require('tiny-svg/lib/attr'),
+    svgCreate = require('tiny-svg/lib/create');
+
 
 function CustomRenderer(eventBus, styles) {
 
@@ -18,19 +22,23 @@ function CustomRenderer(eventBus, styles) {
   var computeStyle = styles.computeStyle;
 
   this.handlers = {
-    'custom:triangle': function(p, element) {
-      return self.drawTriangle(p, element.width);
+    'custom:triangle': function(parentGfx, element) {
+      return self.drawTriangle(parentGfx, element.width);
     },
-    'custom:circle': function(p, element, attrs) {
-      return self.drawCircle(p, element.width, element.height,  attrs);
+    'custom:circle': function(parentGfx, element, attrs) {
+      return self.drawCircle(parentGfx, element.width, element.height,  attrs);
     }
   };
 
-  this.drawTriangle = function(p, side, attrs) {
+  this.drawTriangle = function(parentGfx, side, attrs) {
     var halfSide = side / 2,
         points;
 
-    points = [ halfSide, 0, side, side, 0, side ];
+    points = [{ x: halfSide, y: 0 }, { x: side, y: side }, { x: 0, y: side }];
+
+    var pointsString = points.map(function(point) {
+      return point.x + ',' + point.y;
+    }).join(' ');
 
     attrs = computeStyle(attrs, {
       stroke: '#3CAA82',
@@ -38,7 +46,13 @@ function CustomRenderer(eventBus, styles) {
       fill: '#3CAA82'
     });
 
-    return p.polygon(points).attr(attrs);
+    var polygon = svgCreate('polygon');
+    svgAttr(polygon, { points: pointsString });
+    svgAttr(polygon, attrs);
+
+    svgAppend(parentGfx, polygon);
+
+    return polygon;
   };
 
   this.getTrianglePath = function(element) {
@@ -57,7 +71,7 @@ function CustomRenderer(eventBus, styles) {
     return componentsToPath(trianglePath);
   };
 
-  this.drawCircle = function(p, width, height, attrs) {
+  this.drawCircle = function(parentGfx, width, height, attrs) {
     var cx = width / 2,
         cy = height / 2;
 
@@ -67,7 +81,17 @@ function CustomRenderer(eventBus, styles) {
       fill: 'white'
     });
 
-    return p.circle(cx, cy, Math.round((width + height) / 4)).attr(attrs);
+    var circle = svgCreate('circle');
+    svgAttr(circle, {
+      cx: cx,
+      cy: cy,
+      r: Math.round((width + height) / 4)
+    });
+    svgAttr(circle, attrs);
+
+    svgAppend(parentGfx, circle);
+
+    return circle;
   };
 
   this.getCirclePath = function(shape) {
