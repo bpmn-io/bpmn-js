@@ -135,7 +135,7 @@ describe('features/space-tool', function() {
         dragging.move(canvasEvent({ x: 50, y: 50 }));
         dragging.end();
 
-        var spaceLayer = domQuery('.djs-crosshair-group', canvas.getNativeLayer('space'));
+        var spaceLayer = domQuery('.djs-crosshair-group', canvas.getLayer('space'));
 
         // then
         expect(spaceLayer).to.be.null;

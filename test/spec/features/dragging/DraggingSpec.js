@@ -176,7 +176,7 @@ describe('features/dragging - Dragging', function() {
 
         // given
         var rootElement = canvas.getRootElement(),
-            rootGfx = elementRegistry.getNativeGraphics(rootElement);
+            rootGfx = elementRegistry.getGraphics(rootElement);
 
         // when
         dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');

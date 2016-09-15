@@ -88,10 +88,10 @@ describe('features/bendpoints', function() {
     it('should show on hover', inject(function(eventBus, canvas, elementRegistry) {
 
       // given
-      var layer = canvas.getNativeLayer('overlays');
+      var layer = canvas.getLayer('overlays');
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
 
 
       // then
@@ -104,7 +104,7 @@ describe('features/bendpoints', function() {
     it('should show on select', inject(function(selection, canvas, elementRegistry) {
 
       // given
-      var layer = canvas.getNativeLayer('overlays');
+      var layer = canvas.getLayer('overlays');
 
       // when
       selection.select(connection);
@@ -119,7 +119,7 @@ describe('features/bendpoints', function() {
     it('should activate bendpoint move', inject(function(dragging, eventBus, elementRegistry, bendpoints) {
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
       eventBus.fire('element.mousemove', {
         element: connection,
         originalEvent: canvasEvent({ x: 500, y: 250 })
@@ -145,7 +145,7 @@ describe('features/bendpoints', function() {
           intersectionMid = intersectionEnd - (intersectionEnd - intersectionStart) / 2;
 
       // when
-      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getNativeGraphics(connection) });
+      eventBus.fire('element.hover', { element: connection, gfx: elementRegistry.getGraphics(connection) });
       eventBus.fire('element.mousemove', {
         element: connection,
         originalEvent: canvasEvent({ x: intersectionMid, y: 250 })

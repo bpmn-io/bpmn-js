@@ -288,7 +288,7 @@ describe('features/resize - Resize', function() {
 
         // then
         // TODO@philipp: fix in phantomjs, classList is undefined in phantomjs
-        var frame = domQuery('.djs-resize-overlay', canvas.getNativeDefaultLayer());
+        var frame = domQuery('.djs-resize-overlay', canvas.getDefaultLayer());
 
         expect(domClasses(frame).has('resize-not-ok')).to.equal(true);
       }));

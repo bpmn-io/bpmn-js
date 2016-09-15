@@ -1500,8 +1500,8 @@ describe('Canvas', function() {
       var root = canvas.getRootElement();
 
       // when
-      var gfx = canvas.getNativeGraphics(root),
-          secondaryGfx = canvas.getNativeGraphics(root, true);
+      var gfx = canvas.getGraphics(root),
+          secondaryGfx = canvas.getGraphics(root, true);
 
       // then
       expect(gfx).to.exist;

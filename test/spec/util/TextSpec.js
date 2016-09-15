@@ -4,7 +4,9 @@ var assign = require('lodash/object/assign');
 
 var pick = require('lodash/object/pick');
 
-var unwrapSnapSvg = require('../../../lib/util/SnapSvgUtil').unwrapSnapSvg;
+var svgAppend = require('tiny-svg/lib/append'),
+    svgAttr = require('tiny-svg/lib/attr'),
+    svgCreate = require('tiny-svg/lib/create');
 
 
 function toFitBBox(actual, expected) {
@@ -33,8 +35,7 @@ function toFitBBox(actual, expected) {
   return !!pass;
 }
 
-var Snap = require('../../../vendor/snapsvg'),
-    TextUtil = require('../../../lib/util/Text');
+var TextUtil = require('../../../lib/util/Text');
 
 var TestContainer = require('mocha-test-container-support');
 
@@ -62,17 +63,29 @@ describe('Text', function() {
 
     testContainer.appendChild(parent);
 
-    var svg = Snap.createSnapAt('100%', '100%', parent);
+    var svg = svgCreate('svg');
+    svgAttr(svg, { width: '100%', height: '100%' });
 
-    container = svg.group();
+    svgAppend(parent, svg);
+
+    container = svgCreate('g');
+
+    svgAppend(svg, container);
   });
 
   function drawRect(width, height) {
-    container.rect(0, 0, width, height).attr({
+    var rect = svgCreate('rect');
+    svgAttr(rect, {
+      x: 0,
+      y: 0,
+      width: width,
+      height: height,
       fill: 'none',
       strokeWidth: 1,
       stroke: 'black'
     });
+
+    svgAppend(container, rect);
   }
 
 
@@ -134,13 +147,13 @@ describe('Text', function() {
       var label = 'I am a label';
 
       // render on invisible element
-      container.attr('display', 'none');
+      svgAttr(container, 'display', 'none');
 
       // when
       var text = createText(container, label, { box: { width: 150, height: 100 } });
 
       // make visible (for bounds check)
-      container.attr('display', '');
+      svgAttr(container, 'display', '');
 
       expect(text).to.exist;
       expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
@@ -157,7 +170,7 @@ describe('Text', function() {
 
       // then
       expect(text).to.exist;
-      expect(unwrapSnapSvg(text).textContent.substr(-1)).equals('-');
+      expect(text.textContent.substr(-1)).equals('-');
     });
 
 
@@ -263,8 +276,6 @@ describe('Text', function() {
           align: 'center-middle',
           padding: 5
         });
-
-
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;

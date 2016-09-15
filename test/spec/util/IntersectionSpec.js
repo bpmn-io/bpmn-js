@@ -3,10 +3,8 @@
 var intersect = require('../../../lib/util/Intersection').intersection;
 
 function expectIntersection(intersection, expected) {
-  return intersection.x > expected.x - 1
-    && intersection.x < expected.x + 1
-    && intersection.y > expected.y - 1
-    && intersection.y < expected.y + 1
+  return Math.abs(intersection.x - expected.x) < 1
+    && Math.abs(intersection.y - expected.y) < 1
     && intersection.segment1 === expected.segment1
     && intersection.segment2 === expected.segment2;
 }
