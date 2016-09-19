@@ -383,6 +383,31 @@ describe('features - context-pad', function() {
       }));
 
 
+    it('should open boundary event replace menu after an element is created if it has modifier key',
+      inject(function(create, dragging, canvas, elementFactory, modeling, popupMenu) {
+        // given
+        var rootShape = canvas.getRootElement();
+        var task = elementFactory.createShape({ type: 'bpmn:Task' });
+        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+
+        modeling.createShape(task, { x: 100, y: 100 }, rootShape);
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), intermediateEvent);
+
+        dragging.move(canvasEvent({ x: 50, y: 50 }));
+        dragging.hover({ element: task });
+        dragging.move(canvasEvent({ x: 50, y: 65 }));
+
+        dragging.end(canvasEvent({ x: 50, y: 65 }, { ctrlKey: true, metaKey: true }));
+
+        // then
+        var replaceMenu = domQuery.all('[data-id$="-boundary"]', popupMenu._current.container);
+        expect(replaceMenu).to.exist;
+        expect(replaceMenu.length).to.eql(13);
+      }));
+
+
     it('should not open the replace menu after an element is created when there is none',
       inject(function(create, dragging, canvas, elementFactory) {
         // given
