@@ -890,6 +890,31 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('multi selection move', function() {
+
+    var testXML = require('./BpmnRules.multiSelectionPools.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+    it('is allowed across pools when parent does not change', inject(function(elementRegistry) {
+
+      // when
+      var elements = [
+        elementRegistry.get('Task_A'),
+        elementRegistry.get('Task_B'),
+        elementRegistry.get('MessageFlow_1v3u2fb')
+      ];
+
+      var target = 'Participant_1';
+
+      // then
+      expectCanMove(elements, target, {
+        attach: false,
+        move: true
+      });
+    }));
+  });
+
   describe('event move', function() {
 
     var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
