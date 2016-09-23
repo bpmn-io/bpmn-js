@@ -168,7 +168,7 @@ describe('features/bendpoints', function() {
       function triggerMouseEvent(type, gfx) {
 
         var event = document.createEvent('MouseEvent');
-        event.initMouseEvent(type, true, true, window);
+        event.initMouseEvent(type, true, true, window, 0, 0, 0, 80, 20, false, false, false, false, 0, null);
 
         return gfx.dispatchEvent(event);
       }
