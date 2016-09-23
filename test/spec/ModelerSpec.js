@@ -40,7 +40,7 @@ describe('Modeler', function() {
   });
 
 
-  it.only('should import complex', function(done) {
+  it.skip('should import complex', function(done) {
     var xml = require('../fixtures/bpmn/complex.bpmn');
     createModeler(xml, done);
   });

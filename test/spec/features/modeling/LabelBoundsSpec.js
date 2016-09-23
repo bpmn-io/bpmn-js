@@ -6,8 +6,6 @@ var Modeler = require('../../../../lib/Modeler');
 
 var TestContainer = require('mocha-test-container-support');
 
-var domQuery = require('min-dom/lib/query');
-
 
 describe('label bounds', function() {
 
@@ -196,14 +194,12 @@ describe('label bounds', function() {
     describe('interaction events', function() {
 
       it('should update bounds after element bounds have been updated',
-        inject(function(interactionEvents, elementRegistry, bpmnRenderer) {
+        inject(function(interactionEvents, elementRegistry, bpmnRenderer, graphicsFactory) {
 
           // given
-          var shape = elementRegistry.get('StartEvent_1'),
-              gfx = elementRegistry.getGraphics('StartEvent_1_label'),
-              hit = domQuery('.djs-hit', gfx);
+          var shape = elementRegistry.get('StartEvent_1');
 
-          var interactionEventSpy = sinon.spy(hit, 'attr'),
+          var graphicsFactorySpy = sinon.spy(graphicsFactory, 'update'),
               rendererSpy = sinon.spy(bpmnRenderer, 'drawShape');
 
           // when
@@ -214,7 +210,7 @@ describe('label bounds', function() {
           // updated the elements bounds dimensions and position
           sinon.assert.callOrder(
             rendererSpy.withArgs(sinon.match.any, shape.label),
-            interactionEventSpy
+            graphicsFactorySpy
           );
         })
       );
