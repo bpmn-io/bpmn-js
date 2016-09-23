@@ -185,7 +185,7 @@ describe('features/label-support - Label', function() {
 
       var ctx = dragging.context().data.context;
 
-      var children = ctx.dragGroup.children;
+      var children = ctx.dragGroup.childNodes;
 
       // then
       expect(children).to.have.lengthOf(2);
