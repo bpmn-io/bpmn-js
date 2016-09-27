@@ -50,6 +50,9 @@ describe('features - label-editing', function() {
 
       // then
       expect(directEditing.isActive()).to.be.true;
+
+      // clean up
+      directEditing._textbox.destroy();
     }));
 
 
