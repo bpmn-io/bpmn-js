@@ -108,9 +108,9 @@ describe('label bounds', function() {
     describe('label position', function() {
 
       var getExpectedX = function(shape) {
-        var shapeMid = shape.x + shape.width/2;
+        var shapeMid = shape.x + Math.ceil(shape.width/2);
 
-        return Math.round(shapeMid - shape.label.width/2);
+        return shapeMid - Math.ceil(shape.label.width/2);
       };
 
       it('should shift to left', inject(function(elementRegistry) {
@@ -124,7 +124,7 @@ describe('label bounds', function() {
         // then
         var expectedX = getExpectedX(shape);
 
-        expect(shape.label.x).to.be.within(expectedX - 1, expectedX);
+        expect(shape.label.x).to.equal(expectedX);
       }));
 
 
@@ -139,7 +139,25 @@ describe('label bounds', function() {
         // then
         var expectedX = getExpectedX(shape);
 
-        expect(shape.label.x).to.be.within(expectedX -1, expectedX);
+        expect(shape.label.x).to.equal(expectedX);
+      }));
+
+
+      it('should remain the same', inject(function(elementRegistry) {
+
+        // given
+        var shape = elementRegistry.get('StartEvent_1');
+
+        // when
+        updateLabel(shape, 'FOOBAR');
+
+        // copy old horizontal label position
+        var oldX = shape.label.x + 0;
+
+        updateLabel(shape, 'FOOBAR\n1');
+
+        // then
+        expect(shape.label.x).to.equal(oldX);
       }));
 
     });

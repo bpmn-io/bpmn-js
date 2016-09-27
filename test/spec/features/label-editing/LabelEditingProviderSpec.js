@@ -1,7 +1,5 @@
 'use strict';
 
-var TestContainer = require('mocha-test-container-support');
-
 var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapViewer, inject */
@@ -513,12 +511,6 @@ describe('features - label-editing', function() {
 
         describe('zoom', function() {
 
-          var container;
-
-          beforeEach(function() {
-            container = TestContainer.get(this);
-          });
-
           it('should have fixed dimensions (low zoom)', testTextboxSizing('empty-task', 0.5, 100, 80, oneWord));
 
           it('should have fixed dimensions (high zoom)', testTextboxSizing('empty-task', 1.5, 150, 120, oneWord));
@@ -526,7 +518,7 @@ describe('features - label-editing', function() {
           it('should center text box position (low zoom)', inject(function(canvas, elementRegistry, directEditing) {
 
             // given
-            canvas.zoom(0.5);
+            canvas.zoom(0.5, { x: 0, y: 0 });
 
             var shape = elementRegistry.get('empty-task');
 
@@ -534,17 +526,10 @@ describe('features - label-editing', function() {
             directEditing.activate(shape);
 
             // then
-            var textbox = directEditing._textbox,
-                gfx = elementRegistry.getGraphics('empty-task'),
-                shapeClientRect = gfx.node.parentNode.getBoundingClientRect();
+            var textbox = directEditing._textbox;
 
-            var shapeRect = {
-              top: shapeClientRect.top - container.offsetTop,
-              left: shapeClientRect.left - container.offsetLeft
-            };
-
-            expect(textbox.content.offsetLeft).to.be.within(shapeRect.left - 28, shapeRect.left - 22);
-            expect(textbox.content.offsetTop).to.be.within(shapeRect.top - 22, shapeRect.top - 17);
+            expect(textbox.content.offsetLeft).to.equal(211);
+            expect(textbox.content.offsetTop).to.equal(17);
 
           }));
 
