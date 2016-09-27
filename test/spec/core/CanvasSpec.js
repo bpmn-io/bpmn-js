@@ -7,11 +7,10 @@ require('../../TestHelper');
 var merge = require('lodash/object/merge');
 var TestContainer = require('mocha-test-container-support');
 
-var domClasses = require('min-dom/lib/classes'),
-    domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query');
 
-var svgAttr = require('tiny-svg/lib/attr');
-
+var svgAttr = require('tiny-svg/lib/attr'),
+    svgClasses = require('tiny-svg/lib/classes');
 
 describe('Canvas', function() {
 
@@ -1537,7 +1536,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.true;
-      expect(domClasses(gfx).has('foo')).to.be.true;
+      expect(svgClasses(gfx).has('foo')).to.be.true;
     }));
 
 
@@ -1551,7 +1550,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(root, 'foo')).to.be.true;
-      expect(domClasses(svgGfx).has('foo')).to.be.true;
+      expect(svgClasses(svgGfx).has('foo')).to.be.true;
     }));
 
 
@@ -1565,7 +1564,7 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.false;
-      expect(domClasses(gfx).has('foo')).to.be.false;
+      expect(svgClasses(gfx).has('foo')).to.be.false;
     }));
 
 
@@ -1576,14 +1575,14 @@ describe('Canvas', function() {
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.true;
-      expect(domClasses(gfx).has('foo')).to.be.true;
+      expect(svgClasses(gfx).has('foo')).to.be.true;
 
       // but when
       canvas.toggleMarker(shape, 'foo');
 
       // then
       expect(canvas.hasMarker(shape, 'foo')).to.be.false;
-      expect(domClasses(gfx).has('foo')).to.be.false;
+      expect(svgClasses(gfx).has('foo')).to.be.false;
 
     }));
 

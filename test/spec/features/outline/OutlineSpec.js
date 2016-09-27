@@ -4,8 +4,9 @@
 
 var selectionModule = require('../../../../lib/features/selection');
 
-var domClasses = require('min-dom/lib/classes'),
-    domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query');
+
+var svgClasses = require('tiny-svg/lib/classes');
 
 
 describe('features/outline/Outline', function() {
@@ -41,7 +42,7 @@ describe('features/outline/Outline', function() {
       var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(domClasses(gfx).has('selected')).to.be.true; // Outline class is set
+      expect(svgClasses(gfx).has('selected')).to.be.true; // Outline class is set
     }));
 
 
@@ -58,7 +59,7 @@ describe('features/outline/Outline', function() {
       var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(domClasses(gfx).has('selected')).to.be.true; // Outline class is set
+      expect(svgClasses(gfx).has('selected')).to.be.true; // Outline class is set
     }));
 
   });
@@ -86,7 +87,7 @@ describe('features/outline/Outline', function() {
       var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(domClasses(gfx).has('selected')).to.be.false; // Outline class is not set
+      expect(svgClasses(gfx).has('selected')).to.be.false; // Outline class is not set
     }));
 
 
@@ -104,7 +105,7 @@ describe('features/outline/Outline', function() {
       var outline = domQuery('.djs-outline', gfx);
 
       expect(outline).to.exist;
-      expect(domClasses(gfx).has('selected')).to.be.false; // Outline class is not set
+      expect(svgClasses(gfx).has('selected')).to.be.false; // Outline class is not set
     }));
 
   });

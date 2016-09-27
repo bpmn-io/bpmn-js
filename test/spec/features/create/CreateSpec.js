@@ -13,7 +13,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
     attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
-var domClasses = require('min-dom/lib/classes');
+var svgClasses = require('tiny-svg/lib/classes');
 
 
 describe('features/create - Create', function() {
@@ -147,8 +147,7 @@ describe('features/create - Create', function() {
       var ctx = dragging.context();
 
       // then
-      // TODO repair
-      expect(domClasses(ctx.data.context.visual).has('djs-drag-group')).to.be.true;
+      expect(svgClasses(ctx.data.context.visual).has('djs-drag-group')).to.be.true;
     }));
 
 

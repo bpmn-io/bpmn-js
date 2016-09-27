@@ -12,7 +12,7 @@ var assign = require('lodash/object/assign'),
 
 var dragModule = require('../../../../lib/features/dragging');
 
-var domClasses = require('min-dom/lib/classes');
+var svgClasses = require('tiny-svg/lib/classes');
 
 
 describe('features/dragging - Dragging', function() {
@@ -182,13 +182,13 @@ describe('features/dragging - Dragging', function() {
         dragging.init(canvasEvent({ x: 10, y: 10 }), 'foo');
 
         // then
-        expect(domClasses(rootGfx).has('djs-drag-active')).to.be.false;
+        expect(svgClasses(rootGfx).has('djs-drag-active')).to.be.false;
 
         // but when
         dragging.move(canvasEvent({ x: 30, y: 20 }));
 
         // then
-        expect(domClasses(rootGfx).has('djs-drag-active')).to.be.true;
+        expect(svgClasses(rootGfx).has('djs-drag-active')).to.be.true;
       }));
 
 
@@ -204,7 +204,7 @@ describe('features/dragging - Dragging', function() {
         dragging.cancel();
 
         // then
-        expect(domClasses(rootGfx).has('djs-drag-active')).to.be.false;
+        expect(svgClasses(rootGfx).has('djs-drag-active')).to.be.false;
       }));
 
     });

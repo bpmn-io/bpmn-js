@@ -17,8 +17,9 @@ var getNewAttachShapeDelta = require('../../../../lib/util/AttachUtil').getNewAt
 
 var keyModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
-var domClasses = require('min-dom/lib/classes'),
-    domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query');
+
+var svgClasses = require('tiny-svg/lib/classes');
 
 
 describe('features/attach-support', function() {
@@ -1143,7 +1144,7 @@ describe('features/attach-support', function() {
 
       // then
       expect(ctx.data.context.canExecute).to.equal('attach');
-      expect(domClasses(elementRegistry.getGraphics(host)).has('attach-ok')).to.be.true;
+      expect(svgClasses(elementRegistry.getGraphics(host)).has('attach-ok')).to.be.true;
     }));
 
 
@@ -1163,7 +1164,7 @@ describe('features/attach-support', function() {
       dragging.end();
 
       // then
-      expect(domClasses(elementRegistry.getGraphics(host)).has('attach-ok')).to.be.false;
+      expect(svgClasses(elementRegistry.getGraphics(host)).has('attach-ok')).to.be.false;
     }));
 
 

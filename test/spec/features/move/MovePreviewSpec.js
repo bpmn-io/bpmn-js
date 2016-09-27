@@ -9,8 +9,9 @@ var modelingModule = require('../../../../lib/features/modeling'),
     attachSupportModule = require('../../../../lib/features/attach-support'),
     rulesModule = require('./rules');
 
-var domClasses = require('min-dom/lib/classes'),
-    domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query');
+
+var svgClasses = require('tiny-svg/lib/classes');
 
 
 describe('features/move - MovePreview', function() {
@@ -75,8 +76,8 @@ describe('features/move - MovePreview', function() {
       dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
-      expect(domClasses(elementRegistry.getGraphics(childShape)).has('djs-dragging')).to.equal(true);
-      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(childShape)).has('djs-dragging')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
     }));
 
 
@@ -89,8 +90,8 @@ describe('features/move - MovePreview', function() {
       dragging.move(canvasEvent({ x: 20, y: 20 }));
 
       // then
-      expect(domClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(true);
-      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(true);
     }));
 
 
@@ -104,8 +105,8 @@ describe('features/move - MovePreview', function() {
       dragging.end();
 
       // then
-      expect(domClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(false);
-      expect(domClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(false);
+      expect(svgClasses(elementRegistry.getGraphics(childShape2)).has('djs-dragging')).to.equal(false);
+      expect(svgClasses(elementRegistry.getGraphics(connection)).has('djs-dragging')).to.equal(false);
     }));
 
   });
@@ -131,7 +132,7 @@ describe('features/move - MovePreview', function() {
       var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(true);
 
-      expect(domClasses(elementRegistry.getGraphics(parentShape)).has('drop-ok')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(parentShape)).has('drop-ok')).to.equal(true);
     }));
 
 
@@ -153,7 +154,7 @@ describe('features/move - MovePreview', function() {
       var ctx = dragging.context();
       expect(ctx.data.context.canExecute).to.equal(false);
 
-      expect(domClasses(elementRegistry.getGraphics(childShape)).has('drop-not-ok')).to.equal(true);
+      expect(svgClasses(elementRegistry.getGraphics(childShape)).has('drop-not-ok')).to.equal(true);
     }));
 
   });
@@ -194,7 +195,7 @@ describe('features/move - MovePreview', function() {
         var ctx = dragging.context();
         expect(ctx.data.context.differentParents).to.equal(true);
 
-        expect(domClasses(elementRegistry.getGraphics(parentShape)).has('new-parent')).to.equal(true);
+        expect(svgClasses(elementRegistry.getGraphics(parentShape)).has('new-parent')).to.equal(true);
       })
     );
 
@@ -220,7 +221,7 @@ describe('features/move - MovePreview', function() {
         var ctx = dragging.context();
         expect(ctx.data.context.differentParents).to.equal(true);
 
-        expect(domClasses(elementRegistry.getGraphics(parentShape)).has('drop-new-target')).to.equal(false);
+        expect(svgClasses(elementRegistry.getGraphics(parentShape)).has('drop-new-target')).to.equal(false);
       })
     );
 
@@ -247,8 +248,8 @@ describe('features/move - MovePreview', function() {
         expect(ctx.data.context.differentParents).to.equal(true);
 
         var childGfx = elementRegistry.getGraphics(childShape);
-        expect(domClasses(childGfx).has('drop-new-target')).to.equal(false);
-        expect(domClasses(childGfx).has('drop-not-ok')).to.equal(true);
+        expect(svgClasses(childGfx).has('drop-new-target')).to.equal(false);
+        expect(svgClasses(childGfx).has('drop-not-ok')).to.equal(true);
       })
     );
 

@@ -14,8 +14,9 @@ var resizeModule = require('../../../../lib/features/resize'),
     rulesModule = require('./rules'),
     selectModule = require('../../../../lib/features/selection');
 
-var domClasses = require('min-dom/lib/classes'),
-    domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query');
+
+var svgClasses = require('tiny-svg/lib/classes');
 
 function bounds(b) {
   return pick(b, [ 'x', 'y', 'width', 'height' ]);
@@ -290,7 +291,7 @@ describe('features/resize - Resize', function() {
         // TODO@philipp: fix in phantomjs, classList is undefined in phantomjs
         var frame = domQuery('.djs-resize-overlay', canvas.getDefaultLayer());
 
-        expect(domClasses(frame).has('resize-not-ok')).to.equal(true);
+        expect(svgClasses(frame).has('resize-not-ok')).to.equal(true);
       }));
 
     });
