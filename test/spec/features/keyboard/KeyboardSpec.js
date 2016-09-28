@@ -14,7 +14,7 @@ var modelingModule = require('../../../../lib/features/modeling'),
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
 
-describe.only('features/keyboard', function() {
+describe('features/keyboard', function() {
 
   beforeEach(bootstrapDiagram({
     modules: [
