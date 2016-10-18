@@ -87,6 +87,22 @@ describe('features/modeling - update properties', function() {
       expect(updatedElements).to.include(newDefaultFlowConnection);
     }));
 
+    it('should keep default flow when reconnecting another sequence flows start',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+            sequenceFlow = elementRegistry.get('SequenceFlow_2'),
+            taskShape = elementRegistry.get('Task_1');
+
+        // when
+        modeling.reconnectStart(sequenceFlow, taskShape,
+          { x: taskShape.x + taskShape.width, y: taskShape.y + taskShape.height / 2 });
+
+        // then
+        expect(gatewayShape.businessObject.default).not.to.be.undefined;
+
+      }));
 
     it('updating conditional flow on source replace', inject(function(bpmnReplace, elementRegistry) {
 
