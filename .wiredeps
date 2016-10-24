@@ -28,6 +28,9 @@
     "object-refs": {
       "version": "0.1.0"
     },
+    "tiny-svg": {
+      "version": "bpmn-io/tiny-svg"
+    },
     "bpmn-moddle": {
       "version": "bpmn-io/bpmn-moddle",
       "dependencies": {
