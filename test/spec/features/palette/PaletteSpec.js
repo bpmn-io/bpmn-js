@@ -132,6 +132,55 @@ describe('features/palette', function() {
       expect(domQuery('img', entryB)).to.exist;
     }));
 
+
+    describe('entry className', function() {
+
+      function testClassName(options) {
+
+        var set = options.set,
+            expected = options.expect;
+
+        return inject(function(palette) {
+
+          // given
+          var entries  = {
+            'entryA': {
+              alt: 'A',
+              className: set
+            }
+          };
+
+          var provider = new Provider(entries);
+
+          // when
+          palette.registerProvider(provider);
+          palette.open();
+
+          // then DOM should contain entries
+          var entryA = domQuery('[data-action="entryA"]', palette._container);
+          expect(entryA).to.exist;
+
+          // expect all classes to be set
+          expected.forEach(function(cls) {
+            expect(domClasses(entryA).has(cls)).to.be.true;
+          });
+        });
+      }
+
+
+      it('should recognize Array<String> as className', testClassName({
+        set: [ 'FOO', 'BAAAR' ],
+        expect: [ 'FOO', 'BAAAR' ]
+      }));
+
+
+      it('should recognize <space separated classes> as className', testClassName({
+        set: 'FOO BAAAR blub',
+        expect: [ 'FOO', 'BAAAR', 'blub' ]
+      }));
+
+    });
+
   });
 
 
