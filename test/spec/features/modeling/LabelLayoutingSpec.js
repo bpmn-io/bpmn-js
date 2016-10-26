@@ -249,7 +249,7 @@ describe('modeling - label layouting', function() {
         modeling.reconnectStart(connection, shape, { x: 0, y: 0 });
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(573, 575);
+        expect(Math.round(connection.label.x)).to.be.within(570, 575);
         expect(Math.round(connection.label.y)).to.be.within(138, 139);
 
       }));
@@ -265,7 +265,7 @@ describe('modeling - label layouting', function() {
         modeling.reconnectEnd(connection, shape, { x: 294, y: 270 });
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(258, 260);
+        expect(Math.round(connection.label.x)).to.be.within(257, 260);
         expect(Math.round(connection.label.y)).to.be.within(185, 186);
 
       }));
@@ -331,7 +331,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.equal(518);
+        expect(Math.round(connection.label.x)).to.be.within(517, 518);
         expect(Math.round(connection.label.y)).to.be.equal(507);
 
       }));
@@ -350,7 +350,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(419, 421);
+        expect(Math.round(connection.label.x)).to.be.within(418, 421);
         expect(Math.round(connection.label.y)).to.be.equal(191);
 
       }));
@@ -374,7 +374,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(250, 251);
+        expect(Math.round(connection.label.x)).to.be.within(248, 251);
         expect(Math.round(connection.label.y)).to.be.equal(152);
 
       }));
@@ -503,7 +503,7 @@ describe('modeling - label layouting', function() {
 
         // then
         expect(connection.label.y - labelPosition.y).to.be.within(-76, -70);
-        expect(connection.label.x - labelPosition.x).to.be.within(-53, -51);
+        expect(connection.label.x - labelPosition.x).to.be.within(-54, -51);
 
       }));
 

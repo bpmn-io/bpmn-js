@@ -523,6 +523,7 @@ describe('features/snapping - BpmnSnapping', function() {
     it('should snap to siblings', inject(function(canvas, elementRegistry, move, dragging) {
 
       var label = elementRegistry.get('BoundaryEvent_1_label'),
+          task = elementRegistry.get('Task_1'),
           rootElement = canvas.getRootElement();
 
       move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
@@ -537,7 +538,10 @@ describe('features/snapping - BpmnSnapping', function() {
 
       dragging.end();
 
-      expect(label.x).to.be.within(192, 193);
+      var labelCenterX = label.x + Math.ceil(label.width / 2),
+          taskCenterX = task.x + Math.ceil(task.width / 2);
+
+      expect(labelCenterX).to.equal(taskCenterX);
 
     }));
 

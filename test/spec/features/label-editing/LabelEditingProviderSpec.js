@@ -447,7 +447,7 @@ describe('features - label-editing', function() {
 
         it('[2 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, twoLineText));
 
-        it('[10 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, tenLineText));
+        it('[10 line text] should have element height', testTextboxSizing('text-annotation', 1, { min: 100 }, 98, tenLineText));
 
       });
 
@@ -573,7 +573,8 @@ describe('features - label-editing', function() {
 
         it('[one word] should have fixed width', testTextboxSizing('subprocess-expanded', 1, 200, 20, oneWord));
 
-        it('[five words] should have fixed width, line break', testTextboxSizing('subprocess-expanded', 1, 200, 20, fiveWords));
+        it('[five words] should have fixed width, line break',
+          testTextboxSizing('subprocess-expanded', 1, 200, 34, 'five yreallyreallyreally loooooong woooords'));
 
         it('[long word] should have fixed width', testTextboxSizing('subprocess-expanded', 1, 200, 20, longWord));
 

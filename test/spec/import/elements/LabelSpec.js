@@ -5,6 +5,13 @@ require('../../../TestHelper');
 /* global bootstrapViewer, inject */
 
 
+function getCenter(element) {
+  return {
+    x: element.x + Math.ceil(element.width / 2),
+    y: element.y + Math.ceil(element.height / 2)
+  };
+}
+
 describe('import - labels', function() {
 
   describe('should import embedded labels', function() {
@@ -44,19 +51,22 @@ describe('import - labels', function() {
         // when
         inject(function(elementRegistry) {
 
-          var endEvent = elementRegistry.get('EndEvent_1'),
-              sequenceFlow = elementRegistry.get('SequenceFlow_1');
+          var eventLabel = elementRegistry.get('EndEvent_1').label,
+              sequenceFlowLabel = elementRegistry.get('SequenceFlow_1').label;
+
+          var eventLabelCenter = getCenter(eventLabel),
+              sequenceFlowCenter = getCenter(sequenceFlowLabel);
 
           // then
-          expect(endEvent.label.x).to.be.within(236, 237);
-          expect(endEvent.label.y).to.be.within(256, 256);
-          expect(endEvent.label.width).to.be.within(67, 69);
-          expect(endEvent.label.height).to.be.within(23, 30);
+          expect(eventLabelCenter.x).to.be.within(270, 272);
+          expect(eventLabelCenter.y).to.be.within(268, 270);
+          expect(eventLabel.width).to.be.above(65);
+          expect(eventLabel.height).to.be.above(20);
 
-          expect(sequenceFlow.label.x).to.be.within(441, 442);
-          expect(sequenceFlow.label.y).to.be.within(316, 317);
-          expect(sequenceFlow.label.width).to.be.within(79, 82);
-          expect(sequenceFlow.label.height).to.be.within(12, 15);
+          expect(sequenceFlowCenter.x).to.be.within(481, 483);
+          expect(sequenceFlowCenter.y).to.be.within(323, 325);
+          expect(sequenceFlowLabel.width).to.be.above(75);
+          expect(sequenceFlowLabel.height).to.be.above(11);
 
           done();
         })();

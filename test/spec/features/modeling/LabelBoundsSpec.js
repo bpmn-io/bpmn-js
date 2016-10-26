@@ -56,51 +56,54 @@ describe('label bounds', function() {
       it('should expand width', inject(function(elementRegistry) {
 
         // given
-        var shape = elementRegistry.get('StartEvent_1');
+        var shape = elementRegistry.get('StartEvent_1'),
+            oldLabelWidth = shape.label.width;
 
         // when
         updateLabel(shape, 'Foooooooooobar');
 
         // then
-        // expect the width to be within a range because different browsers...
-        expect(shape.label.width).to.be.within(82, 84);
+        expect(shape.label.width).to.be.above(oldLabelWidth);
       }));
 
 
       it('should expand height', inject(function(elementRegistry) {
 
         // given
-        var shape = elementRegistry.get('StartEvent_1');
+        var shape = elementRegistry.get('StartEvent_1'),
+            oldLabelHeight = shape.label.height;
 
         // when
         updateLabel(shape, 'Foo\nbar\nbaz');
 
         // then
-        expect(shape.label.height).to.be.within(36, 45);
+        expect(shape.label.height).to.be.above(oldLabelHeight);
       }));
 
 
       it('should reduce width', inject(function(elementRegistry) {
         // given
-        var shape = elementRegistry.get('StartEvent_1');
+        var shape = elementRegistry.get('StartEvent_1'),
+            oldLabelWidth = shape.label.width;
 
         // when
         updateLabel(shape, 'i');
 
         // then
-        expect(shape.label.width).to.be.within(2, 3);
+        expect(shape.label.width).to.be.below(oldLabelWidth);
       }));
 
 
       it('should reduce height', inject(function(elementRegistry) {
         // given
-        var shape = elementRegistry.get('StartEvent_3');
+        var shape = elementRegistry.get('StartEvent_3'),
+            oldLabelHeight = shape.label.height;
 
         // when
         updateLabel(shape, 'One line');
 
         // then
-        expect(shape.label.height).to.be.within(12, 15);
+        expect(shape.label.height).to.be.below(oldLabelHeight);
       }));
 
     });
@@ -256,8 +259,8 @@ describe('label bounds', function() {
           var width = parseInt(matches[1]),
               height = parseInt(matches[2]);
 
-          expect(width).to.be.within(43, 45);
-          expect(height).to.be.within(12, 15);
+          expect(width).to.equal(shape.label.width);
+          expect(height).to.equal(shape.label.height);
 
           done();
         });
@@ -299,8 +302,8 @@ describe('label bounds', function() {
           var width = parseInt(matches[1]),
               height = parseInt(matches[2]);
 
-          expect(width).to.be.within(43, 45);
-          expect(height).to.be.within(12, 15);
+          expect(width).to.equal(shape.label.width);
+          expect(height).to.equal(shape.label.height);
 
           done();
         });
@@ -311,6 +314,9 @@ describe('label bounds', function() {
     it('should not update DI of untouched labels', function(done) {
 
       var xml = require('./LabelBoundsSpec.simple.bpmn');
+
+      // strip windows line breaks (if any)
+      xml = xml.replace(/\r/g, '');
 
       createModeler(xml, function(err, warnings, modeler) {
 
