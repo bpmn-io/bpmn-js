@@ -111,7 +111,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 150, height: 100 } });
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
+      expect(toFitBBox(text, { x: 33, y: 0, width: 84, height: 30 })).to.be.true;
     });
 
 
@@ -156,7 +156,7 @@ describe('Text', function() {
       svgAttr(container, 'display', '');
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: 35, y: 0, width: 80, height: 30 })).to.be.true;
+      expect(toFitBBox(text, { x: 33, y: 0, width: 84, height: 30 })).to.be.true;
     });
 
 
@@ -258,7 +258,7 @@ describe('Text', function() {
         var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
-        expect(toFitBBox(text, { x: 5, y: 0, width: 150, height: 100 })).to.be.true;
+        expect(toFitBBox(text, { x: 2, y: 0, width: 150, height: 100 })).to.be.true;
       });
     });
 
@@ -356,7 +356,7 @@ describe('Text', function() {
         });
 
         expect(text).to.exist;
-        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
+        expect(toFitBBox(text, { x: 0, y: -3, width: 100, height: 106 })).to.be.true;
       });
 
 
@@ -379,7 +379,7 @@ describe('Text', function() {
         });
 
         expect(text).to.exist;
-        expect(toFitBBox(text, { x: 0, y: 0, width: 100, height: 100 })).to.be.true;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 102, height: 100 })).to.be.true;
       });
 
 
