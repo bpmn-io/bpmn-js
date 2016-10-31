@@ -411,6 +411,7 @@ function triggerKeyEvent(element, event, code) {
   e.keyCode = code;
   e.which = code;
   element.dispatchEvent(e);
+  
   return e;
 }
 
