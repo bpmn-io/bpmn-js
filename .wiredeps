@@ -11,9 +11,6 @@
         "hammerjs": {
           "version": "^2.0.1"
         },
-        "snapsvg": {
-          "version": "https://github.com/Nikku/Snap.svg/archive/v0.3.0-browserify.tar.gz"
-        },
         "didi": {
           "version": "0.1.0"
         }
