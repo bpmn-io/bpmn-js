@@ -302,7 +302,7 @@ describe('features/snapping - BpmnSnapping', function() {
         dragging.end();
 
         expect(participant.width).to.equal(467);
-        expect(participant.height).to.equal(287);
+        expect(participant.height).to.equal(263);
       }));
 
 
@@ -436,35 +436,6 @@ describe('features/snapping - BpmnSnapping', function() {
 
   });
 
-
-  describe('on TextAnnotation resize', function() {
-
-    var diagramXML = require('./BpmnSnapping.textAnnotation-resize.bpmn');
-
-    var testResizeModules = [
-      coreModule,
-      modelingModule,
-      resizeModule,
-      rulesModule,
-      snappingModule
-    ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testResizeModules }));
-
-
-    it('should snap to minimum bounds', inject(function(elementRegistry, resize, dragging) {
-
-      var textAnnotation = elementRegistry.get('TextAnnotation');
-
-      resize.activate(canvasEvent({ x: 0, y: 0 }), textAnnotation, 'se');
-      dragging.move(canvasEvent({ x: -400, y: -400 }));
-      dragging.end();
-
-      expect(textAnnotation.width).to.equal(50);
-      expect(textAnnotation.height).to.equal(30);
-    }));
-
-  });
 
   describe('labels', function() {
 

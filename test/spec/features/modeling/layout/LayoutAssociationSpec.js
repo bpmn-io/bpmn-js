@@ -41,7 +41,7 @@ describe('features/modeling - layout association', function() {
 
     // then
     expect(waypoints).to.eql([
-      { original: { x: 400, y: 400 }, x: 389, y: 385 },
+      { original: { x: 400, y: 400 }, x: 388, y: 384 },
       { original: { x: 191, y: 120 }, x: 202, y: 134 }
     ]);
 
@@ -63,7 +63,7 @@ describe('features/modeling - layout association', function() {
 
     // then
     expect(waypoints).to.eql([
-      { original: { x: 420, y: 400 }, x: 408, y: 385 },
+      { original: { x: 420, y: 400 }, x: 407, y: 384 },
       { original: { x: 191, y: 120 }, x: 202, y: 134 }
     ]);
 
@@ -91,7 +91,7 @@ describe('features/modeling - layout association', function() {
 
     // then
     expect(waypoints).to.eql([
-      { original: { x: 420, y: 400 }, x: 417, y: 385 },
+      { original: { x: 420, y: 400 }, x: 417, y: 384 },
       { x: 400, y: 300 },
       { original: { x: 191, y: 120 }, x: 204, y: 131 }
     ]);

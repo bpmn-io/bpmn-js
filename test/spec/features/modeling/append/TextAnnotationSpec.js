@@ -95,7 +95,7 @@ describe('features/modeling - append text-annotation', function() {
 
       //then
       expect(annotationShape.width).to.eql(100);
-      expect(annotationShape.height).to.eql(30);
+      expect(annotationShape.height).to.eql(32);
     }));
   });
 

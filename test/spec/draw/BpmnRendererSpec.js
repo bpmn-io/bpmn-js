@@ -267,7 +267,7 @@ describe('draw - bpmn renderer', function() {
         var TextAnnotationPath = graphicsFactory.getShapePath(TextAnnotationElement);
 
         // then
-        expect(TextAnnotationPath).to.equal('M368,156l100,0l0,80l-100,0z');
+        expect(TextAnnotationPath).to.equal('M368,180l100,0l0,32l-100,0z');
       }));
 
     });
