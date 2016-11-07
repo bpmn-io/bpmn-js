@@ -260,6 +260,18 @@ describe('Text', function() {
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 2, y: 0, width: 150, height: 100 })).to.be.true;
       });
+
+
+      it('multiple line breaks', function() {
+
+        // given
+        var label = 'Line\n\n\nBreaks';
+
+        // when
+        var text = createText(container, label, { box: { width: 150, height: 100 } });
+
+        expect(text.getBBox().height).to.be.above(50);
+      });
     });
 
 
