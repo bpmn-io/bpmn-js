@@ -80,6 +80,6 @@
     "lodash": "^3.0.1",
     "min-dom": "^0.2.0",
     "object-refs": "^0.1.1",
-    "tiny-svg": "git://github.com/bpmn-io/tiny-svg.git#master"
+    "tiny-svg": "^0.1.0"
   }
 }
