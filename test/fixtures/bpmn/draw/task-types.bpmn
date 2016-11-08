@@ -65,7 +65,7 @@
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="sid-D049CA0A-81EE-481B-B9E4-5A1577B3D729" id="sid-D049CA0A-81EE-481B-B9E4-5A1577B3D729_gui">
                 <omgdc:Bounds height="80.0" width="100.0" x="190.0" y="450.0"/>
-                <bpmndi:BPMNLabel labelStyle="sid-f50f8ab6-960d-41a1-81ea-6ab94239978f">
+                <bpmndi:BPMNLabel labelStyle="sid-e0061864-4ad9-48c3-ae14-465c7a037c45">
                     <omgdc:Bounds height="24.0" width="86.57142639160156" x="196.71428680419922" y="476.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>

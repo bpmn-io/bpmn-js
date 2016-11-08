@@ -7,9 +7,9 @@
       <bpmn:outgoing>Association_Both</bpmn:outgoing>
     </bpmn:task>
     <bpmn:endEvent id="EndEvent_106rzzp">
-      <bpmn:incoming>SequenceFlow_064b5j6</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_0sdtitg</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_11iyafm</bpmn:incoming>
+      <bpmn:incoming>Association_None</bpmn:incoming>
+      <bpmn:incoming>Association_One</bpmn:incoming>
+      <bpmn:incoming>Association_Both</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:association id="Association_None" associationDirection="None" sourceRef="Task_0s7r08v" targetRef="EndEvent_106rzzp" />
     <bpmn:association id="Association_One" associationDirection="One" sourceRef="Task_0s7r08v" targetRef="EndEvent_106rzzp" />
