@@ -5,7 +5,8 @@ var globalEvent = require('../../../util/MockEvents').createEvent;
 
 /* global bootstrapDiagram, inject, sinon */
 
-var domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom/lib/query'),
+    domClasses = require('min-dom/lib/classes');
 
 var contextPadModule = require('../../../../lib/features/context-pad');
 
@@ -82,6 +83,65 @@ describe('features/context-pad', function() {
       // pass over providers
       expect(provider.getContextPadEntries).to.have.been.calledWith('FOO');
     }));
+
+
+    describe('entry className', function() {
+
+      function testClassName(options) {
+
+        var set = options.set,
+            expected = options.expect;
+
+        return inject(function(contextPad, canvas) {
+
+          // given
+          var entries  = {
+            'entryA': {
+              alt: 'A',
+              className: set
+            }
+          };
+
+          var provider = new Provider(entries);
+
+          // when
+          contextPad.registerProvider(provider);
+
+          // given
+          var shape = { id: 's1', width: 100, height: 100, x: 10, y: 10 };
+
+          canvas.addShape(shape);
+
+          // when
+          contextPad.open(shape);
+
+          var pad = contextPad.getPad(shape),
+              padContainer = pad.html;
+
+          // then DOM should contain entries
+          var entryA = domQuery('[data-action="entryA"]', padContainer);
+          expect(entryA).to.exist;
+
+          // expect all classes to be set
+          expected.forEach(function(cls) {
+            expect(domClasses(entryA).has(cls)).to.be.true;
+          });
+        });
+      }
+
+
+      it('should recognize Array<String> as className', testClassName({
+        set: [ 'FOO', 'BAAAR' ],
+        expect: [ 'FOO', 'BAAAR' ]
+      }));
+
+
+      it('should recognize <space separated classes> as className', testClassName({
+        set: 'FOO BAAAR blub',
+        expect: [ 'FOO', 'BAAAR', 'blub' ]
+      }));
+
+    });
 
   });
 
