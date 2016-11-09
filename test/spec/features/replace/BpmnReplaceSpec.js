@@ -12,7 +12,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
 var is = require('../../../../lib/util/ModelUtil').is,
     isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
     isInterrupting = require('../../../../lib/util/DiUtil').isInterrupting,
-    isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess;
+    isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess,
+    hasErrorEventDefinition = require('../../../../lib/util/DiUtil').hasErrorEventDefinition;
 
 
 describe('features/replace - bpmn replace', function() {
@@ -1015,6 +1016,115 @@ describe('features/replace - bpmn replace', function() {
         // given
         var eventSubProcess = elementRegistry.get('SubProcess_2'),
             startEvent = elementRegistry.get('StartEvent_2');
+
+        // when
+        modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
+
+        // start event after moving parent
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return (element.parent === eventSubProcess && element.type !== 'label');
+        })[0];
+
+        // then
+        expect(startEventAfter).to.equal(startEvent);
+        expect(startEventAfter.parent).to.eql(eventSubProcess);
+      })
+    );
+
+    it('should replace error start event after moving it outside event sub process',
+      inject(function(elementRegistry, bpmnReplace, modeling) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_3'),
+            root = elementRegistry.get('Process_1');
+
+        // when
+        modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
+
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === root;
+        })[0];
+
+        // then
+        expect(hasErrorEventDefinition(startEventAfter)).to.be.false;
+        expect(startEventAfter.parent).to.equal(root);
+      })
+    );
+
+    it('should replace error start event after moving it to a regular sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_3'),
+            subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
+
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
+        })[0];
+
+        // then
+        expect(hasErrorEventDefinition(startEventAfter)).to.be.false;
+        expect(startEventAfter.parent).to.equal(subProcess);
+
+      })
+    );
+
+    it('should not replace error start event after moving it to another event sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_3'),
+            subProcess = elementRegistry.get('SubProcess_1');
+
+        var eventSubProcess = bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          triggeredByEvent: true,
+          isExpanded: true
+        });
+
+        // when
+        modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
+
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
+        })[1];
+
+        // then
+        expect(hasErrorEventDefinition(startEventAfter)).to.be.true;
+        expect(startEventAfter.parent).to.equal(eventSubProcess);
+
+      })
+    );
+
+    it('should replace error start event when replacing parent event sub process',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var eventSubProcess = elementRegistry.get('SubProcess_3');
+
+        // when
+        var subProcess = bpmnReplace.replaceElement(eventSubProcess, { type: 'bpmn:SubProcess' });
+
+        // then
+        var replacedStartEvent = elementRegistry.filter(function(element) {
+          return (element.parent === subProcess && element.type !== 'label');
+        })[0];
+
+        expect(hasErrorEventDefinition(replacedStartEvent)).to.be.false;
+        expect(replacedStartEvent.parent).to.equal(subProcess);
+      })
+    );
+
+
+    it('should not replace error start event when moving parent event sub process',
+      inject(function(elementRegistry, bpmnReplace, modeling) {
+
+        // given
+        var eventSubProcess = elementRegistry.get('SubProcess_3'),
+            startEvent = elementRegistry.get('StartEvent_3');
 
         // when
         modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
