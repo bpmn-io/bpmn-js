@@ -238,8 +238,7 @@ describe('features/palette', function() {
 
     it('should turn the palette into a two columns layout', inject(function(canvas, palette) {
       // given
-      var parent = canvas.getContainer(),
-          container = palette._container;
+      var parent = canvas.getContainer();
 
       parent.style.height = '649px';
 
@@ -247,13 +246,12 @@ describe('features/palette', function() {
       canvas.resized();
 
       // then
-      expect(domClasses(container).has('two-column')).to.be.true;
+      expect(domClasses(parent).has('two-column')).to.be.true;
     }));
 
 
     it('should turn the palette into a one column layout', inject(function(canvas, palette) {
-      var parent = canvas.getContainer(),
-          container = palette._container;
+      var parent = canvas.getContainer();
 
       parent.style.height = '649px';
 
@@ -265,7 +263,7 @@ describe('features/palette', function() {
       canvas.resized();
 
       // then
-      expect(domClasses(container).has('two-column')).to.be.false;
+      expect(domClasses(parent).has('two-column')).to.be.false;
     }));
 
   });

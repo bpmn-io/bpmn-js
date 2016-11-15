@@ -248,7 +248,7 @@ svg.new-parent {
   width: 46px;
 }
 
-.djs-palette.two-column.open {
+.djs-container.two-column .djs-palette.open {
   width: 94px;
 }
 
