@@ -227,6 +227,33 @@ describe('features/modeling - update properties', function() {
       expect(flowConnection.businessObject.get('foo:customAttr')).to.equal('FOO');
     }));
 
+
+    it('setting di properties', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.updateProperties(flowConnection, { di: { fill: 'FUCHSIA' } });
+
+      // then
+      expect(flowConnection.businessObject.di.fill).to.equal('FUCHSIA');
+    }));
+
+
+    it('unsetting di properties', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowConnection = elementRegistry.get('SequenceFlow_1');
+      modeling.updateProperties(flowConnection, { di: { fill: 'FUCHSIA' } });
+
+      // when
+      modeling.updateProperties(flowConnection, { di: { fill: undefined } });
+
+      // then
+      expect(flowConnection.businessObject.di.fill).not.to.exist;
+    }));
+
   });
 
 
