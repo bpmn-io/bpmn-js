@@ -62,7 +62,7 @@ svg.new-parent {
 
 .djs-element.attach-ok .djs-visual > :nth-child(1) {
   stroke-width: 5px !important;
-  stroke: rgba(255, 116, 0, 0.7);
+  stroke: rgba(255, 116, 0, 0.7) !important;
 }
 
 
