@@ -441,13 +441,13 @@ describe('features - label-editing', function() {
 
       describe('text annotation', function() {
 
-        it('[no text] should have element height', testTextboxSizing('text-annotation', 1, 106, 'auto'));
+        it('[no text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98));
 
-        it('[1 line text] should have element height', testTextboxSizing('text-annotation', 1, 106, 'auto', oneLineText));
+        it('[1 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, oneLineText));
 
-        it('[2 line text] should have extended height', testTextboxSizing('text-annotation', 1, 106, { min: 38 }, twoLineText));
+        it('[2 line text] should have element height', testTextboxSizing('text-annotation', 1, 100, 98, twoLineText));
 
-        it('[10 line text] should have extended height', testTextboxSizing('text-annotation', 1, 106, { min: 140 }, tenLineText));
+        it('[10 line text] should have element height', testTextboxSizing('text-annotation', 1, { min: 100 }, 98, tenLineText));
 
       });
 
@@ -556,13 +556,13 @@ describe('features - label-editing', function() {
 
       describe('text annotation', function() {
 
-        it('[no text] should have min width', testTextboxSizing('text-annotation', 1, 106, { min: 32 }));
+        it('[no text] should have min width', testTextboxSizing('text-annotation', 1, 100, 98));
 
-        it('[one word] should have min width', testTextboxSizing('text-annotation', 1, 106, { min: 32 }, oneWord));
+        it('[one word] should have min width', testTextboxSizing('text-annotation', 1, 100, 98, oneWord));
 
-        it('[five words] should expand width', testTextboxSizing('text-annotation', 1, { min: 176 }, { min: 32 }, fiveWords));
+        it('[five words] should expand width', testTextboxSizing('text-annotation', 1, { min: 176 }, 98, fiveWords));
 
-        it('[long word] should expand width', testTextboxSizing('text-annotation', 1, { min: 129 }, { min: 32 }, longWord));
+        it('[long word] should expand width', testTextboxSizing('text-annotation', 1, { min: 129 }, 98, longWord));
 
       });
 
