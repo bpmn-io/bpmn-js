@@ -11,7 +11,7 @@ describe('import - associations', function() {
 
     it('connecting task -> text annotation', function(done) {
 
-      var xml = require('../../../fixtures/bpmn/import/association/text-annotation.bpmn');
+      var xml = require('./AssociationSpec.text-annotation.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -37,7 +37,7 @@ describe('import - associations', function() {
 
     it('connecting boundary -> compensate task', function(done) {
 
-      var xml = require('../../../fixtures/bpmn/import/association/compensation.bpmn');
+      var xml = require('./AssociationSpec.compensation.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -65,9 +65,27 @@ describe('import - associations', function() {
 
   describe('should import data association', function() {
 
+    function expectRendered(elementIds) {
+
+      inject(function(elementRegistry, canvas) {
+
+        elementIds.forEach(function(id) {
+
+          var element = elementRegistry.get(id);
+
+          // then
+          expect(element).to.exist;
+
+          // data associations always rendered on root
+          expect(element.parent).to.eql(canvas.getRootElement());
+        });
+      })();
+    }
+
+
     it('task -> data object -> task', function(done) {
 
-      var xml = require('../../../fixtures/bpmn/import/association/data-association.bpmn');
+      var xml = require('./AssociationSpec.data-association.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -76,26 +94,20 @@ describe('import - associations', function() {
           return done(err);
         }
 
-        // when
-        inject(function(elementRegistry) {
+        // then
+        expectRendered([
+          'DataInputAssociation',
+          'DataOutputAssociation'
+        ]);
 
-          var dataInputAssociation = elementRegistry.get('DataInputAssociation_1');
-          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
-
-          // then
-          expect(dataInputAssociation).to.exist;
-          expect(dataOutputAssociation).to.exist;
-
-          done();
-        })();
-
+        done();
       });
     });
 
 
     it('data input -> task -> data output', function(done) {
 
-      var xml = require('../../../fixtures/bpmn/import/association/data-input-output.bpmn');
+      var xml = require('./AssociationSpec.data-input-output.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -104,18 +116,35 @@ describe('import - associations', function() {
           return done(err);
         }
 
-        // when
-        inject(function(elementRegistry) {
+        // then
+        expectRendered([
+          'DataInputAssociation',
+          'DataOutputAssociation'
+        ]);
 
-          var dataInputAssociation = elementRegistry.get('DataInputAssociation_1');
-          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
+        done();
+      });
+    });
 
-          // then
-          expect(dataInputAssociation).to.exist;
-          expect(dataOutputAssociation).to.exist;
 
-          done();
-        })();
+    it('in collaboration', function(done) {
+
+      var xml = require('./AssociationSpec.collaboration.bpmn');
+
+      // given
+      bootstrapViewer(xml)(function(err) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expectRendered([
+          'DataInputAssociation',
+          'DataOutputAssociation'
+        ]);
+
+        done();
 
       });
     });
@@ -123,7 +152,7 @@ describe('import - associations', function() {
 
     it('catch event -> data object -> throw event', function(done) {
 
-      var xml = require('../../../fixtures/bpmn/import/association/data-association-events.bpmn');
+      var xml = require('./AssociationSpec.events.bpmn');
 
       // given
       bootstrapViewer(xml)(function(err) {
@@ -132,19 +161,13 @@ describe('import - associations', function() {
           return done(err);
         }
 
-        // when
-        inject(function(elementRegistry) {
+        // then
+        expectRendered([
+          'DataInputAssociation',
+          'DataOutputAssociation'
+        ]);
 
-          var dataInputAssociation = elementRegistry.get('DataInputAssociation');
-          var dataOutputAssociation = elementRegistry.get('DataOutputAssociation');
-
-          // then
-          expect(dataInputAssociation).to.exist;
-          expect(dataOutputAssociation).to.exist;
-
-          done();
-        })();
-
+        done();
       });
     });
 
