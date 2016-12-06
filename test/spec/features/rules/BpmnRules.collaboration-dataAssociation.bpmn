@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.5.1">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:task id="Task">
+      <bpmn:property id="Property_1oyztzi" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation">
+        <bpmn:sourceRef>DataStoreReference</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1oyztzi</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:task>
+    <bpmn:dataStoreReference id="DataStoreReference" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant">
+        <dc:Bounds x="28" y="24" width="300" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="109" y="194" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="134" y="244" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="153" y="64" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="149" y="194" />
+        <di:waypoint xsi:type="dc:Point" x="179" y="144" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

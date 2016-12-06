@@ -866,26 +866,54 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('data association move', function() {
 
-    var testXML = require('./BpmnRules.dataAssociation.bpmn');
+    describe('on process diagram', function() {
 
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      var testXML = require('./BpmnRules.dataAssociation.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('mode selection including data association', inject(function(elementRegistry) {
+      it('move selection including data association', inject(function(elementRegistry) {
 
-      // when
-      var elements = [
-        elementRegistry.get('Task'),
-        elementRegistry.get('DataAssociation'),
-        elementRegistry.get('DataObjectReference')
-      ];
+        // when
+        var elements = [
+          elementRegistry.get('Task'),
+          elementRegistry.get('DataAssociation'),
+          elementRegistry.get('DataObjectReference')
+        ];
 
-      // then
-      expectCanMove(elements, 'Process', {
-        attach: false,
-        move: true
-      });
-    }));
+        // then
+        expectCanMove(elements, 'Process', {
+          attach: false,
+          move: true
+        });
+      }));
+
+    });
+
+
+    describe('on collaboration', function() {
+
+      var testXML = require('./BpmnRules.collaboration-dataAssociation.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('move participant and data association', inject(function(elementRegistry) {
+
+        // when
+        var elements = [
+          elementRegistry.get('DataInputAssociation'),
+          elementRegistry.get('Participant')
+        ];
+
+        // then
+        expectCanMove(elements, 'Collaboration', {
+          attach: false,
+          move: true
+        });
+      }));
+    });
 
   });
 
