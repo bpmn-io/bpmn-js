@@ -892,6 +892,32 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
 
+    describe('on sub process', function() {
+
+      var testXML = require('./BpmnRules.subProcess-dataAssociation.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('move task and data association', inject(function(elementRegistry) {
+
+        // when
+        var elements = [
+          elementRegistry.get('DataInputAssociation'),
+          elementRegistry.get('DataOutputAssociation'),
+          elementRegistry.get('DataStoreReference'),
+          elementRegistry.get('Task')
+        ];
+
+        // then
+        expectCanMove(elements, 'SubProcess', {
+          attach: false,
+          move: true
+        });
+      }));
+    });
+
+
     describe('on collaboration', function() {
 
       var testXML = require('./BpmnRules.collaboration-dataAssociation.bpmn');

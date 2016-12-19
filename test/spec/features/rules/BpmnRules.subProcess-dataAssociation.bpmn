@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess">
+      <bpmn:dataStoreReference id="DataStoreReference" />
+      <bpmn:task id="Task">
+        <bpmn:property id="Property_0x4gewx" name="__targetRef_placeholder" />
+        <bpmn:dataInputAssociation id="DataInputAssociation">
+          <bpmn:sourceRef>DataStoreReference</bpmn:sourceRef>
+          <bpmn:targetRef>Property_0x4gewx</bpmn:targetRef>
+        </bpmn:dataInputAssociation>
+        <bpmn:dataOutputAssociation id="DataOutputAssociation">
+          <bpmn:targetRef>DataStoreReference</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_di" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds x="73" y="83" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="168" y="117" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="193" y="167" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="254" y="168" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="193" y="167" />
+        <di:waypoint xsi:type="dc:Point" x="193" y="203" />
+        <di:waypoint xsi:type="dc:Point" x="254" y="203" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation">
+        <di:waypoint xsi:type="dc:Point" x="304" y="168" />
+        <di:waypoint xsi:type="dc:Point" x="304" y="133" />
+        <di:waypoint xsi:type="dc:Point" x="218" y="133" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
