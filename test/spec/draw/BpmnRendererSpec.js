@@ -221,6 +221,27 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should properly render colored markers', function(done) {
+
+    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    bootstrapViewer(xml)(function(err) {
+
+      if (err) {
+        return done(err);
+      }
+
+      inject(function(canvas) {
+        var svg = canvas._svg;
+        var markers = svg.querySelectorAll('marker');
+
+        expect(markers).to.have.length(5);
+      })();
+
+      done();
+    });
+  });
+
+
   describe('path', function() {
 
     var diagramXML = require('../../fixtures/bpmn/simple-cropping.bpmn');
