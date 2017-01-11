@@ -460,6 +460,9 @@
       "superClass": [
         "Element"
       ],
+      "meta": {
+        "allowedIn": [ "*" ]
+      },
       "properties": [
         {
           "name": "values",

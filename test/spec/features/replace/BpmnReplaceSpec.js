@@ -1169,4 +1169,69 @@ describe('features/replace - bpmn replace', function() {
 
   });
 
+
+  describe('properties', function() {
+    var clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn');
+
+    var camundaPackage = require('../../../fixtures/json/model/camunda');
+
+    beforeEach(bootstrapModeler(clonePropertiesXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+    it('should copy properties', inject(function(elementRegistry, bpmnReplace) {
+      // given
+      var task = elementRegistry.get('Task_1');
+      var newElementData =  {
+        type: 'bpmn:ServiceTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(businessObject.asyncBefore).to.be.true;
+      expect(businessObject.jobPriority).to.equal('100');
+      expect(businessObject.documentation[0].text).to.equal('hello world');
+
+      var extensionElements = businessObject.extensionElements.values;
+
+      expect(extensionElements).to.have.length(4);
+
+      expect(is(extensionElements[0], 'camunda:InputOutput')).to.be.true;
+
+      expect(is(extensionElements[0].inputParameters[0], 'camunda:InputParameter')).to.be.true;
+
+      expect(extensionElements[0].inputParameters[0].name).to.equal('Input_1');
+      expect(extensionElements[0].inputParameters[0].value).to.equal('foo');
+
+      expect(is(extensionElements[0].outputParameters[0], 'camunda:OutputParameter')).to.be.true;
+
+      expect(extensionElements[0].outputParameters[0].name).to.equal('Output_1');
+      expect(extensionElements[0].outputParameters[0].value).to.equal('bar');
+
+      expect(is(extensionElements[1], 'camunda:Properties')).to.be.true;
+
+      expect(is(extensionElements[1].values[0], 'camunda:Property')).to.be.true;
+
+      expect(extensionElements[1].values[0].name).to.equal('bar');
+      expect(extensionElements[1].values[0].value).to.equal('foo');
+
+      expect(is(extensionElements[2], 'camunda:ExecutionListener')).to.be.true;
+
+      expect(extensionElements[2].class).to.equal('reallyClassy');
+      expect(extensionElements[2].event).to.equal('start');
+
+      expect(is(extensionElements[3], 'camunda:FailedJobRetryTimeCycle')).to.be.true;
+
+      expect(extensionElements[3].body).to.equal('10');
+    }));
+
+  });
+
 });
