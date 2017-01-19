@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.7.0-dev">
   <bpmn:collaboration id="Collaboration_0j2pyna">
-    <bpmn:participant id="Participant_0x9lnke" processRef="Process_1" />
+    <bpmn:participant id="Participant_0x9lnke" name="foobar" processRef="Process_1" />
   </bpmn:collaboration>
-  <bpmn:process id="Process_1" isExecutable="false">
+  <bpmn:process id="Process_1" name="process_foo" isExecutable="false" camunda:versionTag="1.0">
     <bpmn:dataStoreReference id="DataStoreReference_1elrt45" />
     <bpmn:dataStoreReference id="DataStoreReference_1j8ymac" />
     <bpmn:dataObjectReference id="DataObjectReference_1js94kb" dataObjectRef="DataObject_1l0h55k" />

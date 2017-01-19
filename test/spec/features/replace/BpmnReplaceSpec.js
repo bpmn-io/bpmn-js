@@ -220,7 +220,7 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('collapsed with expande pool', inject(function(elementRegistry, bpmnReplace) {
+    it('collapsed with expanded pool', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       var shape = elementRegistry.get('Participant_2');
