@@ -11,17 +11,20 @@ var bpmnCopyPasteModule = require('../../../../lib/features/copy-paste'),
     coreModule = require('../../../../lib/core');
 
 var map = require('lodash/collection/map'),
+    filter = require('lodash/collection/filter'),
     forEach = require('lodash/collection/forEach'),
     uniq = require('lodash/array/uniq');
 
 var DescriptorTree = require('./DescriptorTree');
 
+var is = require('../../../../lib/util/ModelUtil').is;
 
 describe('features/copy-paste', function() {
 
   var testModules = [ bpmnCopyPasteModule, copyPasteModule, tooltipsModule, modelingModule, coreModule ];
 
   var basicXML = require('../../../fixtures/bpmn/features/copy-paste/basic.bpmn'),
+      clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn'),
       propertiesXML = require('../../../fixtures/bpmn/features/copy-paste/properties.bpmn'),
       collaborationXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration.bpmn'),
       collaborationMultipleXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration-multiple.bpmn'),
@@ -37,19 +40,10 @@ describe('features/copy-paste', function() {
 
       it('selected elements', inject(function(elementRegistry, copyPaste) {
 
-        // given
-        var subProcess,
-            startEvent,
-            boundaryEvent,
-            textAnnotation;
-
         // when
         var tree = copy([ 'SubProcess_1kd6ist' ]);
 
-        startEvent = tree.getElement('StartEvent_1');
-        boundaryEvent = tree.getElement('BoundaryEvent_1c94bi9');
-        subProcess = tree.getElement('SubProcess_1kd6ist');
-        textAnnotation = tree.getElement('TextAnnotation_0h1hhgg');
+        var subProcess = tree.getElement('SubProcess_1kd6ist');
 
         // then
         expect(tree.getLength()).to.equal(3);
@@ -59,9 +53,6 @@ describe('features/copy-paste', function() {
         expect(tree.getDepthLength(2)).to.equal(15);
 
         expect(subProcess.isExpanded).to.be.true;
-        expect(startEvent.name).to.equal('hello');
-        expect(textAnnotation.text).to.equal('foo');
-        expect(boundaryEvent.eventDefinitions).to.contain('bpmn:TimerEventDefinition');
       }));
 
     });
@@ -509,6 +500,57 @@ describe('features/copy-paste', function() {
 
 
     it('participant with InputDataAssociation', inject(integrationTest([ 'Participant_Input' ])));
+
+  });
+
+
+  describe('deep properties', function() {
+
+    var camundaPackage = require('../../../fixtures/json/model/camunda');
+
+    beforeEach(bootstrapModeler(clonePropertiesXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    it('integration', inject(integrationTest([ 'Participant_0x9lnke' ])));
+
+
+    it('should copy UserTask properties',
+      inject(function(elementRegistry, copyPaste, canvas) {
+
+        var participant = elementRegistry.get('Participant_0x9lnke'),
+            task = elementRegistry.get('Task_1'),
+            newTask;
+
+        // when
+        copyPaste.copy([ task ]);
+
+        copyPaste.paste({
+          element: participant,
+          point: {
+            x: 500,
+            y: 50
+          }
+        });
+
+        newTask = filter(participant.children, function(element) {
+          return is(element, 'bpmn:Task');
+        })[0];
+
+        // then
+        var bo = task.businessObject;
+        var copiedBo = newTask.businessObject;
+
+
+        expect(copiedBo.asyncBefore).to.eql(bo.asyncBefore);
+        expect(copiedBo.documentation).to.jsonEqual(bo.documentation);
+        expect(copiedBo.extensionElements).to.jsonEqual(bo.extensionElements);
+      })
+    );
 
   });
 
