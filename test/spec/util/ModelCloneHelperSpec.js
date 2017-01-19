@@ -117,6 +117,9 @@ describe('util/ModelCloneHelper', function() {
       var executionListener = serviceTask.extensionElements.values[0];
 
       // then
+      expect(executionListener).to.not.equal(userTask.extensionElements.values[0]);
+      expect(executionListener.$type).to.equal('camunda:ExecutionListener');
+
       expect(executionListener.$type).to.equal('camunda:ExecutionListener');
       expect(executionListener.$parent).to.equal(serviceTask.extensionElements);
 
@@ -180,6 +183,30 @@ describe('util/ModelCloneHelper', function() {
       expect(newOutParam.$type).to.equal('camunda:OutputParameter');
       expect(newOutParam.definition.$type).to.equal('camunda:List');
       expect(newOutParam.definition.items[0].value).to.equal('${1+1}');
+    }));
+
+
+    it('should not pass disallowed deeply nested property - connector', inject(function(moddle) {
+
+      // given
+      var connector = moddle.create('camunda:Connector', {
+        connectorId: 'hello_connector'
+      });
+
+      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ connector ] });
+
+      var serviceTask = moddle.create('bpmn:UserTask', {
+        extensionElements: extensionElements
+      });
+
+      var userTask = helper.clone(serviceTask, moddle.create('bpmn:UserTask'), [
+        'bpmn:extensionElements'
+      ]);
+
+      var extElem = userTask.extensionElements;
+
+      // then
+      expect(extElem.values).to.be.empty;
     }));
 
   });
