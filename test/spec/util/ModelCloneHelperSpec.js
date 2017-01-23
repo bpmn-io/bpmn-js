@@ -10,13 +10,15 @@ var ModelCloneHelper = require('../../../lib/util/model/ModelCloneHelper');
 
 var camundaPackage = require('../../fixtures/json/model/camunda');
 
+var camundaModdleModule = require('./camunda-moddle');
+
 function getProp(element, property) {
   return element && element.$model.properties.get(element, property);
 }
 
 describe('util/ModelCloneHelper', function() {
 
-  var testModules = [ coreModule ];
+  var testModules = [ camundaModdleModule, coreModule ];
 
   var basicXML = require('../../fixtures/bpmn/basic.bpmn');
 
@@ -29,8 +31,8 @@ describe('util/ModelCloneHelper', function() {
 
   var helper;
 
-  beforeEach(inject(function(moddle) {
-    helper = new ModelCloneHelper(moddle);
+  beforeEach(inject(function(eventBus) {
+    helper = new ModelCloneHelper(eventBus);
   }));
 
   describe('simple', function() {
@@ -207,6 +209,162 @@ describe('util/ModelCloneHelper', function() {
 
       // then
       expect(extElem.values).to.be.empty;
+    }));
+
+  });
+
+
+  describe('special cases', function() {
+
+    it('failed job retry time cycle', inject(function(moddle) {
+
+      function createExtElems() {
+        var retryTimeCycle = moddle.create('camunda:FailedJobRetryTimeCycle', { body: 'foobar' });
+
+        return moddle.create('bpmn:ExtensionElements', { values: [ retryTimeCycle ] });
+      }
+
+      // given
+      var timerEvtDef = moddle.create('bpmn:TimerEventDefinition', {
+        timeDuration: 'foobar'
+      });
+
+      var signalEvtDef = moddle.create('bpmn:SignalEventDefinition', {
+        timeDuration: 'foobar'
+      });
+
+      var multiInst = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+
+      var timerStartEvent = moddle.create('bpmn:StartEvent', {
+        extensionElements: createExtElems(),
+        eventDefinitions: [ timerEvtDef ]
+      });
+
+      var signalStartEvt = moddle.create('bpmn:StartEvent', {
+        extensionElements: createExtElems(),
+        eventDefinitions: [ signalEvtDef ]
+      });
+
+      var subProcess = moddle.create('bpmn:SubProcess', {
+        extensionElements: createExtElems(),
+        loopCharacteristics: multiInst
+      });
+
+      var intCatchEvt = helper.clone(timerStartEvent, moddle.create('bpmn:IntermediateCatchEvent'), [
+        'bpmn:extensionElements',
+        'bpmn:eventDefinitions'
+      ]);
+
+      var startEvt = helper.clone(signalStartEvt, moddle.create('bpmn:StartEvent'), [
+        'bpmn:extensionElements',
+        'bpmn:eventDefinitions'
+      ]);
+
+      var newSubProcess = helper.clone(subProcess, moddle.create('bpmn:SubProcess'), [
+        'bpmn:extensionElements',
+        'bpmn:loopCharacteristics'
+      ]);
+
+      var intCatchEvtExtElems = intCatchEvt.extensionElements.values,
+          startEvtExtElems = startEvt.extensionElements.values,
+          newSubProcessExtElems = newSubProcess.extensionElements.values;
+
+      // then
+      function expectTimeCycle(extElems) {
+        expect(extElems[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
+        expect(extElems[0].body).to.equal('foobar');
+      }
+
+      expectTimeCycle(intCatchEvtExtElems);
+
+      expectTimeCycle(startEvtExtElems);
+
+      expectTimeCycle(newSubProcessExtElems);
+    }));
+
+
+    it('connector', inject(function(moddle) {
+
+      // given
+      var connector = moddle.create('camunda:Connector', {
+        connectorId: 'hello_connector'
+      });
+
+      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ connector ] });
+
+      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition');
+
+      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
+        extensionElements: extensionElements,
+        eventDefinitions: [ msgEvtDef ]
+      });
+
+      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:EndEvent'), [
+        'bpmn:extensionElements',
+        'bpmn:eventDefinitions'
+      ]);
+
+      var extElems = clonedElement.extensionElements.values;
+
+      // then
+      expect(extElems[0].$type).to.equal('camunda:Connector');
+      expect(extElems[0].connectorId).to.equal('hello_connector');
+    }));
+
+
+    it('field', inject(function(moddle) {
+
+      // given
+      var field = moddle.create('camunda:Field', {
+        name: 'hello_field'
+      });
+
+      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ field ] });
+
+      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition');
+
+      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
+        extensionElements: extensionElements,
+        eventDefinitions: [ msgEvtDef ]
+      });
+
+      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:EndEvent'), [
+        'bpmn:extensionElements',
+        'bpmn:eventDefinitions'
+      ]);
+
+      var extElems = clonedElement.extensionElements.values;
+
+      // then
+      expect(extElems[0].$type).to.equal('camunda:Field');
+      expect(extElems[0].name).to.equal('hello_field');
+    }));
+
+
+    it('not clone field', inject(function(moddle) {
+
+      // given
+      var field = moddle.create('camunda:Field', {
+        name: 'hello_field'
+      });
+
+      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ field ] });
+
+      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition');
+
+      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
+        extensionElements: extensionElements,
+        eventDefinitions: [ msgEvtDef ]
+      });
+
+      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:IntermediateThrowEvent'), [
+        'bpmn:extensionElements'
+      ]);
+
+      var extElems = clonedElement.extensionElements;
+
+      // then
+      expect(extElems.values).be.empty;
     }));
 
   });

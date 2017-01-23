@@ -744,7 +744,10 @@
           "bpmn:BusinessRuleTask",
           "bpmn:ScriptTask",
           "bpmn:ReceiveTask",
-          "bpmn:CallActivity"
+          "bpmn:CallActivity",
+          "bpmn:TimerEventDefinition",
+          "bpmn:SignalEventDefinition",
+          "bpmn:MultiInstanceLoopCharacteristics"
         ]
       },
       "properties": [
@@ -777,7 +780,8 @@
           "bpmn:IntermediateThrowEvent",
           "bpmn:EndEvent",
           "bpmn:BoundaryEvent",
-          "bpmn:CallActivity"
+          "bpmn:CallActivity",
+          "bpmn:SubProcess"
         ]
       },
       "properties": [
