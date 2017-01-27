@@ -6,7 +6,8 @@
     "all": "grunt",
     "dev": "grunt auto-test",
     "distro": "grunt build",
-    "test": "grunt test"
+    "test": "grunt test",
+    "lint": "grunt lint"
   },
   "repository": {
     "type": "git",

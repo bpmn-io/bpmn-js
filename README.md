@@ -32,6 +32,19 @@ viewer.importXML(xml, function(err) {
 });
 ```
 
+### Dynamic Attach/Detach
+
+You may attach or detach the viewer dynamically to any element on the page, too:
+
+```javascript
+var viewer = new BpmnViewer();
+
+// attach it to some element
+viewer.attachTo('#container');
+
+// detach the panel
+viewer.detach();
+```
 
 ## Installation
 
