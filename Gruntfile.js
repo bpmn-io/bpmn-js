@@ -119,6 +119,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [ 'karma:single' ]);
 
+  grunt.registerTask('lint', [ 'eslint:check' ]);
+
   grunt.registerTask('auto-test', [ 'karma:unit' ]);
 
   grunt.registerTask('build', [ 'bundle', 'copy' ]);

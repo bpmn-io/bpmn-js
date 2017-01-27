@@ -72,25 +72,6 @@ describe('Viewer', function() {
   });
 
 
-  describe('defaults', function() {
-
-    it('should use <body> as default parent', function(done) {
-
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      var viewer = new Viewer();
-
-      viewer.importXML(xml, function(err, warnings) {
-
-        expect(viewer.container.parentNode).to.equal(document.body);
-
-        done(err, warnings);
-      });
-    });
-
-  });
-
-
   describe('overlay support', function() {
 
     it('should allow to add overlays', function(done) {
@@ -753,6 +734,33 @@ describe('Viewer', function() {
 
     });
 
+    it('should attach the viewer to the given parent', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer({ container: container });
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        expect(viewer.container.parentNode).to.equal(container);
+
+        done(err, warnings);
+      });
+    });
+
+    it('should not attach the viewer automatically if no parent was given', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer();
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        expect(viewer.container.parentNode).to.equal(null);
+
+        done(err, warnings);
+      });
+    });
   });
 
 
@@ -929,4 +937,41 @@ describe('Viewer', function() {
 
   });
 
+
+  describe('#attachTo', function() {
+    it('should attach the viewer', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer();
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        expect(viewer.container.parentNode).to.equal(null);
+        viewer.attachTo(container);
+        expect(viewer.container.parentNode).to.equal(container);
+
+        done(err, warnings);
+      });
+    });
+  });
+
+
+  describe('#detach', function() {
+    it('should detach the viewer', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer({ container: container });
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        expect(viewer.container.parentNode).to.equal(container);
+        viewer.detach();
+        expect(viewer.container.parentNode).to.equal(null);
+
+        done(err, warnings);
+      });
+    });
+  });
 });
