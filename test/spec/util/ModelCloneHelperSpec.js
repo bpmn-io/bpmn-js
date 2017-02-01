@@ -214,7 +214,7 @@ describe('util/ModelCloneHelper', function() {
       var extElem = userTask.extensionElements;
 
       // then
-      expect(extElem.values).to.be.empty;
+      expect(extElem).to.not.exist;
     }));
 
   });
@@ -236,10 +236,12 @@ describe('util/ModelCloneHelper', function() {
       });
 
       var signalEvtDef = moddle.create('bpmn:SignalEventDefinition', {
-        timeDuration: 'foobar'
+        async: true
       });
 
-      var multiInst = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+      var multiInst = moddle.create('bpmn:MultiInstanceLoopCharacteristics', {
+        elementVariable: 'foobar'
+      });
 
       var timerStartEvent = moddle.create('bpmn:StartEvent', {
         extensionElements: createExtElems(),
@@ -368,8 +370,10 @@ describe('util/ModelCloneHelper', function() {
         'bpmn:extensionElements'
       ]);
 
+      var extElems = clonedElement.extensionElements;
+
       // then
-      expect(clonedElement.eventDefinitions).to.be.empty;
+      expect(extElems).to.not.exist;
     }));
 
   });
