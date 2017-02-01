@@ -537,6 +537,8 @@
           "bpmn:GlobalBusinessRuleTask",
           "bpmn:GlobalTask",
           "bpmn:GlobalManualTask",
+          "bpmn:SubProcess",
+          "bpmn:Transaction",
           "bpmn:IntermediateCatchEvent",
           "bpmn:IntermediateThrowEvent",
           "bpmn:EndEvent",

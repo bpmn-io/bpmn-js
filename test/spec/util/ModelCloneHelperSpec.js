@@ -159,6 +159,12 @@ describe('util/ModelCloneHelper', function() {
         extensionElements: extensionElements
       });
 
+      var subProcess = helper.clone(userTask, moddle.create('bpmn:SubProcess'), [
+        'bpmn:extensionElements'
+      ]);
+
+      expect(subProcess.extensionElements.values[0].$type).to.equal('camunda:InputOutput');
+
       var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), [
         'bpmn:extensionElements',
         'camunda:inputOutput'
