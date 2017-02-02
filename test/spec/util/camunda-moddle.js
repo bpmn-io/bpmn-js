@@ -41,27 +41,30 @@ function CamundaModdleExtension(eventBus) {
 
   eventBus.on('property.clone', function(context) {
     var newElement = context.newElement,
+        refTopLevelProperty = context.refTopLevelProperty,
         propDescriptor = context.propertyDescriptor;
 
-    if (isAllowed('camunda:FailedJobRetryTimeCycle', propDescriptor, newElement)) {
-      return includesType(newElement.eventDefinitions, 'bpmn:TimerEventDefinition') ||
-             includesType(newElement.eventDefinitions, 'bpmn:SignalEventDefinition') ||
-             is(newElement.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics');
-    }
-
-    if (isAllowed('camunda:Connector', propDescriptor, newElement)) {
-      return includesType(newElement.eventDefinitions, 'bpmn:MessageEventDefinition');
-    }
-
-    if (isAllowed('camunda:Field', propDescriptor, newElement)) {
-      return includesType(newElement.eventDefinitions, 'bpmn:MessageEventDefinition');
-    }
-  });
+    return this.canCloneProperty(newElement, refTopLevelProperty, propDescriptor);
+  }, this);
 }
 
 CamundaModdleExtension.$inject = [ 'eventBus' ];
 
+CamundaModdleExtension.prototype.canCloneProperty = function(newElement, refTopLevelProperty, propDescriptor) {
+
+  if (isAllowed('camunda:FailedJobRetryTimeCycle', propDescriptor, newElement)) {
+    return includesType(newElement.eventDefinitions, 'bpmn:TimerEventDefinition') ||
+           includesType(newElement.eventDefinitions, 'bpmn:SignalEventDefinition') ||
+           is(newElement.loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics');
+  }
+
+  if (isAllowed('camunda:Connector', propDescriptor, newElement) ||
+      isAllowed('camunda:Field', propDescriptor, newElement)) {
+    return is(refTopLevelProperty, 'bpmn:MessageEventDefinition');
+  }
+};
+
 module.exports = {
-  __init__: [ 'CamundaModdleExtension' ],
-  CamundaModdleExtension: [ 'type', CamundaModdleExtension ]
+  __init__: [ 'camundaModdleExtension' ],
+  camundaModdleExtension: [ 'type', CamundaModdleExtension ]
 };
