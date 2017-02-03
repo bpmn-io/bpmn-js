@@ -177,6 +177,41 @@ describe('features/copy-paste', function() {
 
       it('selected elements', inject(integrationTest([ 'SubProcess_1kd6ist' ])));
 
+      it('should retain color properties',
+        inject(function(modeling, copyPaste, canvas, elementRegistry) {
+
+          // given
+          var task = elementRegistry.get('Task_1fo63a7'),
+              rootElement = canvas.getRootElement(),
+              newTask,
+              fill = '#BBDEFB',
+              stroke = '#1E88E5';
+
+
+          // when
+          modeling.setColor(task, { fill: fill, stroke: stroke });
+
+          copyPaste.copy([ task ]);
+
+          copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1100,
+              y: 250
+            }
+          });
+
+          newTask = elementRegistry.filter(function(element) {
+            return element.parent === rootElement && element.type === 'bpmn:Task' && element.id !== 'Task_1fo63a7';
+          })[0];
+
+          // then
+          expect(newTask.type).to.equal('bpmn:Task');
+          expect(newTask.businessObject.di.fill).to.equal(fill);
+          expect(newTask.businessObject.di.stroke).to.equal(stroke);
+        })
+      );
+
     });
 
 
