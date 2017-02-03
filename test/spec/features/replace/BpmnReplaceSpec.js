@@ -779,6 +779,38 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+
+    it('should keep size when morphing ad hoc',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var element = elementRegistry.get('SubProcess_1');
+        var newElementData = {
+          type: 'bpmn:AdHocSubProcess'
+        };
+
+        var width = element.width,
+            height = element.height;
+
+        modeling.resizeShape(element, {
+          x: element.x,
+          y: element.y,
+          width: width + 20,
+          height: height + 20
+        });
+
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+        // then
+        expect(is(newElement, 'bpmn:AdHocSubProcess')).to.be.true;
+        expect(isExpanded(newElement)).to.be.true;
+
+        expect(newElement.width).to.equal(width + 20);
+        expect(newElement.height).to.equal(height + 20);
+      })
+    );
+
   });
 
 
