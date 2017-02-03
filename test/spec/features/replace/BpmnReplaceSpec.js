@@ -1266,4 +1266,37 @@ describe('features/replace - bpmn replace', function() {
 
   });
 
+
+  describe('colors', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    it('should maintain colors', inject(function(elementRegistry, bpmnReplace, modeling) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var newElementData =  {
+            type: 'bpmn:UserTask'
+          },
+          fill = '#BBDEFB',
+          stroke = '#1E88E5';
+
+      modeling.setColor(task, { fill: fill, stroke: stroke });
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(businessObject.di.fill).to.equal(fill);
+      expect(businessObject.di.stroke).to.equal(stroke);
+
+      expect(newElement.colors).to.not.exist;
+    }));
+
+  });
+
 });
