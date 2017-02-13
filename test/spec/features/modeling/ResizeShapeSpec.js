@@ -38,7 +38,7 @@ describe('features/modeling - resize shape', function() {
 
   describe('basics', function() {
 
-    var rootShape, parentShape, connection, shape1, shape2;
+    var rootShape, parentShape, connection, shape1, shape2, label;
 
     beforeEach(inject(function(elementFactory, canvas) {
 
@@ -72,6 +72,15 @@ describe('features/modeling - resize shape', function() {
       });
 
       canvas.addShape(shape2, parentShape);
+
+      label = elementFactory.createLabel({
+        id: 'label',
+        x: 100, y: 100,
+        width: 90,
+        height: 20
+      });
+
+      canvas.addShape(label, parentShape);
     }));
 
 
@@ -210,6 +219,67 @@ describe('features/modeling - resize shape', function() {
         expect(childrenBoxPadding).to.equal(padding);
       })
     );
+
+    it('should not allow shape resize if not minimum bounds',
+      inject(function(modeling) {
+
+        // given
+        var newBounds = {
+          x: 100,
+          y: 100,
+          width: 8,
+          height: 12
+        };
+
+        // when
+        expect(modeling.resizeShape.bind(modeling, label, newBounds))
+          .to.throw('width and height cannot be less than 10px');
+      }));
+
+    it('should allow providing minimum bounds for shape resize',
+      inject(function(modeling) {
+
+        // given
+        var newBounds = {
+          x: 100,
+          y: 100,
+          width: 8,
+          height: 12
+        };
+
+        var minBounds = {
+          width: 8,
+          height: 12
+        };
+
+        // when
+        modeling.resizeShape(label, newBounds, minBounds);
+
+        // then
+        expect(label.width).to.equal(8);
+        expect(label.height).to.equal(12);
+      }));
+
+    it('should not allow shape resize if not provided minimum bounds',
+      inject(function(modeling) {
+
+        // given
+        var newBounds = {
+          x: 100,
+          y: 100,
+          width: 8,
+          height: 12
+        };
+
+        var minBounds = {
+          width: 12,
+          height: 12
+        };
+
+        // when
+        expect(modeling.resizeShape.bind(modeling, label, newBounds, minBounds))
+          .to.throw('width and height cannot be less than minimum height and width');
+      }));
 
   });
 

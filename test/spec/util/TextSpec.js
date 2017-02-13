@@ -11,15 +11,18 @@ var svgAppend = require('tiny-svg/lib/append'),
 
 function toFitBBox(actual, expected) {
 
-  var actualBBox = actual.getBBox();
+  var actualBBox = actual.getBBox ? actual.getBBox() : actual;
 
-  var pass = actualBBox.x >= expected.x &&
-             actualBBox.y >= expected.y &&
-             actualBBox.width <= expected.width &&
-             actualBBox.x + actualBBox.width <= expected.x + expected.width &&
-             (expected.height ? actualBBox.height <= expected.height : true) &&
-             (expected.height ? actualBBox.y + actualBBox.height <= expected.y + expected.height : true);
+  var pass = actualBBox.width <= expected.width &&
+             (expected.height ? actualBBox.height <= expected.height : true);
 
+
+  if (actualBBox.x) {
+    pass = actualBBox.x >= expected.x &&
+           actualBBox.y >= expected.y &&
+           actualBBox.x + actualBBox.width <= expected.x + expected.width &&
+           (expected.height ? actualBBox.y + actualBBox.height <= expected.y + expected.height : true);
+  }
 
   if (!pass) {
     var bbox = pick(actualBBox, ['x', 'y', 'width', 'height']);
@@ -73,29 +76,46 @@ describe('Text', function() {
     svgAppend(svg, container);
   });
 
-  function drawRect(width, height) {
-    var rect = svgCreate('rect');
-    svgAttr(rect, {
-      x: 0,
-      y: 0,
-      width: width,
-      height: height,
+  function drawRect(bounds, style) {
+
+    var x = bounds.x || 0,
+        y = bounds.y || 0,
+        width = bounds.width,
+        height = bounds.height;
+
+    var attrs = assign({
       fill: 'none',
       strokeWidth: 1,
       stroke: 'black'
+    }, style, {
+      x: x,
+      y: y,
+      width: width,
+      height: height
     });
+
+    var rect = svgCreate('rect');
+    svgAttr(rect, attrs);
 
     svgAppend(container, rect);
   }
 
 
-
   function createText(container, label, options) {
     var box = assign({}, { width: 150, height: 50 }, options.box || {});
 
-    drawRect(box.width, box.height);
+    drawRect(box, { strokeWidth: '3px', stroke: '#CCC' });
 
-    return textUtil.createText(container, label, options);
+    var textAndBoundingBox = textUtil.layoutText(label, options);
+
+    var element = textAndBoundingBox.element,
+        dimensions = textAndBoundingBox.dimensions;
+
+    drawRect(dimensions, { strokeWidth: '1px', stroke: 'fuchsia' });
+
+    svgAppend(container, element);
+
+    return element;
   }
 
 
@@ -277,7 +297,7 @@ describe('Text', function() {
 
     describe('should align', function() {
 
-      it('center-middle', function() {
+      it('center-middle (fixed box)', function() {
 
         // given
         var label = 'I am a long label that should break on spaces';
@@ -294,7 +314,7 @@ describe('Text', function() {
       });
 
 
-      it('center-middle / preformated using line breaks', function() {
+      it('center-middle / preformated using line breaks (fixed box)', function() {
 
         // given
         var label = 'I am\na long label that\r\nshould break on line breaks';
@@ -311,7 +331,7 @@ describe('Text', function() {
       });
 
 
-      it('center-middle / vertical float out', function() {
+      it('center-middle / vertical float out (fixed box)', function() {
 
         // given
         var label = 'I am a long label that should break on spaces and float out of the container';
@@ -328,7 +348,7 @@ describe('Text', function() {
       });
 
 
-      it('left-middle', function() {
+      it('left-middle (fixed box)', function() {
 
         // given
         var label = 'I am a long label that should break on spaces and float out of the container';
@@ -342,6 +362,77 @@ describe('Text', function() {
 
         expect(text).to.exist;
         expect(toFitBBox(text, { x: 0, y: -30, width: 100, height: 180 })).to.be.true;
+      });
+
+
+      it('center-middle (fit box)', function() {
+
+        // given
+        var label = 'I am tiny';
+
+        // when
+        var text = createText(container, label, {
+          box: { width: 100, height: 100 },
+          fitBox: true,
+          align: 'center-middle',
+          padding: 5
+        });
+
+        expect(text).to.exist;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
+      });
+
+
+      it('center-middle / preformated using line breaks (fixed box)', function() {
+
+        // given
+        var label = 'I am\na long label that\r\nshould break on line breaks';
+
+        // when
+        var text = createText(container, label, {
+          box: { width: 100, height: 100 },
+          fitBox: true,
+          align: 'center-middle',
+          padding: 5
+        });
+
+        expect(text).to.exist;
+        expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
+      });
+
+
+      it('center-middle / vertical float out (fit box)', function() {
+
+        // given
+        var label = 'I am a long label that should break on spaces and float out of the container';
+
+        // when
+        var text = createText(container, label, {
+          box: { width: 100, height: 100 },
+          fitBox: true,
+          align: 'center-middle',
+          padding: 5
+        });
+
+        expect(text).to.exist;
+        expect(toFitBBox(text, { x: 0, y: -25, width: 100, height: 150 })).to.be.true;
+      });
+
+
+      it('left-middle (fit box)', function() {
+
+        // given
+        var label = 'I am a long label that should break on spaces and float out of the container';
+
+        // when
+        var text = createText(container, label, {
+          box: { width: 100, height: 100 },
+          align: 'left-middle',
+          padding: 5
+        });
+
+        expect(text).to.exist;
+        expect(toFitBBox(text, { x: 0, y: -25, width: 100, height: 150 })).to.be.true;
       });
     });
 
@@ -419,6 +510,45 @@ describe('Text', function() {
 
     });
 
+  });
+
+
+  describe('#getDimensions', function() {
+
+    it('should get bounding box of simple label', function() {
+
+      // given
+      var label = 'I am a label';
+      var box = {
+        width: 100,
+        height: 100
+      };
+
+      // when
+      var dimensions = textUtil.getDimensions(label, { box: box });
+
+      // then
+      expect(dimensions).to.exist;
+      expect(toFitBBox(dimensions, { width: 100, height: 20 })).to.be.true;
+    });
+
+
+    it('should get bounding box of multi line label', function() {
+
+      // given
+      var label = 'I am a\nlabel';
+      var box = {
+        width: 100,
+        height: 100
+      };
+
+      // when
+      var dimensions = textUtil.getDimensions(label, { box: box });
+
+      // then
+      expect(dimensions).to.exist;
+      expect(toFitBBox(dimensions, { width: 100, height: 40 })).to.be.true;
+    });
   });
 
 });
