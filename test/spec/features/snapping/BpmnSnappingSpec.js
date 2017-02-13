@@ -466,6 +466,7 @@ describe('features/snapping - BpmnSnapping', function() {
 
   });
 
+
   describe('labels', function() {
 
     var diagramXML = require('./BpmnSnapping.labels.bpmn');
@@ -479,20 +480,19 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var originalPosition = { x: label.x, y: label.y };
 
-      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+      move.start(canvasEvent({ x: label.x + 3, y: label.y + 3 }), label);
 
       dragging.hover({
         element: rootElement,
         gfx: elementRegistry.getGraphics(rootElement)
       });
 
-      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
-      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+      dragging.move(canvasEvent({ x: label.x + 4, y: label.y + 40 }));
+      dragging.move(canvasEvent({ x: label.x + 4, y: label.y + 40 }));
 
       dragging.end();
 
-      expect(label.x).to.equal(originalPosition.x);
-
+      expect(label.x).to.be.within(originalPosition.x, originalPosition.x + 1);
     }));
 
 
@@ -503,20 +503,19 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var originalPosition = { x: label.x, y: label.y };
 
-      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+      move.start(canvasEvent({ x: label.x + 2, y: label.y + 2 }), label);
 
       dragging.hover({
         element: rootElement,
         gfx: elementRegistry.getGraphics(rootElement)
       });
 
-      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
-      dragging.move(canvasEvent({ x: label.x+4, y: label.y+40 }));
+      dragging.move(canvasEvent({ x: label.x + 4, y: label.y + 40 }));
+      dragging.move(canvasEvent({ x: label.x + 4, y: label.y + 40 }));
 
       dragging.end();
 
-      expect(label.x).to.equal(originalPosition.x);
-
+      expect(label.x).to.be.within(originalPosition.x, originalPosition.x + 1);
     }));
 
 
@@ -526,7 +525,7 @@ describe('features/snapping - BpmnSnapping', function() {
           task = elementRegistry.get('Task_1'),
           rootElement = canvas.getRootElement();
 
-      move.start(canvasEvent({ x: label.x+2, y: label.y+2 }), label);
+      move.start(canvasEvent({ x: label.x + 2, y: label.y + 2 }), label);
 
       dragging.hover({
         element: rootElement,
@@ -542,7 +541,6 @@ describe('features/snapping - BpmnSnapping', function() {
           taskCenterX = task.x + Math.ceil(task.width / 2);
 
       expect(labelCenterX).to.equal(taskCenterX);
-
     }));
 
   });

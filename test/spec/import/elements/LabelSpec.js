@@ -65,7 +65,7 @@ describe('import - labels', function() {
 
           expect(sequenceFlowCenter.x).to.be.within(481, 483);
           expect(sequenceFlowCenter.y).to.be.within(323, 335);
-          expect(sequenceFlowLabel.width).to.be.above(68);
+          expect(sequenceFlowLabel.width).to.be.above(64);
           expect(sequenceFlowLabel.height).to.be.above(11);
 
           done();

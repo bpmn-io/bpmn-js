@@ -33,7 +33,7 @@ describe('modeling - label layouting', function() {
     }));
 
 
-    it('horizontal', inject(function(modeling, elementRegistry) {
+    it('horizontal', inject(function(modeling, elementRegistry) { // only
 
       // given
       var element1 = elementRegistry.get('StartEvent_1'),
@@ -43,7 +43,9 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      expect(connection.label.x).to.be.equal(472);
+      // we don't need to resize the label since it's invisible
+      // therefore it has the standard width of 90px
+      expect(connection.label.x).to.be.equal(427);
       expect(connection.label.y).to.be.equal(332);
     }));
 
@@ -58,7 +60,7 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      expect(connection.label.x).to.be.equal(337);
+      expect(connection.label.x).to.be.equal(292);
       expect(connection.label.y).to.be.equal(219.5);
     }));
 
@@ -93,8 +95,7 @@ describe('modeling - label layouting', function() {
 
         // then
         expect(connection.label.y - labelPosition.y).to.be.within(13, 16);
-        expect(connection.label.x - labelPosition.x).to.be.within(-82, -81);
-
+        expect(connection.label.x - labelPosition.x).to.be.within(-87, -85);
       }));
 
 
@@ -309,7 +310,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(467, 468);
+        expect(Math.round(connection.label.x)).to.be.within(466, 468);
         expect(Math.round(connection.label.y)).to.be.within(170, 171);
 
       }));
@@ -331,7 +332,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(517, 518);
+        expect(Math.round(connection.label.x)).to.be.within(517, 519);
         expect(Math.round(connection.label.y)).to.be.equal(507);
 
       }));

@@ -13,11 +13,11 @@
       <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
         <dc:Bounds x="218" y="132" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="191" y="180" width="90" height="20" />
+          <dc:Bounds x="190" y="180" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
-        <dc:Bounds x="319" y="92" width="36" height="36" />
+        <dc:Bounds x="320" y="92" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="292" y="135" width="90" height="20" />
         </bpmndi:BPMNLabel>

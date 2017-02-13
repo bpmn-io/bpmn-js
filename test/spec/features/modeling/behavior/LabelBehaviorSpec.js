@@ -81,7 +81,7 @@ describe('behavior - LabelBehavior', function() {
         expect(label).to.exist;
         expect(elementRegistry.get(label.id)).to.exist;
 
-        expect(label).to.have.bounds(assign({ x: 307, y: 138, width: 0, height: 0 }));
+        expect(label).to.have.bounds(assign({ x: 262, y: 138, width: 90, height: 20 }));
       }));
 
 
@@ -134,8 +134,8 @@ describe('behavior - LabelBehavior', function() {
       modeling.moveElements([ labelShape ], { x: 10, y: -10 });
 
       // then
-      expect(labelShape).to.have.position({ x: 201, y: 128 });
-      expect(startEvent.di.label).to.have.position({ x: 201, y: 128 });
+      expect(labelShape).to.have.position({ x: 156, y: 128 });
+      expect(startEvent.di.label).to.have.position({ x: 156, y: 128 });
     }));
 
 

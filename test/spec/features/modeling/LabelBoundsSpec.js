@@ -112,9 +112,7 @@ describe('label bounds', function() {
     describe('label position', function() {
 
       var getExpectedX = function(shape) {
-        var shapeMid = shape.x + Math.ceil(shape.width/2);
-
-        return shapeMid - Math.ceil(shape.label.width/2);
+        return Math.round(shape.x + shape.width / 2 - shape.label.width / 2);
       };
 
       it('should shift to left', inject(function(elementRegistry) {
