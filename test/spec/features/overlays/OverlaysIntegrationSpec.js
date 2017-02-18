@@ -293,6 +293,7 @@ describe('features/overlay - integration', function() {
     it('should allow to pass jquery element as overlay', inject(function(canvas, overlays) {
 
       // given
+      window.jQuery = $;
       var shape = canvas.addShape({
         id: 'test',
         x: 50,
