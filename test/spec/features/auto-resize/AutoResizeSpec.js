@@ -8,6 +8,8 @@ var modelingModule = require('../../../../lib/features/modeling'),
 var AutoResizeProvider = require('../../../../lib/features/auto-resize/AutoResizeProvider'),
     AutoResize = require('../../../../lib/features/auto-resize/AutoResize');
 
+var spy = sinon.spy;
+
 var inherits = require('inherits');
 
 
@@ -89,6 +91,18 @@ describe('features/auto-resize', function() {
     });
 
     canvas.addShape(childShape, parentShape);
+  }));
+
+
+  it('should only resize on actual size change', inject(function(modeling, autoResize) {
+    // given
+    var resizeSpy = spy(autoResize, 'resize');
+
+    // when
+    modeling.moveElements([ topLevelShape ], { x: -300, y: 0 }, parentShape);
+
+    // then
+    expect(resizeSpy).not.to.have.been.called;
   }));
 
 
