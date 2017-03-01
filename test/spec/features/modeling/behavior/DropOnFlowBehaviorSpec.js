@@ -283,7 +283,7 @@ describe('modeling/behavior - drop on connection', function() {
         // no incoming connection
         expect(startEventShape.incoming.length).to.equal(0);
 
-        // no outgoing edges
+        // 1 outgoing connection
         expect(startEventShape.outgoing.length).to.equal(1);
         expect(startEventShape.outgoing[0]).to.eql(sequenceFlow);
 
@@ -293,6 +293,45 @@ describe('modeling/behavior - drop on connection', function() {
           originalWaypoints.slice(2)
         ]));
       }));
+
+
+      it('should undo',
+        inject(function(modeling, elementRegistry, dragging, selection, move, commandStack) {
+
+          // given
+          var startEventShape = elementRegistry.get('StartEvent_foo');
+
+          var sequenceFlow = elementRegistry.get('SequenceFlow'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
+              originalWaypoints = sequenceFlow.waypoints;
+
+          selection.select(startEventShape);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), startEventShape);
+
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
+
+          dragging.move(canvasEvent({ x: -215, y: 0 }));
+
+          dragging.end();
+
+          // when
+          commandStack.undo();
+
+          // then
+
+          // no incoming connection
+          expect(startEventShape.incoming.length).to.equal(0);
+
+          // no outgoing edges
+          expect(startEventShape.outgoing.length).to.equal(0);
+
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([ originalWaypoints ]));
+        }));
 
     });
 
