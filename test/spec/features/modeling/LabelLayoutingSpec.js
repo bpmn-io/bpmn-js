@@ -422,7 +422,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(463, 465);
+        expect(Math.round(connection.label.x)).to.be.within(462, 465);
         expect(Math.round(connection.label.y)).to.be.within(290, 293);
 
       }));
