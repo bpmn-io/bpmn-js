@@ -24,7 +24,7 @@ var testModules = [
 
 describe('modeling - label layouting', function() {
 
-  describe('should create label', function() {
+  describe('should position created label', function() {
 
     var diagramXML = require('./LabelLayouting.initial.bpmn');
 
@@ -33,7 +33,7 @@ describe('modeling - label layouting', function() {
     }));
 
 
-    it('horizontal', inject(function(modeling, elementRegistry) { // only
+    it('horizontal', inject(function(modeling, elementRegistry) {
 
       // given
       var element1 = elementRegistry.get('StartEvent_1'),
@@ -43,10 +43,8 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      // we don't need to resize the label since it's invisible
-      // therefore it has the standard width of 90px
-      expect(connection.label.x).to.be.equal(427);
-      expect(connection.label.y).to.be.equal(332);
+      expect(connection.label.x).to.be.equal(472);
+      expect(connection.label.y).to.be.within(335, 336);
     }));
 
 
@@ -60,8 +58,8 @@ describe('modeling - label layouting', function() {
       var connection = modeling.connect(element1, element2);
 
       // then
-      expect(connection.label.x).to.be.equal(292);
-      expect(connection.label.y).to.be.equal(219.5);
+      expect(connection.label.x).to.be.equal(337);
+      expect(connection.label.y).to.be.within(222, 224);
     }));
 
   });

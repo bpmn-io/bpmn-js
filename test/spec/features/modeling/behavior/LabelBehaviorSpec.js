@@ -4,8 +4,6 @@ require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var assign = require('lodash/object/assign');
-
 var modelingModule = require('../../../../../lib/features/modeling'),
     coreModule = require('../../../../../lib/core');
 
@@ -81,7 +79,10 @@ describe('behavior - LabelBehavior', function() {
         expect(label).to.exist;
         expect(elementRegistry.get(label.id)).to.exist;
 
-        expect(label).to.have.bounds(assign({ x: 262, y: 138, width: 90, height: 20 }));
+        expect(label.x).to.equal(307);
+        expect(label.y).to.be.within(141, 142);
+        expect(label.width).to.be.equal(0);
+        expect(label.height).to.be.within(12, 14);
       }));
 
 

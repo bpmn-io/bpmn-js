@@ -263,15 +263,15 @@ describe('features/replace - bpmn replace', function() {
     it('should keep label position', inject(function(elementRegistry, bpmnReplace, modeling) {
 
       // given
-      var exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
-      var label = elementRegistry.get('ExclusiveGateway_1_label');
+      var startEvent = elementRegistry.get('StartEvent_1');
+      var label = elementRegistry.get('StartEvent_1_label');
 
       var newElementData =  {
-        type: 'bpmn:InclusiveGateway'
+        type: 'bpmn:EndEvent'
       };
 
       // when
-      var newElement = bpmnReplace.replaceElement(exclusiveGateway, newElementData);
+      var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
 
       // then
       expect(newElement.label.x).to.equal(label.x);
