@@ -28,7 +28,7 @@ describe('modeling/behavior - drop on connection', function() {
     it('should be allowed for an IntermediateThrowEvent', inject(function(elementRegistry, bpmnRules, elementFactory) {
 
       // when
-      var sequenceFlow = elementRegistry.get('SequenceFlow');
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
       var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
       // then
@@ -48,8 +48,8 @@ describe('modeling/behavior - drop on connection', function() {
         var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
         var startEvent = elementRegistry.get('StartEvent'),
-            sequenceFlow = elementRegistry.get('SequenceFlow'),
-            task = elementRegistry.get('Task');
+            sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            task = elementRegistry.get('Task_1');
 
         var originalWaypoints = sequenceFlow.waypoints;
 
@@ -96,7 +96,7 @@ describe('modeling/behavior - drop on connection', function() {
         // given
         var endEventShape = elementFactory.createShape({ type: 'bpmn:EndEvent' });
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
         var originalWaypoints = sequenceFlow.waypoints;
 
         var dropPosition = { x: 340, y: 120 }; // first bendpoint
@@ -126,7 +126,7 @@ describe('modeling/behavior - drop on connection', function() {
         // given
         var startEventShape = elementFactory.createShape({ type: 'bpmn:StartEvent' });
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
         var originalWaypoints = sequenceFlow.waypoints;
 
         var dropPosition = { x: 340, y: 120 }; // first bendpoint
@@ -164,9 +164,9 @@ describe('modeling/behavior - drop on connection', function() {
         var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
 
         var startEvent = elementRegistry.get('StartEvent'),
-            sequenceFlow = elementRegistry.get('SequenceFlow'),
+            sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
-            task = elementRegistry.get('Task');
+            task = elementRegistry.get('Task_1');
 
         var originalWaypoints = sequenceFlow.waypoints;
 
@@ -221,7 +221,7 @@ describe('modeling/behavior - drop on connection', function() {
         // given
         var endEventShape = elementRegistry.get('EndEvent_foo');
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow'),
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
             originalWaypoints = sequenceFlow.waypoints;
 
@@ -260,7 +260,7 @@ describe('modeling/behavior - drop on connection', function() {
 
         var startEventShape = elementRegistry.get('StartEvent_foo');
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow'),
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
             originalWaypoints = sequenceFlow.waypoints;
 
@@ -301,7 +301,7 @@ describe('modeling/behavior - drop on connection', function() {
           // given
           var startEventShape = elementRegistry.get('StartEvent_foo');
 
-          var sequenceFlow = elementRegistry.get('SequenceFlow'),
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
               sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
               originalWaypoints = sequenceFlow.waypoints;
 
@@ -345,7 +345,7 @@ describe('modeling/behavior - drop on connection', function() {
       // given
       var participantShape = elementFactory.createShape({ type: 'bpmn:Participant' });
 
-      var sequenceFlow = elementRegistry.get('SequenceFlow');
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
       var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
@@ -367,7 +367,7 @@ describe('modeling/behavior - drop on connection', function() {
       var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo'),
           endEventShape = elementRegistry.get('EndEvent_foo');
 
-      var sequenceFlow = elementRegistry.get('SequenceFlow'),
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
           sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
 
       var intInitPosition = {
@@ -398,6 +398,21 @@ describe('modeling/behavior - drop on connection', function() {
       expect(endEventShape).to.have.position(endInitPosition);
     }));
 
+
+    it('should not insert on sequence flow label', inject(function(bpmnRules, elementRegistry) {
+
+      // given
+      var eventShape = elementRegistry.get('IntermediateThrowEvent_foo'),
+          sequenceFlowLabel = elementRegistry.get('SequenceFlow_2').label;
+
+      var dropPosition = { x: 675, y: 275 }; // sequence flow label
+
+      // when
+      var canInsert = bpmnRules.canInsert(eventShape, sequenceFlowLabel, dropPosition);
+
+      // then
+      expect(canInsert).to.be.false;
+    }));
   });
 
 });
