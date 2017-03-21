@@ -75,26 +75,28 @@ describe('modeling - label layouting', function() {
 
     describe('on segment move', function() {
 
-      it('label name not set -> move label to waypoints mid', inject(function(modeling, elementRegistry, connectionSegmentMove, dragging) {
+      it('label name not set -> move label to waypoints mid', inject(
+        function(modeling, elementRegistry, connectionSegmentMove, dragging) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C'),
-            labelPosition = getLabelPosition(connection);
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C'),
+              labelPosition = getLabelPosition(connection);
 
-        connection.label.businessObject.name = false;
-        connection.label.hidden = true;
+          connection.label.businessObject.name = false;
+          connection.label.hidden = true;
 
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-        dragging.move(canvasEvent({ x: 0, y: 50 }));
+          dragging.move(canvasEvent({ x: 0, y: 50 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expect(connection.label.y - labelPosition.y).to.be.within(13, 16);
-        expect(connection.label.x - labelPosition.x).to.be.within(-87, -85);
-      }));
+          // then
+          expect(connection.label.y - labelPosition.y).to.be.within(13, 16);
+          expect(connection.label.x - labelPosition.x).to.be.within(-87, -85);
+        }
+      ));
 
 
       it('left - no relayout', inject(function(elementRegistry, connectionSegmentMove, dragging) {
@@ -115,58 +117,64 @@ describe('modeling - label layouting', function() {
       }));
 
 
-      it('left - remove bendpoint', inject(function(elementRegistry, connectionSegmentMove, dragging) {
+      it('left - remove bendpoint', inject(
+        function(elementRegistry, connectionSegmentMove, dragging) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_B'),
-            labelPosition = getLabelPosition(connection);
+          // given
+          var connection = elementRegistry.get('SequenceFlow_B'),
+              labelPosition = getLabelPosition(connection);
 
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-        dragging.move(canvasEvent({ x: -70, y: 0 }));
+          dragging.move(canvasEvent({ x: -70, y: 0 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expectLabelMoved(connection, labelPosition, { x: -70, y: 24 });
-      }));
-
-
-      it('right - no relayout', inject(function(elementRegistry, connectionSegmentMove, dragging) {
-
-        // given
-        var connection = elementRegistry.get('SequenceFlow_B'),
-            labelPosition = getLabelPosition(connection);
-
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-
-        dragging.move(canvasEvent({ x: 30, y: 0 }));
-
-        dragging.end();
-
-        // then
-        expectLabelMoved(connection, labelPosition, { x: 30, y: 0 });
-      }));
+          // then
+          expectLabelMoved(connection, labelPosition, { x: -70, y: 24 });
+        }
+      ));
 
 
-      it('right - remove bendpoint', inject(function(elementRegistry, connectionSegmentMove, dragging) {
+      it('right - no relayout', inject(
+        function(elementRegistry, connectionSegmentMove, dragging) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_B'),
-            labelPosition = getLabelPosition(connection);
+          // given
+          var connection = elementRegistry.get('SequenceFlow_B'),
+              labelPosition = getLabelPosition(connection);
 
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-        dragging.move(canvasEvent({ x: 70, y: 0 }));
+          dragging.move(canvasEvent({ x: 30, y: 0 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expectLabelMoved(connection, labelPosition, { x: 70, y: -16 });
-      }));
+          // then
+          expectLabelMoved(connection, labelPosition, { x: 30, y: 0 });
+        }
+      ));
+
+
+      it('right - remove bendpoint', inject(
+        function(elementRegistry, connectionSegmentMove, dragging) {
+
+          // given
+          var connection = elementRegistry.get('SequenceFlow_B'),
+              labelPosition = getLabelPosition(connection);
+
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+
+          dragging.move(canvasEvent({ x: 70, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expectLabelMoved(connection, labelPosition, { x: 70, y: -16 });
+        }
+      ));
 
 
       it('down', inject(function(elementRegistry, connectionSegmentMove, dragging) {
@@ -188,50 +196,54 @@ describe('modeling - label layouting', function() {
       }));
 
 
-      it('up - remove two bendpoints', inject(function(elementRegistry, connectionSegmentMove, dragging) {
+      it('up - remove two bendpoints', inject(
+        function(elementRegistry, connectionSegmentMove, dragging) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C'),
-            labelPosition = getLabelPosition(connection);
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C'),
+              labelPosition = getLabelPosition(connection);
 
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-        dragging.move(canvasEvent({ x: 0, y: -90 }));
+          dragging.move(canvasEvent({ x: 0, y: -90 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expectLabelMoved(connection, labelPosition, { x: -39, y: -85 });
+          // then
+          expectLabelMoved(connection, labelPosition, { x: -39, y: -85 });
 
-      }));
+        }
+      ));
 
 
       // TODO(@janstuemmel): solve by connectionSegmentMove refactoring
-      it('up - remove two bendpoints - redundant waypoints', inject(function(elementRegistry, connectionSegmentMove, dragging, bendpointMove) {
+      it('up - remove two bendpoints - redundant waypoints', inject(
+        function(elementRegistry, connectionSegmentMove, dragging, bendpointMove) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C');
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C');
 
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
-        dragging.move(canvasEvent({ x: 620, y: 435 }));
-        dragging.end();
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+          dragging.move(canvasEvent({ x: 620, y: 435 }));
+          dragging.end();
 
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-        dragging.move(canvasEvent({ x: 300, y: 435 }));
-        dragging.end();
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          dragging.move(canvasEvent({ x: 300, y: 435 }));
+          dragging.end();
 
-        var labelPosition = getLabelPosition(connection);
+          var labelPosition = getLabelPosition(connection);
 
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-        dragging.move(canvasEvent({ x: 0, y: -160 }));
-        dragging.end();
+          // when
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
+          dragging.move(canvasEvent({ x: 0, y: -160 }));
+          dragging.end();
 
-        // then
-        expect(getLabelPosition(connection)).to.not.eql(labelPosition);
+          // then
+          expect(getLabelPosition(connection)).to.not.eql(labelPosition);
 
-      }));
+        }
+      ));
 
     });
 
@@ -314,245 +326,212 @@ describe('modeling - label layouting', function() {
       }));
 
 
-      it('move, label on bendpoint', inject(function(elementRegistry, bendpointMove, dragging, modeling) {
+      it('move, label on bendpoint', inject(
+        function(elementRegistry, bendpointMove, dragging, modeling) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C');
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C');
 
-        // label out of segments, on a bendpoint (idx=1)
-        modeling.moveShape(connection.label, { x: 40, y: 0 });
+          // label out of segments, on a bendpoint (idx=1)
+          modeling.moveShape(connection.label, { x: 40, y: 0 });
 
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
 
-        dragging.move(canvasEvent({ x: 455 + 50, y: 500 }));
+          dragging.move(canvasEvent({ x: 455 + 50, y: 500 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expect(Math.round(connection.label.x)).to.be.within(517, 519);
-        expect(Math.round(connection.label.y)).to.be.equal(507);
+          // then
+          expect(Math.round(connection.label.x)).to.be.within(517, 519);
+          expect(Math.round(connection.label.y)).to.be.equal(507);
 
-      }));
-
-
-      it('remove bendpoint when label on segment', inject(function(elementRegistry, bendpointMove, dragging) {
-
-        // given
-        var connection = elementRegistry.get('SequenceFlow_B');
-
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
-
-        dragging.move(canvasEvent({ x: 455, y: 120 + 160 }));
-
-        dragging.end();
-
-        // then
-        expect(Math.round(connection.label.x)).to.be.within(418, 421);
-        expect(Math.round(connection.label.y)).to.be.equal(191);
-
-      }));
+        }
+      ));
 
 
-      it('add bendpoint, label on right segment', inject(function(elementRegistry, bendpointMove, dragging, canvas) {
+      it('remove bendpoint when label on segment', inject(
+        function(elementRegistry, bendpointMove, dragging) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_A');
+          // given
+          var connection = elementRegistry.get('SequenceFlow_B');
 
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1, true);
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
 
-        dragging.hover({
-          element: connection,
-          gfx: canvas.getGraphics(connection)
-        });
+          dragging.move(canvasEvent({ x: 455, y: 120 + 160 }));
 
-        dragging.move(canvasEvent({ x: 220, y: 200 }));
+          dragging.end();
 
-        dragging.end();
+          // then
+          expect(Math.round(connection.label.x)).to.be.within(418, 421);
+          expect(Math.round(connection.label.y)).to.be.equal(191);
 
-        // then
-        expect(Math.round(connection.label.x)).to.be.within(248, 251);
-        expect(Math.round(connection.label.y)).to.be.equal(152);
-
-      }));
+        }
+      ));
 
 
-      it('add bendpoint, label on left segment', inject(function(elementRegistry, bendpointMove, dragging, canvas) {
+      it('add bendpoint, label on right segment', inject(
+        function(elementRegistry, bendpointMove, dragging, canvas) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_A');
+          // given
+          var connection = elementRegistry.get('SequenceFlow_A');
 
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1, true);
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1, true);
 
-        dragging.hover({
-          element: connection,
-          gfx: canvas.getGraphics(connection)
-        });
+          dragging.hover({
+            element: connection,
+            gfx: canvas.getGraphics(connection)
+          });
 
-        dragging.move(canvasEvent({ x: 260, y: 200 }));
+          dragging.move(canvasEvent({ x: 220, y: 200 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expect(Math.round(connection.label.x)).to.be.within(240, 242);
-        expect(Math.round(connection.label.y)).to.be.equal(148);
+          // then
+          expect(Math.round(connection.label.x)).to.be.within(248, 251);
+          expect(Math.round(connection.label.y)).to.be.equal(152);
 
-
-      }));
-
-
-      it('remove bendpoint when label on bendpoint', inject(function(elementRegistry, bendpointMove, dragging, modeling) {
-
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C');
-
-        // label out of segments, on a bendpoint
-        modeling.moveShape(connection.label, { x: 40, y: 0 });
-
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
-
-        dragging.move(canvasEvent({ x: 455, y: 320 }));
-
-        dragging.end();
-
-        // then
-        expect(Math.round(connection.label.x)).to.be.within(462, 465);
-        expect(Math.round(connection.label.y)).to.be.within(290, 293);
-
-      }));
+        }
+      ));
 
 
-      it('add benpoint, label on segment, should not move', inject(function(elementRegistry, bendpointMove, canvas, dragging, modeling) {
+      it('add bendpoint, label on left segment', inject(
+        function(elementRegistry, bendpointMove, dragging, canvas) {
 
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C');
+          // given
+          var connection = elementRegistry.get('SequenceFlow_A');
 
-        // label out of segments, on a bendpoint
-        modeling.moveShape(connection.label, { x: 40, y: -60 });
-        var position = getLabelPosition(connection);
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1, true);
 
-        // when
-        bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2, true);
+          dragging.hover({
+            element: connection,
+            gfx: canvas.getGraphics(connection)
+          });
 
-        dragging.hover({
-          element: connection,
-          gfx: canvas.getGraphics(connection)
-        });
+          dragging.move(canvasEvent({ x: 260, y: 200 }));
 
-        dragging.move(canvasEvent({ x: 400, y: 350 }));
+          dragging.end();
 
-        dragging.end();
+          // then
+          expect(Math.round(connection.label.x)).to.be.within(240, 242);
+          expect(Math.round(connection.label.y)).to.be.equal(148);
 
-        // then
-        expectLabelMoved(connection, position, { x: 0, y: 0 });
+        }
+      ));
 
-      }));
+
+      it('remove bendpoint when label on bendpoint', inject(
+        function(elementRegistry, bendpointMove, dragging, modeling) {
+
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C');
+
+          // label out of segments, on a bendpoint
+          modeling.moveShape(connection.label, { x: 40, y: 0 });
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+
+          dragging.move(canvasEvent({ x: 455, y: 320 }));
+
+          dragging.end();
+
+          // then
+          expect(Math.round(connection.label.x)).to.be.within(462, 465);
+          expect(Math.round(connection.label.y)).to.be.within(290, 293);
+
+        }
+      ));
+
+
+      it('add benpoint, label on segment, should not move', inject(
+        function(elementRegistry, bendpointMove, canvas, dragging, modeling) {
+
+          // given
+          var connection = elementRegistry.get('SequenceFlow_C');
+
+          // label out of segments, on a bendpoint
+          modeling.moveShape(connection.label, { x: 40, y: -60 });
+          var position = getLabelPosition(connection);
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2, true);
+
+          dragging.hover({
+            element: connection,
+            gfx: canvas.getGraphics(connection)
+          });
+
+          dragging.move(canvasEvent({ x: 400, y: 350 }));
+
+          dragging.end();
+
+          // then
+          expectLabelMoved(connection, position, { x: 0, y: 0 });
+
+        }
+      ));
 
     });
 
 
     describe('special cases', function() {
 
-      it('should behave properly, right after importing', inject(function(elementRegistry, connectionSegmentMove, dragging, modeling) {
-
-        // given
-        var connection = elementRegistry.get('SequenceFlow_C'),
-            labelPosition = getLabelPosition(connection),
-            label = connection.label;
-
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-
-        dragging.move(canvasEvent({ x: 0, y: 70 }));
-
-        dragging.end();
-
-        // move label
-        modeling.moveShape(label, { x: 40, y: -30 });
-
-        // drag again
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
-
-        dragging.move(canvasEvent({ x: -20, y: 0 }));
-
-        dragging.end();
-
-        // then
-        expectLabelMoved(connection, labelPosition, { x: 20, y: 40 });
-
-      }));
-
-
-      it('should reposition on right segment', inject(function(elementRegistry, connectionSegmentMove, dragging) {
-
-        // given
-        var connection = elementRegistry.get('SequenceFlow_E'),
-            labelPosition = getLabelPosition(connection);
-
-        // when
-        connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-
-        dragging.move(canvasEvent({ x: -100, y: 0 }));
-
-        dragging.end();
-
-        // then
-        expect(connection.label.y - labelPosition.y).to.be.within(-76, -70);
-        expect(connection.label.x - labelPosition.x).to.be.within(-54, -51);
-
-      }));
-
-
-      describe.skip('label out of bounds', function() {
-
-        it('should not move label that is out of bounds', inject(function(elementRegistry, connectionSegmentMove, dragging, modeling) {
+      it('should behave properly, right after importing', inject(
+        function(elementRegistry, connectionSegmentMove, dragging, modeling) {
 
           // given
-          var connection = elementRegistry.get('SequenceFlow_C');
-
-          // move shape away
-          modeling.moveShape(connection.label, { x: 0, y: 140 });
-
-          var labelPosition = getLabelPosition(connection);
+          var connection = elementRegistry.get('SequenceFlow_C'),
+              labelPosition = getLabelPosition(connection),
+              label = connection.label;
 
           // when
           connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-          dragging.move(canvasEvent({ x: 0, y: 30 }));
+          dragging.move(canvasEvent({ x: 0, y: 70 }));
+
+          dragging.end();
+
+          // move label
+          modeling.moveShape(label, { x: 40, y: -30 });
+
+          // drag again
+          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 1);
+
+          dragging.move(canvasEvent({ x: -20, y: 0 }));
 
           dragging.end();
 
           // then
-          expectLabelMoved(connection, labelPosition, { x: 0, y: 0 });
-        }));
+          expectLabelMoved(connection, labelPosition, { x: 20, y: 40 });
+
+        }
+      ));
 
 
-        it('should not move label that is out of bounds in corner', inject(function(elementRegistry, connectionSegmentMove, dragging, modeling) {
+      it('should reposition on right segment', inject(
+        function(elementRegistry, connectionSegmentMove, dragging) {
 
           // given
-          var connection = elementRegistry.get('SequenceFlow_C');
-
-          // move shape away
-          modeling.moveShape(connection.label, { x: 50, y: 0 });
-
-          var labelPosition = getLabelPosition(connection);
+          var connection = elementRegistry.get('SequenceFlow_E'),
+              labelPosition = getLabelPosition(connection);
 
           // when
           connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
 
-          dragging.move(canvasEvent({ x: 0, y: 30 }));
+          dragging.move(canvasEvent({ x: -100, y: 0 }));
 
           dragging.end();
 
           // then
-          expectLabelMoved(connection, labelPosition, { x: 0, y: 0 });
-        }));
+          expect(connection.label.y - labelPosition.y).to.be.within(-76, -70);
+          expect(connection.label.x - labelPosition.x).to.be.within(-54, -51);
 
-      });
+        }
+      ));
 
     });
 
