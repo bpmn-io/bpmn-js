@@ -4,6 +4,7 @@ var getAttachment = require('lib/features/modeling/behavior/util/LineAttachmentU
 
 var EPSILON = 0.1;
 
+
 describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function() {
 
   // test line
@@ -198,7 +199,7 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
     //     \
     //      *
     //
-    var otherLine = [
+    var floatingPointLine = [
       { x: 10.141592, y: 10.653589 },
       // -
       { x: 30.793238, y: 10.462643 },
@@ -212,7 +213,7 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
     it('float value segment', function() {
 
       // when
-      var attachment = getAttachment({ x: 20.197169, y: 5.399375 }, otherLine);
+      var attachment = getAttachment({ x: 20.197169, y: 5.399375 }, floatingPointLine);
 
       // then
       expect(attachment.type).to.equal('segment');
@@ -228,7 +229,7 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
     it('float value bendboint', function() {
 
       // when
-      var attachment = getAttachment({ x: 35.197169, y: 5.399375 }, otherLine);
+      var attachment = getAttachment({ x: 35.197169, y: 5.399375 }, floatingPointLine);
 
       // then
       // expext values to be rounded to 3 decimal places
@@ -239,6 +240,54 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
         segmentIndex: 0
       });
 
+    });
+
+  });
+
+
+  describe('handle zero-length line', function() {
+
+    var zeroLengthLine = [
+      { x: 10, y: 10 },
+      // -
+      { x: 10, y: 10 }
+    ];
+
+
+    var zeroLengthFloatingPointLine = [
+      { x: 10.1, y: 10.12313 },
+      // -
+      { x: 10, y: 10.112 }
+    ];
+
+
+    it('should treat zero-length as bendpoint attach', function() {
+
+      // when
+      var attachment = getAttachment({ x: 15.1, y: 15.123 }, zeroLengthLine);
+
+      // then
+      expect(attachment).to.eql({
+        type: 'bendpoint',
+        position: { x: 10, y: 10 },
+        segmentIndex: 0,
+        bendpointIndex: 0
+      });
+    });
+
+
+    it('should treat approx zero-length as bendpoint attach', function() {
+
+      // when
+      var attachment = getAttachment({ x: 15.1, y: 15.123 }, zeroLengthFloatingPointLine);
+
+      // then
+      expect(attachment).to.eql({
+        type: 'bendpoint',
+        position: { x: 10.1, y: 10.12313 },
+        segmentIndex: 0,
+        bendpointIndex: 0
+      });
     });
 
   });
