@@ -232,4 +232,24 @@ describe('features/bendpoints', function() {
 
   });
 
+  describe('updating', function() {
+
+    it('should update on element updated ID', inject(function(selection, canvas, elementRegistry) {
+
+      // given
+      var layer = canvas.getLayer('overlays');
+
+      selection.select(connection);
+
+      // when
+      elementRegistry.updateId(connection, 'foo');
+
+      var bendpointContainer = domQuery('.djs-bendpoints', layer);
+
+      // then
+      // bendpoint container references element with updated ID
+      expect(bendpointContainer.dataset.elementId).to.equal('foo');
+    }));
+
+  });
 });
