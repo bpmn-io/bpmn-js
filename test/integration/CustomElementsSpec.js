@@ -154,7 +154,7 @@ describe('custom elements', function() {
       );
 
 
-      it('should connect a bpmn element to a custom one',
+      it('should not connect a bpmn element to a custom one',
         inject(function(elementFactory, dragging, elementRegistry, connect) {
 
           // given
@@ -170,11 +170,8 @@ describe('custom elements', function() {
 
           dragging.end();
 
-          var connection = triangle.incoming[0];
-
           // then
-          expect(connection.type).to.equal('bpmn:Association');
-          expect(connection.source).to.equal(subProcess);
+          expect(triangle.incoming).to.have.lengthOf(0);
         })
       );
 
