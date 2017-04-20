@@ -14,7 +14,7 @@ describe('features/modeling - move shape', function() {
   }));
 
 
-  var rootShape, parentShape, childShape, childShape2, connection;
+  var rootShape, parentShape, parentShape2, childShape, childShape2, connection;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -31,6 +31,14 @@ describe('features/modeling - move shape', function() {
     });
 
     canvas.addShape(parentShape, rootShape);
+
+    parentShape2 = elementFactory.createShape({
+      id: 'parent2',
+      x: 500, y: 100,
+      width: 300, height: 300
+    });
+
+    canvas.addShape(parentShape2, rootShape);
 
     childShape = elementFactory.createShape({
       id: 'child',
@@ -213,9 +221,9 @@ describe('features/modeling - move shape', function() {
   });
 
 
-  describe('layout connections', function() {
+  describe('update connections', function() {
 
-    it('should layout after move', inject(function(modeling) {
+    it('should update connection parent', inject(function(modeling) {
 
       // when
       modeling.moveShape(childShape, { x: -20, y: +20 }, parentShape);
@@ -226,6 +234,21 @@ describe('features/modeling - move shape', function() {
         { x: 130, y: 170 },
         { x: 250, y: 160 }
       ]);
+    }));
+
+  });
+
+
+  describe('layout connections', function() {
+
+    it('should layout after move', inject(function(modeling) {
+
+      // when
+      modeling.moveShape(childShape, { x: +500, y: +20 }, parentShape2);
+
+      // then
+      // update parent
+      expect(connection.parent).to.equal(parentShape2);
     }));
 
 
