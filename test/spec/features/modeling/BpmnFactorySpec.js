@@ -45,6 +45,32 @@ describe('features - bpmn-factory', function() {
 
   });
 
+  describe('create event definition', function() {
+
+    it('should return instance', inject(function(bpmnFactory) {
+      var event = bpmnFactory.create('bpmn:BoundaryEvent');
+      var eventDefinition = bpmnFactory.createEventDefinition('bpmn:ErrorEventDefinition', event);
+
+      expect(eventDefinition).to.exist;
+      expect(eventDefinition.$type).to.equal('bpmn:ErrorEventDefinition');
+    }));
+
+
+    it('should assign id (with semantic prefix)', inject(function(bpmnFactory) {
+      var event = bpmnFactory.create('bpmn:BoundaryEvent');
+      var eventDefinition = bpmnFactory.createEventDefinition('bpmn:ErrorEventDefinition', event);
+
+      expect(eventDefinition.id).to.match(/^ErrorEventDefinition_.+/);
+    }));
+
+    it('should assign $parent as bound event', inject(function(bpmnFactory) {
+      var event = bpmnFactory.create('bpmn:BoundaryEvent');
+      var eventDefinition = bpmnFactory.createEventDefinition('bpmn:ErrorEventDefinition', event);
+
+      expect(eventDefinition.$parent).to.exist;
+      expect(eventDefinition.$parent.id).to.eql(event.id);
+    }));
+  });
 
   describe('create di', function() {
 

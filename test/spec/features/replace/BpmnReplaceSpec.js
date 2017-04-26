@@ -135,6 +135,7 @@ describe('features/replace - bpmn replace', function() {
         // given
         var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
             newElementData = {
+              id: boundaryEvent.id,
               type: 'bpmn:BoundaryEvent',
               eventDefinitionType: 'bpmn:EscalationEventDefinition'
             };
@@ -145,7 +146,10 @@ describe('features/replace - bpmn replace', function() {
         // then
         expect(newElement).to.exist;
         expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+
         expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
+        expect(newElement.businessObject.eventDefinitions[0].id).to.match(/^EscalationEventDefinition_.+/);
+
         expect(newElement.businessObject.cancelActivity).to.be.true;
       })
     );
@@ -169,6 +173,7 @@ describe('features/replace - bpmn replace', function() {
         expect(newElement).to.exist;
         expect(is(newElement, 'bpmn:BoundaryEvent')).to.be.true;
         expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
+        expect(newElement.businessObject.eventDefinitions[0].id).to.match(/^SignalEventDefinition_.+/);
         expect(newElement.businessObject.cancelActivity).to.be.false;
       })
     );
@@ -1199,6 +1204,42 @@ describe('features/replace - bpmn replace', function() {
       expect(parent).to.equal(messageEvent.businessObject);
     }));
 
+    it('should properly set event definition id', inject(function(elementRegistry, modeling, bpmnReplace) {
+
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      var timerEvent = bpmnReplace.replaceElement(startEvent, {
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:TimerEventDefinition'
+      });
+
+      var eventDefinitionId = timerEvent.businessObject.eventDefinitions[0].id;
+
+      expect(eventDefinitionId).to.exist;
+    }));
+
+    it('even if changed to other event definition type', inject(function(elementRegistry, modeling, bpmnReplace) {
+
+      var startEvent = elementRegistry.get('StartEvent_1');
+
+      var timerEvent = bpmnReplace.replaceElement(startEvent, {
+        id: startEvent.id,
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:TimerEventDefinition'
+      });
+
+      var eventDefinitionId1 = timerEvent.businessObject.eventDefinitions[0].id;
+      expect(eventDefinitionId1).to.exist;
+
+      var signalEvent = bpmnReplace.replaceElement(timerEvent, {
+        id: startEvent.id,
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:SignalEventDefinition'
+      });
+
+      var eventDefinitionId2 = signalEvent.businessObject.eventDefinitions[0].id;
+      expect(eventDefinitionId2).to.exist;
+    }));
   });
 
 
