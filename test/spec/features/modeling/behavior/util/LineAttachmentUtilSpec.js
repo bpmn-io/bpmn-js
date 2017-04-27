@@ -232,14 +232,13 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
       var attachment = getAttachment({ x: 35.197169, y: 5.399375 }, floatingPointLine);
 
       // then
-      // expext values to be rounded to 3 decimal places
-      expect(attachment).to.eql({
-        type: 'bendpoint',
-        position: { x: 30.793, y: 10.463 },
-        bendpointIndex: 1,
-        segmentIndex: 0
-      });
+      expect(attachment.type).to.equal('bendpoint');
+      expect(attachment.segmentIndex).to.equal(1);
+      expect(attachment.bendpointIndex).to.equal(1);
 
+      // expect values to be roughly equal
+      expect(attachment.position.x).to.be.within(30.793 - EPSILON, 30.793 + EPSILON);
+      expect(attachment.position.y).to.be.within(10.463 - EPSILON, 10.463 + EPSILON);
     });
 
   });
