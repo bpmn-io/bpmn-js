@@ -5,7 +5,7 @@ require('../../../TestHelper');
 /* global bootstrapDiagram, inject */
 
 
-var changeSupportModule = require('../../../../lib/features/modeling'),
+var modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
 
@@ -14,7 +14,7 @@ describe('features/change-support', function() {
   beforeEach(bootstrapDiagram({
     modules: [
       coreModule,
-      changeSupportModule
+      modelingModule
     ]
   }));
 
@@ -46,7 +46,7 @@ describe('features/change-support', function() {
   }));
 
 
-  it('should emit element.changed event', inject(function(eventBus) {
+  it('should emit <element.changed> event', inject(function(eventBus) {
 
     // given
     var affectedElements = recordEvents(eventBus, 'element.changed');
@@ -62,7 +62,7 @@ describe('features/change-support', function() {
   }));
 
 
-  it('should omit element.changed event for deleted shape',
+  it('should omit <element.changed> event for deleted shape',
     inject(function(eventBus, modeling) {
 
       // given
@@ -78,7 +78,7 @@ describe('features/change-support', function() {
   );
 
 
-  it('should emit shape.changed event', inject(function(eventBus) {
+  it('should emit <shape.changed> event', inject(function(eventBus) {
 
     // given
     var affectedElements = recordEvents(eventBus, 'shape.changed');
@@ -93,7 +93,7 @@ describe('features/change-support', function() {
   }));
 
 
-  it('should emit connection.changed event', inject(function(eventBus) {
+  it('should emit <connection.changed> event', inject(function(eventBus) {
 
     // given
     var affectedElements = recordEvents(eventBus, 'connection.changed');
@@ -108,7 +108,7 @@ describe('features/change-support', function() {
   }));
 
 
-  it('should emit root.changed event', inject(function(eventBus) {
+  it('should emit <root.changed> event', inject(function(eventBus) {
 
     // given
     var affectedElements = recordEvents(eventBus, 'root.changed');
@@ -121,6 +121,44 @@ describe('features/change-support', function() {
       rootElement
     ]);
   }));
+
+
+  describe('command stack integration', function() {
+
+    it('should emit <element.changed> on execute', inject(function(eventBus, modeling) {
+
+      // given
+      var affectedElements = recordEvents(eventBus, 'element.changed');
+
+      // when
+      modeling.moveShape(shapeA, { x: 10, y: 5 });
+
+      // then
+      expect(affectedElements).to.eql([
+        shapeA
+      ]);
+    }));
+
+
+    it('should emit <element.changed> on undo', inject(
+      function(eventBus, modeling, commandStack) {
+
+        // given
+        modeling.moveShape(shapeA, { x: 10, y: 5 });
+
+        var affectedElements = recordEvents(eventBus, 'element.changed');
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(affectedElements).to.eql([
+          shapeA
+        ]);
+      })
+    );
+
+  });
 
 });
 
