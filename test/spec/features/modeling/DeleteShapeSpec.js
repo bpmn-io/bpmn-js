@@ -15,7 +15,10 @@ describe('features/modeling - #removeShape', function() {
         parentShape,
         childShape,
         childShape2,
-        connection;
+        childShape3,
+        childShape4,
+        connection,
+        connection2;
 
     beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
@@ -33,9 +36,6 @@ describe('features/modeling - #removeShape', function() {
       });
 
       canvas.addShape(parentShape, rootShape);
-    }));
-
-    beforeEach(inject(function(elementFactory, canvas) {
 
       childShape = elementFactory.createShape({
         id: 'child',
@@ -59,6 +59,29 @@ describe('features/modeling - #removeShape', function() {
       });
 
       canvas.addConnection(connection, parentShape);
+
+      childShape3 = elementFactory.createShape({
+        id: 'child3',
+        x: 600, y: 100, width: 100, height: 100
+      });
+
+      canvas.addShape(childShape3, rootShape);
+
+      childShape4 = elementFactory.createShape({
+        id: 'child4',
+        x: 100, y: 500, width: 100, height: 100
+      });
+
+      canvas.addShape(childShape4, rootShape);
+
+      connection2 = elementFactory.createConnection({
+        id: 'connection2',
+        waypoints: [ { x: 650, y: 150 }, { x: 150, y: 550 } ],
+        source: childShape3,
+        target: childShape4
+      });
+
+      canvas.addConnection(connection2, parentShape);
     }));
 
 
@@ -105,6 +128,8 @@ describe('features/modeling - #removeShape', function() {
       expect(childShape.parent).to.be.null;
       expect(childShape2.parent).to.be.null;
       expect(connection.parent).to.be.null;
+      expect(childShape3.outgoing.length).to.equal(0);
+      expect(childShape4.incoming.length).to.equal(0);
     }));
 
 
@@ -119,6 +144,8 @@ describe('features/modeling - #removeShape', function() {
       // then
       expect(childShape.parent).to.equal(parentShape);
       expect(connection.parent).to.equal(parentShape);
+      expect(childShape3.outgoing.length).to.equal(1);
+      expect(childShape4.incoming.length).to.equal(1);
     }));
 
 
