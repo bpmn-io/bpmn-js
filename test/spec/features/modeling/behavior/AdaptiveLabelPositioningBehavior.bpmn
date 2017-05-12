@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="http://bpmn.io" exporterVersion="0.10.1">
+  <process id="Process_1" isExecutable="false">
+    <exclusiveGateway id="LabelBottom" name="BOTTOM" />
+    <exclusiveGateway id="LabelLeft" name="LEFT" />
+    <exclusiveGateway id="LabelTop" name="TOP">
+      <outgoing>SequenceFlow_1</outgoing>
+    </exclusiveGateway>
+    <exclusiveGateway id="LabelRight" name="RIGHT">
+      <outgoing>SequenceFlow_2</outgoing>
+    </exclusiveGateway>
+    <exclusiveGateway id="LabelBottomLeft" name="BOTTOM_LEFT" />
+    <exclusiveGateway id="LabelBottom_2" name="BOTTOM_2">
+      <incoming>SequenceFlow_2</incoming>
+    </exclusiveGateway>
+    <exclusiveGateway id="LabelBottom_3" name="BOTTOM_3">
+      <incoming>SequenceFlow_1</incoming>
+    </exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_1" name="1" sourceRef="LabelTop" targetRef="LabelBottom_3" />
+    <sequenceFlow id="SequenceFlow_2" name="2" sourceRef="LabelRight" targetRef="LabelBottom_2" />
+    <exclusiveGateway id="LabelImpossible" name="IMPOSSIBLE">
+      <incoming>SequenceFlow_1qmllcx</incoming>
+      <incoming>SequenceFlow_0s993e4</incoming>
+      <incoming>SequenceFlow_022at7e</incoming>
+    </exclusiveGateway>
+    <task id="Task">
+      <outgoing>SequenceFlow_1qmllcx</outgoing>
+      <outgoing>SequenceFlow_0s993e4</outgoing>
+      <outgoing>SequenceFlow_022at7e</outgoing>
+    </task>
+    <sequenceFlow id="SequenceFlow_1qmllcx" sourceRef="Task" targetRef="LabelImpossible" />
+    <sequenceFlow id="SequenceFlow_0s993e4" sourceRef="Task" targetRef="LabelImpossible" />
+    <sequenceFlow id="SequenceFlow_022at7e" sourceRef="Task" targetRef="LabelImpossible" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="LabelBottom_di" bpmnElement="LabelBottom" isMarkerVisible="true">
+        <omgdc:Bounds x="113" y="89" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="107" y="129" width="49" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelLeft_di" bpmnElement="LabelLeft" isMarkerVisible="true">
+        <omgdc:Bounds x="309" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="263" y="101" width="30" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelTop_di" bpmnElement="LabelTop" isMarkerVisible="true">
+        <omgdc:Bounds x="309" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="322" y="198" width="24" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelRight_di" bpmnElement="LabelRight" isMarkerVisible="true">
+        <omgdc:Bounds x="106" y="225" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="168" y="244" width="37" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelBottomLeft_di" bpmnElement="LabelBottomLeft" isMarkerVisible="true">
+        <omgdc:Bounds x="532" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="487" y="146" width="83" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelBottom_2_di" bpmnElement="LabelBottom_2" isMarkerVisible="true">
+        <omgdc:Bounds x="106" y="370" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="101" y="424" width="61" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelBottom_3_di" bpmnElement="LabelBottom_3" isMarkerVisible="true">
+        <omgdc:Bounds x="309" y="370" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="304" y="424" width="61" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="334" y="275" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="334" y="370" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="346" y="317" width="7" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_2_di" bpmnElement="SequenceFlow_2">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="131" y="275" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="131" y="370" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="142" y="317" width="8" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="LabelImpossible_di" bpmnElement="LabelImpossible" isMarkerVisible="true">
+        <omgdc:Bounds x="633" y="308" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="694" y="327" width="68" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <omgdc:Bounds x="776" y="293" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1qmllcx_di" bpmnElement="SequenceFlow_1qmllcx">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="293" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="202" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="202" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="308" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="742" y="181" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0s993e4_di" bpmnElement="SequenceFlow_0s993e4">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="373" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="424" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="424" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="358" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="742" y="403" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_022at7e_di" bpmnElement="SequenceFlow_022at7e">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="845" y="373" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="845" y="453" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="594" y="453" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="594" y="333" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="633" y="333" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="719.5" y="432" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
