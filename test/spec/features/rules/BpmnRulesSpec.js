@@ -207,6 +207,50 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect DataObjectReference -> TextAnnotation', inject(function() {
+
+      expectCanConnect('DataObjectReference', 'TextAnnotation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect TextAnnotation -> DataObjectReference', inject(function() {
+
+      expectCanConnect('TextAnnotation', 'DataObjectReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect DataStoreReference -> TextAnnotation', inject(function() {
+
+      expectCanConnect('DataStoreReference', 'TextAnnotation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect TextAnnotation -> DataStoreReference', inject(function() {
+
+      expectCanConnect('TextAnnotation', 'DataStoreReference', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
     it('connect StartEvent_None -> DataStoreReference', inject(function() {
 
       expectCanConnect('StartEvent_None', 'DataStoreReference', {
