@@ -1,6 +1,8 @@
 language: node_js
 node_js: '4.0'
 
+sudo: false
+
 addons:
   firefox: "latest-esr"
 
