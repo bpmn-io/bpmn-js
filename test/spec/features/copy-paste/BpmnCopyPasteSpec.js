@@ -58,6 +58,38 @@ describe('features/copy-paste', function() {
     });
 
 
+    it('should forbid multi paste', inject(
+      function(elementRegistry, canvas, copyPaste) {
+        // given
+        var element = elementRegistry.get('SubProcess_1kd6ist'),
+            rootElement = canvas.getRootElement();
+
+        // when
+        copyPaste.copy(element);
+
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 600,
+            y: 100
+          }
+        });
+
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 600,
+            y: 275
+          }
+        });
+
+        // then
+        // pasted was only once
+        expect(rootElement.children).to.have.length(2);
+      }
+    ));
+
+
     describe('integration', function() {
 
       it('should retain label\'s relative position',
@@ -489,6 +521,7 @@ describe('features/copy-paste', function() {
       it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
 
       it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
+
     });
 
   });
