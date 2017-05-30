@@ -120,9 +120,13 @@ describe('features/modeling - layout connection', function() {
   });
 
 
-  describe('correct z-order', function() {
+  describe('z-order handling', function() {
 
-    var container1, container2, sourceShape, targetShape, connection;
+    var container1,
+        container2,
+        sourceShape,
+        targetShape,
+        connection;
 
     beforeEach(inject(function(elementFactory, canvas) {
 
@@ -166,7 +170,7 @@ describe('features/modeling - layout connection', function() {
     }));
 
 
-    describe('send to front after moving target to nested child', function() {
+    describe('keep z-index after moving target to nested child', function() {
 
       it('should execute', inject(function(modeling) {
 
@@ -174,11 +178,13 @@ describe('features/modeling - layout connection', function() {
         modeling.moveShape(targetShape, { x: 0, y: 200 }, container2);
 
         // then
-        var childArr = connection.parent.children;
+        var connectionSiblings = connection.parent.children;
 
-        expect(childArr[0]).to.equal(sourceShape);
-        expect(childArr[1]).to.equal(container1);
-        expect(childArr[2]).to.equal(connection);
+        expect(connectionSiblings).to.eql([
+          sourceShape,
+          connection,
+          container1
+        ]);
       }));
 
 
@@ -191,39 +197,17 @@ describe('features/modeling - layout connection', function() {
         commandStack.undo();
 
         // then
-        var childArr = connection.parent.children;
+        var connectionSiblings = connection.parent.children;
 
-        expect(childArr[0]).to.equal(sourceShape);
-        expect(childArr[1]).to.equal(targetShape);
-        expect(childArr[2]).to.equal(connection);
-        expect(childArr[3]).to.equal(container1);
+        expect(connectionSiblings).to.eql([
+          sourceShape,
+          targetShape,
+          connection,
+          container1
+        ]);
       }));
 
     });
-
-
-    it('should leave unchanged if already in front', inject(function(canvas, modeling) {
-
-      // given
-      var connection2 = canvas.addConnection({
-        id: 'connection2',
-        waypoints: [ { x: 60, y: 60 }, { x: 150, y: 150 }, { x: 200, y: 60 } ],
-        source: sourceShape,
-        target: targetShape
-      });
-
-      // when
-      modeling.moveShape(targetShape, { x: 0, y: 200 }, container2);
-
-      // then
-      var childArr = connection2.parent.children;
-
-      expect(childArr[0]).to.equal(sourceShape);
-      expect(childArr[1]).to.equal(container1);
-      expect(childArr[2]).to.equal(connection);
-      expect(childArr[3]).to.equal(connection2);
-
-    }));
 
   });
 
