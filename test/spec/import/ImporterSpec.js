@@ -273,6 +273,49 @@ describe('import - Importer', function() {
       });
     });
 
+    it('should import boundary event definition', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/eventDefinition.bpmn');
+
+      var events = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        events.push({
+          type: 'add',
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
+        });
+
+        if (e.element.businessObject.eventDefinitions) {
+          events = events.concat(e.element.businessObject.eventDefinitions.map(function(ed) {
+            return {
+              type: 'attach',
+              semantic: ed.id,
+              $type: ed.$type
+            };
+          }));
+        }
+      });
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+        // then
+        expect(events).to.eql([
+          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: 'Process_1' },
+          { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_2', diagramElement: 'Task_1' },
+          { type: 'add', semantic: 'Task_2', di: '_BPMNShape_Task_3', diagramElement: 'Task_2' },
+          { type: 'add', semantic: 'BoundaryEvent_1', di: '_BPMNShape_BoundaryEvent_2', diagramElement: 'BoundaryEvent_1' },
+          { type: 'attach', semantic: 'ErrorEventDefinition_1', $type: 'bpmn:ErrorEventDefinition' },
+          { type: 'add', semantic: 'SequenceFlow_1', di: 'SequenceFlow_1_di', diagramElement: 'SequenceFlow_1' }
+        ]);
+
+        done(err);
+      });
+    });
+
   });
 
 
