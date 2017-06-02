@@ -1,1 +1,1 @@
-module.exports = require('./lib/Viewer');
+module.exports = require('bpmn-js/lib/Viewer');
