@@ -14,7 +14,7 @@ describe('features/modeling - create shape', function() {
   beforeEach(bootstrapDiagram({ modules: [ modelingModule ] }));
 
 
-  var rootShape, parentShape, childShape;
+  var rootShape, parentShape, newShape;
 
   beforeEach(inject(function(elementFactory, canvas) {
 
@@ -31,8 +31,8 @@ describe('features/modeling - create shape', function() {
 
     canvas.addShape(parentShape, rootShape);
 
-    childShape = elementFactory.createShape({
-      id: 'childShape',
+    newShape = elementFactory.createShape({
+      id: 'newShape',
       x: 0, y: 0, width: 100, height: 100
     });
 
@@ -46,61 +46,84 @@ describe('features/modeling - create shape', function() {
 
   describe('basics', function() {
 
-    it('should create a shape', inject(function(modeling, elementRegistry) {
+    describe('should create', function() {
 
-      // when
-      modeling.createShape(childShape, position, parentShape);
+      it('execute', inject(function(modeling, elementRegistry) {
 
-      var shape = elementRegistry.get('childShape');
+        // when
+        modeling.createShape(newShape, position, parentShape);
 
-      // then
-      expect(shape).to.include({
-        id: 'childShape',
-        x: 125, y: 125,
-        width: 100, height: 100
-      });
+        var shape = elementRegistry.get('newShape');
 
-    }));
+        // then
+        expect(shape).to.include({
+          id: 'newShape',
+          x: 125, y: 125,
+          width: 100, height: 100
+        });
+
+      }));
+
+
+      it('undo', inject(function(modeling, commandStack, elementRegistry) {
+
+        // given
+        modeling.createShape(newShape, position, parentShape);
+
+        // when
+        commandStack.undo();
+
+        var shape = elementRegistry.get('newShape');
+
+        // then
+        expect(shape).to.not.exist;
+        expect(newShape.parent).not.to.exist;
+
+        expect(parentShape.children).not.to.contain(newShape);
+      }));
+
+    });
 
 
     it('should have a parent', inject(function(modeling) {
 
       // given
-      modeling.createShape(childShape, position, parentShape);
+      modeling.createShape(newShape, position, parentShape);
 
       // when
-      var parent = childShape.parent;
+      var parent = newShape.parent;
 
       // then
       expect(parent).to.equal(parentShape);
     }));
 
 
-    it('should return a graphics element', inject(function(modeling, elementRegistry) {
+    it('should have parentIndex', inject(function(modeling) {
 
       // given
-      modeling.createShape(childShape, position, parentShape);
+      modeling.createShape(newShape, position, rootShape, 0);
 
       // when
-      var shape = elementRegistry.getGraphics(childShape);
+      var children = rootShape.children;
 
       // then
-      expect(shape).to.exist;
+      expect(children).to.eql([
+        newShape,
+        parentShape
+      ]);
     }));
 
 
-    it('should undo', inject(function(modeling, commandStack, elementRegistry) {
+    it('should return a graphics element', inject(function(modeling, elementRegistry) {
 
       // given
-      modeling.createShape(childShape, position, parentShape);
+      modeling.createShape(newShape, position, parentShape);
 
       // when
-      commandStack.undo();
-
-      var shape = elementRegistry.get('childShape');
+      var shape = elementRegistry.getGraphics(newShape);
 
       // then
-      expect(shape).to.not.exist;
+      expect(shape).to.exist;
     }));
 
   });

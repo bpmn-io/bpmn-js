@@ -10,7 +10,13 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/ordering', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ moveModule, modelingModule, orderingProviderModule ] }));
+  beforeEach(bootstrapDiagram({
+    modules: [
+      moveModule,
+      modelingModule,
+      orderingProviderModule
+    ]
+  }));
 
 
   var rootShape,
@@ -139,6 +145,31 @@ describe('features/ordering', function() {
         level3Shape_Parent,
         level5Shape_alwaysTopLevel
       ]);
+    }));
+
+  });
+
+
+  describe('should handle connection order', function() {
+
+    it('should create connection behind shapes', inject(function(modeling, elementFactory) {
+
+      // given
+      var newConnection = elementFactory.createConnection({
+        id: 'newConnection',
+        level: 0
+      });
+
+      // when
+      modeling.connect(nestedLevel1Shape, nestedLevel2Shape, newConnection);
+
+      // then
+      expect(level3Shape_Parent.children).to.eql([
+        newConnection,
+        nestedLevel1Shape,
+        nestedLevel2Shape
+      ]);
+
     }));
 
   });
