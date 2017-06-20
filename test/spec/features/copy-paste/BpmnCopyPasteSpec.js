@@ -58,7 +58,7 @@ describe('features/copy-paste', function() {
     });
 
 
-    it('should forbid multi paste', inject(
+    it('should paste twice', inject(
       function(elementRegistry, canvas, copyPaste) {
         // given
         var element = elementRegistry.get('SubProcess_1kd6ist'),
@@ -70,7 +70,7 @@ describe('features/copy-paste', function() {
         copyPaste.paste({
           element: rootElement,
           point: {
-            x: 600,
+            x: 1000,
             y: 100
           }
         });
@@ -78,14 +78,19 @@ describe('features/copy-paste', function() {
         copyPaste.paste({
           element: rootElement,
           point: {
-            x: 600,
+            x: 1500,
             y: 275
           }
         });
 
         // then
-        // pasted was only once
-        expect(rootElement.children).to.have.length(2);
+        expect(rootElement.children).to.have.length(3);
+
+        var pastedElements = elementRegistry.filter(function(e) {
+          return e !== element && is(e, 'bpmn:SubProcess');
+        });
+
+        expect(pastedElements[0].id).to.not.equal(pastedElements[1].id);
       }
     ));
 
