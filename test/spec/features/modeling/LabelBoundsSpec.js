@@ -6,6 +6,8 @@ var Modeler = require('../../../../lib/Modeler');
 
 var TestContainer = require('mocha-test-container-support');
 
+var DELTA = 2;
+
 
 describe('label bounds', function() {
 
@@ -126,7 +128,7 @@ describe('label bounds', function() {
         // then
         var expectedX = getExpectedX(shape);
 
-        expect(shape.label.x).to.equal(expectedX);
+        expect(shape.label.x).to.be.closeTo(expectedX, DELTA);
       }));
 
 
