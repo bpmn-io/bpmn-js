@@ -7,20 +7,21 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var labelSupportModule = require('../../../../lib/features/label-support'),
     modelingModule = require('../../../../lib/features/modeling'),
-    rulesModule = require('./rules');
+    rulesModule = require('./rules'),
+    spaceToolModule = require('../../../../lib/features/space-tool');
 
 var svgClasses = require('tiny-svg/lib/classes');
 
 describe('features/label-support - Label', function() {
 
-  beforeEach(bootstrapDiagram({ modules: [ labelSupportModule, modelingModule, rulesModule ] }));
+  beforeEach(bootstrapDiagram({ modules: [ labelSupportModule, modelingModule, rulesModule, spaceToolModule ] }));
 
   beforeEach(inject(function(canvas, dragging) {
     dragging.setOptions({ manual: true });
   }));
 
 
-  var rootShape, parentShape, childShape, label;
+  var rootShape, parentShape, childShape, label, hostShape, attacherShape, attacherLabel;
 
   beforeEach(inject(function(elementFactory, canvas, modeling) {
 
@@ -52,6 +53,32 @@ describe('features/label-support - Label', function() {
     });
 
     modeling.createLabel(childShape, { x: 200, y: 250 }, label, parentShape);
+
+    hostShape = elementFactory.createShape({
+      id: 'host',
+      x: 500, y: 100,
+      width: 100, height: 100
+    });
+
+    canvas.addShape(hostShape, rootShape);
+
+    attacherShape = elementFactory.createShape({
+      id: 'attacher',
+      x: 525, y: 175,
+      width: 50, height: 50,
+      parent: rootShape,
+      host: hostShape
+    });
+
+    canvas.addShape(attacherShape, hostShape);
+
+    attacherLabel = elementFactory.createLabel({
+      id: 'attacherLabel',
+      width: 80, height: 40,
+      type: 'label'
+    });
+
+    modeling.createLabel(attacherShape, { x: 550, y: 250 }, attacherLabel, rootShape);
   }));
 
   describe('modeling', function() {
@@ -125,6 +152,56 @@ describe('features/label-support - Label', function() {
         expect(label.x).to.eql(235);
         expect(label.y).to.eql(230);
       }));
+
+    });
+
+
+    describe('space tool', function() {
+
+      var attacherLabelPos;
+
+      beforeEach(function() {
+        attacherLabelPos = { x: attacherLabel.x, y: attacherLabel.y };
+      });
+
+      describe('should move label along with its target', function() {
+
+        beforeEach(inject(function(spaceTool, dragging) {
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 250, y: 100 }));
+
+          dragging.move(canvasEvent({ x: 250, y: 200 }));
+          dragging.end();
+        }));
+
+        it('execute', inject(function(spaceTool, dragging) {
+
+          // then
+          expect(attacherLabel.x).to.eql(attacherLabelPos.x);
+          expect(attacherLabel.y).to.eql(attacherLabelPos.y + 100);
+        }));
+
+
+        it('undo', inject(function(commandStack) {
+          // when
+          commandStack.undo();
+
+          // then
+          expect(attacherLabel.x).to.eql(attacherLabelPos.x);
+          expect(attacherLabel.y).to.eql(attacherLabelPos.y);
+        }));
+
+
+        it('redo', inject(function(commandStack) {
+          // when
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(attacherLabel.x).to.eql(attacherLabelPos.x);
+          expect(attacherLabel.y).to.eql(attacherLabelPos.y + 100);
+        }));
+      });
 
     });
 

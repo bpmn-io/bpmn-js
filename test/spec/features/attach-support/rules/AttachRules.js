@@ -66,7 +66,7 @@ MoveRules.prototype.init = function() {
   this.addRule('shape.resize', function(context) {
     var shape = context.shape;
 
-    return shape.attachers.length > 0;
+    return shape.attachers.length > 0 && shape.resizable !== false;
   });
 };
 
