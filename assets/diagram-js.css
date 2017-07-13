@@ -671,3 +671,13 @@ svg.new-parent {
   background: yellow;
   opacity: 0.3;
 }
+
+/**
+ * hidden styles
+ */
+.djs-element-hidden,
+.djs-element-hidden .djs-hit,
+.djs-element-hidden .djs-outline,
+.djs-label-hidden .djs-label {
+  display: none !important;
+}
