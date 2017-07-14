@@ -7,7 +7,8 @@ var assign = require('lodash/object/assign');
 var snappingModule = require('../../../lib/features/snapping'),
     modelingModule = require('../../../lib/features/modeling'),
     moveModule = require('../../../lib/features/move'),
-    createModule = require('../../../lib/features/create');
+    createModule = require('../../../lib/features/create'),
+    attachSupportModule = require('../../../lib/features/attach-support');
 
 var canvasEvent = require('../../util/MockEvents').createCanvasEvent;
 
@@ -20,7 +21,7 @@ describe('features/snapping - Snapping', function() {
 
   describe('basics', function() {
 
-    beforeEach(bootstrapDiagram({ modules: [ snappingModule ] }));
+    beforeEach(bootstrapDiagram({ modules: [ modelingModule, snappingModule ] }));
 
 
     var rootElement, shape;
@@ -187,6 +188,63 @@ describe('features/snapping - Snapping', function() {
       }));
 
     });
+
+  });
+
+
+  describe('util', function() {
+
+    beforeEach(bootstrapDiagram({ modules: [ modelingModule, snappingModule, attachSupportModule ] }));
+
+    var rootElement, shape, sibling;
+
+    beforeEach(inject(function(canvas, elementFactory) {
+
+      rootElement = elementFactory.createRoot({
+        id: 'root'
+      });
+
+      canvas.setRootElement(rootElement);
+
+      shape = canvas.addShape(elementFactory.createShape({
+        id: 'shape1',
+        x: 100, y: 100, width: 100, height: 100
+      }));
+
+      sibling = canvas.addShape(elementFactory.createShape({
+        id: 'shape2',
+        x: 400, y: 150, width: 50, height: 50
+      }));
+    }));
+
+
+    it('getSiblings', inject(function(canvas, elementFactory, modeling, snapping) {
+
+      // given
+      var attacher = elementFactory.createShape({
+        id: 'attacher',
+        width: 50, height: 50
+      });
+
+      modeling.createShape(attacher, { x: 100, y: 100 }, shape, true);
+
+      var label = elementFactory.createLabel({
+        id: 'label',
+        width: 80, height: 40
+      });
+
+      modeling.createLabel(shape, { x: 150, y: 250 }, label, rootElement);
+
+      var connection = modeling.connect(shape, sibling);
+
+      // when
+      var siblings = snapping.getSiblings(shape, rootElement);
+
+      // then        
+      expect(siblings).to.have.length(2);
+      expect(siblings).to.contain(sibling);
+      expect(siblings).to.contain(connection);
+    }));
 
   });
 
