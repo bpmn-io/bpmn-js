@@ -99,6 +99,72 @@ describe('features/snapping - BpmnSnapping', function() {
   });
 
 
+  describe('on Sequence Flows', function() {
+
+    var diagramXML = require('./BpmnSnapping.sequenceFlow.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var sequenceFlow, task;
+
+    beforeEach(inject(function(elementFactory, elementRegistry, dragging) {
+      sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      task = elementFactory.createShape({
+        type: 'bpmn:Task'
+      });
+
+      dragging.setOptions({ manual: true });
+    }));
+
+    afterEach(inject(function(dragging) {
+      dragging.setOptions({ manual: false });
+    }));
+
+
+    it('should snap vertically',
+      inject(function(canvas, create, dragging) {
+
+        // given
+        var sequenceFlowGfx = canvas.getGraphics(sequenceFlow);
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), task);
+
+        dragging.hover({ element: sequenceFlow, gfx: sequenceFlowGfx });
+
+        dragging.move(canvasEvent({ x: 300, y: 245 }));
+        dragging.end();
+
+        // then
+        expect(task.x).to.eql(254);
+      })
+    );
+
+
+    it('should snap horizontally',
+      inject(function(canvas, create, dragging) {
+
+        // given
+        var sequenceFlowGfx = canvas.getGraphics(sequenceFlow);
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), task);
+
+        dragging.hover({ element: sequenceFlow, gfx: sequenceFlowGfx });
+
+        dragging.move(canvasEvent({ x: 410, y: 320 }));
+        dragging.end();
+
+        // then
+        expect(task.y).to.eql(285);
+      })
+    );
+  });
+
+
   describe('on Participant create', function() {
 
     describe('in non-empty process', function() {
