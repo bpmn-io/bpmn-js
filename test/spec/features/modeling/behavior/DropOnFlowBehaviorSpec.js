@@ -150,6 +150,54 @@ describe('modeling/behavior - drop on connection', function() {
         ]));
       }));
 
+
+      it('should connect start -> target -> end (with bendpointBefore inside bbox)',
+        inject(function(modeling, elementRegistry, elementFactory) {
+          // given
+          var taskShape = elementFactory.createShape({ type: 'bpmn:Task' }),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              originalWaypoints = sequenceFlow.waypoints,
+              dropPosition = { x: 340, y: 145 }; // 25 pixels below bendpoint
+
+          // when
+          modeling.createShape(taskShape, dropPosition, sequenceFlow);
+
+          // then
+          // split target but don't keep insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 1),
+            { x: 290, y: 120 }
+          ]));
+
+          expect(sequenceFlow).to.have.endDocking({ x: 340, y: 120 });
+        }
+      ));
+
+
+      it('should connect start -> target -> end (with bendpointAfter inside bbox)',
+        inject(function(modeling, elementRegistry, elementFactory) {
+
+           // given
+          var taskShape = elementFactory.createShape({ type: 'bpmn:Task' }),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              originalWaypoints = sequenceFlow.waypoints,
+              dropPosition = { x: 340, y: 280 }; // 25 pixels above bendpoint
+
+          // when
+          var newShape = modeling.createShape(taskShape, dropPosition, sequenceFlow),
+              targetConnection = newShape.outgoing[0];
+
+          // then
+          // split target but don't keep insertion point
+          expect(targetConnection).to.have.waypoints(flatten([
+            { x: 390, y: 299 },
+            originalWaypoints.slice(3)
+          ]));
+
+          expect(targetConnection).to.have.startDocking({ x: 340, y: 299 });
+        }
+      ));
+
     });
 
     describe('move', function() {
