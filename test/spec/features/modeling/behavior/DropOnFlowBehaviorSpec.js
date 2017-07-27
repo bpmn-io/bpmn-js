@@ -13,7 +13,6 @@ var coreModule = require('../../../../../lib/core'),
 
 var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
 
-
 describe('modeling/behavior - drop on connection', function() {
 
   var diagramXML = require('./DropOnFlowBehavior.bpmn');
@@ -262,6 +261,132 @@ describe('modeling/behavior - drop on connection', function() {
 
         expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
       }));
+
+
+      it('should connect start -> target -> end (hovering parent)',
+        inject(function(dragging, move, elementRegistry, selection, canvas) {
+
+          // given
+          var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
+
+          var startEvent = elementRegistry.get('StartEvent'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              task = elementRegistry.get('Task_1'),
+              rootElement = canvas.getRootElement(),
+              rootElementGfx = elementRegistry.getGraphics(rootElement);
+
+          var originalWaypoints = sequenceFlow.waypoints;
+
+          // when
+          selection.select(intermediateThrowEvent);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+
+          dragging.hover({
+            element: rootElement,
+            gfx: rootElementGfx
+          });
+
+          dragging.move(canvasEvent({ x: 150, y: 0 }));
+          dragging.end();
+
+          // then
+          var targetConnection = intermediateThrowEvent.outgoing[0];
+
+          // new incoming connection
+          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
+
+          // new outgoing connection
+          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(targetConnection).to.be.ok;
+          expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+
+          expect(startEvent.outgoing[0]).to.equal(intermediateThrowEvent.incoming[0]);
+          expect(task.incoming[0]).to.equal(intermediateThrowEvent.outgoing[0]);
+
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 2),
+            { x: 341, y: 192 }
+          ]));
+
+          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 210 });
+
+          expect(targetConnection).to.have.waypoints(flatten([
+            { x: 341, y: 228 },
+            originalWaypoints.slice(2)
+          ]));
+
+          expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
+        }
+      ));
+
+
+      it('should connect start -> target -> end (with bendpointBefore inside bbox)',
+        inject(function(elementRegistry, selection, move, dragging) {
+          // given
+          var task3 = elementRegistry.get('Task_3'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
+              originalWaypoints = sequenceFlow.waypoints;
+
+          // when
+          selection.select(task3);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), task3);
+
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
+
+          dragging.move(canvasEvent({ x: 150, y: -130 }));
+          dragging.end();
+
+          // then
+          // split target but don't keep insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 2),
+            { x: 341, y: 241 }
+          ]));
+
+          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 281 });
+        }
+      ));
+
+
+      it('should connect start -> target -> end (with bendpointAfter inside bbox)',
+        inject(function(elementRegistry, selection, move, dragging) {
+          // given
+          var task3 = elementRegistry.get('Task_3'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
+              originalWaypoints = sequenceFlow.waypoints;
+
+          // when
+          selection.select(task3);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), task3);
+
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
+
+          dragging.move(canvasEvent({ x: 170, y: -110 }));
+          dragging.end();
+
+          // then
+          // split target but don't keep insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 2),
+            { x: 340, y: 261 }
+          ]));
+
+          expect(sequenceFlow).to.have.endDocking({ x: 340, y: 299 });
+        }
+      ));
 
 
       it('should connect start -> target', inject(function(modeling, elementRegistry, selection, move, dragging) {
