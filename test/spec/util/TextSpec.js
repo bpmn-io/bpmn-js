@@ -61,7 +61,7 @@ describe('Text', function() {
 
     var parent = document.createElement('div');
     parent.style.width = '200px';
-    parent.style.height = '200px';
+    parent.style.height = '400px';
     parent.style.display = 'inline-block';
 
     testContainer.appendChild(parent);
@@ -144,7 +144,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 0, height: 0 } });
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 320 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 40, height: 320 })).to.be.true;
     });
 
 
@@ -157,7 +157,7 @@ describe('Text', function() {
       var text = createText(container, label, { box: { width: 25, height: 25 } });
 
       expect(text).to.exist;
-      expect(toFitBBox(text, { x: -1, y: 3, width: 32, height: 195 })).to.be.true;
+      expect(toFitBBox(text, { x: -1, y: 3, width: 40, height: 230 })).to.be.true;
     });
 
 
@@ -255,7 +255,7 @@ describe('Text', function() {
       it('mass hyphenated', function() {
 
         // given
-        var label = 'Some superdooooper-\nlong-\nword in the middle';
+        var label = 'Some superdooooper-long-word in the middle';
 
         // when
         var text = createText(container, label, {
@@ -278,14 +278,14 @@ describe('Text', function() {
         var text = createText(container, label, { box: { width: 150, height: 100 } });
 
         expect(text).to.exist;
-        expect(toFitBBox(text, { x: 2, y: 0, width: 150, height: 100 })).to.be.true;
+        expect(toFitBBox(text, { x: 2, y: 0, width: 150, height: 105 })).to.be.true;
       });
 
 
       it('multiple line breaks', function() {
 
         // given
-        var label = 'Line\n\n\nBreaks';
+        var label = 'Line breaks line breaks line\n\n\nBreaks';
 
         // when
         var text = createText(container, label, { box: { width: 150, height: 100 } });
@@ -369,24 +369,6 @@ describe('Text', function() {
 
         // given
         var label = 'I am tiny';
-
-        // when
-        var text = createText(container, label, {
-          box: { width: 100, height: 100 },
-          fitBox: true,
-          align: 'center-middle',
-          padding: 5
-        });
-
-        expect(text).to.exist;
-        expect(toFitBBox(text, { x: 0, y: 0, width: 150, height: 100 })).to.be.true;
-      });
-
-
-      it('center-middle / preformated using line breaks (fixed box)', function() {
-
-        // given
-        var label = 'I am\na long label that\r\nshould break on line breaks';
 
         // when
         var text = createText(container, label, {
