@@ -6,7 +6,7 @@
 
 [bpmn-js](https://github.com/bpmn-io/bpmn-js) is a BPMN 2.0 diagram rendering toolkit and web modeler.
 
-[![bpmn-js in action](https://raw.githubusercontent.com/bpmn-io/bpmn-js/master/resources/screencast.gif)](http://demo.bpmn.io/s/start)
+[<img src="https://raw.githubusercontent.com/bpmn-io/bpmn-js/master/resources/screencast.gif" alt="bpmn-js in action" width="480px" />](http://demo.bpmn.io/s/start)
 
 
 ## Usage
