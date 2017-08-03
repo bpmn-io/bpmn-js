@@ -1,0 +1,38 @@
+{
+  "name": "diagram-js-example",
+  "version": "0.0.0",
+  "description": "An example how to use diagram-js with CommonJS + npm + browserify",
+  "main": "app/app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmn-io/diagram-js"
+  },
+  "keywords": [
+    "diagramjs-example"
+  ],
+  "author": {
+    "name": "Philipp Fromme",
+    "url": "https://github.com/philippfromme"
+  },
+  "contributors": [
+    {
+      "name": "bpmn.io contributors",
+      "url": "https://github.com/bpmn-io"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "brfs": "^1.2.0",
+    "grunt-browserify": "^5.0.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-connect": "~1.0.2",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-copy": "~1.0.0",
+    "load-grunt-tasks": "~3.5.0"
+  },
+  "dependencies": {
+    "diagram-js": "^0.20.0",
+    "inherits": "^2.0.3"
+  }
+}

@@ -1,7 +1,3 @@
-> The project is in an early development stage.
-> For the time being, please refer to our [comprehensive test suite](https://github.com/bpmn-io/diagram-js/tree/master/test/spec) or [bpmn-js](https://github.com/bpmn-io/bpmn-js) for usage examples.
-
-
 # diagram-js
 
 [![Build Status](https://travis-ci.org/bpmn-io/diagram-js.svg?branch=master)](https://travis-ci.org/bpmn-io/diagram-js)
@@ -30,6 +26,11 @@ Expose an environment variable `TEST_BROWSERS=(Chrome|Firefox|IE)` to execute th
 Execute `grunt` to lint and test the project and to generate (preliminary) documentation.
 
 We do not generate any build artifacts. Required parts of the library should be bundled by modelers / viewers as needed instead.
+
+
+### Example
+
+You can find an example app build with diagram-js [here](/example).
 
 
 ## License

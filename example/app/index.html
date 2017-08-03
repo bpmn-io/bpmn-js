@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="css/diagram-js.css">
+
+    <style>
+      html,
+      body,
+      #canvas,
+      #canvas > div {
+          height: 100%;
+          margin: 0;
+      }
+
+      .palette-icon-lasso-tool {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="1.5" stroke-dasharray="5, 5" width="46" height="46"><rect x="10" y="10" width="26" height="26"/></svg>');
+      }
+
+      .palette-icon-create-shape {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="1.5" width="46" height="46"><rect x="10" y="13" width="26" height="20"/></svg>');
+      }
+
+      .context-pad-icon-remove {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="1.5" width="46" height="46"><line x1="5" y1="5" x2="15" y2="15"/><line x1="15" y1="5" x2="5" y2="15"/></svg>') !important;
+      }
+
+      .context-pad-icon-connect {
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#000" stroke-width="1.5" width="46" height="46"><line x1="15" y1="5" x2="5" y2="15"/></svg>') !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
