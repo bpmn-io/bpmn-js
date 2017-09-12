@@ -235,6 +235,30 @@ describe('draw - bpmn renderer', function() {
         var markers = svg.querySelectorAll('marker');
 
         expect(markers).to.have.length(5);
+        expect(markers[0].id).to.equal('sequenceflow-end-white-black');
+        expect(markers[4].id).to.equal('messageflow-start-white-fuchsia');
+      })();
+
+      done();
+    });
+  });
+
+  it('markers should have correct unique IDs when viewerID option is specified', function(done) {
+    
+    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    bootstrapViewer(xml, { viewerId: 123 })(function(err) {
+
+      if (err) {
+        return done(err);
+      }
+
+      inject(function(canvas) {
+        var svg = canvas._svg;
+        var markers = svg.querySelectorAll('marker');
+
+        expect(markers).to.have.length(5);
+        expect(markers[0].id).to.equal('sequenceflow-end-white-black-123');
+        expect(markers[4].id).to.equal('messageflow-start-white-fuchsia-123');
       })();
 
       done();
