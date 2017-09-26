@@ -35,7 +35,7 @@ Help us to understand and reproduce your issue:
 * Attach steps to reproduce
 * Attach code samples, configuration options or stack traces that provide the necessary context
 
-If possible, try to build an example that reproduces your problem. Use [this JSFiddle](https://jsfiddle.net/kxqy09gf/) as a starting point or put a running demo up on [GitHub](https://github.com/).
+If possible, try to build an example that reproduces your problem. You can use our playgrounds for [viewer](https://jsfiddle.net/kxqy09gf/) or [modeler](https://jsfiddle.net/08p147e9/) as a starting point or put a demo up on [GitHub](https://github.com/) for inspection.
 
 
 #### Suggesting a Feature
