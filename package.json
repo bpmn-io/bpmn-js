@@ -38,6 +38,7 @@
     "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
     "chai": "^3.5.0",
+    "chai-match": "^1.1.1",
     "eslint": "^3.19.0",
     "eslint-plugin-mocha": "^4.9.0",
     "grunt": "^0.4.4",

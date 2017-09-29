@@ -221,6 +221,27 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should add random ID suffix to marker ID', function(done) {
+    
+    var xml = require('../../fixtures/bpmn/simple.bpmn');
+    bootstrapViewer(xml)(function(err) {
+
+      if (err) {
+        return done(err);
+      }
+
+      inject(function(canvas) {
+        var svg = canvas._svg;
+        var markers = svg.querySelectorAll('marker');
+
+        expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]+$/);
+      })();
+
+      done();
+    });
+  });
+
+
   it('should properly render colored markers', function(done) {
 
     var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
@@ -235,6 +256,8 @@ describe('draw - bpmn renderer', function() {
         var markers = svg.querySelectorAll('marker');
 
         expect(markers).to.have.length(5);
+        expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[4].id).to.match(/^messageflow-start-white-fuchsia-[A-Za-z0-9]{25}$/);
       })();
 
       done();
