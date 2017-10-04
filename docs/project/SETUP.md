@@ -10,7 +10,7 @@ On Linux, OS X or Windows? [git](http://git-scm.com/), [NodeJS](nodejs.org) and 
 
 ## Manual Steps
 
-Make sure you have [git](http://git-scm.com/), [NodeJS](nodejs.org), [npm](https://www.npmjs.org/doc/cli/npm.html) and [Grunt](http://gruntjs.com/getting-started) installed before you continue.
+Make sure you have [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html)  installed before you continue.
 
 
 ### Get Project + Dependencies
