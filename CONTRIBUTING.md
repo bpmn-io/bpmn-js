@@ -91,7 +91,7 @@ Some things that make it easier for us to accept your pull requests
 * The code is tested
 * The `npm run all` build passes (executes tests + linting)
 * The work is combined into a single commit
-* The commit messages adhere to our [guideline](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y)
+* The commit messages adhere to our [guideline](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/COMMIT_MESSAGES.md)
 
 
 We'd be glad to assist you if you do not get these things right in the first place.
