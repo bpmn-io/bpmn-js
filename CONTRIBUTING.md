@@ -57,20 +57,24 @@ Learn how to setup the project locally, make changes and contribute bug fixes an
 
 The project development runs on top of the [diagram-js](https://github.com/bpmn-io/diagram-js) master branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
 
-    mkdir bpmn.io
-    cd bpmn.io
+```plain
+mkdir bpmn.io
+cd bpmn.io
 
-    git clone git@github.com:bpmn-io/diagram-js.git
-    (cd diagram-js && npm i)
+git clone git@github.com:bpmn-io/diagram-js.git
+(cd diagram-js && npm i)
 
-    git clone git@github.com:bpmn-io/bpmn-js.git
-    (cd bpmn-js && npm install && npm link ../diagram-js)
+git clone git@github.com:bpmn-io/bpmn-js.git
+(cd bpmn-js && npm install && npm link ../diagram-js)
 
-    // Run the test suite
-    npm test
+// Run the test suite
+npm test
 
-    // Running the test suite with every file change
-    TEST_BROWSERS=(Chrome|Firefox|IE) npm run dev
+// Running the test suite with every file change
+TEST_BROWSERS=(Chrome|Firefox|IE) npm run dev
+```
+
+For details consult our in depth [setup guide](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md).
 
 
 ### Discussing Code Changes
