@@ -1,7 +1,7 @@
 /*!
  * <%= pkg.name %> - <%= config.variant %> v<%= pkg.version %>
 
- * Copyright 2014, 2015 camunda Services GmbH and other contributors
+ * Copyright 2014 - 2017 camunda Services GmbH and other contributors
  *
  * Released under the bpmn.io license
  * http://bpmn.io/license
