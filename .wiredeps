@@ -1,89 +1,138 @@
 {
   "name": "bpmn-js",
-  "version": "0.13.0",
+  "version": "0.22.1",
+  "lockfileVersion": 1,
+  "requires": true,
   "dependencies": {
-    "diagram-js": {
-      "version": "bpmn-io/diagram-js",
-      "dependencies": {
-        "eve": {
-          "version": "^0.4.2"
-        },
-        "hammerjs": {
-          "version": "^2.0.1"
-        },
-        "didi": {
-          "version": "0.1.0"
-        }
-      }
-    },
-    "inherits": {
-      "version": "2.0.1"
-    },
-    "lodash": {
-      "version": "3.2.0"
-    },
-    "object-refs": {
-      "version": "0.1.0"
-    },
-    "tiny-svg": {
-      "version": "bpmn-io/tiny-svg"
-    },
     "bpmn-moddle": {
       "version": "bpmn-io/bpmn-moddle",
-      "dependencies": {
-        "moddle": {
-          "version": "bpmn-io/moddle"
-        },
-        "moddle-xml": {
-          "version": "bpmn-io/moddle-xml",
-          "dependencies": {
-            "sax": {
-              "version": "0.6.1"
-            },
-            "tiny-stack": {
-              "version": "0.1.0"
-            }
-          }
-        }
+      "requires": {
+        "lodash": "3.10.1",
+        "moddle": "1.0.0",
+        "moddle-xml": "1.0.0"
+      }
+    },
+    "component-classes": {
+      "version": "1.2.6",
+      "requires": {
+        "component-indexof": "0.0.3"
+      }
+    },
+    "component-closest": {
+      "version": "0.1.4",
+      "requires": {
+        "component-matches-selector": "0.1.6"
+      }
+    },
+    "component-delegate": {
+      "version": "0.2.4",
+      "requires": {
+        "component-closest": "0.1.4",
+        "component-event": "0.1.4"
+      }
+    },
+    "component-event": {
+      "version": "0.1.4"
+    },
+    "component-indexof": {
+      "version": "0.0.3"
+    },
+    "component-matches-selector": {
+      "version": "0.1.6",
+      "requires": {
+        "component-query": "0.0.3"
+      }
+    },
+    "component-query": {
+      "version": "0.0.3"
+    },
+    "diagram-js": {
+      "version": "bpmn-io/diagram-js",
+      "requires": {
+        "didi": "0.1.1",
+        "hammerjs": "2.0.8",
+        "inherits": "2.0.3",
+        "lodash": "3.10.1",
+        "min-dom": "0.2.0",
+        "object-refs": "0.1.1",
+        "tiny-svg": "0.1.1"
       }
     },
     "diagram-js-direct-editing": {
-      "version": "bpmn-io/diagram-js-direct-editing"
+      "version": "bpmn-io/diagram-js-direct-editing",
+      "requires": {
+        "lodash": "3.10.1",
+        "min-dom": "0.2.0"
+      }
+    },
+    "diagram-js-origin": {
+      "version": "0.15.2",
+      "requires": {
+        "tiny-svg": "0.1.1"
+      }
+    },
+    "didi": {
+      "version": "0.1.1"
+    },
+    "domify": {
+      "version": "1.4.0"
+    },
+    "hammerjs": {
+      "version": "2.0.8"
+    },
+    "hat": {
+      "version": "0.0.3"
     },
     "ids": {
       "version": "0.2.0",
-      "dependencies": {
-        "hat": {
-          "version": "0.0.3"
-        }
+      "requires": {
+        "hat": "0.0.3"
       }
+    },
+    "inherits": {
+      "version": "2.0.3"
+    },
+    "lodash": {
+      "version": "3.10.1"
     },
     "min-dom": {
       "version": "0.2.0",
-      "dependencies": {
-        "component-classes": {
-          "version": "1.2.3"
-        },
-        "component-closest": {
-          "version": "0.1.4"
-        },
-
-        "component-delegate": {
-          "version": "0.2.3"
-        },
-        "component-event": {
-          "version": "0.1.4"
-        },
-        "component-matches-selector": {
-          "version": "0.1.5"
-        },
-        "component-query": {
-          "version": "0.0.3"
-        },
-        "domify": {
-          "version": "1.3.1"
-        }
+      "requires": {
+        "component-classes": "1.2.6",
+        "component-closest": "0.1.4",
+        "component-delegate": "0.2.4",
+        "component-event": "0.1.4",
+        "component-matches-selector": "0.1.6",
+        "component-query": "0.0.3",
+        "domify": "1.4.0"
       }
+    },
+    "moddle": {
+      "version": "bpmn-io/moddle",
+      "requires": {
+        "lodash": "3.10.1"
+      }
+    },
+    "moddle-xml": {
+      "version": "bpmn-io/moddle-xml",
+      "requires": {
+        "lodash": "3.10.1",
+        "moddle": "1.0.0",
+        "sax": "0.6.1",
+        "tiny-stack": "0.1.0"
+      }
+    },
+    "object-refs": {
+      "version": "0.1.1"
+    },
+    "sax": {
+      "version": "0.6.1"
+    },
+    "tiny-stack": {
+      "version": "0.1.0"
+    },
+    "tiny-svg": {
+      "version": "0.1.1"
     }
   }
 }

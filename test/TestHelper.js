@@ -13,6 +13,6 @@ TestHelper.insertCSS('diagram-js-testing.css',
 
 // add suite specific matchers
 global.chai.use(require('chai-match'));
-global.chai.use(require('diagram-js/test/matchers/BoundsMatchers'));
-global.chai.use(require('diagram-js/test/matchers/ConnectionMatchers'));
+global.chai.use(require('./matchers/BoundsMatchers'));
+global.chai.use(require('./matchers/ConnectionMatchers'));
 global.chai.use(require('./matchers/JSONMatcher'));

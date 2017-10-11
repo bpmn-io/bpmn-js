@@ -7,7 +7,7 @@ var coreModule = require('../../../../lib/core'),
     keyboardModule = require('../../../../lib/features/keyboard'),
     modelingModule = require('../../../../lib/features/modeling');
 
-var createKeyEvent = require('diagram-js/test/util/KeyEvents').createKeyEvent;
+var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
 /* global bootstrapViewer, inject, sinon */
 

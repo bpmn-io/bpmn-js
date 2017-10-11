@@ -1,5 +1,5 @@
 language: node_js
-node_js: '4.0'
+node_js: 'node'
 
 sudo: false
 
@@ -15,5 +15,5 @@ script:
   - TEST_BROWSERS=Firefox,PhantomJS npm run all
 
 before_install:
-  - npm install -g grunt-cli wiredeps
-  - wiredeps --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
+  - npm install -g grunt-cli wiredeps@0.2
+  - wiredeps --default-branch=master --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
