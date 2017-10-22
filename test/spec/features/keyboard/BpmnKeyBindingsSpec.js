@@ -118,7 +118,7 @@ describe('features - keyboard', function() {
       // then
       var selectedElements = selection.get();
 
-      expect(selectedElements).to.have.length.of(allElements.length - 1);
+      expect(selectedElements).to.have.length(allElements.length - 1);
       expect(selectedElements).not.to.contain(rootElement);
     }));
 

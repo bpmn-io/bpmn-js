@@ -36,7 +36,6 @@ module.exports = function(karma) {
     frameworks: [
       'browserify',
       'mocha',
-      'chai',
       'sinon-chai'
     ],
 

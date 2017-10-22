@@ -2,11 +2,13 @@
 
 /* global bootstrapViewer, inject */
 
+var pick = require('lodash/object/pick');
 
 var labelEditingModule = require('../../../../lib/features/label-editing'),
     coreModule = require('../../../../lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging'),
     modelingModule = require('diagram-js/lib/features/modeling');
+
 
 describe('features - label-editing preview', function() {
 
@@ -67,7 +69,7 @@ describe('features - label-editing preview', function() {
       });
 
       // then
-      var bounds = labelEditingPreview.path.getBBox();
+      var bounds = bbox(labelEditingPreview.path);
 
       expect(bounds).to.eql({ x: 0, y: 0, width: 10, height: 300 });
     }));
@@ -88,7 +90,7 @@ describe('features - label-editing preview', function() {
       });
 
       // then
-      var bounds = labelEditingPreview.path.getBBox();
+      var bounds = bbox(labelEditingPreview.path);
 
       expect(bounds).to.eql({ x: 0, y: 0, width: 10, height: 0 });
     }));
@@ -130,4 +132,11 @@ describe('features - label-editing preview', function() {
     }));
 
   });
+
 });
+
+
+
+function bbox(el) {
+  return pick(el.getBBox(), [ 'x', 'y', 'width', 'height' ]);
+}
