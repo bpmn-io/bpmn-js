@@ -1,0 +1,28 @@
+#! /bin/sh
+
+# bumps bpmn-js and diagram-js dependencies in bpmn-js-integration
+
+PWD="$(pwd)"
+WORKDIR="$(pwd)/tmp"
+IT_DIR="$WORKDIR/bpmn-js-integration"
+
+# create work dir
+mkdir -p "$WORKDIR"
+
+git clone --depth=1 https://github.com/bpmn-io/bpmn-js-integration.git "$IT_DIR"
+
+cd "$IT_DIR"
+
+npm install --save bpmn-js@latest bpmn-moddle@latest
+
+git config user.email "$BPMN_IO_EMAIL"
+git config user.name "$BPMN_IO_USERNAME"
+git config push.default simple
+
+git add -A
+git commit -m "chore(project): bump bpmn-js to $TRAVIS_TAG"
+git tag "$TRAVIS_TAG"
+git push -q "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn-js-integration.git" &2>/dev/null
+git push --tags -q "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn-js-integration.git" &2>/dev/null
+
+cd "$PWD"

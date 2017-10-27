@@ -1,0 +1,29 @@
+#! /bin/sh
+
+# publishes the bower-bpmn-js prebuilt bundle
+
+PWD="$(pwd)"
+WORKDIR="$(pwd)/tmp"
+BOWER_DIR="$WORKDIR/bower-bpmn-js"
+
+# create work dir
+mkdir -p "$WORKDIR"
+
+git clone --depth=1 https://github.com/bpmn-io/bower-bpmn-js.git "$BOWER_DIR"
+
+npm install
+BOWER_DIST="$BOWER_DIR/dist" npm run distro
+
+cd "$BOWER_DIR"
+
+git config user.email "$BPMN_IO_EMAIL"
+git config user.name "$BPMN_IO_USERNAME"
+git config push.default simple
+
+git add -A
+git commit -m "chore(project): package $TRAVIS_TAG"
+git tag "$TRAVIS_TAG"
+git push -q "https://$GITHUB_AUTH@github.com/bpmn-io/bower-bpmn-js.git" &2>/dev/null
+git push --tags -q "https://$GITHUB_AUTH@github.com/bpmn-io/bower-bpmn-js.git" &2>/dev/null
+
+cd "$PWD"
