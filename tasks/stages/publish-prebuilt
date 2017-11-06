@@ -20,6 +20,12 @@ git config user.email "$BPMN_IO_EMAIL"
 git config user.name "$BPMN_IO_USERNAME"
 git config push.default simple
 
+# update bower.json
+BOWER_VERSION="${TRAVIS_TAG:1}"
+
+sed -i -E "s/(\"version\": )\"[^\"]+\"/\1\"$BOWER_VERSION\"/" bower.json
+
+# add all resources
 git add -A
 git commit -m "chore(project): package $TRAVIS_TAG"
 git tag "$TRAVIS_TAG"
