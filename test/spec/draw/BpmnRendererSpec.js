@@ -222,7 +222,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should add random ID suffix to marker ID', function(done) {
-    
+
     var xml = require('../../fixtures/bpmn/simple.bpmn');
     bootstrapViewer(xml)(function(err) {
 
@@ -328,6 +328,28 @@ describe('draw - bpmn renderer', function() {
       }));
 
     });
+
+  });
+
+
+  describe('extension API', function() {
+
+    var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        rendererModule
+      ]
+    }));
+
+
+    it('should expose helpers', inject(function(bpmnRenderer) {
+
+      // then
+      expect(bpmnRenderer._drawPath).to.be.a('function');
+
+    }));
 
   });
 
