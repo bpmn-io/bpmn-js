@@ -6,6 +6,7 @@ var Helper = require('./Helper');
 
 var move = Helper.move,
     attach = Helper.attach,
+    connect = Helper.connect,
     expectZOrder = Helper.expectZOrder;
 
 var modelingModule = require('../../../../lib/features/modeling'),
@@ -224,6 +225,25 @@ describe('features/modeling - ordering', function() {
 
       // then
       expectZOrder('Collaboration', 'Participant', 'SequenceFlow_label');
+    }));
+
+  });
+
+
+  describe('connections', function() {
+
+    var diagramXML = require('./ordering.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should render sequence flows behind tasks', inject(function() {
+
+      // when
+      var connection = connect('BoundaryEvent', 'Task');
+
+      // then
+      expectZOrder(connection, 'Task', 'BoundaryEvent', connection.label);
     }));
 
   });

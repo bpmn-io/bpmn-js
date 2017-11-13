@@ -85,6 +85,33 @@ function add(attrs, position, target, isAttach) {
 module.exports.add = add;
 
 
+function connect(source, target) {
+
+  return TestHelper.getBpmnJS().invoke(function(canvas, elementRegistry, modeling) {
+
+    function getElement(id) {
+
+      var element = elementRegistry.get(id);
+
+      expect(element).to.exist;
+
+      return element;
+    }
+
+    if (typeof target === 'string') {
+      target = getElement(target);
+    }
+
+    if (typeof source === 'string') {
+      source = getElement(source);
+    }
+
+    return modeling.connect(source, target);
+  });
+}
+
+module.exports.connect = connect;
+
 function attach(attrs, position, target) {
   return add(attrs, position, target, true);
 }
@@ -105,7 +132,7 @@ function getAncestors(element) {
 }
 
 
-function compareZOrder(aId, bId) {
+function compareZOrder(a, b) {
 
   var elementA,
       elementB;
@@ -120,8 +147,16 @@ function compareZOrder(aId, bId) {
       return element;
     }
 
-    elementA = getElement(aId);
-    elementB = getElement(bId);
+    if (typeof a === 'string') {
+      a = getElement(a);
+    }
+
+    if (typeof b === 'string') {
+      b = getElement(b);
+    }
+
+    elementA = a;
+    elementB = b;
   });
 
 
