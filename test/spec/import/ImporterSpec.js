@@ -1,8 +1,5 @@
 'use strict';
 
-require('../../TestHelper');
-
-
 var TestContainer = require('mocha-test-container-support');
 
 var Diagram = require('diagram-js/lib/Diagram'),
@@ -10,7 +7,13 @@ var Diagram = require('diagram-js/lib/Diagram'),
     importBpmnDiagram = require('../../../lib/import/Importer').importBpmnDiagram,
     Viewer = require('../../../lib/Viewer');
 
+var domMatches = require('min-dom/lib/matches');
+
+var getChildrenGfx = require('diagram-js/lib/util/GraphicsUtil').getChildren;
+
 var find = require('lodash/collection/find');
+
+var is = require('../../../lib/util/ModelUtil').is;
 
 
 describe('import - Importer', function() {
@@ -164,12 +167,12 @@ describe('import - Importer', function() {
         expect(events).to.eql([
           { type: 'add', semantic: '_Collaboration_2', di: 'BPMNPlane_1', diagramElement: '_Collaboration_2' },
           { type: 'add', semantic: 'Participant_2', di: '_BPMNShape_Participant_2', diagramElement: 'Participant_2' },
-          { type: 'add', semantic: 'Lane_1', di: '_BPMNShape_Lane_2', diagramElement: 'Lane_1' },
-          { type: 'add', semantic: 'Lane_2', di: '_BPMNShape_Lane_3', diagramElement: 'Lane_2' },
-          { type: 'add', semantic: 'Lane_3', di: '_BPMNShape_Lane_4', diagramElement: 'Lane_3' },
           { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_3', diagramElement: 'Task_1' },
           { type: 'add', semantic: 'Participant_1', di: '_BPMNShape_Participant_3', diagramElement: 'Participant_1' },
-          { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_3', diagramElement: 'StartEvent_1' }
+          { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_3', diagramElement: 'StartEvent_1' },
+          { type: 'add', semantic: 'Lane_1', di: '_BPMNShape_Lane_2', diagramElement: 'Lane_1' },
+          { type: 'add', semantic: 'Lane_2', di: '_BPMNShape_Lane_3', diagramElement: 'Lane_2' },
+          { type: 'add', semantic: 'Lane_3', di: '_BPMNShape_Lane_4', diagramElement: 'Lane_3' }
         ]);
 
         done(err);
@@ -184,7 +187,7 @@ describe('import - Importer', function() {
 
     var xml = require('../../fixtures/bpmn/import/position/position-testcase.bpmn');
 
-    it('should round shape\'s x and y coordinates', function(done) {
+    it('should round shape coordinates', function(done) {
 
       // given
       var events = {};
@@ -210,7 +213,7 @@ describe('import - Importer', function() {
     });
 
 
-    it('should round shape\'s height and width', function(done) {
+    it('should round shape dimensions', function(done) {
 
       // given
       var events = {};
@@ -226,6 +229,42 @@ describe('import - Importer', function() {
         //round down
         expect(events.ID_Start.height).to.equal(Math.round(30.4));
         expect(events.ID_Start.width).to.equal(Math.round(30.4));
+
+        done(err);
+      });
+    });
+
+  });
+
+
+  describe('order', function() {
+
+    it('should import sequence flows and lanes behind other flow nodes', function(done) {
+
+      var xml = require('./sequenceFlow-ordering.bpmn');
+
+      // given
+      var elementRegistry = diagram.get('elementRegistry');
+
+
+      runImport(diagram, xml, function(err, warnings) {
+
+        // when
+        var processShape = elementRegistry.get('Participant_1jxpy8o');
+
+        var children = processShape.children;
+
+        // lanes
+        // connections
+        // other elements
+        var correctlyOrdered = [].concat(
+          children.filter(function(c) { return is(c, 'bpmn:Lane'); }),
+          children.filter(function(c) { return c.waypoints; }),
+          children.filter(function(c) { return !is(c, 'bpmn:Lane') && !c.waypoints; })
+        );
+
+        // then
+        expectChildren(diagram, processShape, correctlyOrdered);
 
         done(err);
       });
@@ -422,3 +461,35 @@ describe('import - Importer', function() {
   });
 
 });
+
+
+
+////////// helpers /////////////////////////////////////
+
+function expectChildren(diagram, parent, children) {
+
+  return diagram.invoke(function(elementRegistry) {
+
+    // verify model is consistent
+    expect(parent.children).to.eql(children);
+
+    // verify SVG is consistent
+    var parentGfx = elementRegistry.getGraphics(parent);
+
+    var expectedChildrenGfx = children.map(function(c) {
+      return elementRegistry.getGraphics(c);
+    });
+
+    var childrenContainerGfx =
+      domMatches(parentGfx, '[data-element-id="Process_1"]')
+        ? parentGfx
+        : getChildrenGfx(parentGfx);
+
+    var existingChildrenGfx = Array.prototype.map.call(childrenContainerGfx.childNodes, function(c) {
+      return c.querySelector('.djs-element');
+    });
+
+    expect(existingChildrenGfx).to.eql(expectedChildrenGfx);
+  });
+
+}
