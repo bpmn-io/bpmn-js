@@ -1,7 +1,4 @@
 node_modules/
-bower_components/
-tmp/
-docs/api/
 dist/
 .idea
 *.iml
