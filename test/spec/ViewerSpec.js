@@ -139,7 +139,7 @@ describe('Viewer', function() {
 
         expect(err).to.exist;
 
-        expectMessage(err, /Text data outside of root node./);
+        expectMessage(err, /missing start tag/);
 
         done();
       });
@@ -198,14 +198,10 @@ describe('Viewer', function() {
 
         // then
         expect(err).to.exist;
-        expect(err.message).to.eql('no process or collaboration to display');
+        expect(err.message).to.eql('failed to parse document as <bpmn:Definitions>');
 
-        expectWarnings(warnings, [
-          /unparsable content <collaboration> detected/,
-          'unresolved reference <Participant_1>',
-          'no bpmnElement referenced in <bpmndi:BPMNPlane id="BPMNPlane_1" />',
-          'no bpmnElement referenced in <bpmndi:BPMNShape id="BPMNShape_Participant_1" />'
-        ]);
+        expect(warnings).to.have.length(1);
+        expect(warnings[0].message).to.match(/unparsable content <definitions> detected/);
 
         done();
       });
@@ -566,8 +562,9 @@ describe('Viewer', function() {
 
         // extension elements should provide typed element
         expect(extensionElements).to.exist;
+        expect(extensionElements.values).to.exist;
 
-        expect(extensionElements.values.length).to.equal(1);
+        expect(extensionElements.values).to.have.length(1);
         expect(extensionElements.values[0].$instanceOf('camunda:InputOutput')).to.be.true;
 
         done(err);
