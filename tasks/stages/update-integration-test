@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # bumps bpmn-js and diagram-js dependencies in bpmn-js-integration
 

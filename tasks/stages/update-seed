@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # updates the bpmn-js-seed project with the latest bundle
 

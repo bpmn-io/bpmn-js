@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 # publishes the bower-bpmn-js prebuilt bundle
 
@@ -22,6 +22,7 @@ git config push.default simple
 
 # update bower.json
 BOWER_VERSION="${TRAVIS_TAG:1}"
+echo "Updating bower.json version to $BOWER_VERSION"
 
 sed -i -E "s/(\"version\": )\"[^\"]+\"/\1\"$BOWER_VERSION\"/" bower.json
 
