@@ -118,15 +118,15 @@
       "requires": {
         "lodash": "3.10.1",
         "moddle": "1.0.0",
-        "sax": "0.6.1",
+        "saxen": "5.3.1",
         "tiny-stack": "0.1.0"
       }
     },
     "object-refs": {
       "version": "0.1.1"
     },
-    "sax": {
-      "version": "0.6.1"
+    "saxen": {
+      "version": "5.3.1"
     },
     "tiny-stack": {
       "version": "0.1.0"
