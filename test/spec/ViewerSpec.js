@@ -433,7 +433,7 @@ describe('Viewer', function() {
           return done(err);
         }
 
-        var svgDoc = viewer.container.childNodes[1].childNodes[1];
+        var svgDoc = viewer._container.childNodes[1].childNodes[1];
 
 
 
@@ -524,9 +524,9 @@ describe('Viewer', function() {
       });
 
       // then
-      expect(viewer.container.style.position).to.equal('fixed');
-      expect(viewer.container.style.width).to.equal('200px');
-      expect(viewer.container.style.height).to.equal('100px');
+      expect(viewer._container.style.position).to.equal('fixed');
+      expect(viewer._container.style.width).to.equal('200px');
+      expect(viewer._container.style.height).to.equal('100px');
     });
 
 
@@ -739,7 +739,7 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
-        expect(viewer.container.parentNode).to.equal(container);
+        expect(viewer._container.parentNode).to.equal(container);
 
         done(err, warnings);
       });
@@ -753,7 +753,7 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
-        expect(viewer.container.parentNode).to.equal(null);
+        expect(viewer._container.parentNode).to.equal(null);
 
         done(err, warnings);
       });
@@ -929,7 +929,7 @@ describe('Viewer', function() {
       viewer.destroy();
 
       // then
-      expect(viewer.container.parentNode).not.to.exist;
+      expect(viewer._container.parentNode).not.to.exist;
     });
 
   });
@@ -944,9 +944,9 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
-        expect(viewer.container.parentNode).to.equal(null);
+        expect(viewer._container.parentNode).to.equal(null);
         viewer.attachTo(container);
-        expect(viewer.container.parentNode).to.equal(container);
+        expect(viewer._container.parentNode).to.equal(container);
 
         done(err, warnings);
       });
@@ -963,9 +963,9 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
-        expect(viewer.container.parentNode).to.equal(container);
+        expect(viewer._container.parentNode).to.equal(container);
         viewer.detach();
-        expect(viewer.container.parentNode).to.equal(null);
+        expect(viewer._container.parentNode).to.equal(null);
 
         done(err, warnings);
       });
