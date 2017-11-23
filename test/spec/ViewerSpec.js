@@ -29,7 +29,21 @@ describe('Viewer', function() {
 
   it('should import simple process', function(done) {
     var xml = require('../fixtures/bpmn/simple.bpmn');
-    createViewer(xml, done);
+
+    // when
+    createViewer(xml, function(err, warnings, viewer) {
+
+      // then
+      expect(err).not.to.exist;
+      expect(warnings).to.be.empty;
+
+      var definitions = viewer.getDefinitions();
+
+      expect(definitions).to.exist;
+      expect(definitions).to.eql(viewer._definitions);
+
+      done();
+    });
   });
 
 
