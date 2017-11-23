@@ -950,6 +950,7 @@ describe('Viewer', function() {
 
 
   describe('#attachTo', function() {
+
     it('should attach the viewer', function(done) {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -958,17 +959,24 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
-        expect(viewer._container.parentNode).to.equal(null);
+        // assume
+        expect(viewer._container.parentNode).not.to.exist;
+
+        // when
         viewer.attachTo(container);
+
+        // then
         expect(viewer._container.parentNode).to.equal(container);
 
         done(err, warnings);
       });
     });
+
   });
 
 
   describe('#detach', function() {
+
     it('should detach the viewer', function(done) {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -977,12 +985,19 @@ describe('Viewer', function() {
 
       viewer.importXML(xml, function(err, warnings) {
 
+        // assume
         expect(viewer._container.parentNode).to.equal(container);
+
+        // when
         viewer.detach();
-        expect(viewer._container.parentNode).to.equal(null);
+
+        // then
+        expect(viewer._container.parentNode).not.to.exist;
 
         done(err, warnings);
       });
     });
+
   });
+
 });
