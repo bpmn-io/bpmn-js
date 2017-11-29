@@ -32,14 +32,6 @@ module.exports = function(grunt) {
       }
     },
 
-    release: {
-      options: {
-        tagName: 'v<%= version %>',
-        commitMessage: 'chore(project): release v<%= version %>',
-        tagMessage: 'chore(project): tag v<%= version %>'
-      }
-    },
-
     karma: {
       options: {
         configFile: '<%= config.tests %>/config/karma.unit.js'
