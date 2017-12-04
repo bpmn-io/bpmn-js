@@ -16,10 +16,6 @@ describe('import - associations', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // when
         inject(function(elementRegistry) {
 
@@ -28,7 +24,7 @@ describe('import - associations', function() {
           // then
           expect(association).to.exist;
 
-          done();
+          done(err);
         })();
 
       });
@@ -41,10 +37,6 @@ describe('import - associations', function() {
 
       // given
       bootstrapViewer(xml)(function(err) {
-
-        if (err) {
-          return done(err);
-        }
 
         // when
         inject(function(elementRegistry) {
@@ -90,17 +82,13 @@ describe('import - associations', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // then
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
 
-        done();
+        done(err);
       });
     });
 
@@ -112,17 +100,13 @@ describe('import - associations', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // then
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
 
-        done();
+        done(err);
       });
     });
 
@@ -134,18 +118,13 @@ describe('import - associations', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // then
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
 
-        done();
-
+        done(err);
       });
     });
 
@@ -157,17 +136,13 @@ describe('import - associations', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // then
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
 
-        done();
+        done(err);
       });
     });
 

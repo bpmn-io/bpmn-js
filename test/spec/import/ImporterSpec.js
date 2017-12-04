@@ -7,7 +7,7 @@ var TestContainer = require('mocha-test-container-support');
 
 var Diagram = require('diagram-js/lib/Diagram'),
     BpmnModdle = require('bpmn-moddle'),
-    Importer = require('../../../lib/import/Importer'),
+    importBpmnDiagram = require('../../../lib/import/Importer').importBpmnDiagram,
     Viewer = require('../../../lib/Viewer');
 
 var find = require('lodash/collection/find');
@@ -34,11 +34,7 @@ describe('import - Importer', function() {
     var moddle = new BpmnModdle();
 
     moddle.fromXML(xml, function(err, definitions) {
-      if (err) {
-        return done(err);
-      }
-
-      Importer.importBpmnDiagram(diagram, definitions, done);
+      importBpmnDiagram(diagram, definitions, done);
     });
   }
 

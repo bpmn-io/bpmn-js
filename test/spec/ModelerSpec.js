@@ -72,17 +72,9 @@ describe('Modeler', function() {
     // given
     createModeler(xml, function(err, warnings, modeler) {
 
-      if (err) {
-        return done(err);
-      }
-
       // when
       // mimic re-import of same diagram
       modeler.importXML(xml, function(err, warnings) {
-
-        if (err) {
-          return done(err);
-        }
 
         // then
         expect(warnings.length).to.equal(0);

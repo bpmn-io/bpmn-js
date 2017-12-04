@@ -54,17 +54,9 @@ describe('Viewer', function() {
     // given
     createViewer(xml, function(err, warnings, viewer) {
 
-      if (err) {
-        return done(err);
-      }
-
       // when
       // mimic re-import of same diagram
       viewer.importXML(xml, function(err, warnings) {
-
-        if (err) {
-          return done(err);
-        }
 
         // then
         expect(warnings.length).to.equal(0);
@@ -343,16 +335,8 @@ describe('Viewer', function() {
 
       createViewer(xml, function(err, warnings, viewer) {
 
-        if (err) {
-          return done(err);
-        }
-
         // when
         viewer.saveXML({ format: true }, function(err, xml) {
-
-          if (err) {
-            return done(err);
-          }
 
           // then
           expect(xml).to.contain('<?xml version="1.0" encoding="UTF-8"?>');
@@ -380,14 +364,10 @@ describe('Viewer', function() {
         // when
         viewer.saveSVG(function(err, svg) {
 
-          if (err) {
-            return done(err);
-          }
-
           // then
           expect(validSVG(svg)).to.be.true;
 
-          done();
+          done(err);
         });
       });
     });
@@ -411,17 +391,13 @@ describe('Viewer', function() {
         // when
         viewer.saveSVG(function(err, svg) {
 
-          if (err) {
-            return done(err);
-          }
-
           // then
           expect(validSVG(svg)).to.be.true;
 
           // no svg export should not take too long
           expect(currentTime() - time).to.be.below(1000);
 
-          done();
+          done(err);
         });
       });
     });
@@ -459,10 +435,6 @@ describe('Viewer', function() {
         // when
         viewer.saveSVG(function(err, svg) {
 
-          if (err) {
-            return done(err);
-          }
-
           var svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
           svgDoc.innerHTML = svg;
 
@@ -470,7 +442,7 @@ describe('Viewer', function() {
           expect(validSVG(svg)).to.be.true;
           expect(svgDoc.querySelector('.outer-bound-marker')).to.be.null;
 
-          done();
+          done(err);
         });
       });
     });
