@@ -246,10 +246,6 @@ describe('label bounds', function() {
 
         modeler.saveXML({ format: true }, function(err, result) {
 
-          if (err) {
-            return done(err);
-          }
-
           // strip spaces and line breaks after '>'
           result = result.replace(/>\s+/g,'>');
 
@@ -262,7 +258,7 @@ describe('label bounds', function() {
           expect(width).to.equal(shape.label.width);
           expect(height).to.equal(shape.label.height);
 
-          done();
+          done(err);
         });
       });
     });
@@ -289,10 +285,6 @@ describe('label bounds', function() {
 
         modeler.saveXML({ format: true }, function(err, result) {
 
-          if (err) {
-            return done(err);
-          }
-
           // strip spaces and line breaks after '>'
           result = result.replace(/>\s+/g,'>');
 
@@ -305,7 +297,7 @@ describe('label bounds', function() {
           expect(width).to.equal(shape.label.width);
           expect(height).to.equal(shape.label.height);
 
-          done();
+          done(err);
         });
       });
     });
@@ -332,7 +324,7 @@ describe('label bounds', function() {
 
           expect(result).to.equal(xml);
 
-          done();
+          done(err);
         });
       });
     });

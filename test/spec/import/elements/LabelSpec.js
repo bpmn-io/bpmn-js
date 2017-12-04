@@ -44,10 +44,6 @@ describe('import - labels', function() {
       // given
       bootstrapViewer(xml)(function(err) {
 
-        if (err) {
-          return done(err);
-        }
-
         // when
         inject(function(elementRegistry) {
 
@@ -68,7 +64,7 @@ describe('import - labels', function() {
           expect(sequenceFlowLabel.width).to.be.above(64);
           expect(sequenceFlowLabel.height).to.be.above(11);
 
-          done();
+          done(err);
         })();
 
       });

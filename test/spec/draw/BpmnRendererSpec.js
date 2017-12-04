@@ -180,10 +180,6 @@ describe('draw - bpmn renderer', function() {
 
     bootstrapViewer(xml)(function(err) {
 
-      if (err) {
-        return done(err);
-      }
-
       inject(function(elementRegistry) {
 
         var callActivityGfx = elementRegistry.getGraphics('CallActivity');
@@ -191,7 +187,7 @@ describe('draw - bpmn renderer', function() {
         // make sure the + marker is shown
         expect(domQuery('[data-marker=sub-process]', callActivityGfx)).to.exist;
 
-        done();
+        done(err);
       })();
     });
 
@@ -203,10 +199,6 @@ describe('draw - bpmn renderer', function() {
 
     bootstrapViewer(xml)(function(err) {
 
-      if (err) {
-        return done(err);
-      }
-
       inject(function(elementRegistry) {
 
         var callActivityGfx = elementRegistry.getGraphics('AdHocSubProcess');
@@ -214,7 +206,7 @@ describe('draw - bpmn renderer', function() {
         // make sure the + marker is shown
         expect(domQuery('[data-marker=adhoc]', callActivityGfx)).to.exist;
 
-        done();
+        done(err);
       })();
     });
 
@@ -226,10 +218,6 @@ describe('draw - bpmn renderer', function() {
     var xml = require('../../fixtures/bpmn/simple.bpmn');
     bootstrapViewer(xml)(function(err) {
 
-      if (err) {
-        return done(err);
-      }
-
       inject(function(canvas) {
         var svg = canvas._svg;
         var markers = svg.querySelectorAll('marker');
@@ -237,7 +225,7 @@ describe('draw - bpmn renderer', function() {
         expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]+$/);
       })();
 
-      done();
+      done(err);
     });
   });
 
@@ -246,10 +234,6 @@ describe('draw - bpmn renderer', function() {
 
     var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
     bootstrapViewer(xml)(function(err) {
-
-      if (err) {
-        return done(err);
-      }
 
       inject(function(canvas) {
         var svg = canvas._svg;
@@ -260,7 +244,7 @@ describe('draw - bpmn renderer', function() {
         expect(markers[4].id).to.match(/^messageflow-start-white-fuchsia-[A-Za-z0-9]{25}$/);
       })();
 
-      done();
+      done(err);
     });
   });
 
