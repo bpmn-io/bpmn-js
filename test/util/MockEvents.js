@@ -39,9 +39,6 @@ module.exports.createCanvasEvent = createCanvasEvent;
 
 function createEvent(target, position, data) {
 
-  // unwrap snapsvg gfx
-  target = target.node || target;
-
   data = assign({
     target: target,
     x: position.x,
