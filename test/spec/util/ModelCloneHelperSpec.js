@@ -5,6 +5,7 @@ require('../../TestHelper');
 /* global bootstrapModeler, inject */
 
 var coreModule = require('../../../lib/core');
+var modelingModule = require('../../../lib/features/modeling');
 
 var ModelCloneHelper = require('../../../lib/util/model/ModelCloneHelper');
 
@@ -18,7 +19,11 @@ function getProp(element, property) {
 
 describe('util/ModelCloneHelper', function() {
 
-  var testModules = [ camundaModdleModule, coreModule ];
+  var testModules = [
+    camundaModdleModule,
+    coreModule,
+    modelingModule
+  ];
 
   var basicXML = require('../../fixtures/bpmn/basic.bpmn');
 
@@ -31,8 +36,8 @@ describe('util/ModelCloneHelper', function() {
 
   var helper;
 
-  beforeEach(inject(function(eventBus) {
-    helper = new ModelCloneHelper(eventBus);
+  beforeEach(inject(function(eventBus, bpmnFactory) {
+    helper = new ModelCloneHelper(eventBus, bpmnFactory);
   }));
 
   describe('simple', function() {
@@ -63,6 +68,7 @@ describe('util/ModelCloneHelper', function() {
     }));
 
   });
+
 
   describe('nested', function() {
 

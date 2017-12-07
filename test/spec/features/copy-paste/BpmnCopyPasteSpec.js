@@ -523,9 +523,15 @@ describe('features/copy-paste', function() {
 
     describe('integration', function() {
 
-      it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
+      it('multiple participants', inject(integrationTest([
+        'Participant_0pgdgt4',
+        'Participant_1id96b4'
+      ])));
 
-      it('multiple participants', inject(integrationTest([ 'Participant_0pgdgt4', 'Participant_1id96b4' ])));
+      it('multiple participants', inject(integrationTest([
+        'Participant_0pgdgt4',
+        'Participant_1id96b4'
+      ])));
 
     });
 
@@ -537,42 +543,44 @@ describe('features/copy-paste', function() {
     beforeEach(bootstrapModeler(collaborationAssociations, { modules: testModules }));
 
 
-    it('copying participant should copy process as well', inject(function(elementRegistry, copyPaste, canvas) {
+    it('copying participant should copy process as well', inject(
+      function(elementRegistry, copyPaste, canvas) {
 
-      // given
-      var participants = map([ 'Participant_Input', 'Participant_Output' ], function(e) {
-        return elementRegistry.get(e);
-      });
-      var rootElement = canvas.getRootElement();
+        // given
+        var participants = map([ 'Participant_Input', 'Participant_Output' ], function(e) {
+          return elementRegistry.get(e);
+        });
+        var rootElement = canvas.getRootElement();
 
-      // when
-      copyPaste.copy(participants);
+        // when
+        copyPaste.copy(participants);
 
-      copyPaste.paste({
-        element: rootElement,
-        point: {
-          x: 4000,
-          y: 4500
-        }
-      });
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 4000,
+            y: 4500
+          }
+        });
 
-      // then
-      var elements = elementRegistry.filter(function(element) {
-        return element.type === 'bpmn:Participant';
-      });
+        // then
+        var elements = elementRegistry.filter(function(element) {
+          return element.type === 'bpmn:Participant';
+        });
 
-      var processIds = map(elements, function(e) {
-        return e.businessObject.processRef.id;
-      });
+        var processIds = map(elements, function(e) {
+          return e.businessObject.processRef.id;
+        });
 
-      expect(uniq(processIds)).to.have.length(4);
-    }));
-
-
-    it('participant with OutputDataAssociation', inject(integrationTest([ 'Participant_Output' ])));
+        expect(uniq(processIds)).to.have.length(4);
+      }
+    ));
 
 
-    it('participant with InputDataAssociation', inject(integrationTest([ 'Participant_Input' ])));
+    it('participant with DataOutputAssociation', inject(integrationTest([ 'Participant_Output' ])));
+
+
+    it('participant with DataInputAssociation', inject(integrationTest([ 'Participant_Input' ])));
 
   });
 

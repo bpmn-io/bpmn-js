@@ -236,6 +236,48 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
+  describe('should replace with data objects', function() {
+
+    var diagramXML = require('./BpmnReplace.dataObjects.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('restoring dataAssociations', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('Task');
+
+      // when
+      var serviceTask = bpmnReplace.replaceElement(task, { type: 'bpmn:ServiceTask' });
+      var bo = serviceTask.businessObject;
+
+      // then
+      // expect one incoming connection
+      expect(serviceTask.incoming).to.have.length(1);
+
+      var inputAssociations = bo.dataInputAssociations;
+      expect(inputAssociations).to.have.length(1);
+
+      var inputAssociation = inputAssociations[0];
+
+      // expect input association references __target_ref_placeholder property
+      expect(inputAssociation.targetRef).to.equal(bo.properties[0]);
+
+      // ...and
+      // expect one outgoing connection
+      expect(serviceTask.outgoing).to.have.length(1);
+
+      var outputAssociations = bo.dataOutputAssociations;
+      expect(outputAssociations).to.have.length(1);
+
+    }));
+
+  });
+
+
   describe('position and size', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
