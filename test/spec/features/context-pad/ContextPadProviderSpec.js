@@ -19,7 +19,8 @@ var contextPadModule = require('../../../../lib/features/context-pad'),
     modelingModule = require('../../../../lib/features/modeling'),
     replaceMenuModule = require('../../../../lib/features/popup-menu'),
     createModule = require('diagram-js/lib/features/create'),
-    customRulesModule = require('../../../util/custom-rules');
+    customRulesModule = require('../../../util/custom-rules'),
+    autoPlaceModule = require('../../../../lib/features/auto-place');
 
 
 describe('features - context-pad', function() {
@@ -429,6 +430,89 @@ describe('features - context-pad', function() {
         // then
         expect(replaceMenu).to.not.exist;
       }));
+
+  });
+
+
+  describe('auto place', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat(autoPlaceModule)
+    }));
+
+    var container;
+
+    beforeEach(function() {
+      container = TestContainer.get(this);
+    });
+
+
+    it('should trigger', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = {
+        clientX: 100,
+        clientY: 100,
+        target: padEntry(container, 'append.gateway'),
+        preventDefault: function() {}
+      };
+
+      // when
+      contextPad.trigger('click', event);
+
+      // then
+      expect(element.outgoing).to.have.length(1);
+    }));
+
+  });
+
+
+  describe('disabled auto-place', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat(autoPlaceModule),
+      contextPad: {
+        autoPlace: false
+      }
+    }));
+
+    var container;
+
+    beforeEach(function() {
+      container = TestContainer.get(this);
+    });
+
+
+    it('should default to drag start', inject(function(elementRegistry, contextPad, dragging) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = {
+        clientX: 100,
+        clientY: 100,
+        target: padEntry(container, 'append.gateway'),
+        preventDefault: function() {}
+      };
+
+      // when
+      contextPad.trigger('click', event);
+
+      // then
+      expect(dragging.context()).to.exist;
+    }));
 
   });
 
