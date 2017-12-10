@@ -5,6 +5,7 @@ require('../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 var replacePreviewModule = require('../../../../lib/features/replace-preview'),
+    moveModule = require('diagram-js/lib/features/move'),
     modelingModule = require('../../../../lib/features/modeling'),
     coreModule = require('../../../../lib/core');
 
@@ -19,8 +20,6 @@ var svgAttr = require('tiny-svg/lib/attr'),
 
 describe('features/replace-preview', function() {
 
-  var testModules = [ replacePreviewModule, modelingModule, coreModule ];
-
   var diagramXML = require('../../../fixtures/bpmn/event-sub-processes.bpmn');
 
   var startEvent_1,
@@ -29,7 +28,14 @@ describe('features/replace-preview', function() {
   var getGfx,
       moveShape;
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      replacePreviewModule,
+      moveModule,
+      modelingModule,
+      coreModule
+    ]
+  }));
 
   beforeEach(inject(function(canvas, elementRegistry, elementFactory, move, dragging) {
 

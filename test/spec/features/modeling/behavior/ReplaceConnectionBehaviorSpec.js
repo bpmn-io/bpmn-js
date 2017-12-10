@@ -8,6 +8,7 @@ var is = require('../../../../../lib/util/ModelUtil').is,
     find = require('lodash/collection/find');
 
 var modelingModule = require('../../../../../lib/features/modeling'),
+    moveModule = require('diagram-js/lib/features/move'),
     coreModule = require('../../../../../lib/core');
 
 var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
@@ -31,7 +32,11 @@ function expectNotConnected(source, target, connectionOrType) {
 
 describe('features/modeling - replace connection', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+  var testModules = [
+    coreModule,
+    moveModule,
+    modelingModule
+  ];
 
 
   describe('should replace SequenceFlow <> MessageFlow', function() {
@@ -321,7 +326,9 @@ describe('features/modeling - replace connection', function() {
 
       var processDiagramXML = require('./ReplaceConnectionBehavior.boundary-events.bpmn');
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processDiagramXML, {
+        modules: testModules
+      }));
 
       var element;
 

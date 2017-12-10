@@ -11,6 +11,7 @@ var autoResizeModule = require('../../../../lib/features/auto-resize'),
     modelingModule = require('../../../../lib/features/modeling'),
     createModule = require('diagram-js/lib/features/create'),
     coreModule = require('../../../../lib/core'),
+    moveModule = require('diagram-js/lib/features/move'),
     canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 function getBounds(shape) {
@@ -20,8 +21,13 @@ function getBounds(shape) {
 
 describe('features/auto-resize', function() {
 
-  var testModules = [ coreModule, modelingModule, autoResizeModule, createModule ];
-
+  var testModules = [
+    coreModule,
+    modelingModule,
+    autoResizeModule,
+    createModule,
+    moveModule
+  ];
 
   describe('participant', function() {
 
@@ -32,7 +38,9 @@ describe('features/auto-resize', function() {
         startEventShape,
         originalBounds;
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
     beforeEach(inject(function(elementRegistry) {
 
@@ -285,7 +293,9 @@ describe('features/auto-resize', function() {
 
     var diagramXML = require('./AutoResize.lanes.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
     it('should fit new element', inject(function(elementRegistry, modeling) {
@@ -326,7 +336,9 @@ describe('features/auto-resize', function() {
 
     var diagramXML = require('./AutoResize.sub-processes.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
     it('should auto-resize after moving children', inject(function(elementRegistry, modeling) {
 
@@ -433,7 +445,9 @@ describe('features/auto-resize', function() {
 
     var diagramXML = require('./AutoResize.multi-selection.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
     var taskShape_1,
         taskShape_2,
@@ -567,6 +581,7 @@ describe('features/auto-resize', function() {
 
   });
 
+
   describe('space-tool', function() {
 
     var diagramXML = require('./AutoResize.space-tool.bpmn');
@@ -575,7 +590,9 @@ describe('features/auto-resize', function() {
         participantShape,
         originalBounds;
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
     beforeEach(inject(function(elementRegistry) {
 
