@@ -13,14 +13,17 @@ describe('features/modeling - layout connection', function() {
 
   var diagramXML = require('../../../../fixtures/bpmn/sequence-flows.bpmn');
 
-  var testModules = [ coreModule, modelingModule ];
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
+  describe('should not touch already layouted', function() {
 
-  describe('connection handling', function() {
-
-    it('should execute', inject(function(elementRegistry, modeling, bpmnFactory) {
+    it('execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -44,12 +47,8 @@ describe('features/modeling - layout connection', function() {
       expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
-  });
 
-
-  describe('undo support', function() {
-
-    it('should undo', inject(function(elementRegistry, commandStack, modeling) {
+    it('undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -68,12 +67,8 @@ describe('features/modeling - layout connection', function() {
       expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
     }));
 
-  });
 
-
-  describe('redo support', function() {
-
-    it('should redo', inject(function(elementRegistry, commandStack, modeling) {
+    it('redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -95,4 +90,35 @@ describe('features/modeling - layout connection', function() {
 
   });
 
+
+  it('should remove un-needed waypoints', inject(function(elementRegistry, modeling) {
+
+    // given
+    var taskShape = elementRegistry.get('Task_2'),
+        sequenceFlowConnection = elementRegistry.get('SequenceFlow_1');
+
+    // when
+    // moving task
+    modeling.moveElements([ taskShape ], { x: 250, y: -95 });
+
+    // then
+    var newWaypoints = sequenceFlowConnection.waypoints;
+
+    expect(newWaypoints.map(toPoint)).to.eql([
+      { x: 578, y: 341 },
+      { x: 982, y: 341 }
+    ]);
+  }));
+
 });
+
+
+
+///////// helpers ///////////////////////////
+
+function toPoint(p) {
+  return {
+    x: p.x,
+    y: p.y
+  };
+}
