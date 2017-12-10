@@ -162,6 +162,92 @@ describe('features/snapping - BpmnSnapping', function() {
         expect(task.y).to.eql(285);
       })
     );
+
+
+    it('should NOT snap shape to first waypoint',
+      inject(function(canvas, elementRegistry, move, dragging) {
+
+        // given
+        var shape = elementRegistry.get('StartEvent_1');
+
+        var originalPosition = {
+          x: shape.x,
+          y: shape.y
+        };
+
+        var rootElement = canvas.getRootElement();
+
+        // when
+        move.start(canvasEvent(originalPosition), shape);
+
+        dragging.hover({
+          element: rootElement,
+          gfx: canvas.getGraphics(rootElement)
+        });
+
+        dragging.move(canvasEvent({
+          x: originalPosition.x + 10,
+          y: originalPosition.y
+        }));
+
+        dragging.move(canvasEvent({
+          x: originalPosition.x + 20,
+          y: originalPosition.y - 5
+        }));
+
+        dragging.end();
+
+        // then
+        // no horizontal snap
+        expect(shape.x).to.eql(originalPosition.x + 20);
+
+        // vertical snap though!
+        expect(shape.y).to.eql(originalPosition.y);
+      })
+    );
+
+
+    it('should NOT snap shape to last waypoint',
+      inject(function(canvas, elementRegistry, move, dragging) {
+
+        // given
+        var shape = elementRegistry.get('Task_1');
+
+        var originalPosition = {
+          x: shape.x,
+          y: shape.y
+        };
+
+        var rootElement = canvas.getRootElement();
+
+        // when
+        move.start(canvasEvent(originalPosition), shape);
+
+        dragging.hover({
+          element: rootElement,
+          gfx: canvas.getGraphics(rootElement)
+        });
+
+        dragging.move(canvasEvent({
+          x: originalPosition.x,
+          y: originalPosition.y - 10
+        }));
+
+        dragging.move(canvasEvent({
+          x: originalPosition.x + 5,
+          y: originalPosition.y - 20
+        }));
+
+        dragging.end();
+
+        // then
+        // no vertical snap
+        expect(shape.y).to.eql(originalPosition.y - 20);
+
+        // horizontal snap though!
+        expect(shape.x).to.eql(originalPosition.x);
+      })
+    );
   });
 
 
