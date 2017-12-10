@@ -35,7 +35,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
     "browser-pack-flat": "^3.0.5",
-    "browserify": "^13.0.0",
+    "browserify": "^14.5.0",
     "browserify-derequire": "^0.9.1",
     "bundle-collapser": "^1.1.1",
     "chai": "^4.1.2",
@@ -70,7 +70,7 @@
     "source-map-concat": "^1.0.0",
     "stringify": "^5.2.0",
     "time-grunt": "^0.3.2",
-    "uglify-es": "^3.1.9",
+    "uglify-es": "^3.2.2",
     "unassertify": "^2.1.0",
     "watchify": "^3.7.0"
   },
