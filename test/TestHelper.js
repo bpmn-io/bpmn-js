@@ -7,7 +7,8 @@ TestHelper.insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css
 TestHelper.insertCSS('bpmn-embedded.css', require('../assets/bpmn-font/css/bpmn-embedded.css'));
 
 TestHelper.insertCSS('diagram-js-testing.css',
-  '.test-container .test-content-container { height: 500px; max-height: 100%; }'
+  'body .test-container { height: auto }' +
+  'body .test-container .test-content-container { height: 90vmin; }'
 );
 
 
