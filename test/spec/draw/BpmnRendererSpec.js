@@ -251,7 +251,7 @@ describe('draw - bpmn renderer', function() {
 
   describe('path', function() {
 
-    var diagramXML = require('../../fixtures/bpmn/simple-cropping.bpmn');
+    var diagramXML = require('./BpmnRenderer.simple-cropping.bpmn');
 
     var testModules = [ coreModule, rendererModule ];
 
