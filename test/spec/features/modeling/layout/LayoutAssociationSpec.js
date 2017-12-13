@@ -87,10 +87,8 @@ describe('features/modeling - layout association', function() {
     // when
     modeling.moveElements([ textAnnotationShape ], { x: 20, y: 0 }, rootShape);
 
-    waypoints = textAnnotationShape.outgoing[0].waypoints;
-
     // then
-    expect(waypoints).to.eql([
+    expect(connection).to.have.waypoints([
       { original: { x: 420, y: 400 }, x: 417, y: 385 },
       { x: 400, y: 300 },
       { original: { x: 191, y: 120 }, x: 204, y: 131 }
