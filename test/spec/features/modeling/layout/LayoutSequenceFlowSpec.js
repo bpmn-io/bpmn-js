@@ -284,7 +284,7 @@ describe('features/modeling - layout', function() {
 
       // then
       expect(connection).to.have.waypoints([
-        { original: { x: 586, y: 258 }, x: 586, y: 258 },
+        { original: { x: 586, y: 258 }, x: 586, y: 240 },
         { x: 586, y: 162 },
         { original: { x: 428, y: 162 }, x: 478, y: 162 }
       ]);

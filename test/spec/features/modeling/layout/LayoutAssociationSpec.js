@@ -91,7 +91,7 @@ describe('features/modeling - layout association', function() {
     expect(connection).to.have.waypoints([
       { original: { x: 420, y: 400 }, x: 417, y: 385 },
       { x: 400, y: 300 },
-      { original: { x: 191, y: 120 }, x: 204, y: 131 }
+      { original: { x: 191, y: 120 }, x: 204, y: 132 }
     ]);
 
   }));

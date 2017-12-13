@@ -93,10 +93,10 @@ describe('features/modeling - create connection', function() {
     // then
     // expect cropped connection with custom start/end
     expect(newConnection).to.have.waypoints([
-      { x: 738, y: 400 },
+      { x: 734, y: 400 },
       { x: 590, y: 400 },
       { x: 590, y: 130 },
-      { x: 446, y: 130 }
+      { x: 447, y: 130 }
     ]);
   }));
 
