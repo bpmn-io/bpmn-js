@@ -11,14 +11,17 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - move elements', function() {
 
-  var diagramXML = require('./MoveElements.flow-collaboration.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
-
   describe('should keep flow parent', function() {
+
+    var diagramXML = require('./MoveElements.flow-collaboration.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
 
     it('when moving shapes', inject(function(elementRegistry, modeling, bpmnFactory) {
 
@@ -67,4 +70,67 @@ describe('features/modeling - move elements', function() {
 
   });
 
+
+  describe('should move boundary connection with tasks', function() {
+
+    var diagramXML = require('./MoveElements.boundary-connection.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+
+    it('should properly adjust connection', inject(function(elementRegistry, modeling) {
+
+      // given
+      var elements = [
+        elementRegistry.get('Task_1'),
+        elementRegistry.get('Task_2'),
+        elementRegistry.get('BoundaryEvent')
+      ];
+
+      var boundaryFlow = elementRegistry.get('Boundary_Flow');
+
+      var delta = { x: 0, y: 20 };
+
+      var expectedWaypoints = moveWaypoints(boundaryFlow.waypoints, delta);
+
+      // when
+      modeling.moveElements(elements, delta);
+
+      // then
+      expect(boundaryFlow).to.have.waypoints(expectedWaypoints);
+    }));
+
+  });
+
 });
+
+
+///////// helpers /////////////////////////////////
+
+function moveWaypoint(p, delta) {
+  return {
+    x: p.x + delta.x || 0,
+    y: p.y + delta.y || 0
+  };
+}
+
+function moveWaypoints(waypoints, delta) {
+
+  return waypoints.map(function(p) {
+
+    var original = p.original;
+
+    var moved = moveWaypoint(p, delta);
+
+    if (original) {
+      moved.original = moveWaypoint(original, delta);
+    }
+
+    return moved;
+  });
+}

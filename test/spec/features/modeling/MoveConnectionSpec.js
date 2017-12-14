@@ -11,16 +11,19 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - move connection', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
+  describe('should move connection', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+    var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
 
 
-  describe('connection handling', function() {
-
-    it('should execute', inject(function(elementRegistry, modeling, bpmnFactory) {
+    it('execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -47,12 +50,8 @@ describe('features/modeling - move connection', function() {
       expect(sequenceFlow.di.waypoint).eql(diWaypoints);
     }));
 
-  });
 
-
-  describe('undo support', function() {
-
-    it('should undo', inject(function(elementRegistry, commandStack, modeling) {
+    it('undo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -71,12 +70,8 @@ describe('features/modeling - move connection', function() {
       expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
     }));
 
-  });
 
-
-  describe('redo support', function() {
-
-    it('should redo', inject(function(elementRegistry, commandStack, modeling) {
+    it('redo', inject(function(elementRegistry, commandStack, modeling) {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
@@ -97,5 +92,4 @@ describe('features/modeling - move connection', function() {
     }));
 
   });
-
 });
