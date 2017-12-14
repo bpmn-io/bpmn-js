@@ -41,8 +41,6 @@
     "chai": "^4.1.2",
     "chai-match": "^1.1.1",
     "common-shakeify": "^0.4.4",
-    "diagram-js": "^0.25.0",
-    "diagram-js-direct-editing": "^0.22.0",
     "eslint": "^3.19.0",
     "eslint-plugin-mocha": "^4.9.0",
     "grunt": "^0.4.4",
@@ -78,6 +76,8 @@
   },
   "dependencies": {
     "bpmn-moddle": "^2.0.0",
+    "diagram-js": "^0.25.0",
+    "diagram-js-direct-editing": "^0.22.0",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
     "lodash": "^3.0.1",
