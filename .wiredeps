@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "0.22.1",
+  "version": "0.25.2",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -8,43 +8,30 @@
       "version": "bpmn-io/bpmn-moddle",
       "requires": {
         "lodash": "3.10.1",
-        "moddle": "1.0.0",
-        "moddle-xml": "1.0.0"
+        "moddle": "2.0.0",
+        "moddle-xml": "4.0.0"
       }
     },
-    "component-classes": {
-      "version": "1.2.6",
+    "closest": {
+      "version": "0.0.1",
       "requires": {
-        "component-indexof": "0.0.3"
-      }
-    },
-    "component-closest": {
-      "version": "0.1.4",
-      "requires": {
-        "component-matches-selector": "0.1.6"
-      }
-    },
-    "component-delegate": {
-      "version": "0.2.4",
-      "requires": {
-        "component-closest": "0.1.4",
-        "component-event": "0.1.4"
+        "matches-selector": "0.0.1"
+      },
+      "dependencies": {
+        "matches-selector": {
+          "version": "0.0.1"
+        }
       }
     },
     "component-event": {
       "version": "0.1.4"
     },
-    "component-indexof": {
-      "version": "0.0.3"
-    },
-    "component-matches-selector": {
-      "version": "0.1.6",
+    "delegate-events": {
+      "version": "1.1.1",
       "requires": {
-        "component-query": "0.0.3"
+        "closest": "0.0.1",
+        "component-event": "0.1.4"
       }
-    },
-    "component-query": {
-      "version": "0.0.3"
     },
     "diagram-js": {
       "version": "bpmn-io/diagram-js",
@@ -53,22 +40,17 @@
         "hammerjs": "2.0.8",
         "inherits": "2.0.3",
         "lodash": "3.10.1",
-        "min-dom": "0.2.0",
+        "min-dom": "1.0.0",
         "object-refs": "0.1.1",
-        "tiny-svg": "0.1.1"
+        "path-intersection": "1.0.2",
+        "tiny-svg": "0.1.3"
       }
     },
     "diagram-js-direct-editing": {
-      "version": "bpmn-io/diagram-js-direct-editing",
+      "version": "0.22.0",
       "requires": {
         "lodash": "3.10.1",
-        "min-dom": "0.2.0"
-      }
-    },
-    "diagram-js-origin": {
-      "version": "0.15.2",
-      "requires": {
-        "tiny-svg": "0.1.1"
+        "min-dom": "1.0.0"
       }
     },
     "didi": {
@@ -89,22 +71,27 @@
         "hat": "0.0.3"
       }
     },
+    "indexof": {
+      "version": "0.0.1"
+    },
     "inherits": {
       "version": "2.0.3"
     },
     "lodash": {
       "version": "3.10.1"
     },
+    "matches-selector": {
+      "version": "1.2.0"
+    },
     "min-dom": {
-      "version": "0.2.0",
+      "version": "1.0.0",
       "requires": {
-        "component-classes": "1.2.6",
-        "component-closest": "0.1.4",
-        "component-delegate": "0.2.4",
+        "closest": "0.0.1",
         "component-event": "0.1.4",
-        "component-matches-selector": "0.1.6",
-        "component-query": "0.0.3",
-        "domify": "1.4.0"
+        "delegate-events": "1.1.1",
+        "domify": "1.4.0",
+        "indexof": "0.0.1",
+        "matches-selector": "1.2.0"
       }
     },
     "moddle": {
@@ -117,22 +104,25 @@
       "version": "bpmn-io/moddle-xml",
       "requires": {
         "lodash": "3.10.1",
-        "moddle": "1.0.0",
-        "saxen": "5.3.1",
+        "moddle": "2.0.0",
+        "saxen": "5.5.0",
         "tiny-stack": "0.1.0"
       }
     },
     "object-refs": {
       "version": "0.1.1"
     },
+    "path-intersection": {
+      "version": "1.0.2"
+    },
     "saxen": {
-      "version": "5.3.1"
+      "version": "5.5.0"
     },
     "tiny-stack": {
       "version": "0.1.0"
     },
     "tiny-svg": {
-      "version": "0.1.1"
+      "version": "0.1.3"
     }
   }
 }
