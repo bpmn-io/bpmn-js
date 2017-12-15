@@ -105,6 +105,13 @@ describe('features/auto-place', function() {
 
       it('bottom right of source', autoPlace({
         element: 'bpmn:DataStoreReference',
+        behind: 'TASK_2',
+        expectedBounds: { x: 369, y: 303, width: 50, height: 50 }
+      }));
+
+
+      it('next to existing', autoPlace({
+        element: 'bpmn:DataStoreReference',
         behind: 'TASK_3',
         expectedBounds: { x: 769, y: 247, width: 50, height: 50 }
       }));
@@ -117,14 +124,14 @@ describe('features/auto-place', function() {
       it('top right of source', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_2',
-        expectedBounds: { x: 409, y: 103, width: 100, height: 30 }
+        expectedBounds: { x: 379, y: 103, width: 100, height: 30 }
       }));
 
 
       it('above existing', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_3',
-        expectedBounds: { x: 726, y: -4, width: 100, height: 30 }
+        expectedBounds: { x: 696, y: -4, width: 100, height: 30 }
       }));
 
     });
