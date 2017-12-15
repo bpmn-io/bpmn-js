@@ -27,34 +27,6 @@ describe('features/auto-place', function() {
     }));
 
 
-    function autoPlace(cfg) {
-
-      var element = cfg.element,
-          behind = cfg.behind,
-          expectedBounds = cfg.expectedBounds;
-
-      return inject(function(autoPlace, elementRegistry, elementFactory) {
-
-        var sourceEl = elementRegistry.get(behind);
-
-        // assume
-        expect(sourceEl).to.exist;
-
-        if (typeof element === 'string') {
-          element = { type: element };
-        }
-
-        var shape = elementFactory.createShape(element);
-
-        // when
-        var placedShape = autoPlace.append(sourceEl, shape);
-
-        // then
-        expect(placedShape).to.have.bounds(expectedBounds);
-      });
-    }
-
-
     describe('should place bpmn:FlowNode', function() {
 
       it('at default distance after START_EVENT_1', autoPlace({
@@ -209,4 +181,80 @@ describe('features/auto-place', function() {
 
   });
 
+
+  describe('boundary event connection handling', function() {
+
+    var diagramXML = require('./AutoPlace.boundary-events.bpmn');
+
+    before(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        autoPlaceModule,
+        selectionModule
+      ]
+    }));
+
+
+    it('should place bottom right of BOUNDARY_BOTTOM', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'BOUNDARY_BOTTOM',
+      expectedBounds: { x: 241, y: 213, width: 100, height: 80 }
+    }));
+
+
+    it('should place bottom right of BOUNDARY_SUBPROCESS_BOTTOM', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'BOUNDARY_SUBPROCESS_BOTTOM',
+      expectedBounds: { x: 278, y: 495, width: 100, height: 80 }
+    }));
+
+
+    it('should place top right of BOUNDARY_TOP', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'BOUNDARY_TOP',
+      expectedBounds: { x: 242, y: -27, width: 100, height: 80 }
+    }));
+
+
+    it('should place top right of BOUNDARY_SUBPROCESS_TOP', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'BOUNDARY_SUBPROCESS_TOP',
+      expectedBounds: { x: 275, y: 194, width: 100, height: 80 }
+    }));
+
+  });
+
 });
+
+
+
+
+////////// helpers /////////////////////////////////////////
+
+function autoPlace(cfg) {
+
+  var element = cfg.element,
+      behind = cfg.behind,
+      expectedBounds = cfg.expectedBounds;
+
+  return inject(function(autoPlace, elementRegistry, elementFactory) {
+
+    var sourceEl = elementRegistry.get(behind);
+
+    // assume
+    expect(sourceEl).to.exist;
+
+    if (typeof element === 'string') {
+      element = { type: element };
+    }
+
+    var shape = elementFactory.createShape(element);
+
+    // when
+    var placedShape = autoPlace.append(sourceEl, shape);
+
+    // then
+    expect(placedShape).to.have.bounds(expectedBounds);
+  });
+}
