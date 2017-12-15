@@ -13,10 +13,9 @@ var autoPlaceModule = require('../../../../lib/features/auto-place'),
 
 describe('features/auto-place', function() {
 
-  var diagramXML = require('./AutoPlace.bpmn');
-
-
   describe('element placement', function() {
+
+    var diagramXML = require('./AutoPlace.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
@@ -135,6 +134,8 @@ describe('features/auto-place', function() {
 
   describe('modeling flow', function() {
 
+    var diagramXML = require('./AutoPlace.bpmn');
+
     before(bootstrapModeler(diagramXML, {
       modules: [
         coreModule,
@@ -162,6 +163,40 @@ describe('features/auto-place', function() {
 
         expect(directEditing.isActive()).to.be.true;
         expect(directEditing._active.element).to.equal(newShape);
+      }
+    ));
+
+  });
+
+
+  describe('multi connection handling', function() {
+
+    var diagramXML = require('./AutoPlace.multi-connection.bpmn');
+
+    before(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        autoPlaceModule,
+        selectionModule
+      ]
+    }));
+
+
+    it('should ignore multiple source -> target connections', inject(
+      function(autoPlace, elementRegistry, elementFactory, selection, directEditing) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('TASK_1');
+        var alignedElement = elementRegistry.get('TASK_3');
+
+        // when
+        var newShape = autoPlace.append(source, element);
+
+        // then
+        expect(newShape.x).to.eql(alignedElement.x);
       }
     ));
 
