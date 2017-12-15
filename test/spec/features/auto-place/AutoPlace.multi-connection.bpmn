@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:task id="TASK_1" name="TASK_1">
+      <bpmn:outgoing>SequenceFlow_0uj471x</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0sys8ww</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1q8yl3p</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1dh9p3h</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="TASK_2" name="TASK_2">
+      <bpmn:incoming>SequenceFlow_0uj471x</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1dh9p3h</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_0uj471x" sourceRef="TASK_1" targetRef="TASK_2" />
+    <bpmn:task id="TASK_3" name="TASK_3">
+      <bpmn:incoming>SequenceFlow_0sys8ww</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_0sys8ww" sourceRef="TASK_1" targetRef="TASK_3" />
+    <bpmn:task id="TASK_4" name="TASK_4">
+      <bpmn:incoming>SequenceFlow_1q8yl3p</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_1q8yl3p" sourceRef="TASK_1" targetRef="TASK_4" />
+    <bpmn:sequenceFlow id="SequenceFlow_1dh9p3h" sourceRef="TASK_1" targetRef="TASK_2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="TASK_1_di" bpmnElement="TASK_1">
+        <dc:Bounds x="66.87482219061161" y="115.89615931721193" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TASK_2_di" bpmnElement="TASK_2">
+        <dc:Bounds x="361.8748221906116" y="116" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0uj471x_di" bpmnElement="SequenceFlow_0uj471x">
+        <di:waypoint xsi:type="dc:Point" x="167" y="156" />
+        <di:waypoint xsi:type="dc:Point" x="362" y="156" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="264.5" y="135" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TASK_3_di" bpmnElement="TASK_3">
+        <dc:Bounds x="206.8748221906116" y="247.89615931721193" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0sys8ww_di" bpmnElement="SequenceFlow_0sys8ww">
+        <di:waypoint xsi:type="dc:Point" x="117" y="196" />
+        <di:waypoint xsi:type="dc:Point" x="117" y="288" />
+        <di:waypoint xsi:type="dc:Point" x="207" y="288" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="132" y="236" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TASK_4_di" bpmnElement="TASK_4">
+        <dc:Bounds x="206.8748221906116" y="358.8961593172119" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1q8yl3p_di" bpmnElement="SequenceFlow_1q8yl3p">
+        <di:waypoint xsi:type="dc:Point" x="117" y="196" />
+        <di:waypoint xsi:type="dc:Point" x="117" y="399" />
+        <di:waypoint xsi:type="dc:Point" x="207" y="399" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="132" y="291.5" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1dh9p3h_di" bpmnElement="SequenceFlow_1dh9p3h">
+        <di:waypoint xsi:type="dc:Point" x="117" y="116" />
+        <di:waypoint xsi:type="dc:Point" x="117" y="50" />
+        <di:waypoint xsi:type="dc:Point" x="412" y="50" />
+        <di:waypoint xsi:type="dc:Point" x="412" y="116" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="264.5" y="29" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
