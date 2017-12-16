@@ -2,8 +2,11 @@
 
 require('../../TestHelper');
 
+var svgCreate = require('tiny-svg/lib/create');
+
 var coreModule = require('../../../lib/core'),
-    rendererModule = require('../../../lib/draw');
+    rendererModule = require('../../../lib/draw'),
+    modelingModule = require('../../../lib/features/modeling');
 
 var domQuery = require('min-dom/lib/query');
 
@@ -246,6 +249,41 @@ describe('draw - bpmn renderer', function() {
 
       done(err);
     });
+  });
+
+
+  it('should render sequenceFlows without source', function(done) {
+
+    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    bootstrapModeler(xml, {
+      modules: [
+        coreModule,
+        rendererModule,
+        modelingModule
+      ]
+    })(function(err) {
+
+      inject(function(elementFactory, graphicsFactory) {
+
+        // given
+        var g = svgCreate('g');
+
+        var connection = elementFactory.create('connection', {
+          type: 'bpmn:SequenceFlow',
+          waypoints: [
+            { x: 0, y: 0 },
+            { x: 10, y: 100 }
+          ]
+        });
+
+        var gfx = graphicsFactory.drawConnection(g, connection);
+
+        expect(gfx).to.exist;
+      })();
+
+      done(err);
+    });
+
   });
 
 
