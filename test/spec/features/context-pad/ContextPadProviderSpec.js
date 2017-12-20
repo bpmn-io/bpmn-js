@@ -1,6 +1,6 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+var getBpmnJS = require('../../../TestHelper').getBpmnJS;
 
 var TestContainer = require('mocha-test-container-support');
 
@@ -171,7 +171,7 @@ describe('features - context-pad', function() {
 
     function expectContextPadEntries(elementOrId, expectedEntries) {
 
-      TestHelper.getBpmnJS().invoke(function(elementRegistry, contextPad) {
+      getBpmnJS().invoke(function(elementRegistry, contextPad) {
 
         var element = typeof elementOrId === 'string' ? elementRegistry.get(elementOrId) : elementOrId;
 
@@ -279,11 +279,68 @@ describe('features - context-pad', function() {
   });
 
 
+  describe('create', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should attach boundary event', inject(function(dragging, contextPad, elementRegistry) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+
+      // when
+      contextPad.open(task);
+
+      contextPad.trigger('dragstart', padEvent('append.intermediate-event'));
+
+      dragging.move(canvasEvent({ x: task.x, y: task.y }));
+      dragging.hover({ element: task });
+      dragging.move(canvasEvent({ x: task.x + 80, y: task.y + 70 }));
+      dragging.end();
+
+      // then
+      expect(task.attachers).to.have.length(1);
+    }));
+
+
+    it('should attach boundary event to other target', inject(
+      function(dragging, contextPad, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        contextPad.open(task);
+
+        contextPad.trigger('dragstart', padEvent('append.intermediate-event'));
+
+        dragging.move(canvasEvent({ x: subProcess.x, y: subProcess.y }));
+        dragging.hover({ element: subProcess });
+        dragging.move(canvasEvent({ x: subProcess.x + 80, y: subProcess.y + 5 }));
+        dragging.end();
+
+        // then
+        expect(subProcess.attachers).to.have.length(1);
+      })
+    );
+
+  });
+
+
   describe('replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
     var container;
 
@@ -297,20 +354,15 @@ describe('features - context-pad', function() {
       // given
       var element = elementRegistry.get('StartEvent_1'),
           padding = 5,
-          replaceMenuRect,
-          padMenuRect;
+          padMenuRect,
+          replaceMenuRect;
 
       contextPad.open(element);
-      padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
-
-      // mock event
-      var event = {
-        target: padEntry(container, 'replace'),
-        preventDefault: function() {}
-      };
 
       // when
-      contextPad.trigger('click', event);
+      contextPad.trigger('click', padEvent('replace'));
+
+      padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
       replaceMenuRect = domQuery('.bpmn-replace', container).getBoundingClientRect();
 
       // then
@@ -319,7 +371,7 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should not include control if replacement is disallowed',
+    it('should hide wrench if replacement is disallowed',
       inject(function(elementRegistry, contextPad, customRules) {
 
         // given
@@ -337,10 +389,11 @@ describe('features - context-pad', function() {
 
         // then
         expect(padEntry(padNode, 'replace')).not.to.exist;
-      }));
+      }
+    ));
 
 
-    it('should include control if replacement is allowed',
+    it('should show wrench if replacement is allowed',
       inject(function(elementRegistry, contextPad, customRules) {
 
         // given
@@ -358,78 +411,88 @@ describe('features - context-pad', function() {
 
         // then
         expect(padEntry(padNode, 'replace')).to.exist;
-      }));
+      }
+    ));
 
 
-    it('should open the replace menu after an element is created if it has modifier key',
-      inject(function(create, dragging, canvas, elementFactory) {
-        // given
-        var rootShape = canvas.getRootElement(),
-            startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' }),
-            replaceMenu;
+    describe('create + <CTRL>', function() {
 
-        // when
-        create.start(canvasEvent({ x: 0, y: 0 }), startEvent);
+      it('should open replace',
+        inject(function(create, dragging, canvas, elementFactory) {
 
-        dragging.move(canvasEvent({ x: 50, y: 50 }));
-        dragging.hover({ element: rootShape });
-        dragging.move(canvasEvent({ x: 75, y: 75 }));
+          // given
+          var rootShape = canvas.getRootElement(),
+              startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' }),
+              replaceMenu;
 
-        dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
+          // when
+          create.start(canvasEvent({ x: 0, y: 0 }), startEvent);
 
-        replaceMenu = domQuery('.bpmn-replace', container);
+          dragging.move(canvasEvent({ x: 50, y: 50 }));
+          dragging.hover({ element: rootShape });
+          dragging.move(canvasEvent({ x: 75, y: 75 }));
 
-        // then
-        expect(replaceMenu).to.exist;
-      }));
+          dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
+          replaceMenu = domQuery('.bpmn-replace', container);
 
-    it('should open boundary event replace menu after an element is created if it has modifier key',
-      inject(function(create, dragging, canvas, elementFactory, modeling, popupMenu) {
-        // given
-        var rootShape = canvas.getRootElement();
-        var task = elementFactory.createShape({ type: 'bpmn:Task' });
-        var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
-
-        modeling.createShape(task, { x: 100, y: 100 }, rootShape);
-
-        // when
-        create.start(canvasEvent({ x: 0, y: 0 }), intermediateEvent);
-
-        dragging.move(canvasEvent({ x: 50, y: 50 }));
-        dragging.hover({ element: task });
-        dragging.move(canvasEvent({ x: 50, y: 65 }));
-
-        dragging.end(canvasEvent({ x: 50, y: 65 }, { ctrlKey: true, metaKey: true }));
-
-        // then
-        var replaceMenu = domQuery.all('[data-id$="-boundary"]', popupMenu._current.container);
-        expect(replaceMenu).to.exist;
-        expect(replaceMenu.length).to.eql(13);
-      }));
+          // then
+          expect(replaceMenu).to.exist;
+        }
+      ));
 
 
-    it('should not open the replace menu after an element is created when there is none',
-      inject(function(create, dragging, canvas, elementFactory) {
-        // given
-        var rootShape = canvas.getRootElement(),
-            dataObject = elementFactory.createShape({ type: 'bpmn:DataObjectReference' }),
-            replaceMenu;
+      it('should open boundary event replace menu',
+        inject(function(create, dragging, canvas, elementFactory, modeling, popupMenu) {
 
-        // when
-        create.start(canvasEvent({ x: 0, y: 0 }), dataObject);
+          // given
+          var rootShape = canvas.getRootElement();
+          var task = elementFactory.createShape({ type: 'bpmn:Task' });
+          var intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
 
-        dragging.move(canvasEvent({ x: 50, y: 50 }));
-        dragging.hover({ element: rootShape });
-        dragging.move(canvasEvent({ x: 75, y: 75 }));
+          modeling.createShape(task, { x: 100, y: 100 }, rootShape);
 
-        dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
+          // when
+          create.start(canvasEvent({ x: 0, y: 0 }), intermediateEvent);
 
-        replaceMenu = domQuery('.bpmn-replace', container);
+          dragging.move(canvasEvent({ x: 50, y: 50 }));
+          dragging.hover({ element: task });
+          dragging.move(canvasEvent({ x: 50, y: 65 }));
 
-        // then
-        expect(replaceMenu).to.not.exist;
-      }));
+          dragging.end(canvasEvent({ x: 50, y: 65 }, { ctrlKey: true, metaKey: true }));
+
+          // then
+          var replaceMenu = domQuery.all('[data-id$="-boundary"]', popupMenu._current.container);
+          expect(replaceMenu).to.exist;
+          expect(replaceMenu.length).to.eql(13);
+        }
+      ));
+
+
+      it('should not open non-existing replace menu',
+        inject(function(create, dragging, canvas, elementFactory) {
+          // given
+          var rootShape = canvas.getRootElement(),
+              dataObject = elementFactory.createShape({ type: 'bpmn:DataObjectReference' }),
+              replaceMenu;
+
+          // when
+          create.start(canvasEvent({ x: 0, y: 0 }), dataObject);
+
+          dragging.move(canvasEvent({ x: 50, y: 50 }));
+          dragging.hover({ element: rootShape });
+          dragging.move(canvasEvent({ x: 75, y: 75 }));
+
+          dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
+
+          replaceMenu = domQuery('.bpmn-replace', container);
+
+          // then
+          expect(replaceMenu).to.not.exist;
+        }
+      ));
+
+    });
 
   });
 
@@ -442,12 +505,6 @@ describe('features - context-pad', function() {
       modules: testModules.concat(autoPlaceModule)
     }));
 
-    var container;
-
-    beforeEach(function() {
-      container = TestContainer.get(this);
-    });
-
 
     it('should trigger', inject(function(elementRegistry, contextPad) {
 
@@ -457,12 +514,7 @@ describe('features - context-pad', function() {
       contextPad.open(element);
 
       // mock event
-      var event = {
-        clientX: 100,
-        clientY: 100,
-        target: padEntry(container, 'append.gateway'),
-        preventDefault: function() {}
-      };
+      var event = padEvent('append.gateway');
 
       // when
       contextPad.trigger('click', event);
@@ -521,4 +573,20 @@ describe('features - context-pad', function() {
 
 function padEntry(element, name) {
   return domQuery('[data-action="' + name + '"]', element);
+}
+
+
+function padEvent(entry) {
+
+  return getBpmnJS().invoke(function(overlays) {
+
+    var target = padEntry(overlays._overlayRoot, entry);
+
+    return {
+      target: target,
+      preventDefault: function() {},
+      clientX: 100,
+      clientY: 100
+    };
+  });
 }
