@@ -17,7 +17,7 @@ function getProp(element, property) {
   return element && element.$model.properties.get(element, property);
 }
 
-describe('util/ModelCloneHelper', function() {
+describe('util/clone/ModelCloneHelper', function() {
 
   var testModules = [
     camundaModdleModule,
