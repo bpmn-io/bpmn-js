@@ -10,7 +10,7 @@ var coreModule = require('../../../lib/core'),
 var ModelUtil = require('../../../lib/util/ModelUtil');
 
 
-describe('ModelUtil', function() {
+describe('util/ModelUtil', function() {
 
   var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
