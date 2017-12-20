@@ -14,6 +14,8 @@ var is = require('../../../../../lib/util/ModelUtil').is,
 
 var domQuery = require('min-dom/lib/query');
 
+var ATTACH = { attach: true };
+
 
 describe('features/modeling - move start event behavior', function() {
 
@@ -335,7 +337,7 @@ describe('features/modeling - move start event behavior', function() {
             eventDefinitionType: 'bpmn:CancelEventDefinition'
           });
 
-          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
+          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, ATTACH);
 
           var movedBoundaryEvent = elementRegistry.filter(function(element) {
             return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
@@ -367,7 +369,7 @@ describe('features/modeling - move start event behavior', function() {
             eventDefinitionType: 'bpmn:CancelEventDefinition'
           });
 
-          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, true);
+          modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, ATTACH);
 
           commandStack.undo();
 

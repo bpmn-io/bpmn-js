@@ -15,7 +15,10 @@ var modelingModule = require('../../../../lib/features/modeling'),
 
 describe('features/modeling - ordering', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+  var testModules = [
+    coreModule,
+    modelingModule
+  ];
 
 
   describe('boundary events', function() {

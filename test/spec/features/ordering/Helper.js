@@ -51,7 +51,9 @@ function move(elementIds, delta, targetId, isAttach) {
       target = targetId && getElement(targetId);
     }
 
-    return modeling.moveElements(elements, delta, target, isAttach);
+    var hints = isAttach ? { attach: true } : {};
+
+    return modeling.moveElements(elements, delta, target, hints);
   });
 }
 
@@ -78,7 +80,7 @@ function add(attrs, position, target, isAttach) {
       target = getElement(target);
     }
 
-    return modeling.createShape(attrs, position, target, isAttach);
+    return modeling.createShape(attrs, position, target, { attach: isAttach });
   });
 }
 

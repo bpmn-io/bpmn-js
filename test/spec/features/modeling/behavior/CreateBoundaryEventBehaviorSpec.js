@@ -29,7 +29,7 @@ describe('features/modeling/behavior - create boundary events', function() {
     modeling.createShape(task, { x: 100, y: 100 }, rootElement);
 
     // when
-    var newEvent = modeling.createShape(intermediateEvent, { x: 50 + 15, y: 100 }, task, true);
+    var newEvent = modeling.createShape(intermediateEvent, { x: 50 + 15, y: 100 }, task, { attach: true });
 
     // then
     expect(newEvent.type).to.equal('bpmn:BoundaryEvent');
