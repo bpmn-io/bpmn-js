@@ -1226,20 +1226,41 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('should properly set parent of event definitions', inject(function(elementRegistry, modeling, bpmnReplace) {
+    it('should properly set parent of event definitions', inject(
+      function(elementRegistry, modeling, bpmnReplace) {
 
-      var startEvent = elementRegistry.get('StartEvent_1');
+        var startEvent = elementRegistry.get('StartEvent_1');
 
-      var messageEvent = bpmnReplace.replaceElement(startEvent, {
-        type: 'bpmn:StartEvent',
-        eventDefinitionType: 'bpmn:MessageEventDefinition'
-      });
+        var messageEvent = bpmnReplace.replaceElement(startEvent, {
+          type: 'bpmn:StartEvent',
+          eventDefinitionType: 'bpmn:MessageEventDefinition'
+        });
 
-      var parent = messageEvent.businessObject.eventDefinitions[0].$parent;
+        var parent = messageEvent.businessObject.eventDefinitions[0].$parent;
 
-      expect(parent).to.exist;
-      expect(parent).to.equal(messageEvent.businessObject);
-    }));
+        expect(parent).to.exist;
+        expect(parent).to.equal(messageEvent.businessObject);
+      })
+    );
+
+
+    it('should add condition with ConditionalEventDefinition', inject(
+      function(elementRegistry, modeling, bpmnReplace) {
+
+        var startEvent = elementRegistry.get('StartEvent_1');
+
+        // when
+        var messageEvent = bpmnReplace.replaceElement(startEvent, {
+          type: 'bpmn:StartEvent',
+          eventDefinitionType: 'bpmn:ConditionalEventDefinition'
+        });
+
+        var definition = messageEvent.businessObject.eventDefinitions[0];
+
+        // then
+        expect(definition.condition).to.exist;
+      })
+    );
 
   });
 
