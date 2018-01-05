@@ -10,7 +10,8 @@
     "clean": "del dist/*",
     "build-distro": "node tasks/build-distro.js",
     "copy-assets": "node tasks/copy-assets.js",
-    "distro": "run-s clean copy-assets build-distro"
+    "distro": "run-s clean copy-assets build-distro",
+    "prepublishOnly": "run-s distro"
   },
   "repository": {
     "type": "git",
