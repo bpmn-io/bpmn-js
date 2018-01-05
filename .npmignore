@@ -7,8 +7,8 @@ test/fixtures
 test/integration
 test/spec
 test/TestHelper.js
+.eslintignore
 .eslintrc
 .travis.yml
 .wiredeps
 CONTRIBUTING.md
-Gruntfile.js
