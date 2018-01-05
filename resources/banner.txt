@@ -1,0 +1,12 @@
+/*!
+ * bpmn-js - {{ variant }} v{{ version }}
+
+ * Copyright 2014 - 2017 camunda Services GmbH and contributors
+ *
+ * Released under the bpmn.io license
+ * http://bpmn.io/license
+ *
+ * Source Code: https://github.com/bpmn-io/bpmn-js
+ *
+ * Date: {{ date }}
+ */

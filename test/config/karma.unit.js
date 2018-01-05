@@ -64,14 +64,16 @@ module.exports = function(karma) {
 
     browserNoActivityTimeout: 30000,
 
-    singleRun: false,
-    autoWatch: true,
+    singleRun: true,
+    autoWatch: false,
 
     // browserify configuration
     browserify: {
       debug: true,
       paths: [ absoluteBasePath ],
-      transform: [ [ 'stringify', { global: true, extensions: [ '.bpmn', '.xml', '.css' ] } ] ]
+      transform: [
+        [ 'stringify', { global: true, extensions: [ '.bpmn', '.xml', '.css' ] } ]
+      ]
     }
   });
 };
