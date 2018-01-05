@@ -371,8 +371,8 @@ describe('features - context-pad', function() {
     }));
 
 
-    it('should hide wrench if replacement is disallowed',
-      inject(function(elementRegistry, contextPad, customRules) {
+    it('should hide wrench if replacement is disallowed', inject(
+      function(elementRegistry, contextPad, customRules) {
 
         // given
         var element = elementRegistry.get('StartEvent_1');
@@ -393,8 +393,8 @@ describe('features - context-pad', function() {
     ));
 
 
-    it('should show wrench if replacement is allowed',
-      inject(function(elementRegistry, contextPad, customRules) {
+    it('should show wrench if replacement is allowed', inject(
+      function(elementRegistry, contextPad, customRules) {
 
         // given
         var element = elementRegistry.get('EndEvent_1');
@@ -417,8 +417,8 @@ describe('features - context-pad', function() {
 
     describe('create + <CTRL>', function() {
 
-      it('should open replace',
-        inject(function(create, dragging, canvas, elementFactory) {
+      it('should open replace', inject(
+        function(create, dragging, canvas, elementFactory) {
 
           // given
           var rootShape = canvas.getRootElement(),
@@ -442,8 +442,8 @@ describe('features - context-pad', function() {
       ));
 
 
-      it('should open boundary event replace menu',
-        inject(function(create, dragging, canvas, elementFactory, modeling, popupMenu) {
+      it('should open boundary event replace menu', inject(
+        function(create, dragging, canvas, elementFactory, modeling, popupMenu) {
 
           // given
           var rootShape = canvas.getRootElement();
@@ -469,8 +469,8 @@ describe('features - context-pad', function() {
       ));
 
 
-      it('should not open non-existing replace menu',
-        inject(function(create, dragging, canvas, elementFactory) {
+      it('should not open non-existing replace menu', inject(
+        function(create, dragging, canvas, elementFactory) {
           // given
           var rootShape = canvas.getRootElement(),
               dataObject = elementFactory.createShape({ type: 'bpmn:DataObjectReference' }),

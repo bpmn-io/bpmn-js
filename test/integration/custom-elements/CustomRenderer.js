@@ -120,7 +120,7 @@ CustomRenderer.$inject = [ 'eventBus', 'styles' ];
 
 
 CustomRenderer.prototype.canRender = function(element) {
-  return /^custom\:/.test(element.type);
+  return /^custom:/.test(element.type);
 };
 
 CustomRenderer.prototype.drawShape = function(visuals, element) {
@@ -140,7 +140,7 @@ CustomRenderer.prototype.drawConnection = function(visuals, element) {
 };
 
 CustomRenderer.prototype.getShapePath = function(element) {
-  var type = element.type.replace(/^custom\:/, '');
+  var type = element.type.replace(/^custom:/, '');
 
   var shapes = {
     triangle: this.getTrianglePath,

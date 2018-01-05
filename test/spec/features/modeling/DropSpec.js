@@ -60,38 +60,41 @@ describe('features/move - drop', function() {
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-    it('should remove flow if target and source have different parents',
-        inject(function(elementRegistry, modeling) {
+    it('should remove flow if target and source have different parents', inject(
+      function(elementRegistry, modeling) {
 
-      // given
-          var task_1 = elementRegistry.get('ID_Task_1'),
-              parent = elementRegistry.get('ID_SubProcess_1'),
-              flow   = elementRegistry.get('ID_Sequenceflow_1');
+        // given
+        var task_1 = elementRegistry.get('ID_Task_1'),
+            parent = elementRegistry.get('ID_SubProcess_1'),
+            flow   = elementRegistry.get('ID_Sequenceflow_1');
 
-      // when
-          modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
+        // when
+        modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
 
-      // then
-          expect(flow.parent).to.be.null;
-          expect(flow.businessObject.$parent).to.be.null;
-        }));
+        // then
+        expect(flow.parent).to.be.null;
+        expect(flow.businessObject.$parent).to.be.null;
+      }
+    ));
 
 
-    it('should update flow parent if target and source have same parents', inject(function(elementRegistry, modeling) {
+    it('should update flow parent if target and source have same parents', inject(
+      function(elementRegistry, modeling) {
 
-      // given
-      var task_1 = elementRegistry.get('ID_Task_1'),
-          task_2 = elementRegistry.get('ID_Task_2'),
-          parent = elementRegistry.get('ID_SubProcess_1'),
-          flow   = elementRegistry.get('ID_Sequenceflow_1');
+        // given
+        var task_1 = elementRegistry.get('ID_Task_1'),
+            task_2 = elementRegistry.get('ID_Task_2'),
+            parent = elementRegistry.get('ID_SubProcess_1'),
+            flow   = elementRegistry.get('ID_Sequenceflow_1');
 
-      // when
-      modeling.moveElements([ task_1, task_2 ], { x: 0, y: 250 }, parent);
+        // when
+        modeling.moveElements([ task_1, task_2 ], { x: 0, y: 250 }, parent);
 
-      // then
-      expect(flow.parent).to.eql(parent);
-      expect(flow.businessObject.$parent).to.eql(parent.businessObject);
-    }));
+        // then
+        expect(flow.parent).to.eql(parent);
+        expect(flow.businessObject.$parent).to.eql(parent.businessObject);
+      }
+    ));
 
   });
 

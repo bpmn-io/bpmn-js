@@ -21,8 +21,8 @@ function CustomElementFactory(injector) {
       return self.baseCreate(elementType, assign({ type: 'label' }, LabelUtil.DEFAULT_LABEL_SIZE, attrs));
     }
 
-    if (/^custom\:/.test(type)) {
-      type = attrs.type.replace(/^custom\:/, '');
+    if (/^custom:/.test(type)) {
+      type = attrs.type.replace(/^custom:/, '');
 
       businessObject = {};
 

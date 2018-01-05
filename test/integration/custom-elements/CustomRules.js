@@ -15,7 +15,7 @@ function isType(element, type) {
 }
 
 function isCustom(element) {
-  return element && /^custom\:/.test(element.type);
+  return element && /^custom:/.test(element.type);
 }
 
 /**

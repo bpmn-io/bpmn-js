@@ -112,7 +112,7 @@ describe('features/modeling - layout message flows', function() {
 
       // then
       expect(messageFlowConnection).to.have.waypoints([
-         { x: 902, y: 266 }, { x: 902, y: 458 }
+        { x: 902, y: 266 }, { x: 902, y: 458 }
       ]);
     })
   );
@@ -298,10 +298,10 @@ describe('features/modeling - layout message flows', function() {
           // then
           // expect cropped, repaired manhattan connection
           expect(messageFlowConnection).to.have.waypoints([
-             { x: 681, y: 415 },
-             { x: 681, y: 315 },
-             { x: 773, y: 315 },
-             { x: 773, y: 214 }
+            { x: 681, y: 415 },
+            { x: 681, y: 315 },
+            { x: 773, y: 315 },
+            { x: 773, y: 214 }
           ]);
         })
       );

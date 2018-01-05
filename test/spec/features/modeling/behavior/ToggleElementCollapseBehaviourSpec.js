@@ -339,28 +339,28 @@ describe('features/modeling - collapse and expand elements', function() {
 
 
     it('hide all children',
-     inject(function(elementRegistry, bpmnReplace) {
+      inject(function(elementRegistry, bpmnReplace) {
 
-       // given
-       var expandedSubProcess = elementRegistry.get('SubProcess_2');
-       var originalChildren = expandedSubProcess.children.slice();
+        // given
+        var expandedSubProcess = elementRegistry.get('SubProcess_2');
+        var originalChildren = expandedSubProcess.children.slice();
 
-       // when
-       var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
-         {
-           type: 'bpmn:SubProcess',
-           isExpanded: false
-         }
-       );
+        // when
+        var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
+          {
+            type: 'bpmn:SubProcess',
+            isExpanded: false
+          }
+        );
 
-       // then keep children
-       originalChildren.forEach(function(c) {
-         expect(collapsedSubProcess.children).to.include(c);
-       });
+        // then keep children
+        originalChildren.forEach(function(c) {
+          expect(collapsedSubProcess.children).to.include(c);
+        });
 
-       // and hide them
-       expect(collapsedSubProcess.children).to.satisfy(allHidden());
-     })
+        // and hide them
+        expect(collapsedSubProcess.children).to.satisfy(allHidden());
+      })
     );
 
 
@@ -387,7 +387,6 @@ describe('features/modeling - collapse and expand elements', function() {
 
 
     describe('resize', function() {
-
 
       it('is centered and has default bounds',
         inject(function(elementRegistry, bpmnReplace) {
@@ -418,13 +417,12 @@ describe('features/modeling - collapse and expand elements', function() {
           expect(collapsedSubProcess.height).to.be.at.least(defaultSize.height);
 
         })
-       );
+      );
 
     });
 
 
     describe('undo', function() {
-
 
       it('collapsed marker is removed',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
@@ -509,9 +507,7 @@ describe('features/modeling - collapse and expand elements', function() {
 
   describe('attaching marker', function() {
 
-
     describe('collapsed', function() {
-
 
       it('add ad-hoc-marker does not call toggleProvider',
         inject(function(eventBus, bpmnReplace, elementRegistry) {
@@ -567,7 +563,6 @@ describe('features/modeling - collapse and expand elements', function() {
 
     describe('expanded', function() {
 
-
       it('add ad-hoc-marker does not call toggleProvider',
         inject(function(eventBus, bpmnReplace, elementRegistry) {
 
@@ -618,8 +613,6 @@ describe('features/modeling - collapse and expand elements', function() {
       );
 
     });
-
-
 
   });
 

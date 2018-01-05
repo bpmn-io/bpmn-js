@@ -29,9 +29,10 @@ describe('features/modeling/behavior - data store', function() {
 
       // when
       var dataStoreShape = modeling.createShape(
-                              { type: 'bpmn:DataStoreReference' },
-                              { x: 220, y: 220 },
-                              participantElement);
+        { type: 'bpmn:DataStoreReference' },
+        { x: 220, y: 220 },
+        participantElement
+      );
 
       var dataStoreReference = dataStoreShape.businessObject;
 
@@ -53,9 +54,10 @@ describe('features/modeling/behavior - data store', function() {
 
       // when
       var dataStoreShape = modeling.createShape(
-                              { type: 'bpmn:DataStoreReference' },
-                              { x: 420, y: 220 },
-                              subProcessElement);
+        { type: 'bpmn:DataStoreReference' },
+        { x: 420, y: 220 },
+        subProcessElement
+      );
 
       var dataStoreReference = dataStoreShape.businessObject;
 
