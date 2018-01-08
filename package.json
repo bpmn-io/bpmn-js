@@ -3,12 +3,13 @@
   "version": "0.26.6",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
-    "all": "run-s lint test distro",
+    "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
     "dev": "npm test -- --auto-watch --no-single-run",
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
-    "prepublishOnly": "run-s distro"
+    "test:distro": "node tasks/test-distro.js",
+    "prepublishOnly": "run-s distro test:distro"
   },
   "repository": {
     "type": "git",
@@ -48,6 +49,7 @@
     "envify": "^4.1.0",
     "eslint": "^4.14.0",
     "eslint-plugin-mocha": "^4.9.0",
+    "execa": "^0.8.0",
     "jsondiffpatch": "^0.1.26",
     "karma": "^1.7.0",
     "karma-browserify": "^5.1.1",

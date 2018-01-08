@@ -1,11 +1,5 @@
 'use strict';
 
-var path = require('path');
-
-var basePath = '../../';
-
-var absoluteBasePath = path.resolve(path.join(__dirname, basePath));
-
 /* global process */
 
 // configures browsers to run test against
@@ -28,24 +22,29 @@ var browsers =
     });
 
 
+var VARIANT = process.env.VARIANT;
+
+var NODE_ENV = process.env.NODE_ENV;
+
 module.exports = function(karma) {
   karma.set({
 
-    basePath: basePath,
+    basePath: '../../',
 
     frameworks: [
-      'browserify',
       'mocha',
       'sinon-chai'
     ],
 
     files: [
-      'test/{spec,integration}/**/*Spec.js'
+      `dist/${VARIANT}.${NODE_ENV === 'production' ? 'production.min' : 'development'}.js`,
+      'dist/assets/bpmn-font/css/bpmn.css',
+      'dist/assets/diagram-js.css',
+      { pattern: 'resources/initial.bpmn', included: false },
+      { pattern: 'dist/assets/**/*', included: false },
+      'test/distro/helper.js',
+      `test/distro/${VARIANT}.js`
     ],
-
-    preprocessors: {
-      'test/{spec,integration}/**/*Spec.js': [ 'browserify', 'env' ]
-    },
 
     reporters: [ 'spec' ],
 
@@ -65,15 +64,7 @@ module.exports = function(karma) {
     browserNoActivityTimeout: 30000,
 
     singleRun: true,
-    autoWatch: false,
-
-    // browserify configuration
-    browserify: {
-      debug: true,
-      paths: [ absoluteBasePath ],
-      transform: [
-        [ 'stringify', { global: true, extensions: [ '.bpmn', '.xml', '.css' ] } ]
-      ]
-    }
+    autoWatch: false
   });
+
 };
