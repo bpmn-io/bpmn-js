@@ -75,6 +75,7 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "bpmn-font": "^0.8.0",
     "bpmn-moddle": "^2.1.0",
     "diagram-js": "^0.28.0",
     "diagram-js-direct-editing": "^0.22.0",

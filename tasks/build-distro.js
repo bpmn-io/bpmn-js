@@ -24,7 +24,7 @@ console.log('mkdir -p ' + dest);
 mkdirp(dest);
 
 console.log(`copy bpmn-font to ${dest}/bpmn-font`);
-cp('assets/bpmn-font/*', dest + '/assets/bpmn-font');
+cp(resolve('bpmn-font', '/dist/{font,css}/**'), dest + '/assets/bpmn-font');
 
 console.log(`copy diagram-js.css to ${dest}`);
 cp(resolve('diagram-js', '/assets/**'), dest + '/assets');
