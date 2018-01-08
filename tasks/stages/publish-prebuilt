@@ -12,7 +12,7 @@ mkdir -p "$WORKDIR"
 git clone --depth=1 https://github.com/bpmn-io/bower-bpmn-js.git "$BOWER_DIR"
 
 npm install
-BOWER_DIST="$BOWER_DIR/dist" npm run distro
+DISTRO_DIST="$BOWER_DIR/dist" npm run distro
 
 cd "$BOWER_DIR"
 
