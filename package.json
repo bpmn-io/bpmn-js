@@ -45,6 +45,7 @@
     "cpx": "^1.5.0",
     "del": "^3.0.0",
     "del-cli": "^1.1.0",
+    "envify": "^4.1.0",
     "eslint": "^4.14.0",
     "eslint-plugin-mocha": "^4.9.0",
     "jsondiffpatch": "^0.1.26",

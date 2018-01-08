@@ -8,7 +8,8 @@ var browserify = require('browserify'),
     flattenBundle = require('browser-pack-flat/plugin'),
     commonShake = require('common-shakeify'),
     unassertify = require('unassertify'),
-    uglify = require('uglify-es');
+    uglify = require('uglify-es'),
+    envify = require('envify');
 
 var pkg = require('../package');
 
@@ -127,6 +128,9 @@ function bundle(dest, variant, entry, done) {
       timer.start('build prod');
 
       browserify(browserifyOptions)
+        .transform(envify, {
+          NODE_ENV: 'production'
+        })
         .transform(unassertify)
         .plugin(commonShake)
         .plugin(flattenBundle)
@@ -166,6 +170,9 @@ function bundle(dest, variant, entry, done) {
       timer.start('build dev');
 
       browserify(browserifyOptions)
+        .transform(envify, {
+          NODE_ENV: 'development'
+        })
         .plugin(collapse)
         .plugin(derequire)
         .add(src)
