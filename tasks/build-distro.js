@@ -8,7 +8,7 @@ var mkdirp = require('mkdirp').sync,
     cp = require('cpx').copySync,
     del = require('del').sync;
 
-var dest = 'dist';
+var dest = process.env.DISTRO_DIST || 'dist';
 
 
 function resolve(module, sub) {
