@@ -33,7 +33,9 @@ describe('features/copy-paste', function() {
 
   describe('basic diagram', function() {
 
-    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: testModules
+    }));
 
 
     describe('copy', function() {
@@ -53,6 +55,26 @@ describe('features/copy-paste', function() {
         expect(tree.getDepthLength(2)).to.equal(15);
 
         expect(subProcess.isExpanded).to.be.true;
+      }));
+
+
+      it('selected elements 2', inject(function(elementRegistry, copyPaste) {
+
+        // given
+        var event = elementRegistry.get('StartEvent_1');
+
+        // add business object type property
+        event.businessObject.type = 'Foo';
+
+        // when
+        var tree = copy([ event ]);
+
+        var eventDescriptor = tree.getElement('StartEvent_1');
+
+        // then
+        expect(tree.getLength()).to.equal(1);
+
+        expect(eventDescriptor.type).to.eql('bpmn:StartEvent');
       }));
 
     });
