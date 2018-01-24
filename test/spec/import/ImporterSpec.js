@@ -4,8 +4,8 @@ var TestContainer = require('mocha-test-container-support');
 
 var Diagram = require('diagram-js/lib/Diagram'),
     BpmnModdle = require('bpmn-moddle'),
-    importBpmnDiagram = require('../../../lib/import/Importer').importBpmnDiagram,
-    Viewer = require('../../../lib/Viewer');
+    importBpmnDiagram = require('lib/import/Importer').importBpmnDiagram,
+    Viewer = require('lib/Viewer');
 
 var domMatches = require('min-dom/lib/matches');
 
@@ -13,7 +13,7 @@ var getChildrenGfx = require('diagram-js/lib/util/GraphicsUtil').getChildren;
 
 var find = require('lodash/collection/find');
 
-var is = require('../../../lib/util/ModelUtil').is;
+var is = require('lib/util/ModelUtil').is;
 
 
 describe('import - Importer', function() {

@@ -11,9 +11,9 @@ var getBBox = require('diagram-js/lib/util/Elements').getBBox;
 var getParent = require('lib/features/modeling/util/ModelingUtil').getParent;
 
 
-var bpmnEditorActionsModule = require('../../../../lib/features/editor-actions'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var bpmnEditorActionsModule = require('lib/features/editor-actions'),
+    modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn'),
     collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');

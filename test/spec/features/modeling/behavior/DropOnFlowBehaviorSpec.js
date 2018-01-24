@@ -6,9 +6,9 @@ require('../../../../TestHelper');
 
 var flatten = require('lodash/array/flatten');
 
-var coreModule = require('../../../../../lib/core'),
+var coreModule = require('lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
-    modelingModule = require('../../../../../lib/features/modeling'),
+    modelingModule = require('lib/features/modeling'),
     noTouchInteractionModule = { touchInteractionEvents: ['value', null ] };
 
 var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;

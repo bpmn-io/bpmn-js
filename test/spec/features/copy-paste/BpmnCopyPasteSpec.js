@@ -4,11 +4,11 @@ var TestHelper = require('../../../TestHelper');
 
 /* global bootstrapModeler, inject, sinon */
 
-var bpmnCopyPasteModule = require('../../../../lib/features/copy-paste'),
+var bpmnCopyPasteModule = require('lib/features/copy-paste'),
     copyPasteModule = require('diagram-js/lib/features/copy-paste'),
     tooltipsModule = require('diagram-js/lib/features/tooltips'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+    modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 var map = require('lodash/collection/map'),
     filter = require('lodash/collection/filter'),
@@ -17,7 +17,7 @@ var map = require('lodash/collection/map'),
 
 var DescriptorTree = require('./DescriptorTree');
 
-var is = require('../../../../lib/util/ModelUtil').is;
+var is = require('lib/util/ModelUtil').is;
 
 describe('features/copy-paste', function() {
 

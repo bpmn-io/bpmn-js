@@ -2,7 +2,7 @@
 
 /* global bootstrapModeler, inject */
 
-var Modeler = require('../../lib/Modeler');
+var Modeler = require('lib/Modeler');
 
 var canvasEvent = require('../util/MockEvents').createCanvasEvent;
 

@@ -7,8 +7,8 @@ require('../../../../TestHelper');
 
 var find = require('lodash/collection/find');
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('features/modeling - append text-annotation', function() {

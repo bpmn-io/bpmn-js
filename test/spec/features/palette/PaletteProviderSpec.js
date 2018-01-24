@@ -4,9 +4,9 @@ require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    paletteModule = require('../../../../lib/features/palette'),
-    coreModule = require('../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    paletteModule = require('lib/features/palette'),
+    coreModule = require('lib/core');
 
 var domQuery = require('min-dom/lib/query');
 

@@ -5,8 +5,8 @@ require('../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 var alignElementsModule = require('diagram-js/lib/features/align-elements'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+    modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('features/align-elements', function() {

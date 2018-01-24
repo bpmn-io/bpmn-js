@@ -5,9 +5,9 @@ require('../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 
-var modelingModule = require('../../../../lib/features/modeling'),
+var modelingModule = require('lib/features/modeling'),
     bendpointsModule = require('diagram-js/lib/features/bendpoints'),
-    coreModule = require('../../../../lib/core');
+    coreModule = require('lib/core');
 
 
 describe('features/bendpoints', function() {

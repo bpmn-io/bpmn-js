@@ -4,11 +4,11 @@ require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var autoPlaceModule = require('../../../../lib/features/auto-place'),
-    modelingModule = require('../../../../lib/features/modeling'),
+var autoPlaceModule = require('lib/features/auto-place'),
+    modelingModule = require('lib/features/modeling'),
     selectionModule = require('diagram-js/lib/features/selection'),
-    labelEditingModule = require('../../../../lib/features/label-editing'),
-    coreModule = require('../../../../lib/core');
+    labelEditingModule = require('lib/features/label-editing'),
+    coreModule = require('lib/core');
 
 
 describe('features/auto-place', function() {

@@ -8,8 +8,8 @@ var expectCanConnect = Helper.expectCanConnect,
 
 /* global bootstrapModeler, inject */
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('features/modeling/rules - BpmnRules', function() {

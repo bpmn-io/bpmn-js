@@ -7,10 +7,10 @@ require('../../../TestHelper');
 var pick = require('lodash/object/pick'),
     assign = require('lodash/object/assign');
 
-var autoResizeModule = require('../../../../lib/features/auto-resize'),
-    modelingModule = require('../../../../lib/features/modeling'),
+var autoResizeModule = require('lib/features/auto-resize'),
+    modelingModule = require('lib/features/modeling'),
     createModule = require('diagram-js/lib/features/create'),
-    coreModule = require('../../../../lib/core'),
+    coreModule = require('lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
     canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 

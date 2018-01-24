@@ -3,12 +3,12 @@
 /* global bootstrapViewer, inject */
 
 
-var labelEditingModule = require('../../../../lib/features/label-editing'),
-    coreModule = require('../../../../lib/core'),
+var labelEditingModule = require('lib/features/label-editing'),
+    coreModule = require('lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging'),
     modelingModule = require('diagram-js/lib/features/modeling');
 
-var LabelUtil = require('../../../../lib/features/label-editing/LabelUtil');
+var LabelUtil = require('lib/features/label-editing/LabelUtil');
 
 var MEDIUM_LINE_HEIGHT = 14;
 

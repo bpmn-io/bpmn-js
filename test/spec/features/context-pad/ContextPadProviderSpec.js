@@ -6,7 +6,7 @@ var TestContainer = require('mocha-test-container-support');
 
 var domQuery = require('min-dom/lib/query');
 
-var is = require('../../../../lib/util/ModelUtil').is;
+var is = require('lib/util/ModelUtil').is;
 
 var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
@@ -14,13 +14,13 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 /* global bootstrapModeler, inject */
 
 
-var contextPadModule = require('../../../../lib/features/context-pad'),
-    coreModule = require('../../../../lib/core'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    replaceMenuModule = require('../../../../lib/features/popup-menu'),
+var contextPadModule = require('lib/features/context-pad'),
+    coreModule = require('lib/core'),
+    modelingModule = require('lib/features/modeling'),
+    replaceMenuModule = require('lib/features/popup-menu'),
     createModule = require('diagram-js/lib/features/create'),
     customRulesModule = require('../../../util/custom-rules'),
-    autoPlaceModule = require('../../../../lib/features/auto-place');
+    autoPlaceModule = require('lib/features/auto-place');
 
 
 describe('features - context-pad', function() {

@@ -4,9 +4,9 @@ require('../../TestHelper');
 
 var svgCreate = require('tiny-svg/lib/create');
 
-var coreModule = require('../../../lib/core'),
-    rendererModule = require('../../../lib/draw'),
-    modelingModule = require('../../../lib/features/modeling');
+var coreModule = require('lib/core'),
+    rendererModule = require('lib/draw'),
+    modelingModule = require('lib/features/modeling');
 
 var domQuery = require('min-dom/lib/query');
 

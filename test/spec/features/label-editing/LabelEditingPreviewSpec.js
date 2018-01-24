@@ -4,8 +4,8 @@
 
 var pick = require('lodash/object/pick');
 
-var labelEditingModule = require('../../../../lib/features/label-editing'),
-    coreModule = require('../../../../lib/core'),
+var labelEditingModule = require('lib/features/label-editing'),
+    coreModule = require('lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging'),
     modelingModule = require('diagram-js/lib/features/modeling');
 

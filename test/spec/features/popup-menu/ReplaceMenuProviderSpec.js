@@ -6,17 +6,17 @@ var TestHelper = require('../../../TestHelper');
 
 var globalEvent = require('../../../util/MockEvents').createEvent;
 
-var coreModule = require('../../../../lib/core'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    replaceMenuProviderModule = require('../../../../lib/features/popup-menu'),
+var coreModule = require('lib/core'),
+    modelingModule = require('lib/features/modeling'),
+    replaceMenuProviderModule = require('lib/features/popup-menu'),
     customRulesModule = require('../../../util/custom-rules');
 
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes'),
     find = require('lodash/collection/find');
 
-var is = require('../../../../lib/util/ModelUtil').is,
-    isExpanded = require('../../../../lib/util/DiUtil').isExpanded;
+var is = require('lib/util/ModelUtil').is,
+    isExpanded = require('lib/util/DiUtil').isExpanded;
 
 function queryEntry(popupMenu, id) {
   return queryPopup(popupMenu, '[data-id="' + id + '"]');

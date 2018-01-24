@@ -35,8 +35,8 @@ var unique = require('lodash/array/unique'),
 
 var TestContainer = require('mocha-test-container-support');
 
-var Modeler = require('../../lib/Modeler'),
-    Viewer = require('../../lib/Viewer');
+var Modeler = require('lib/Modeler'),
+    Viewer = require('lib/Viewer');
 
 var OPTIONS, BPMN_JS;
 

@@ -6,8 +6,8 @@ require('../../../../TestHelper');
 
 var getOrientation = require('diagram-js/lib/layout/LayoutUtil').getOrientation;
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {

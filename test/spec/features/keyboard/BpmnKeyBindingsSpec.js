@@ -2,10 +2,10 @@
 
 var TestContainer = require('mocha-test-container-support');
 
-var coreModule = require('../../../../lib/core'),
-    editorActionsModule = require('../../../../lib/features/editor-actions'),
-    keyboardModule = require('../../../../lib/features/keyboard'),
-    modelingModule = require('../../../../lib/features/modeling');
+var coreModule = require('lib/core'),
+    editorActionsModule = require('lib/features/editor-actions'),
+    keyboardModule = require('lib/features/keyboard'),
+    modelingModule = require('lib/features/modeling');
 
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 

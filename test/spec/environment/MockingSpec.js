@@ -6,7 +6,7 @@ require('../../TestHelper');
 
 var Events = require('diagram-js/lib/core/EventBus');
 
-var Viewer = require('../../../lib/Viewer');
+var Viewer = require('lib/Viewer');
 
 
 describe('environment - mocking', function() {

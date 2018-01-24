@@ -5,7 +5,7 @@ require('../../../TestHelper');
 
 var TestContainer = require('mocha-test-container-support');
 
-var Modeler = require('../../../../lib/Modeler');
+var Modeler = require('lib/Modeler');
 
 
 describe('direct editing - touch integration', function() {

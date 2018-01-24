@@ -2,7 +2,7 @@
 
 var inherits = require('inherits');
 
-var isBpmn = require('../../../lib/util/ModelUtil').is;
+var isBpmn = require('lib/util/ModelUtil').is;
 
 var CommandInterceptor = require('diagram-js/lib/command/CommandInterceptor');
 

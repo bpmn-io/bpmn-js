@@ -4,16 +4,16 @@ require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    replaceModule = require('../../../../lib/features/replace'),
+var modelingModule = require('lib/features/modeling'),
+    replaceModule = require('lib/features/replace'),
     moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('../../../../lib/core');
+    coreModule = require('lib/core');
 
-var is = require('../../../../lib/util/ModelUtil').is,
-    isExpanded = require('../../../../lib/util/DiUtil').isExpanded,
-    isInterrupting = require('../../../../lib/util/DiUtil').isInterrupting,
-    isEventSubProcess = require('../../../../lib/util/DiUtil').isEventSubProcess,
-    hasErrorEventDefinition = require('../../../../lib/util/DiUtil').hasErrorEventDefinition;
+var is = require('lib/util/ModelUtil').is,
+    isExpanded = require('lib/util/DiUtil').isExpanded,
+    isInterrupting = require('lib/util/DiUtil').isInterrupting,
+    isEventSubProcess = require('lib/util/DiUtil').isEventSubProcess,
+    hasErrorEventDefinition = require('lib/util/DiUtil').hasErrorEventDefinition;
 
 
 describe('features/replace - bpmn replace', function() {

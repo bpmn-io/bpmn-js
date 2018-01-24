@@ -5,8 +5,8 @@ require('../../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 var resizeTRBL = require('diagram-js/lib/features/resize/ResizeUtil').resizeTRBL;

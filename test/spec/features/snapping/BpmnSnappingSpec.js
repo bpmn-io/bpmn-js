@@ -6,13 +6,13 @@ require('../../../TestHelper');
 
 var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
-var coreModule = require('../../../../lib/core'),
-    snappingModule = require('../../../../lib/features/snapping'),
-    modelingModule = require('../../../../lib/features/modeling'),
+var coreModule = require('lib/core'),
+    snappingModule = require('lib/features/snapping'),
+    modelingModule = require('lib/features/modeling'),
     createModule = require('diagram-js/lib/features/create'),
     resizeModule = require('diagram-js/lib/features/resize'),
     moveModule = require('diagram-js/lib/features/move'),
-    rulesModule = require('../../../../lib/features/rules'),
+    rulesModule = require('lib/features/rules'),
     connectModule = require('diagram-js/lib/features/connect');
 
 

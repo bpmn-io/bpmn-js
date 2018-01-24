@@ -2,8 +2,8 @@
 
 /* global bootstrapModeler, inject */
 
-var modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('features/modeling - update label', function() {

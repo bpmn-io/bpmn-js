@@ -2,7 +2,7 @@
 
 require('../TestHelper');
 
-var NavigatedViewer = require('../../lib/NavigatedViewer');
+var NavigatedViewer = require('lib/NavigatedViewer');
 
 
 describe('NavigatedViewer', function() {

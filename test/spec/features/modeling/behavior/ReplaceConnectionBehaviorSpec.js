@@ -4,12 +4,12 @@ require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var is = require('../../../../../lib/util/ModelUtil').is,
+var is = require('lib/util/ModelUtil').is,
     find = require('lodash/collection/find');
 
-var modelingModule = require('../../../../../lib/features/modeling'),
+var modelingModule = require('lib/features/modeling'),
     moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('../../../../../lib/core');
+    coreModule = require('lib/core');
 
 var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
 

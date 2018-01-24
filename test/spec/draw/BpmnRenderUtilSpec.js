@@ -2,7 +2,7 @@
 
 require('../../TestHelper');
 
-var BpmnRenderUtil = require('../../../lib/draw/BpmnRenderUtil');
+var BpmnRenderUtil = require('lib/draw/BpmnRenderUtil');
 
 
 describe('BpmnRenderUtil', function() {

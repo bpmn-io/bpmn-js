@@ -4,9 +4,9 @@ require('../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var bpmnDistributeElements = require('../../../../lib/features/distribute-elements'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    coreModule = require('../../../../lib/core');
+var bpmnDistributeElements = require('lib/features/distribute-elements'),
+    modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 function last(arr) {
   return arr[arr.length - 1];

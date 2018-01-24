@@ -1,8 +1,8 @@
 'use strict';
 
-var coreModule = require('../../../../lib/core'),
-    modelingModule = require('../../../../lib/features/modeling'),
-    bpmnSearchModule = require('../../../../lib/features/search');
+var coreModule = require('lib/core'),
+    modelingModule = require('lib/features/modeling'),
+    bpmnSearchModule = require('lib/features/search');
 
 /* global bootstrapViewer, inject */
 

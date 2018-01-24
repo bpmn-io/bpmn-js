@@ -5,7 +5,7 @@ require('../../TestHelper');
 /* global bootstrapViewer, inject */
 
 
-var is = require('../../../lib/util/ModelUtil').is;
+var is = require('lib/util/ModelUtil').is;
 
 
 describe('import - model wiring', function() {

@@ -3,8 +3,8 @@
 var assign = require('lodash/object/assign'),
     inherits = require('inherits');
 
-var BpmnElementFactory = require('../../../lib/features/modeling/ElementFactory'),
-    LabelUtil = require('../../../lib/util/LabelUtil');
+var BpmnElementFactory = require('lib/features/modeling/ElementFactory'),
+    LabelUtil = require('lib/util/LabelUtil');
 
 
 function CustomElementFactory(injector) {

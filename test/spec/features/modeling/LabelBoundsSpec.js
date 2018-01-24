@@ -2,7 +2,7 @@
 
 /* global bootstrapModeler, inject, sinon */
 
-var Modeler = require('../../../../lib/Modeler');
+var Modeler = require('lib/Modeler');
 
 var TestContainer = require('mocha-test-container-support');
 

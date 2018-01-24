@@ -4,10 +4,10 @@ require('../../../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var is = require('../../../../../lib/util/ModelUtil').is;
+var is = require('lib/util/ModelUtil').is;
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
 
 describe('features/modeling - remove participant behavior', function() {

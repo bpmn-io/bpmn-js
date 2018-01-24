@@ -4,10 +4,10 @@ require('../../TestHelper');
 
 /* global bootstrapModeler, inject */
 
-var coreModule = require('../../../lib/core');
-var modelingModule = require('../../../lib/features/modeling');
+var coreModule = require('lib/core');
+var modelingModule = require('lib/features/modeling');
 
-var ModelCloneHelper = require('../../../lib/util/model/ModelCloneHelper');
+var ModelCloneHelper = require('lib/util/model/ModelCloneHelper');
 
 var camundaPackage = require('../../fixtures/json/model/camunda');
 

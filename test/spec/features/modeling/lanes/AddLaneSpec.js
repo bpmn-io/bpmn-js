@@ -7,10 +7,10 @@ require('../../../../TestHelper');
 
 var pick = require('lodash/object/pick');
 
-var modelingModule = require('../../../../../lib/features/modeling'),
-    coreModule = require('../../../../../lib/core');
+var modelingModule = require('lib/features/modeling'),
+    coreModule = require('lib/core');
 
-var getChildLanes = require('../../../../../lib/features/modeling/util/LaneUtil').getChildLanes;
+var getChildLanes = require('lib/features/modeling/util/LaneUtil').getChildLanes;
 
 var DEFAULT_LANE_HEIGHT = 120;
 

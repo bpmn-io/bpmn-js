@@ -4,7 +4,7 @@ var TestContainer = require('mocha-test-container-support');
 
 var Diagram = require('diagram-js/lib/Diagram');
 
-var Viewer = require('../../lib/Viewer');
+var Viewer = require('lib/Viewer');
 
 var inherits = require('inherits');
 
