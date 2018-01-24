@@ -6,7 +6,7 @@
 var labelEditingModule = require('lib/features/label-editing'),
     coreModule = require('lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging'),
-    modelingModule = require('diagram-js/lib/features/modeling');
+    modelingModule = require('lib/features/modeling');
 
 var LabelUtil = require('lib/features/label-editing/LabelUtil');
 
@@ -36,118 +36,138 @@ function expectBounds(parent, bounds) {
 
 describe('features - label-editing', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
+  var diagramXML = require('./LabelEditing.bpmn');
 
   describe('basics', function() {
 
-    var testModules = [ labelEditingModule, coreModule, draggingModule, modelingModule ];
-
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
-
-
-    it('should register on dblclick', inject(function(elementRegistry, directEditing, eventBus) {
-
-      // given
-      var shape = elementRegistry.get('Task_1');
-
-      // when
-      eventBus.fire('element.dblclick', { element: shape });
-
-      // then
-      expect(directEditing.isActive()).to.be.true;
-
-      // clean up
-      directEditing._textbox.destroy();
+    beforeEach(bootstrapViewer(diagramXML, {
+      modules: [
+        labelEditingModule,
+        coreModule,
+        draggingModule,
+        modelingModule
+      ]
     }));
 
 
-    it('should cancel on <ESC>', inject(function(elementRegistry, directEditing, eventBus) {
+    it('should register on dblclick', inject(
+      function(elementRegistry, directEditing, eventBus) {
 
-      // given
-      var shape = elementRegistry.get('Task_1'),
-          task = shape.businessObject;
+        // given
+        var shape = elementRegistry.get('Task_1');
 
-      var oldName = task.name;
+        // when
+        eventBus.fire('element.dblclick', { element: shape });
 
-      // activate
-      eventBus.fire('element.dblclick', { element: shape });
+        // then
+        expect(directEditing.isActive()).to.be.true;
 
-      var textbox = directEditing._textbox.content;
-
-      // when
-      // change + ESC is pressed
-      textbox.innerText = 'new value';
-      triggerKeyEvent(textbox, 'keydown', 27);
-
-      // then
-      expect(directEditing.isActive()).to.be.false;
-      expect(task.name).to.equal(oldName);
-    }));
+        // clean up
+        directEditing._textbox.destroy();
+      }
+    ));
 
 
-    it('should complete on drag start', inject(function(elementRegistry, directEditing, dragging) {
+    it('should cancel on <ESC>', inject(
+      function(elementRegistry, directEditing, eventBus) {
 
-      // given
-      var shape = elementRegistry.get('Task_1'),
-          task = shape.businessObject;
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
 
-      directEditing.activate(shape);
+        var oldName = task.name;
 
-      directEditing._textbox.content.textContent = 'FOO BAR';
+        // activate
+        eventBus.fire('element.dblclick', { element: shape });
 
-      // when
-      dragging.init(null, { x: 0, y: 0 }, 'foo');
+        var textbox = directEditing._textbox.content;
 
-      // then
-      expect(task.name).to.equal('FOO BAR');
-    }));
+        // when
+        // change + ESC is pressed
+        textbox.innerText = 'new value';
+        triggerKeyEvent(textbox, 'keydown', 27);
+
+        // then
+        expect(directEditing.isActive()).to.be.false;
+        expect(task.name).to.equal(oldName);
+      }
+    ));
 
 
-    it('should submit on root element click', inject(function(elementRegistry, directEditing, canvas, eventBus) {
+    it('should complete on drag start', inject(
+      function(elementRegistry, directEditing, dragging) {
 
-      // given
-      var shape = elementRegistry.get('Task_1'),
-          task = shape.businessObject;
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
 
-      // activate
-      eventBus.fire('element.dblclick', { element: shape });
+        directEditing.activate(shape);
 
-      var newName = 'new value';
+        directEditing._textbox.content.textContent = 'FOO BAR';
 
-      // a <textarea /> element
-      var content = directEditing._textbox.content;
+        // when
+        dragging.init(null, { x: 0, y: 0 }, 'foo');
 
-      content.innerText = newName;
+        // then
+        expect(task.name).to.equal('FOO BAR');
+      }
+    ));
 
-      // when
-      // change + <element.mousedown>
 
-      eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
+    it('should submit on root element click', inject(
+      function(elementRegistry, directEditing, canvas, eventBus) {
 
-      // then
-      expect(directEditing.isActive()).to.be.false;
-      expect(task.name).to.equal(newName);
-    }));
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
+
+        // activate
+        eventBus.fire('element.dblclick', { element: shape });
+
+        var newName = 'new value';
+
+        // a <textarea /> element
+        var content = directEditing._textbox.content;
+
+        content.innerText = newName;
+
+        // when
+        // change + <element.mousedown>
+
+        eventBus.fire('element.mousedown', { element: canvas.getRootElement() });
+
+        // then
+        expect(directEditing.isActive()).to.be.false;
+        expect(task.name).to.equal(newName);
+      }
+    ));
 
   });
 
 
   describe('details', function() {
 
-    var testModules = [ labelEditingModule, coreModule, modelingModule ];
-
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapViewer(diagramXML, {
+      modules: [
+        labelEditingModule,
+        coreModule,
+        modelingModule
+      ]
+    }));
 
     var elementRegistry,
         eventBus,
         directEditing;
 
 
-    beforeEach(inject([ 'elementRegistry', 'eventBus', 'directEditing', function(_elementRegistry, _eventBus, _directEditing) {
-      elementRegistry = _elementRegistry;
-      eventBus = _eventBus;
-      directEditing = _directEditing;
-    }]));
+    beforeEach(inject([
+      'elementRegistry', 'eventBus', 'directEditing',
+      function(_elementRegistry, _eventBus, _directEditing) {
+        elementRegistry = _elementRegistry;
+        eventBus = _eventBus;
+        directEditing = _directEditing;
+      }
+    ]));
 
 
     function directEditActivate(element) {
@@ -351,11 +371,12 @@ describe('features - label-editing', function() {
 
   describe('sizes', function() {
 
-    var testModules = [ labelEditingModule, coreModule, modelingModule ];
-
-
     beforeEach(bootstrapViewer(diagramXML, {
-      modules: testModules,
+      modules: [
+        labelEditingModule,
+        coreModule,
+        modelingModule
+      ],
       canvas: { deferUpdate: false }
     }));
 
@@ -364,268 +385,292 @@ describe('features - label-editing', function() {
 
       describe('external labels', function() {
 
-        it('[zoom 1] should have fixed width and element height', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have fixed width and element height', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var startEvent = elementRegistry.get('StartEvent_1');
+            var startEvent = elementRegistry.get('StartEvent_1');
 
-          var bounds = canvas.getAbsoluteBBox(startEvent.label);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(startEvent.label);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(startEvent);
+            directEditing.activate(startEvent);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: mid.x - (45 * zoom),
-            y: bounds.y - (7 * zoom),
-            width: (90 * zoom),
-            height: bounds.height + (5 * zoom) + 7
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - (45 * zoom),
+              y: bounds.y - (7 * zoom),
+              width: (90 * zoom),
+              height: bounds.height + (5 * zoom) + 7
+            });
+          }
+        ));
 
 
-        it('[zoom 1.5] should have fixed width and element height', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have fixed width and element height', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var startEvent = elementRegistry.get('StartEvent_1');
+            var startEvent = elementRegistry.get('StartEvent_1');
 
-          var bounds = canvas.getAbsoluteBBox(startEvent.label);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(startEvent.label);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(startEvent);
+            directEditing.activate(startEvent);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: mid.x - (45 * zoom),
-            y: bounds.y - (7 * zoom),
-            width: (90 * zoom),
-            height: bounds.height + (5 * zoom) + (7 * zoom)
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - (45 * zoom),
+              y: bounds.y - (7 * zoom),
+              width: (90 * zoom),
+              height: bounds.height + (5 * zoom) + (7 * zoom)
+            });
+          }
+        ));
 
       });
 
 
       describe('internal labels', function() {
 
-        it('[zoom 1] should have element size', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have element size', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var task = elementRegistry.get('Task_1');
+            var task = elementRegistry.get('Task_1');
 
-          var bounds = canvas.getAbsoluteBBox(task);
+            var bounds = canvas.getAbsoluteBBox(task);
 
-          directEditing.activate(task);
+            directEditing.activate(task);
 
-          expectBounds(directEditing._textbox.parent, bounds);
-        }));
+            expectBounds(directEditing._textbox.parent, bounds);
+          }
+        ));
 
 
-        it('[zoom 1.5] should have element size', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have element size', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var task = elementRegistry.get('Task_1');
+            var task = elementRegistry.get('Task_1');
 
-          var bounds = canvas.getAbsoluteBBox(task);
+            var bounds = canvas.getAbsoluteBBox(task);
 
-          directEditing.activate(task);
+            directEditing.activate(task);
 
-          expectBounds(directEditing._textbox.parent, bounds);
-        }));
+            expectBounds(directEditing._textbox.parent, bounds);
+          }
+        ));
 
       });
 
 
       describe('sequence flows', function() {
 
-        it('[zoom 1] should have fixed width and element height', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have fixed width and element height', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+            var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
-          var bounds = canvas.getAbsoluteBBox(sequenceFlow.label);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(sequenceFlow.label);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(sequenceFlow);
+            directEditing.activate(sequenceFlow);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: mid.x - (45 * zoom),
-            y: bounds.y - (7 * zoom),
-            width: (90 * zoom),
-            height: bounds.height + (5 * zoom) + 7
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - (45 * zoom),
+              y: bounds.y - (7 * zoom),
+              width: (90 * zoom),
+              height: bounds.height + (5 * zoom) + 7
+            });
+          }
+        ));
 
 
-        it('[zoom 1.5] should have fixed width and element height', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have fixed width and element height', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var sequenceflow = elementRegistry.get('SequenceFlow_1');
+            var sequenceflow = elementRegistry.get('SequenceFlow_1');
 
-          var bounds = canvas.getAbsoluteBBox(sequenceflow.label);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(sequenceflow.label);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(sequenceflow);
+            directEditing.activate(sequenceflow);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: mid.x - (45 * zoom),
-            y: bounds.y - (7 * zoom),
-            width: (90 * zoom),
-            height: bounds.height + (5 * zoom) + (7 * zoom)
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - (45 * zoom),
+              y: bounds.y - (7 * zoom),
+              width: (90 * zoom),
+              height: bounds.height + (5 * zoom) + (7 * zoom)
+            });
+          }
+        ));
 
       });
 
 
       describe('text annotations', function() {
 
-        it('[zoom 1] should have element size', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have element size', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var textAnnotation = elementRegistry.get('TextAnnotation_1');
+            var textAnnotation = elementRegistry.get('TextAnnotation_1');
 
-          var bounds = canvas.getAbsoluteBBox(textAnnotation);
+            var bounds = canvas.getAbsoluteBBox(textAnnotation);
 
-          directEditing.activate(textAnnotation);
+            directEditing.activate(textAnnotation);
 
-          expectBounds(directEditing._textbox.parent, bounds);
-        }));
+            expectBounds(directEditing._textbox.parent, bounds);
+          }
+        ));
 
 
-        it('[zoom 1.5] should have element size', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have element size', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var textAnnotation = elementRegistry.get('TextAnnotation_1');
+            var textAnnotation = elementRegistry.get('TextAnnotation_1');
 
-          var bounds = canvas.getAbsoluteBBox(textAnnotation);
+            var bounds = canvas.getAbsoluteBBox(textAnnotation);
 
-          directEditing.activate(textAnnotation);
+            directEditing.activate(textAnnotation);
 
-          expectBounds(directEditing._textbox.parent, bounds);
-        }));
+            expectBounds(directEditing._textbox.parent, bounds);
+          }
+        ));
 
       });
 
 
       describe('expanded sub processes', function() {
 
-        it('[zoom 1] should have element width and height to fit text', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have element width and height to fit text', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var subProcess = elementRegistry.get('SubProcess_1');
+            var subProcess = elementRegistry.get('SubProcess_1');
 
-          var bounds = canvas.getAbsoluteBBox(subProcess);
+            var bounds = canvas.getAbsoluteBBox(subProcess);
 
-          directEditing.activate(subProcess);
+            directEditing.activate(subProcess);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: bounds.x,
-            y: bounds.y,
-            width: bounds.width,
-            height: (MEDIUM_LINE_HEIGHT * zoom) + (7 * 2 * zoom)
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: (MEDIUM_LINE_HEIGHT * zoom) + (7 * 2 * zoom)
+            });
+          }
+        ));
 
 
-        it('[zoom 1.5] should have element width and height to fit text', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have element width and height to fit text', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var subProcess = elementRegistry.get('SubProcess_1');
+            var subProcess = elementRegistry.get('SubProcess_1');
 
-          var bounds = canvas.getAbsoluteBBox(subProcess);
+            var bounds = canvas.getAbsoluteBBox(subProcess);
 
-          directEditing.activate(subProcess);
+            directEditing.activate(subProcess);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: bounds.x,
-            y: bounds.y,
-            width: bounds.width,
-            height: (MEDIUM_LINE_HEIGHT * zoom) + (7 * 2 * zoom)
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: (MEDIUM_LINE_HEIGHT * zoom) + (7 * 2 * zoom)
+            });
+          }
+        ));
 
       });
 
 
       describe('pools/lanes', function() {
 
-        it('[zoom 1] should have width of element height, height of 30', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1;
+        it('[zoom 1] should have width of element height, height of 30', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var pool = elementRegistry.get('Participant_1');
+            var pool = elementRegistry.get('Participant_1');
 
-          var bounds = canvas.getAbsoluteBBox(pool);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(pool);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(pool);
+            directEditing.activate(pool);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: bounds.x - (bounds.height / 2) + (15 * zoom),
-            y: mid.y - (30 * zoom) / 2,
-            width: bounds.height * zoom,
-            height: 30 * zoom
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x - (bounds.height / 2) + (15 * zoom),
+              y: mid.y - (30 * zoom) / 2,
+              width: bounds.height * zoom,
+              height: 30 * zoom
+            });
+          }
+        ));
 
 
-        it('[zoom 1.5] should have width of element height, height of 30', inject(function(canvas, directEditing, elementRegistry) {
-          var zoom = 1.5;
+        it('[zoom 1.5] should have width of element height, height of 30', inject(
+          function(canvas, directEditing, elementRegistry) {
+            var zoom = 1.5;
 
-          canvas.zoom(zoom);
+            canvas.zoom(zoom);
 
-          var pool = elementRegistry.get('Participant_1');
+            var pool = elementRegistry.get('Participant_1');
 
-          var bounds = canvas.getAbsoluteBBox(pool);
-          var mid = {
-            x: bounds.x + bounds.width / 2,
-            y: bounds.y + bounds.height / 2
-          };
+            var bounds = canvas.getAbsoluteBBox(pool);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
 
-          directEditing.activate(pool);
+            directEditing.activate(pool);
 
-          expectBounds(directEditing._textbox.parent, {
-            x: bounds.x - (bounds.height / 2) + (15 * zoom),
-            y: mid.y - (30 * zoom) / 2,
-            width: bounds.height,
-            height: 30 * zoom
-          });
-        }));
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x - (bounds.height / 2) + (15 * zoom),
+              y: mid.y - (30 * zoom) / 2,
+              width: bounds.height,
+              height: 30 * zoom
+            });
+          }
+        ));
 
       });
 

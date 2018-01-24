@@ -28,7 +28,14 @@ describe('features/editor-actions', function() {
 
       return function() {
 
-        beforeEach(bootstrapModeler(xml, { modules: [ bpmnEditorActionsModule, modelingModule, coreModule ] }));
+        beforeEach(bootstrapModeler(xml, {
+          modules: [
+            bpmnEditorActionsModule,
+            modelingModule,
+            coreModule
+          ]
+        }));
+
 
         it('should move to origin', inject(function(editorActions) {
           // given
@@ -43,28 +50,42 @@ describe('features/editor-actions', function() {
           // then
           expect(pick(boundingBox, [ 'x', 'y' ])).to.eql({ x: 0, y: 0 });
         }));
+
       };
+
     }
+
 
     describe('single process', testMoveToOrigin(basicXML));
 
+
     describe('collaboration', testMoveToOrigin(collaborationXML));
+
 
     describe('subprocesses', function() {
 
-      beforeEach(bootstrapModeler(basicXML, { modules: [ bpmnEditorActionsModule, modelingModule, coreModule ] }));
-
-      it('should ignore children of subprocesses', inject(function(editorActions, elementRegistry) {
-        // given
-        var startEvent = elementRegistry.get('StartEvent_3'),
-            startEventParent = getParent(startEvent);
-
-        // when
-        editorActions.trigger('moveToOrigin');
-
-        // then
-        expect(getParent(startEvent)).to.equal(startEventParent);
+      beforeEach(bootstrapModeler(basicXML, {
+        modules: [
+          bpmnEditorActionsModule,
+          modelingModule,
+          coreModule
+        ]
       }));
+
+      it('should ignore children of subprocesses', inject(
+        function(editorActions, elementRegistry) {
+          // given
+          var startEvent = elementRegistry.get('StartEvent_3'),
+              startEventParent = getParent(startEvent);
+
+          // when
+          editorActions.trigger('moveToOrigin');
+
+          // then
+          expect(getParent(startEvent)).to.equal(startEventParent);
+        }
+      ));
+
     });
 
   });
