@@ -33,7 +33,7 @@ describe('direct editing - touch integration', function() {
 
 
   it('should edit labels via double tap (manual test)', function(done) {
-    var xml = require('../../../fixtures/bpmn/features/label-editing/labels.bpmn');
+    var xml = require('./LabelEditing.bpmn');
     createModeler(xml, done);
   });
 

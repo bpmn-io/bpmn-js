@@ -157,7 +157,8 @@ describe('features/auto-place', function() {
         coreModule,
         modelingModule,
         autoPlaceModule,
-        selectionModule
+        selectionModule,
+        labelEditingModule
       ]
     }));
 
