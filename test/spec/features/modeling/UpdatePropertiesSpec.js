@@ -270,6 +270,8 @@ describe('features/modeling - update properties', function() {
 
       // then
       expect(flowBo.di.fill).to.equal('FUCHSIA');
+
+      expect(flowBo.get('di')).not.to.exist;
     }));
 
 
@@ -575,6 +577,25 @@ describe('features/modeling - update properties', function() {
         expect(ids.assigned('SequenceFlow_1')).to.eql(flowBo);
 
         expect(flowBo.id).to.equal('SequenceFlow_1');
+      }
+    ));
+
+
+    it('should ignore setting color on root', inject(
+      function(canvas, modeling) {
+
+        // given
+        var rootElement = canvas.getRootElement();
+
+        // when
+        modeling.updateProperties(rootElement, {
+          di: {
+            fill: 'fuchsia'
+          }
+        });
+
+        // then
+        expect(rootElement.di).not.to.exist;
       }
     ));
 
