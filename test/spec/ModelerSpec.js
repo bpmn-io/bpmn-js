@@ -192,6 +192,38 @@ describe('Modeler', function() {
   });
 
 
+  describe('color support', function() {
+
+    it('should allow color changes', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createModeler(xml, function(err, warnings, modeler) {
+
+        // given
+        var modeling = modeler.get('modeling'),
+            elementRegistry = modeler.get('elementRegistry'),
+            eventShape = elementRegistry.get('StartEvent_2');
+
+        // when
+        // set color for StartEvent_2
+        modeling.setColor(eventShape, {
+          fill: 'FUCHSIA',
+          stroke: 'YELLOW'
+        });
+
+        // test saving process to get XML
+        modeler.saveXML({ format: true }, function(err, xml) {
+          expect(xml).not.to.contain('di="[object Object]"');
+
+          done();
+        });
+      });
+    });
+
+  });
+
+
   describe('configuration', function() {
 
     // given
