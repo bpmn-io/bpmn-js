@@ -15,10 +15,14 @@ Include the library [pre-packaged](https://github.com/bpmn-io/bpmn-js-examples/t
 or include it [via npm](https://github.com/bpmn-io/bpmn-js-examples/tree/master/bundling)
 into your node-style web-application.
 
+Create a [bpmn-js](https://github.com/bpmn-io/bpmn-js) instance and render
+[BPMN 2.0 diagrams](www.omg.org/spec/BPMN/2.0.2/) in the browser:
 
 ```javascript
 var xml; // my BPMN 2.0 xml
-var viewer = new BpmnJS({ container: 'body' });
+var viewer = new BpmnJS({
+  container: 'body'
+});
 
 viewer.importXML(xml, function(err) {
 
