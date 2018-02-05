@@ -4,19 +4,21 @@
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js)
 
-View and edit BPMN 2.0 diagrams in the modern browsers.
+View and edit BPMN 2.0 diagrams in the browser.
 
 [![bpmn-js screencast](./resources/screencast.gif "bpmn-js in action")](http://demo.bpmn.io/s/start)
 
 
-## Usage
+## Installation
 
 Include the library [pre-packaged](https://github.com/bpmn-io/bpmn-js-examples/tree/master/pre-packaged)
 or include it [via npm](https://github.com/bpmn-io/bpmn-js-examples/tree/master/bundling)
 into your node-style web-application.
 
-Create a [bpmn-js](https://github.com/bpmn-io/bpmn-js) instance and render
-[BPMN 2.0 diagrams](www.omg.org/spec/BPMN/2.0.2/) in the browser:
+## Usage
+
+To get started, create a [bpmn-js](https://github.com/bpmn-io/bpmn-js) instance
+and render [BPMN 2.0 diagrams](www.omg.org/spec/BPMN/2.0.2/) in the browser:
 
 ```javascript
 var xml; // my BPMN 2.0 xml
