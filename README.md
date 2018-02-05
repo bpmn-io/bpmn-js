@@ -4,23 +4,21 @@
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js)
 
-[bpmn-js](https://github.com/bpmn-io/bpmn-js) is a BPMN 2.0 diagram rendering toolkit and web modeler.
+View and edit BPMN 2.0 diagrams in the modern browsers.
 
-[<img src="https://raw.githubusercontent.com/bpmn-io/bpmn-js/master/resources/screencast.gif" alt="bpmn-js in action" width="480px" />](http://demo.bpmn.io/s/start)
+[![bpmn-js screencast](./resources/screencast.gif/screencast.gif "bpmn-js in action")](http://demo.bpmn.io/s/start)
 
 
 ## Usage
 
-> No need for additional setup: Try out our [seed project](https://github.com/bpmn-io/bpmn-js-seed) or use the [pre-packaged version](https://github.com/bpmn-io/bower-bpmn-js) of the library.
-
-Get the library via [npm](http://npmjs.org) or [Bower](http://bower.io/) and use it in your web applications to display [BPMN 2.0 diagrams](http://www.bpmn.org/).
+Include the library [pre-packaged](https://github.com/bpmn-io/bpmn-js-examples/tree/master/pre-packaged)
+or include it [via npm](https://github.com/bpmn-io/bpmn-js-examples/tree/master/bundling)
+into your node-style web-application.
 
 
 ```javascript
-var BpmnViewer = require('bpmn-js');
-
 var xml; // my BPMN 2.0 xml
-var viewer = new BpmnViewer({ container: 'body' });
+var viewer = new BpmnJS({ container: 'body' });
 
 viewer.importXML(xml, function(err) {
 
@@ -37,7 +35,7 @@ viewer.importXML(xml, function(err) {
 You may attach or detach the viewer dynamically to any element on the page, too:
 
 ```javascript
-var viewer = new BpmnViewer();
+var viewer = new BpmnJS();
 
 // attach it to some element
 viewer.attachTo('#container');
@@ -45,36 +43,6 @@ viewer.attachTo('#container');
 // detach the panel
 viewer.detach();
 ```
-
-## Installation
-
-Fetch [bpmn-js prebuilt](https://github.com/bpmn-io/bower-bpmn-js) or install it via [npm](https://www.npmjs.com/package/bpmn-js).
-
-
-#### Fetch Prebuilt
-
-The [bower-bpmn-js](https://github.com/bpmn-io/bower-bpmn-js) repository contains pre-built bundles of bpmn-js. 
-
-Download them directly _or_ fetch them with [Bower](http://bower.io/):
-
-```
-bower install bpmn-js
-```
-
-Checkout the [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-bower) to get started.
-
-
-#### Install via npm
-
-Fetch the library via npm to get fine grained access to the parts you need:
-
-```
-npm install --save bpmn-js
-```
-
-Make sure you use [browserify](http://browserify.org) or the like to bundle your project and bpmn-js for the browser.
-
-Checkout the [example project](https://github.com/bpmn-io/bpmn-js-examples/tree/master/simple-commonjs) to learn more.
 
 
 ## Resources
@@ -95,9 +63,11 @@ npm install
 npm run all
 ```
 
-You may need to perform [additional project setup](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md) when building the latest development snapshot.
+You may need to perform [additional project setup](./docs/project/SETUP.md) when
+building the latest development snapshot.
 
-Please checkout our [contributing guidelines](https://github.com/bpmn-io/bpmn-js/blob/master/CONTRIBUTING.md) if you plan to file an issue or pull request.
+Please checkout our [contributing guidelines](./CONTRIBUTING.md) if you plan to
+file an issue or pull request.
 
 
 ## Related
