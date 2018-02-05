@@ -6,7 +6,7 @@
 
 View and edit BPMN 2.0 diagrams in the modern browsers.
 
-[![bpmn-js screencast](./resources/screencast.gif/screencast.gif "bpmn-js in action")](http://demo.bpmn.io/s/start)
+[![bpmn-js screencast](./resources/screencast.gif "bpmn-js in action")](http://demo.bpmn.io/s/start)
 
 
 ## Usage
