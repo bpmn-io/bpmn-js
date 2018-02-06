@@ -21,18 +21,10 @@ jobs:
         - sleep 3
       script:
         - TEST_BROWSERS=Firefox,PhantomJS npm run all
-    - stage: publish pre-built
-      script: './tasks/stages/publish-prebuilt'
     - stage: update integration test
       script: './tasks/stages/update-integration-test'
-    - stage: update seed
-      script: './tasks/stages/update-seed'
 
 stages:
   - test
-  - name: publish pre-built
-    if: tag =~ ^v\d
   - name: update integration test
-    if: tag =~ ^v\d
-  - name: update seed
     if: tag =~ ^v\d
