@@ -1,0 +1,39 @@
+#! /bin/bash
+
+# update bpmn-js version in the <bpmn-js-examples> project
+
+PWD="$(pwd)"
+WORKDIR="$(pwd)/tmp"
+EXAMPLES_DIR="$WORKDIR/bpmn-js-examples"
+
+# create work dir
+mkdir -p "$WORKDIR"
+
+git clone --depth=1 https://github.com/bpmn-io/bpmn-js-examples.git "$EXAMPLES_DIR"
+
+cd "$EXAMPLES_DIR"
+
+# update bower.json
+TOOLKIT_VERSION="${TRAVIS_TAG:1}"
+echo "Updating toolkit version to $TOOLKIT_VERSION"
+
+sed -i -E "s#(\"bpmn-js\": )\"[^\"]+\"#\1\"^$TOOLKIT_VERSION\"#" **/package.json
+sed -i -E "s#/bpmn-js@[^/]+/#/bpmn-js@$TOOLKIT_VERSION/#" **/*.{html,md}
+
+if [[ "x$SKIP_COMMIT" = "x" ]]; then
+
+  git config user.email "$BPMN_IO_EMAIL"
+  git config user.name "$BPMN_IO_USERNAME"
+  git config push.default simple
+
+  # add all resources
+  git add -A
+  git commit -m "chore(project): bump examples to $TRAVIS_TAG"
+  git tag "$TRAVIS_TAG"
+  git push -q "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn-js-examples.git" &2>/dev/null
+  git push --tags -q "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn-js-examples.git" &2>/dev/null
+else
+  echo "Skipping commit (SKIP_COMMIT=$SKIP_COMMIT)"
+fi
+
+cd "$PWD"

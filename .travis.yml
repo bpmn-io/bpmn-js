@@ -23,8 +23,12 @@ jobs:
         - TEST_BROWSERS=Firefox,PhantomJS npm run all
     - stage: update integration test
       script: './tasks/stages/update-integration-test'
+    - stage: update examples
+      script: './tasks/stages/update-examples'
 
 stages:
   - test
   - name: update integration test
+    if: tag =~ ^v\d
+  - name: update examples
     if: tag =~ ^v\d
