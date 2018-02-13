@@ -853,6 +853,25 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+
+    it('should remove children of collapsed sub process not morphing into expanded',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var element = elementRegistry.get('SubProcess_1');
+        var newElementData = {
+          type: 'bpmn:CallActivity'
+        };
+
+        modeling.toggleCollapse(element);
+
+        // when
+        var newElement = bpmnReplace.replaceElement(element, newElementData);
+
+        // then
+        expect(is(newElement, 'bpmn:CallActivity')).to.be.true;
+      }));
+
   });
 
 
