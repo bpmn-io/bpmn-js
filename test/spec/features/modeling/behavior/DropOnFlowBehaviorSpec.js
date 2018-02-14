@@ -17,122 +17,149 @@ describe('modeling/behavior - drop on connection', function() {
 
   var diagramXML = require('./DropOnFlowBehavior.bpmn');
 
-  var testModules = [ noTouchInteractionModule, moveModule, modelingModule, coreModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      noTouchInteractionModule,
+      moveModule,
+      modelingModule,
+      coreModule
+    ]
+  }));
 
 
   describe('execution', function() {
 
     describe('create', function() {
 
-      it('should connect start -> target -> end', inject(function(modeling, elementRegistry, elementFactory) {
+      it('should connect start -> target -> end', inject(
+        function(modeling, elementRegistry, elementFactory) {
 
-        // given
-        var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+          // given
+          var intermediateThrowEvent = elementFactory.createShape({
+            type: 'bpmn:IntermediateThrowEvent'
+          });
 
-        var startEvent = elementRegistry.get('StartEvent'),
-            sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            task = elementRegistry.get('Task_1');
+          var startEvent = elementRegistry.get('StartEvent'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              task = elementRegistry.get('Task_1');
 
-        var originalWaypoints = sequenceFlow.waypoints;
+          var originalWaypoints = sequenceFlow.waypoints;
 
-        var dropPosition = { x: 340, y: 120 }; // first bendpoint
+          var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
-        // when
-        var newShape = modeling.createShape(intermediateThrowEvent, dropPosition, sequenceFlow);
+          // when
+          var newShape = modeling.createShape(
+            intermediateThrowEvent,
+            dropPosition,
+            sequenceFlow
+          );
 
-        // then
+          // then
 
-        var targetConnection = newShape.outgoing[0];
+          var targetConnection = newShape.outgoing[0];
 
-        // new incoming connection
-        expect(newShape.incoming.length).to.equal(1);
-        expect(newShape.incoming[0]).to.eql(sequenceFlow);
+          // new incoming connection
+          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
-        // new outgoing connection
-        expect(newShape.outgoing.length).to.equal(1);
-        expect(targetConnection).to.be.ok;
-        expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+          // new outgoing connection
+          expect(newShape.outgoing.length).to.equal(1);
+          expect(targetConnection).to.be.ok;
+          expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
-        expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
-        expect(task.incoming[0]).to.equal(newShape.outgoing[0]);
+          expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
+          expect(task.incoming[0]).to.equal(newShape.outgoing[0]);
 
-        // split target at insertion point
-        expect(sequenceFlow).to.have.waypoints(flatten([
-          originalWaypoints.slice(0, 1),
-          { x: 322, y: 120 }
-        ]));
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 1),
+            { x: 322, y: 120 }
+          ]));
 
-        expect(sequenceFlow).to.have.endDocking(dropPosition);
+          expect(sequenceFlow).to.have.endDocking(dropPosition);
 
-        expect(targetConnection).to.have.waypoints(flatten([
-          { x: 340, y: 138 },
-          originalWaypoints.slice(2)
-        ]));
+          expect(targetConnection).to.have.waypoints(flatten([
+            { x: 340, y: 138 },
+            originalWaypoints.slice(2)
+          ]));
 
-        expect(targetConnection).to.have.startDocking(dropPosition);
-      }));
-
-
-      it('should connect start -> target', inject(function(modeling, elementRegistry, elementFactory) {
-
-        // given
-        var endEventShape = elementFactory.createShape({ type: 'bpmn:EndEvent' });
-
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
-        var originalWaypoints = sequenceFlow.waypoints;
-
-        var dropPosition = { x: 340, y: 120 }; // first bendpoint
-
-        // when
-        var newShape = modeling.createShape(endEventShape, dropPosition, sequenceFlow);
-
-        // then
-
-        // new incoming connection
-        expect(newShape.incoming.length).to.equal(1);
-        expect(newShape.incoming[0]).to.eql(sequenceFlow);
-
-        // no outgoing edges
-        expect(newShape.outgoing.length).to.equal(0);
-
-        // split target at insertion point
-        expect(sequenceFlow).to.have.waypoints(flatten([
-          originalWaypoints.slice(0, 1),
-          { x: 322, y: 120 }
-        ]));
-      }));
+          expect(targetConnection).to.have.startDocking(dropPosition);
+        }
+      ));
 
 
-      it('should connect target -> end', inject(function(modeling, elementRegistry, elementFactory) {
+      it('should connect start -> target', inject(
+        function(modeling, elementRegistry, elementFactory) {
 
-        // given
-        var startEventShape = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+          // given
+          var endEventShape = elementFactory.createShape({ type: 'bpmn:EndEvent' });
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
-        var originalWaypoints = sequenceFlow.waypoints;
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+          var originalWaypoints = sequenceFlow.waypoints;
 
-        var dropPosition = { x: 340, y: 120 }; // first bendpoint
+          var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
-        // when
-        var newShape = modeling.createShape(startEventShape, dropPosition, sequenceFlow);
+          // when
+          var newShape = modeling.createShape(
+            endEventShape,
+            dropPosition,
+            sequenceFlow
+          );
 
-        // then
+          // then
 
-        // no incoming connection
-        expect(newShape.incoming.length).to.equal(0);
+          // new incoming connection
+          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
-        // no outgoing edges
-        expect(newShape.outgoing.length).to.equal(1);
-        expect(newShape.outgoing[0]).to.eql(sequenceFlow);
+          // no outgoing edges
+          expect(newShape.outgoing.length).to.equal(0);
 
-        // split target at insertion point
-        expect(sequenceFlow).to.have.waypoints(flatten([
-          { x: 340, y: 138 },
-          originalWaypoints.slice(2)
-        ]));
-      }));
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 1),
+            { x: 322, y: 120 }
+          ]));
+        }
+      ));
+
+
+      it('should connect target -> end', inject(
+        function(modeling, elementRegistry, elementFactory) {
+
+          // given
+          var startEventShape = elementFactory.createShape({
+            type: 'bpmn:StartEvent'
+          });
+
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+          var originalWaypoints = sequenceFlow.waypoints;
+
+          var dropPosition = { x: 340, y: 120 }; // first bendpoint
+
+          // when
+          var newShape = modeling.createShape(
+            startEventShape,
+            dropPosition,
+            sequenceFlow
+          );
+
+          // then
+
+          // no incoming connection
+          expect(newShape.incoming.length).to.equal(0);
+
+          // no outgoing edges
+          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing[0]).to.eql(sequenceFlow);
+
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            { x: 340, y: 138 },
+            originalWaypoints.slice(2)
+          ]));
+        }
+      ));
 
 
       it('should connect start -> target -> end (with bendpointBefore inside bbox)', inject(
@@ -191,62 +218,64 @@ describe('modeling/behavior - drop on connection', function() {
         dragging.setOptions({ manual: true });
       }));
 
-      it('should connect start -> target -> end', inject(function(dragging, move, elementRegistry, selection) {
+      it('should connect start -> target -> end', inject(
+        function(dragging, move, elementRegistry, selection) {
 
-        // given
-        var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
+          // given
+          var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
 
-        var startEvent = elementRegistry.get('StartEvent'),
-            sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
-            task = elementRegistry.get('Task_1');
+          var startEvent = elementRegistry.get('StartEvent'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow),
+              task = elementRegistry.get('Task_1');
 
-        var originalWaypoints = sequenceFlow.waypoints;
+          var originalWaypoints = sequenceFlow.waypoints;
 
-        // when
-        selection.select(intermediateThrowEvent);
+          // when
+          selection.select(intermediateThrowEvent);
 
-        move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+          move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
-        dragging.hover({
-          element: sequenceFlow,
-          gfx: sequenceFlowGfx
-        });
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
 
-        dragging.move(canvasEvent({ x: 150, y: 0 }));
+          dragging.move(canvasEvent({ x: 150, y: 0 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        var targetConnection = intermediateThrowEvent.outgoing[0];
+          // then
+          var targetConnection = intermediateThrowEvent.outgoing[0];
 
-        // new incoming connection
-        expect(intermediateThrowEvent.incoming.length).to.equal(1);
-        expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
+          // new incoming connection
+          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
 
-        // new outgoing connection
-        expect(intermediateThrowEvent.outgoing.length).to.equal(1);
-        expect(targetConnection).to.be.ok;
-        expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+          // new outgoing connection
+          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(targetConnection).to.be.ok;
+          expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
-        expect(startEvent.outgoing[0]).to.equal(intermediateThrowEvent.incoming[0]);
-        expect(task.incoming[0]).to.equal(intermediateThrowEvent.outgoing[0]);
+          expect(startEvent.outgoing[0]).to.equal(intermediateThrowEvent.incoming[0]);
+          expect(task.incoming[0]).to.equal(intermediateThrowEvent.outgoing[0]);
 
-        // split target at insertion point
-        expect(sequenceFlow).to.have.waypoints(flatten([
-          originalWaypoints.slice(0, 2),
-          { x: 341, y: 192 }
-        ]));
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 2),
+            { x: 341, y: 192 }
+          ]));
 
-        expect(sequenceFlow).to.have.endDocking({ x: 341, y: 210 });
+          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 210 });
 
-        expect(targetConnection).to.have.waypoints(flatten([
-          { x: 341, y: 228 },
-          originalWaypoints.slice(2)
-        ]));
+          expect(targetConnection).to.have.waypoints(flatten([
+            { x: 341, y: 228 },
+            originalWaypoints.slice(2)
+          ]));
 
-        expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
-      }));
+          expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
+        }
+      ));
 
 
       it('should connect start -> target -> end (hovering parent)', inject(
@@ -498,32 +527,34 @@ describe('modeling/behavior - drop on connection', function() {
       ));
 
 
-      it('should not insert on inaccuratly found intersection', inject(function(dragging, move, elementRegistry, selection) {
+      it('should not insert on inaccuratly found intersection', inject(
+        function(dragging, move, elementRegistry, selection) {
 
-        // given
-        var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
+          // given
+          var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
 
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-            sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
 
-        // when
-        selection.select(intermediateThrowEvent);
+          // when
+          selection.select(intermediateThrowEvent);
 
-        move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+          move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
-        dragging.hover({
-          element: sequenceFlow,
-          gfx: sequenceFlowGfx
-        });
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
 
-        dragging.move(canvasEvent({ x: 20, y: -90 }));
+          dragging.move(canvasEvent({ x: 20, y: -90 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expect(intermediateThrowEvent.incoming).to.have.lengthOf(0);
-        expect(intermediateThrowEvent.outgoing).to.have.lengthOf(0);
-      }));
+          // then
+          expect(intermediateThrowEvent.incoming).to.have.lengthOf(0);
+          expect(intermediateThrowEvent.outgoing).to.have.lengthOf(0);
+        }
+      ));
 
     });
 
@@ -532,22 +563,28 @@ describe('modeling/behavior - drop on connection', function() {
 
   describe('rules', function() {
 
-    it('should be allowed for an IntermediateThrowEvent', inject(function(elementRegistry, bpmnRules, elementFactory) {
+    it('should be allowed for an IntermediateThrowEvent', inject(
+      function(elementRegistry, bpmnRules, elementFactory) {
 
-      // when
-      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
-      var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+        // when
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+        var intermediateThrowEvent = elementFactory.createShape({
+          type: 'bpmn:IntermediateThrowEvent'
+        });
 
-      // then
-      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).to.be.true;
-    }));
+        // then
+        expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).to.be.true;
+      }
+    ));
 
 
     it('should not insert participant', inject(
       function(rules, elementRegistry, elementFactory) {
 
         // given
-        var participantShape = elementFactory.createShape({ type: 'bpmn:Participant' });
+        var participantShape = elementFactory.createShape({
+          type: 'bpmn:Participant'
+        });
 
         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
@@ -606,20 +643,22 @@ describe('modeling/behavior - drop on connection', function() {
     ));
 
 
-    it('should not insert on sequence flow label', inject(function(bpmnRules, elementRegistry) {
+    it('should not insert on sequence flow label', inject(
+      function(bpmnRules, elementRegistry) {
 
-      // given
-      var eventShape = elementRegistry.get('IntermediateThrowEvent_foo'),
-          sequenceFlowLabel = elementRegistry.get('SequenceFlow_2').label;
+        // given
+        var eventShape = elementRegistry.get('IntermediateThrowEvent_foo'),
+            sequenceFlowLabel = elementRegistry.get('SequenceFlow_2').label;
 
-      var dropPosition = { x: 675, y: 275 }; // sequence flow label
+        var dropPosition = { x: 675, y: 275 }; // sequence flow label
 
-      // when
-      var canInsert = bpmnRules.canInsert(eventShape, sequenceFlowLabel, dropPosition);
+        // when
+        var canInsert = bpmnRules.canInsert(eventShape, sequenceFlowLabel, dropPosition);
 
-      // then
-      expect(canInsert).to.be.false;
-    }));
+        // then
+        expect(canInsert).to.be.false;
+      }
+    ));
 
   });
 
