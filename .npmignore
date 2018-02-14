@@ -3,11 +3,10 @@
 docs
 resources
 tasks
-test/config
-test/fixtures
-test/integration
-test/spec
-test/TestHelper.js
+test/*
+!test/util
+!test/helper
+!test/matchers
 .eslintignore
 .eslintrc
 .travis.yml
