@@ -47,7 +47,7 @@
     "del": "^3.0.0",
     "envify": "^4.1.0",
     "eslint": "^4.14.0",
-    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-bpmn-io": "^0.2.0",
     "execa": "^0.8.0",
     "jsondiffpatch": "^0.1.26",
     "karma": "^1.7.0",
