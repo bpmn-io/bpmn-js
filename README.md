@@ -18,7 +18,7 @@ into your node-style web-application.
 ## Usage
 
 To get started, create a [bpmn-js](https://github.com/bpmn-io/bpmn-js) instance
-and render [BPMN 2.0 diagrams](www.omg.org/spec/BPMN/2.0.2/) in the browser:
+and render [BPMN 2.0 diagrams](https://www.omg.org/spec/BPMN/2.0.2/) in the browser:
 
 ```javascript
 var xml; // my BPMN 2.0 xml
