@@ -375,7 +375,7 @@ describe('Viewer', function() {
 
     it('should export huge svg', function(done) {
 
-      this.timeout(3000);
+      this.timeout(5000);
 
       // given
       var xml = require('../fixtures/bpmn/complex.bpmn');
