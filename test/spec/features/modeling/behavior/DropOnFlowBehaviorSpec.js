@@ -22,21 +22,6 @@ describe('modeling/behavior - drop on connection', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  describe('rules', function() {
-
-    it('should be allowed for an IntermediateThrowEvent', inject(function(elementRegistry, bpmnRules, elementFactory) {
-
-      // when
-      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
-      var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
-
-      // then
-      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).to.be.true;
-    }));
-
-  });
-
-
   describe('execution', function() {
 
     describe('create', function() {
@@ -512,12 +497,51 @@ describe('modeling/behavior - drop on connection', function() {
         }
       ));
 
+
+      it('should not insert on inaccuratly found intersection', inject(function(dragging, move, elementRegistry, selection) {
+
+        // given
+        var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_foo');
+
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
+
+        // when
+        selection.select(intermediateThrowEvent);
+
+        move.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+
+        dragging.hover({
+          element: sequenceFlow,
+          gfx: sequenceFlowGfx
+        });
+
+        dragging.move(canvasEvent({ x: 20, y: -90 }));
+
+        dragging.end();
+
+        // then
+        expect(intermediateThrowEvent.incoming).to.have.lengthOf(0);
+        expect(intermediateThrowEvent.outgoing).to.have.lengthOf(0);
+      }));
+
     });
 
   });
 
 
   describe('rules', function() {
+
+    it('should be allowed for an IntermediateThrowEvent', inject(function(elementRegistry, bpmnRules, elementFactory) {
+
+      // when
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+      var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' });
+
+      // then
+      expect(bpmnRules.canCreate(intermediateThrowEvent, sequenceFlow)).to.be.true;
+    }));
+
 
     it('should not insert participant', inject(
       function(rules, elementRegistry, elementFactory) {
