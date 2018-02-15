@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_9X-DgL31EeWxRuodBysTLQ" targetNamespace="http://activiti.org/bpmn" exporter="camunda modeler" exporterVersion="2.6.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="Collaboration_0loy6fl">
+    <bpmn2:participant id="Participant_05lagcz" processRef="Process_1" />
+    <bpmn2:participant id="CollapsedPool" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_1" isExecutable="false">
+    <bpmn2:task id="Task" />
+    <bpmn2:task id="CompensationTask" isForCompensation="true" />
+    <bpmn2:boundaryEvent id="CompensationBoundary" attachedToRef="Task">
+      <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_2" waitForCompletion="false" />
+    </bpmn2:boundaryEvent>
+    <bpmn2:association id="Association_1eqfqtu" associationDirection="One" sourceRef="CompensationBoundary" targetRef="CompensationTask" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0loy6fl">
+      <bpmndi:BPMNShape id="Participant_05lagcz_di" bpmnElement="Participant_05lagcz">
+        <dc:Bounds x="50" y="45" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_TaskForCompensation" bpmnElement="Task">
+        <dc:Bounds x="100" y="65" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CompensationTask_di" bpmnElement="CompensationTask">
+        <dc:Bounds x="230" y="185" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="CompensationBoundary">
+        <dc:Bounds x="144" y="127" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="117" y="97" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1eqfqtu_di" bpmnElement="Association_1eqfqtu">
+        <di:waypoint x="162" y="163" />
+        <di:waypoint x="162" y="225" />
+        <di:waypoint x="230" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_08qzqg7_di" bpmnElement="CollapsedPool">
+        <dc:Bounds x="133" y="368" width="332" height="96" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
