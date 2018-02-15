@@ -1,12 +1,13 @@
 'use strict';
 
-/* global bootstrapViewer, inject */
+/* global bootstrapModeler, inject */
 
 
 var labelEditingModule = require('lib/features/label-editing'),
     coreModule = require('lib/core'),
     draggingModule = require('diagram-js/lib/features/dragging'),
-    modelingModule = require('lib/features/modeling');
+    modelingModule = require('lib/features/modeling'),
+    autoPlaceModule = require('lib/features/auto-place');
 
 var LabelUtil = require('lib/features/label-editing/LabelUtil');
 
@@ -40,12 +41,13 @@ describe('features - label-editing', function() {
 
   describe('basics', function() {
 
-    beforeEach(bootstrapViewer(diagramXML, {
+    beforeEach(bootstrapModeler(diagramXML, {
       modules: [
         labelEditingModule,
         coreModule,
         draggingModule,
-        modelingModule
+        modelingModule,
+        autoPlaceModule
       ]
     }));
 
@@ -114,6 +116,29 @@ describe('features - label-editing', function() {
     ));
 
 
+    it('should complete on auto place', inject(
+      function(elementRegistry, directEditing, elementFactory, autoPlace) {
+
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
+
+        directEditing.activate(shape);
+
+        directEditing._textbox.content.textContent = 'FOO BAR';
+
+        // when
+        autoPlace.append(shape, elementFactory.create(
+          'shape',
+          { type: 'bpmn:ServiceTask' }
+        ));
+
+        // then
+        expect(task.name).to.equal('FOO BAR');
+      }
+    ));
+
+
     it('should submit on root element click', inject(
       function(elementRegistry, directEditing, canvas, eventBus) {
 
@@ -147,7 +172,7 @@ describe('features - label-editing', function() {
 
   describe('details', function() {
 
-    beforeEach(bootstrapViewer(diagramXML, {
+    beforeEach(bootstrapModeler(diagramXML, {
       modules: [
         labelEditingModule,
         coreModule,
@@ -371,7 +396,7 @@ describe('features - label-editing', function() {
 
   describe('sizes', function() {
 
-    beforeEach(bootstrapViewer(diagramXML, {
+    beforeEach(bootstrapModeler(diagramXML, {
       modules: [
         labelEditingModule,
         coreModule,
