@@ -1,26 +1,18 @@
 language: node_js
+
 node_js:
   - 'node'
-
-before_install:
-  - npm install -g wiredeps@0.2
-  - wiredeps --default-branch=master --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
-
-sudo: false
-
-script: npm test
 
 jobs:
   include:
     - stage: test
       addons:
-        firefox: "latest-esr"
-      before_script:
-        - "export DISPLAY=:99.0"
-        - "sh -e /etc/init.d/xvfb start"
-        - sleep 3
+        firefox: 'latest-esr'
+      before_install:
+        - npm install -g wiredeps@0.2
+        - wiredeps --default-branch=master --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
       script:
-        - TEST_BROWSERS=Firefox,PhantomJS npm run all
+        - TEST_BROWSERS=Firefox,PhantomJS xvfb-run npm run all
     - stage: update integration test
       script: './tasks/stages/update-integration-test'
     - stage: update examples
