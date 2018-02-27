@@ -241,7 +241,7 @@ describe('features/modeling - remove element behavior', function() {
 
 
 
-////////////////////////// helper /////////////////////////////////
+// helper //////////////////////
 
 function point(p) {
   return {

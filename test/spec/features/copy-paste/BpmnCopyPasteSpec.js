@@ -661,7 +661,7 @@ describe('features/copy-paste', function() {
 
 
 
-////// test helpers //////////////////////////////////////////////////
+// test helpers //////////////////////
 
 
 function integrationTest(ids) {

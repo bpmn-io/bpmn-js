@@ -114,7 +114,7 @@ describe('features/modeling - layout connection', function() {
 
 
 
-///////// helpers ///////////////////////////
+// helpers //////////////////////
 
 function toPoint(p) {
   return {

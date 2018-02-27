@@ -110,7 +110,7 @@ describe('features/modeling - move elements', function() {
 });
 
 
-///////// helpers /////////////////////////////////
+// helpers //////////////////////
 
 function moveWaypoint(p, delta) {
   return {

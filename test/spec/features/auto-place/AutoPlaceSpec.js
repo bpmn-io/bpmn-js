@@ -231,7 +231,7 @@ describe('features/auto-place', function() {
 
 
 
-////////// helpers /////////////////////////////////////////
+// helpers //////////////////////
 
 function autoPlace(cfg) {
 

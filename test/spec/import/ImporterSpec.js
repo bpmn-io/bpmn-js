@@ -464,7 +464,7 @@ describe('import - Importer', function() {
 
 
 
-////////// helpers /////////////////////////////////////
+// helpers //////////////////////
 
 function expectChildren(diagram, parent, children) {
 

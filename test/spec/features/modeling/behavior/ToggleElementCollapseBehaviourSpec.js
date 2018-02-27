@@ -620,7 +620,7 @@ describe('features/modeling - collapse and expand elements', function() {
 });
 
 
-/////////// helpers /////////////////////////////
+// helpers //////////////////////
 
 
 function allHidden() {
