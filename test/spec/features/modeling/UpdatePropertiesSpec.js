@@ -123,14 +123,14 @@ describe('features/modeling - update properties', function() {
     it('updating conditional flow on source replace', inject(
       function(bpmnReplace, elementRegistry) {
 
-        //given
+        // given
         var conditionalFlow = elementRegistry.get('SequenceFlow_3'),
             conditionalBo = conditionalFlow.businessObject,
             serviceTask = elementRegistry.get('ServiceTask_1');
 
         var conditionExpression = conditionalBo.conditionExpression;
 
-        var userTaskData =  {
+        var userTaskData = {
           type: 'bpmn:UserTask'
         };
 
@@ -146,14 +146,14 @@ describe('features/modeling - update properties', function() {
     it('updating conditional flow on target replace', inject(
       function(bpmnReplace, elementRegistry) {
 
-        //given
+        // given
         var conditionalFlow = elementRegistry.get('SequenceFlow_3'),
             conditionalBo = conditionalFlow.businessObject,
             endEvent = elementRegistry.get('EndEvent_1');
 
         var conditionExpression = conditionalBo.conditionExpression;
 
-        var messageEndEventData =  {
+        var messageEndEventData = {
           type: 'bpmn:EndEvent',
           eventDefinitionType: 'bpmn:MessageEventDefinition'
         };

@@ -31,7 +31,7 @@ describe('features/modeling - delete default connection', function() {
 
     // then
     expect(defaultConnection.parent).to.be.null;
-    expect(gateway.businessObject.default).to.be.null; //.property('default');
+    expect(gateway.businessObject.default).to.be.null; // .property('default');
   }));
 
 

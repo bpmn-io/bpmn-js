@@ -84,9 +84,9 @@ describe('modeling/behavior/util - GeometricUtil', function() {
       var angle = GeometricUtil.getAngle(testLines[i].line);
 
       // to degree
-      angle = angle * ( 180 / Math.PI );
+      angle = angle * (180 / Math.PI);
 
-      //then
+      // then
       expect(angle).to.be.equal(testLines[i].angle);
     }
   });
@@ -105,7 +105,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
     for (var i=0; i<testVectors.length; i++) {
 
       // degree to radian
-      var angle = testVectors[i].angle * ( Math.PI / 180 );
+      var angle = testVectors[i].angle * (Math.PI / 180);
 
       // when
       var rotatedVector = GeometricUtil.rotateVector(testVectors[i].vector, angle);

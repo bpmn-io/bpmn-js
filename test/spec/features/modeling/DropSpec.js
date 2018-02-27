@@ -66,7 +66,7 @@ describe('features/move - drop', function() {
         // given
         var task_1 = elementRegistry.get('ID_Task_1'),
             parent = elementRegistry.get('ID_SubProcess_1'),
-            flow   = elementRegistry.get('ID_Sequenceflow_1');
+            flow = elementRegistry.get('ID_Sequenceflow_1');
 
         // when
         modeling.moveElements([ task_1 ], { x: 0, y: 200 }, parent);
@@ -85,7 +85,7 @@ describe('features/move - drop', function() {
         var task_1 = elementRegistry.get('ID_Task_1'),
             task_2 = elementRegistry.get('ID_Task_2'),
             parent = elementRegistry.get('ID_SubProcess_1'),
-            flow   = elementRegistry.get('ID_Sequenceflow_1');
+            flow = elementRegistry.get('ID_Sequenceflow_1');
 
         // when
         modeling.moveElements([ task_1, task_2 ], { x: 0, y: 250 }, parent);

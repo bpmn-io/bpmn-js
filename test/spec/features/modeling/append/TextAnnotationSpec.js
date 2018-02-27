@@ -87,13 +87,13 @@ describe('features/modeling - append text-annotation', function() {
 
     it('with right size', inject(function(elementRegistry, elementFactory, modeling) {
 
-      //given
+      // given
       var eventShape = elementRegistry.get('IntermediateCatchEvent_1');
 
-      //when
+      // when
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' });
 
-      //then
+      // then
       expect(annotationShape.width).to.eql(100);
       expect(annotationShape.height).to.eql(30);
     }));

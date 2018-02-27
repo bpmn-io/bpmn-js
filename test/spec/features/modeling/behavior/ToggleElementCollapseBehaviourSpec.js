@@ -148,7 +148,7 @@ describe('features/modeling - collapse and expand elements', function() {
           );
 
           // then
-          var newMid =  {
+          var newMid = {
             x: expandedSubProcess.x + expandedSubProcess.width / 2,
             y: expandedSubProcess.y + expandedSubProcess.height / 2
           };

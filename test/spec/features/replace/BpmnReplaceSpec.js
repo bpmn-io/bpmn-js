@@ -37,7 +37,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:UserTask'
       };
 
@@ -56,7 +56,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var gateway = elementRegistry.get('ExclusiveGateway_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:InclusiveGateway'
       };
 
@@ -289,7 +289,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:UserTask'
       };
 
@@ -308,7 +308,7 @@ describe('features/replace - bpmn replace', function() {
       var startEvent = elementRegistry.get('StartEvent_1');
       var label = elementRegistry.get('StartEvent_1_label');
 
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:EndEvent'
       };
 
@@ -335,7 +335,7 @@ describe('features/replace - bpmn replace', function() {
 
         // given
         var task = elementRegistry.get('Task_1');
-        var newElementData =  {
+        var newElementData = {
           type: 'bpmn:UserTask'
         };
 
@@ -362,7 +362,7 @@ describe('features/replace - bpmn replace', function() {
         // given
         var task = elementRegistry.get('Task_1');
 
-        var newElementData =  {
+        var newElementData = {
           type: 'bpmn:UserTask'
         };
 
@@ -381,7 +381,7 @@ describe('features/replace - bpmn replace', function() {
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
 
-        var newElementData =  {
+        var newElementData = {
           type: 'bpmn:EndEvent'
         };
 
@@ -411,7 +411,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:UserTask'
       };
 
@@ -433,10 +433,10 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:UserTask'
       };
-      var newElementData2 =  {
+      var newElementData2 = {
         type: 'bpmn:ServiceTask'
       };
 
@@ -473,7 +473,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:UserTask'
       };
 
@@ -497,7 +497,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('StartEvent_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:EndEvent'
       };
 
@@ -513,7 +513,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('EndEvent_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:StartEvent'
       };
 
@@ -531,7 +531,7 @@ describe('features/replace - bpmn replace', function() {
 
         // given
         var task = elementRegistry.get('Task_1');
-        var newElementData =  {
+        var newElementData = {
           type: 'bpmn:UserTask'
         };
 
@@ -559,7 +559,7 @@ describe('features/replace - bpmn replace', function() {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1');
-          var newElementData =  {
+          var newElementData = {
             type: 'bpmn:EndEvent'
           };
 
@@ -587,7 +587,7 @@ describe('features/replace - bpmn replace', function() {
 
           // given
           var endEvent = elementRegistry.get('EndEvent_1');
-          var newElementData =  {
+          var newElementData = {
             type: 'bpmn:StartEvent'
           };
 
@@ -600,7 +600,7 @@ describe('features/replace - bpmn replace', function() {
           var newEvent = elementRegistry.get('EndEvent_1');
           var incoming = newEvent.incoming[0],
               outgoing = newEvent.outgoing[0],
-              source   = incoming.source;
+              source = incoming.source;
 
           expect(incoming).to.exist;
           expect(outgoing).not.to.exist;
@@ -618,7 +618,7 @@ describe('features/replace - bpmn replace', function() {
 
           // given
           var task = elementRegistry.get('Task_1');
-          var newElementData =  {
+          var newElementData = {
             type: 'bpmn:UserTask'
           };
           var newElement = bpmnReplace.replaceElement(task, newElementData);
@@ -647,7 +647,7 @@ describe('features/replace - bpmn replace', function() {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1');
-          var newElementData =  {
+          var newElementData = {
             type: 'bpmn:EndEvent'
           };
           var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
@@ -672,7 +672,7 @@ describe('features/replace - bpmn replace', function() {
 
           // given
           var endEvent = elementRegistry.get('EndEvent_1');
-          var newElementData =  {
+          var newElementData = {
             type: 'bpmn:StartEvent'
           };
           var newElement = bpmnReplace.replaceElement(endEvent, newElementData);
@@ -711,7 +711,7 @@ describe('features/replace - bpmn replace', function() {
       var taskShape = elementRegistry.get('Task_2');
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_4');
 
-      var transactionShapeData =  {
+      var transactionShapeData = {
         type: 'bpmn:Transaction'
       };
 
@@ -941,7 +941,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:ServiceTask'
       };
 
@@ -967,7 +967,7 @@ describe('features/replace - bpmn replace', function() {
 
         // given
         var transaction = elementRegistry.get('SubProcess_1');
-        var newElementData =  {
+        var newElementData = {
           type: 'bpmn:SubProcess',
           triggeredByEvent: true
         };
@@ -1299,7 +1299,7 @@ describe('features/replace - bpmn replace', function() {
     it('should copy properties', inject(function(elementRegistry, bpmnReplace) {
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
         type: 'bpmn:ServiceTask'
       };
 
@@ -1359,7 +1359,7 @@ describe('features/replace - bpmn replace', function() {
 
       // given
       var task = elementRegistry.get('Task_1');
-      var newElementData =  {
+      var newElementData = {
             type: 'bpmn:UserTask'
           },
           fill = '#BBDEFB',

@@ -49,7 +49,7 @@ describe.skip('scenario - successive reopening', function() {
       }
 
       if (event.warnings && event.warnings.length) {
-        console.warn('WARNINGS', event.warnings );
+        console.warn('WARNINGS', event.warnings);
       }
     });
 

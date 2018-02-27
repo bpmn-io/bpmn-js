@@ -1127,7 +1127,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
-        //when
+        // when
         openPopup(sequenceFlow);
 
         var entries = getEntries(popupMenu);
@@ -1885,7 +1885,7 @@ describe('features/popup-menu - replace menu provider', function() {
           return true;
         });
 
-        //when
+        // when
         openPopup(startEvent);
 
         var entries = getEntries(popupMenu);

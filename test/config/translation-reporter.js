@@ -16,12 +16,12 @@ function TranslationReporter() {
 
   this.onBrowserLog = function(browser, log, type) {
 
-    if ( log === undefined || typeof log !== 'string' ) {
+    if (log === undefined || typeof log !== 'string') {
       return;
     }
 
-    if ( log.substring( 0, 1 ) === '\'' ) {
-      log = log.substring( 1, log.length - 1 );
+    if (log.substring(0, 1) === '\'') {
+      log = log.substring(1, log.length - 1);
     }
 
     try {

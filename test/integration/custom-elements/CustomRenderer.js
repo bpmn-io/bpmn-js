@@ -26,7 +26,7 @@ function CustomRenderer(eventBus, styles) {
       return self.drawTriangle(parentGfx, element.width);
     },
     'custom:circle': function(parentGfx, element, attrs) {
-      return self.drawCircle(parentGfx, element.width, element.height,  attrs);
+      return self.drawCircle(parentGfx, element.width, element.height, attrs);
     }
   };
 

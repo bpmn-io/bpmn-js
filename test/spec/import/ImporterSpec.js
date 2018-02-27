@@ -200,11 +200,11 @@ describe('import - Importer', function() {
 
       runImport(diagram, xml, function(err, warnings) {
 
-        //round up
+        // round up
         expect(events.ID_End.x).to.equal(Math.round(340.6));
         expect(events.ID_End.y).to.equal(Math.round(136.6));
 
-        //round down
+        // round down
         expect(events.ID_Start.x).to.equal(Math.round(120.4));
         expect(events.ID_Start.y).to.equal(Math.round(135.4));
 
@@ -226,7 +226,7 @@ describe('import - Importer', function() {
 
       runImport(diagram, xml, function(err, warnings) {
 
-        //round down
+        // round down
         expect(events.ID_Start.height).to.equal(Math.round(30.4));
         expect(events.ID_Start.width).to.equal(Math.round(30.4));
 
