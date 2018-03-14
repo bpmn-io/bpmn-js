@@ -12,8 +12,9 @@ var coreModule = require('lib/core'),
     customRulesModule = require('../../../util/custom-rules');
 
 var domQuery = require('min-dom').query,
-    domClasses = require('min-dom').classes,
-    find = require('lodash/collection/find');
+    domClasses = require('min-dom').classes;
+
+var find = require('min-dash').find;
 
 var is = require('lib/util/ModelUtil').is,
     isExpanded = require('lib/util/DiUtil').isExpanded;

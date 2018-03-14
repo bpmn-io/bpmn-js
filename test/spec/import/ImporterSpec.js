@@ -11,7 +11,7 @@ var domMatches = require('min-dom').matches;
 
 var getChildrenGfx = require('diagram-js/lib/util/GraphicsUtil').getChildren;
 
-var find = require('lodash/collection/find');
+var find = require('min-dash').find;
 
 var is = require('lib/util/ModelUtil').is;
 

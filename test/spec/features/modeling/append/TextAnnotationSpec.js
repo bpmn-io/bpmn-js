@@ -5,7 +5,7 @@ require('../../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 
-var find = require('lodash/collection/find');
+var find = require('min-dash').find;
 
 var modelingModule = require('lib/features/modeling'),
     coreModule = require('lib/core');

@@ -10,10 +10,10 @@ var bpmnCopyPasteModule = require('lib/features/copy-paste'),
     modelingModule = require('lib/features/modeling'),
     coreModule = require('lib/core');
 
-var map = require('lodash/collection/map'),
-    filter = require('lodash/collection/filter'),
-    forEach = require('lodash/collection/forEach'),
-    uniq = require('lodash/array/uniq');
+var map = require('min-dash').map,
+    filter = require('min-dash').filter,
+    forEach = require('min-dash').forEach,
+    uniqueBy = require('min-dash').uniqueBy;
 
 var DescriptorTree = require('./DescriptorTree');
 
@@ -594,7 +594,7 @@ describe('features/copy-paste', function() {
           return e.businessObject.processRef.id;
         });
 
-        expect(uniq(processIds)).to.have.length(4);
+        expect(uniqueBy(function(e) {return e;}, processIds)).to.have.length(4);
       }
     ));
 
