@@ -5,7 +5,7 @@ require('../../../../TestHelper');
 /* global bootstrapModeler, inject */
 
 var is = require('lib/util/ModelUtil').is,
-    find = require('lodash/collection/find');
+    find = require('min-dash').find;
 
 var modelingModule = require('lib/features/modeling'),
     moveModule = require('diagram-js/lib/features/move'),

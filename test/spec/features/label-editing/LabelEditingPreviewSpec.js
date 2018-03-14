@@ -2,7 +2,7 @@
 
 /* global bootstrapViewer, inject */
 
-var pick = require('lodash/object/pick');
+var pick = require('min-dash').pick;
 
 var labelEditingModule = require('lib/features/label-editing'),
     coreModule = require('lib/core'),

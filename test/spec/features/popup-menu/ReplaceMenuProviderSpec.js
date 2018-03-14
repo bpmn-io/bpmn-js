@@ -13,7 +13,7 @@ var coreModule = require('lib/core'),
 
 var domQuery = require('min-dom/lib/query'),
     domClasses = require('min-dom/lib/classes'),
-    find = require('lodash/collection/find');
+    find = require('min-dash').find;
 
 var is = require('lib/util/ModelUtil').is,
     isExpanded = require('lib/util/DiUtil').isExpanded;

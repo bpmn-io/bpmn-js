@@ -1,6 +1,6 @@
 'use strict';
 
-var pick = require('lodash/object/pick');
+var pick = require('min-dash').pick;
 
 var BOUNDS_ATTRS = [ 'x', 'y', 'width', 'height' ],
     POSITION_ATTRS = [ 'x', 'y' ],

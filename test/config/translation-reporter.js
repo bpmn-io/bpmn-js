@@ -3,8 +3,8 @@
 var fs = require('fs');
 var path = require('path');
 
-var unique = require('lodash/array/unique');
-var sortBy = require('lodash/collection/sortBy');
+var unique = require('min-dash').unique;
+var sortBy = require('min-dash').sortBy;
 
 function TranslationReporter() {
   process.env.TRANSLATIONS = 'enabled';

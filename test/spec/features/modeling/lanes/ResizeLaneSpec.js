@@ -11,7 +11,7 @@ var modelingModule = require('lib/features/modeling'),
 
 var resizeTRBL = require('diagram-js/lib/features/resize/ResizeUtil').resizeTRBL;
 
-var pick = require('lodash/object/pick');
+var pick = require('min-dash').pick;
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height']);
