@@ -28,15 +28,16 @@
  * ```
  */
 
-var unique = require('min-dash').unique,
+var uniqueBy = require('min-dash').uniqueBy,
     isFunction = require('min-dash').isFunction,
-    merge = require('min-dash').merge,
     forEach = require('min-dash').forEach;
 
 var TestContainer = require('mocha-test-container-support');
 
 var Modeler = require('../../lib/Modeler'),
     Viewer = require('../../lib/Viewer');
+
+var merge = require('../util/merge');
 
 var OPTIONS, BPMN_JS;
 
@@ -96,7 +97,7 @@ function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
       _options.modules = [].concat(_options.modules || [], [ mockModule ]);
     }
 
-    _options.modules = unique(_options.modules);
+    _options.modules = uniqueBy(function(e) {return e;}, _options.modules);
 
     if (!_options.modules.length) {
       _options.modules = undefined;
@@ -105,7 +106,7 @@ function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
     // used to extract translations used during tests
     if (window.__env__ && window.__env__.TRANSLATIONS === 'enabled') {
       _options.additionalModules = [].concat(_options.additionalModules || [], [ translationModule ]);
-      _options.additionalModules = unique(_options.additionalModules);
+      _options.additionalModules = uniqueBy(function(e) {return e;}, _options.additionalModules);
     }
 
     // clean up old bpmn-js instance
