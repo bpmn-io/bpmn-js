@@ -14,7 +14,7 @@ function runTest(variant, env) {
   try {
     execSync('karma', [ 'start', 'test/config/karma.distro.js' ]);
   } catch (e) {
-    console.error('[TEST] FAILURE');
+    console.error('[TEST] FAILURE ' + variant + '@' + env);
     console.error(e);
 
     failures++;
