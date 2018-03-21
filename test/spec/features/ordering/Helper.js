@@ -2,7 +2,7 @@
 
 var TestHelper = require('../../../TestHelper');
 
-var map = require('lodash/collection/map');
+var map = require('min-dash').map;
 
 // polyfill, because Math.sign is not available in PhantomJS, IE and Safari
 // https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/sign
@@ -199,7 +199,7 @@ function compareZOrder(a, b) {
 }
 
 
-var forEach = require('lodash/collection/forEach');
+var forEach = require('min-dash').forEach;
 
 function expectZOrder() {
 
