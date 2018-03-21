@@ -4,7 +4,8 @@ var getBpmnJS = require('../../../TestHelper').getBpmnJS;
 
 var TestContainer = require('mocha-test-container-support');
 
-var domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom').query,
+    domQueryAll = require('min-dom').queryAll;
 
 var is = require('lib/util/ModelUtil').is;
 
@@ -462,7 +463,7 @@ describe('features - context-pad', function() {
           dragging.end(canvasEvent({ x: 50, y: 65 }, { ctrlKey: true, metaKey: true }));
 
           // then
-          var replaceMenu = domQuery.all('[data-id$="-boundary"]', popupMenu._current.container);
+          var replaceMenu = domQueryAll('[data-id$="-boundary"]', popupMenu._current.container);
           expect(replaceMenu).to.exist;
           expect(replaceMenu.length).to.eql(13);
         }

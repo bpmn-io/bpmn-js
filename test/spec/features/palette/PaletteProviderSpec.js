@@ -8,7 +8,8 @@ var modelingModule = require('lib/features/modeling'),
     paletteModule = require('lib/features/palette'),
     coreModule = require('lib/core');
 
-var domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom').query,
+    domQueryAll = require('min-dom').queryAll;
 
 
 describe('features/palette', function() {
@@ -24,7 +25,7 @@ describe('features/palette', function() {
 
     // when
     var paletteElement = domQuery('.djs-palette', canvas._container);
-    var entries = domQuery.all('.entry', paletteElement);
+    var entries = domQueryAll('.entry', paletteElement);
 
     // then
     expect(entries.length).to.equal(13);

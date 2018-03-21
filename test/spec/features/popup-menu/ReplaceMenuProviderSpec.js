@@ -11,8 +11,8 @@ var coreModule = require('lib/core'),
     replaceMenuProviderModule = require('lib/features/popup-menu'),
     customRulesModule = require('../../../util/custom-rules');
 
-var domQuery = require('min-dom/lib/query'),
-    domClasses = require('min-dom/lib/classes'),
+var domQuery = require('min-dom').query,
+    domClasses = require('min-dom').classes,
     find = require('lodash/collection/find');
 
 var is = require('lib/util/ModelUtil').is,

@@ -7,7 +7,7 @@ var Diagram = require('diagram-js/lib/Diagram'),
     importBpmnDiagram = require('lib/import/Importer').importBpmnDiagram,
     Viewer = require('lib/Viewer');
 
-var domMatches = require('min-dom/lib/matches');
+var domMatches = require('min-dom').matches;
 
 var getChildrenGfx = require('diagram-js/lib/util/GraphicsUtil').getChildren;
 

@@ -8,7 +8,7 @@ var coreModule = require('lib/core'),
     rendererModule = require('lib/draw'),
     modelingModule = require('lib/features/modeling');
 
-var domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom').query;
 
 /* global bootstrapViewer, bootstrapModeler, inject */
 

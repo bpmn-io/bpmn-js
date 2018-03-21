@@ -12,7 +12,7 @@ var replacePreviewModule = require('lib/features/replace-preview'),
 var is = require('lib/util/ModelUtil').is,
     canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
 
-var domQuery = require('min-dom/lib/query');
+var domQuery = require('min-dom').query;
 
 var ATTACH = { attach: true };
 
