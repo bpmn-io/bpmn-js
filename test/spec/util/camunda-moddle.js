@@ -1,9 +1,14 @@
 'use strict';
 
-var any = require('min-dash').any;
+var some = require('min-dash').some;
 
 var ALLOWED_TYPES = {
-  FailedJobRetryTimeCycle: [ 'bpmn:StartEvent', 'bpmn:BoundaryEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:Activity' ],
+  FailedJobRetryTimeCycle: [
+    'bpmn:StartEvent',
+    'bpmn:BoundaryEvent',
+    'bpmn:IntermediateCatchEvent',
+    'bpmn:Activity'
+  ],
   Connector: [ 'bpmn:EndEvent', 'bpmn:IntermediateThrowEvent' ],
   Field: [ 'bpmn:EndEvent', 'bpmn:IntermediateThrowEvent' ]
 };
@@ -18,13 +23,13 @@ function exists(element) {
 }
 
 function includesType(collection, type) {
-  return exists(collection) && any(collection, function(element) {
+  return exists(collection) && some(collection, function(element) {
     return is(element, type);
   });
 }
 
 function anyType(element, types) {
-  return any(types, function(type) {
+  return some(types, function(type) {
     return is(element, type);
   });
 }

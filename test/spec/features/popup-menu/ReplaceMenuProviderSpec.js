@@ -14,7 +14,8 @@ var coreModule = require('lib/core'),
 var domQuery = require('min-dom').query,
     domClasses = require('min-dom').classes;
 
-var find = require('min-dash').find;
+var find = require('min-dash').find,
+    matchPattern = require('min-dash').matchPattern;
 
 var is = require('lib/util/ModelUtil').is,
     isExpanded = require('lib/util/DiUtil').isExpanded;
@@ -41,7 +42,7 @@ function getEntries(popupMenu) {
 }
 
 function triggerAction(entries, id) {
-  var entry = find(entries, { id: id });
+  var entry = find(entries, matchPattern({ id: id }));
 
   if (!entry) {
     throw new Error('entry "'+ id +'" not found in replace menu');
@@ -1535,7 +1536,7 @@ describe('features/popup-menu - replace menu provider', function() {
         var entries = getEntries(popupMenu);
 
         // trigger DefaultFlow replacement
-        var replaceDefaultFlow = find(entries, { id: 'replace-with-default-flow' });
+        var replaceDefaultFlow = find(entries, matchPattern({ id: 'replace-with-default-flow' }));
 
         replaceDefaultFlow.action();
 
@@ -1570,16 +1571,20 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should remove any conditionExpression when morphing to DefaultFlow',
+      it('should remove conditionExpression when morphing to DefaultFlow',
         inject(function(elementRegistry, modeling, popupMenu, moddle) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
               exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
 
-          var conditionExpression = moddle.create('bpmn:FormalExpression', { body: '' });
+          var conditionExpression = moddle.create('bpmn:FormalExpression', {
+            body: ''
+          });
 
-          modeling.updateProperties(sequenceFlow, { conditionExpression: conditionExpression });
+          modeling.updateProperties(sequenceFlow, {
+            conditionExpression: conditionExpression
+          });
 
           // when
           openPopup(sequenceFlow);
@@ -1596,7 +1601,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should remove any conditionExpression when morphing to DefaultFlow -> undo',
+      it('should remove some conditionExpression when morphing to DefaultFlow -> undo',
         inject(function(elementRegistry, modeling, popupMenu, moddle, commandStack) {
 
           // given
@@ -1651,22 +1656,24 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should morph into a ConditionalFlow -> undo', inject(function(elementRegistry, popupMenu, commandStack) {
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_2');
+      it('should morph into a ConditionalFlow -> undo', inject(
+        function(elementRegistry, popupMenu, commandStack) {
+          // given
+          var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 
-        // when
-        openPopup(sequenceFlow);
+          // when
+          openPopup(sequenceFlow);
 
-        var entries = getEntries(popupMenu);
+          var entries = getEntries(popupMenu);
 
-        triggerAction(entries, 'replace-with-conditional-flow');
+          triggerAction(entries, 'replace-with-conditional-flow');
 
-        commandStack.undo();
+          commandStack.undo();
 
-        // then
-        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
-      }));
+          // then
+          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+        }
+      ));
 
 
       it('should morph back into a SequenceFlow', inject(function(elementRegistry, popupMenu) {

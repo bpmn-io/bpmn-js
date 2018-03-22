@@ -248,7 +248,7 @@ describe('features/replace-preview', function() {
   );
 
 
-  it('should not replace any non-interrupting start events in a selection of multiple elements',
+  it('should not replace some non-interrupting start events in a selection of multiple elements',
     inject(function(move, dragging, elementRegistry, selection) {
 
       // given

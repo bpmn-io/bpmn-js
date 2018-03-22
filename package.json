@@ -81,7 +81,7 @@
     "diagram-js-direct-editing": "^0.23.0",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
-    "min-dash": "^2.0.0",
+    "min-dash": "^2.3.0",
     "min-dom": "^2.0.1",
     "object-refs": "^0.1.1",
     "tiny-svg": "^0.1.3"

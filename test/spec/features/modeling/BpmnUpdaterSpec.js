@@ -60,7 +60,7 @@ describe('features - bpmn-updater', function() {
     it('should not create new di refs', inject(function(modeling, elementRegistry, elementFactory) {
 
       // given
-      // sequence flow without any sourceElement and targetElement di information
+      // sequence flow without some sourceElement and targetElement di information
       var sequenceFlow = elementRegistry.get('SequenceFlow_4');
 
       var intermediateThrowEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' }),

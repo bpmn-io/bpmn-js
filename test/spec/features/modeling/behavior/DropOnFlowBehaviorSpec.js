@@ -4,7 +4,7 @@ require('../../../../TestHelper');
 
 /* global inject, bootstrapModeler */
 
-var flatten = require('../../../util/flatten');
+var flatten = require('min-dash').flatten;
 
 var coreModule = require('lib/core'),
     moveModule = require('diagram-js/lib/features/move'),
