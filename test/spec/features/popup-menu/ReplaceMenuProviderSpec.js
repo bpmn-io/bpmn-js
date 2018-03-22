@@ -1571,7 +1571,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should remove conditionExpression when morphing to DefaultFlow',
+      it('should remove any conditionExpression when morphing to DefaultFlow',
         inject(function(elementRegistry, modeling, popupMenu, moddle) {
 
           // given
@@ -1601,7 +1601,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should remove some conditionExpression when morphing to DefaultFlow -> undo',
+      it('should remove any conditionExpression when morphing to DefaultFlow -> undo',
         inject(function(elementRegistry, modeling, popupMenu, moddle, commandStack) {
 
           // given
