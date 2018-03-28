@@ -6,9 +6,9 @@ var BaseRenderer = require('diagram-js/lib/draw/BaseRenderer');
 
 var componentsToPath = require('diagram-js/lib/util/RenderUtil').componentsToPath;
 
-var svgAppend = require('tiny-svg/lib/append'),
-    svgAttr = require('tiny-svg/lib/attr'),
-    svgCreate = require('tiny-svg/lib/create');
+var svgAppend = require('tiny-svg').append,
+    svgAttr = require('tiny-svg').attr,
+    svgCreate = require('tiny-svg').create;
 
 
 function CustomRenderer(eventBus, styles) {

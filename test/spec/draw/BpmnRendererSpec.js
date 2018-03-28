@@ -2,7 +2,7 @@
 
 require('../../TestHelper');
 
-var svgCreate = require('tiny-svg/lib/create');
+var svgCreate = require('tiny-svg').create;
 
 var coreModule = require('lib/core'),
     rendererModule = require('lib/draw'),

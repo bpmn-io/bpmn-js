@@ -13,9 +13,9 @@ var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
 
 var assign = require('min-dash').assign;
 
-var svgAttr = require('tiny-svg/lib/attr'),
-    svgClone = require('tiny-svg/lib/clone'),
-    innerSVG = require('tiny-svg/lib/innerSVG');
+var svgAttr = require('tiny-svg').attr,
+    svgClone = require('tiny-svg').clone,
+    innerSVG = require('tiny-svg').innerSVG;
 
 
 describe('features/replace-preview', function() {
