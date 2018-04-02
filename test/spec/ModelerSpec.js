@@ -4,17 +4,33 @@ var Modeler = require('lib/Modeler');
 
 var TestContainer = require('mocha-test-container-support');
 
+
 describe('Modeler', function() {
 
   var container;
+
+  var modeler;
 
   beforeEach(function() {
     container = TestContainer.get(this);
   });
 
+  afterEach(function() {
+    if (modeler) {
+      modeler.destroy();
+    }
+
+    modeler = null;
+  });
 
   function createModeler(xml, done) {
-    var modeler = new Modeler({ container: container });
+
+    modeler = new Modeler({
+      container: container,
+      keyboard: {
+        bindTo: document
+      }
+    });
 
     modeler.importXML(xml, function(err, warnings) {
       done(err, warnings, modeler);
