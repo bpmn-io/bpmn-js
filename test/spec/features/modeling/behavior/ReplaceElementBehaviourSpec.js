@@ -1,18 +1,24 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import replacePreviewModule from 'lib/features/replace-preview';
+import modelingModule from 'lib/features/modeling';
+import moveModule from 'diagram-js/lib/features/move';
+import coreModule from 'lib/core';
 
-var replacePreviewModule = require('lib/features/replace-preview'),
-    modelingModule = require('lib/features/modeling'),
-    moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('lib/core');
+import { is } from 'lib/util/ModelUtil';
 
-var is = require('lib/util/ModelUtil').is,
-    canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../../util/MockEvents';
 
-var domQuery = require('min-dom').query;
+import {
+  query as domQuery
+} from 'min-dom';
 
 var ATTACH = { attach: true };
 

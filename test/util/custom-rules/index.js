@@ -1,4 +1,6 @@
-module.exports = {
+import CustomRules from './CustomRules';
+
+export default {
   __init__: [ 'customRules' ],
-  customRules: [ 'type', require('./CustomRules') ]
+  customRules: [ 'type', CustomRules ]
 };

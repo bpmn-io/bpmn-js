@@ -1,14 +1,16 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  find
+} from 'min-dash';
 
-
-var find = require('min-dash').find;
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 
 describe('features/modeling - append text-annotation', function() {

@@ -1,6 +1,8 @@
 'use strict';
 
-var pick = require('min-dash').pick;
+import {
+  pick
+} from 'min-dash';
 
 var POSITION_ATTRS = [ 'x', 'y' ];
 
@@ -9,7 +11,7 @@ function extractPoints(point) {
 }
 
 
-module.exports = function(chai, utils) {
+export default function(chai, utils) {
 
   var Assertion = chai.Assertion;
 
@@ -121,4 +123,4 @@ module.exports = function(chai, utils) {
     );
   });
 
-};
+}

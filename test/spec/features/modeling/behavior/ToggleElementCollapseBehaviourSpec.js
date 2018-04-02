@@ -1,18 +1,20 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
-
-var is = require('lib/util/ModelUtil').is;
+import { is } from 'lib/util/ModelUtil';
 
 var testModules = [
   modelingModule,
   coreModule
 ];
+
 
 describe('features/modeling - collapse and expand elements', function() {
 

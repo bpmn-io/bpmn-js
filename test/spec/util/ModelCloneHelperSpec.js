@@ -1,21 +1,19 @@
 'use strict';
 
-require('../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
-var coreModule = require('lib/core');
-var modelingModule = require('lib/features/modeling');
+import ModelCloneHelper from 'lib/util/model/ModelCloneHelper';
 
-var ModelCloneHelper = require('lib/util/model/ModelCloneHelper');
+import camundaPackage from '../../fixtures/json/model/camunda';
 
-var camundaPackage = require('../../fixtures/json/model/camunda');
+import camundaModdleModule from './camunda-moddle';
 
-var camundaModdleModule = require('./camunda-moddle');
-
-function getProp(element, property) {
-  return element && element.$model.properties.get(element, property);
-}
 
 describe('util/clone/ModelCloneHelper', function() {
 
@@ -385,3 +383,10 @@ describe('util/clone/ModelCloneHelper', function() {
   });
 
 });
+
+
+// helpers ////////////
+
+function getProp(element, property) {
+  return element && element.$model.properties.get(element, property);
+}

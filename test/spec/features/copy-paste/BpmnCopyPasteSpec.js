@@ -1,27 +1,40 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+/* global sinon */
 
-/* global bootstrapModeler, inject, sinon */
+import {
+  bootstrapModeler,
+  getBpmnJS,
+  inject
+} from 'test/TestHelper';
 
-var bpmnCopyPasteModule = require('lib/features/copy-paste'),
-    copyPasteModule = require('diagram-js/lib/features/copy-paste'),
-    tooltipsModule = require('diagram-js/lib/features/tooltips'),
-    modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import bpmnCopyPasteModule from 'lib/features/copy-paste';
+import copyPasteModule from 'diagram-js/lib/features/copy-paste';
+import tooltipsModule from 'diagram-js/lib/features/tooltips';
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var map = require('min-dash').map,
-    filter = require('min-dash').filter,
-    forEach = require('min-dash').forEach,
-    uniqueBy = require('min-dash').uniqueBy;
+import {
+  map,
+  filter,
+  forEach,
+  uniqueBy
+} from 'min-dash';
 
-var DescriptorTree = require('./DescriptorTree');
+import DescriptorTree from './DescriptorTree';
 
-var is = require('lib/util/ModelUtil').is;
+import { is } from 'lib/util/ModelUtil';
+
 
 describe('features/copy-paste', function() {
 
-  var testModules = [ bpmnCopyPasteModule, copyPasteModule, tooltipsModule, modelingModule, coreModule ];
+  var testModules = [
+    bpmnCopyPasteModule,
+    copyPasteModule,
+    tooltipsModule,
+    modelingModule,
+    coreModule
+  ];
 
   var basicXML = require('../../../fixtures/bpmn/features/copy-paste/basic.bpmn'),
       clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn'),
@@ -754,7 +767,7 @@ function integrationTest(ids) {
  */
 function copy(ids) {
 
-  return TestHelper.getBpmnJS().invoke(function(copyPaste, elementRegistry) {
+  return getBpmnJS().invoke(function(copyPaste, elementRegistry) {
 
     var elements = ids.map(function(e) {
       var element = elementRegistry.get(e.id || e);

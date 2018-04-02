@@ -1,15 +1,18 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import modelingModule from 'lib/features/modeling';
+import paletteModule from 'lib/features/palette';
+import coreModule from 'lib/core';
 
-var modelingModule = require('lib/features/modeling'),
-    paletteModule = require('lib/features/palette'),
-    coreModule = require('lib/core');
-
-var domQuery = require('min-dom').query,
-    domQueryAll = require('min-dom').queryAll;
+import {
+  query as domQuery,
+  queryAll as domQueryAll
+} from 'min-dom';
 
 
 describe('features/palette', function() {

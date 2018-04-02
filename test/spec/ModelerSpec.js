@@ -1,8 +1,14 @@
 'use strict';
 
-var Modeler = require('lib/Modeler');
+import Modeler from 'lib/Modeler';
+import Viewer from 'lib/Viewer';
+import NavigatedViewer from 'lib/NavigatedViewer';
 
-var TestContainer = require('mocha-test-container-support');
+import TestContainer from 'mocha-test-container-support';
+
+import {
+  createEvent
+} from '../util/MockEvents';
 
 
 describe('Modeler', function() {
@@ -177,9 +183,6 @@ describe('Modeler', function() {
 
 
   describe('bendpoint editing support', function() {
-
-    var createEvent = require('../util/MockEvents').createEvent;
-
 
     it('should allow to edit bendpoints', function(done) {
 
@@ -432,12 +435,6 @@ describe('Modeler', function() {
 
 
   it('should expose Viewer and NavigatedViewer', function() {
-
-    // given
-    var Viewer = require('lib/Viewer');
-    var NavigatedViewer = require('lib/NavigatedViewer');
-
-    // then
     expect(Modeler.Viewer).to.equal(Viewer);
     expect(Modeler.NavigatedViewer).to.equal(NavigatedViewer);
   });

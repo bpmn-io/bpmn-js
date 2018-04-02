@@ -1,13 +1,13 @@
 'use strict';
 
-require('test/TestHelper');
-
-/* global bootstrapModeler, inject */
-
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
 var getParticipantSizeConstraints = require('lib/features/snapping/BpmnSnappingUtil').getParticipantSizeConstraints;
 
-var coreModule = require('lib/core');
+import coreModule from 'lib/core';
 
 var LANE_MIN_HEIGHT = 60,
     LANE_RIGHT_PADDING = 20,

@@ -1,17 +1,20 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
+import {
+  resizeTRBL
+} from 'diagram-js/lib/features/resize/ResizeUtil';
 
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
-
-
-var resizeTRBL = require('diagram-js/lib/features/resize/ResizeUtil').resizeTRBL;
-
-var pick = require('min-dash').pick;
+import {
+  pick
+} from 'min-dash';
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height']);

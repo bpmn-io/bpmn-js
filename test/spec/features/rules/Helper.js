@@ -1,13 +1,15 @@
 'use strict';
 
-var TestHelper = require('../../../TestHelper');
+import {
+  getBpmnJS
+} from 'test/TestHelper';
 
 
-function expectCanConnect(source, target, rules) {
+export function expectCanConnect(source, target, rules) {
 
   var results = {};
 
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
 
     source = elementRegistry.get(source);
     target = elementRegistry.get(target);
@@ -35,14 +37,12 @@ function expectCanConnect(source, target, rules) {
   expect(results).to.eql(rules);
 }
 
-module.exports.expectCanConnect = expectCanConnect;
 
-
-function expectCanDrop(element, target, expectedResult) {
+export function expectCanDrop(element, target, expectedResult) {
 
   var result;
 
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
 
     element = elementRegistry.get(element);
     target = elementRegistry.get(target);
@@ -56,14 +56,12 @@ function expectCanDrop(element, target, expectedResult) {
   expect(result).to.eql(expectedResult);
 }
 
-module.exports.expectCanDrop = expectCanDrop;
 
-
-function expectCanMove(elements, target, rules) {
+export function expectCanMove(elements, target, rules) {
 
   var results = {};
 
-  TestHelper.getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
 
     target = elementRegistry.get(target);
 
@@ -78,5 +76,3 @@ function expectCanMove(elements, target, rules) {
 
   expect(results).to.eql(rules);
 }
-
-module.exports.expectCanMove = expectCanMove;

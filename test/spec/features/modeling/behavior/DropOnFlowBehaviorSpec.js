@@ -1,17 +1,24 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global inject, bootstrapModeler */
+import {
+  flatten
+} from 'min-dash';
 
-var flatten = require('min-dash').flatten;
+import coreModule from 'lib/core';
+import moveModule from 'diagram-js/lib/features/move';
+import modelingModule from 'lib/features/modeling';
 
-var coreModule = require('lib/core'),
-    moveModule = require('diagram-js/lib/features/move'),
-    modelingModule = require('lib/features/modeling'),
-    noTouchInteractionModule = { touchInteractionEvents: ['value', null ] };
+var noTouchInteractionModule = { touchInteractionEvents: ['value', null ] };
 
-var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../../util/MockEvents';
+
 
 describe('modeling/behavior - drop on connection', function() {
 

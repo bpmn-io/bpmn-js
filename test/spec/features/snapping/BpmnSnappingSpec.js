@@ -1,19 +1,22 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
 
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
-
-var coreModule = require('lib/core'),
-    snappingModule = require('lib/features/snapping'),
-    modelingModule = require('lib/features/modeling'),
-    createModule = require('diagram-js/lib/features/create'),
-    resizeModule = require('diagram-js/lib/features/resize'),
-    moveModule = require('diagram-js/lib/features/move'),
-    rulesModule = require('lib/features/rules'),
-    connectModule = require('diagram-js/lib/features/connect');
+import coreModule from 'lib/core';
+import snappingModule from 'lib/features/snapping';
+import modelingModule from 'lib/features/modeling';
+import createModule from 'diagram-js/lib/features/create';
+import resizeModule from 'diagram-js/lib/features/resize';
+import moveModule from 'diagram-js/lib/features/move';
+import rulesModule from 'lib/features/rules';
+import connectModule from 'diagram-js/lib/features/connect';
 
 
 describe('features/snapping - BpmnSnapping', function() {

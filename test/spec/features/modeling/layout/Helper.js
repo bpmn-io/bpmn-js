@@ -1,10 +1,12 @@
-var TestHelper = require('../../../../TestHelper');
+import {
+  getBpmnJS
+} from 'test/TestHelper';
 
 
-function connect(source, target, attrs) {
+export function connect(source, target, attrs) {
 
-  var elementRegistry = TestHelper.getBpmnJS().get('elementRegistry'),
-      modeling = TestHelper.getBpmnJS().get('modeling');
+  var elementRegistry = getBpmnJS().get('elementRegistry'),
+      modeling = getBpmnJS().get('modeling');
 
   var sourceElement = typeof source === 'string' ? elementRegistry.get(source) : source;
   var targetElement = typeof target === 'string' ? elementRegistry.get(target) : target;
@@ -17,10 +19,10 @@ function connect(source, target, attrs) {
 }
 
 
-function reconnectEnd(connection, target, docking) {
+export function reconnectEnd(connection, target, docking) {
 
-  var elementRegistry = TestHelper.getBpmnJS().get('elementRegistry'),
-      modeling = TestHelper.getBpmnJS().get('modeling');
+  var elementRegistry = getBpmnJS().get('elementRegistry'),
+      modeling = getBpmnJS().get('modeling');
 
   var connectionElement = typeof connection === 'string' ? elementRegistry.get(connection) : connection;
   var targetElement = typeof target === 'string' ? elementRegistry.get(target) : target;
@@ -32,14 +34,16 @@ function reconnectEnd(connection, target, docking) {
   return modeling.reconnectEnd(connectionElement, targetElement, docking);
 }
 
-function element(id) {
-  return TestHelper.getBpmnJS().get('elementRegistry').get(id);
+
+export function element(id) {
+  return getBpmnJS().get('elementRegistry').get(id);
 }
 
-function move(shape, delta) {
 
-  var elementRegistry = TestHelper.getBpmnJS().get('elementRegistry'),
-      modeling = TestHelper.getBpmnJS().get('modeling');
+export function move(shape, delta) {
+
+  var elementRegistry = getBpmnJS().get('elementRegistry'),
+      modeling = getBpmnJS().get('modeling');
 
   var shapeElement = typeof shape === 'string' ? elementRegistry.get(shape) : shape;
 
@@ -51,15 +55,7 @@ function move(shape, delta) {
   return shapeElement;
 }
 
-
-// API
-
-module.exports.connect = connect;
-module.exports.reconnectEnd = reconnectEnd;
-module.exports.element = element;
-module.exports.move = move;
-
 // debugging
-module.exports.inspect = function(element) {
+export function inspect(element) {
   console.log(JSON.stringify(element));
-};
+}

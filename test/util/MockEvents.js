@@ -1,8 +1,12 @@
 'use strict';
 
-var assign = require('min-dash').assign;
+import {
+  assign
+} from 'min-dash';
 
-var TestHelper = require('../TestHelper');
+import {
+  getBpmnJS
+} from 'test/TestHelper';
 
 
 /**
@@ -15,9 +19,9 @@ var TestHelper = require('../TestHelper');
  *
  * @return {Event} event, scoped to the given canvas
  */
-function createCanvasEvent(position, data) {
+export function createCanvasEvent(position, data) {
 
-  return TestHelper.getBpmnJS().invoke(function(canvas) {
+  return getBpmnJS().invoke(function(canvas) {
 
     var target = canvas._svg;
 
@@ -32,12 +36,10 @@ function createCanvasEvent(position, data) {
   });
 }
 
-module.exports.createCanvasEvent = createCanvasEvent;
 
+export function createEvent(target, position, data) {
 
-function createEvent(target, position, data) {
-
-  return TestHelper.getBpmnJS().invoke(function(eventBus) {
+  return getBpmnJS().invoke(function(eventBus) {
     data = assign({
       target: target,
       x: position.x,
@@ -51,5 +53,3 @@ function createEvent(target, position, data) {
     return eventBus.createEvent(data);
   });
 }
-
-module.exports.createEvent = createEvent;

@@ -1,27 +1,33 @@
 'use strict';
 
-var getBpmnJS = require('../../../TestHelper').getBpmnJS;
+import {
+  bootstrapModeler,
+  getBpmnJS,
+  inject
+} from 'test/TestHelper';
 
-var TestContainer = require('mocha-test-container-support');
+import TestContainer from 'mocha-test-container-support';
 
-var domQuery = require('min-dom').query,
-    domQueryAll = require('min-dom').queryAll;
+import {
+  query as domQuery,
+  queryAll as domQueryAll
+} from 'min-dom';
 
-var is = require('lib/util/ModelUtil').is;
+import {
+  is
+} from 'lib/util/ModelUtil';
 
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
 
-
-/* global bootstrapModeler, inject */
-
-
-var contextPadModule = require('lib/features/context-pad'),
-    coreModule = require('lib/core'),
-    modelingModule = require('lib/features/modeling'),
-    replaceMenuModule = require('lib/features/popup-menu'),
-    createModule = require('diagram-js/lib/features/create'),
-    customRulesModule = require('../../../util/custom-rules'),
-    autoPlaceModule = require('lib/features/auto-place');
+import contextPadModule from 'lib/features/context-pad';
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
+import replaceMenuModule from 'lib/features/popup-menu';
+import createModule from 'diagram-js/lib/features/create';
+import customRulesModule from '../../../util/custom-rules';
+import autoPlaceModule from 'lib/features/auto-place';
 
 
 describe('features - context-pad', function() {

@@ -1,19 +1,30 @@
 'use strict';
 
-var TestHelper = module.exports = require('./helper');
+export * from './helper';
 
-TestHelper.insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
+import {
+  insertCSS
+} from './helper';
 
-TestHelper.insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
+insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
 
-TestHelper.insertCSS('diagram-js-testing.css',
+insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
+
+insertCSS('diagram-js-testing.css',
   'body .test-container { height: auto }' +
   'body .test-container .test-content-container { height: 90vmin; }'
 );
 
 
+import ChaiMatch from 'chai-match';
+import BoundsMatchers from './matchers/BoundsMatchers';
+import ConnectionMatchers from './matchers/ConnectionMatchers';
+import JSONMatcher from './matchers/JSONMatcher';
+
+/* global chai */
+
 // add suite specific matchers
-global.chai.use(require('chai-match'));
-global.chai.use(require('./matchers/BoundsMatchers'));
-global.chai.use(require('./matchers/ConnectionMatchers'));
-global.chai.use(require('./matchers/JSONMatcher'));
+chai.use(ChaiMatch);
+chai.use(BoundsMatchers);
+chai.use(ConnectionMatchers);
+chai.use(JSONMatcher);

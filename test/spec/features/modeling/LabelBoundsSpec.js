@@ -1,10 +1,15 @@
 'use strict';
 
-/* global bootstrapModeler, inject, sinon */
+/* global sinon */
 
-var Modeler = require('lib/Modeler');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-var TestContainer = require('mocha-test-container-support');
+import Modeler from 'lib/Modeler';
+
+import TestContainer from 'mocha-test-container-support';
 
 var DELTA = 2;
 

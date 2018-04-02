@@ -1,12 +1,12 @@
 'use strict';
 
-var TestContainer = require('mocha-test-container-support');
+import TestContainer from 'mocha-test-container-support';
 
-var Diagram = require('diagram-js/lib/Diagram');
+import Diagram from 'diagram-js/lib/Diagram';
 
-var Viewer = require('lib/Viewer');
+import Viewer from 'lib/Viewer';
 
-var inherits = require('inherits');
+import inherits from 'inherits';
 
 
 describe('Viewer', function() {
@@ -616,11 +616,13 @@ describe('Viewer', function() {
     it('should allow user to override default custom moddle extensions', function(done) {
 
       // given
-      var xml = require('../fixtures/bpmn/extension/custom-override.bpmn'),
-          additionalModdleDescriptors = {
-            custom: require('../fixtures/json/model/custom')
-          },
-          customOverride = require('../fixtures/json/model/custom-override');
+      var xml = require('../fixtures/bpmn/extension/custom-override.bpmn');
+
+      var additionalModdleDescriptors = {
+        custom: require('../fixtures/json/model/custom')
+      };
+
+      var customOverride = require('../fixtures/json/model/custom-override');
 
       function CustomViewer(options) {
         Viewer.call(this, options);

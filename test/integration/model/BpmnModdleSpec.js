@@ -1,6 +1,6 @@
 'use strict';
 
-var BpmnModdle = require('bpmn-moddle');
+import BpmnModdle from 'bpmn-moddle';
 
 
 describe('bpmn-moddle', function() {

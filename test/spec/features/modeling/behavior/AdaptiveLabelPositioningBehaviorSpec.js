@@ -1,13 +1,16 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  getOrientation
+} from 'diagram-js/lib/layout/LayoutUtil';
 
-var getOrientation = require('diagram-js/lib/layout/LayoutUtil').getOrientation;
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 
 describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {

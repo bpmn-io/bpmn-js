@@ -1,1 +1,1 @@
-module.exports = require('./lib/Viewer');
+export default './lib/Viewer';

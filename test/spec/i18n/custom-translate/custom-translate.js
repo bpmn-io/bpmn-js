@@ -1,8 +1,8 @@
 'use strict';
 
-var translate = require('diagram-js/lib/i18n/translate/translate');
+import translate from 'diagram-js/lib/i18n/translate/translate';
 
-module.exports = function customTranslate(template, replacements) {
+export default function customTranslate(template, replacements) {
   if (template === 'Remove') {
     template = 'Eliminar';
   }
@@ -12,4 +12,4 @@ module.exports = function customTranslate(template, replacements) {
   }
 
   return translate(template, replacements);
-};
+}

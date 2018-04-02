@@ -1,13 +1,15 @@
 'use strict';
 
-var CroppingConnectionDocking = require('diagram-js/lib/layout/CroppingConnectionDocking');
+import CroppingConnectionDocking from 'diagram-js/lib/layout/CroppingConnectionDocking';
 
-var getOrientation = require('diagram-js/lib/layout/LayoutUtil').getOrientation;
+import {
+  getOrientation
+} from 'diagram-js/lib/layout/LayoutUtil';
 
-var inherits = require('inherits');
+import inherits from 'inherits';
 
 
-function LoggingCroppingConnectionDocking(elementRegistry, graphicsFactory) {
+export default function LoggingCroppingConnectionDocking(elementRegistry, graphicsFactory) {
   CroppingConnectionDocking.call(this, elementRegistry, graphicsFactory);
 }
 
@@ -17,8 +19,6 @@ LoggingCroppingConnectionDocking.$inject = [
 ];
 
 inherits(LoggingCroppingConnectionDocking, CroppingConnectionDocking);
-
-module.exports = LoggingCroppingConnectionDocking;
 
 window.noIntersectCount = 0;
 

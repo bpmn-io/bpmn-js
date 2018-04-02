@@ -1,8 +1,12 @@
 'use strict';
 
-require('../../../../../TestHelper');
-
-var GeometricUtil = require('lib/features/modeling/behavior/util/GeometricUtil');
+import {
+  getDistancePointLine,
+  getAngle,
+  getDistancePointPoint,
+  perpendicularFoot,
+  rotateVector
+} from 'lib/features/modeling/behavior/util/GeometricUtil';
 
 
 describe('modeling/behavior/util - GeometricUtil', function() {
@@ -19,7 +23,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
     for (var i=0; i<testData.length; i++) {
 
       // when
-      var d = GeometricUtil.getDistancePointLine(testData[i].point, testData[i].line);
+      var d = getDistancePointLine(testData[i].point, testData[i].line);
 
       // then
       expect(Math.round(d)).to.be.equal(testData[i].distance);
@@ -38,7 +42,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
     for (var i=0; i<testData.length; i++) {
 
       // when
-      var foot = GeometricUtil.perpendicularFoot(testData[i].point, testData[i].line);
+      var foot = perpendicularFoot(testData[i].point, testData[i].line);
 
       // then
       expect(rounded(foot)).to.be.eql(testData[i].foot);
@@ -58,7 +62,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
     for (var i=0; i<testData.length; i++) {
 
       // when
-      var d = GeometricUtil.getDistancePointPoint(testData[i].p1, testData[i].p2);
+      var d = getDistancePointPoint(testData[i].p1, testData[i].p2);
 
       // then
       expect(Math.round(d)).to.be.eql(testData[i].distance);
@@ -81,7 +85,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
     for (var i=0; i<testLines.length; i++) {
 
       // when
-      var angle = GeometricUtil.getAngle(testLines[i].line);
+      var angle = getAngle(testLines[i].line);
 
       // to degree
       angle = angle * (180 / Math.PI);
@@ -108,7 +112,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
       var angle = testVectors[i].angle * (Math.PI / 180);
 
       // when
-      var rotatedVector = GeometricUtil.rotateVector(testVectors[i].vector, angle);
+      var rotatedVector = rotateVector(testVectors[i].vector, angle);
 
       // then
       expect(rounded(rotatedVector)).to.be.eql(testVectors[i].rotated);

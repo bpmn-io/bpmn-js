@@ -1,13 +1,16 @@
 'use strict';
 
-/* global bootstrapViewer, inject */
+import {
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
 var pick = require('min-dash').pick;
 
-var labelEditingModule = require('lib/features/label-editing'),
-    coreModule = require('lib/core'),
-    draggingModule = require('diagram-js/lib/features/dragging'),
-    modelingModule = require('lib/features/modeling');
+import labelEditingModule from 'lib/features/label-editing';
+import coreModule from 'lib/core';
+import draggingModule from 'diagram-js/lib/features/dragging';
+import modelingModule from 'lib/features/modeling';
 
 
 describe('features - label-editing preview', function() {

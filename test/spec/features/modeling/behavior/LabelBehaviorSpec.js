@@ -1,13 +1,16 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
-
-var LabelUtil = require('lib/util/LabelUtil');
+import {
+  getExternalLabelMid
+} from 'lib/util/LabelUtil';
 
 
 describe('behavior - LabelBehavior', function() {
@@ -168,8 +171,8 @@ describe('behavior - LabelBehavior', function() {
 
         // then
         var expected = {
-          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
-          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+          x: getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
         };
 
         expect({
@@ -194,8 +197,8 @@ describe('behavior - LabelBehavior', function() {
 
         // then
         var expected = {
-          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
-          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+          x: getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
         };
 
         expect({
@@ -220,8 +223,8 @@ describe('behavior - LabelBehavior', function() {
 
         // then
         var expected = {
-          x: LabelUtil.getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
-          y: LabelUtil.getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
+          x: getExternalLabelMid(sequenceFlowConnection).x - sequenceFlowConnection.label.width / 2,
+          y: getExternalLabelMid(sequenceFlowConnection).y - sequenceFlowConnection.label.height / 2
         };
 
         expect({

@@ -1,19 +1,29 @@
 'use strict';
 
-var TestContainer = require('mocha-test-container-support');
+import TestContainer from 'mocha-test-container-support';
 
-var Diagram = require('diagram-js/lib/Diagram'),
-    BpmnModdle = require('bpmn-moddle'),
-    importBpmnDiagram = require('lib/import/Importer').importBpmnDiagram,
-    Viewer = require('lib/Viewer');
+import Diagram from 'diagram-js/lib/Diagram';
+import BpmnModdle from 'bpmn-moddle';
 
-var domMatches = require('min-dom').matches;
+import {
+  importBpmnDiagram
+} from 'lib/import/Importer';
 
-var getChildrenGfx = require('diagram-js/lib/util/GraphicsUtil').getChildren;
+import Viewer from 'lib/Viewer';
 
-var find = require('min-dash').find;
+import {
+  matches as domMatches
+} from 'min-dom';
 
-var is = require('lib/util/ModelUtil').is;
+import {
+  getChildren as getChildrenGfx
+} from 'diagram-js/lib/util/GraphicsUtil';
+
+import {
+  find
+} from 'min-dash';
+
+import { is } from 'lib/util/ModelUtil';
 
 
 describe('import - Importer', function() {

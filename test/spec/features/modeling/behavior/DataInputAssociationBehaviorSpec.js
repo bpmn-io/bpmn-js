@@ -1,12 +1,15 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global inject, bootstrapModeler */
+import {
+  find
+} from 'min-dash';
 
-var find = require('min-dash').find;
-
-var modelingModule = require('lib/features/modeling');
+import modelingModule from 'lib/features/modeling';
 
 
 describe('modeling/behavior - fix DataInputAssociation#targetRef', function() {

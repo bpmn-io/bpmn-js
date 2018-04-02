@@ -1,12 +1,16 @@
 'use strict';
 
-/* global bootstrapModeler, inject */
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-var find = require('min-dash').find;
+import {
+  find
+} from 'min-dash';
 
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 
 describe('features/modeling - append shape', function() {

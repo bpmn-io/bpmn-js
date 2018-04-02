@@ -1,15 +1,18 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
+import moveModule from 'diagram-js/lib/features/move';
+import snappingModule from 'lib/features/snapping';
 
-var coreModule = require('lib/core'),
-    modelingModule = require('lib/features/modeling'),
-    moveModule = require('diagram-js/lib/features/move'),
-    snappingModule = require('lib/features/snapping');
-
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
 
 
 describe('features/modeling - move', function() {

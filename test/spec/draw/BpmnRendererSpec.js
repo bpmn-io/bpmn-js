@@ -1,16 +1,22 @@
 'use strict';
 
-require('../../TestHelper');
+import {
+  bootstrapModeler,
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
-var svgCreate = require('tiny-svg').create;
+import {
+  create as svgCreate
+} from 'tiny-svg';
 
-var coreModule = require('lib/core'),
-    rendererModule = require('lib/draw'),
-    modelingModule = require('lib/features/modeling');
+import coreModule from 'lib/core';
+import rendererModule from 'lib/draw';
+import modelingModule from 'lib/features/modeling';
 
-var domQuery = require('min-dom').query;
-
-/* global bootstrapViewer, bootstrapModeler, inject */
+import {
+  query as domQuery
+} from 'min-dom';
 
 function checkErrors(done) {
   return function(err, warnings) {
@@ -19,6 +25,7 @@ function checkErrors(done) {
     done();
   };
 }
+
 
 describe('draw - bpmn renderer', function() {
 

@@ -1,35 +1,24 @@
 'use strict';
 
-var forEach = require('min-dash').forEach,
-    inherits = require('inherits');
+import { forEach } from 'min-dash';
 
-var RuleProvider = require('diagram-js/lib/features/rules/RuleProvider');
+import inherits from 'inherits';
+
+import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
 var HIGH_PRIORITY = 1500;
 
 
-function isType(element, type) {
-  var patt = new RegExp(type, 'i');
-
-  return element && patt.test(element.type);
-}
-
-function isCustom(element) {
-  return element && /^custom:/.test(element.type);
-}
-
 /**
  * Specific rules for custom elements
  */
-function CustomRules(eventBus) {
+export default function CustomRules(eventBus) {
   RuleProvider.call(this, eventBus);
 }
 
 inherits(CustomRules, RuleProvider);
 
 CustomRules.$inject = [ 'eventBus' ];
-
-module.exports = CustomRules;
 
 
 CustomRules.prototype.init = function() {
@@ -145,4 +134,14 @@ function canMove(shapes, target, position) {
   });
 
   return result;
+}
+
+function isType(element, type) {
+  var patt = new RegExp(type, 'i');
+
+  return element && patt.test(element.type);
+}
+
+function isCustom(element) {
+  return element && /^custom:/.test(element.type);
 }

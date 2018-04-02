@@ -1,12 +1,13 @@
 'use strict';
 
-require('../../TestHelper');
+import {
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapViewer, inject */
+import Events from 'diagram-js/lib/core/EventBus';
 
-var Events = require('diagram-js/lib/core/EventBus');
-
-var Viewer = require('lib/Viewer');
+import Viewer from 'lib/Viewer';
 
 
 describe('environment - mocking', function() {

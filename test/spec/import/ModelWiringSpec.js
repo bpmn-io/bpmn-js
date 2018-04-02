@@ -1,11 +1,11 @@
 'use strict';
 
-require('../../TestHelper');
+import {
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapViewer, inject */
-
-
-var is = require('lib/util/ModelUtil').is;
+import { is } from 'lib/util/ModelUtil';
 
 
 describe('import - model wiring', function() {

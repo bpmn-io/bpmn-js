@@ -1,21 +1,28 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import replacePreviewModule from 'lib/features/replace-preview';
+import moveModule from 'diagram-js/lib/features/move';
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var replacePreviewModule = require('lib/features/replace-preview'),
-    moveModule = require('diagram-js/lib/features/move'),
-    modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
 
-var canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+import {
+  assign
+} from 'min-dash';
 
-var assign = require('min-dash').assign;
-
-var svgAttr = require('tiny-svg').attr,
-    svgClone = require('tiny-svg').clone,
-    innerSVG = require('tiny-svg').innerSVG;
+import {
+  attr as svgAttr,
+  clone as svgClone,
+  innerSVG
+} from 'tiny-svg';
 
 
 describe('features/replace-preview', function() {

@@ -1,19 +1,25 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import modelingModule from 'lib/features/modeling';
+import replaceModule from 'lib/features/replace';
+import moveModule from 'diagram-js/lib/features/move';
+import coreModule from 'lib/core';
 
-var modelingModule = require('lib/features/modeling'),
-    replaceModule = require('lib/features/replace'),
-    moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('lib/core');
+import {
+  is
+} from 'lib/util/ModelUtil';
 
-var is = require('lib/util/ModelUtil').is,
-    isExpanded = require('lib/util/DiUtil').isExpanded,
-    isInterrupting = require('lib/util/DiUtil').isInterrupting,
-    isEventSubProcess = require('lib/util/DiUtil').isEventSubProcess,
-    hasErrorEventDefinition = require('lib/util/DiUtil').hasErrorEventDefinition;
+import {
+  isExpanded,
+  isInterrupting,
+  isEventSubProcess,
+  hasErrorEventDefinition
+} from 'lib/util/DiUtil';
 
 
 describe('features/replace - bpmn replace', function() {

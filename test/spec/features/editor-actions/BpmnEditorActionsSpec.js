@@ -1,8 +1,9 @@
 'use strict';
 
-require('../../../TestHelper');
-
-/* global bootstrapModeler, inject */
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
 var pick = require('min-dash').pick;
 
@@ -11,12 +12,12 @@ var getBBox = require('diagram-js/lib/util/Elements').getBBox;
 var getParent = require('lib/features/modeling/util/ModelingUtil').getParent;
 
 
-var bpmnEditorActionsModule = require('lib/features/editor-actions'),
-    modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import bpmnEditorActionsModule from 'lib/features/editor-actions';
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn'),
-    collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');
+var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn');
+var collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');
 
 
 

@@ -1,12 +1,13 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
-
-var bpmnDistributeElements = require('lib/features/distribute-elements'),
-    modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import bpmnDistributeElements from 'lib/features/distribute-elements';
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 function last(arr) {
   return arr[arr.length - 1];

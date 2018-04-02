@@ -1,11 +1,8 @@
 'use strict';
 
-require('../../../TestHelper');
+import TestContainer from 'mocha-test-container-support';
 
-
-var TestContainer = require('mocha-test-container-support');
-
-var Modeler = require('lib/Modeler');
+import Modeler from 'lib/Modeler';
 
 
 describe('direct editing - touch integration', function() {

@@ -1,20 +1,21 @@
 'use strict';
 
-var Helper = require('./Helper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-var connect = Helper.connect,
-    element = Helper.element,
-    move = Helper.move,
-    reconnectEnd = Helper.reconnectEnd;
+import {
+  connect,
+  element,
+  move,
+  reconnectEnd
+} from './Helper';
 
-var Modeler = require('lib/Modeler');
+import Modeler from 'lib/Modeler';
 
-
-/* global bootstrapModeler, inject */
-
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 
 describe('features/modeling - layout', function() {

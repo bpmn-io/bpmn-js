@@ -1,10 +1,14 @@
 'use strict';
 
-var coreModule = require('lib/core'),
-    modelingModule = require('lib/features/modeling'),
-    bpmnSearchModule = require('lib/features/search');
+import {
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapViewer, inject */
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
+import bpmnSearchModule from 'lib/features/search';
+
 
 describe('features - BPMN search provider', function() {
 

@@ -1,10 +1,11 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global inject, bootstrapModeler */
-
-var modelingModule = require('lib/features/modeling');
+import modelingModule from 'lib/features/modeling';
 
 
 describe('modeling/behavior - CompensationAssociation', function() {

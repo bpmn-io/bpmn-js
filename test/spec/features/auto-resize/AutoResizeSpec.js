@@ -1,18 +1,24 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  pick,
+  assign
+} from 'min-dash';
 
-var pick = require('min-dash').pick,
-    assign = require('min-dash').assign;
+import autoResizeModule from 'lib/features/auto-resize';
+import modelingModule from 'lib/features/modeling';
+import createModule from 'diagram-js/lib/features/create';
+import coreModule from 'lib/core';
+import moveModule from 'diagram-js/lib/features/move';
 
-var autoResizeModule = require('lib/features/auto-resize'),
-    modelingModule = require('lib/features/modeling'),
-    createModule = require('diagram-js/lib/features/create'),
-    coreModule = require('lib/core'),
-    moveModule = require('diagram-js/lib/features/move'),
-    canvasEvent = require('../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
 
 function getBounds(shape) {
   return pick(shape, [ 'x', 'y', 'width', 'height' ]);

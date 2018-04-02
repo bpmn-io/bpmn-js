@@ -1,15 +1,18 @@
 'use strict';
 
-var Helper = require('./Helper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-var expectCanConnect = Helper.expectCanConnect,
-    expectCanDrop = Helper.expectCanDrop,
-    expectCanMove = Helper.expectCanMove;
+import {
+  expectCanConnect,
+  expectCanDrop,
+  expectCanMove
+} from './Helper';
 
-/* global bootstrapModeler, inject */
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
 
 describe('features/modeling/rules - BpmnRules', function() {

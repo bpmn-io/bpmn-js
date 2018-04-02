@@ -1,6 +1,8 @@
 'use strict';
 
-var some = require('min-dash').some;
+import {
+  some
+} from 'min-dash';
 
 var ALLOWED_TYPES = {
   FailedJobRetryTimeCycle: [
@@ -55,7 +57,8 @@ function CamundaModdleExtension(eventBus) {
 
 CamundaModdleExtension.$inject = [ 'eventBus' ];
 
-CamundaModdleExtension.prototype.canCloneProperty = function(newElement, refTopLevelProperty, propDescriptor) {
+CamundaModdleExtension.prototype.canCloneProperty = function(
+    newElement, refTopLevelProperty, propDescriptor) {
 
   if (isAllowed('camunda:FailedJobRetryTimeCycle', propDescriptor, newElement)) {
     return includesType(newElement.eventDefinitions, 'bpmn:TimerEventDefinition') ||
@@ -69,7 +72,8 @@ CamundaModdleExtension.prototype.canCloneProperty = function(newElement, refTopL
   }
 };
 
-module.exports = {
+
+export default {
   __init__: [ 'camundaModdleExtension' ],
   camundaModdleExtension: [ 'type', CamundaModdleExtension ]
 };

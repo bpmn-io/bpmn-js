@@ -3,8 +3,11 @@
 var fs = require('fs');
 var path = require('path');
 
-var uniqueBy = require('min-dash').uniqueBy;
-var sortBy = require('min-dash').sortBy;
+var {
+  uniqueBy,
+  sortBy
+} = require('min-dash');
+
 
 function TranslationReporter() {
   process.env.TRANSLATIONS = 'enabled';

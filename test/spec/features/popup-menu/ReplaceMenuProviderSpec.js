@@ -1,24 +1,33 @@
 'use strict';
 
-/* global bootstrapModeler, inject */
+import {
+  bootstrapModeler,
+  getBpmnJS,
+  inject
+} from 'test/TestHelper';
 
-var TestHelper = require('../../../TestHelper');
+import {
+  createEvent as globalEvent
+} from '../../../util/MockEvents';
 
-var globalEvent = require('../../../util/MockEvents').createEvent;
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
+import replaceMenuProviderModule from 'lib/features/popup-menu';
+import customRulesModule from '../../../util/custom-rules';
 
-var coreModule = require('lib/core'),
-    modelingModule = require('lib/features/modeling'),
-    replaceMenuProviderModule = require('lib/features/popup-menu'),
-    customRulesModule = require('../../../util/custom-rules');
+import {
+  query as domQuery,
+  classes as domClasses
+} from 'min-dom';
 
-var domQuery = require('min-dom').query,
-    domClasses = require('min-dom').classes;
+import {
+  find,
+  matchPattern
+} from 'min-dash';
 
-var find = require('min-dash').find,
-    matchPattern = require('min-dash').matchPattern;
+import { is } from 'lib/util/ModelUtil';
 
-var is = require('lib/util/ModelUtil').is,
-    isExpanded = require('lib/util/DiUtil').isExpanded;
+import { isExpanded } from 'lib/util/DiUtil';
 
 function queryEntry(popupMenu, id) {
   return queryPopup(popupMenu, '[data-id="' + id + '"]');
@@ -67,7 +76,7 @@ describe('features/popup-menu - replace menu provider', function() {
   var openPopup = function(element, offset) {
     offset = offset || 100;
 
-    TestHelper.getBpmnJS().invoke(function(popupMenu) {
+    getBpmnJS().invoke(function(popupMenu) {
 
       popupMenu.create('bpmn-replace', element);
 

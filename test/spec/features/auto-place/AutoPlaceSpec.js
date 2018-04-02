@@ -1,14 +1,15 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
-
-var autoPlaceModule = require('lib/features/auto-place'),
-    modelingModule = require('lib/features/modeling'),
-    selectionModule = require('diagram-js/lib/features/selection'),
-    labelEditingModule = require('lib/features/label-editing'),
-    coreModule = require('lib/core');
+import autoPlaceModule from 'lib/features/auto-place';
+import modelingModule from 'lib/features/modeling';
+import selectionModule from 'diagram-js/lib/features/selection';
+import labelEditingModule from 'lib/features/label-editing';
+import coreModule from 'lib/core';
 
 
 describe('features/auto-place', function() {

@@ -3,7 +3,7 @@
 var forEach = require('min-dash').forEach;
 
 
-function DescriptorTree(tree) {
+export default function DescriptorTree(tree) {
 
   var self = this;
 
@@ -24,8 +24,6 @@ function DescriptorTree(tree) {
 
   });
 }
-
-module.exports = DescriptorTree;
 
 DescriptorTree.prototype.getLength = function() {
   return this._length;

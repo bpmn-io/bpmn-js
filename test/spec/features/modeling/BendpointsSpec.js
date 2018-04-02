@@ -1,13 +1,13 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
-
-
-var modelingModule = require('lib/features/modeling'),
-    bendpointsModule = require('diagram-js/lib/features/bendpoints'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import bendpointsModule from 'diagram-js/lib/features/bendpoints';
+import coreModule from 'lib/core';
 
 
 describe('features/bendpoints', function() {

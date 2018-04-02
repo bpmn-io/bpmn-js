@@ -1,17 +1,25 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  is
+} from 'lib/util/ModelUtil';
 
-var is = require('lib/util/ModelUtil').is,
-    find = require('min-dash').find;
+import {
+  find
+} from 'min-dash';
 
-var modelingModule = require('lib/features/modeling'),
-    moveModule = require('diagram-js/lib/features/move'),
-    coreModule = require('lib/core');
+import modelingModule from 'lib/features/modeling';
+import moveModule from 'diagram-js/lib/features/move';
+import coreModule from 'lib/core';
 
-var canvasEvent = require('../../../../util/MockEvents').createCanvasEvent;
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../../util/MockEvents';
 
 
 function getConnection(source, target, connectionOrType) {

@@ -1,16 +1,20 @@
 'use strict';
 
-require('../../../../TestHelper');
+import {
+  bootstrapModeler,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapModeler, inject */
+import {
+  pick
+} from 'min-dash';
 
+import modelingModule from 'lib/features/modeling';
+import coreModule from 'lib/core';
 
-var pick = require('min-dash').pick;
-
-var modelingModule = require('lib/features/modeling'),
-    coreModule = require('lib/core');
-
-var getChildLanes = require('lib/features/modeling/util/LaneUtil').getChildLanes;
+import {
+  getChildLanes
+} from 'lib/features/modeling/util/LaneUtil';
 
 var DEFAULT_LANE_HEIGHT = 120;
 

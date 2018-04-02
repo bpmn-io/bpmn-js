@@ -1,16 +1,10 @@
 'use strict';
 
-require('../../../TestHelper');
+import {
+  bootstrapViewer,
+  inject
+} from 'test/TestHelper';
 
-/* global bootstrapViewer, inject */
-
-
-function getCenter(element) {
-  return {
-    x: element.x + Math.ceil(element.width / 2),
-    y: element.y + Math.ceil(element.height / 2)
-  };
-}
 
 describe('import - labels', function() {
 
@@ -79,3 +73,13 @@ describe('import - labels', function() {
   });
 
 });
+
+
+// helper ////////////////
+
+function getCenter(element) {
+  return {
+    x: element.x + Math.ceil(element.width / 2),
+    y: element.y + Math.ceil(element.height / 2)
+  };
+}
