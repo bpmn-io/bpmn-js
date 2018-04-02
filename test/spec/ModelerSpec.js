@@ -165,8 +165,8 @@ describe('Modeler', function() {
         });
 
         // then
-        expect(overlays.get({ element: 'SubProcess_1', type: 'badge' }).length).to.equal(1);
-        expect(overlays.get({ element: 'StartEvent_1', type: 'badge' }).length).to.equal(1);
+        expect(overlays.get({ element: 'SubProcess_1', type: 'badge' })).to.have.length(1);
+        expect(overlays.get({ element: 'StartEvent_1', type: 'badge' })).to.have.length(1);
 
         done(err);
       });
@@ -197,7 +197,11 @@ describe('Modeler', function() {
         expect(bendpointMove).to.exist;
 
         // when
-        bendpointMove.start(createEvent(canvas, { x: 0, y: 0 }), elementRegistry.get('SequenceFlow_1'), 1);
+        bendpointMove.start(
+          createEvent(canvas, { x: 0, y: 0 }),
+          elementRegistry.get('SequenceFlow_1'),
+          1
+        );
         dragging.move(createEvent(canvas, { x: 200, y: 200 }));
 
         done(err);
