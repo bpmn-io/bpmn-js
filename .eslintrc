@@ -1,5 +1,5 @@
 {
-  "extends": "plugin:bpmn-io/es5",
+  "extends": "plugin:bpmn-io/es6",
   "env": {
     "browser": true
   }

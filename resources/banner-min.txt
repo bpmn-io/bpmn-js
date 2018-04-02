@@ -1,1 +1,1 @@
-/*! bpmn-js - {{ variant }} v{{ version }} | Copyright (c) 2014-present, camunda Services GmbH | bpmn.io/license */
+/*! bpmn-js - {{ name }} v{{ version }} | Copyright (c) 2014-present, camunda Services GmbH | bpmn.io/license */

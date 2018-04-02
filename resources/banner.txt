@@ -1,5 +1,5 @@
 /*!
- * bpmn-js - {{ variant }} v{{ version }}
+ * bpmn-js - {{ name }} v{{ version }}
  *
  * Copyright (c) 2014-present, camunda Services GmbH
  *
