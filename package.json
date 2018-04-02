@@ -77,7 +77,7 @@
   "dependencies": {
     "bpmn-font": "^0.8.0",
     "bpmn-moddle": "^3.0.2",
-    "diagram-js": "^0.30.0",
+    "diagram-js": "^0.31.0",
     "diagram-js-direct-editing": "^0.23.0",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
