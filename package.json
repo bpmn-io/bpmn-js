@@ -36,6 +36,10 @@
   ],
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
     "browser-pack-flat": "^3.0.8",
     "browserify": "^14.5.0",
     "browserify-derequire": "^0.9.1",
@@ -76,14 +80,14 @@
   },
   "dependencies": {
     "bpmn-font": "^0.8.0",
-    "bpmn-moddle": "^4.0.0",
-    "diagram-js": "^0.31.1",
-    "diagram-js-direct-editing": "^0.23.0",
+    "bpmn-moddle": "^5.1.0",
+    "diagram-js": "^1.1.0",
+    "diagram-js-direct-editing": "^1.2.0",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
-    "min-dash": "^2.4.0",
-    "min-dom": "^2.2.0",
+    "min-dash": "^3.0.0",
+    "min-dom": "^3.0.0",
     "object-refs": "^0.1.1",
-    "tiny-svg": "^1.1.0"
+    "tiny-svg": "^2.0.0"
   }
 }

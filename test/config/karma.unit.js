@@ -1,5 +1,7 @@
 'use strict';
 
+var bbl = require('babel-plugin-add-module-exports');
+
 var path = require('path');
 
 var basePath = '../../';
@@ -72,7 +74,22 @@ module.exports = function(karma) {
       debug: true,
       paths: [ absoluteBasePath ],
       transform: [
-        [ 'stringify', { global: true, extensions: [ '.bpmn', '.xml', '.css' ] } ]
+        [ 'babelify', {
+          global: true,
+          babelrc: false,
+          presets: [ 'env' ],
+          plugins: [
+            bbl
+          ]
+        } ],
+        [ 'stringify', {
+          global: true,
+          extensions: [
+            '.bpmn',
+            '.xml',
+            '.css'
+          ]
+        } ]
       ]
     }
   });

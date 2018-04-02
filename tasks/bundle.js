@@ -1,5 +1,7 @@
 'use strict';
 
+var bbl = require('babel-plugin-add-module-exports');
+
 var browserify = require('browserify'),
     derequire = require('browserify-derequire'),
     collapse = require('bundle-collapser/plugin'),
@@ -128,6 +130,14 @@ function bundle(dest, variant, entry, done) {
       timer.start('build prod');
 
       browserify(browserifyOptions)
+        .transform('babelify', {
+          global: true,
+          babelrc: false,
+          presets: [ 'env' ],
+          plugins: [
+            bbl
+          ]
+        })
         .transform(envify, {
           NODE_ENV: 'production'
         })
@@ -170,6 +180,14 @@ function bundle(dest, variant, entry, done) {
       timer.start('build dev');
 
       browserify(browserifyOptions)
+        .transform('babelify', {
+          global: true,
+          babelrc: false,
+          presets: [ 'env' ],
+          plugins: [
+            bbl
+          ]
+        })
         .transform(envify, {
           NODE_ENV: 'development'
         })
