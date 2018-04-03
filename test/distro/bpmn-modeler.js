@@ -1,6 +1,3 @@
-'use strict';
-
-
 describe('bpmn-modeler', function() {
 
   it('should expose globals', function() {

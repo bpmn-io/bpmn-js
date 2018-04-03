@@ -1,5 +1,3 @@
-'use strict';
-
 import TestContainer from 'mocha-test-container-support';
 
 import Modeler from 'lib/Modeler';

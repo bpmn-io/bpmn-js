@@ -1,5 +1,3 @@
-'use strict';
-
 import NavigatedViewer from 'lib/NavigatedViewer';
 
 

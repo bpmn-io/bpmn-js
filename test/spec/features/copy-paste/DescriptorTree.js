@@ -1,5 +1,3 @@
-'use strict';
-
 var forEach = require('min-dash').forEach;
 
 

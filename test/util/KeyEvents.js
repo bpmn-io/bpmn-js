@@ -1,5 +1,3 @@
-'use strict';
-
 export function createKeyEvent(element, code, ctrlKey) {
   var e = document.createEvent('Events') || new document.defaultView.CustomEvent('keyEvent');
 

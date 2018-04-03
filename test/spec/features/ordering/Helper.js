@@ -1,5 +1,3 @@
-'use strict';
-
 import {
   getBpmnJS
 } from 'test/TestHelper';

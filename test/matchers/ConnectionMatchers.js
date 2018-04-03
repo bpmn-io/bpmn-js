@@ -1,5 +1,3 @@
-'use strict';
-
 import {
   pick
 } from 'min-dash';

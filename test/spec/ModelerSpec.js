@@ -1,5 +1,3 @@
-'use strict';
-
 import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';

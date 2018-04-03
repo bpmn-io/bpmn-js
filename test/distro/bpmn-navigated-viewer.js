@@ -1,6 +1,3 @@
-'use strict';
-
-
 describe('bpmn-navigated-viewer', function() {
 
   it('should expose globals', function() {

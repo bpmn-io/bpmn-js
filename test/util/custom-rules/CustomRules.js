@@ -1,5 +1,3 @@
-'use strict';
-
 import inherits from 'inherits';
 
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';

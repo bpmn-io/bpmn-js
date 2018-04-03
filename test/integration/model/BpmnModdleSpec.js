@@ -1,5 +1,3 @@
-'use strict';
-
 import BpmnModdle from 'bpmn-moddle';
 
 

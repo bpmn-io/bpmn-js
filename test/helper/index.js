@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A helper file that may be used in test cases for bpmn-js and extensions.
  *

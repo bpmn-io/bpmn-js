@@ -1,5 +1,3 @@
-'use strict';
-
 /* global process */
 
 // configures browsers to run test against

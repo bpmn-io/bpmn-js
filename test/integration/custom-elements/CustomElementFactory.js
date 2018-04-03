@@ -1,5 +1,3 @@
-'use strict';
-
 import {
   assign
 } from 'min-dash';

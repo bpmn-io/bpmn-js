@@ -1,5 +1,3 @@
-'use strict';
-
 import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';

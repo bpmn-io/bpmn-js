@@ -1,5 +1,3 @@
-'use strict';
-
 export default function(chai, utils) {
 
   utils.addMethod(chai.Assertion.prototype, 'jsonEqual', function(comparison) {

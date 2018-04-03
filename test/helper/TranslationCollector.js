@@ -1,5 +1,3 @@
-'use strict';
-
 import translate from 'diagram-js/lib/i18n/translate/translate';
 
 function collectTranslations(template, replacements) {

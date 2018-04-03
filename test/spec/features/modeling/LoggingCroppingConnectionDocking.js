@@ -1,5 +1,3 @@
-'use strict';
-
 import CroppingConnectionDocking from 'diagram-js/lib/layout/CroppingConnectionDocking';
 
 import {

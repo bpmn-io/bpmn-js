@@ -1,5 +1,3 @@
-'use strict';
-
 import intersection from 'lib/features/modeling/behavior/util/LineIntersect';
 
 
