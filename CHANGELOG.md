@@ -6,6 +6,17 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.0.1
+
+_Republished 1.0.0 with CHANGELOG entries._
+
+## 1.0.0
+
+### Breaking Changes
+
+* `CHORE`: convert code base to ES modules. You must now configure a module transpiler such as Babel or Webpack to handle ES module imports and exports
+* `CHORE`: update utility toolbelt
+
 ## 0.31.0
 
 * `FEAT`: encode entities in body properties during XML export
