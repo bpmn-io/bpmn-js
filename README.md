@@ -1,5 +1,3 @@
-> The project is still in an early stage. Documentation may be missing and [examples](https://github.com/bpmn-io/bpmn-js-examples) may be broken.
-
 # bpmn-js - BPMN 2.0 for the web
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js)
