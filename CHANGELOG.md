@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.0.2
+
+* `FIX`: correct library default export
+
 ## 1.0.1
 
 _Republished 1.0.0 with CHANGELOG entries._
