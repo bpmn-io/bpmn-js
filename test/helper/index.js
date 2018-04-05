@@ -46,7 +46,7 @@ var OPTIONS, BPMN_JS;
 import translationModule from './TranslationCollector';
 
 
-function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
+export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
   return function(done) {
     var testContainer;
