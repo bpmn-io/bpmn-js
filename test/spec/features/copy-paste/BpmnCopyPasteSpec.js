@@ -664,7 +664,11 @@ describe('features/copy-paste', function() {
 
         expect(copiedBo.asyncBefore).to.eql(bo.asyncBefore);
         expect(copiedBo.documentation).to.jsonEqual(bo.documentation);
-        expect(copiedBo.extensionElements).to.jsonEqual(bo.extensionElements);
+
+        var copiedExtensions = copiedBo.extensionElements;
+
+        expect(copiedExtensions).to.jsonEqual(bo.extensionElements);
+        expect(copiedExtensions.$parent).to.equal(copiedBo);
       })
     );
 
