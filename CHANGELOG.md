@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.0.4
+
+* `FIX`: properly wire `$parent` on copy + paste
+* `FIX`: improve boundary event rendering to correct SVG to image conversion
+
 ## 1.0.3
 
 * `FIX`: re-expose `TestHelper#bootstrapBpmnJS` util
