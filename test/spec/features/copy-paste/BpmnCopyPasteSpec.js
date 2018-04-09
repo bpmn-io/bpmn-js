@@ -287,16 +287,18 @@ describe('features/copy-paste', function() {
 
     describe('rules', function() {
 
-      it('disallow individual boundary events copying', inject(function(copyPaste, elementRegistry, canvas) {
+      it('disallow individual boundary events copying', inject(
+        function(copyPaste, elementRegistry, canvas) {
 
-        var boundaryEventA = elementRegistry.get('BoundaryEvent_1404oxd'),
-            boundaryEventB = elementRegistry.get('BoundaryEvent_1c94bi9');
+          var boundaryEventA = elementRegistry.get('BoundaryEvent_1404oxd'),
+              boundaryEventB = elementRegistry.get('BoundaryEvent_1c94bi9');
 
-        // when
-        var tree = copy([ boundaryEventA, boundaryEventB ]);
+          // when
+          var tree = copy([ boundaryEventA, boundaryEventB ]);
 
-        expect(tree.getLength()).to.equal(0);
-      }));
+          expect(tree.getLength()).to.equal(0);
+        }
+      ));
     });
 
   });
