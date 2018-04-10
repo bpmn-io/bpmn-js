@@ -29,6 +29,9 @@
     "component-event": {
       "version": "0.1.4"
     },
+    "css.escape": {
+      "version": "1.5.1"
+    },
     "delegate-events": {
       "version": "1.1.1",
       "requires": {

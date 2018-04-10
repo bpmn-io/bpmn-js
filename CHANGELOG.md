@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.1.1
+
+* `FIX`: escape `data-element-id` in CSS selectors
+
 ## 1.1.0
 
 * `FEAT`: show gateway icon on context pad without marker ([`15dfab6b`](https://github.com/bpmn-io/bpmn-js/commit/15dfab6b5b12dd184acf070f2ab3ad205d1b245c))
