@@ -806,6 +806,100 @@ describe('features/snapping - BpmnSnapping', function() {
     }));
 
 
+    it('should snap data output association on connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1'),
+          dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      var mid = { x: dataObjectReference.x + dataObjectReference.width / 2, y: dataObjectReference.y + dataObjectReference.height / 2 };
+
+      // when
+      connect.start(canvasEvent({ x: 0, y: 0 }), startEvent);
+
+      dragging.hover({
+        element: dataObjectReference,
+        gfx: elementRegistry.getGraphics(dataObjectReference)
+      });
+
+      dragging.move(canvasEvent({ x: mid.x + 10, y: mid.y + 10 }));
+
+      dragging.end();
+
+      // then
+      var expected = [
+        {
+          original:
+          {
+            x: startEvent.x + startEvent.width / 2,
+            y: startEvent.y + startEvent.height / 2
+          },
+          x: startEvent.x + startEvent.width,
+          y: startEvent.y + startEvent.height / 2
+        },
+        {
+          original:
+          {
+            x: dataObjectReference.x + dataObjectReference.width / 2,
+            y: dataObjectReference.y + dataObjectReference.height / 2
+          },
+          x: dataObjectReference.x,
+          y: dataObjectReference.y + dataObjectReference.height / 2
+        }
+      ];
+
+      expect(startEvent.outgoing[0].waypoints).to.eql(expected);
+
+    }));
+
+
+    it('should snap data input association on connect', inject(function(connect, dragging, elementRegistry) {
+
+      // given
+      var dataStoreReference = elementRegistry.get('DataStoreReference_1'),
+          task = elementRegistry.get('Task_2');
+
+      var mid = { x: task.x + task.width / 2, y: task.y + task.height / 2 };
+
+      // when
+      connect.start(canvasEvent({ x: 0, y: 0 }), dataStoreReference);
+
+      dragging.hover({
+        element: task,
+        gfx: elementRegistry.getGraphics(task)
+      });
+
+      dragging.move(canvasEvent({ x: mid.x + 10, y: mid.y + 10 }));
+
+      dragging.end();
+
+      // then
+      var expected = [
+        {
+          original:
+          {
+            x: dataStoreReference.x + dataStoreReference.width / 2,
+            y: dataStoreReference.y + dataStoreReference.height / 2
+          },
+          x: dataStoreReference.x + dataStoreReference.width,
+          y: dataStoreReference.y + dataStoreReference.height / 2
+        },
+        {
+          original:
+          {
+            x: task.x + task.width / 2,
+            y: task.y + task.height / 2
+          },
+          x: task.x,
+          y: task.y + task.height / 2
+        }
+      ];
+
+      expect(dataStoreReference.outgoing[0].waypoints).to.eql(expected);
+
+    }));
+
+
     it('should NOT snap message flow on global connect', inject(function(connect, dragging, elementRegistry) {
 
       // given
