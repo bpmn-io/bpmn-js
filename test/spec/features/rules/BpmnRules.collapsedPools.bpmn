@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_ah3a1f" targetNamespace="http://bpmn.io/bpmn" exporter="http://bpmn.io" exporterVersion="0.10.1">
+  <collaboration id="Collaboration_1">
+    <participant id="CollapsedPool_A" name="A" />
+    <participant id="CollapsedPool_B" name="B" />
+    <participant id="ExpandedPool" name="C" processRef="Process_C" />
+  </collaboration>
+  <process id="Process_C" />
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_150rzdx_di" bpmnElement="CollapsedPool_A">
+        <omgdc:Bounds x="142" y="79" width="355" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CollapsedPool_B_di" bpmnElement="CollapsedPool_B">
+        <omgdc:Bounds x="142" y="237" width="355" height="100" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExpandedPool_di" bpmnElement="ExpandedPool">
+        <omgdc:Bounds x="565" y="79" width="305" height="99" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -926,6 +926,51 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('participants', function() {
+
+    var testXML = require('./BpmnRules.collapsedPools.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('connect CollapsedPool_A -> CollapsedPool_B', inject(function() {
+
+      expectCanConnect('CollapsedPool_A', 'CollapsedPool_B', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: false,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect CollapsedPool_A -> ExpandedPool', inject(function() {
+
+      expectCanConnect('CollapsedPool_A', 'ExpandedPool', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: false,
+        dataAssociation: false
+      });
+
+    }));
+
+
+    it('connect ExpandedPool -> CollapsedPool_A', inject(function() {
+
+      expectCanConnect('ExpandedPool', 'CollapsedPool_A', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: false,
+        dataAssociation: false
+      });
+
+    }));
+
+  });
+
+
   describe('message flows', function() {
 
     var testXML = require('./BpmnRules.messageFlow.bpmn');
