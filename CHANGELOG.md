@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: add initial snapping when creating associations
 * `FIX`: allow message flows between collapsed pools
+* `FIX`: complete direct editing on popup menu use
 
 ## 1.1.1
 
