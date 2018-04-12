@@ -7,8 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: add initial snapping when creating associations
+* `CHORE`: update to `diagram-js@1.3.0`
 * `FIX`: allow message flows between collapsed pools
 * `FIX`: complete direct editing on popup menu use
+* `FIX`: focus label editing box on element creation
 
 ## 1.1.1
 
