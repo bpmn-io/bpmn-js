@@ -57,7 +57,7 @@
             <standardLoopCharacteristics id="sid-5cf2c5d8-3fea-4adf-98e0-0e5079b9f224" testBefore="false"/>
         </subProcess>
         <adHocSubProcess completionQuantity="1" id="sid-C341A75A-67E0-4050-B61F-EE9E87A5F2B3" isForCompensation="false" name="Adhoc" startQuantity="1" />
-        <adHocSubProcess completionQuantity="1" id="sid-089831BF-3189-425A-9573-9A6CA7A1CE27" isForCompensation="false" method="compensate" name="Adhoc" startQuantity="1" triggeredByEvent="false" />
+        <adHocSubProcess completionQuantity="1" id="sid-089831BF-3189-425A-9573-9A6CA7A1CE27" isForCompensation="false" name="Adhoc" startQuantity="1" triggeredByEvent="false" />
         <adHocSubProcess cancelRemainingInstances="true" completionQuantity="1" id="sid-2F24C7DE-9653-414E-81FC-7D59494A854C" isForCompensation="false" name="Adhoc" ordering="Sequential" startQuantity="1" triggeredByEvent="true" />
         <adHocSubProcess cancelRemainingInstances="true" completionQuantity="1" id="sid-EF715560-F1B1-48AA-AE2D-6D1429858F7D" isForCompensation="false" ordering="Sequential" startQuantity="1" triggeredByEvent="false" />
     </process>
