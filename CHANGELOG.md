@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.2.1
+
+* `FIX`: correct side-effects config to not include `*.css` files
+
 ## 1.2.0
 
 * `FEAT`: add initial snapping when creating associations
