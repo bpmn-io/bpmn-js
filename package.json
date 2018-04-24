@@ -90,7 +90,7 @@
     "inherits": "^2.0.1",
     "min-dash": "^3.0.0",
     "min-dom": "^3.0.0",
-    "object-refs": "^0.1.1",
+    "object-refs": "^0.3.0",
     "tiny-svg": "^2.0.0"
   }
 }

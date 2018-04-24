@@ -47,7 +47,7 @@
         "inherits": "2.0.3",
         "min-dash": "2.3.0",
         "min-dom": "2.0.1",
-        "object-refs": "0.1.1",
+        "object-refs": "0.3.0",
         "path-intersection": "1.0.2",
         "tiny-svg": "0.1.3"
       }
@@ -116,7 +116,7 @@
       }
     },
     "object-refs": {
-      "version": "0.1.1"
+      "version": "0.3.0"
     },
     "path-intersection": {
       "version": "1.0.2"
