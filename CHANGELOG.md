@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `CHORE`: bump diagram-js and object-refs version
+* `FEAT`: expose additional `BpmnTreeWalker` APIs for advanced import use-cases
+
 ## 1.2.1
 
 * `FIX`: correct side-effects config to not include `*.css` files
