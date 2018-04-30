@@ -24,7 +24,7 @@ import DescriptorTree from './DescriptorTree';
 import { is } from 'lib/util/ModelUtil';
 
 
-describe('features/copy-paste', function() {
+describe.skip('features/copy-paste', function() {
 
   var testModules = [
     bpmnCopyPasteModule,
