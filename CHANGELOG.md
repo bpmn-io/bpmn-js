@@ -6,6 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: external labels can be deleted, clearing the elements name ([#791](https://github.com/bpmn-io/bpmn-js/pull/791))
 * `FEAT`: add ability to define default element colors ([#713](https://github.com/bpmn-io/bpmn-js/issues/713))
 
 ## 2.0.1

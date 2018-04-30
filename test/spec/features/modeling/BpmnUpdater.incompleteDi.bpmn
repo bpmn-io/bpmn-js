@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <semantic:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" id="Definitions" targetNamespace="http://bpmn.io/schema/bpmn">
   <semantic:process id="Process">
-    <semantic:startEvent id="StartEvent" />
+    <semantic:startEvent id="StartEvent" name="Start 0" />
     <semantic:startEvent id="StartEvent_2" name="Start" />
   </semantic:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

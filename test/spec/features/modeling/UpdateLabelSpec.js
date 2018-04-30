@@ -30,12 +30,11 @@ describe('features/modeling - update label', function() {
 
       // then
       expect(startEvent_1.businessObject.name).to.equal('bar');
-      expect(startEvent_1.label.hidden).to.be.false;
     }
   ));
 
 
-  it('should change name of start event with hidden label', inject(
+  it('should create label name of start event', inject(
     function(modeling, elementRegistry) {
 
       // given
@@ -46,12 +45,12 @@ describe('features/modeling - update label', function() {
 
       // then
       expect(startEvent_2.businessObject.name).to.equal('bar');
-      expect(startEvent_2.label.hidden).to.be.false;
+      expect(startEvent_2.label).to.exist;
     }
   ));
 
 
-  it('should hide label when setting empty string', inject(
+  it('should delete label when setting empty string', inject(
     function(modeling, elementRegistry) {
 
       // given
@@ -62,7 +61,7 @@ describe('features/modeling - update label', function() {
 
       // then
       expect(startEvent_1.businessObject.name).to.equal('');
-      expect(startEvent_1.label.hidden).to.be.true;
+      expect(startEvent_1.label).not.to.exist;
     }
   ));
 
@@ -79,7 +78,6 @@ describe('features/modeling - update label', function() {
 
       // then
       expect(startEvent_1.businessObject.name).to.equal('bar');
-      expect(startEvent_1.label.hidden).to.be.false;
     }
   ));
 

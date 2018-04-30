@@ -1591,29 +1591,4 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   });
 
-
-  describe('labels', function() {
-
-    var testXML = require('./BpmnRules.process.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
-
-
-    it('should filter labels', inject(function(elementRegistry, rules) {
-
-      // given
-      var startEventShape = elementRegistry.get('StartEvent_None'),
-          startEventLabel = startEventShape.label;
-
-      // when
-      var allowed = rules.allowed('elements.delete', {
-        elements: [ startEventShape, startEventLabel ]
-      });
-
-      // then
-      expect(allowed).to.eql([ startEventShape ]);
-    }));
-
-  });
-
 });

@@ -42,9 +42,11 @@ describe('modeling - label layouting', function() {
       // when
       var connection = modeling.connect(element1, element2);
 
+      modeling.updateLabel(connection, 'foo');
+
       // then
-      expect(connection.label.x).to.be.equal(472);
-      expect(connection.label.y).to.be.within(335, 336);
+      expect(connection.label.x).to.be.within(463, 465);
+      expect(connection.label.y).to.be.within(335, 340);
     }));
 
 
@@ -57,9 +59,11 @@ describe('modeling - label layouting', function() {
       // when
       var connection = modeling.connect(element1, element2);
 
+      modeling.updateLabel(connection, 'foo');
+
       // then
-      expect(connection.label.x).to.be.equal(337);
-      expect(connection.label.y).to.be.within(222, 224);
+      expect(connection.label.x).to.be.within(328, 330);
+      expect(connection.label.y).to.be.within(225, 230);
     }));
 
   });
@@ -74,30 +78,6 @@ describe('modeling - label layouting', function() {
     }));
 
     describe('on segment move', function() {
-
-      it('label name not set -> move label to waypoints mid', inject(
-        function(modeling, elementRegistry, connectionSegmentMove, dragging) {
-
-          // given
-          var connection = elementRegistry.get('SequenceFlow_C'),
-              labelPosition = getLabelPosition(connection);
-
-          connection.label.businessObject.name = false;
-          connection.label.hidden = true;
-
-          // when
-          connectionSegmentMove.start(canvasEvent({ x: 0, y: 0 }), connection, 2);
-
-          dragging.move(canvasEvent({ x: 0, y: 50 }));
-
-          dragging.end();
-
-          // then
-          expect(connection.label.y - labelPosition.y).to.be.within(13, 16);
-          expect(connection.label.x - labelPosition.x).to.be.within(-87, -85);
-        }
-      ));
-
 
       it('left - no relayout', inject(function(elementRegistry, connectionSegmentMove, dragging) {
 

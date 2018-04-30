@@ -143,7 +143,7 @@ describe('features/modeling - create participant', function() {
 
         // then
         expect(participantShape.children.length).to.equal(0);
-        expect(processShape.children.length).to.equal(9);
+        expect(processShape.children.length).to.equal(7);
 
         // children di is wired
         expect(startEventDi.$parent).to.eql(rootShapeDi);
