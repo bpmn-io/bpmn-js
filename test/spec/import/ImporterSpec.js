@@ -316,6 +316,69 @@ describe('import - Importer', function() {
       });
     });
 
+
+    it('should import data store as child of participant', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/data-store.inside-participant.bpmn');
+
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml, function(err, warnings) {
+        expect(events.DataStoreReference.parent).to.equal(events.Participant);
+
+        done(err);
+      });
+
+    });
+
+    it('should import data store in particpant as child of collaboration', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.participant.bpmn');
+
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml, function(err, warnings) {
+        expect(events.DataStoreReference.parent).to.equal(events.Collaboration);
+
+        done(err);
+      });
+    });
+
+
+    it('should import data store in subprocess as child of collaboration', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.subprocess.bpmn');
+
+      var events = {};
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+
+        events[e.element.id] = e.element;
+      });
+
+      runImport(diagram, xml, function(err, warnings) {
+        expect(events.DataStoreReference.parent).to.equal(events.Collaboration);
+
+        done(err);
+      });
+    });
+
   });
 
 

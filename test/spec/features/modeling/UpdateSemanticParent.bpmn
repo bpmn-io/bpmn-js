@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0oawaw3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0">
+  <bpmn:collaboration id="Collaboration_1ymmlly">
+    <bpmn:participant id="Participant_1" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" processRef="Process_2" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:dataStoreReference id="DataStoreReference" />
+  </bpmn:process>
+  <bpmn:process id="Process_2" isExecutable="false" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1ymmlly">
+      <bpmndi:BPMNShape id="Participant_0xpjksb_di" bpmnElement="Participant_1">
+        <dc:Bounds x="0" y="0" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_18lkqyt_di" bpmnElement="Participant_2">
+        <dc:Bounds x="0" y="300" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_17mkq6m_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="200" y="100" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="240" y="120" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
