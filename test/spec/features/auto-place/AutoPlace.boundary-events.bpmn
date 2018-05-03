@@ -11,6 +11,7 @@
     <sequenceFlow id="SequenceFlow_0o6gp3o" sourceRef="TASK_1" targetRef="TASK_2" />
     <task id="TASK_3" name="TASK_3" />
     <boundaryEvent id="BOUNDARY_TOP" name="BOUNDARY_TOP" attachedToRef="TASK_1" />
+    <boundaryEvent id="BOUNDARY_TOP_RIGHT" name="BOUNDARY_TOP_RIGHT" attachedToRef="TASK_2" />
     <subProcess id="SUBPROCESS" name="SUBPROCESS" />
     <boundaryEvent id="BOUNDARY_SUBPROCESS_BOTTOM" name="BOUNDARY_SUBPROCESS_BOTTOM" attachedToRef="SUBPROCESS" />
     <boundaryEvent id="BOUNDARY_SUBPROCESS_TOP" name="BOUNDARY_SUBPROCESS_TOP" attachedToRef="SUBPROCESS" />
@@ -29,7 +30,7 @@
       <bpmndi:BPMNShape id="TASK_2_di" bpmnElement="TASK_2">
         <omgdc:Bounds x="305" y="93" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0o6gp3o_di" bpmnElement="TASK_1">
+      <bpmndi:BPMNEdge id="SequenceFlow_0o6gp3o_di" bpmnElement="SequenceFlow_0o6gp3o">
         <omgdi:waypoint xsi:type="omgdc:Point" x="221" y="133" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="305" y="133" />
         <bpmndi:BPMNLabel>
@@ -43,6 +44,12 @@
         <omgdc:Bounds x="156" y="75" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="78" y="52" width="86" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BOUNDARY_TOP_RIGHT_di" bpmnElement="BOUNDARY_TOP_RIGHT">
+        <omgdc:Bounds x="387" y="75" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="363" y="44" width="84" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SUBPROCESS_di" bpmnElement="SUBPROCESS" isExpanded="true">
