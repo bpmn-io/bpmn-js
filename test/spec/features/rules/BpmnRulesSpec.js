@@ -916,6 +916,12 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));
 
+
+    it('drop DataStoreReference -> Collaboration', function() {
+      expectCanDrop('DataStoreReference', 'Collaboration', true);
+    });
+
+
     it('drop element -> collapsed Participant', inject(function(canvas) {
       expectCanDrop('StartEvent_None', 'CollapsedParticipant', false);
       expectCanDrop('SubProcess', 'CollapsedParticipant', false);
@@ -1090,6 +1096,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       });
     }));
   });
+
 
   describe('event move', function() {
 

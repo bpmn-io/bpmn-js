@@ -5,42 +5,22 @@
     <bpmn:participant id="Participant_2" processRef="Process_2" />
   </bpmn:collaboration>
   <bpmn:process id="Process" isExecutable="false">
-    <bpmn:subProcess id="SubProcess">
-      <bpmn:dataStoreReference id="DataStoreReference" />
-    </bpmn:subProcess>
+    <bpmn:dataStoreReference id="DataStoreReference" />
   </bpmn:process>
-  <bpmn:process id="Process_2" isExecutable="false">
-    <bpmn:dataStoreReference id="DataStoreReference_2" />
-    <bpmn:dataStoreReference id="DataStoreReference_3" />
-  </bpmn:process>
+  <bpmn:process id="Process_2" isExecutable="false" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
       <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant" isHorizontal="false">
         <dc:Bounds x="42" y="46" width="600" height="250" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="SubProcess_di" bpmnElement="SubProcess" isExpanded="true">
-        <dc:Bounds x="260" y="73" width="350" height="200" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
-        <dc:Bounds x="400" y="200" width="50" height="50" />
+        <dc:Bounds x="42" y="375" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="375" y="245" width="90" height="20" />
+          <dc:Bounds x="22" y="425" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_066vvzt_di" bpmnElement="Participant_2">
-        <dc:Bounds x="42" y="514" width="600" height="250" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_01wsbcu_di" bpmnElement="DataStoreReference_2">
-        <dc:Bounds x="150" y="600" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="180.5438596491228" y="685.7462887989204" width="0" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_135tyw7_di" bpmnElement="DataStoreReference_3">
-        <dc:Bounds x="500" y="400" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="617" y="478" width="0" height="12" />
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="50" y="500" width="600" height="250" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
