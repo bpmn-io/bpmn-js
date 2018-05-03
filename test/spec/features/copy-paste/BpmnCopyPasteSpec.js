@@ -123,7 +123,7 @@ describe('features/copy-paste', function() {
           return e !== element && is(e, 'bpmn:SubProcess');
         });
 
-        expect(pastedElements[0].id).to.not.equal(pastedElements[1].id);
+        expect(pastedElements[0].id).not.to.equal(pastedElements[1].id);
       }
     ));
 
@@ -804,7 +804,7 @@ function expectCollection(collA, collB, contains) {
     if (contains) {
       expect(collA).to.contain(element);
     } else {
-      expect(collA).to.not.contain(element);
+      expect(collA).not.to.contain(element);
     }
   });
 }

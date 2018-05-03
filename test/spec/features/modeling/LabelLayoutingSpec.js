@@ -239,7 +239,7 @@ describe('modeling - label layouting', function() {
           dragging.end();
 
           // then
-          expect(getLabelPosition(connection)).to.not.eql(labelPosition);
+          expect(getLabelPosition(connection)).not.to.eql(labelPosition);
 
         }
       ));

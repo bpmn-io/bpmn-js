@@ -965,7 +965,7 @@ describe('features/popup-menu - replace menu provider', function() {
             defaultFlowEntry = queryEntry(popupMenu, 'replace-with-default-flow');
 
         // then
-        expect(sequenceFlowEntry).to.not.exist;
+        expect(sequenceFlowEntry).not.to.exist;
         expect(defaultFlowEntry).to.exist;
       }));
 
@@ -982,7 +982,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(sequenceFlowEntry).to.exist;
-        expect(defaultFlowEntry).to.not.exist;
+        expect(defaultFlowEntry).not.to.exist;
       }));
 
     });
@@ -1008,7 +1008,7 @@ describe('features/popup-menu - replace menu provider', function() {
             defaultFlowEntry = queryEntry(popupMenu, 'replace-with-default-flow');
 
         // then
-        expect(sequenceFlowEntry).to.not.exist;
+        expect(sequenceFlowEntry).not.to.exist;
         expect(defaultFlowEntry).to.exist;
       }));
 
@@ -1025,7 +1025,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(sequenceFlowEntry).to.exist;
-        expect(defaultFlowEntry).to.not.exist;
+        expect(defaultFlowEntry).not.to.exist;
       }));
 
     });
@@ -1113,7 +1113,7 @@ describe('features/popup-menu - replace menu provider', function() {
         var collapsedSubProcessEntry = queryEntry(popupMenu, 'replace-with-collapsed-subprocess');
 
         // then
-        expect(collapsedSubProcessEntry).to.not.exist;
+        expect(collapsedSubProcessEntry).not.to.exist;
       }));
 
     });
@@ -1189,7 +1189,7 @@ describe('features/popup-menu - replace menu provider', function() {
         var task = elementRegistry.get('Task_1ei94kl');
 
         // then
-        expect(task.businessObject.default).to.not.exist;
+        expect(task.businessObject.default).not.to.exist;
       }));
 
 
@@ -1243,7 +1243,7 @@ describe('features/popup-menu - replace menu provider', function() {
         triggerAction(entries, 'replace-with-conditional-flow');
 
         // then
-        expect(task.businessObject.default).to.not.exist;
+        expect(task.businessObject.default).not.to.exist;
       }));
 
 
@@ -1293,7 +1293,7 @@ describe('features/popup-menu - replace menu provider', function() {
           commandStack.undo();
 
           // then
-          expect(gateway.businessObject.default).to.not.exist;
+          expect(gateway.businessObject.default).not.to.exist;
         })
       );
 
@@ -1316,7 +1316,7 @@ describe('features/popup-menu - replace menu provider', function() {
           var task = elementRegistry.get('Task_1ei94kl');
 
           // then
-          expect(task.businessObject.default).to.not.exist;
+          expect(task.businessObject.default).not.to.exist;
         })
       );
 
@@ -1372,7 +1372,7 @@ describe('features/popup-menu - replace menu provider', function() {
           var gateway = elementRegistry.get('ExclusiveGateway_1');
 
           // then
-          expect(gateway.businessObject.default).to.not.exist;
+          expect(gateway.businessObject.default).not.to.exist;
         })
       );
 
@@ -1436,7 +1436,7 @@ describe('features/popup-menu - replace menu provider', function() {
             var gateway = elementRegistry.get('ExclusiveGateway_1');
 
             // then
-            expect(gateway.businessObject.default).to.not.exist;
+            expect(gateway.businessObject.default).not.to.exist;
           })
         );
       });
@@ -1603,7 +1603,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           // then
           expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
-          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+          expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
         })
       );
 
@@ -1630,7 +1630,7 @@ describe('features/popup-menu - replace menu provider', function() {
           commandStack.undo();
 
           // then
-          expect(exclusiveGateway.businessObject.default).to.not.exist;
+          expect(exclusiveGateway.businessObject.default).not.to.exist;
           expect(sequenceFlow.businessObject.conditionExpression).to.equal(conditionExpression);
         })
       );
@@ -1678,7 +1678,7 @@ describe('features/popup-menu - replace menu provider', function() {
           commandStack.undo();
 
           // then
-          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+          expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
         }
       ));
 
@@ -1703,7 +1703,7 @@ describe('features/popup-menu - replace menu provider', function() {
         triggerAction(entries, 'replace-with-sequence-flow');
 
         // then
-        expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+        expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
       }));
 
 
@@ -1728,7 +1728,7 @@ describe('features/popup-menu - replace menu provider', function() {
           ]);
 
           // then
-          expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+          expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
         })
       );
 
@@ -1788,7 +1788,7 @@ describe('features/popup-menu - replace menu provider', function() {
             ]);
 
             // then
-            expect(sequenceFlow.businessObject.conditionExpression).to.not.exist;
+            expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
           })
         );
 

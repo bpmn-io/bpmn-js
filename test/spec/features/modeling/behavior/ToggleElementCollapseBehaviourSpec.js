@@ -95,7 +95,7 @@ describe('features/modeling - collapse and expand elements', function() {
         // then
         expect(is(expandedAdHocSubProcess, 'bpmn:AdHocSubProcess')).to.eql(true);
         var businessObject = expandedAdHocSubProcess.businessObject;
-        expect(businessObject.loopCharacteristics).to.not.be.undefined;
+        expect(businessObject.loopCharacteristics).not.to.be.undefined;
       })
     );
 
@@ -381,7 +381,7 @@ describe('features/modeling - collapse and expand elements', function() {
         // then
         expect(is(collapsedSubProcess, 'bpmn:AdHocSubProcess')).to.eql(true);
         var businessObject = collapsedSubProcess.businessObject;
-        expect(businessObject.loopCharacteristics).to.not.be.undefined;
+        expect(businessObject.loopCharacteristics).not.to.be.undefined;
       })
     );
 

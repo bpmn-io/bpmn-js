@@ -103,7 +103,7 @@ describe('features/distribute-elements', function() {
       // then
       expect(rangeGroups).to.have.length(3);
 
-      expect(rangeGroups[1].elements).to.not.include(boundaryEvent);
+      expect(rangeGroups[1].elements).not.to.include(boundaryEvent);
 
     }));
 

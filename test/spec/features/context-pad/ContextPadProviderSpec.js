@@ -103,7 +103,7 @@ describe('features - context-pad', function() {
         contextPad.open(element);
 
         // then
-        expect(deleteAction(element)).to.not.exist;
+        expect(deleteAction(element)).not.to.exist;
       })
     );
 
@@ -161,7 +161,7 @@ describe('features - context-pad', function() {
         contextPad.open(element);
 
         // then
-        expect(deleteAction(element)).to.not.exist;
+        expect(deleteAction(element)).not.to.exist;
       })
     );
 
@@ -493,7 +493,7 @@ describe('features - context-pad', function() {
           replaceMenu = domQuery('.bpmn-replace', container);
 
           // then
-          expect(replaceMenu).to.not.exist;
+          expect(replaceMenu).not.to.exist;
         }
       ));
 

@@ -70,7 +70,7 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
       commandStack.redo();
 
       // then
-      expect(sourceLane.flowNodeRef).to.not.contain(task);
+      expect(sourceLane.flowNodeRef).not.to.contain(task);
     }));
 
   });

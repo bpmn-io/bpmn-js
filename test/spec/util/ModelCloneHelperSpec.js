@@ -60,7 +60,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
       var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), []);
 
-      expect(getProp(serviceTask, 'camunda:assignee')).to.not.exist;
+      expect(getProp(serviceTask, 'camunda:assignee')).not.to.exist;
     }));
 
   });
@@ -83,7 +83,7 @@ describe('util/clone/ModelCloneHelper', function() {
       var serviceTaskDocs = getProp(serviceTask, 'bpmn:documentation'),
           userTaskDocs = getProp(userTask, 'bpmn:documentation');
 
-      expect(userTaskDocs[0]).to.not.equal(serviceTaskDocs[0]);
+      expect(userTaskDocs[0]).not.to.equal(serviceTaskDocs[0]);
 
       expect(serviceTaskDocs[0].$parent).to.equal(serviceTask);
 
@@ -121,7 +121,7 @@ describe('util/clone/ModelCloneHelper', function() {
       var executionListener = serviceTask.extensionElements.values[0];
 
       // then
-      expect(executionListener).to.not.equal(userTask.extensionElements.values[0]);
+      expect(executionListener).not.to.equal(userTask.extensionElements.values[0]);
       expect(executionListener.$type).to.equal('camunda:ExecutionListener');
 
       expect(executionListener.$type).to.equal('camunda:ExecutionListener');
@@ -180,15 +180,15 @@ describe('util/clone/ModelCloneHelper', function() {
       var newOutParam = executionListener.outputParameters[0];
       var oldOutParam = userTask.extensionElements.values[0].outputParameters[0];
 
-      expect(newOutParam).to.not.equal(oldOutParam);
+      expect(newOutParam).not.to.equal(oldOutParam);
 
       expect(newOutParam.$parent).to.equal(executionListener);
-      expect(newOutParam.definition).to.not.equal(oldOutParam.definition);
+      expect(newOutParam.definition).not.to.equal(oldOutParam.definition);
       expect(newOutParam.definition.$parent).to.equal(newOutParam);
 
-      expect(newOutParam.definition.items[0]).to.not.equal(oldOutParam.definition.items[0]);
+      expect(newOutParam.definition.items[0]).not.to.equal(oldOutParam.definition.items[0]);
 
-      expect(newOutParam.definition.items[0].$parent).to.not.equal(newOutParam.definition.$parent);
+      expect(newOutParam.definition.items[0].$parent).not.to.equal(newOutParam.definition.$parent);
 
       expect(newOutParam.$type).to.equal('camunda:OutputParameter');
       expect(newOutParam.definition.$type).to.equal('camunda:List');
@@ -216,7 +216,7 @@ describe('util/clone/ModelCloneHelper', function() {
       var extElem = userTask.extensionElements;
 
       // then
-      expect(extElem).to.not.exist;
+      expect(extElem).not.to.exist;
     }));
 
   });
@@ -375,7 +375,7 @@ describe('util/clone/ModelCloneHelper', function() {
       var extElems = clonedElement.extensionElements;
 
       // then
-      expect(extElems).to.not.exist;
+      expect(extElems).not.to.exist;
     }));
 
   });

@@ -163,7 +163,7 @@ describe('features/modeling - create participant', function() {
               rootShapeDi = rootElement.businessObject.di;
 
           // then
-          expect(startEventDi.$parent).to.not.be.ok;
+          expect(startEventDi.$parent).not.to.be.ok;
           expect(rootShapeDi.planeElement).not.to.include(startEventDi);
         }
       ));
@@ -215,7 +215,7 @@ describe('features/modeling - create participant', function() {
       // then
       expect(collaborationRoot.children).not.to.include(participantShape);
 
-      expect(participant.$parent).to.not.be.ok;
+      expect(participant.$parent).not.to.be.ok;
       expect(collaboration.participants).not.to.include(participant);
     }));
 

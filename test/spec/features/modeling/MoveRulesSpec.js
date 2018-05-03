@@ -52,7 +52,7 @@ describe('features/modeling - move', function() {
     expect(subProcess.attachers).to.include(boundaryEvent);
 
     expect(boundaryEvent.host).to.eql(subProcess);
-    expect(label.host).to.not.exist;
+    expect(label.host).not.to.exist;
   }));
 
 
@@ -82,7 +82,7 @@ describe('features/modeling - move', function() {
       expect(subProcess.attachers).to.include(boundaryEvent);
 
       expect(boundaryEvent.host).to.eql(subProcess);
-      expect(label.host).to.not.exist;
+      expect(label.host).not.to.exist;
     })
   );
 
@@ -113,7 +113,7 @@ describe('features/modeling - move', function() {
     expect(subProcess.attachers).to.include(boundaryEvent);
 
     expect(boundaryEvent.host).to.eql(subProcess);
-    expect(label.host).to.not.exist;
+    expect(label.host).not.to.exist;
   }));
 
 
@@ -146,7 +146,7 @@ describe('features/modeling - move', function() {
       expect(subProcess.attachers).to.include(boundaryEvent);
 
       expect(boundaryEvent.host).to.eql(subProcess);
-      expect(label.host).to.not.exist;
+      expect(label.host).not.to.exist;
     })
   );
 

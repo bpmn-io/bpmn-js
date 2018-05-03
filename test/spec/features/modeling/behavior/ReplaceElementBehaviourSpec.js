@@ -179,7 +179,7 @@ describe('features/modeling - move start event behavior', function() {
 
           // then
           expect(subProcess.children).to.have.length(2);
-          expect(newEndEvent.eventDefinitionTypes).to.not.exist;
+          expect(newEndEvent.eventDefinitionTypes).not.to.exist;
         })
       );
 
@@ -234,7 +234,7 @@ describe('features/modeling - move start event behavior', function() {
 
           // then
           expect(transaction.children).to.have.length(0);
-          expect(endEventAfter.businessObject.eventDefinitions).to.not.exist;
+          expect(endEventAfter.businessObject.eventDefinitions).not.to.exist;
         })
       );
 
@@ -290,7 +290,7 @@ describe('features/modeling - move start event behavior', function() {
           var newBoundaryEvent = subProcess.attachers[0].businessObject;
 
           // then
-          expect(newBoundaryEvent.eventDefinitionTypes).to.not.exist;
+          expect(newBoundaryEvent.eventDefinitionTypes).not.to.exist;
           expect(newBoundaryEvent.attachedToRef).to.equal(subProcess.businessObject);
           expect(elementRegistry.get('Transaction_1')).to.eql(subProcess);
         })
@@ -348,7 +348,7 @@ describe('features/modeling - move start event behavior', function() {
           })[0];
 
           // then
-          expect(movedBoundaryEvent.businessObject.eventDefinitions).to.not.exist;
+          expect(movedBoundaryEvent.businessObject.eventDefinitions).not.to.exist;
           expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
           expect(movedBoundaryEvent.parent).to.equal(process);
 

@@ -37,7 +37,7 @@ describe('features/modeling - delete participant', function() {
         modeling.removeShape(participantShape);
 
         // then
-        expect(participant.$parent).to.not.be.ok;
+        expect(participant.$parent).not.to.be.ok;
 
         var newRootShape = canvas.getRootElement(),
             newRootBusinessObject = newRootShape.businessObject;
@@ -45,11 +45,11 @@ describe('features/modeling - delete participant', function() {
         expect(newRootBusinessObject.$instanceOf('bpmn:Process')).to.be.true;
 
         // collaboration DI is unwired
-        expect(participantDi.$parent).to.not.be.ok;
-        expect(collaboration.di).to.not.be.ok;
+        expect(participantDi.$parent).not.to.be.ok;
+        expect(collaboration.di).not.to.be.ok;
 
-        expect(bpmnDefinitions.rootElements).to.not.include(process);
-        expect(bpmnDefinitions.rootElements).to.not.include(collaboration);
+        expect(bpmnDefinitions.rootElements).not.to.include(process);
+        expect(bpmnDefinitions.rootElements).not.to.include(collaboration);
 
         // process DI is wired
         expect(diPlane.bpmnElement).to.eql(newRootBusinessObject);

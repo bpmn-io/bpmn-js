@@ -1380,7 +1380,7 @@ describe('features/replace - bpmn replace', function() {
       expect(businessObject.di.fill).to.equal(fill);
       expect(businessObject.di.stroke).to.equal(stroke);
 
-      expect(newElement.colors).to.not.exist;
+      expect(newElement.colors).not.to.exist;
     }));
 
   });
