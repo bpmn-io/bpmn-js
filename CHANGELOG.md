@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.3.1
+
+* `FIX`: correctly auto-place from boundary events attached to host edges ([#788](https://github.com/bpmn-io/bpmn-js/issues/788))
+
 ## 1.3.0
 
 * `FEAT`: expose additional `BpmnTreeWalker` APIs for advanced import use-cases
