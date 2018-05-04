@@ -216,6 +216,11 @@ describe('features/auto-place', function() {
       expectedBounds: { x: 242, y: -27, width: 100, height: 80 }
     }));
 
+    it('should place top right of BOUNDARY_TOP_RIGHT without infinite loop', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'BOUNDARY_TOP_RIGHT',
+      expectedBounds: { x: 473, y: -27, width: 100, height: 80 }
+    }));
 
     it('should place top right of BOUNDARY_SUBPROCESS_TOP', autoPlace({
       element: 'bpmn:Task',
