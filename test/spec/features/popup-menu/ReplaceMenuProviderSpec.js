@@ -76,9 +76,9 @@ describe('features/popup-menu - replace menu provider', function() {
 
     getBpmnJS().invoke(function(popupMenu) {
 
-      popupMenu.create('bpmn-replace', element);
-
-      popupMenu.open({ x: element.x + offset, y: element.y + offset });
+      popupMenu.open(element, 'bpmn-replace', {
+        x: element.x + offset, y: element.y + offset
+      });
 
     });
   };
