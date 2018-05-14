@@ -82,7 +82,7 @@
   },
   "dependencies": {
     "bpmn-font": "^0.8.0",
-    "bpmn-moddle": "^5.1.4",
+    "bpmn-moddle": "^5.1.5",
     "css.escape": "^1.5.1",
     "diagram-js": "^1.4.0",
     "diagram-js-direct-editing": "^1.2.2",
