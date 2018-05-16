@@ -89,16 +89,16 @@ describe('features - bpmn-updater', function() {
   });
 
 
-  describe('missing bpmndi:Bounds', function() {
+  describe('incomplete DI', function() {
 
-    var diagramXML = require('./BpmnUpdater.missingBounds.bpmn');
+    var diagramXML = require('./BpmnUpdater.incompleteDi.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: testModules
     }));
 
 
-    it('should add bpmndi:Bounds', inject(
+    it('should add missing label bpmndi:Bounds', inject(
       function(modeling, elementRegistry) {
 
         // given
@@ -118,6 +118,27 @@ describe('features - bpmn-updater', function() {
           'x', 'y',
           'width', 'height'
         );
+      }
+    ));
+
+
+    it('should add missing bpmndi:BPMNLabel', inject(
+      function(modeling, elementRegistry) {
+
+        // given
+        var event = elementRegistry.get('StartEvent_2'),
+            label = event.label,
+            di = event.businessObject.di;
+
+        // when
+        modeling.moveElements([ label ], { x: 20, y: 20 });
+
+        var diLabel = di.label;
+
+        // then
+        expect(diLabel).to.exist;
+
+        expect(diLabel.bounds).to.exist;
       }
     ));
 
