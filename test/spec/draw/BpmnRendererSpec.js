@@ -177,7 +177,7 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  it.skip('should render colors', function(done) {
+  it('should render colors', function(done) {
     var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
     bootstrapViewer(xml)(checkErrors(done));
   });

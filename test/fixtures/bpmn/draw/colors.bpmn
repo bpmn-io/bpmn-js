@@ -236,7 +236,7 @@ can be added, too]]></bpmn:text>
       <bpmndi:BPMNEdge id="SequenceFlow_01w8xpk_di" bpmnElement="SequenceFlow_01w8xpk" bioc:stroke="fuchsia">
         <di:waypoint xsi:type="dc:Point" x="802" y="131" />
         <di:waypoint xsi:type="dc:Point" x="834" y="131" />
-        <bpmndi:BPMNLabel bioc:fill="fuchsia">
+        <bpmndi:BPMNLabel>
           <dc:Bounds x="818" y="121" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
