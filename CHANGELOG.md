@@ -6,9 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-### BREAKING CHANGES
+### Breaking Changes
 
-* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#200)
+* `CHORE`: update to [`diagram-js@2.1.1`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#211)
 
 ## 1.3.3
 

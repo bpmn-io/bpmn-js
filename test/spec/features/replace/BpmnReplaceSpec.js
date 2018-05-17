@@ -360,7 +360,7 @@ describe('features/replace - bpmn replace', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-    it('should keep interior labels',
+    it('should keep internal labels',
       inject(function(elementRegistry, bpmnReplace) {
 
         // given
@@ -379,7 +379,7 @@ describe('features/replace - bpmn replace', function() {
     );
 
 
-    it('should keep exterior labels',
+    it('should keep external labels',
       inject(function(elementRegistry, bpmnReplace) {
 
         // given
@@ -393,7 +393,6 @@ describe('features/replace - bpmn replace', function() {
         var newElement = bpmnReplace.replaceElement(startEvent, newElementData);
 
         // then
-        expect(newElement.label.hidden).to.equal(false);
         expect(newElement.label.labelTarget).to.equal(newElement);
         expect(newElement.businessObject.name).to.equal('KEEP ME');
       })

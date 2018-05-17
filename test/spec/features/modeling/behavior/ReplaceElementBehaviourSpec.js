@@ -178,7 +178,7 @@ describe('features/modeling - move start event behavior', function() {
           var newEndEvent = subProcess.children[0].businessObject;
 
           // then
-          expect(subProcess.children).to.have.length(2);
+          expect(subProcess.children).to.have.length(1);
           expect(newEndEvent.eventDefinitionTypes).not.to.exist;
         })
       );
@@ -206,7 +206,7 @@ describe('features/modeling - move start event behavior', function() {
           })[0];
 
           // then
-          expect(transaction.children).to.have.length(2);
+          expect(transaction.children).to.have.length(1);
           expect(endEventAfter.businessObject.eventDefinitions).to.exist;
         })
       );
@@ -262,7 +262,7 @@ describe('features/modeling - move start event behavior', function() {
           })[0];
 
           // then
-          expect(transaction.children).to.have.length(2);
+          expect(transaction.children).to.have.length(1);
           expect(endEventAfter.businessObject.eventDefinitions).to.exist;
         })
       );
