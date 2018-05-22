@@ -24,7 +24,7 @@ import DescriptorTree from './DescriptorTree';
 import { is } from 'lib/util/ModelUtil';
 
 
-describe.skip('features/copy-paste', function() {
+describe.only('features/copy-paste', function() {
 
   var testModules = [
     bpmnCopyPasteModule,
@@ -63,7 +63,7 @@ describe.skip('features/copy-paste', function() {
 
         expect(tree.getDepthLength(0)).to.equal(1);
         expect(tree.getDepthLength(1)).to.equal(3);
-        expect(tree.getDepthLength(2)).to.equal(15);
+        expect(tree.getDepthLength(2)).to.equal(12);
 
         expect(subProcess.isExpanded).to.be.true;
       }));
@@ -245,6 +245,7 @@ describe.skip('features/copy-paste', function() {
       );
 
 
+      // this test breaks due to LabelBehavior#97
       it('selected elements', inject(integrationTest([ 'SubProcess_1kd6ist' ])));
 
       it('should retain color properties',
@@ -524,7 +525,7 @@ describe.skip('features/copy-paste', function() {
         expect(lane.children).to.be.empty;
         expect(lane.businessObject.flowNodeRef).to.have.length(2);
 
-        expect(participant.children).to.have.length(10);
+        expect(participant.children).to.have.length(7);
       }));
 
 
@@ -684,6 +685,8 @@ describe.skip('features/copy-paste', function() {
 function integrationTest(ids) {
 
   return function(canvas, elementRegistry, modeling, copyPaste, commandStack) {
+    // debugger
+    
     // given
     var shapes = elementRegistry.getAll(),
         rootElement;
