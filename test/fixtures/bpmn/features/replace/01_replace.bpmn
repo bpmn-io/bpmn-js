@@ -43,7 +43,9 @@
     <bpmn:adHocSubProcess id="AdHocSubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessExpanded" />
     <bpmn:boundaryEvent id="BoundaryEvent_1" cancelActivity="false" attachedToRef="Task_1">
-      <bpmn:timerEventDefinition />
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration>P1D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="Task_1">
       <bpmn:outgoing>SequenceFlow_7</bpmn:outgoing>
