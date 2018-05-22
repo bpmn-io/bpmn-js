@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.0.1
+
+_Republish of `v2.0.0` due to registry error._
+
 ## 2.0.0
 
 ### Breaking Changes
