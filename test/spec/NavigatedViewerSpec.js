@@ -1,19 +1,19 @@
 import NavigatedViewer from 'lib/NavigatedViewer';
 
+import TestContainer from 'mocha-test-container-support';
 
 describe('NavigatedViewer', function() {
 
   var container;
 
   beforeEach(function() {
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    container = TestContainer.get(this);
   });
 
-
-
   function createViewer(xml, done) {
-    var viewer = new NavigatedViewer({ container: container });
+    var viewer = new NavigatedViewer({
+      container: container
+    });
 
     viewer.importXML(xml, function(err, warnings) {
       done(err, warnings, viewer);

@@ -16,6 +16,12 @@ import {
   query as domQuery
 } from 'min-dom';
 
+import { isAny } from 'lib/features/modeling/util/ModelingUtil';
+
+import {
+  getDi
+} from 'lib/draw/BpmnRenderUtil';
+
 function checkErrors(done) {
   return function(err, warnings) {
     expect(warnings).to.be.empty;
@@ -177,12 +183,6 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  it('should render colors', function(done) {
-    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
-  });
-
-
   it('should render call activity', function(done) {
     var xml = require('../../fixtures/bpmn/draw/call-activity.bpmn');
 
@@ -249,7 +249,10 @@ describe('draw - bpmn renderer', function() {
 
         expect(markers).to.have.length(5);
         expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[4].id).to.match(/^messageflow-start-white-fuchsia-[A-Za-z0-9]{25}$/);
+        expect(markers[1].id).to.match(/^sequenceflow-end-blue-blue-[A-Za-z0-9]{25}$/);
+        expect(markers[2].id).to.match(/^association-end-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[3].id).to.match(/^messageflow-end-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[4].id).to.match(/^messageflow-start-white-black-[A-Za-z0-9]{25}$/);
       })();
 
       done(err);
@@ -287,6 +290,113 @@ describe('draw - bpmn renderer', function() {
       })();
 
       done(err);
+    });
+
+  });
+
+
+  describe('colors', function() {
+
+    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+
+
+    it('should render colors without warnings and errors', function(done) {
+      bootstrapViewer(xml)(checkErrors(done));
+    });
+
+
+    describe('default colors', function() {
+
+      var defaultFillColor = 'red',
+          defaultStrokeColor = 'lime';
+
+      // TODO(philippfromme): remove once PhantomJS is not used anymore
+      var hexValues = {
+        blue: '#0000ff',
+        lime: '#00ff00',
+        red: '#ff0000',
+        yellow: '#ffff00'
+      };
+
+      beforeEach(bootstrapViewer(xml,{
+        renderer: {
+          defaultFillColor: defaultFillColor,
+          defaultStrokeColor: defaultStrokeColor
+        }
+      }));
+
+      function expectFillColor(element, color) {
+        expect([ color, hexValues[ color ]]).to.include(element.style.fill);
+      }
+
+      function expectStrokeColor(element, color) {
+        expect([ color, hexValues[ color ]]).to.include(element.style.stroke);
+      }
+
+      /**
+       * Expect colors depending on element type.
+       *
+       * @param {djs.model.base} element - Element.
+       * @param {SVG} gfx - Graphics of element.
+       * @param {String} fillColor - Fill color to expect.
+       * @param {String} strokeColor - Stroke color to expect.
+       */
+      function expectColors(element, gfx, fillColor, strokeColor) {
+        var djsVisual = domQuery('.djs-visual', gfx);
+
+        var circle, path, polygon, polyline, rect, text;
+
+        if (element.labelTarget) {
+          text = domQuery('text', djsVisual);
+
+          expectFillColor(text, strokeColor);
+        } else if (element.waypoints) {
+          path = domQuery('path', djsVisual);
+          polyline = domQuery('polyline', djsVisual);
+
+          expectStrokeColor(path || polyline, strokeColor);
+        } else if (isAny(element, [ 'bpmn:StartEvent', 'bpmn:EndEvent' ])) {
+          circle = domQuery('circle', djsVisual);
+
+          expectFillColor(circle, fillColor);
+          expectStrokeColor(circle, strokeColor);
+        } else if (isAny(element, [ 'bpmn:Task', 'bpmn:SubProcess', 'bpmn:Particpant' ])) {
+          rect = domQuery('rect', djsVisual);
+          text = domQuery('text', djsVisual);
+
+          expectFillColor(rect, fillColor);
+          expectStrokeColor(rect, strokeColor);
+          expectFillColor(text, strokeColor);
+        } else if (isAny(element, [ 'bpmn:Gateway' ])) {
+          polygon = domQuery('polygon', djsVisual);
+
+          expectFillColor(polygon, fillColor);
+          expectStrokeColor(polygon, strokeColor);
+        }
+      }
+
+
+      it('should render default colors without overriding', inject(function(canvas, elementRegistry) {
+        var rootElement = canvas.getRootElement();
+
+        elementRegistry.forEach(function(e) {
+          if (e === rootElement) {
+            return;
+          }
+
+          var gfx = elementRegistry.getGraphics(e),
+              di = getDi(e),
+              fillColor = di.get('bioc:fill'),
+              strokeColor = di.get('bioc:stroke');
+
+          if (fillColor || strokeColor) {
+            expectColors(e, gfx, fillColor, strokeColor);
+          } else {
+            expectColors(e, gfx, defaultFillColor, defaultStrokeColor);
+          }
+        });
+      }));
+
     });
 
   });
