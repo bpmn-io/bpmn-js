@@ -319,7 +319,7 @@ describe('draw - bpmn renderer', function() {
       };
 
       beforeEach(bootstrapViewer(xml,{
-        renderer: {
+        bpmnRenderer: {
           defaultFillColor: defaultFillColor,
           defaultStrokeColor: defaultStrokeColor
         }
