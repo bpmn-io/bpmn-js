@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="http://bpmn.io" exporterVersion="0.0.0">
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="StartEvent_1" name="EVENT" />
+    <task id="Task_1bjzik3" name="TASK" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_16g5oa3_di" bpmnElement="StartEvent_1">
+        <omgdc:Bounds x="239" y="184" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="237" y="226" width="39" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1bjzik3_di" bpmnElement="Task_1bjzik3">
+        <omgdc:Bounds x="347" y="162" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
