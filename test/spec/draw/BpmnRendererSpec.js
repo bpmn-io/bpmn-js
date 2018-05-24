@@ -35,158 +35,158 @@ describe('draw - bpmn renderer', function() {
 
   it('should render activity markers', function(done) {
     var xml = require('../../fixtures/bpmn/draw/activity-markers.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render association markers', function(done) {
     var xml = require('../../fixtures/bpmn/draw/associations.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render activity markers (combination)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/activity-markers-combination.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render conditional flows', function(done) {
     var xml = require('../../fixtures/bpmn/draw/conditional-flow.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render conditional default flows', function(done) {
     var xml = require('../../fixtures/bpmn/draw/conditional-flow-default.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render NO conditional flow (gateway)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/conditional-flow-gateways.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render conditional flow (typed task)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/conditional-flow-typed-task.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render data objects', function(done) {
     var xml = require('../../fixtures/bpmn/draw/data-objects.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render events', function(done) {
     var xml = require('../../fixtures/bpmn/draw/events.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render events (interrupting)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/events-interrupting.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render event subprocesses (collapsed)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/event-subprocesses-collapsed.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render event subprocesses (expanded)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/event-subprocesses-expanded.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render gateways', function(done) {
     var xml = require('../../fixtures/bpmn/draw/gateways.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render group', function(done) {
     var xml = require('../../fixtures/bpmn/draw/group.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render message marker', function(done) {
     var xml = require('../../fixtures/bpmn/draw/message-marker.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render pools', function(done) {
     var xml = require('../../fixtures/bpmn/draw/pools.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render pool collection marker', function(done) {
     var xml = require('../../fixtures/bpmn/draw/pools-with-collection-marker.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render task types', function(done) {
     var xml = require('../../fixtures/bpmn/draw/task-types.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render text annotations', function(done) {
     var xml = require('../../fixtures/bpmn/draw/text-annotation.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render flow markers', function(done) {
     var xml = require('../../fixtures/bpmn/flow-markers.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render xor gateways blank and with X', function(done) {
     var xml = require('../../fixtures/bpmn/draw/xor.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render boundary events with correct z-index', function(done) {
     var xml = require('../../fixtures/bpmn/draw/boundary-event-z-index.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render boundary events without flowNodeRef', function(done) {
     var xml = require('../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render boundary event only once if referenced incorrectly via flowNodeRef (robustness)', function(done) {
     var xml = require('../../fixtures/bpmn/draw/boundary-event-with-refnode.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render gateway event if attribute is missing in XML', function(done) {
     var xml = require('../../fixtures/bpmn/draw/gateway-type-default.bpmn');
-    bootstrapViewer(xml)(checkErrors(done));
+    bootstrapViewer(xml).call(this, checkErrors(done));
   });
 
 
   it('should render call activity', function(done) {
     var xml = require('../../fixtures/bpmn/draw/call-activity.bpmn');
 
-    bootstrapViewer(xml)(function(err) {
+    bootstrapViewer(xml).call(this, function(err) {
 
       inject(function(elementRegistry) {
 
@@ -205,7 +205,7 @@ describe('draw - bpmn renderer', function() {
   it('should render adhoc sub process', function(done) {
     var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
 
-    bootstrapViewer(xml)(function(err) {
+    bootstrapViewer(xml).call(this, function(err) {
 
       inject(function(elementRegistry) {
 
@@ -224,7 +224,7 @@ describe('draw - bpmn renderer', function() {
   it('should add random ID suffix to marker ID', function(done) {
 
     var xml = require('../../fixtures/bpmn/simple.bpmn');
-    bootstrapViewer(xml)(function(err) {
+    bootstrapViewer(xml).call(this, function(err) {
 
       inject(function(canvas) {
         var svg = canvas._svg;
@@ -241,7 +241,7 @@ describe('draw - bpmn renderer', function() {
   it('should properly render colored markers', function(done) {
 
     var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
-    bootstrapViewer(xml)(function(err) {
+    bootstrapViewer(xml).call(this, function(err) {
 
       inject(function(canvas) {
         var svg = canvas._svg;
@@ -249,7 +249,7 @@ describe('draw - bpmn renderer', function() {
 
         expect(markers).to.have.length(5);
         expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[1].id).to.match(/^sequenceflow-end-blue-blue-[A-Za-z0-9]{25}$/);
+        expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
         expect(markers[2].id).to.match(/^association-end-white-black-[A-Za-z0-9]{25}$/);
         expect(markers[3].id).to.match(/^messageflow-end-white-black-[A-Za-z0-9]{25}$/);
         expect(markers[4].id).to.match(/^messageflow-start-white-black-[A-Za-z0-9]{25}$/);
@@ -269,7 +269,7 @@ describe('draw - bpmn renderer', function() {
         rendererModule,
         modelingModule
       ]
-    })(function(err) {
+    }).call(this, function(err) {
 
       inject(function(elementFactory, graphicsFactory) {
 
@@ -301,7 +301,7 @@ describe('draw - bpmn renderer', function() {
 
 
     it('should render colors without warnings and errors', function(done) {
-      bootstrapViewer(xml)(checkErrors(done));
+      bootstrapViewer(xml).call(this, checkErrors(done));
     });
 
 
