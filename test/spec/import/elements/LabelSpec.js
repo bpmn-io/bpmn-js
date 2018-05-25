@@ -47,7 +47,7 @@ describe('import - labels', function() {
 
           // then
           expect(eventLabelCenter.x).to.be.within(270, 272);
-          expect(eventLabelCenter.y).to.be.within(268, 270);
+          expect(eventLabelCenter.y).to.be.within(269, 271);
           expect(eventLabel.width).to.be.above(65);
           expect(eventLabel.height).to.be.above(20);
 

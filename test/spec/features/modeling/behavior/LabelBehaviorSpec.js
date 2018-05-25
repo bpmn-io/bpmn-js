@@ -137,9 +137,9 @@ describe('behavior - LabelBehavior', function() {
           expect(elementRegistry.get(label.id)).to.exist;
 
           expect(label.x).to.within(298, 299);
-          expect(label.y).to.be.within(141, 142);
+          expect(label.y).to.be.within(140, 141);
           expect(label.width).to.be.within(15, 18);
-          expect(label.height).to.be.within(12, 14);
+          expect(label.height).to.be.within(13, 15);
         }
       ));
 

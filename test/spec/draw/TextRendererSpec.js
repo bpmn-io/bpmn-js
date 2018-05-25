@@ -57,7 +57,8 @@ describe('draw - TextRenderer', function() {
       textRenderer: {
         defaultStyle: {
           fontFamily: 'monospace',
-          fontSize: '15px'
+          fontSize: '15px',
+          lineHeight: '24px'
         },
         externalStyle: {
           fontWeight: 'bold'
@@ -75,6 +76,7 @@ describe('draw - TextRenderer', function() {
       // then
       expect(defaultStyle.fontFamily).to.eql('monospace');
       expect(defaultStyle.fontSize).to.eql('15px');
+      expect(defaultStyle.lineHeight).to.eql('24px');
 
       expect(externalStyle.fontFamily).to.eql('monospace');
       expect(externalStyle.fontSize).to.eql(14);

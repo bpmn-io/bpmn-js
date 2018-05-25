@@ -13,7 +13,7 @@ import {
   getLabel
 } from 'lib/features/label-editing/LabelUtil';
 
-var MEDIUM_LINE_HEIGHT = 14;
+var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
 var DELTA = 3;
 
