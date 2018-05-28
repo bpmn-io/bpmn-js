@@ -41,6 +41,13 @@ describe('features - bpmn-factory', function() {
       expect(plane.id).to.match(/^BPMNPlane_/g);
     }));
 
+
+    it('should assign bpmn:LaneSet id', inject(function(bpmnFactory) {
+      var set = bpmnFactory.create('bpmn:LaneSet');
+
+      expect(set.id).to.exist;
+    }));
+
   });
 
 
