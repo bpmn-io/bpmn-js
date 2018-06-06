@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -15,6 +17,51 @@ describe('behavior - LabelBehavior', function() {
   var testModules = [ modelingModule, coreModule ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+  describe('updating name property', function() {
+
+    it('should update label', inject(function(elementRegistry, eventBus, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1'),
+          spy = sinon.spy();
+
+      eventBus.once('commandStack.element.updateLabel.execute', spy);
+
+      // when
+      modeling.updateProperties(startEvent, {
+        name: 'bar'
+      });
+
+      // then
+      expect(startEvent.businessObject.name).to.equal('bar');
+      expect(spy).to.have.been.called;
+    }));
+
+
+    it('should create label', inject(function(elementRegistry, eventBus, modeling) {
+
+      // given
+      var startEvent = elementRegistry.get('ExclusiveGateway_1'),
+          spy = sinon.spy();
+
+      eventBus.once('commandStack.element.updateLabel.execute', spy);
+
+      // when
+      modeling.updateProperties(startEvent, {
+        name: 'foo'
+      });
+
+      // then
+      var labelShape = startEvent.label;
+
+      expect(labelShape).to.exist;
+      expect(startEvent.businessObject.name).to.equal('foo');
+      expect(spy).to.have.been.called;
+    }));
+
+  });
 
 
   describe('add label', function() {
