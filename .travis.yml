@@ -1,16 +1,14 @@
-language: node_js
+language:
+  - node_js
 
 node_js:
-  - 'node'
+  - node
 
 jobs:
   include:
     - stage: test
       addons:
         firefox: 'latest-esr'
-      before_install:
-        - npm install -g wiredeps@0.2
-        - wiredeps --default-branch=master --branch=$TRAVIS_BRANCH --tag=$TRAVIS_TAG --verbose
       script:
         - TEST_BROWSERS=Firefox,PhantomJS xvfb-run npm run all
     - stage: update integration test
