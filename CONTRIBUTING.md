@@ -81,6 +81,7 @@ For details consult our in depth [setup guide](https://github.com/bpmn-io/bpmn-j
 
 Create a [pull request](#creating-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
+
 ### Code Style
 
 In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
