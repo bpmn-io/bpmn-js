@@ -82,6 +82,16 @@ For details consult our in depth [setup guide](https://github.com/bpmn-io/bpmn-j
 Create a [pull request](#creating-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
 
+### Code Style
+
+In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
+
+* Use modules (`import` / `export (default)`)
+* __Do NOT__ use ES language constructs (`class`, `const`, ...) in sources
+
+__Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
+
+
 ### Creating a Pull Request
 
 We use pull requests for feature additions and bug fixes. If you are not yet familiar on how to create a pull request, [read this great guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
