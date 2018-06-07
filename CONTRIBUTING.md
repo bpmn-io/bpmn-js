@@ -88,7 +88,8 @@ In addition to our automatically enforced [lint rules](https://github.com/bpmn-i
 * Use modules (`import` / `export (default)`)
 * __Do NOT__ use ES language constructs (`class`, `const`, ...) in sources
 
-Rationale: People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org). They should not be forced into using [Babel](https://babeljs.io/) to consume this toolkit.
+__Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
+
 
 ### Creating a Pull Request
 
