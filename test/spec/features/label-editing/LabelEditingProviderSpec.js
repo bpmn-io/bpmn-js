@@ -244,6 +244,38 @@ describe('features - label-editing', function() {
     });
 
 
+    describe('should unset', function() {
+
+      it('name on empty text', function() {
+
+        // given
+        var diagramElement = elementRegistry.get('SequenceFlow_1');
+
+        // when
+        directEditActivate(diagramElement);
+        directEditComplete(' ');
+
+        // then
+        expect(diagramElement.businessObject.name).not.to.exist;
+      });
+
+
+      it('text on empty text', function() {
+
+        // given
+        var diagramElement = elementRegistry.get('TextAnnotation_1');
+
+        // when
+        directEditActivate(diagramElement);
+        directEditComplete(' ');
+
+        // then
+        expect(diagramElement.businessObject.text).not.to.exist;
+      });
+
+    });
+
+
     describe('should trigger redraw', function() {
 
       it('on shape change', function() {
