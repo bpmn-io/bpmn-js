@@ -50,20 +50,40 @@ describe('features/modeling - update label', function() {
   ));
 
 
-  it('should delete label when setting empty string', inject(
-    function(modeling, elementRegistry) {
+  describe('should delete label', function() {
 
-      // given
-      var startEvent_1 = elementRegistry.get('StartEvent_1');
+    it('when setting null', inject(
+      function(modeling, elementRegistry) {
 
-      // when
-      modeling.updateLabel(startEvent_1, '');
+        // given
+        var startEvent_1 = elementRegistry.get('StartEvent_1');
 
-      // then
-      expect(startEvent_1.businessObject.name).to.equal('');
-      expect(startEvent_1.label).not.to.exist;
-    }
-  ));
+        // when
+        modeling.updateLabel(startEvent_1, null);
+
+        // then
+        expect(startEvent_1.businessObject.name).not.to.exist;
+        expect(startEvent_1.label).not.to.exist;
+      }
+    ));
+
+
+    it('when setting empty string', inject(
+      function(modeling, elementRegistry) {
+
+        // given
+        var startEvent_1 = elementRegistry.get('StartEvent_1');
+
+        // when
+        modeling.updateLabel(startEvent_1, '');
+
+        // then
+        expect(startEvent_1.businessObject.name).to.equal('');
+        expect(startEvent_1.label).not.to.exist;
+      }
+    ));
+
+  });
 
 
   it('should change name of start event when editing label', inject(
