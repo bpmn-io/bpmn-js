@@ -328,7 +328,7 @@ describe('behavior - LabelBehavior', function() {
 
       // then
       expect(startEventShape.label).not.to.exist;
-      expect(startEvent.name).to.equal('');
+      expect(startEvent.name).not.to.exist;
     }));
 
   });
