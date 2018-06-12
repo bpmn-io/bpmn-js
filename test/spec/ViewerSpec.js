@@ -294,162 +294,6 @@ describe('Viewer', function() {
   });
 
 
-  describe('export', function() {
-
-    function currentTime() {
-      return new Date().getTime();
-    }
-
-    function validSVG(svg) {
-      var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
-      var expectedEnd = '</svg>';
-
-      expect(svg.indexOf(expectedStart)).to.equal(0);
-      expect(svg.indexOf(expectedEnd)).to.equal(svg.length - expectedEnd.length);
-
-      // ensure correct rendering of SVG contents
-      expect(svg.indexOf('undefined')).to.equal(-1);
-
-      // expect header to be written only once
-      expect(svg.indexOf('<svg width="100%" height="100%">')).to.equal(-1);
-      expect(svg.indexOf('<g class="viewport"')).to.equal(-1);
-
-      var parser = new DOMParser();
-      var svgNode = parser.parseFromString(svg, 'image/svg+xml');
-
-      // [comment, <!DOCTYPE svg>, svg]
-      expect(svgNode.childNodes).to.have.length(3);
-
-      // no error body
-      expect(svgNode.body).not.to.exist;
-
-      // FIXME(nre): make matcher
-      return true;
-    }
-
-
-    it('should export XML', function(done) {
-
-      // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      createViewer(xml, function(err, warnings, viewer) {
-
-        // when
-        viewer.saveXML({ format: true }, function(err, xml) {
-
-          // then
-          expect(xml).to.contain('<?xml version="1.0" encoding="UTF-8"?>');
-          expect(xml).to.contain('<bpmn2:definitions');
-          expect(xml).to.contain('  ');
-
-          done();
-        });
-      });
-
-    });
-
-
-    it('should export svg', function(done) {
-
-      // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      createViewer(xml, function(err, warnings, viewer) {
-
-        if (err) {
-          return done(err);
-        }
-
-        // when
-        viewer.saveSVG(function(err, svg) {
-
-          // then
-          expect(validSVG(svg)).to.be.true;
-
-          done(err);
-        });
-      });
-    });
-
-
-    it('should export huge svg', function(done) {
-
-      this.timeout(5000);
-
-      // given
-      var xml = require('../fixtures/bpmn/complex.bpmn');
-
-      createViewer(xml, function(err, warnings, viewer) {
-
-        if (err) {
-          return done(err);
-        }
-
-        var time = currentTime();
-
-        // when
-        viewer.saveSVG(function(err, svg) {
-
-          // then
-          expect(validSVG(svg)).to.be.true;
-
-          // no svg export should not take too long
-          expect(currentTime() - time).to.be.below(1000);
-
-          done(err);
-        });
-      });
-    });
-
-
-    it('should remove outer-makers on export', function(done) {
-
-      // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-      function appendTestRect(svgDoc) {
-        var rect = document.createElementNS(svgDoc.namespaceURI, 'rect');
-        rect.setAttribute('class', 'outer-bound-marker');
-        rect.setAttribute('width', 500);
-        rect.setAttribute('height', 500);
-        rect.setAttribute('x', 10000);
-        rect.setAttribute('y', 10000);
-        svgDoc.appendChild(rect);
-      }
-
-      createViewer(xml, function(err, warnings, viewer) {
-
-        if (err) {
-          return done(err);
-        }
-
-        var svgDoc = viewer._container.childNodes[1].childNodes[1];
-
-
-
-        appendTestRect(svgDoc);
-        appendTestRect(svgDoc);
-
-        expect(svgDoc.querySelectorAll('.outer-bound-marker')).to.exist;
-
-        // when
-        viewer.saveSVG(function(err, svg) {
-
-          var svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          svgDoc.innerHTML = svg;
-
-          // then
-          expect(validSVG(svg)).to.be.true;
-          expect(svgDoc.querySelector('.outer-bound-marker')).to.be.null;
-
-          done(err);
-        });
-      });
-    });
-
-  });
-
-
   describe('creation', function() {
 
     var testModules = [
@@ -806,6 +650,244 @@ describe('Viewer', function() {
       // then
       viewer.on('import.done', function(event) {
         done();
+      });
+    });
+
+  });
+
+
+  describe('#saveXML', function() {
+
+    it('should export XML', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        // when
+        viewer.saveXML({ format: true }, function(err, xml) {
+
+          // then
+          expect(xml).to.contain('<?xml version="1.0" encoding="UTF-8"?>');
+          expect(xml).to.contain('<bpmn2:definitions');
+          expect(xml).to.contain('  ');
+
+          done();
+        });
+      });
+
+    });
+
+
+    it('should emit <saveXML.*> events', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        var events = [];
+
+        viewer.on([
+          'saveXML.start',
+          'saveXML.serialized',
+          'saveXML.done'
+        ], function(e) {
+          // log event type + event arguments
+          events.push([
+            e.type,
+            Object.keys(e).filter(function(key) {
+              return key !== 'type';
+            })
+          ]);
+        });
+
+        viewer.importXML(xml, function(err) {
+
+          // when
+          viewer.saveXML(function(err) {
+            // then
+            expect(events).to.eql([
+              [ 'saveXML.start', [ 'definitions' ] ],
+              [ 'saveXML.serialized', ['error', 'xml' ] ],
+              [ 'saveXML.done', ['error', 'xml' ] ]
+            ]);
+
+            done(err);
+          });
+        });
+      });
+    });
+
+  });
+
+
+  describe('#saveSVG', function() {
+
+    function currentTime() {
+      return new Date().getTime();
+    }
+
+    function validSVG(svg) {
+      var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
+      var expectedEnd = '</svg>';
+
+      expect(svg.indexOf(expectedStart)).to.equal(0);
+      expect(svg.indexOf(expectedEnd)).to.equal(svg.length - expectedEnd.length);
+
+      // ensure correct rendering of SVG contents
+      expect(svg.indexOf('undefined')).to.equal(-1);
+
+      // expect header to be written only once
+      expect(svg.indexOf('<svg width="100%" height="100%">')).to.equal(-1);
+      expect(svg.indexOf('<g class="viewport"')).to.equal(-1);
+
+      var parser = new DOMParser();
+      var svgNode = parser.parseFromString(svg, 'image/svg+xml');
+
+      // [comment, <!DOCTYPE svg>, svg]
+      expect(svgNode.childNodes).to.have.length(3);
+
+      // no error body
+      expect(svgNode.body).not.to.exist;
+
+      // FIXME(nre): make matcher
+      return true;
+    }
+
+
+    it('should export svg', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // when
+        viewer.saveSVG(function(err, svg) {
+
+          // then
+          expect(validSVG(svg)).to.be.true;
+
+          done(err);
+        });
+      });
+    });
+
+
+    it('should export huge svg', function(done) {
+
+      this.timeout(5000);
+
+      // given
+      var xml = require('../fixtures/bpmn/complex.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        var time = currentTime();
+
+        // when
+        viewer.saveSVG(function(err, svg) {
+
+          // then
+          expect(validSVG(svg)).to.be.true;
+
+          // no svg export should not take too long
+          expect(currentTime() - time).to.be.below(1000);
+
+          done(err);
+        });
+      });
+    });
+
+
+    it('should remove outer-makers on export', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+      function appendTestRect(svgDoc) {
+        var rect = document.createElementNS(svgDoc.namespaceURI, 'rect');
+        rect.setAttribute('class', 'outer-bound-marker');
+        rect.setAttribute('width', 500);
+        rect.setAttribute('height', 500);
+        rect.setAttribute('x', 10000);
+        rect.setAttribute('y', 10000);
+        svgDoc.appendChild(rect);
+      }
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        if (err) {
+          return done(err);
+        }
+
+        var svgDoc = viewer._container.childNodes[1].childNodes[1];
+
+
+
+        appendTestRect(svgDoc);
+        appendTestRect(svgDoc);
+
+        expect(svgDoc.querySelectorAll('.outer-bound-marker')).to.exist;
+
+        // when
+        viewer.saveSVG(function(err, svg) {
+
+          var svgDoc = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svgDoc.innerHTML = svg;
+
+          // then
+          expect(validSVG(svg)).to.be.true;
+          expect(svgDoc.querySelector('.outer-bound-marker')).to.be.null;
+
+          done(err);
+        });
+      });
+    });
+
+
+    it('should emit <saveSVG.*> events', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      createViewer(xml, function(err, warnings, viewer) {
+
+        var events = [];
+
+        viewer.on([
+          'saveSVG.start',
+          'saveSVG.done'
+        ], function(e) {
+          // log event type + event arguments
+          events.push([
+            e.type,
+            Object.keys(e).filter(function(key) {
+              return key !== 'type';
+            })
+          ]);
+        });
+
+        viewer.importXML(xml, function(err) {
+
+          // when
+          viewer.saveSVG(function() {
+            // then
+            expect(events).to.eql([
+              [ 'saveSVG.start', [ ] ],
+              [ 'saveSVG.done', ['error', 'svg' ] ]
+            ]);
+
+            done(err);
+          });
+        });
       });
     });
 
