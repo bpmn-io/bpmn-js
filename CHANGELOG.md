@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.2.0
+
 * `FEAT`: emit export events ([#813](https://github.com/bpmn-io/bpmn-js/issues/813))
 * `FEAT`: unset businessObject name if empty ([`6c081d85`](https://github.com/bpmn-io/bpmn-js/commit/6c081d854fa8a4e87eb7cdd1744be37c78652667))
 * `FEAT`: resize text annotation on text change ([`100f3fb2`](https://github.com/bpmn-io/bpmn-js/commit/100f3fb2ee6373cd4b7ad0b76e520a1afb70887e))
