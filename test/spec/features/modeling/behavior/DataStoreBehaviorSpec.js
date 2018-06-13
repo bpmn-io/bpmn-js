@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -308,6 +310,32 @@ describe('features/modeling/behavior - data store', function() {
       }));
 
     });
+
+  });
+
+
+  describe('process', function() {
+    var processDiagramXML = require('./DataStoreBehavior.process.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+    it('should not update parent on subprocess delete', inject(
+      function(elementRegistry, eventBus, modeling) {
+
+        // given
+        var spy = sinon.spy();
+
+        eventBus.on('commandStack.dataStore.updateContainment.execute', spy);
+
+        var subProcessElement = elementRegistry.get('SubProcess');
+
+        // when
+        modeling.removeShape(subProcessElement);
+
+        // then
+        expect(spy).to.not.have.been.called;
+      }
+    ));
 
   });
 
