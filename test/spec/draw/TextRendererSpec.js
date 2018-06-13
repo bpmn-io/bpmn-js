@@ -23,7 +23,7 @@ describe('draw - TextRenderer', function() {
     }));
 
 
-    it('should expose #getLayoutedBounds', inject(function(textRenderer) {
+    it('should expose #getExternalLabelBounds', inject(function(textRenderer) {
 
       // given
       var bounds = {
@@ -34,7 +34,33 @@ describe('draw - TextRenderer', function() {
       };
 
       // when
-      var layoutedBounds = textRenderer.getLayoutedBounds(
+      var layoutedBounds = textRenderer.getExternalLabelBounds(
+        bounds,
+        'FOO\nBar\nFOOBAR'
+      );
+
+      // then
+      expect(layoutedBounds).to.exist;
+
+      expect(layoutedBounds.x).to.exist;
+      expect(layoutedBounds.y).to.exist;
+      expect(layoutedBounds.width).to.exist;
+      expect(layoutedBounds.height).to.exist;
+    }));
+
+
+    it('should expose #getTextAnnotationBounds', inject(function(textRenderer) {
+
+      // given
+      var bounds = {
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100
+      };
+
+      // when
+      var layoutedBounds = textRenderer.getTextAnnotationBounds(
         bounds,
         'FOO\nBar\nFOOBAR'
       );
