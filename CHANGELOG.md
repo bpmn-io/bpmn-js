@@ -9,6 +9,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: emit export events ([#813](https://github.com/bpmn-io/bpmn-js/issues/813))
 * `FEAT`: unset businessObject name if empty ([`6c081d85`](https://github.com/bpmn-io/bpmn-js/commit/6c081d854fa8a4e87eb7cdd1744be37c78652667))
 * `FEAT`: resize text annotation on text change ([`100f3fb2`](https://github.com/bpmn-io/bpmn-js/commit/100f3fb2ee6373cd4b7ad0b76e520a1afb70887e))
+* `FIX`: apply data store behavior in collaboration only ([`5cc28d5d`](https://github.com/bpmn-io/bpmn-js/commit/5cc28d5d5571287a798b189aed75095f1fd0189e))
 * `FIX`: create/update labels when updating element name via `Modeling#updateProperties` ([`4a0f6da8`](https://github.com/bpmn-io/bpmn-js/commit/4a0f6da814c45268e8a324e73a53479bd2435bbe))
 
 ## 2.1.0
