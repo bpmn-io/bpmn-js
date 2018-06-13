@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: emit export events ([#813](https://github.com/bpmn-io/bpmn-js/issues/813))
+* `FEAT`: unset businessObject name if empty ([`6c081d85`](https://github.com/bpmn-io/bpmn-js/commit/6c081d854fa8a4e87eb7cdd1744be37c78652667))
 * `FIX`: create/update labels when updating element name via `Modeling#updateProperties` ([`4a0f6da8`](https://github.com/bpmn-io/bpmn-js/commit/4a0f6da814c45268e8a324e73a53479bd2435bbe))
 
 ## 2.1.0
