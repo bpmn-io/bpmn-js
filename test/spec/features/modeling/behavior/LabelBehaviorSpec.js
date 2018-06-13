@@ -333,4 +333,42 @@ describe('behavior - LabelBehavior', function() {
 
   });
 
+
+  describe('update properties', function() {
+
+    it('should resize after updating name property', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var spy = sinon.spy(modeling, 'resizeShape');
+
+        var startEventShape = elementRegistry.get('StartEvent_1');
+
+        // when
+        modeling.updateProperties(startEventShape, { name: 'bar' });
+
+        // then
+        expect(spy).to.have.been.called;
+      }
+    ));
+
+
+    it('should resize after updating text property', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var spy = sinon.spy(modeling, 'resizeShape');
+
+        var textAnnotationShape = elementRegistry.get('TextAnnotation_1');
+
+        // when
+        modeling.updateProperties(textAnnotationShape, { text: 'bar' });
+
+        // then
+        expect(spy).to.have.been.called;
+      }
+    ));
+
+  });
+
 });
