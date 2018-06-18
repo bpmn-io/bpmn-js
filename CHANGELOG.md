@@ -8,7 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 2.2.1
 
-* `FIX`: correct updating of multiple data stores ([300e7010](https://github.com/bpmn-io/bpmn-js/commit/300e7010c4e1862394d147988dc4c4bcc09b07bc))
+* `FIX`: correct updating of multiple data stores ([`300e7010`](https://github.com/bpmn-io/bpmn-js/commit/300e7010c4e1862394d147988dc4c4bcc09b07bc))
 
 ## 2.2.0
 
