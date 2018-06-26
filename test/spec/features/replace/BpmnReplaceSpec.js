@@ -154,6 +154,27 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+    it('non interrupting boundary event by interrupting boundary event both with timer',
+      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+            newElementData = {
+              type: 'bpmn:BoundaryEvent',
+              eventDefinitionType: 'bpmn:TimerEventDefinition'
+            };
+
+        // when
+        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+        // then
+        expect(newElement).to.exist;
+        expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
+        expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:TimerEventDefinition');
+        expect(newElement.businessObject.eventDefinitions[0].timeDuration).to.exist;
+        expect(newElement.businessObject.cancelActivity).to.be.true;
+      })
+    );
 
     it('interrupting boundary event by non interrupting boundary event',
       inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
