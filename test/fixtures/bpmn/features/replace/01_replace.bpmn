@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.16.1">
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1" name="KEEP ME">
       <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
@@ -43,11 +43,15 @@
     <bpmn:adHocSubProcess id="AdHocSubProcessCollapsed" />
     <bpmn:adHocSubProcess id="AdHocSubProcessExpanded" />
     <bpmn:boundaryEvent id="BoundaryEvent_1" cancelActivity="false" attachedToRef="Task_1">
-      <bpmn:timerEventDefinition />
+      <bpmn:timerEventDefinition>
+        <bpmn:timeDuration>P1D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="Task_1">
       <bpmn:outgoing>SequenceFlow_7</bpmn:outgoing>
-      <bpmn:conditionalEventDefinition />
+      <bpmn:conditionalEventDefinition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">${a &lt; b}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="SequenceFlow_6" sourceRef="SubProcess_1" targetRef="Transaction_1" />
     <bpmn:sequenceFlow id="SequenceFlow_7" sourceRef="BoundaryEvent_2" targetRef="SubProcess_1" />

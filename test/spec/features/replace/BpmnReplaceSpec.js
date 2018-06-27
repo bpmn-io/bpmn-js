@@ -133,70 +133,147 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
-    it('non interrupting boundary event by interrupting boundary event',
-      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+    describe('boundary event', function() {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            newElementData = {
-              type: 'bpmn:BoundaryEvent',
-              eventDefinitionType: 'bpmn:EscalationEventDefinition'
-            };
+      it('<non-interrupting> with <interrupting>',
+        inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
-        // when
-        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              boundaryBo = boundaryEvent.businessObject,
+              newElementData = {
+                type: 'bpmn:BoundaryEvent',
+                eventDefinitionType: 'bpmn:TimerEventDefinition'
+              };
 
-        // then
-        expect(newElement).to.exist;
-        expect(is(newElement.businessObject, 'bpmn:BoundaryEvent')).to.be.true;
-        expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
-        expect(newElement.businessObject.cancelActivity).to.be.true;
-      })
-    );
+          var eventDefinitions = boundaryBo.eventDefinitions.slice();
 
+          // when
+          var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+          var newBo = newElement.businessObject;
 
-    it('interrupting boundary event by non interrupting boundary event',
-      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+          // then
+          expect(newElement).to.exist;
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
-            newElementData = {
-              type: 'bpmn:BoundaryEvent',
-              eventDefinitionType: 'bpmn:SignalEventDefinition',
-              cancelActivity: false
-            };
+          expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
 
-        // when
-        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+          expect(newBo.eventDefinitions).to.jsonEqual(eventDefinitions, skipId);
 
-        // then
-        expect(newElement).to.exist;
-        expect(is(newElement, 'bpmn:BoundaryEvent')).to.be.true;
-        expect(newElement.businessObject.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
-        expect(newElement.businessObject.cancelActivity).to.be.false;
-      })
-    );
+          expect(newBo.cancelActivity).to.be.true;
+        })
+      );
 
 
-    it('boundary event and update host',
-      inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+      it('<interrupting> with <non-interrupting>',
+        inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
 
-        // given
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            host = elementRegistry.get('Task_1'),
-            newElementData = {
-              type: 'bpmn:BoundaryEvent',
-              eventDefinitionType: 'bpmn:ErrorEventDefinition'
-            };
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
+              boundaryBo = boundaryEvent.businessObject,
+              newElementData = {
+                type: 'bpmn:BoundaryEvent',
+                eventDefinitionType: 'bpmn:ConditionalEventDefinition',
+                cancelActivity: false
+              };
 
-        // when
-        var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+          var eventDefinitions = boundaryBo.eventDefinitions.slice();
 
-        // then
-        expect(newElement.host).to.exist;
-        expect(newElement.host).to.eql(host);
-      })
-    );
+          // when
+          var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+          var newBo = newElement.businessObject;
+
+          // then
+          expect(newElement).to.exist;
+
+          expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
+
+          expect(newBo.eventDefinitions).to.jsonEqual(eventDefinitions, skipId);
+
+          expect(newBo.cancelActivity).to.be.false;
+        })
+      );
+
+
+      it('<timer> with <signal>',
+        inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              newElementData = {
+                type: 'bpmn:BoundaryEvent',
+                eventDefinitionType: 'bpmn:SignalEventDefinition',
+                cancelActivity: false
+              };
+
+          // when
+          var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+          var newBo = newElement.businessObject;
+          var newEventDefinitions = newBo.eventDefinitions;
+          var newEventDefinition = newEventDefinitions[0];
+
+          // then
+          expect(newElement).to.exist;
+          expect(newEventDefinitions).to.have.length(1);
+
+          expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
+          expect(is(newEventDefinition, 'bpmn:SignalEventDefinition')).to.be.true;
+
+          expect(newBo.cancelActivity).to.be.false;
+        })
+      );
+
+
+      it('<conditional> with <timer>',
+        inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_2'),
+              newElementData = {
+                type: 'bpmn:BoundaryEvent',
+                eventDefinitionType: 'bpmn:TimerEventDefinition'
+              };
+
+          // when
+          var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+          var newBo = newElement.businessObject;
+          var newEventDefinitions = newBo.eventDefinitions;
+          var newEventDefinition = newEventDefinitions[0];
+
+          // then
+          expect(newElement).to.exist;
+          expect(newEventDefinitions).to.have.length(1);
+
+          expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
+          expect(is(newEventDefinition, 'bpmn:TimerEventDefinition')).to.be.true;
+
+          expect(newBo.cancelActivity).to.be.true;
+        })
+      );
+
+
+      it('updating host',
+        inject(function(elementRegistry, modeling, bpmnReplace, canvas) {
+
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              host = elementRegistry.get('Task_1'),
+              newElementData = {
+                type: 'bpmn:BoundaryEvent',
+                eventDefinitionType: 'bpmn:ErrorEventDefinition'
+              };
+
+          // when
+          var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
+
+          // then
+          expect(newElement.host).to.exist;
+          expect(newElement.host).to.eql(host);
+        })
+      );
+
+    });
 
   });
 
@@ -1385,3 +1462,15 @@ describe('features/replace - bpmn replace', function() {
   });
 
 });
+
+
+// helpers ////////////////////////
+
+function skipId(key, value) {
+
+  if (key === 'id') {
+    return;
+  }
+
+  return value;
+}
