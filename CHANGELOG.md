@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.3.1
+
+* `FIX`: revert to `Arial` as the default rendering font ([#819](https://github.com/bpmn-io/bpmn-js/issues/819))
 * `FIX`: keep event definitions when switching from interrupting to non-interrupting boundary event ([#799](https://github.com/bpmn-io/bpmn-js/issues/799))
 
 ## 2.3.0
