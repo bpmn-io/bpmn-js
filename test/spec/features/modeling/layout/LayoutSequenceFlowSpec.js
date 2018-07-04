@@ -31,14 +31,139 @@ describe('features/modeling - layout', function() {
   });
 
 
-  describe.skip('overall experience, boundary events', function() {
+  describe('boundary events', function() {
 
     var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEvents.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: Modeler.prototype._modules }));
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-    it('should feel awesome', inject(function() { }));
+    describe('loops', function() {
+
+      it('attached top right', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopRight', 'SubProcess');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 300 }, x: 650, y: 282 },
+          { x: 650, y: 262 },
+          { x: 475, y: 262 },
+          { original: { x: 475, y: 400 }, x: 475, y: 300 }
+        ]);
+      });
+
+
+      it('attached bottom right', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomRight', 'SubProcess');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 468 }, x: 668, y: 468 },
+          { x: 688, y: 468 },
+          { x: 688, y: 400 },
+          { original: { x: 475, y: 400 }, x: 650, y: 400 }
+        ]);
+      });
+
+
+      it('attached bottom left', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomLeft', 'SubProcess');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 300, y: 500 }, x: 300, y: 518 },
+          { x: 300, y: 538 },
+          { x: 475, y: 538 },
+          { original: { x: 475, y: 400 }, x: 475, y: 500 }
+        ]);
+      });
+
+
+      it('attached top left', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopLeft', 'SubProcess');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 300, y: 338 }, x: 282, y: 338 },
+          { x: 262, y: 338 },
+          { x: 262, y: 400 },
+          { original: { x: 475, y: 400 }, x: 300, y: 400 }
+        ]);
+      });
+
+    });
+
+
+    describe('non-loops', function() {
+
+      it('attached top right, orientation top', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopRight', 'Task_Top');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 300 }, x: 650, y: 282 },
+          { x: 650, y: 40 },
+          { original: { x: 450, y: 40 }, x: 500, y: 40 }
+        ]);
+      });
+
+
+      it('attached top right, orientation right', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopRight', 'Task_Right');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 300 }, x: 668, y: 300 },
+          { x: 900, y: 300 },
+          { original: { x: 900, y: 390 }, x: 900, y: 350 }
+        ]);
+      });
+
+
+      it('attached top right, orientation bottom', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopRight', 'Task_Bottom');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 300 }, x: 650, y: 282 },
+          { x: 650, y: 262 },
+          { x: 450, y: 262 },
+          { original: { x: 450, y: 690 }, x: 450, y: 650 }
+        ]);
+      });
+
+
+      it('attached top right, orientation left', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_TopRight', 'Task_Left');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { original: { x: 650, y: 300 }, x: 650, y: 282 },
+          { x: 650, y: 262 },
+          { x: 50, y: 262 },
+          { original: { x: 50, y: 390 }, x: 50, y: 350 }
+        ]);
+      });
+
+    });
 
   });
 
@@ -207,115 +332,6 @@ describe('features/modeling - layout', function() {
       }));
 
     });
-
-  });
-
-
-  describe('boundary events', function() {
-
-    var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEvents.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
-
-    it('should layout h:h connecting BoundaryEvent -> left Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_A', 'Task_1');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 505, y: 417 }, x: 487, y: 417 },
-        { x: 437, y: 417 },
-        { x: 437, y: 394 },
-        { original: { x: 337, y: 394 }, x: 387, y: 394 }
-      ]);
-    }));
-
-
-    it('should layout h:v connecting BoundaryEvent -> bottom-left Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_A', 'Task_2');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 505, y: 417 }, x: 487, y: 417 },
-        { x: 412, y: 417 },
-        { original: { x: 412, y: 543 }, x: 412, y: 503 }
-      ]);
-    }));
-
-
-    it('should layout h:v connecting BoundaryEvent -> top-right Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_A', 'Task_5');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 505, y: 417 }, x: 523, y: 417 },
-        { x: 1016, y: 417 },
-        { original: { x: 1016, y: 215 }, x: 1016, y: 255 }
-      ]);
-    }));
-
-
-    it('should layout v:v connecting BoundaryEvent -> top Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_B', 'Task_4');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 586, y: 258 }, x: 586, y: 240 },
-        { original: { x: 586, y: 121 }, x: 586, y: 161 }
-      ]);
-    }));
-
-
-    it('should layout v:h connecting BoundaryEvent -> top-left Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_B', 'Task_3');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 586, y: 258 }, x: 586, y: 240 },
-        { x: 586, y: 162 },
-        { original: { x: 428, y: 162 }, x: 478, y: 162 }
-      ]);
-    }));
-
-
-    it('should layout h:v connecting BoundaryEvent -> bottom-right Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_C', 'Task_6');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 855, y: 293 }, x: 873, y: 293 },
-        { x: 1041, y: 293 },
-        { original: { x: 1041, y: 483 }, x: 1041, y: 443 }
-      ]);
-    }));
-
-
-    it('should layout v:h connecting BoundaryEvent -> bottom-left Task', inject(function() {
-
-      // when
-      var connection = connect('BoundaryEvent_D', 'Task_2');
-
-      // then
-      expect(connection).to.have.waypoints([
-        { original: { x: 815, y: 458 }, x: 815, y: 476 },
-        { x: 815, y: 543 },
-        { original: { x: 412, y: 543 }, x: 462, y: 543 }
-      ]);
-    }));
 
   });
 
