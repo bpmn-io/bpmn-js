@@ -10,8 +10,7 @@ insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
 
 insertCSS('diagram-js-testing.css',
   'body .test-container { height: auto }' +
-  'body .test-container .test-content-container { height: 90vmin; }' +
-  'body .test-container.passed:not(:last-child) .test-content-container { display: none; }'
+  'body .test-container .test-content-container { height: 90vmin; }'
 );
 
 

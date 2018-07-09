@@ -19,14 +19,6 @@ describe('Modeler', function() {
     container = TestContainer.get(this);
   });
 
-  afterEach(function() {
-    if (modeler) {
-      modeler.destroy();
-    }
-
-    modeler = null;
-  });
-
   function createModeler(xml, done) {
 
     modeler = new Modeler({
