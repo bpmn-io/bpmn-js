@@ -328,6 +328,17 @@ describe('features/modeling/rules - BpmnRules', function() {
       });
     }));
 
+
+    it('connect Task -> Task', inject(function() {
+
+      expectCanConnect('Task', 'Task', {
+        sequenceFlow: true,
+        messageFlow: false,
+        association: false,
+        dataAssociation: false
+      });
+    }));
+
   });
 
 

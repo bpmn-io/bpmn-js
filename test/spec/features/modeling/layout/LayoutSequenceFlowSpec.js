@@ -18,7 +18,6 @@ import coreModule from 'lib/core';
 
 describe('features/modeling - layout', function() {
 
-
   describe.skip('overall experience, flow elements', function() {
 
     var diagramXML = require('./LayoutSequenceFlowSpec.flowElements.bpmn');
@@ -175,6 +174,26 @@ describe('features/modeling - layout', function() {
     var testModules = [ coreModule, modelingModule ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    describe('loops', function() {
+
+      it('should layout loop', function() {
+
+        // when
+        var connection = connect('Task_1', 'Task_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 332, y: 260 },
+          { x: 332, y: 280 },
+          { x: 262, y: 280 },
+          { x: 262, y: 220 },
+          { x: 282, y: 220 }
+        ]);
+      });
+
+    });
 
 
     describe('gateway layout', function() {
