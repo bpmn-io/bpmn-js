@@ -200,6 +200,27 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
   });
 
 
+  describe('on source move / layout', function() {
+
+    it('should move label from BOTTOM to TOP', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var source = elementRegistry.get('LabelTop'),
+            target = elementRegistry.get('LabelBottom_3');
+
+        // when
+        modeling.moveElements([ target ], { x: 20, y: -300 });
+
+        // then
+        expectLabelOrientation(source, 'bottom');
+        expectLabelOrientation(target, 'top');
+      }
+    ));
+
+  });
+
+
   describe('on waypoints update', function() {
 
     it('should move label from RIGHT to TOP', inject(function(elementRegistry, modeling) {
