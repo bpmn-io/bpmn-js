@@ -31,6 +31,13 @@
     <sequenceFlow id="SequenceFlow_1qmllcx" sourceRef="Task" targetRef="LabelImpossible" />
     <sequenceFlow id="SequenceFlow_0s993e4" sourceRef="Task" targetRef="LabelImpossible" />
     <sequenceFlow id="SequenceFlow_022at7e" sourceRef="Task" targetRef="LabelImpossible" />
+    <exclusiveGateway id="NoLabel">
+      <outgoing>SequenceFlow_0isa70k</outgoing>
+    </exclusiveGateway>
+    <exclusiveGateway id="ExclusiveGateway_02fomt2">
+      <incoming>SequenceFlow_0isa70k</incoming>
+    </exclusiveGateway>
+    <sequenceFlow id="SequenceFlow_0isa70k" sourceRef="NoLabel" targetRef="ExclusiveGateway_02fomt2" />
   </process>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
@@ -77,15 +84,15 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="334" y="275" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="334" y="370" />
+        <omgdi:waypoint x="334" y="275" />
+        <omgdi:waypoint x="334" y="370" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="346" y="317" width="7" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_2_di" bpmnElement="SequenceFlow_2">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="131" y="275" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="131" y="370" />
+        <omgdi:waypoint x="131" y="275" />
+        <omgdi:waypoint x="131" y="370" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="142" y="317" width="8" height="12" />
         </bpmndi:BPMNLabel>
@@ -100,32 +107,47 @@
         <omgdc:Bounds x="776" y="293" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qmllcx_di" bpmnElement="SequenceFlow_1qmllcx">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="293" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="202" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="202" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="308" />
+        <omgdi:waypoint x="826" y="293" />
+        <omgdi:waypoint x="826" y="202" />
+        <omgdi:waypoint x="658" y="202" />
+        <omgdi:waypoint x="658" y="308" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="742" y="181" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0s993e4_di" bpmnElement="SequenceFlow_0s993e4">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="373" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="826" y="424" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="424" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="658" y="358" />
+        <omgdi:waypoint x="826" y="373" />
+        <omgdi:waypoint x="826" y="424" />
+        <omgdi:waypoint x="658" y="424" />
+        <omgdi:waypoint x="658" y="358" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="742" y="403" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_022at7e_di" bpmnElement="SequenceFlow_022at7e">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="845" y="373" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="845" y="453" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="594" y="453" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="594" y="333" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="633" y="333" />
+        <omgdi:waypoint x="845" y="373" />
+        <omgdi:waypoint x="845" y="453" />
+        <omgdi:waypoint x="594" y="453" />
+        <omgdi:waypoint x="594" y="333" />
+        <omgdi:waypoint x="633" y="333" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="719.5" y="432" width="0" height="12" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="NoLabel_di" bpmnElement="NoLabel" isMarkerVisible="true">
+        <omgdc:Bounds x="633" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="120" y="570" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_02fomt2_di" bpmnElement="ExclusiveGateway_02fomt2" isMarkerVisible="true">
+        <omgdc:Bounds x="836" y="82" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0isa70k_di" bpmnElement="SequenceFlow_0isa70k">
+        <omgdi:waypoint x="658" y="132" />
+        <omgdi:waypoint x="658" y="159" />
+        <omgdi:waypoint x="861" y="159" />
+        <omgdi:waypoint x="861" y="132" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

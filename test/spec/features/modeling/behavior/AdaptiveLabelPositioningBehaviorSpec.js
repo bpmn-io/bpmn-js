@@ -260,4 +260,21 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
   });
 
 
+  describe('on label creation', function() {
+
+    it('should create label at TOP', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var element = elementRegistry.get('NoLabel');
+
+        // when
+        modeling.updateProperties(element, { name: 'FOO BAR' });
+
+        // then
+        expectLabelOrientation(element, 'top');
+      }
+    ));
+  });
+
 });
