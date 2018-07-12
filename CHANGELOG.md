@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `CHORE`: bump to `diagram-js@2.5.0`
+
 ## 2.3.1
 
 * `FIX`: revert to `Arial` as the default rendering font ([#819](https://github.com/bpmn-io/bpmn-js/issues/819))
