@@ -6,7 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: create label on appropriate free position ([#825](https://github.com/bpmn-io/bpmn-js/issues/825))
 * `CHORE`: bump to `diagram-js@2.5.0`
+* `FIX`: repair label position not being adapted on host move
 
 ## 2.3.1
 
