@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.4.0
+
+* `FEAT`: improve layouting of boundary event to host loops ([#467](https://github.com/bpmn-io/bpmn-js/issues/467))
+* `FEAT`: allow circular activity to activity loops ([#824](https://github.com/bpmn-io/bpmn-js/issues/824))
 * `FEAT`: create label on appropriate free position ([#825](https://github.com/bpmn-io/bpmn-js/issues/825))
 * `CHORE`: bump to `diagram-js@2.5.0`
 * `FIX`: repair label position not being adapted on host move
