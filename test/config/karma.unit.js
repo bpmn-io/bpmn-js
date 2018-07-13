@@ -32,17 +32,16 @@ module.exports = function(karma) {
     basePath: basePath,
 
     frameworks: [
-      'browserify',
       'mocha',
       'sinon-chai'
     ],
 
     files: [
-      'test/{spec,integration}/**/*Spec.js'
+      'test/suite.js'
     ],
 
     preprocessors: {
-      'test/{spec,integration}/**/*Spec.js': [ 'browserify', 'env' ]
+      'test/suite.js': [ 'webpack', 'env' ]
     },
 
     reporters: [ 'spec' ],
@@ -65,25 +64,29 @@ module.exports = function(karma) {
     singleRun: true,
     autoWatch: false,
 
-    // browserify configuration
-    browserify: {
-      debug: true,
-      paths: [ absoluteBasePath ],
-      transform: [
-        [ 'babelify', {
-          global: true,
-          babelrc: false,
-          presets: [ 'env' ]
-        } ],
-        [ 'stringify', {
-          global: true,
-          extensions: [
-            '.bpmn',
-            '.xml',
-            '.css'
-          ]
-        } ]
-      ]
+
+    webpack: {
+      mode: 'development',
+      module: {
+        rules: [
+          {
+            test: /\.css|\.bpmn$/,
+            use: 'raw-loader'
+          }
+        ]
+      },
+      resolve: {
+        mainFields: [
+          'dev:module',
+          'browser',
+          'module',
+          'main'
+        ],
+        modules: [
+          'node_modules',
+          absoluteBasePath
+        ]
+      }
     }
   });
 };
