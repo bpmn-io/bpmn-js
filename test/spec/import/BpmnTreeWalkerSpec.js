@@ -14,7 +14,7 @@ describe('import - BpmnTreeWalker', function() {
   it('should expose functions', function() {
 
     // when
-    const walker = createWalker();
+    var walker = createWalker();
 
     // then
     expect(walker.handleDeferred).to.exist;
@@ -27,17 +27,17 @@ describe('import - BpmnTreeWalker', function() {
   it('should walk bpmn:Definitions', function(done) {
 
     // given
-    const elementSpy = sinon.spy(),
-          rootSpy = sinon.spy(),
-          errorSpy = sinon.spy();
+    var elementSpy = sinon.spy(),
+        rootSpy = sinon.spy(),
+        errorSpy = sinon.spy();
 
-    const walker = createWalker({
+    var walker = createWalker({
       element: elementSpy,
       root: rootSpy,
       error: errorSpy
     });
 
-    createModdle(simpleXML, (err, definitions, context, moddle) => {
+    createModdle(simpleXML, function(err, definitions, context, moddle) {
 
       // when
       walker.handleDefinitions(definitions);
@@ -55,21 +55,21 @@ describe('import - BpmnTreeWalker', function() {
   it('should walk bpmn:SubProcess', function(done) {
 
     // given
-    const elementSpy = sinon.spy(),
-          rootSpy = sinon.spy(),
-          errorSpy = sinon.spy();
+    var elementSpy = sinon.spy(),
+        rootSpy = sinon.spy(),
+        errorSpy = sinon.spy();
 
-    const walker = createWalker({
+    var walker = createWalker({
       element: elementSpy,
       root: rootSpy,
       error: errorSpy
     });
 
-    createModdle(simpleXML, (err, definitions, context, moddle) => {
-      const subProcess = findElementWithId(definitions, 'SubProcess_1');
+    createModdle(simpleXML, function(err, definitions, context, moddle) {
+      var subProcess = findElementWithId(definitions, 'SubProcess_1');
 
-      const plane = definitions.diagrams[0].plane,
-            planeElements = plane.planeElement;
+      var plane = definitions.diagrams[0].plane,
+          planeElements = plane.planeElement;
 
       // register DI
       planeElements.forEach(walker.registerDi);
@@ -92,19 +92,19 @@ describe('import - BpmnTreeWalker', function() {
   it('should error', function(done) {
 
     // given
-    const elementSpy = sinon.spy(),
-          rootSpy = sinon.spy(),
-          errorSpy = sinon.spy();
+    var elementSpy = sinon.spy(),
+        rootSpy = sinon.spy(),
+        errorSpy = sinon.spy();
 
-    const walker = createWalker({
+    var walker = createWalker({
       element: elementSpy,
       root: rootSpy,
       error: errorSpy
     });
 
-    createModdle(simpleXML, (err, definitions, context, moddle) => {
+    createModdle(simpleXML, function(err, definitions, context, moddle) {
 
-      const element = findElementWithId(definitions, 'SubProcess_1');
+      var element = findElementWithId(definitions, 'SubProcess_1');
 
       // will error
       element.di = 'DI';
@@ -127,22 +127,25 @@ describe('import - BpmnTreeWalker', function() {
 // helpers //////////
 
 function createModdle(xml, done) {
-  const moddle = new BpmnModdle();
+  var moddle = new BpmnModdle();
 
-  moddle.fromXML(xml, 'bpmn:Definitions', (err, definitions, context) => {
+  moddle.fromXML(xml, 'bpmn:Definitions', function(err, definitions, context) {
     done(err, definitions, context, moddle);
   });
 }
 
-function createWalker(listeners = {}) {
-  const visitor = {
-    element(element, parent) {
+function createWalker(listeners) {
+
+  listeners = listeners || {};
+
+  var visitor = {
+    element: function(element, parent) {
       listeners.element && listeners.element(element, parent);
     },
-    root(root) {
+    root: function(root) {
       listeners.root && listeners.root(root);
     },
-    error(message, context) {
+    error: function(message, context) {
       listeners.error && listeners.error(message, context);
     }
   };
@@ -158,15 +161,15 @@ function findElementWithId(definitions, id) {
     }
 
     if (element.flowElements) {
-      return find(element.flowElements, flowElement => {
-        const foundElement = findElement(flowElement);
+      return find(element.flowElements, function(flowElement) {
+        var foundElement = findElement(flowElement);
 
         return foundElement && foundElement.id === id;
       });
     }
   }
 
-  return definitions.rootElements.reduce((foundElement, rootElement) => {
+  return definitions.rootElements.reduce(function(foundElement, rootElement) {
     if (rootElement.id === id) {
       return rootElement;
     } else {
