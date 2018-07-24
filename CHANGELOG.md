@@ -7,6 +7,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 ___Note:__ Yet to be released changes appear here._
 
 * `FIX`: make viewer IE 9 compatible
+* `FIX`: prevent duplicate connections after drop on flow ([#774](https://github.com/bpmn-io/bpmn-js/issues/774))
+* `FIX`: fix rules not preventing redundant loop ([#836](https://github.com/bpmn-io/bpmn-js/issues/836))
 
 ## 2.4.0
 
