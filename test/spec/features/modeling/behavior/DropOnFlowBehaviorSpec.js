@@ -69,11 +69,11 @@ describe('modeling/behavior - drop on connection', function() {
 
           // new outgoing connection
           expect(newShape.outgoing.length).to.equal(1);
-          expect(targetConnection).to.be.ok;
+          expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
           expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
-          expect(task.incoming[0]).to.equal(newShape.outgoing[0]);
+          expect(task.incoming[1]).to.equal(newShape.outgoing[0]);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -259,11 +259,11 @@ describe('modeling/behavior - drop on connection', function() {
 
           // new outgoing connection
           expect(intermediateThrowEvent.outgoing.length).to.equal(1);
-          expect(targetConnection).to.be.ok;
+          expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
           expect(startEvent.outgoing[0]).to.equal(intermediateThrowEvent.incoming[0]);
-          expect(task.incoming[0]).to.equal(intermediateThrowEvent.outgoing[0]);
+          expect(task.incoming[1]).to.equal(intermediateThrowEvent.outgoing[0]);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -319,11 +319,11 @@ describe('modeling/behavior - drop on connection', function() {
 
           // new outgoing connection
           expect(intermediateThrowEvent.outgoing.length).to.equal(1);
-          expect(targetConnection).to.be.ok;
+          expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
           expect(startEvent.outgoing[0]).to.equal(intermediateThrowEvent.incoming[0]);
-          expect(task.incoming[0]).to.equal(intermediateThrowEvent.outgoing[0]);
+          expect(task.incoming[1]).to.equal(intermediateThrowEvent.outgoing[0]);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -558,6 +558,40 @@ describe('modeling/behavior - drop on connection', function() {
           // then
           expect(intermediateThrowEvent.incoming).to.have.lengthOf(0);
           expect(intermediateThrowEvent.outgoing).to.have.lengthOf(0);
+        }
+      ));
+
+
+      it('should remove redundant flows', inject(
+        function(elementRegistry, selection, move, dragging) {
+
+          var existingIncoming = elementRegistry.get('SequenceFlow_3'),
+              existingOutgoing = elementRegistry.get('SequenceFlow_4');
+
+          // given
+          var element = elementRegistry.get('Task_4');
+
+          var targetFlow = elementRegistry.get('SequenceFlow_1'),
+              targetFlowGfx = elementRegistry.getGraphics(targetFlow);
+
+          // when
+          selection.select(element);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), element);
+
+          dragging.hover({
+            element: targetFlow,
+            gfx: targetFlowGfx
+          });
+
+          dragging.move(canvasEvent({ x: -40, y: 179 }));
+
+          dragging.end();
+
+          // then
+          // existing connections are removed, as they are duplicates
+          expect(element.incoming).not.to.contain(existingIncoming);
+          expect(element.outgoing).not.to.contain(existingOutgoing);
         }
       ));
 
