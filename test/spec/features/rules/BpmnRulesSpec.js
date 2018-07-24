@@ -6,7 +6,8 @@ import {
 import {
   expectCanConnect,
   expectCanDrop,
-  expectCanMove
+  expectCanMove,
+  expectCanInsert
 } from './Helper';
 
 import modelingModule from 'lib/features/modeling';
@@ -1598,6 +1599,28 @@ describe('features/modeling/rules - BpmnRules', function() {
         expect(canMove).to.be.true;
       }));
 
+    });
+
+  });
+
+
+  describe('insert', function() {
+
+    var testXML = require('./BpmnRules.insert.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('insert END -> S1', function() {
+      expectCanInsert('END', 'S1', false);
+    });
+
+    it('insert START -> S1', function() {
+      expectCanInsert('START', 'S1', false);
+    });
+
+    it('insert GATEWAY -> S1', function() {
+      expectCanInsert('GATEWAY', 'S1', true);
     });
 
   });
