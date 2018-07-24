@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="http://bpmn.io" exporterVersion="0.10.1">
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="START" name="START">
+      <outgoing>S1</outgoing>
+      <outgoing>S2</outgoing>
+    </startEvent>
+    <sequenceFlow id="S1" name="S1" sourceRef="START" targetRef="END" />
+    <endEvent id="END" name="END">
+      <incoming>S1</incoming>
+    </endEvent>
+    <exclusiveGateway id="GATEWAY" name="GATEWAY">
+      <incoming>S2</incoming>
+    </exclusiveGateway>
+    <sequenceFlow id="S2" name="S2" sourceRef="START" targetRef="GATEWAY" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="START_di" bpmnElement="START">
+        <omgdc:Bounds x="254" y="174" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="254" y="144" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="S1_di" bpmnElement="S1">
+        <omgdi:waypoint x="290" y="192" />
+        <omgdi:waypoint x="497" y="192" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="387" y="174" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="END_di" bpmnElement="END">
+        <omgdc:Bounds x="497" y="174" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="503" y="217" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GATEWAY_di" bpmnElement="GATEWAY" isMarkerVisible="true">
+        <omgdc:Bounds x="364" y="281" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="362" y="338" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="S2_di" bpmnElement="S2">
+        <omgdi:waypoint x="272" y="210" />
+        <omgdi:waypoint x="272" y="306" />
+        <omgdi:waypoint x="364" y="306" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="281" y="255" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
