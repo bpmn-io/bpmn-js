@@ -75,7 +75,7 @@ npm run all
 You may need to perform [additional project setup](./docs/project/SETUP.md) when
 building the latest development snapshot.
 
-Please checkout our [contributing guidelines](./CONTRIBUTING.md) if you plan to
+Please checkout our [contributing guidelines](./.github/CONTRIBUTING.md) if you plan to
 file an issue or pull request.
 
 
