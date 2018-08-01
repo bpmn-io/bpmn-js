@@ -2,8 +2,6 @@ import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';
 
-import ViewerDefaultExport from '../../';
-
 import Viewer from 'lib/Viewer';
 
 import inherits from 'inherits';
@@ -1062,11 +1060,6 @@ describe('Viewer', function() {
       });
     });
 
-  });
-
-
-  it('default export', function() {
-    expect(ViewerDefaultExport).to.equal(Viewer);
   });
 
 });
