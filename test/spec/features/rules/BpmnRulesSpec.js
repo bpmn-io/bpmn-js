@@ -924,7 +924,6 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
     it('drop TextAnnotation_Global -> Participant', inject(function() {
-
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));
 
@@ -934,12 +933,54 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
 
-    it('drop element -> collapsed Participant', inject(function(canvas) {
+    it('drop element -> collapsed Participant', inject(function() {
       expectCanDrop('StartEvent_None', 'CollapsedParticipant', false);
       expectCanDrop('SubProcess', 'CollapsedParticipant', false);
       expectCanDrop('Task_in_SubProcess', 'CollapsedParticipant', false);
       expectCanDrop('TextAnnotation_Global', 'CollapsedParticipant', false);
     }));
+
+
+    describe('drop MessageFlow label', function() {
+
+      var label;
+
+      beforeEach(inject(function(elementRegistry) {
+        label = elementRegistry.get('MessageFlow_labeled').label;
+      }));
+
+
+      it('-> MessageFlow', function() {
+        expectCanDrop(label, 'MessageFlow_labeled', true);
+      });
+
+
+      it('-> CollapsedParticipant', function() {
+        expectCanDrop(label, 'CollapsedParticipant', true);
+      });
+
+
+      it('-> Collaboration', function() {
+        // then
+        expectCanDrop(label, 'Collaboration', true);
+      });
+
+
+      it('-> Task_in_SubProcess', function() {
+        expectCanDrop(label, 'Task_in_SubProcess', true);
+      });
+
+
+      it('-> SequenceFlow', function() {
+        expectCanDrop(label, 'SequenceFlow', true);
+      });
+
+
+      it('-> DataOutputAssociation', function() {
+        expectCanDrop(label, 'DataOutputAssociation', true);
+      });
+
+    });
 
   });
 

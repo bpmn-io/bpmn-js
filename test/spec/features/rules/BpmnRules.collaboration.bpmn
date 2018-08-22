@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_biH3sOTeEeS2YerRfpjPrw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_biH3sOTeEeS2YerRfpjPrw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:collaboration id="Collaboration">
     <bpmn2:participant id="Participant" name="Pool" processRef="Process" />
     <bpmn2:participant id="OtherParticipant" name="Pool" processRef="OtherProcess" />
     <bpmn2:participant id="CollapsedParticipant" name="Pool" />
+    <bpmn2:messageFlow id="MessageFlow_labeled" name="LABEL" sourceRef="Participant" targetRef="OtherParticipant" />
+    <bpmn2:messageFlow id="MessageFlow_2" sourceRef="OtherParticipant" targetRef="SubProcess" />
     <bpmn2:textAnnotation id="TextAnnotation_Global" />
   </bpmn2:collaboration>
   <bpmn2:process id="Process" isExecutable="false">
@@ -21,23 +23,32 @@
     <bpmn2:endEvent id="EndEvent_Message">
       <bpmn2:messageEventDefinition />
     </bpmn2:endEvent>
-    <bpmn2:endEvent id="EndEvent_None" />
+    <bpmn2:endEvent id="EndEvent_None">
+      <bpmn2:incoming>SequenceFlow</bpmn2:incoming>
+    </bpmn2:endEvent>
     <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Escalation">
       <bpmn2:escalationEventDefinition />
     </bpmn2:intermediateCatchEvent>
     <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Message">
       <bpmn2:messageEventDefinition id="MessageEventDefinition_1" />
     </bpmn2:intermediateThrowEvent>
-    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_None" />
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_None">
+      <bpmn2:outgoing>SequenceFlow</bpmn2:outgoing>
+    </bpmn2:intermediateThrowEvent>
     <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Signal">
       <bpmn2:signalEventDefinition />
     </bpmn2:intermediateThrowEvent>
     <bpmn2:endEvent id="EndEvent_Cancel">
       <bpmn2:cancelEventDefinition />
     </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow" sourceRef="IntermediateThrowEvent_None" targetRef="EndEvent_None" />
   </bpmn2:process>
   <bpmn2:process id="OtherProcess" isExecutable="false">
-    <bpmn2:task id="Task_in_OtherParticipant" />
+    <bpmn2:task id="Task_in_OtherParticipant">
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation">
+        <bpmn2:targetRef>DataStoreReference</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
     <bpmn2:dataStoreReference id="DataStoreReference" />
     <bpmn2:textAnnotation id="TextAnnotation_OtherParticipant" />
   </bpmn2:process>
@@ -140,6 +151,25 @@
           <dc:Bounds x="696.8233151183972" y="534" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_labeled_di" bpmnElement="MessageFlow_labeled">
+        <di:waypoint x="425" y="314" />
+        <di:waypoint x="425" y="432" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="433" y="364" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_2_di" bpmnElement="MessageFlow_2">
+        <di:waypoint x="551" y="432" />
+        <di:waypoint x="551" y="277" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation">
+        <di:waypoint x="508" y="505" />
+        <di:waypoint x="672" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_di" bpmnElement="SequenceFlow">
+        <di:waypoint x="275" y="252" />
+        <di:waypoint x="417" y="252" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
