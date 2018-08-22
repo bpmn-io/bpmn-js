@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.5.0
+
+* `FEAT`: snap message flows to `bpmn:Event` center during connect ([#850](https://github.com/bpmn-io/bpmn-js/issues/850))
+* `CHORE`: bump to `diagram-js@2.6.0`
+* `FIX`: allow label movement over message flow ([#849](https://github.com/bpmn-io/bpmn-js/issues/849))
+
 ## 2.4.1
 
 * `FIX`: make viewer IE 9 compatible
