@@ -2,18 +2,19 @@ import {
   getBpmnJS
 } from 'test/TestHelper';
 
+import {
+  isString
+} from 'min-dash';
+
 
 export function expectCanConnect(source, target, rules) {
 
   var results = {};
 
-  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+  getBpmnJS().invoke(function(bpmnRules) {
 
-    source = elementRegistry.get(source);
-    target = elementRegistry.get(target);
-
-    expect(source).to.exist;
-    expect(target).to.exist;
+    source = get(source);
+    target = get(target);
 
     if ('sequenceFlow' in rules) {
       results.sequenceFlow = bpmnRules.canConnectSequenceFlow(source, target);
@@ -38,17 +39,8 @@ export function expectCanConnect(source, target, rules) {
 
 export function expectCanDrop(element, target, expectedResult) {
 
-  var result;
-
-  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
-
-    element = elementRegistry.get(element);
-    target = elementRegistry.get(target);
-
-    expect(element).to.exist;
-    expect(target).to.exist;
-
-    result = bpmnRules.canDrop(element, target);
+  var result = getBpmnJS().invoke(function(bpmnRules) {
+    return bpmnRules.canDrop(get(element), get(target));
   });
 
   expect(result).to.eql(expectedResult);
@@ -57,17 +49,8 @@ export function expectCanDrop(element, target, expectedResult) {
 
 export function expectCanInsert(element, target, expectedResult) {
 
-  var result;
-
-  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
-
-    element = elementRegistry.get(element);
-    target = elementRegistry.get(target);
-
-    expect(element).to.exist;
-    expect(target).to.exist;
-
-    result = bpmnRules.canInsert(element, target);
+  var result = getBpmnJS().invoke(function(bpmnRules) {
+    return bpmnRules.canInsert(get(element), get(target));
   });
 
   expect(result).to.eql(expectedResult);
@@ -78,9 +61,9 @@ export function expectCanMove(elements, target, rules) {
 
   var results = {};
 
-  getBpmnJS().invoke(function(elementRegistry, bpmnRules) {
+  getBpmnJS().invoke(function(bpmnRules) {
 
-    target = elementRegistry.get(target);
+    target = get(target);
 
     if ('attach' in rules) {
       results.attach = bpmnRules.canAttach(elements, target);
@@ -92,4 +75,28 @@ export function expectCanMove(elements, target, rules) {
   });
 
   expect(results).to.eql(rules);
+}
+
+
+/**
+ * Retrieve element, resolving an ID with
+ * the actual element.
+ */
+function get(element) {
+
+  var actualElement;
+
+  if (isString(element)) {
+    actualElement = getBpmnJS().invoke(function(elementRegistry) {
+      return elementRegistry.get(element);
+    });
+
+    if (!actualElement) {
+      throw new Error('element #' + element + ' not found');
+    }
+
+    return actualElement;
+  }
+
+  return element;
 }
