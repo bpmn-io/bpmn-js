@@ -1666,4 +1666,32 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   });
 
+
+  describe('integration', function() {
+
+    describe('move Lane', function() {
+
+      var testXML = require('./BpmnRules.moveLane.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('should disallow', inject(function(elementRegistry, rules) {
+
+        // given
+        var lane = elementRegistry.get('Lane_1');
+
+        // when
+        var result = rules.allowed('elements.move', {
+          shapes: [ lane ]
+        });
+
+        // then
+        expect(result).to.be.false;
+      }));
+
+    });
+
+  });
+
 });

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="http://bpmn.io" exporterVersion="0.10.1">
+  <collaboration id="Collaboration_00p2rt7">
+    <participant id="Participant_1f9ghrx" processRef="Process_0td36v7" />
+  </collaboration>
+  <process id="Process_0td36v7">
+    <laneSet id="LaneSet_0pqv2qu">
+      <lane id="Lane_1" />
+      <lane id="Lane_2" />
+    </laneSet>
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Collaboration_00p2rt7">
+      <bpmndi:BPMNShape id="Participant_1f9ghrx_di" bpmnElement="Participant_1f9ghrx">
+        <omgdc:Bounds x="96" y="100" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1">
+        <omgdc:Bounds x="126" y="100" width="570" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2">
+        <omgdc:Bounds x="126" y="225" width="570" height="125" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
