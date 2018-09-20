@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.5.2
+
+* `FIX`: correct horizontal embedded label padding
+
 ## 2.5.1
 
 * `FIX`: prevent error to be thrown on lane move ([#855](https://github.com/bpmn-io/bpmn-js/issues/855))
