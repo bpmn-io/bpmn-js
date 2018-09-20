@@ -33,6 +33,12 @@ function checkErrors(done) {
 
 describe('draw - bpmn renderer', function() {
 
+  it('should render labels', function(done) {
+    var xml = require('./BpmnRenderer.labels.bpmn');
+    bootstrapViewer(xml).call(this, checkErrors(done));
+  });
+
+
   it('should render activity markers', function(done) {
     var xml = require('../../fixtures/bpmn/draw/activity-markers.bpmn');
     bootstrapViewer(xml).call(this, checkErrors(done));
