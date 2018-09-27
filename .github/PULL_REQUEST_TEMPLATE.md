@@ -1,10 +1,11 @@
 <!--
 
-Thanks for filing a pull request!
+Thanks for creating this pull request!
 
-Make sure you've read through [our contributing guide](https://github.com/bpmn-io/bpmn-js/blob/master/.github/CONTRIBUTING.md#creating-an-issue). This will help you to get your contribution merged.
+Please make sure you provide the relevant context.
 
 -->
 
+__Which issue does this PR address?_
 
 Closes #
