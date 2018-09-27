@@ -7,10 +7,10 @@ If possible, reproduce bugs through a [JSFiddle snippet](https://jsfiddle.net/kx
 -->
 
 
-### Expected Behavior
+__Expected Behavior__
 
 
-### Actual Behavior
+__Actual Behavior__
 
 
-### Steps to reproduce the Behavior
+__Steps to Reproduce__
