@@ -26,7 +26,7 @@ Steps to reproduce the behavior:
 
 If you report a modeling related issue, ensure you can reproduce it on [demo.bpmn.io](https://demo.bpmn.io/new)
 
-When reporting a library error, try to build an example that reproduces your problem. You can use our playgrounds for [viewer](https://jsfiddle.net/kxqy09gf/) or [modeler](https://jsfiddle.net/08p147e9/) as a starting point or put a demo up on [GitHub](https://github.com/) for inspection.
+When reporting a library error, try to build an example that reproduces your problem. You can use our playgrounds for [viewer](https://jsfiddle.net/07envcu1/) or [modeler](https://jsfiddle.net/bg97r61t/) as a starting point or put a demo up on [GitHub](https://github.com/) for inspection.
 
 
 __Expected Behavior__
