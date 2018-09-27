@@ -19,30 +19,6 @@ Great to see you! Help us out by [filing bugs or feature requests](#working-with
 We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication, discussion and planning.
 
 
-### Creating an Issue
-
-Help others to understand your request:
-
-* Be clear whether you [file a bug](#reporting-a-bug) or [suggest a new feature/improvement](#suggesting-a-feature)
-* Be descriptive when reporting (what, where, when and how)
-
-
-#### Reporting a Bug
-
-Help us to understand and reproduce your issue:
-
-* Attach your environment (browser, bpmn-js version)
-* Attach steps to reproduce
-* Attach code samples, configuration options or stack traces that provide the necessary context
-
-If possible, try to build an example that reproduces your problem. You can use our playgrounds for [viewer](https://jsfiddle.net/kxqy09gf/) or [modeler](https://jsfiddle.net/08p147e9/) as a starting point or put a demo up on [GitHub](https://github.com/) for inspection.
-
-
-#### Suggesting a Feature
-
-* Provide the necessary context that allows us to understand how your proposal improves our library
-
-
 ### Helping out
 
 * Share your perspective on issues
