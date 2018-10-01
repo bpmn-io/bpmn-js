@@ -10,7 +10,8 @@ jobs:
       addons:
         firefox: 'latest-esr'
       script:
-        - TEST_BROWSERS=Firefox,PhantomJS xvfb-run npm run all
+        - COVERAGE=1 TEST_BROWSERS=Firefox,PhantomJS xvfb-run npm run all
+        - codecov
     - stage: update integration test
       script: './tasks/stages/update-integration-test'
     - stage: update examples

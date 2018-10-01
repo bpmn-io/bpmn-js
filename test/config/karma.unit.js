@@ -1,3 +1,5 @@
+var coverage = process.env.COVERAGE;
+
 var path = require('path');
 
 var basePath = '../../';
@@ -25,6 +27,8 @@ var browsers =
       return browser;
     });
 
+var suite = coverage ? 'test/all.js' : 'test/suite.js';
+
 
 module.exports = function(karma) {
   karma.set({
@@ -37,14 +41,14 @@ module.exports = function(karma) {
     ],
 
     files: [
-      'test/suite.js'
+      suite
     ],
 
     preprocessors: {
-      'test/suite.js': [ 'webpack', 'env' ]
+      [ suite ]: [ 'webpack', 'env' ]
     },
 
-    reporters: [ 'spec' ],
+    reporters: [ 'spec' ].concat(coverage ? 'coverage' : []),
 
     customLaunchers: {
       ChromeHeadless_Linux: {
@@ -57,13 +61,18 @@ module.exports = function(karma) {
       }
     },
 
+    coverageReporter: {
+      reporters: [
+        { type: 'lcov', subdir: '.' }
+      ]
+    },
+
     browsers: browsers,
 
     browserNoActivityTimeout: 30000,
 
     singleRun: true,
     autoWatch: false,
-
 
     webpack: {
       mode: 'development',
@@ -73,7 +82,17 @@ module.exports = function(karma) {
             test: /\.css|\.bpmn$/,
             use: 'raw-loader'
           }
-        ]
+        ].concat(coverage ?
+          {
+            test: /\.js$/,
+            use: {
+              loader: 'istanbul-instrumenter-loader',
+              options: { esModules: true }
+            },
+            include: /lib\.*/,
+            exclude: /node_modules/
+          } : []
+        )
       },
       resolve: {
         mainFields: [
