@@ -1694,4 +1694,58 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   });
 
+  describe('start connection', function() {
+
+    var testXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should allow start for given element types', inject(function(elementFactory, rules) {
+      // given
+      var types = [
+        'bpmn:FlowNode',
+        'bpmn:InteractionNode',
+        'bpmn:DataObjectReference',
+        'bpmn:DataStoreReference'
+      ];
+
+      // when
+      var results = types.map(function(type) {
+        var element = elementFactory.createShape({ type: type });
+        return rules.allowed('connection.start', { source: element });
+      });
+
+      // then
+      results.forEach(function(result) {
+        expect(result).to.be.true;
+      });
+    }));
+
+
+    it('should ignore label elements', inject(function(elementFactory, rules) {
+      // given
+      var label = elementFactory.createShape({ type: 'bpmn:FlowNode', labelTarget: {} });
+
+      // when
+      var result = rules.allowed('connection.start', { source: label });
+
+      // then
+      expect(result).to.be.null;
+    }));
+
+
+    it('should NOT allow start on unknown element', inject(function(rules) {
+      // given
+      var element = { type: 'bpmn:SomeUnknownType' };
+
+      // when
+      var result = rules.allowed('connection.start', { source: element });
+
+      // then
+      expect(result).to.be.false;
+    }));
+
+  });
+
 });
