@@ -1377,6 +1377,41 @@ describe('features/modeling/rules - BpmnRules', function() {
       }
     ));
 
+    it('not attach IntermediateEvent to ReceiveTask after EventBasedGateway', inject(
+      function(canvas, modeling, elementFactory, bpmnRules) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            eventBasedGatewayShape = elementFactory.createShape({ type: 'bpmn:EventBasedGateway' }),
+            receiveTaskShape = elementFactory.createShape({ type: 'bpmn:ReceiveTask' }),
+            eventShape = elementFactory.createShape({
+              type: 'bpmn:IntermediateThrowEvent',
+              x: 0, y: 0
+            });
+
+        var boundaryPosition = {
+          x: 175,
+          y: 100 + receiveTaskShape.height
+        };
+
+        // when
+        modeling.createShape(eventBasedGatewayShape, { x: 100, y: 100 }, rootElement);
+        modeling.createShape(receiveTaskShape, { x : 150, y: 100 }, rootElement);
+        modeling.connect(eventBasedGatewayShape, receiveTaskShape, {
+          type: 'bpmn:SequenceFlow'
+        });
+
+        var canAttach = bpmnRules.canAttach(
+          [ eventShape ],
+          receiveTaskShape,
+          null,
+          boundaryPosition
+        );
+
+        // then
+        expect(canAttach).to.be.false;
+      }
+    ));
 
     it('create IntermediateEvent in SubProcess body', inject(
       function(elementFactory, elementRegistry, bpmnRules) {
