@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1ipuizk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:eventBasedGateway id="EventBasedGateway_1" />
+    <bpmn:receiveTask id="ReceiveTask_1" />
+    <bpmn:boundaryEvent id="BoundaryEvent_1" attachedToRef="ReceiveTask_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="EventBasedGateway_1cu8t9h_di" bpmnElement="EventBasedGateway_1">
+        <dc:Bounds x="172" y="118" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_1vk05s6_di" bpmnElement="ReceiveTask_1">
+        <dc:Bounds x="300" y="103" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0xg8xmx_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="331" y="165" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
