@@ -15,7 +15,7 @@ describe('features/modeling/behavior - boundary event', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-
+ 
   describe('removing boundary event attached to receive task', function() {
   
     it('after connecting to event-based gateway',
