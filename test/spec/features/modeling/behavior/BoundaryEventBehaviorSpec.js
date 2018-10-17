@@ -16,40 +16,49 @@ describe('features/modeling/behavior - boundary event', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  it('should remove the boundary event from the receive task after connecting the task with an event based gateway',
-    inject(function(modeling, elementRegistry) {
+  describe('implicitly removing boundary events', function() {
 
-      // given
-      var eventBasedGateway = elementRegistry.get('EventBasedGateway_1'),
-          receiveTask = elementRegistry.get('ReceiveTask_1'),
-          boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+    it('after connecting to event-based gateway',
+      inject(function(modeling, elementRegistry) {
 
-      // when
-      modeling.connect(eventBasedGateway, receiveTask, {
-        type: 'bpmn:SequenceFlow'
-      });
+        // given
+        var eventBasedGateway = elementRegistry.get('EventBasedGateway_1'),
+            receiveTask = elementRegistry.get('ReceiveTask_1'),
+            boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-      // then
-      expect(elementRegistry.get(boundaryEvent.id)).to.be.undefined;
-    }));
+        // when
+        modeling.connect(eventBasedGateway, receiveTask, {
+          type: 'bpmn:SequenceFlow'
+        });
 
-  it('should remove Boundary from ReceiveTask after changing type of Gateway', inject(function(modeling, elementRegistry, bpmnReplace) {
+        // then
+        expect(elementRegistry.get(boundaryEvent.id)).not.to.exist;
+      })
+    );
 
-    // given
-    var gateway = elementRegistry.get('ExclusiveGateway_1'),
-        receiveTask = elementRegistry.get('ReceiveTask_1'),
-        boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-    // when
-    modeling.connect(gateway, receiveTask, {
-      type: 'bpmn:SequenceFlow'
-    });
-    bpmnReplace.replaceElement(gateway, {
-      type: 'bpmn:EventBasedGateway'
-    });
+    it('after replacing connected gateway with event-based gateway',
+      inject(function(modeling, elementRegistry, bpmnReplace) {
 
-    // then
-    expect(elementRegistry.get(boundaryEvent.id)).not.to.exist;
-  }));
+        // given
+        var gateway = elementRegistry.get('ExclusiveGateway_1'),
+            receiveTask = elementRegistry.get('ReceiveTask_1'),
+            boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+        modeling.connect(gateway, receiveTask, {
+          type: 'bpmn:SequenceFlow'
+        });
+
+        // when
+        bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // then
+        expect(elementRegistry.get(boundaryEvent.id)).not.to.exist;
+      })
+    );
+
+  });
 
 });
