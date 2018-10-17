@@ -7,11 +7,11 @@ import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
 
-describe('features/modeling/behavior - connect event based gateway to receive task with boundary', function() {
+describe('features/modeling/behavior - boundary event', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
-  var diagramXML = require('./ConnectEventBasedGatewayBehavior.bpmn');
+  var diagramXML = require('./BoundaryEvent.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -32,5 +32,24 @@ describe('features/modeling/behavior - connect event based gateway to receive ta
       // then
       expect(elementRegistry.get(boundaryEvent.id)).to.be.undefined;
     }));
+
+  it('should remove Boundary from ReceiveTask after changing type of Gateway', inject(function(modeling, elementRegistry, bpmnReplace) {
+
+    // given
+    var gateway = elementRegistry.get('ExclusiveGateway_1'),
+        receiveTask = elementRegistry.get('ReceiveTask_1'),
+        boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+    // when
+    modeling.connect(gateway, receiveTask, {
+      type: 'bpmn:SequenceFlow'
+    });
+    bpmnReplace.replaceElement(gateway, {
+      type: 'bpmn:EventBasedGateway'
+    });
+
+    // then
+    expect(elementRegistry.get(boundaryEvent.id)).not.to.exist;
+  }));
 
 });
