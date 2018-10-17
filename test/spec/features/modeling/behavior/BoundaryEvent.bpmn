@@ -4,6 +4,7 @@
     <bpmn:eventBasedGateway id="EventBasedGateway_1" />
     <bpmn:receiveTask id="ReceiveTask_1" />
     <bpmn:boundaryEvent id="BoundaryEvent_1" attachedToRef="ReceiveTask_1" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -15,6 +16,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_0xg8xmx_di" bpmnElement="BoundaryEvent_1">
         <dc:Bounds x="331" y="165" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1qf26hs_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds x="172" y="221" width="50" height="50" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
