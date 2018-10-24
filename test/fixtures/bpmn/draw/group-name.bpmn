@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:signavio="http://www.signavio.com" id="sid-0fcc2144-457b-4505-9e44-ff673663e3bc" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="2.0.3" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="my group" />
+  </category>
+  <process id="Process_1" processType="None" isExecutable="false">
+    <extensionElements>
+      <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="64982a7ff2f14bcea04a5d016bd89e49" />
+    </extensionElements>
+    <group id="Group_1" categoryValueRef="CategoryValue_1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="" />
+      </extensionElements>
+    </group>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Group_1di" bpmnElement="Group_1">
+        <omgdc:Bounds x="180" y="105" width="188" height="154" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="184" y="107" width="58.28571319580078" height="15" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
