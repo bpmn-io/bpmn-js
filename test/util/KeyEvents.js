@@ -1,8 +1,9 @@
-export function createKeyEvent(element, code, ctrlKey) {
+export function createKeyEvent(element, key, ctrlKey) {
   var e = document.createEvent('Events') || new document.defaultView.CustomEvent('keyEvent');
 
-  e.keyCode = code;
-  e.which = code;
+  e.key = key;
+  e.keyCode = key;
+  e.which = key;
   e.ctrlKey = ctrlKey;
 
   return e;
