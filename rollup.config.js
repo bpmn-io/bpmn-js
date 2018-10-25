@@ -122,7 +122,7 @@ function today() {
   return [
     d.getFullYear(),
     pad(d.getMonth() + 1),
-    pad(d.getDay())
+    pad(d.getDate())
   ].join('-');
 }
 
