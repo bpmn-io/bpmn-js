@@ -172,6 +172,47 @@ describe('Modeler', function() {
   });
 
 
+  describe('editor actions support', function() {
+
+    it('should ship all actions', function() {
+
+      // given
+      var expectedActions = [
+        'undo',
+        'redo',
+        'copy',
+        'paste',
+        'stepZoom',
+        'zoom',
+        'removeSelection',
+        'moveCanvas',
+        'selectElements',
+        'spaceTool',
+        'lassoTool',
+        'handTool',
+        'globalConnectTool',
+        'distributeElements',
+        'alignElements',
+        'setColor',
+        'directEditing',
+        'find',
+        'moveToOrigin'
+      ];
+
+      var modeler = new Modeler();
+
+      // when
+      var editorActions = modeler.get('editorActions');
+
+      // then
+      var actualActions = editorActions.getActions();
+
+      expect(actualActions).to.eql(expectedActions);
+    });
+
+  });
+
+
   describe('bendpoint editing support', function() {
 
     it('should allow to edit bendpoints', function(done) {
