@@ -11,13 +11,19 @@ import { forEach } from 'min-dash';
 
 import coreModule from 'lib/core';
 import editorActionsModule from 'lib/features/editor-actions';
+import searchModule from 'lib/features/search';
+import globalConnectModule from 'diagram-js/lib/features/global-connect';
+import spaceToolModule from 'diagram-js/lib/features/space-tool';
+import lassoToolModule from 'diagram-js/lib/features/lasso-tool';
+import handToolModule from 'diagram-js/lib/features/hand-tool';
 import keyboardModule from 'lib/features/keyboard';
 import modelingModule from 'lib/features/modeling';
+import labelEditingModule from 'lib/features/label-editing';
 
 var createKeyEvent = require('../../../util/KeyEvents').createKeyEvent;
 
 
-describe('features - keyboard', function() {
+describe('features/keyboard', function() {
 
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
@@ -25,13 +31,19 @@ describe('features - keyboard', function() {
     coreModule,
     editorActionsModule,
     keyboardModule,
-    modelingModule
+    modelingModule,
+    globalConnectModule,
+    spaceToolModule,
+    lassoToolModule,
+    handToolModule,
+    searchModule,
+    labelEditingModule
   ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
 
 
-  describe('bpmn key bindings', function() {
+  describe('bpmn keyboard bindings', function() {
 
     var container;
 
@@ -39,9 +51,27 @@ describe('features - keyboard', function() {
       container = TestContainer.get(this);
     });
 
+
     it('should include triggers inside editorActions', inject(function(editorActions) {
+      // given
+      var expectedActions = [
+        'undo',
+        'redo',
+        'zoom',
+        'removeSelection',
+        'selectElements',
+        'spaceTool',
+        'lassoTool',
+        'handTool',
+        'globalConnectTool',
+        'setColor',
+        'directEditing',
+        'find',
+        'moveToOrigin'
+      ];
+
       // then
-      expect(editorActions.length()).to.equal(19);
+      expect(editorActions.getActions()).to.eql(expectedActions);
     }));
 
 
@@ -58,7 +88,7 @@ describe('features - keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        expect(globalConnect.toggle.calledOnce).to.be.true;
+        expect(globalConnect.toggle).to.have.been.calledOnce;
       }));
 
     });
@@ -77,7 +107,7 @@ describe('features - keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        expect(lassoTool.activateSelection.calledOnce).to.be.true;
+        expect(lassoTool.activateSelection).to.have.been.calledOnce;
       }));
 
     });
@@ -96,7 +126,7 @@ describe('features - keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        expect(spaceTool.activateSelection.calledOnce).to.be.true;
+        expect(spaceTool.activateSelection).to.have.been.calledOnce;
       }));
 
     });
@@ -119,7 +149,7 @@ describe('features - keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        expect(directEditing.activate.calledOnce).to.be.true;
+        expect(directEditing.activate).to.have.been.calledOnce;
       }));
 
     });
@@ -163,7 +193,7 @@ describe('features - keyboard', function() {
         keyboard._keyHandler(e);
 
         // then
-        expect(searchPad.toggle).calledOnce;
+        expect(searchPad.toggle).to.have.been.calledOnce;
       }));
 
     });
