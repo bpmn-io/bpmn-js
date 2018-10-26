@@ -186,6 +186,7 @@ describe('Modeler', function() {
         'zoom',
         'removeSelection',
         'moveCanvas',
+        'moveSelection',
         'selectElements',
         'spaceTool',
         'lassoTool',
