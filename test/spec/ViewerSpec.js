@@ -114,6 +114,23 @@ describe('Viewer', function() {
   });
 
 
+  describe('editor actions support', function() {
+
+    it('should not ship per default', function() {
+
+      // given
+      var viewer = new Viewer();
+
+      // when
+      var editorActions = viewer.get('editorActions', false);
+
+      // then
+      expect(editorActions).not.to.exist;
+    });
+
+  });
+
+
   describe('error handling', function() {
 
     function expectMessage(e, expectedMessage) {
