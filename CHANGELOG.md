@@ -6,6 +6,22 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.0.0
+
+### Breaking Changes
+
+* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#300)
+* `FEAT`: remove `BpmnGlobalConnect` provider. Add `connection.start` rule to specify whether connection should be allowed ([#565](https://github.com/bpmn-io/bpmn-js/issues/565), [#870](https://github.com/bpmn-io/bpmn-js/issues/870))
+
+## Other Improvements
+
+* `FEAT`: adjust tooltip titles for `IntermediateCatchEvents` ([350a5ab](https://github.com/bpmn-io/bpmn-js/commit/350a5ab75ed675991599faff9615e4bbe184d491))
+* `FIX`: disallow to attach a `BoundaryEvent` to a `ReceiveTask` following an `EventBasedGateway`. As an effect, the `BoundaryEvent` is removed after connecting elements  ([#784](https://github.com/camunda/camunda-modeler/issues/784), [#874](https://github.com/bpmn-io/bpmn-js/issues/874))
+* `FEAT`: display group names ([#844](https://github.com/bpmn-io/bpmn-js/issues/844))
+* `FIX`: fix date in license ([#882](https://github.com/bpmn-io/bpmn-js/pull/882))
+* `FEAT`: add ability to move selection with keyboard arrows ([#376](https://github.com/bpmn-io/bpmn-js/issues/376))
+* `FIX`: bind to actions in `EditorActions` and register keyboard shortcuts only for actions implemented via features ([#887](https://github.com/bpmn-io/bpmn-js/pull/887))
+
 ## 2.5.2
 
 * `FIX`: correct horizontal embedded label padding
