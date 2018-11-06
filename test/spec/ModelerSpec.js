@@ -463,6 +463,41 @@ describe('Modeler', function() {
 
     });
 
+    it('should inject mandatory modules', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      // when
+      createModeler(xml, function(err, warnings, modeler) {
+
+        // then
+        expect(modeler.get('alignElements')).to.exist;
+        expect(modeler.get('autoPlace')).to.exist;
+        expect(modeler.get('bpmnAutoResize')).to.exist;
+        expect(modeler.get('autoScroll')).to.exist;
+        expect(modeler.get('bendpoints')).to.exist;
+        expect(modeler.get('bpmnCopyPaste')).to.exist;
+        expect(modeler.get('bpmnSearch')).to.exist;
+        expect(modeler.get('contextPad')).to.exist;
+        expect(modeler.get('copyPaste')).to.exist;
+        expect(modeler.get('alignElements')).to.exist;
+        expect(modeler.get('distributeElements')).to.exist;
+        expect(modeler.get('editorActions')).to.exist;
+        expect(modeler.get('keyboard')).to.exist;
+        expect(modeler.get('keyboardMoveSelection')).to.exist;
+        expect(modeler.get('labelEditingProvider')).to.exist;
+        expect(modeler.get('modeling')).to.exist;
+        expect(modeler.get('move')).to.exist;
+        expect(modeler.get('paletteProvider')).to.exist;
+        expect(modeler.get('resize')).to.exist;
+        expect(modeler.get('snapping')).to.exist;
+
+        done(err);
+      });
+
+    });
+
   });
 
 
