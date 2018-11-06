@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.0.1
+
+* `FIX`: restore copy-paste behavior
+
 ## 3.0.0
 
 ### Breaking Changes
