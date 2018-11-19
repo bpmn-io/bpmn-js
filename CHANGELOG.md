@@ -12,19 +12,22 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 3.0.0
 
+* `FEAT`: improve context pad tooltip titles for `EventBasedGateway` ([`350a5ab`](https://github.com/bpmn-io/bpmn-js/commit/350a5ab75ed675991599faff9615e4bbe184d491))
+* `FEAT`: display group names ([#844](https://github.com/bpmn-io/bpmn-js/issues/844))
+* `FEAT`: add ability to move selection with keyboard arrows ([#376](https://github.com/bpmn-io/bpmn-js/issues/376))
+* `FEAT`: support `SHIFT` modifier to move elements / canvas with keyboard arrows at accelerated speed
+* `FEAT`: require `Ctrl/Cmd` to be pressed as a modifier key to move the canvas via keyboard errors
+* `FEAT`: auto-expand elements when children resize ([#786](https://github.com/bpmn-io/bpmn-js/issues/786))
+* `CHORE`: bind editor actions and keyboard shortcuts for explicitly added features only ([#887](https://github.com/bpmn-io/bpmn-js/pull/887))
+* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#300)
+* `FIX`: disallow attaching of `BoundaryEvent` to a `ReceiveTask` following an `EventBasedGateway` ([#874](https://github.com/bpmn-io/bpmn-js/issues/874))
+* `FIX`: fix date in license ([#882](https://github.com/bpmn-io/bpmn-js/pull/882))
+
 ### Breaking Changes
 
-* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#300)
-* `FEAT`: remove `BpmnGlobalConnect` provider. Add `connection.start` rule to specify whether connection should be allowed ([#565](https://github.com/bpmn-io/bpmn-js/issues/565), [#870](https://github.com/bpmn-io/bpmn-js/issues/870))
-
-## Other Improvements
-
-* `FEAT`: adjust tooltip titles for `IntermediateCatchEvents` ([350a5ab](https://github.com/bpmn-io/bpmn-js/commit/350a5ab75ed675991599faff9615e4bbe184d491))
-* `FIX`: disallow to attach a `BoundaryEvent` to a `ReceiveTask` following an `EventBasedGateway`. As an effect, the `BoundaryEvent` is removed after connecting elements  ([#784](https://github.com/camunda/camunda-modeler/issues/784), [#874](https://github.com/bpmn-io/bpmn-js/issues/874))
-* `FEAT`: display group names ([#844](https://github.com/bpmn-io/bpmn-js/issues/844))
-* `FIX`: fix date in license ([#882](https://github.com/bpmn-io/bpmn-js/pull/882))
-* `FEAT`: add ability to move selection with keyboard arrows ([#376](https://github.com/bpmn-io/bpmn-js/issues/376))
-* `FIX`: bind to actions in `EditorActions` and register keyboard shortcuts only for actions implemented via features ([#887](https://github.com/bpmn-io/bpmn-js/pull/887))
+* `BpmnGlobalConnect` provider got removed. Use `connection.start` rule to customize whether connection should allowed to be started ([#565](https://github.com/bpmn-io/bpmn-js/issues/565), [#870](https://github.com/bpmn-io/bpmn-js/issues/870))
+* `EditorActions` / `Keyboard` do not pull in features implicitly anymore. If you roll your own editor, include features you would like to ship with manually to provide the respective actions / keyboard bindings ([`645265ad`](https://github.com/bpmn-io/bpmn-js/commit/645265ad7e4a47e80657c671068a027752d7504f))
+* Moving the canvas with keyboard arrows now requires the `Ctrl/Cmd` modifiers to be pressed.
 
 ## 2.5.2
 
@@ -89,14 +92,13 @@ _Republish of `v2.0.0` due to registry error._
 
 ## 2.0.0
 
+* `FEAT`: allow data store to be modeled between participants ([#483](https://github.com/bpmn-io/bpmn-js/issues/483))
+* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#200)
+* `FIX`: correctly handle missing `bpmndi:Label` bounds during model updating ([#794](https://github.com/bpmn-io/bpmn-js/issues/794))
+
 ### Breaking Changes
 
-* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#200)
-
-## Other Improvements
-
-* `FEAT`: allow data store to be modeled between participants ([#483](https://github.com/bpmn-io/bpmn-js/issues/483))
-* `FIX`: correctly handle missing `bpmndi:Label` bounds during model updating ([#794](https://github.com/bpmn-io/bpmn-js/issues/794))
+* The `PopupMenu` API got rewritten, cf. [`b1852e1d`](https://github.com/bpmn-io/diagram-js/pull/254/commits/b1852e1d71f67bd36ae1eb02748d2d0cbf124625)
 
 ## 1.3.3
 
@@ -154,10 +156,12 @@ _Republished 1.0.0 with CHANGELOG entries._
 
 ## 1.0.0
 
+* `CHORE`: convert code base to ES modules
+* `CHORE`: update utility toolbelt
+
 ### Breaking Changes
 
-* `CHORE`: convert code base to ES modules. You must now configure a module transpiler such as Babel or Webpack to handle ES module imports and exports
-* `CHORE`: update utility toolbelt
+* You must now configure a module transpiler such as Babel or Webpack to handle ES module imports and exports.
 
 ## 0.31.0
 
