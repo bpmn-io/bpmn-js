@@ -344,8 +344,8 @@ describe('features/replace - bpmn replace', function() {
 
       var inputAssociation = inputAssociations[0];
 
-      // expect input association references __target_ref_placeholder property
-      expect(inputAssociation.targetRef).to.equal(bo.properties[0]);
+      // expect input association targetRef
+      expect(inputAssociation.targetRef).to.equal(bo.ioSpecification.dataInputs[0]);
 
       // ...and
       // expect one outgoing connection
