@@ -4,4 +4,3 @@ coverage/
 .idea
 *.iml
 .DS_Store
-package-lock.json
