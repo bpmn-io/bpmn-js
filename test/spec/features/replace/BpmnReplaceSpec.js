@@ -317,6 +317,37 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
+  describe('should collapse pool, removing message flows', function() {
+
+    var diagramXML = require('./BpmnReplace.poolMessageFlows.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('expanded with collapsed pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('Participant_1');
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: false
+      });
+
+      // then
+      expect(isExpanded(newShape)).to.be.false; // collapsed
+      expect(newShape.children).to.be.empty;
+
+      expect(elementRegistry.get('MessageFlow_1')).not.to.exist;
+      expect(elementRegistry.get('MessageFlow_2')).not.to.exist;
+    }));
+
+  });
+
+
   describe('should replace with data objects', function() {
 
     var diagramXML = require('./BpmnReplace.dataObjects.bpmn');
