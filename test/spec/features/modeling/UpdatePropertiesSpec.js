@@ -9,7 +9,7 @@ import coreModule from 'lib/core';
 
 describe('features/modeling - update properties', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/conditions.bpmn');
+  var diagramXML = require('./UpdateProperties.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -267,6 +267,27 @@ describe('features/modeling - update properties', function() {
       expect(flowConnection.businessObject.di.fill).not.to.exist;
     }));
 
+
+    it('updating nested business objects', inject(function(bpmnFactory, elementRegistry, modeling) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      var dataState = bpmnFactory.create('bpmn:DataState');
+
+      // when
+      modeling.updateProperties(dataObjectReference, {
+        dataObjectRef: {
+          dataState: dataState,
+          name: 'foo'
+        }
+      });
+
+      // then
+      expect(dataObjectReference.businessObject.dataObjectRef.name).to.equal('foo');
+      expect(dataObjectReference.businessObject.dataObjectRef.dataState).to.equal(dataState);
+    }));
+
   });
 
 
@@ -420,6 +441,27 @@ describe('features/modeling - update properties', function() {
       }
     ));
 
+
+    it('updating nested business objects', inject(function(bpmnFactory, commandStack, elementRegistry, modeling) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      modeling.updateProperties(dataObjectReference, {
+        dataObjectRef: {
+          dataState: bpmnFactory.create('bpmn:DataState'),
+          name: 'foo'
+        }
+      });
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(dataObjectReference.businessObject.dataObjectRef.name).not.to.exist;
+      expect(dataObjectReference.businessObject.dataObjectRef.dataState).not.to.exist;
+    }));
+
   });
 
 
@@ -507,6 +549,31 @@ describe('features/modeling - update properties', function() {
         expect(flowConnection.businessObject.name).not.to.exist;
       }
     ));
+
+
+    it('updating nested business objects', inject(function(bpmnFactory, commandStack, elementRegistry, modeling) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      var dataState = bpmnFactory.create('bpmn:DataState');
+
+      modeling.updateProperties(dataObjectReference, {
+        dataObjectRef: {
+          dataState: dataState,
+          name: 'foo'
+        }
+      });
+
+      commandStack.undo();
+
+      // when
+      commandStack.redo();
+
+      // then
+      expect(dataObjectReference.businessObject.dataObjectRef.name).to.equal('foo');
+      expect(dataObjectReference.businessObject.dataObjectRef.dataState).to.equal(dataState);
+    }));
 
   });
 

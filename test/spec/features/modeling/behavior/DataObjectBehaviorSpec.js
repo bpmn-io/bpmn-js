@@ -293,4 +293,126 @@ describe('features/modeling/behavior - data object', function() {
 
   });
 
+
+  describe('update', function() {
+
+    var processDiagramXML = require('./DataObjectBehavior.remove-data-association.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+    var dataObjectReferenceShape;
+
+    beforeEach(inject(function(canvas, elementRegistry) {
+      dataObjectReferenceShape = elementRegistry.get('DataObjectReference_1');
+    }));
+
+
+    describe('update label', function() {
+
+      it('should execute', inject(function(modeling) {
+
+        // when
+        modeling.updateLabel(dataObjectReferenceShape, 'foo [bar]');
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState.name).to.equal('bar');
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).to.equal('foo');
+      }));
+
+
+      it('should undo', inject(function(modeling, commandStack) {
+
+        modeling.updateLabel(dataObjectReferenceShape, 'foo [bar]');
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState).not.to.exist;
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).not.to.exist;
+      }));
+
+
+      it('should redo', inject(function(modeling, commandStack) {
+
+        modeling.updateLabel(dataObjectReferenceShape, 'foo [bar]');
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState.name).to.equal('bar');
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).to.equal('foo');
+      }));
+
+    });
+
+
+    describe('update properties', function() {
+
+      it('should execute', inject(function(modeling) {
+
+        // when
+        modeling.updateProperties(dataObjectReferenceShape, {
+          name: 'foo [bar]'
+        });
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState.name).to.equal('bar');
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).to.equal('foo');
+      }));
+
+
+      it('should undo', inject(function(modeling, commandStack) {
+
+        modeling.updateProperties(dataObjectReferenceShape, {
+          name: 'foo [bar]'
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState).not.to.exist;
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).not.to.exist;
+      }));
+
+
+      it('should redo', inject(function(modeling, commandStack) {
+
+        modeling.updateProperties(dataObjectReferenceShape, {
+          name: 'foo [bar]'
+        });
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState.name).to.equal('bar');
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).to.equal('foo');
+      }));
+
+    });
+
+
+    describe('missing state', function() {
+
+      it('should handle missing state', inject(function(modeling) {
+
+        // when
+        modeling.updateLabel(dataObjectReferenceShape, 'foo bar');
+
+        // then
+        expect(dataObjectReferenceShape.businessObject.dataState.name).to.equal('');
+        expect(dataObjectReferenceShape.businessObject.dataObjectRef.name).to.equal('foo bar');
+      }));
+
+    });
+
+  });
+
 });
