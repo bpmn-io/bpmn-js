@@ -222,14 +222,63 @@ describe('features/modeling - ordering', function() {
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-    it('should always be in front', inject(function() {
+    describe('should stay always in front', function() {
 
-      // when
-      move('SequenceFlow_label', { x: 500, y: 0 }, 'Collaboration', false);
+      it('moving <SequenceFlow_label> onto <Participant>', inject(function() {
 
-      // then
-      expectZOrder('Collaboration', 'Participant', 'SequenceFlow_label');
-    }));
+        // when
+        move('SequenceFlow_label', { x: 300, y: 0 }, 'Collaboration', false);
+
+        // then
+        expectZOrder('Collaboration', 'Participant', 'SequenceFlow_label');
+      }));
+
+
+      it('moving <StartEvent_label> onto <Participant>', inject(function() {
+
+        // when
+        move('StartEvent_label', { x: 50, y: -330 }, 'Participant', false);
+
+        // then
+        expectZOrder(
+          'Participant',
+          'Task_With_Boundary',
+          'BoundaryEvent',
+          'Participant_StartEvent',
+          'StartEvent_label'
+        );
+      }));
+
+
+      it('move <StartEvent> with label onto <Participant>', inject(function() {
+
+        // when
+        move('StartEvent', { x: 0, y: -330 }, 'Participant', false);
+
+        // then
+        expectZOrder(
+          'Participant',
+          'Participant_StartEvent',
+          'StartEvent_label'
+        );
+      }));
+
+
+      it('move <DataStore> with label onto <Participant_StartEvent>', inject(function() {
+
+        // when
+        move('DataStore', { x: -150, y: 330 }, 'Participant_StartEvent', false);
+
+        // then
+        expectZOrder(
+          'Participant',
+          'Participant_StartEvent',
+          'DataStore',
+          'DataStore_label'
+        );
+      }));
+
+    });
 
   });
 

@@ -14,7 +14,7 @@
     <bpmn2:task id="Task">
       <bpmn2:incoming>SequenceFlow</bpmn2:incoming>
     </bpmn2:task>
-    <bpmn2:dataStoreReference id="DataStore" />
+    <bpmn2:dataStoreReference id="DataStore" name="Store" />
     <bpmn2:dataStoreReference id="DataStore_With_Output" />
   </bpmn2:process>
   <bpmn2:process id="Process_StartEvent" isExecutable="false">
@@ -53,17 +53,17 @@
         <dc:Bounds x="480" y="144" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow" sourceElement="_BPMNShape_BoundaryEvent_2" targetElement="_BPMNShape_Task_3">
-        <di:waypoint xsi:type="dc:Point" x="364" y="242" />
-        <di:waypoint xsi:type="dc:Point" x="364" y="272" />
-        <di:waypoint xsi:type="dc:Point" x="530" y="272" />
-        <di:waypoint xsi:type="dc:Point" x="530" y="224" />
+        <di:waypoint x="364" y="242" />
+        <di:waypoint x="364" y="272" />
+        <di:waypoint x="530" y="272" />
+        <di:waypoint x="530" y="224" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="429" y="272" width="90" height="6" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_1" bpmnElement="MessageFlow" sourceElement="_BPMNShape_Task_2" targetElement="_BPMNShape_Participant_3">
-        <di:waypoint xsi:type="dc:Point" x="326" y="224" />
-        <di:waypoint xsi:type="dc:Point" x="326" y="444" />
+        <di:waypoint x="326" y="224" />
+        <di:waypoint x="326" y="444" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="370" y="334" width="6" height="6" />
         </bpmndi:BPMNLabel>
@@ -74,18 +74,18 @@
           <dc:Bounds x="244" y="531" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="DataStoreReference_0g20j8u_di" bpmnElement="DataStore">
+      <bpmndi:BPMNShape id="DataStore_di" bpmnElement="DataStore">
         <dc:Bounds x="629" y="159" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="609" y="209" width="90" height="20" />
+          <dc:Bounds x="641" y="129" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1w5ze4k_di" bpmnElement="Task_With_Input">
         <dc:Bounds x="604" y="473" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataInputAssociation_1ubbgym_di" bpmnElement="DataInputAssociation">
-        <di:waypoint xsi:type="dc:Point" x="654" y="209" />
-        <di:waypoint xsi:type="dc:Point" x="654" y="473" />
+        <di:waypoint x="654" y="209" />
+        <di:waypoint x="654" y="473" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="DataStoreReference_0jbctd4_di" bpmnElement="DataStore_With_Output">
         <dc:Bounds x="772" y="159" width="50" height="50" />
@@ -97,8 +97,8 @@
         <dc:Bounds x="747" y="473" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1fcd0id_di" bpmnElement="DataOutputAssociation">
-        <di:waypoint xsi:type="dc:Point" x="797" y="473" />
-        <di:waypoint xsi:type="dc:Point" x="797" y="209" />
+        <di:waypoint x="797" y="473" />
+        <di:waypoint x="797" y="209" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -204,8 +204,10 @@ export function expectZOrder() {
 
     next = elements[idx + 1];
 
-    if (next) {
-      expect(compareZOrder(e, next)).to.eql(-1);
+    if (next && compareZOrder(e, next) !== -1) {
+      throw new Error(
+        'expected <element#' + next + '> to be in front of <element#' + e + '>'
+      );
     }
   });
 

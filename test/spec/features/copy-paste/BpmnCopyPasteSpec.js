@@ -117,7 +117,9 @@ describe('features/copy-paste', function() {
         });
 
         // then
-        expect(rootElement.children).to.have.length(3);
+        // 3 sub-processes
+        // 6 pasted labels
+        expect(rootElement.children).to.have.length(9);
 
         var pastedElements = elementRegistry.filter(function(e) {
           return e !== element && is(e, 'bpmn:SubProcess');
