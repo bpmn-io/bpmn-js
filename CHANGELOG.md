@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.0.4
+
+* `FIX`: render labels always on top ([#920](https://github.com/bpmn-io/bpmn-js/pull/920))
+
 ## 3.0.3
 
 * `FIX`: do not join incoming/outgoing flows other than sequence flows on element deletion ([#917](https://github.com/bpmn-io/bpmn-js/issues/917))
