@@ -72,6 +72,13 @@ npm install
 npm run all
 ```
 
+You may have problem with PUPPETEER_SKIP_CHROMIUM_DOWNLOAD, please include code that reproduces the issue.
+
+```
+Add PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true to local .npmrc file,
+or run npm config set PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true to put property in global .npmrc file.
+```
+
 You may need to perform [additional project setup](./docs/project/SETUP.md) when
 building the latest development snapshot.
 
