@@ -39,6 +39,7 @@ cd bpmn.io
 
 git clone git@github.com:bpmn-io/diagram-js.git
 (cd diagram-js && npm i)
+cd ..
 
 git clone git@github.com:bpmn-io/bpmn-js.git
 (cd bpmn-js && npm install && npm link ../diagram-js)
