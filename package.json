@@ -58,7 +58,6 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-safari-launcher": "^1.0.0",
     "karma-sinon-chai": "^2.0.2",
-    "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^3.0.0",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
