@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.2.1
+
+* `FIX`: bump to `diagram-js@3.1.3` / `tiny-svg@2.2.1` to work around MS Edge bug ([`ed798a15`](https://github.com/bpmn-io/bpmn-js/commit/ed798a152539a613dbc9de9d61231ebbfb50987a))
+
 ## 3.2.0
 
 * `FEAT`: set isHorizontal=true for new and updated participant/lane DIs ([#934](https://github.com/bpmn-io/bpmn-js/issues/934))
