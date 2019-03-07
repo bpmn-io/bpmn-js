@@ -16,7 +16,7 @@ var testModules = [
 
 describe('features/modeling - collapse and expand elements', function() {
 
-  var diagramXML = require('../../../../fixtures/bpmn/import/collapsed/processWithChildren.bpmn');
+  var diagramXML = require('./ToggleElementCollapseBehaviour.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: testModules
