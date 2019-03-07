@@ -418,6 +418,21 @@ describe('import - Importer', function() {
     });
 
 
+    it('should import sequence flow without waypoints', function(done) {
+
+      // given
+      var xml = require('./sequenceFlow-missingWaypoints.bpmn');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        expect(warnings).to.be.empty;
+
+        done(err);
+      });
+    });
+
+
     it('should extend attributes with default value', function(done) {
 
       // given
