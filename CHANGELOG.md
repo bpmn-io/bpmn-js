@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.2.2
+
+* `FIX`: gracefully handle missing waypoints ([`45486f2`](https://github.com/bpmn-io/bpmn-js/commit/45486f2afe7f42fcac31be9ca477a7c94babe7d8))
+
 ## 3.2.1
 
 * `FIX`: bump to `diagram-js@3.1.3` / `tiny-svg@2.2.1` to work around MS Edge bug ([`ed798a15`](https://github.com/bpmn-io/bpmn-js/commit/ed798a152539a613dbc9de9d61231ebbfb50987a))
