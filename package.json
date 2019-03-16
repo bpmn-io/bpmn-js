@@ -72,6 +72,7 @@
     "rollup-plugin-license": "^0.7.0",
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-uglify": "^6.0.0",
     "sinon": "^7.1.0",
     "sinon-chai": "^3.2.0",

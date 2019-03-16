@@ -24,6 +24,8 @@ var VARIANT = process.env.VARIANT;
 
 var NODE_ENV = process.env.NODE_ENV;
 
+var IS_MODULE = (process.env.IS_MODULE == 'true');
+
 module.exports = function(karma) {
   karma.set({
 
@@ -35,13 +37,13 @@ module.exports = function(karma) {
     ],
 
     files: [
-      'dist/' + VARIANT + '.' + (NODE_ENV === 'production' ? 'production.min' : 'development') + '.js',
+      { pattern: 'dist/' + VARIANT + '.' + (NODE_ENV === 'production' ? 'production.min' : 'development') + '.js', type: IS_MODULE ? 'module' : 'js' },
       'dist/assets/bpmn-font/css/bpmn.css',
       'dist/assets/diagram-js.css',
       { pattern: 'resources/initial.bpmn', included: false },
       { pattern: 'dist/assets/**/*', included: false },
       'test/distro/helper.js',
-      'test/distro/' + VARIANT + '.js'
+      { pattern: 'test/distro/' + VARIANT + (IS_MODULE ? '.' + (NODE_ENV === 'production' ? 'production.min' : 'development') : '') + '.js', type: IS_MODULE ? 'module' : 'js' }
     ],
 
     reporters: [ 'progress' ],

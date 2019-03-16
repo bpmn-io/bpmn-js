@@ -4,6 +4,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import license from 'rollup-plugin-license';
 import replace from 'rollup-plugin-replace';
+import { terser } from 'rollup-plugin-terser';
 
 import {
   readFileSync
@@ -57,6 +58,33 @@ const configs = distros.reduce(function(configs, distro) {
       plugins: pgl([
         banner(output, true),
         uglify({
+          output: {
+            comments: /license|@preserve/
+          }
+        })
+      ])
+    },
+    {
+      input: `./lib/${input}.js`,
+      output: {
+        name: 'BpmnJS',
+        file: `${outputDir}/${output}.esm.development.js`,
+        format: 'es'
+      },
+      plugins: pgl([
+        banner(output)
+      ])
+    },
+    {
+      input: `./lib/${input}.js`,
+      output: {
+        name: 'BpmnJS',
+        file: `${outputDir}/${output}.esm.production.min.js`,
+        format: 'es'
+      },
+      plugins: pgl([
+        banner(output, true),
+        terser({
           output: {
             comments: /license|@preserve/
           }
