@@ -21,6 +21,16 @@
         <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
+    <bpmn:ioSpecification>
+      <bpmn:dataInput name="Input" isCollection="false" id="DataInput"/>
+      <bpmn:dataOutput name="Output" isCollection="false" id="DataOutput"/>
+      <bpmn:inputSet id="_9f9aea93-30cd-4899-bbe1-e62165c3dbc9">
+        <bpmn:dataInputRefs>DataInput</bpmn:dataInputRefs>
+      </bpmn:inputSet>
+      <bpmn:outputSet id="_8154d47e-5733-41c1-8125-29ff926b3cd2">
+        <bpmn:dataOutputRefs>DataOutput</bpmn:dataOutputRefs>
+      </bpmn:outputSet>
+      </bpmn:ioSpecification>
     <bpmn:startEvent id="StartEvent_1" name="FOO">
       <bpmn:outgoing>SequenceFlow_2</bpmn:outgoing>
     </bpmn:startEvent>
@@ -172,6 +182,18 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0kzj58d_di" bpmnElement="Participant_2">
         <dc:Bounds x="161" y="646" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataOutput_di" bpmnElement="DataOutput">
+        <dc:Bounds x="265" y="150" width="34" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="12" width="30" x="265" y="195"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput_di" bpmnElement="DataInput">
+        <dc:Bounds x="220" y="150" width="34" height="40"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="12" width="30" x="220" y="200"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
