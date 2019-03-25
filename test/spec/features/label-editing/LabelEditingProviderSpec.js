@@ -22,6 +22,7 @@ describe('features - label-editing', function() {
 
   var diagramXML = require('./LabelEditing.bpmn');
 
+
   describe('basics', function() {
 
     beforeEach(bootstrapModeler(diagramXML, {
@@ -405,7 +406,13 @@ describe('features - label-editing', function() {
 
       it('lane without label', directEdit('Lane_2'));
 
+
+      it('data input', directEdit('DataInput'));
+
+      it('data output', directEdit('DataOutput'));
+
     });
+
   });
 
 
