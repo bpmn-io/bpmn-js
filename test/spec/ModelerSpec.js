@@ -52,6 +52,12 @@ describe('Modeler', function() {
   });
 
 
+  it('should import ioSpecification', function(done) {
+    var xml = require('./features/modeling/input-output/DataInputOutput.bpmn');
+    createModeler(xml, done);
+  });
+
+
   it.skip('should import complex', function(done) {
     var xml = require('../fixtures/bpmn/complex.bpmn');
     createModeler(xml, done);
