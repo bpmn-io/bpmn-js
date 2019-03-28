@@ -9,7 +9,7 @@ import coreModule from 'lib/core';
 
 describe('features/modeling - move elements', function() {
 
-  describe('should keep flow parent', function() {
+  describe('flow parent', function() {
 
     var diagramXML = require('./MoveElements.flow-collaboration.bpmn');
 
@@ -21,7 +21,7 @@ describe('features/modeling - move elements', function() {
     }));
 
 
-    it('when moving shapes', inject(function(elementRegistry, modeling, bpmnFactory) {
+    it('should keep when moving shapes', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var connectionSequenceFlow = elementRegistry.get('SequenceFlow'),
@@ -44,7 +44,7 @@ describe('features/modeling - move elements', function() {
     }));
 
 
-    it('when moving shapes with flow', inject(function(elementRegistry, modeling, bpmnFactory) {
+    it('should keep when moving shapes with flow', inject(function(elementRegistry, modeling, bpmnFactory) {
 
       // given
       var connectionSequenceFlow = elementRegistry.get('SequenceFlow'),
@@ -69,7 +69,7 @@ describe('features/modeling - move elements', function() {
   });
 
 
-  describe('should move boundary connection with tasks', function() {
+  describe('boundary connection with tasks', function() {
 
     var diagramXML = require('./MoveElements.boundary-connection.bpmn');
 
@@ -104,6 +104,57 @@ describe('features/modeling - move elements', function() {
     }));
 
   });
+
+
+  describe('data input / data output', function() {
+
+    var diagramXML = require('./MoveElements.data-input-output.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+
+    it('should move', inject(function(elementRegistry, modeling) {
+
+      // given
+      var dataInput = elementRegistry.get('DataInput');
+      var dataOutput = elementRegistry.get('DataOutput');
+
+      var elements = [
+        dataInput,
+        dataOutput,
+        elementRegistry.get('Task')
+      ];
+
+      // when
+      modeling.moveElements(
+        elements,
+        { x: -10, y: -10 }
+      );
+
+      // then
+      expect(dataOutput).to.have.bounds({
+        x: 275,
+        y: 140,
+        width: 34,
+        height: 40
+      });
+
+      expect(dataInput).to.have.bounds({
+        x: 90,
+        y: 90,
+        width: 34,
+        height: 40
+      });
+    }));
+
+  });
+
+
 
 });
 
