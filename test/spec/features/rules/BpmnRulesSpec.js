@@ -1575,6 +1575,23 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
 
+    describe('should resize', function() {
+
+      it('Group', inject(function(bpmnRules, elementRegistry) {
+
+        // given
+        var groupElement = elementRegistry.get('Group_1');
+
+        // when
+        var canResize = bpmnRules.canResize(groupElement);
+
+        // then
+        expect(canResize).to.be.true;
+      }));
+
+    });
+
+
     describe('should allow drop', function() {
 
       it('[any Element] -> Group', inject(function(elementRegistry, bpmnRules) {
