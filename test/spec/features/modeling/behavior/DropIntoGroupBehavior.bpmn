@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:signavio="http://www.signavio.com" xmlns:tns="http://www.signavio.com/bpmn20" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:yaoqiang="http://bpmn.sourceforge.net" id="sid-0fcc2144-457b-4505-9e44-ff673663e3bc" name="" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="3.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://bpmn.sourceforge.net/schemas/BPMN20.xsd">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="group" />
+  </category>
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="StartEvent_1" />
+    <group id="Group_1" categoryValueRef="CategoryValue_1" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="Group_1">
+        <omgdc:Bounds x="189" y="62" width="400" height="254" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="276" y="98" width="58" height="18.96" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_2" bpmnElement="StartEvent_1">
+        <omgdc:Bounds x="125" y="116" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_2">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" />
+  </bpmndi:BPMNDiagram>
+</definitions>

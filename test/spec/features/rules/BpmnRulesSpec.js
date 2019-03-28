@@ -1532,6 +1532,73 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('groups', function() {
+
+    var testXML = require('./BpmnRules.groups.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    describe('should allow add', function() {
+
+      it('[any Element] -> Group', inject(function(elementFactory, elementRegistry, bpmnRules) {
+
+        // given
+        var groupElement = elementRegistry.get('Group_1');
+
+        var shapes = [
+          elementFactory.createShape({
+            type: 'bpmn:StartEvent',
+            x: 0, y: 0
+          }),
+          elementFactory.createShape({
+            type: 'bpmn:SubProcess',
+            x: 200, y: 200
+          }),
+          elementFactory.createShape({
+            type: 'bpmn:Task',
+            x: 100, y: 100
+          })
+        ];
+
+        shapes.forEach(function(s) {
+
+          // when
+          var canCreate = bpmnRules.canCreate(s, groupElement);
+
+          // then
+          expect(canCreate).to.be.true;
+        });
+
+      }));
+
+    });
+
+
+    describe('should allow drop', function() {
+
+      it('[any Element] -> Group', inject(function(elementRegistry, bpmnRules) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            subProcessElement = elementRegistry.get('SubProcess_1'),
+            taskElement = elementRegistry.get('Task_1'),
+            groupElement = elementRegistry.get('Group_1');
+
+        // when
+        var canMove = bpmnRules.canMove([
+          startEventElement,
+          subProcessElement,
+          taskElement
+        ], groupElement);
+
+        // then
+        expect(canMove).to.be.true;
+      }));
+    });
+  });
+
+
   describe('lanes', function() {
 
     var testXML = require('./BpmnRules.collaboration-lanes.bpmn');
