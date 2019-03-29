@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.3.0
+
+* `FEAT`: support basic `DataInput` / `DataOutput` move ([#962](https://github.com/bpmn-io/bpmn-js/pull/962))
+* `FIX`: properly handle `DataInput` / `DataOutput` move ([#961](https://github.com/bpmn-io/bpmn-js/issues/961))
 * `CHORE`: update to `diagram-js-direct-editing@1.4.1`
 
 ## 3.2.2
