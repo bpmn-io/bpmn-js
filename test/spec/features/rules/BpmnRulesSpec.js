@@ -1702,6 +1702,76 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('data input / output', function() {
+
+    describe('in process', function() {
+
+      var testXML = require('./BpmnRules.dataInputOutput.process.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('should move', inject(function(elementRegistry) {
+
+        // when
+        var elements = [
+          'Task',
+          'DataInput',
+          'DataOutput'
+        ];
+
+        // then
+        expectCanDrop('DataInput', 'Process', true);
+        expectCanDrop('DataOutput', 'Process', true);
+
+        expectCanMove(elements, 'Process', {
+          attach: false,
+          move: true
+        });
+      }));
+
+    });
+
+
+    describe('in collaboration', function() {
+
+      var testXML = require('./BpmnRules.dataInputOutput.collaboration.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('should move', inject(function(elementRegistry) {
+
+        // when
+        var elements = [
+          'Task',
+          'DataInput',
+          'DataOutput'
+        ];
+
+        // then
+        expectCanDrop('DataInput', 'Participant_A', true);
+        expectCanDrop('DataInput', 'Participant_B', false);
+
+        expectCanDrop('DataOutput', 'Participant_A', true);
+        expectCanDrop('DataOutput', 'Participant_B', false);
+
+        expectCanMove(elements, 'Participant_A', {
+          attach: false,
+          move: true
+        });
+
+        expectCanMove(elements, 'Participant_B', {
+          attach: false,
+          move: false
+        });
+      }));
+
+    });
+
+  });
+
+
   describe('integration', function() {
 
     describe('move Lane', function() {
