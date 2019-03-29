@@ -1,0 +1,74 @@
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_af3cbf6a-9c69-460b-9a1d-276711d30213" targetNamespace="http://www.trisotech.com/definitions/_af3cbf6a-9c69-460b-9a1d-276711d30213" expressionLanguage="http://www.w3.org/1999/XPath" exporter="BPMN Modeler" exporterVersion="6.1.22" name="Travel Booking with Event Subprocess">
+  <semantic:process id="Process" name="Simple Travel Booking" isClosed="false">
+    <semantic:ioSpecification>
+      <semantic:dataInput name="Input" isCollection="false" id="DataInput"/>
+      <semantic:dataOutput name="Output" isCollection="false" id="DataOutput"/>
+      <semantic:inputSet id="Process_InputSet">
+        <semantic:dataInputRefs>DataInput</semantic:dataInputRefs>
+      </semantic:inputSet>
+      <semantic:outputSet id="Process_OutputSet">
+        <semantic:dataOutputRefs>DataOutput</semantic:dataOutputRefs>
+      </semantic:outputSet>
+    </semantic:ioSpecification>
+    <semantic:sendTask id="Task" name="Process Data" implementation="##WebService">
+      <semantic:ioSpecification>
+        <semantic:dataInput id="Task_DataInput"/>
+        <semantic:dataOutput id="Task_DataOutput"/>
+        <semantic:inputSet id="Task_InputSet">
+          <semantic:dataInputRefs>Task_DataInput</semantic:dataInputRefs>
+        </semantic:inputSet>
+        <semantic:outputSet id="Task_OutputSet">
+          <semantic:dataOutputRefs>Task_DataOutput</semantic:dataOutputRefs>
+        </semantic:outputSet>
+      </semantic:ioSpecification>
+      <semantic:dataInputAssociation id="DataInputAssociation">
+        <semantic:sourceRef>DataInput</semantic:sourceRef>
+        <semantic:targetRef>Task_DataInput</semantic:targetRef>
+      </semantic:dataInputAssociation>
+      <semantic:dataOutputAssociation id="DataOutputAssociation">
+        <semantic:sourceRef>Task_DataOutput</semantic:sourceRef>
+        <semantic:targetRef>DataOutput</semantic:targetRef>
+      </semantic:dataOutputAssociation>
+    </semantic:sendTask>
+  </semantic:process>
+  <bpmndi:BPMNDiagram id="_f1aecfc3-a3da-4bde-bece-87786e25273d" name="Simple Travel Booking">
+    <bpmndi:BPMNPlane bpmnElement="Process" id="_f1aecfc3-a3da-4bde-bece-87786e25273d_plane">
+      <bpmndi:BPMNShape id="DataOutput_di" bpmnElement="DataOutput">
+        <dc:Bounds x="285" y="150" width="34" height="40"/>
+        <bpmndi:BPMNLabel labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1">
+          <dc:Bounds height="12" width="30" x="285" y="195"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataInput_di" bpmnElement="DataInput">
+        <dc:Bounds x="100" y="100" width="34" height="40"/>
+        <bpmndi:BPMNLabel labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1">
+          <dc:Bounds height="12" width="30" x="100" y="150"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="167" y="200" width="96" height="76"/>
+        <bpmndi:BPMNLabel labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1">
+          <dc:Bounds height="26" width="89" x="170.5" y="261.9739767206677"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation" targetElement="Task_di">
+        <di:waypoint x="135" y="113.99809778522484"/>
+        <di:waypoint x="215" y="113.99809778522484"/>
+        <di:waypoint x="215" y="200"/>
+        <bpmndi:BPMNLabel labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation" sourceElement="Task">
+        <di:waypoint x="230" y="200"/>
+        <di:waypoint x="230" y="170"/>
+        <di:waypoint x="285" y="170"/>
+        <bpmndi:BPMNLabel labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0">
+      <dc:Font name="Arial" size="11" isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false"/>
+    </bpmndi:BPMNLabelStyle>
+    <bpmndi:BPMNLabelStyle id="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1">
+      <dc:Font name="arial,helvetica,sans-serif" size="11" isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>

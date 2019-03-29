@@ -61,6 +61,8 @@ export function expectCanMove(elements, target, rules) {
 
   var results = {};
 
+  elements = elements.map(get);
+
   getBpmnJS().invoke(function(bpmnRules) {
 
     target = get(target);
