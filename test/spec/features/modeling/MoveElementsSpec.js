@@ -152,6 +152,27 @@ describe('features/modeling - move elements', function() {
       });
     }));
 
+
+    it('should wrap in participant', inject(
+      function(elementRegistry, elementFactory, modeling, canvas) {
+
+        // given
+        var dataInput = elementRegistry.get('DataInput');
+        var dataOutput = elementRegistry.get('DataOutput');
+
+        var processShape = canvas.getRootElement(),
+            processBo = processShape.businessObject,
+            participantShape = elementFactory.createParticipantShape(true);
+
+        // when
+        modeling.createShape(participantShape, { x: 350, y: 200 }, processShape);
+
+        // then
+        expect(dataInput.businessObject.$parent).to.eql(processBo.ioSpecification);
+        expect(dataOutput.businessObject.$parent).to.eql(processBo.ioSpecification);
+      }
+    ));
+
   });
 
 
