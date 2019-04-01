@@ -10,7 +10,10 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: support basic `DataInput` / `DataOutput` move ([#962](https://github.com/bpmn-io/bpmn-js/pull/962))
 * `FIX`: properly handle `DataInput` / `DataOutput` move ([#961](https://github.com/bpmn-io/bpmn-js/issues/961))
-* `CHORE`: update to `diagram-js-direct-editing@1.4.1`
+
+## 3.2.3
+
+* `FIX`: update to `diagram-js-direct-editing@1.4.1` to trim trailing/leading whitespace in task names ([#763](https://github.com/bpmn-io/bpmn-js/issues/763))
 
 ## 3.2.2
 
