@@ -8,6 +8,10 @@ import Viewer from 'lib/Viewer';
 
 import inherits from 'inherits';
 
+import {
+  isFunction
+} from 'min-dash';
+
 
 describe('Viewer', function() {
 
@@ -18,10 +22,15 @@ describe('Viewer', function() {
   });
 
 
-  function createViewer(xml, done) {
+  function createViewer(xml, diagramId, done) {
+    if (isFunction(diagramId)) {
+      done = diagramId;
+      diagramId = null;
+    }
+
     var viewer = new Viewer({ container: container });
 
-    viewer.importXML(xml, function(err, warnings) {
+    viewer.importXML(xml, diagramId, function(err, warnings) {
       done(err, warnings, viewer);
     });
   }
@@ -660,6 +669,68 @@ describe('Viewer', function() {
       var viewer = new Viewer({ container: container });
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      // when
+      viewer.importXML(xml);
+
+      // then
+      viewer.on('import.done', function(event) {
+        done();
+      });
+    });
+
+
+    it('should import BPMN with multiple diagrams without diagram id specified', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+
+      // when
+      createViewer(xml, function(err) {
+
+        // then
+        done(err);
+      });
+    });
+
+
+    it('should import BPMN with multiple diagrams with diagram id specified', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+
+      // when
+      createViewer(xml, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7', function(err) {
+
+        // then
+        done(err);
+      });
+    });
+
+
+    it('should complete with error if diagram of provided ID does not exist', function(done) {
+
+      // given
+      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+
+      // when
+      createViewer(xml, 'Diagram_IDontExist', function(err) {
+
+        // then
+        expect(err).to.exist;
+        expect(err.message).to.eql('BPMNDiagram not found');
+
+        done();
+      });
+    });
+
+
+    it('should import BPMN with multiple diagrams when only xml is provided', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
       // when
       viewer.importXML(xml);

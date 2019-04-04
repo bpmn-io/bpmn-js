@@ -18,7 +18,8 @@ import {
 } from 'diagram-js/lib/util/GraphicsUtil';
 
 import {
-  find
+  find,
+  isFunction
 } from 'min-dash';
 
 import { is } from 'lib/util/ModelUtil';
@@ -40,12 +41,22 @@ describe('import - Importer', function() {
   });
 
 
-  function runImport(diagram, xml, done) {
+  function runImport(diagram, xml, diagramId, done) {
+
+    if (isFunction(diagramId)) {
+      done = diagramId;
+      diagramId = null;
+    }
 
     var moddle = new BpmnModdle();
 
     moddle.fromXML(xml, function(err, definitions) {
-      importBpmnDiagram(diagram, definitions, done);
+
+      var selectedDiagram = find(definitions.diagrams, function(element) {
+        return element.id === diagramId;
+      });
+
+      importBpmnDiagram(diagram, definitions, selectedDiagram, done);
     });
   }
 
@@ -376,6 +387,79 @@ describe('import - Importer', function() {
         expect(events.DataStoreReference.parent).to.equal(events.Collaboration);
 
         done(err);
+      });
+    });
+
+
+    it('should import single diagram from multiple diagrams 2', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/multiple-diagrams.bpmn');
+
+      var events = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        events.push({
+          type: 'add',
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
+        });
+      });
+
+      // when
+      runImport(diagram, xml, 'BPMNDiagram_2', function(err, warnings) {
+
+        // then
+        expect(events).to.eql([
+          { type: 'add', semantic: 'Process_2', di: 'BPMNPlane_2', diagramElement: 'Process_2' },
+          { type: 'add', semantic: 'StartEvent_2', di: '_BPMNShape_StartEvent_2', diagramElement: 'StartEvent_2' },
+          { type: 'add', semantic: 'IntermediateThrowEvent_1', di: '_BPMNShape_IntermediateThrowEvent_1', diagramElement: 'IntermediateThrowEvent_1' },
+          { type: 'add', semantic: 'EndEvent_2', di: '_BPMNShape_EndEvent_2', diagramElement: 'EndEvent_2' },
+          { type: 'add', semantic: 'SequenceFlow_4', di: 'BPMNEdge_SequenceFlow_4', diagramElement: 'SequenceFlow_4' },
+          { type: 'add', semantic: 'SequenceFlow_5', di: 'BPMNEdge_SequenceFlow_5', diagramElement: 'SequenceFlow_5' }
+        ]);
+
+        done(err);
+      });
+    });
+
+
+    it('should import single diagram from multiple diagrams 1', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/multiple-diagrams.bpmn');
+
+      var events = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        events.push({
+          type: 'add',
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
+        });
+      });
+
+      // when
+      runImport(diagram, xml, 'BPMNDiagram_1', function(err, warnings) {
+
+        // then
+        expect(events).to.eql([
+          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: 'Process_1' },
+          { type: 'add', semantic: 'StartEvent_1', di: '_BPMNShape_StartEvent_1', diagramElement: 'StartEvent_1' },
+          { type: 'add', semantic: 'Task_1', di: '_BPMNShape_Task_1', diagramElement: 'Task_1' },
+          { type: 'add', semantic: 'Task_2', di: '_BPMNShape_Task_2', diagramElement: 'Task_2' },
+          { type: 'add', semantic: 'EndEvent_1', di: '_BPMNShape_EndEvent_1', diagramElement: 'EndEvent_1' },
+          { type: 'add', semantic: 'SequenceFlow_1', di: 'BPMNEdge_SequenceFlow_1', diagramElement: 'SequenceFlow_1' },
+          { type: 'add', semantic: 'SequenceFlow_2', di: 'BPMNEdge_SequenceFlow_2', diagramElement: 'SequenceFlow_2' },
+          { type: 'add', semantic: 'SequenceFlow_3', di: 'BPMNEdge_SequenceFlow_3', diagramElement: 'SequenceFlow_3' }
+        ]);
+
+        done(err);
+
       });
     });
 
