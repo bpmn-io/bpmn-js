@@ -36,6 +36,7 @@
   ],
   "license": "SEE LICENSE IN LICENSE",
   "sideEffects": [
+    "./lib/draw/BpmnRenderer.js",
     "*.css"
   ],
   "devDependencies": {
