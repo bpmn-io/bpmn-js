@@ -6,6 +6,8 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
+/* global sinon */
+
 var testModules = [ modelingModule, coreModule ];
 
 
@@ -83,6 +85,36 @@ describe('features - bpmn-updater', function() {
         // then
         expect(sequenceFlow.businessObject.di.sourceElement).not.to.exist;
         expect(sequenceFlow.businessObject.di.targetElement).not.to.exist;
+      }
+    ));
+
+  });
+
+
+  describe('connection cropping', function() {
+
+    var diagramXML = require('./BpmnUpdater.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    afterEach(sinon.restore);
+
+
+    it('should crop connection only once per reconnect', inject(
+      function(modeling, elementRegistry, connectionDocking) {
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            target = elementRegistry.get('EndEvent_2'),
+            cropSpy = sinon.spy(connectionDocking, 'getCroppedWaypoints');
+
+        // when
+        modeling.reconnectEnd(sequenceFlow, target, { x: 418, y: 260 });
+
+        // then
+        expect(cropSpy).to.have.been.calledOnce;
+        expect(cropSpy).to.have.been.calledWith(sequenceFlow);
       }
     ));
 
