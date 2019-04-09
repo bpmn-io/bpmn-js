@@ -8,10 +8,12 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 3.3.1
 
+* `FIX`: ignore unchanged direct editing completion
 * `CHORE`: update to `diagram-js-direct-editing@1.4.2`
 
 ## 3.3.0
 
+* `FEAT`: display `DataInput` / `DataOutput` labels ([`89719de3b`](https://github.com/bpmn-io/bpmn-js/commit/89719de3be50d9270227fd04216f7f19f0d018a2))
 * `FEAT`: support basic `DataInput` / `DataOutput` move ([#962](https://github.com/bpmn-io/bpmn-js/pull/962))
 * `FIX`: properly handle `DataInput` / `DataOutput` move ([#961](https://github.com/bpmn-io/bpmn-js/issues/961))
 
