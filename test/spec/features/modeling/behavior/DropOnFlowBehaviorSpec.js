@@ -246,7 +246,7 @@ describe('modeling/behavior - drop on connection', function() {
             gfx: sequenceFlowGfx
           });
 
-          dragging.move(canvasEvent({ x: 150, y: 0 }));
+          dragging.move(canvasEvent({ x: 149, y: 0 }));
 
           dragging.end();
 
@@ -268,17 +268,17 @@ describe('modeling/behavior - drop on connection', function() {
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
             originalWaypoints.slice(0, 2),
-            { x: 341, y: 192 }
+            { x: 340, y: 192 }
           ]));
 
-          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 210 });
+          expect(sequenceFlow).to.have.endDocking({ x: 340, y: 210 });
 
           expect(targetConnection).to.have.waypoints(flatten([
-            { x: 341, y: 228 },
+            { x: 340, y: 228 },
             originalWaypoints.slice(2)
           ]));
 
-          expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
+          expect(targetConnection).to.have.startDocking({ x: 340, y: 210 });
         }
       ));
 
@@ -307,7 +307,7 @@ describe('modeling/behavior - drop on connection', function() {
             gfx: rootElementGfx
           });
 
-          dragging.move(canvasEvent({ x: 150, y: 0 }));
+          dragging.move(canvasEvent({ x: 149, y: 0 }));
           dragging.end();
 
           // then
@@ -328,17 +328,17 @@ describe('modeling/behavior - drop on connection', function() {
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
             originalWaypoints.slice(0, 2),
-            { x: 341, y: 192 }
+            { x: 340, y: 192 }
           ]));
 
-          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 210 });
+          expect(sequenceFlow).to.have.endDocking({ x: 340, y: 210 });
 
           expect(targetConnection).to.have.waypoints(flatten([
-            { x: 341, y: 228 },
+            { x: 340, y: 228 },
             originalWaypoints.slice(2)
           ]));
 
-          expect(targetConnection).to.have.startDocking({ x: 341, y: 210 });
+          expect(targetConnection).to.have.startDocking({ x: 340, y: 210 });
         }
       ));
 
@@ -361,17 +361,17 @@ describe('modeling/behavior - drop on connection', function() {
             gfx: sequenceFlowGfx
           });
 
-          dragging.move(canvasEvent({ x: 150, y: -130 }));
+          dragging.move(canvasEvent({ x: 149, y: -130 }));
           dragging.end();
 
           // then
           // split target but don't keep insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
             originalWaypoints.slice(0, 2),
-            { x: 341, y: 241 }
+            { x: 340, y: 241 }
           ]));
 
-          expect(sequenceFlow).to.have.endDocking({ x: 341, y: 281 });
+          expect(sequenceFlow).to.have.endDocking({ x: 340, y: 281 });
         }
       ));
 
