@@ -270,12 +270,14 @@ describe('draw - bpmn renderer', function() {
         var svg = canvas._svg;
         var markers = svg.querySelectorAll('marker');
 
-        expect(markers).to.have.length(5);
+        expect(markers).to.have.length(7);
         expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
-        expect(markers[2].id).to.match(/^association-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[3].id).to.match(/^messageflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[4].id).to.match(/^messageflow-start-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[1].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
+        expect(markers[2].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
+        expect(markers[3].id).to.match(/^sequenceflow-end-white-_3399aa-[A-Za-z0-9]{25}$/);
+        expect(markers[4].id).to.match(/^association-end-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[5].id).to.match(/^messageflow-end-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[6].id).to.match(/^messageflow-start-white-black-[A-Za-z0-9]{25}$/);
       })();
 
       done(err);
@@ -334,11 +336,13 @@ describe('draw - bpmn renderer', function() {
           defaultStrokeColor = 'lime';
 
       // TODO(philippfromme): remove once PhantomJS is not used anymore
-      var hexValues = {
+      var conversionValues = {
         blue: '#0000ff',
         lime: '#00ff00',
         red: '#ff0000',
-        yellow: '#ffff00'
+        yellow: '#ffff00',
+        'rgb(251, 140, 0)': '#fb8c00',
+        '#3399aa': 'rgb(51, 153, 170)'
       };
 
       beforeEach(bootstrapViewer(xml,{
@@ -349,11 +353,11 @@ describe('draw - bpmn renderer', function() {
       }));
 
       function expectFillColor(element, color) {
-        expect([ color, hexValues[ color ]]).to.include(element.style.fill);
+        expect([ color, conversionValues[ color ]]).to.include(element.style.fill);
       }
 
       function expectStrokeColor(element, color) {
-        expect([ color, hexValues[ color ]]).to.include(element.style.stroke);
+        expect([ color, conversionValues[ color ]]).to.include(element.style.stroke);
       }
 
       /**
