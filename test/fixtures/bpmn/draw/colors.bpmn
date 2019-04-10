@@ -163,7 +163,7 @@ can be added, too</bpmn:text>
       <bpmndi:BPMNShape id="Task_02fdytg_di" bpmnElement="Task_02fdytg">
         <dc:Bounds x="430" y="189" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0pqo7zt_di" bpmnElement="SequenceFlow_0pqo7zt">
+      <bpmndi:BPMNEdge id="SequenceFlow_0pqo7zt_di" bpmnElement="SequenceFlow_0pqo7zt" bioc:stroke="#3399aa">
         <di:waypoint x="368" y="229" />
         <di:waypoint x="430" y="229" />
         <bpmndi:BPMNLabel>
@@ -187,7 +187,7 @@ can be added, too</bpmn:text>
           <dc:Bounds x="561" y="369" width="62" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_17ohrlh_di" bpmnElement="SequenceFlow_17ohrlh">
+      <bpmndi:BPMNEdge id="SequenceFlow_17ohrlh_di" bpmnElement="SequenceFlow_17ohrlh" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
         <di:waypoint x="530" y="351" />
         <di:waypoint x="574" y="351" />
         <bpmndi:BPMNLabel>
