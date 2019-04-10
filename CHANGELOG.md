@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: consistently layout connection on reconnect start and end ([#971](https://github.com/bpmn-io/bpmn-js/pull/971))
+* `FIX`: properly crop sequence flow ends on undo/redo ([#940](https://github.com/bpmn-io/bpmn-js/issues/940))
+
 ## 3.3.1
 
 * `FIX`: ignore unchanged direct editing completion
