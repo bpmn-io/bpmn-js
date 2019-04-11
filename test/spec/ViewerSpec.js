@@ -718,7 +718,7 @@ describe('Viewer', function() {
 
         // then
         expect(err).to.exist;
-        expect(err.message).to.eql('BPMNDiagram not found');
+        expect(err.message).to.eql('no diagram to display');
 
         done();
       });
@@ -738,6 +738,134 @@ describe('Viewer', function() {
       // then
       viewer.on('import.done', function(event) {
         done();
+      });
+    });
+
+  });
+
+
+  describe('#open', function() {
+
+    var diagramId1 = 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7',
+        diagramId2 = 'Diagram_94435ba7-4027-4df9-ad3b-df1f6e068e5e',
+        xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+
+    it('should open another diagram', function(done) {
+
+      // when
+      createViewer(xml, diagramId1, function(err, warnings, viewer) {
+
+        // then
+        expect(err).not.to.exist;
+        expect(warnings).to.be.empty;
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.exist;
+
+        viewer.open(diagramId2, function(err, warnings) {
+
+          // then
+          expect(err).not.to.exist;
+          expect(warnings).to.be.empty;
+
+          var definitions = viewer.getDefinitions();
+
+          expect(definitions).to.exist;
+
+          done();
+        });
+      });
+    });
+
+
+    it('should complete with error if xml was not imported', function(done) {
+
+      // given
+      var viewer = new Viewer();
+
+      // when
+      viewer.open(function(err) {
+
+        // then
+        expect(err).to.exist;
+        expect(err.message).to.eql('no XML imported');
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.not.exist;
+
+        done();
+      });
+
+    });
+
+
+    it('should open with error if diagram does not exist', function(done) {
+
+      // when
+      createViewer(xml, diagramId1, function(err, warnings, viewer) {
+
+        // then
+        expect(err).not.to.exist;
+        expect(warnings).to.be.empty;
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.exist;
+
+        viewer.open('Diagram_IDontExist', function(err) {
+
+          // then
+          expect(err).to.exist;
+          expect(err.message).to.eql('no diagram to display');
+
+          // definitions stay the same
+          expect(viewer.getDefinitions()).to.eql(definitions);
+
+          done();
+        });
+      });
+    });
+
+
+    it('should emit <import.*> events', function(done) {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var events = [];
+
+      // when
+      viewer.importXML(xml, diagramId1, function(err) {
+
+        // when
+        viewer.on([
+          'import.parse.start',
+          'import.parse.complete',
+          'import.render.start',
+          'import.render.complete',
+          'import.done'
+        ], function(e) {
+          // log event type + event arguments
+          events.push([
+            e.type,
+            Object.keys(e).filter(function(key) {
+              return key !== 'type';
+            })
+          ]);
+        });
+
+        viewer.open(diagramId2, function(err) {
+
+          // then
+          expect(events).to.eql([
+            [ 'import.render.start', [ 'definitions' ] ],
+            [ 'import.render.complete', [ 'error', 'warnings' ] ]
+          ]);
+
+          done(err);
+        });
       });
     });
 
