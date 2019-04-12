@@ -763,15 +763,40 @@ describe('Viewer', function() {
 
         expect(definitions).to.exist;
 
-        viewer.open(diagramId2, function(err, warnings) {
+        viewer.open(diagramId2, function(err) {
 
           // then
           expect(err).not.to.exist;
-          expect(warnings).to.be.empty;
 
           var definitions = viewer.getDefinitions();
 
           expect(definitions).to.exist;
+
+          done();
+        });
+      });
+    });
+
+
+    it('should open the first diagram if id was not provided', function(done) {
+
+      // given
+      var firstDiagramId = 'Diagram_35ab9b1f-354a-48cb-9b99-f4e448f7b04c';
+
+      // when
+      createViewer(xml, firstDiagramId, function(err, warnings, viewer) {
+
+        // then
+        var elements1 = viewer.get('elementRegistry').getAll().slice();
+
+        viewer.open(function(err) {
+
+          // then
+          expect(err).not.to.exist;
+
+          var elements2 = viewer.get('elementRegistry').getAll();
+
+          expect(elements2).to.have.lengthOf(elements1.length);
 
           done();
         });
@@ -837,7 +862,7 @@ describe('Viewer', function() {
       var events = [];
 
       // when
-      viewer.importXML(xml, diagramId1, function(err) {
+      viewer.importXML(xml, diagramId1, function() {
 
         // when
         viewer.on([
