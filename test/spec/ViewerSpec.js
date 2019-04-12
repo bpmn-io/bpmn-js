@@ -804,7 +804,7 @@ describe('Viewer', function() {
     it('should switch between diagrams', function(done) {
 
       // when
-      createViewer(multipleXML, 'Diagram_2', function(err, warnings, viewer) {
+      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
 
         // then
         expect(err).not.to.exist;
@@ -815,7 +815,7 @@ describe('Viewer', function() {
 
         expect(definitions).to.exist;
 
-        viewer.open('Diagram_4', function(err, warnings) {
+        viewer.open('Diagram_2', function(err, warnings) {
 
           // then
           expect(err).not.to.exist;
@@ -825,7 +825,9 @@ describe('Viewer', function() {
 
           done();
         });
+
       });
+
     });
 
 

@@ -95,12 +95,41 @@ describe('Modeler', function() {
       modeler.importXML(xml, function(err, warnings) {
 
         // then
-        expect(warnings.length).to.equal(0);
+        expect(warnings).to.be.empty;
 
         done();
       });
 
     });
+  });
+
+
+  it('should switch between diagrams', function(done) {
+
+    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+
+    // given
+    createModeler(multipleXML, function(err, warnings, modeler) {
+
+      if (err) {
+        return done(err);
+      }
+
+      // when
+      modeler.open('Diagram_2', function(err, warnings) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(warnings).to.be.empty;
+
+        done();
+      });
+
+    });
+
   });
 
 
