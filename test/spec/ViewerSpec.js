@@ -589,33 +589,40 @@ describe('Viewer', function() {
 
     });
 
-    it('should attach the viewer to the given parent', function(done) {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
+    describe('container', function() {
 
-      var viewer = new Viewer({ container: container });
+      it('should attach if provided', function(done) {
 
-      viewer.importXML(xml, function(err, warnings) {
+        var xml = require('../fixtures/bpmn/simple.bpmn');
 
-        expect(viewer._container.parentNode).to.equal(container);
+        var viewer = new Viewer({ container: container });
 
-        done(err, warnings);
+        viewer.importXML(xml, function(err, warnings) {
+
+          expect(viewer._container.parentNode).to.equal(container);
+
+          done(err, warnings);
+        });
       });
+
+
+      it('should not attach if absent', function(done) {
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        var viewer = new Viewer();
+
+        viewer.importXML(xml, function(err, warnings) {
+
+          expect(viewer._container.parentNode).to.equal(null);
+
+          done(err, warnings);
+        });
+      });
+
     });
 
-    it('should not attach the viewer automatically if no parent was given', function(done) {
-
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      var viewer = new Viewer();
-
-      viewer.importXML(xml, function(err, warnings) {
-
-        expect(viewer._container.parentNode).to.equal(null);
-
-        done(err, warnings);
-      });
-    });
   });
 
 
