@@ -680,65 +680,83 @@ describe('Viewer', function() {
     });
 
 
-    it('should import BPMN with multiple diagrams without diagram id specified', function(done) {
+    describe('multiple BPMNDiagram elements', function() {
 
-      // given
-      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+      var multipleDiagramsXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
-      // when
-      createViewer(xml, function(err) {
 
-        // then
-        done(err);
+      it('should import default without bpmnDiagram specified', function(done) {
+
+        // when
+        createViewer(multipleDiagramsXML, function(err) {
+
+          // then
+          done(err);
+        });
       });
-    });
 
 
-    it('should import BPMN with multiple diagrams with diagram id specified', function(done) {
+      it('should import bpmnDiagram specified by id', function(done) {
 
-      // given
-      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+        // when
+        createViewer(multipleDiagramsXML, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7', function(err) {
 
-      // when
-      createViewer(xml, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7', function(err) {
-
-        // then
-        done(err);
+          // then
+          done(err);
+        });
       });
-    });
 
 
-    it('should complete with error if diagram of provided ID does not exist', function(done) {
+      it('should handle diagram not found', function(done) {
 
-      // given
-      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+        // given
+        var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
-      // when
-      createViewer(xml, 'Diagram_IDontExist', function(err) {
+        // when
+        createViewer(xml, 'Diagram_IDontExist', function(err) {
 
-        // then
-        expect(err).to.exist;
-        expect(err.message).to.eql('no diagram to display');
+          // then
+          expect(err).to.exist;
+          expect(err.message).to.eql('BPMNDiagram <Diagram_IDontExist> not found');
 
-        done();
+          done();
+        });
       });
-    });
 
 
-    it('should import BPMN with multiple diagrams when only xml is provided', function(done) {
+      describe('without callback', function() {
 
-      // given
-      var viewer = new Viewer({ container: container });
+        it('should open default', function(done) {
 
-      var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+          // given
+          var viewer = new Viewer({ container: container });
 
-      // when
-      viewer.importXML(xml);
+          // when
+          viewer.importXML(multipleDiagramsXML);
 
-      // then
-      viewer.on('import.done', function(event) {
-        done();
+          // then
+          viewer.on('import.done', function(event) {
+            done();
+          });
+        });
+
+
+        it('should open specified BPMNDiagram', function(done) {
+
+          // given
+          var viewer = new Viewer({ container: container });
+
+          // when
+          viewer.importXML(multipleDiagramsXML, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7');
+
+          // then
+          viewer.on('import.done', function(event) {
+            done();
+          });
+        });
+
       });
+
     });
 
   });
@@ -818,7 +836,7 @@ describe('Viewer', function() {
 
           // then
           expect(err).to.exist;
-          expect(err.message).to.eql('no diagram to display');
+          expect(err.message).to.eql('BPMNDiagram <Diagram_IDontExist> not found');
 
           // definitions stay the same
           expect(viewer.getDefinitions()).to.eql(definitions);
