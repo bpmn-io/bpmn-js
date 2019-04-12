@@ -68,7 +68,7 @@ describe('Viewer', function() {
       viewer.importXML(xml, function(err, warnings) {
 
         // then
-        expect(warnings.length).to.equal(0);
+        expect(warnings).to.be.empty;
 
         done();
       });
@@ -689,13 +689,13 @@ describe('Viewer', function() {
 
     describe('multiple BPMNDiagram elements', function() {
 
-      var multipleDiagramsXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+      var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
 
       it('should import default without bpmnDiagram specified', function(done) {
 
         // when
-        createViewer(multipleDiagramsXML, function(err) {
+        createViewer(multipleXML, function(err) {
 
           // then
           done(err);
@@ -706,7 +706,7 @@ describe('Viewer', function() {
       it('should import bpmnDiagram specified by id', function(done) {
 
         // when
-        createViewer(multipleDiagramsXML, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7', function(err) {
+        createViewer(multipleXML, 'Diagram_3', function(err) {
 
           // then
           done(err);
@@ -739,7 +739,7 @@ describe('Viewer', function() {
           var viewer = new Viewer({ container: container });
 
           // when
-          viewer.importXML(multipleDiagramsXML);
+          viewer.importXML(multipleXML);
 
           // then
           viewer.on('import.done', function(event) {
@@ -754,7 +754,7 @@ describe('Viewer', function() {
           var viewer = new Viewer({ container: container });
 
           // when
-          viewer.importXML(multipleDiagramsXML, 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7');
+          viewer.importXML(multipleXML, 'Diagram_2');
 
           // then
           viewer.on('import.done', function(event) {
@@ -771,46 +771,17 @@ describe('Viewer', function() {
 
   describe('#open', function() {
 
-    var diagramId1 = 'Diagram_80fecfcd-0165-4c36-90b6-3ea384265fe7',
-        diagramId2 = 'Diagram_94435ba7-4027-4df9-ad3b-df1f6e068e5e',
-        xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
-
-    it('should open another diagram', function(done) {
-
-      // when
-      createViewer(xml, diagramId1, function(err, warnings, viewer) {
-
-        // then
-        expect(err).not.to.exist;
-        expect(warnings).to.be.empty;
-
-        var definitions = viewer.getDefinitions();
-
-        expect(definitions).to.exist;
-
-        viewer.open(diagramId2, function(err, warnings) {
-
-          // then
-          expect(err).not.to.exist;
-          expect(warnings).to.be.empty;
-
-          var definitions = viewer.getDefinitions();
-
-          expect(definitions).to.exist;
-
-          done();
-        });
-      });
-    });
+    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
 
     it('should open the first diagram if id was not provided', function(done) {
 
-      // given
-      var firstDiagramId = 'Diagram_35ab9b1f-354a-48cb-9b99-f4e448f7b04c';
-
       // when
-      createViewer(xml, firstDiagramId, function(err, warnings, viewer) {
+      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
+
+        if (err) {
+          return done(err);
+        }
 
         // then
         var renderedDiagram = viewer.get('canvas').getRootElement().businessObject.di;
@@ -823,6 +794,34 @@ describe('Viewer', function() {
 
           // then
           expect(viewer.get('canvas').getRootElement().businessObject.di).to.equal(renderedDiagram);
+
+          done();
+        });
+      });
+    });
+
+
+    it('should switch between diagrams', function(done) {
+
+      // when
+      createViewer(multipleXML, 'Diagram_2', function(err, warnings, viewer) {
+
+        // then
+        expect(err).not.to.exist;
+
+        expect(warnings).to.be.empty;
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.exist;
+
+        viewer.open('Diagram_4', function(err, warnings) {
+
+          // then
+          expect(err).not.to.exist;
+          expect(warnings).to.be.empty;
+
+          expect(definitions).to.equal(viewer.getDefinitions());
 
           done();
         });
@@ -855,7 +854,7 @@ describe('Viewer', function() {
     it('should open with error if diagram does not exist', function(done) {
 
       // when
-      createViewer(xml, diagramId1, function(err, warnings, viewer) {
+      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
 
         // then
         expect(err).not.to.exist;
@@ -882,15 +881,13 @@ describe('Viewer', function() {
 
     it('should emit <import.*> events', function(done) {
 
-      // given
       var viewer = new Viewer({ container: container });
 
       var events = [];
 
-      // when
-      viewer.importXML(xml, diagramId1, function(err) {
+      viewer.importXML(multipleXML, 'Diagram_1', function(err) {
 
-        // when
+        // given
         viewer.on([
           'import.parse.start',
           'import.parse.complete',
@@ -907,7 +904,8 @@ describe('Viewer', function() {
           ]);
         });
 
-        viewer.open(diagramId2, function(err) {
+        // when
+        viewer.open('Diagram_2', function(err) {
 
           // then
           expect(events).to.eql([
