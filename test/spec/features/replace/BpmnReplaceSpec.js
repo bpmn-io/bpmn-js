@@ -298,6 +298,10 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(isExpanded(newShape)).to.be.false; // collapsed
       expect(newShape.children).to.be.empty;
+
+      expect(newShape.width).to.equal(shape.width);
+      // default height for collapsed pool
+      expect(newShape.height).to.equal(100);
     }));
 
 
@@ -312,6 +316,10 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(isExpanded(newShape)).to.be.true; // expanded
       expect(newShape.children).to.be.empty;
+
+      expect(newShape.width).to.equal(shape.width);
+      // default height for expanded pool
+      expect(newShape.height).to.equal(250);
     }));
 
   });
