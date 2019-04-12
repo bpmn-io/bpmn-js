@@ -804,6 +804,32 @@ describe('Viewer', function() {
     });
 
 
+    it('should open the first diagram if id was not provided', function(done) {
+
+      // given
+      var firstDiagramId = 'Diagram_35ab9b1f-354a-48cb-9b99-f4e448f7b04c';
+
+      // when
+      createViewer(xml, firstDiagramId, function(err, warnings, viewer) {
+
+        // then
+        var renderedDiagram = viewer.get('canvas').getRootElement().businessObject.di;
+
+        viewer.open(function(err) {
+
+          if (err) {
+            return done(err);
+          }
+
+          // then
+          expect(viewer.get('canvas').getRootElement().businessObject.di).to.equal(renderedDiagram);
+
+          done();
+        });
+      });
+    });
+
+
     it('should complete with error if xml was not imported', function(done) {
 
       // given
