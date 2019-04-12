@@ -6,6 +6,8 @@ jobs:
     - stage: test
       addons:
         firefox: 'latest-esr'
+      before_script:
+        - ./tasks/wiredeps
       script:
         - COVERAGE=1 TEST_BROWSERS=Firefox,PhantomJS xvfb-run npm run all
         - npx codecov
