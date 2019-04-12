@@ -1,0 +1,21 @@
+#! /bin/bash
+
+FEATURE_BRANCH=
+
+if [ "$TRAVIS_TAG" == "" ]; then
+  if [ "$TRAVIS_PULL_REQUEST_BRANCH" != "" ]; then
+    FEATURE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH";
+  else
+    FEATURE_BRANCH="$TRAVIS_BRANCH";
+  fi
+
+  echo "Attempting to install diagram-js@$FEATURE_BRANCH";
+
+  npm install "diagram-js@bpmn-io/diagram-js#$FEATURE_BRANCH";
+
+  if [ $? -ne 0 ]; then
+    echo "Falling back to diagram-js@master";
+
+    npm install "diagram-js@bpmn-io/diagram-js#master";
+  fi
+fi
