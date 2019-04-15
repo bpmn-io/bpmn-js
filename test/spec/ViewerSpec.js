@@ -771,7 +771,8 @@ describe('Viewer', function() {
 
   describe('#open', function() {
 
-    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
+    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
+        simpleMultipleXML = require('../fixtures/bpmn/multiple-diagrams-simple.bpmn');
 
 
     it('should open the first diagram if id was not provided', function(done) {
@@ -824,6 +825,36 @@ describe('Viewer', function() {
           expect(definitions).to.equal(viewer.getDefinitions());
 
           expect(viewer.get('elementRegistry').getAll()).to.have.lengthOf(28);
+
+          done();
+        });
+
+      });
+
+    });
+
+
+    it('should switch between diagrams with overlapping DI', function(done) {
+
+      // when
+      createViewer(simpleMultipleXML, 'BpmnDiagram_1', function(err, warnings, viewer) {
+
+        // then
+        expect(err).not.to.exist;
+
+        expect(warnings).to.be.empty;
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.exist;
+
+        viewer.open('BpmnDiagram_2', function(err, warnings) {
+
+          // then
+          expect(err).not.to.exist;
+          expect(warnings).to.be.empty;
+
+          expect(definitions).to.equal(viewer.getDefinitions());
 
           done();
         });
