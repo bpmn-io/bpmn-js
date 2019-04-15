@@ -338,7 +338,8 @@ describe('import - Importer', function() {
 
     });
 
-    it('should import data store in particpant as child of collaboration', function(done) {
+
+    it('should import data store in participant as child of collaboration', function(done) {
 
       // given
       var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.participant.bpmn');
@@ -377,6 +378,23 @@ describe('import - Importer', function() {
 
         done(err);
       });
+    });
+
+
+    it('should import data store outside of participant without warnings', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.dangling.bpmn');
+
+      // when
+      runImport(diagram, xml, function(err, warnings) {
+
+        // then
+        expect(warnings).to.be.empty;
+
+        done(err);
+      });
+
     });
 
   });
