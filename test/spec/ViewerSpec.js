@@ -823,6 +823,8 @@ describe('Viewer', function() {
 
           expect(definitions).to.equal(viewer.getDefinitions());
 
+          expect(viewer.get('elementRegistry').getAll()).to.have.lengthOf(28);
+
           done();
         });
 
