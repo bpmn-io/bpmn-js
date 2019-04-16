@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_19dhhgf" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="3.3.1">
+  <bpmn:collaboration id="Collaboration_1pbeyt7">
+    <bpmn:participant id="Participant_0ibnr2x" processRef="Process_1" />
+    <bpmn:participant id="Participant_1idiy26" processRef="Process_0x3gxd5" />
+    <bpmn:messageFlow id="MessageFlow_1facuin" sourceRef="Participant_0ibnr2x" targetRef="Participant_1idiy26" />
+    <bpmn:messageFlow id="MessageFlow_1vmbq3n" sourceRef="Participant_1idiy26" targetRef="Participant_0ibnr2x" />
+    <bpmn:textAnnotation id="TextAnnotation_1eywcut">
+      <bpmn:text>YO</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0r1hup8" sourceRef="Participant_0ibnr2x" targetRef="TextAnnotation_1eywcut" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true" />
+  <bpmn:process id="Process_0x3gxd5" isExecutable="false">
+    <bpmn:dataStoreReference id="DataStoreReference_046zpex" />
+    <bpmn:task id="Task_049utn6">
+      <bpmn:property id="Property_0kufae0" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation">
+        <bpmn:sourceRef>DataStoreReference_046zpex</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0kufae0</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_0ixhole">
+        <bpmn:targetRef>DataObjectReference_130kij0</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataObjectReference id="DataObjectReference_130kij0" dataObjectRef="DataObject_1k959a8" />
+    <bpmn:dataObject id="DataObject_1k959a8" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1pbeyt7">
+      <bpmndi:BPMNShape id="Participant_0ibnr2x_di" bpmnElement="Participant_0ibnr2x" isHorizontal="true">
+        <dc:Bounds x="201" y="151" width="468" height="162" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1eywcut_di" bpmnElement="TextAnnotation_1eywcut">
+        <dc:Bounds x="247" y="81" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0r1hup8_di" bpmnElement="Association_0r1hup8" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
+        <di:waypoint x="253" y="151" />
+        <di:waypoint x="261" y="111" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_1idiy26_di" bpmnElement="Participant_1idiy26" isHorizontal="true">
+        <dc:Bounds x="201" y="374" width="473" height="192" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1facuin_di" bpmnElement="MessageFlow_1facuin" bioc:stroke="rgb(23, 100, 344)" bioc:fill="rgb(23, 100, 344)">
+        <di:waypoint x="341" y="313" />
+        <di:waypoint x="341" y="374" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataStoreReference_046zpex_di" bpmnElement="DataStoreReference_046zpex">
+        <dc:Bounds x="289" y="483" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_049utn6_di" bpmnElement="Task_049utn6">
+        <dc:Bounds x="383" y="404" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_di" bpmnElement="DataInputAssociation" bioc:stroke="rgb(23, 100, 344)" bioc:fill="rgb(23, 100, 344)">
+        <di:waypoint x="339" y="519" />
+        <di:waypoint x="412" y="519" />
+        <di:waypoint x="423" y="484" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="DataObjectReference_130kij0_di" bpmnElement="DataObjectReference_130kij0">
+        <dc:Bounds x="537" y="483" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_0ixhole_di" bpmnElement="DataOutputAssociation_0ixhole" bioc:stroke="#8E24AA" bioc:fill="#E1BEE7">
+        <di:waypoint x="440" y="484" />
+        <di:waypoint x="446" y="520" />
+        <di:waypoint x="537" y="510" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_1vmbq3n_di" bpmnElement="MessageFlow_1vmbq3n" bioc:stroke="rgb(23, 100, 344)" bioc:fill="rgb(23, 100, 344)">
+        <di:waypoint x="438" y="374" />
+        <di:waypoint x="438" y="313" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
