@@ -271,13 +271,33 @@ describe('draw - bpmn renderer', function() {
         var markers = svg.querySelectorAll('marker');
 
         expect(markers).to.have.length(7);
-        expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[1].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
-        expect(markers[2].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
-        expect(markers[3].id).to.match(/^sequenceflow-end-white-_3399aa-[A-Za-z0-9]{25}$/);
-        expect(markers[4].id).to.match(/^association-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[5].id).to.match(/^messageflow-end-white-black-[A-Za-z0-9]{25}$/);
-        expect(markers[6].id).to.match(/^messageflow-start-white-black-[A-Za-z0-9]{25}$/);
+        expect(markers[0].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
+        expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
+        expect(markers[2].id).to.match(/^sequenceflow-end-white-_3399aa-[A-Za-z0-9]{25}$/);
+        expect(markers[4].id).to.match(/^association-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
+        expect(markers[5].id).to.match(/^messageflow-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
+        expect(markers[6].id).to.match(/^messageflow-start-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
+      })();
+
+      done(err);
+    });
+  });
+
+
+  it('should properly render connection markers (2)', function(done) {
+
+    var xml = require('./BpmnRenderer.connection-colors.bpmn');
+    bootstrapViewer(xml).call(this, function(err) {
+
+      inject(function(canvas) {
+        var svg = canvas._svg;
+        var markers = svg.querySelectorAll('marker');
+
+        expect(markers).to.have.length(4);
+        expect(markers[0].id).to.match(/^association-end-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
+        expect(markers[1].id).to.match(/^association-end-_E1BEE7-_8E24AA-[A-Za-z0-9]{25}$/);
+        expect(markers[2].id).to.match(/^messageflow-end-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
+        expect(markers[3].id).to.match(/^messageflow-start-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
       })();
 
       done(err);
@@ -336,14 +356,26 @@ describe('draw - bpmn renderer', function() {
           defaultStrokeColor = 'lime';
 
       // TODO(philippfromme): remove once PhantomJS is not used anymore
-      var conversionValues = {
-        blue: '#0000ff',
-        lime: '#00ff00',
-        red: '#ff0000',
-        yellow: '#ffff00',
-        'rgb(251, 140, 0)': '#fb8c00',
-        '#3399aa': 'rgb(51, 153, 170)'
-      };
+      function expectedColors(color) {
+
+        var conversionValues = {
+          blue: '#0000ff',
+          lime: '#00ff00',
+          red: '#ff0000',
+          yellow: '#ffff00',
+          'rgb(251, 140, 0)': '#fb8c00',
+          '#3399aa': 'rgb(51, 153, 170)'
+        };
+
+        return [
+          color,
+          color.toLowerCase(),
+          color.toUpperCase(),
+          conversionValues[ color ],
+          conversionValues[ color ] && conversionValues[ color ].toLowerCase(),
+          conversionValues[ color ] && conversionValues[ color ].toUpperCase()
+        ];
+      }
 
       beforeEach(bootstrapViewer(xml,{
         bpmnRenderer: {
@@ -353,11 +385,11 @@ describe('draw - bpmn renderer', function() {
       }));
 
       function expectFillColor(element, color) {
-        expect([ color, conversionValues[ color ]]).to.include(element.style.fill);
+        expect(expectedColors(color)).to.include(element.style.fill);
       }
 
       function expectStrokeColor(element, color) {
-        expect([ color, conversionValues[ color ]]).to.include(element.style.stroke);
+        expect(expectedColors(color)).to.include(element.style.stroke);
       }
 
       /**
