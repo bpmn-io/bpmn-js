@@ -706,7 +706,7 @@ describe('Viewer', function() {
       it('should import bpmnDiagram specified by id', function(done) {
 
         // when
-        createViewer(multipleXML, 'Diagram_3', function(err) {
+        createViewer(multipleXML, 'BpmnDiagram_2', function(err) {
 
           // then
           done(err);
@@ -771,14 +771,17 @@ describe('Viewer', function() {
 
   describe('#open', function() {
 
-    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
-        simpleMultipleXML = require('../fixtures/bpmn/multiple-diagrams-simple.bpmn');
+    var multipleXMLSimple = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
+        multipleXMLOverlappingDI = require('../fixtures/bpmn/multiple-diagrams-overlapping-di.bpmn'),
+        multipleXMLWithLaneSet = require('../fixtures/bpmn/multiple-diagrams-lanesets.bpmn'),
+        diagram1 = 'BpmnDiagram_1',
+        diagram2 = 'BpmnDiagram_2';
 
 
     it('should open the first diagram if id was not provided', function(done) {
 
       // when
-      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
+      createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
 
         if (err) {
           return done(err);
@@ -805,10 +808,12 @@ describe('Viewer', function() {
     it('should switch between diagrams', function(done) {
 
       // when
-      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
+      createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
 
         // then
-        expect(err).not.to.exist;
+        if (err) {
+          return done(err);
+        }
 
         expect(warnings).to.be.empty;
 
@@ -816,15 +821,21 @@ describe('Viewer', function() {
 
         expect(definitions).to.exist;
 
-        viewer.open('Diagram_2', function(err, warnings) {
+        viewer.open(diagram2, function(err, warnings) {
 
           // then
-          expect(err).not.to.exist;
+          if (err) {
+            return done(err);
+          }
+
           expect(warnings).to.be.empty;
 
           expect(definitions).to.equal(viewer.getDefinitions());
 
-          expect(viewer.get('elementRegistry').getAll()).to.have.lengthOf(28);
+          var elementRegistry = viewer.get('elementRegistry');
+
+          expect(elementRegistry.get('Task_A')).to.not.exist;
+          expect(elementRegistry.get('Task_B')).to.exist;
 
           done();
         });
@@ -837,10 +848,12 @@ describe('Viewer', function() {
     it('should switch between diagrams with overlapping DI', function(done) {
 
       // when
-      createViewer(simpleMultipleXML, 'BpmnDiagram_1', function(err, warnings, viewer) {
+      createViewer(multipleXMLOverlappingDI, diagram1, function(err, warnings, viewer) {
 
         // then
-        expect(err).not.to.exist;
+        if (err) {
+          return done(err);
+        }
 
         expect(warnings).to.be.empty;
 
@@ -848,13 +861,55 @@ describe('Viewer', function() {
 
         expect(definitions).to.exist;
 
-        viewer.open('BpmnDiagram_2', function(err, warnings) {
+        viewer.open(diagram2, function(err, warnings) {
 
           // then
-          expect(err).not.to.exist;
+          if (err) {
+            return done(err);
+          }
+
           expect(warnings).to.be.empty;
 
           expect(definitions).to.equal(viewer.getDefinitions());
+
+          done();
+        });
+
+      });
+    });
+
+
+    it('should switch between diagrams with laneSets', function(done) {
+
+      // when
+      createViewer(multipleXMLWithLaneSet, diagram2, function(err, warnings, viewer) {
+
+        // then
+        if (err) {
+          return done(err);
+        }
+
+        expect(warnings).to.be.empty;
+
+        var definitions = viewer.getDefinitions();
+
+        expect(definitions).to.exist;
+
+        viewer.open(diagram1, function(err, warnings) {
+
+          // then
+          if (err) {
+            return done(err);
+          }
+
+          expect(warnings).to.be.empty;
+
+          expect(definitions).to.equal(viewer.getDefinitions());
+
+          var elementRegistry = viewer.get('elementRegistry');
+
+          expect(elementRegistry.get('Task_A')).to.exist;
+          expect(elementRegistry.get('Task_B')).to.not.exist;
 
           done();
         });
@@ -889,10 +944,13 @@ describe('Viewer', function() {
     it('should open with error if diagram does not exist', function(done) {
 
       // when
-      createViewer(multipleXML, 'Diagram_1', function(err, warnings, viewer) {
+      createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
 
         // then
-        expect(err).not.to.exist;
+        if (err) {
+          return done(err);
+        }
+
         expect(warnings).to.be.empty;
 
         var definitions = viewer.getDefinitions();
@@ -920,7 +978,7 @@ describe('Viewer', function() {
 
       var events = [];
 
-      viewer.importXML(multipleXML, 'Diagram_1', function(err) {
+      viewer.importXML(multipleXMLSimple, diagram1, function(err) {
 
         // given
         viewer.on([
@@ -940,7 +998,7 @@ describe('Viewer', function() {
         });
 
         // when
-        viewer.open('Diagram_2', function(err) {
+        viewer.open(diagram2, function(err) {
 
           // then
           expect(events).to.eql([
