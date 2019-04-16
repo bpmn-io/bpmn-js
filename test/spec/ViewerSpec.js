@@ -1082,6 +1082,48 @@ describe('Viewer', function() {
   });
 
 
+  describe('#clear', function() {
+
+    it('should not throw if diagram is already empty', function() {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      function clearDiagram() {
+        viewer.clear();
+      }
+
+      // then
+      expect(clearDiagram).to.not.throw();
+    });
+
+
+    it('should remove di property', function(done) {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer = new Viewer({ container: container }),
+          elementRegistry = viewer.get('elementRegistry');
+
+      viewer.importXML(xml, function(err, warnings) {
+
+        var elements = elementRegistry.getAll();
+
+        // when
+        viewer.clear();
+
+        // then
+        expect(elements.some(function(el) {
+          return el && el.businessObject && el.businessObject.di;
+        }), 'at least one element still has di').to.be.false;
+
+        done(err, warnings);
+      });
+    });
+
+  });
+
+
   it('default export', function() {
     expect(ViewerDefaultExport).to.equal(Viewer);
   });
