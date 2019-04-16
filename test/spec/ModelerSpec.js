@@ -116,7 +116,7 @@ describe('Modeler', function() {
       }
 
       // when
-      modeler.open('Diagram_2', function(err, warnings) {
+      modeler.open('BpmnDiagram_2', function(err, warnings) {
 
         if (err) {
           return done(err);

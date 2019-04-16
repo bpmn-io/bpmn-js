@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="3.3.1">
+  <collaboration id="Collaboration_1">
+    <participant id="Participant_1" name="Pool" processRef="Process_1"/>
+  </collaboration>
+  <process id="Process_1" isExecutable="false">
+    <laneSet id="LaneSet_1" name="Lane Set 1" />
+    <task id="Task_A" name="A">
+      <outgoing>SequenceFlow</outgoing>
+    </task>
+    <endEvent id="EndEvent_B" name="B">
+      <incoming>SequenceFlow</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow" sourceRef="Task_A" targetRef="EndEvent_B" />
+  </process>
+  <process id="Process_2" isExecutable="false">
+    <laneSet id="LaneSet_2" name="Lane Set 2" />
+    <task id="Task_B" name="B" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1">
+        <omgdc:Bounds x="56" y="31" width="500" height="500" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BpmnDiagram_1_Task_A_di" bpmnElement="Task_A">
+        <omgdc:Bounds x="156" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BpmnDiagram_1_EndEvent_B_di" bpmnElement="EndEvent_B">
+        <omgdc:Bounds x="306" y="103" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="320" y="147" width="8" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BpmnDiagram_1_SequenceFlow_di" bpmnElement="SequenceFlow">
+        <omgdi:waypoint x="256" y="121" />
+        <omgdi:waypoint x="306" y="121" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_2">
+    <bpmndi:BPMNPlane id="BpmnPlane_2" bpmnElement="Process_2">
+      <bpmndi:BPMNShape id="BpmnDiagram_2_Task_B_di" bpmnElement="Task_B">
+        <omgdc:Bounds x="0" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
