@@ -263,7 +263,7 @@ describe('draw - bpmn renderer', function() {
 
   it('should properly render colored markers', function(done) {
 
-    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    var xml = require('./BpmnRenderer.colors.bpmn');
     bootstrapViewer(xml).call(this, function(err) {
 
       inject(function(canvas) {
@@ -287,7 +287,7 @@ describe('draw - bpmn renderer', function() {
 
   it('should render sequenceFlows without source', function(done) {
 
-    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    var xml = require('./BpmnRenderer.sequenceFlow-no-source.bpmn');
     bootstrapModeler(xml, {
       modules: [
         coreModule,
@@ -322,7 +322,7 @@ describe('draw - bpmn renderer', function() {
 
   describe('colors', function() {
 
-    var xml = require('../../fixtures/bpmn/draw/colors.bpmn');
+    var xml = require('./BpmnRenderer.colors.bpmn');
 
 
     it('should render colors without warnings and errors', function(done) {
