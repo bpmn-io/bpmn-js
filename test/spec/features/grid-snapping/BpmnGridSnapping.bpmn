@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1kkksuc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.0-0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Participant_1" processRef="Process_1" />
+    <bpmn:textAnnotation id="TextAnnotation_1">
+      <bpmn:text>TextAnnotation_1</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0punwjh" sourceRef="Participant_1" targetRef="TextAnnotation_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:subProcess id="SubProcess_1" name="SubProcess_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1brw48p_di" bpmnElement="Participant_1">
+        <dc:Bounds x="100" y="100" width="590" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_11f0dg1_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="150" y="130" width="350" height="190" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0bnhhhy_di" bpmnElement="TextAnnotation_1">
+        <dc:Bounds x="700" y="20" width="110" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0punwjh_di" bpmnElement="Association_0punwjh">
+        <di:waypoint x="646" y="100" />
+        <di:waypoint x="706" y="70" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
