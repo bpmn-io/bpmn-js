@@ -294,10 +294,10 @@ describe('features/modeling - layout', function() {
 
     describe('relayout', function() {
 
-      it('should not repair after reconnect end', inject(function() {
+      it('should repair after reconnect end', inject(function() {
 
         // given
-        var newDocking = { x: 660, y: 280 };
+        var newDocking = { x: 660, y: 300 };
         var connection = element('SequenceFlow_1');
 
         // when
@@ -307,8 +307,8 @@ describe('features/modeling - layout', function() {
         expect(connection).to.have.waypoints([
           { x: 382, y: 241 },
           { x: 559, y: 241 },
-          { x: 559, y: 138 },
-          { x: 660, y: 280 }
+          { x: 559, y: 300 },
+          { x: 655, y: 300 }
         ]);
       }));
 
