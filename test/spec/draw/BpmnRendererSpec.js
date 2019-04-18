@@ -364,6 +364,7 @@ describe('draw - bpmn renderer', function() {
           red: '#ff0000',
           yellow: '#ffff00',
           'rgb(251, 140, 0)': '#fb8c00',
+          '#FB8C00': 'rgb(251, 140, 0)',
           '#3399aa': 'rgb(51, 153, 170)'
         };
 
