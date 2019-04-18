@@ -188,14 +188,14 @@ describe('features/modeling - remove element behavior', function() {
     });
 
 
-    describe('connections layout', function() {
+    describe('connection layouting', function() {
 
       var processDiagramXML = require('./RemoveElementBehavior.diagonal.bpmn');
 
       beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
 
-      it('should layout connection', inject(function(modeling, elementRegistry) {
+      it('should execute', inject(function(modeling, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task1');
@@ -221,6 +221,26 @@ describe('features/modeling - remove element behavior', function() {
         expect(waypoints[1].x).to.eql(waypoints[2].x);
         expect(waypoints[2].y).to.eql(waypoints[3].y);
 
+      }));
+
+
+      it('should redo', inject(function(commandStack, modeling, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task1'),
+            connection = elementRegistry.get('SequenceFlow1'),
+            newWaypoints;
+
+        // when
+        modeling.removeShape(task);
+
+        newWaypoints = connection.waypoints.slice();
+
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(connection).to.have.waypoints(newWaypoints);
       }));
 
     });
