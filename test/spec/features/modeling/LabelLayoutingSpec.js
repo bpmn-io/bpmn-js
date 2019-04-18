@@ -255,8 +255,8 @@ describe('modeling - label layouting', function() {
         modeling.reconnectEnd(connection, shape, { x: 294, y: 270 });
 
         // then
-        expect(Math.round(connection.label.x)).to.be.within(224, 228);
-        expect(Math.round(connection.label.y)).to.be.within(93, 97);
+        expect(Math.round(connection.label.x)).to.be.within(257, 270);
+        expect(Math.round(connection.label.y)).to.be.within(240, 250);
 
       }));
 
