@@ -108,6 +108,62 @@ describe('features/modeling - layout connection', function() {
     ]);
   }));
 
+
+  describe('integration', function() {
+
+    it('should correctly layout after start re-connection', inject(function(elementRegistry, modeling) {
+
+      // given
+      var task1 = elementRegistry.get('Task_1'),
+          connection = elementRegistry.get('SequenceFlow_1'),
+          docking = { x: 292, y: 376 };
+
+      // when
+      modeling.reconnectStart(connection, task1, docking);
+
+      // then
+      var waypoints = connection.waypoints,
+          i,
+          first,
+          second;
+
+      for (i = 0; i < waypoints.length - 1; i++) {
+        first = waypoints[i];
+        second = waypoints[i + 1];
+
+        expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
+      }
+
+    }));
+
+
+    it('should correctly layout after end re-connection', inject(function(elementRegistry, modeling) {
+
+      // given
+      var task1 = elementRegistry.get('Task_1'),
+          connection = elementRegistry.get('SequenceFlow_1'),
+          docking = { x: 292, y: 376 };
+
+      // when
+      modeling.reconnectEnd(connection, task1, docking);
+
+      // then
+      var waypoints = connection.waypoints,
+          i,
+          first,
+          second;
+
+      for (i = 0; i < waypoints.length - 1; i++) {
+        first = waypoints[i];
+        second = waypoints[i + 1];
+
+        expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
+      }
+
+    }));
+
+  });
+
 });
 
 
@@ -119,4 +175,8 @@ function toPoint(p) {
     x: p.x,
     y: p.y
   };
+}
+
+function areOnSameAxis(a, b) {
+  return a.x === b.x || a.y === b.y;
 }
