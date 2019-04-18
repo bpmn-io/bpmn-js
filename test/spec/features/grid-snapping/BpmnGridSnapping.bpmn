@@ -8,7 +8,20 @@
     <bpmn:association id="Association_0punwjh" sourceRef="Participant_1" targetRef="TextAnnotation_1" />
   </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:subProcess id="SubProcess_1" name="SubProcess_1" />
+    <bpmn:subProcess id="SubProcess_1" name="SubProcess_1">
+      <bpmn:task id="Task_1" name="Task_1">
+        <bpmn:incoming>SequenceFlow_0e7hjjz</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0jhtpzs</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:startEvent id="StartEvent_1" name="StartEvent_1">
+        <bpmn:outgoing>SequenceFlow_0e7hjjz</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:endEvent id="EndEvent_1" name="EndEvent_1">
+        <bpmn:incoming>SequenceFlow_0jhtpzs</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0e7hjjz" sourceRef="StartEvent_1" targetRef="Task_1" />
+      <bpmn:sequenceFlow id="SequenceFlow_0jhtpzs" sourceRef="Task_1" targetRef="EndEvent_1" />
+    </bpmn:subProcess>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
@@ -24,6 +37,29 @@
       <bpmndi:BPMNEdge id="Association_0punwjh_di" bpmnElement="Association_0punwjh">
         <di:waypoint x="646" y="100" />
         <di:waypoint x="706" y="70" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_10ndd1c_di" bpmnElement="Task_1">
+        <dc:Bounds x="273" y="180" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0ck0xbl_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="190" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="176" y="245" width="64" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0fx80e1_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="420" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="408" y="245" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0e7hjjz_di" bpmnElement="SequenceFlow_0e7hjjz">
+        <di:waypoint x="226" y="220" />
+        <di:waypoint x="273" y="220" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0jhtpzs_di" bpmnElement="SequenceFlow_0jhtpzs">
+        <di:waypoint x="373" y="220" />
+        <di:waypoint x="420" y="220" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
