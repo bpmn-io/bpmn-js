@@ -5,9 +5,12 @@
     <bpmn:subProcess id="SubProcess" />
     <bpmn:task id="Task_Right" />
     <bpmn:boundaryEvent id="BoundaryEvent_TopLeft" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopCenter" attachedToRef="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent_BottomRight" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomCenter" attachedToRef="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent_BottomLeft" attachedToRef="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent_TopRight" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_RightCenter" attachedToRef="SubProcess" />
     <bpmn:task id="Task_Bottom" />
     <bpmn:task id="Task_Top" />
   </bpmn:process>
@@ -25,14 +28,23 @@
       <bpmndi:BPMNShape id="BoundaryEvent_0s0nl1k_di" bpmnElement="BoundaryEvent_TopLeft">
         <dc:Bounds x="282" y="320" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_TopCenter_di" bpmnElement="BoundaryEvent_TopCenter">
+        <dc:Bounds x="432" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_0nomac7_di" bpmnElement="BoundaryEvent_BottomRight">
         <dc:Bounds x="632" y="450" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_BottomCenter_di" bpmnElement="BoundaryEvent_BottomCenter">
+        <dc:Bounds x="432" y="482" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_1spolhy_di" bpmnElement="BoundaryEvent_BottomLeft">
         <dc:Bounds x="282" y="482" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_13iwzlu_di" bpmnElement="BoundaryEvent_TopRight">
         <dc:Bounds x="632" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_RightCenter_di" bpmnElement="BoundaryEvent_RightCenter">
+        <dc:Bounds x="632" y="372" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0ygk7bh_di" bpmnElement="Task_Bottom">
         <dc:Bounds x="400" y="650" width="100" height="80" />

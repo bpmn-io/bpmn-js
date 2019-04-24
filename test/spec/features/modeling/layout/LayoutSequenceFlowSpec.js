@@ -162,6 +162,54 @@ describe('features/modeling - layout', function() {
         ]);
       });
 
+
+      it('attached bottom center, orientation bottom', function() {
+        // when
+        var connection = connect('BoundaryEvent_BottomCenter', 'Task_Bottom');
+
+        expect(connection).to.have.waypoints([
+          { x: 450, y: 518 },
+          { x: 450, y: 650 }
+        ]);
+      });
+
+
+      it('attached top center, orientation top', function() {
+        // when
+        var connection = connect('BoundaryEvent_TopCenter', 'Task_Top');
+
+        expect(connection).to.have.waypoints([
+          { x: 450, y: 282 },
+          { x: 450, y: 80 }
+        ]);
+      });
+
+
+      it('attached right center, orientation right', function() {
+        // when
+        var connection = connect('BoundaryEvent_RightCenter', 'Task_Right');
+
+        expect(connection).to.have.waypoints([
+          { x: 668, y: 390 },
+          { x: 850, y: 390 }
+        ]);
+      });
+
+
+      it('attached right center, orientation left', function() {
+        // when
+        var connection = connect('BoundaryEvent_RightCenter', 'Task_Left');
+
+        expect(connection).to.have.waypoints([
+          { x: 668, y: 390 },
+          { x: 688, y: 390 },
+          { x: 688, y: 410 },
+          { x: 536, y: 410 },
+          { x: 536, y: 390 },
+          { x: 100, y: 390 }
+        ]);
+      });
+
     });
 
   });
