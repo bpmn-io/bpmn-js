@@ -6,8 +6,16 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.4.0
+
+* `FIX`: properly render colored connection markers ([#981](https://github.com/bpmn-io/bpmn-js/issues/981))
+* `FEAT`: add ability to open different DI diagrams ([#87](https://github.com/bpmn-io/bpmn-js/issues/87))
+* `FIX`: correctly layout straight boundary to target connections ([#891](https://github.com/bpmn-io/bpmn-js/issues/891))
+* `FEAT`: resize participant to standard size on collapse ([#975](https://github.com/bpmn-io/bpmn-js/pull/975))
 * `FEAT`: consistently layout connection on reconnect start and end ([#971](https://github.com/bpmn-io/bpmn-js/pull/971))
+* `FEAT`: layout connection on element removal ([#989](https://github.com/bpmn-io/bpmn-js/issues/989))
 * `FIX`: properly crop sequence flow ends on undo/redo ([#940](https://github.com/bpmn-io/bpmn-js/issues/940))
+* `CHORE`: bump to [`diagram-js@3.3.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#330)
 
 ## 3.3.1
 
