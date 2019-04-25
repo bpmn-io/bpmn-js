@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0-dev">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:receiveTask id="ReceiveTask">
+      <bpmn:incoming>SequenceFlow_A</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_05bjkc2</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Message">
+      <bpmn:incoming>SequenceFlow_B</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l6c300</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1xz8330" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Timer">
+      <bpmn:incoming>SequenceFlow_C</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ku3hwq</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0h6dedo" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Conditional">
+      <bpmn:incoming>SequenceFlow_D</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0yjtrc2</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_1eyek11">
+        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+      </bpmn:conditionalEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchEvent_Signal">
+      <bpmn:incoming>SequenceFlow_E</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_12xris6</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="SignalEventDefinition_0bmjdpv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="EndEvent_1gytbom">
+      <bpmn:incoming>SequenceFlow_05bjkc2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_1s10cm7">
+      <bpmn:incoming>SequenceFlow_1l6c300</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_1cjf8ky">
+      <bpmn:incoming>SequenceFlow_0ku3hwq</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_0t9wzor">
+      <bpmn:incoming>SequenceFlow_0yjtrc2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_0k4zebg">
+      <bpmn:incoming>SequenceFlow_12xris6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_A">
+      <bpmn:outgoing>SequenceFlow_A</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_B">
+      <bpmn:outgoing>SequenceFlow_B</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_C">
+      <bpmn:outgoing>SequenceFlow_C</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_D">
+      <bpmn:outgoing>SequenceFlow_D</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_E">
+      <bpmn:outgoing>SequenceFlow_E</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_05bjkc2" sourceRef="ReceiveTask" targetRef="EndEvent_1gytbom" />
+    <bpmn:sequenceFlow id="SequenceFlow_1l6c300" sourceRef="IntermediateCatchEvent_Message" targetRef="EndEvent_1s10cm7" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ku3hwq" sourceRef="IntermediateCatchEvent_Timer" targetRef="EndEvent_1cjf8ky" />
+    <bpmn:sequenceFlow id="SequenceFlow_0yjtrc2" sourceRef="IntermediateCatchEvent_Conditional" targetRef="EndEvent_0t9wzor" />
+    <bpmn:sequenceFlow id="SequenceFlow_12xris6" sourceRef="IntermediateCatchEvent_Signal" targetRef="EndEvent_0k4zebg" />
+    <bpmn:sequenceFlow id="SequenceFlow_A" sourceRef="Task_A" targetRef="ReceiveTask" />
+    <bpmn:sequenceFlow id="SequenceFlow_B" sourceRef="Task_B" targetRef="IntermediateCatchEvent_Message" />
+    <bpmn:sequenceFlow id="SequenceFlow_C" sourceRef="Task_C" targetRef="IntermediateCatchEvent_Timer" />
+    <bpmn:sequenceFlow id="SequenceFlow_D" sourceRef="Task_D" targetRef="IntermediateCatchEvent_Conditional" />
+    <bpmn:sequenceFlow id="SequenceFlow_E" sourceRef="Task_E" targetRef="IntermediateCatchEvent_Signal" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="ReceiveTask_1v6bvh5_di" bpmnElement="ReceiveTask">
+        <dc:Bounds x="336" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0xrbhjg_di" bpmnElement="IntermediateCatchEvent_Message">
+        <dc:Bounds x="368" y="213" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1wndrxs_di" bpmnElement="IntermediateCatchEvent_Timer">
+        <dc:Bounds x="368" y="313" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0k2sk19_di" bpmnElement="IntermediateCatchEvent_Conditional">
+        <dc:Bounds x="368" y="423" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1ihnoj3_di" bpmnElement="IntermediateCatchEvent_Signal">
+        <dc:Bounds x="368" y="533" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1gytbom_di" bpmnElement="EndEvent_1gytbom">
+        <dc:Bounds x="486" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1s10cm7_di" bpmnElement="EndEvent_1s10cm7">
+        <dc:Bounds x="486" y="213" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1cjf8ky_di" bpmnElement="EndEvent_1cjf8ky">
+        <dc:Bounds x="486" y="313" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0t9wzor_di" bpmnElement="EndEvent_0t9wzor">
+        <dc:Bounds x="486" y="423" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0k4zebg_di" bpmnElement="EndEvent_0k4zebg">
+        <dc:Bounds x="486" y="533" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1831vfx_di" bpmnElement="Task_A">
+        <dc:Bounds x="156" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0zhy9co_di" bpmnElement="Task_B">
+        <dc:Bounds x="156" y="191" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1i41gxo_di" bpmnElement="Task_C">
+        <dc:Bounds x="156" y="291" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1qthskw_di" bpmnElement="Task_D">
+        <dc:Bounds x="156" y="401" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1f0jmew_di" bpmnElement="Task_E">
+        <dc:Bounds x="156" y="511" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_05bjkc2_di" bpmnElement="SequenceFlow_05bjkc2">
+        <di:waypoint x="436" y="121" />
+        <di:waypoint x="486" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l6c300_di" bpmnElement="SequenceFlow_1l6c300">
+        <di:waypoint x="404" y="231" />
+        <di:waypoint x="486" y="231" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ku3hwq_di" bpmnElement="SequenceFlow_0ku3hwq">
+        <di:waypoint x="404" y="331" />
+        <di:waypoint x="486" y="331" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yjtrc2_di" bpmnElement="SequenceFlow_0yjtrc2">
+        <di:waypoint x="404" y="441" />
+        <di:waypoint x="486" y="441" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_12xris6_di" bpmnElement="SequenceFlow_12xris6">
+        <di:waypoint x="404" y="551" />
+        <di:waypoint x="486" y="551" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nqkc2f_di" bpmnElement="SequenceFlow_A">
+        <di:waypoint x="256" y="121" />
+        <di:waypoint x="336" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13d84ey_di" bpmnElement="SequenceFlow_B">
+        <di:waypoint x="256" y="231" />
+        <di:waypoint x="368" y="231" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_17wwzat_di" bpmnElement="SequenceFlow_C">
+        <di:waypoint x="256" y="331" />
+        <di:waypoint x="368" y="331" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1r2eh3g_di" bpmnElement="SequenceFlow_D">
+        <di:waypoint x="256" y="441" />
+        <di:waypoint x="368" y="441" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_197dyvg_di" bpmnElement="SequenceFlow_E">
+        <di:waypoint x="256" y="551" />
+        <di:waypoint x="368" y="551" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
