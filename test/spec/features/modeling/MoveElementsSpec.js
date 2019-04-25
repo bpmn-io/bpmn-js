@@ -176,6 +176,50 @@ describe('features/modeling - move elements', function() {
   });
 
 
+  describe('incoming sequence flows of event based targets', function() {
+
+    var diagramXML = require('./MoveElements.eventBasedTargets.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+    it('should keep when moving source flow object', inject(function(elementRegistry, modeling) {
+
+      // given
+      var shapeTask_A = elementRegistry.get('Task_A'),
+          shapeTask_B = elementRegistry.get('Task_B'),
+          shapeTask_C = elementRegistry.get('Task_C'),
+          shapeTask_D = elementRegistry.get('Task_D'),
+          shapeTask_E = elementRegistry.get('Task_E'),
+          connectionSequenceFlow_A = elementRegistry.get('SequenceFlow_A'),
+          connectionSequenceFlow_B = elementRegistry.get('SequenceFlow_B'),
+          connectionSequenceFlow_C = elementRegistry.get('SequenceFlow_C'),
+          connectionSequenceFlow_D = elementRegistry.get('SequenceFlow_D'),
+          connectionSequenceFlow_E = elementRegistry.get('SequenceFlow_E');
+
+      // when
+      modeling.moveElements([
+        shapeTask_A,
+        shapeTask_B,
+        shapeTask_C,
+        shapeTask_D,
+        shapeTask_E
+      ], {
+        x: 0, y: -50
+      });
+
+      // then
+      expect(elementRegistry.get(connectionSequenceFlow_A.id)).to.exist;
+      expect(elementRegistry.get(connectionSequenceFlow_B.id)).to.exist;
+      expect(elementRegistry.get(connectionSequenceFlow_C.id)).to.exist;
+      expect(elementRegistry.get(connectionSequenceFlow_D.id)).to.exist;
+      expect(elementRegistry.get(connectionSequenceFlow_E.id)).to.exist;
+    }));
+  });
 
 });
 
