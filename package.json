@@ -64,7 +64,7 @@
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",
     "phantomjs-prebuilt": "^2.1.12",
-    "puppeteer": "^1.9.0",
+    "puppeteer": "^1.14.0",
     "raw-loader": "^0.5.1",
     "rollup": "^0.66.6",
     "rollup-plugin-commonjs": "^9.1.0",
