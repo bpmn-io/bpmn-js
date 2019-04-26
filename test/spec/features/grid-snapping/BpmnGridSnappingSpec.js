@@ -179,7 +179,7 @@ describe('features/grid-snapping', function() {
         );
 
         // then
-        expect(getBounds(collapsedParticipant)).to.eql(bounds);
+        expect(collapsedParticipant).to.have.bounds(bounds);
       }));
 
 
@@ -230,7 +230,7 @@ describe('features/grid-snapping', function() {
         );
 
         // then
-        expect(getBounds(expandedParticipant)).to.eql(bounds);
+        expect(expandedParticipant).to.have.bounds(bounds);
       }));
 
 
