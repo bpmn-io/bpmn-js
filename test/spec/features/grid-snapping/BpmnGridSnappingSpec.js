@@ -165,9 +165,9 @@ describe('features/grid-snapping', function() {
       it('participant (no auto resize)', inject(function(bpmnReplace) {
 
         // given
-        var bounds = assign(
+        var collapsedBounds = assign(
           getBounds(participant),
-          { height: 100 }
+          { height: 60 }
         );
 
         // when
@@ -179,7 +179,7 @@ describe('features/grid-snapping', function() {
         );
 
         // then
-        expect(collapsedParticipant).to.have.bounds(bounds);
+        expect(collapsedParticipant).to.have.bounds(collapsedBounds);
       }));
 
 

@@ -3,6 +3,11 @@ import {
   inject
 } from 'test/TestHelper';
 
+import {
+  assign,
+  pick
+} from 'min-dash';
+
 import modelingModule from 'lib/features/modeling';
 import replaceModule from 'lib/features/replace';
 import moveModule from 'diagram-js/lib/features/move';
@@ -292,16 +297,19 @@ describe('features/replace - bpmn replace', function() {
       // given
       var shape = elementRegistry.get('Participant_1');
 
+      var collapsedBounds = assign({}, getBounds(shape), { height: 60 });
+
       // when
-      var newShape = bpmnReplace.replaceElement(shape, { type: 'bpmn:Participant', isExpanded: false });
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: false
+      });
 
       // then
       expect(isExpanded(newShape)).to.be.false; // collapsed
       expect(newShape.children).to.be.empty;
 
-      expect(newShape.width).to.equal(shape.width);
-      // default height for collapsed pool
-      expect(newShape.height).to.equal(100);
+      expect(newShape).to.have.bounds(collapsedBounds);
     }));
 
 
@@ -1512,4 +1520,8 @@ function skipId(key, value) {
   }
 
   return value;
+}
+
+function getBounds(shape) {
+  return pick(shape, [ 'x', 'y', 'width', 'height' ]);
 }
