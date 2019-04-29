@@ -318,16 +318,19 @@ describe('features/replace - bpmn replace', function() {
       // given
       var shape = elementRegistry.get('Participant_2');
 
+      var expandedBounds = assign({}, getBounds(shape), { height: 250 });
+
       // when
-      var newShape = bpmnReplace.replaceElement(shape, { type: 'bpmn:Participant', isExpanded: true });
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: true
+      });
 
       // then
       expect(isExpanded(newShape)).to.be.true; // expanded
       expect(newShape.children).to.be.empty;
 
-      expect(newShape.width).to.equal(shape.width);
-      // default height for expanded pool
-      expect(newShape.height).to.equal(250);
+      expect(newShape).to.have.bounds(expandedBounds);
     }));
 
   });
