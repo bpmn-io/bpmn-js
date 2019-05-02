@@ -13,6 +13,7 @@
       <bpmn:incoming>SequenceFlow_2</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_2" sourceRef="SubProcess_1" targetRef="EndEvent_1" />
+    <bpmn:group id="Group_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -45,6 +46,9 @@
           <dc:Bounds x="710" y="232" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <dc:Bounds x="264" y="42" width="500" height="400" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
