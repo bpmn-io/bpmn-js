@@ -5,6 +5,11 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import createModule from 'diagram-js/lib/features/create';
+
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../../util/MockEvents';
 
 
 describe('features/modeling - layout connection', function() {
@@ -14,7 +19,8 @@ describe('features/modeling - layout connection', function() {
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
       coreModule,
-      modelingModule
+      modelingModule,
+      createModule
     ]
   }));
 
@@ -111,57 +117,108 @@ describe('features/modeling - layout connection', function() {
 
   describe('integration', function() {
 
-    it('should correctly layout after start re-connection', inject(function(elementRegistry, modeling) {
+    describe('re-connection', function() {
 
-      // given
-      var task1 = elementRegistry.get('Task_1'),
-          connection = elementRegistry.get('SequenceFlow_1'),
-          docking = { x: 292, y: 376 };
+      it('should correctly layout after start re-connection', inject(function(elementRegistry, modeling) {
 
-      // when
-      modeling.reconnectStart(connection, task1, docking);
+        // given
+        var task1 = elementRegistry.get('Task_1'),
+            connection = elementRegistry.get('SequenceFlow_1'),
+            docking = { x: 292, y: 376 };
 
-      // then
-      var waypoints = connection.waypoints,
-          i,
-          first,
-          second;
+        // when
+        modeling.reconnectStart(connection, task1, docking);
 
-      for (i = 0; i < waypoints.length - 1; i++) {
-        first = waypoints[i];
-        second = waypoints[i + 1];
+        // then
+        var waypoints = connection.waypoints,
+            i,
+            first,
+            second;
 
-        expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
-      }
+        for (i = 0; i < waypoints.length - 1; i++) {
+          first = waypoints[i];
+          second = waypoints[i + 1];
 
-    }));
+          expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
+        }
+
+      }));
 
 
-    it('should correctly layout after end re-connection', inject(function(elementRegistry, modeling) {
+      it('should correctly layout after end re-connection', inject(function(elementRegistry, modeling) {
 
-      // given
-      var task1 = elementRegistry.get('Task_1'),
-          connection = elementRegistry.get('SequenceFlow_1'),
-          docking = { x: 292, y: 376 };
+        // given
+        var task1 = elementRegistry.get('Task_1'),
+            connection = elementRegistry.get('SequenceFlow_1'),
+            docking = { x: 292, y: 376 };
 
-      // when
-      modeling.reconnectEnd(connection, task1, docking);
+        // when
+        modeling.reconnectEnd(connection, task1, docking);
 
-      // then
-      var waypoints = connection.waypoints,
-          i,
-          first,
-          second;
+        // then
+        var waypoints = connection.waypoints,
+            i,
+            first,
+            second;
 
-      for (i = 0; i < waypoints.length - 1; i++) {
-        first = waypoints[i];
-        second = waypoints[i + 1];
+        for (i = 0; i < waypoints.length - 1; i++) {
+          first = waypoints[i];
+          second = waypoints[i + 1];
 
-        expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
-      }
+          expect(areOnSameAxis(first, second), 'points are on different axes').to.be.true;
+        }
 
-    }));
+      }));
 
+    });
+
+
+    describe('connection preview', function() {
+
+      var task;
+
+      beforeEach(inject(function(elementFactory, dragging) {
+        task = elementFactory.createShape({
+          type: 'bpmn:Task'
+        });
+
+        dragging.setOptions({ manual: true });
+      }));
+
+      afterEach(inject(function(dragging) {
+        dragging.setOptions({ manual: false });
+      }));
+
+
+      it('should correctly lay out connection preview',
+        inject(function(canvas, create, dragging, elementRegistry) {
+
+          // given
+          var rootShape = canvas.getRootElement(),
+              rootShapeGfx = canvas.getGraphics(rootShape),
+              task1 = elementRegistry.get('Task_1');
+
+          // when
+          create.start(canvasEvent({ x: 0, y: 0 }), task, task1);
+
+          dragging.move(canvasEvent({ x: 175, y: 175 }));
+          dragging.hover({ element: rootShape, gfx: rootShapeGfx });
+          dragging.move(canvasEvent({ x: 200, y: 200 }));
+
+          var ctx = dragging.context();
+          var context = ctx.data.context;
+
+          var connectionPreview = context.getConnection(context.canExecute.connect);
+          var waypointsPreview = connectionPreview.waypoints.slice();
+
+          dragging.end();
+
+          // then
+          expect(task1.outgoing[0]).to.exist;
+          expect(task1.outgoing[0].waypoints).to.deep.eql(waypointsPreview);
+        })
+      );
+    });
   });
 
 });
