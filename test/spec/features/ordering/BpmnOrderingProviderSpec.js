@@ -283,6 +283,49 @@ describe('features/modeling - ordering', function() {
   });
 
 
+  describe('groups', function() {
+
+    var diagramXML = require('./groups.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    describe('should stay always in front', function() {
+
+      it('moving <Group> onto <StartEvent>', inject(function() {
+
+        // when
+        move('Group', { x: 100, y: 0 }, 'StartEvent', false);
+
+        // then
+        expectZOrder('StartEvent', 'Group');
+      }));
+
+
+      it('moving <Group> onto <Task>', inject(function() {
+
+        // when
+        move('Group', { x: 200, y: 50 }, 'Task', false);
+
+        // then
+        expectZOrder('Task', 'Group');
+      }));
+
+
+      it('move <Group> onto <SubProcess>', inject(function() {
+
+        // when
+        move('Group', { x: 400, y: 0 }, 'SubProcess', false);
+
+        // then
+        expectZOrder('SubProcess', 'Group');
+      }));
+
+    });
+
+  });
+
+
   describe('connections', function() {
 
     var diagramXML = require('./ordering.bpmn');
