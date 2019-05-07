@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-0fcc2144-457b-4505-9e44-ff673663e3bc" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="3.0.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="my group" />
+  </category>
+  <process id="Process_1" processType="None" isExecutable="false">
+    <startEvent id="StartEvent" />
+    <task id="Task" />
+    <subProcess id="SubProcess" />
+    <group id="Group" categoryValueRef="CategoryValue_1" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Group_1di" bpmnElement="Group">
+        <omgdc:Bounds x="180" y="105" width="188" height="154" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="184" y="107" width="58.28571319580078" height="15" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0yve8vf_di" bpmnElement="StartEvent">
+        <omgdc:Bounds x="450" y="164" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0nb7h9d_di" bpmnElement="Task">
+        <omgdc:Bounds x="418" y="268" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_02cid6e_di" bpmnElement="SubProcess" isExpanded="true">
+        <omgdc:Bounds x="546" y="138" width="350" height="200" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
