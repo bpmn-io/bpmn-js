@@ -5,7 +5,9 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import connectModule from 'lib/features/connect';
 import createModule from 'lib/features/create';
+
 
 import {
   createCanvasEvent as canvasEvent
@@ -20,6 +22,7 @@ describe('features/modeling - layout connection', function() {
     modules: [
       coreModule,
       modelingModule,
+      connectModule,
       createModule
     ]
   }));
@@ -190,7 +193,7 @@ describe('features/modeling - layout connection', function() {
       }));
 
 
-      it('should correctly lay out connection preview',
+      it('should correctly lay out append shape connection preview',
         inject(function(canvas, create, dragging, elementRegistry) {
 
           // given
@@ -212,6 +215,40 @@ describe('features/modeling - layout connection', function() {
             context.canExecute.connect,
             context.source,
             context.shape
+          );
+
+          var waypointsPreview = connectionPreview.waypoints.slice();
+
+          dragging.end();
+
+          // then
+          expect(task1.outgoing[0]).to.exist;
+          expect(task1.outgoing[0].waypoints).to.deep.eql(waypointsPreview);
+        })
+      );
+
+
+      it('should correctly lay out new connection preview',
+        inject(function(connect, dragging, elementRegistry) {
+
+          // given
+          var task1 = elementRegistry.get('Task_1'),
+              task2 = elementRegistry.get('Task_2');
+
+          // when
+          connect.start(canvasEvent({ x: 0, y: 0 }), task1);
+
+          dragging.move(canvasEvent({ x: 760, y: 420 }));
+          dragging.hover({ element: task2 });
+          dragging.move(canvasEvent({ x: 782, y: 436 }));
+
+          var ctx = dragging.context();
+          var context = ctx.data.context;
+
+          var connectionPreview = context.getConnection(
+            context.canExecute,
+            context.source,
+            context.target
           );
 
           var waypointsPreview = connectionPreview.waypoints.slice();
