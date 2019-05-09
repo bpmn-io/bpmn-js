@@ -5,7 +5,7 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
-import createModule from 'diagram-js/lib/features/create';
+import createModule from 'lib/features/create';
 
 import {
   createCanvasEvent as canvasEvent
@@ -208,7 +208,12 @@ describe('features/modeling - layout connection', function() {
           var ctx = dragging.context();
           var context = ctx.data.context;
 
-          var connectionPreview = context.getConnection(context.canExecute.connect);
+          var connectionPreview = context.getConnection(
+            context.canExecute.connect,
+            context.source,
+            context.shape
+          );
+
           var waypointsPreview = connectionPreview.waypoints.slice();
 
           dragging.end();
