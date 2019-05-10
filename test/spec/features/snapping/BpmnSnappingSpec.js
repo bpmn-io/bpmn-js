@@ -29,6 +29,52 @@ describe('features/snapping - BpmnSnapping', function() {
     connectModule
   ];
 
+  describe('general', function() {
+
+    var diagramXML = require('./BpmnSnapping.general.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var task;
+
+    beforeEach(inject(function(dragging, elementRegistry) {
+      task = elementRegistry.get('Task_1');
+
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should snap to itself', inject(function(canvas, dragging, move) {
+
+      // given
+      var originalPosition = {
+        x: task.x,
+        y: task.y
+      };
+
+      var taskGfx = canvas.getGraphics(task);
+
+      // when
+      move.start(canvasEvent(originalPosition), task);
+
+      dragging.hover({ element: task, gfx: taskGfx });
+
+      dragging.move(canvasEvent({
+        x: originalPosition.x + 5,
+        y: originalPosition.y + 5
+      }));
+
+      dragging.end();
+
+      // then
+      expect(task.x).to.eql(originalPosition.x);
+      expect(task.y).to.eql(originalPosition.y);
+    }));
+
+  });
+
   describe('on Boundary Events', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/collaboration/process.bpmn');
