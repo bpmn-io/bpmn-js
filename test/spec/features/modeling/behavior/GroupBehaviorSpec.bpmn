@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.signavio.com/bpmn20" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="Definition_1" name="" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.0-dev">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="Value 1" />
+    <categoryValue id="CategoryValue_2" value="Value 2" />
+  </category>
+  <category id="Category_2">
+    <categoryValue id="CategoryValue_3" value="Value 3" />
+  </category>
+  <process id="Process_1" isExecutable="false">
+    <group id="Group_1" categoryValueRef="CategoryValue_1" />
+    <group id="Group_2" categoryValueRef="CategoryValue_1" />
+    <group id="Group_3" categoryValueRef="CategoryValue_2" />
+    <group id="Group_4" categoryValueRef="CategoryValue_3" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <omgdc:Bounds x="162" y="75" width="200" height="200" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="276" y="98" width="58" height="18.96" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_2_di" bpmnElement="Group_2">
+        <omgdc:Bounds x="387" y="75" width="200" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_3_di" bpmnElement="Group_3">
+        <omgdc:Bounds x="609" y="75" width="200" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_4_di" bpmnElement="Group_4">
+        <omgdc:Bounds x="836" y="75" width="200" height="200" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
