@@ -32,6 +32,32 @@ describe('features/modeling/behavior - groups', function() {
 
   describe('creation', function() {
 
+    it('should NOT create new CategoryValue if one exists', inject(
+      function(canvas, elementFactory, elementRegistry, modeling) {
+
+        // given
+        var group1 = elementRegistry.get('Group_1'),
+            categoryValue = getBusinessObject(group1).categoryValueRef,
+            root = canvas.getRootElement(),
+            definitions = getBusinessObject(root).$parent,
+            originalSize = definitions.get('rootElements').length;
+
+        var group = elementFactory.createShape({ type: 'bpmn:Group' });
+
+        getBusinessObject(group).categoryValueRef = categoryValue;
+
+        // when
+        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
+            categoryValueRef = getBusinessObject(groupShape).categoryValueRef;
+
+        // then
+        expect(categoryValueRef).to.eql(categoryValue);
+        expect(originalSize).to.equal(definitions.get('rootElements').length);
+
+      }
+    ));
+
+
     describe('should create new Category for every new Group', function() {
 
       it('execute', inject(function(canvas, elementFactory, modeling) {
