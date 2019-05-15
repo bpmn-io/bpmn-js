@@ -21,7 +21,10 @@ import {
 
 import DescriptorTree from './DescriptorTree';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  getBusinessObject,
+  is
+} from 'lib/util/ModelUtil';
 
 
 describe('features/copy-paste', function() {
@@ -400,6 +403,25 @@ describe('features/copy-paste', function() {
         })[0];
 
         expect(transaction).to.exist;
+      })
+    );
+
+
+    it('should copy & paste groups',
+      inject(function(elementRegistry, canvas, copyPaste, modeling) {
+
+        // when
+        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Group');
+
+        var group = elementRegistry.filter(function(element) {
+          return element.type === 'bpmn:Group';
+        })[0];
+
+        var categoryValue = getBusinessObject(group).categoryValueRef;
+
+        expect(group).to.exist;
+        expect(categoryValue).to.exist;
+        expect(categoryValue.id).to.equal('CategoryValue');
       })
     );
 
