@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.0-dev">
+  <bpmn:category id="Category">
+    <bpmn:categoryValue id="CategoryValue" value="Group" />
+  </bpmn:category>
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:subProcess id="Sub_non_interrupt" />
     <bpmn:subProcess id="Sub_event_subprocess" triggeredByEvent="true" />
@@ -11,6 +14,7 @@
       <bpmn:timerEventDefinition />
     </bpmn:boundaryEvent>
     <bpmn:transaction id="Sub_transaction" />
+    <bpmn:group id="Group" categoryValueRef="CategoryValue" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -37,6 +41,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Transaction_1so7kki_di" bpmnElement="Sub_transaction" isExpanded="true">
         <dc:Bounds x="329" y="207" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_di" bpmnElement="Group">
+        <dc:Bounds x="529" y="40" width="140" height="120" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
