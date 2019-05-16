@@ -48,7 +48,7 @@
     "eslint-plugin-import": "^2.17.2",
     "execa": "^1.0.0",
     "istanbul-instrumenter-loader": "^3.0.1",
-    "karma": "^3.1.4",
+    "karma": "^4.1.0",
     "karma-chrome-launcher": "^2.1.1",
     "karma-coverage": "^1.1.2",
     "karma-env-preprocessor": "^0.1.1",
