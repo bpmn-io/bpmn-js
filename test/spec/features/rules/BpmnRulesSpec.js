@@ -1441,6 +1441,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       }
     ));
 
+
     it('not attach IntermediateEvent to ReceiveTask after EventBasedGateway', inject(
       function(canvas, modeling, elementFactory, bpmnRules) {
 
@@ -1476,6 +1477,7 @@ describe('features/modeling/rules - BpmnRules', function() {
         expect(canAttach).to.be.false;
       }
     ));
+
 
     it('create IntermediateEvent in SubProcess body', inject(
       function(elementFactory, elementRegistry, bpmnRules) {
@@ -1791,6 +1793,41 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('connect on create', function() {
+
+    var testXML = require('./BpmnRules.connectOnCreate.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should handle target without parent', inject(function(elementFactory) {
+
+      // given
+      var types = [
+        'bpmn:Task',
+        'bpmn:StartEvent',
+        'bpmn:EndEvent',
+        'bpmn:Gateway'
+      ];
+
+      types.forEach(function(type) {
+        // when
+        var element = elementFactory.createShape({ type: type });
+
+        // then
+        expectCanConnect('Task_A', element, {
+          sequenceFlow: false,
+          messageFlow: false,
+          association: false,
+          dataAssociation: false
+        });
+      });
+
+    }));
+
+  });
+
+
   describe('data input / output', function() {
 
     describe('in process', function() {
@@ -1887,6 +1924,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
   });
+
 
   describe('start connection', function() {
 
