@@ -1260,6 +1260,23 @@ describe('features/modeling/rules - BpmnRules', function() {
       }
     ));
 
+
+    it('attach/move IntermediateThrowEvent -> SubProcess', inject(
+      function(elementRegistry) {
+
+        // given
+        var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_1');
+
+        var elements = [ intermediateThrowEvent ];
+
+        // then
+        expectCanMove(elements, 'SubProcess_1', {
+          attach: 'attach',
+          move: true
+        });
+      }
+    ));
+
   });
 
 
@@ -1539,7 +1556,7 @@ describe('features/modeling/rules - BpmnRules', function() {
         );
 
         // then
-        expect(canAttach).to.be.false;
+        expect(canAttach).to.eql('attach');
         expect(canCreate).to.be.false;
       }
     ));

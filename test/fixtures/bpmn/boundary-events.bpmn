@@ -14,6 +14,7 @@
     <bpmn2:task id="Task_2" />
     <bpmn2:boundaryEvent id="BoundaryEvent_2" name="superman" attachedToRef="Task_2" />
     <bpmn2:task id="CompensationTask" isForCompensation="true" />
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_1" name="joker" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -53,6 +54,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CompensationTask_di" bpmnElement="CompensationTask">
         <dc:Bounds x="795" y="249" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_1_di" bpmnElement="IntermediateThrowEvent_1">
+        <dc:Bounds x="185" y="480" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="191" y="525" width="24" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
