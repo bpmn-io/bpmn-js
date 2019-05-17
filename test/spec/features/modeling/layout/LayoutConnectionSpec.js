@@ -5,9 +5,9 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
-import connectionPreviewModule from 'lib/features/connection-preview';
 
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
+import connectionPreviewModule from 'diagram-js/lib/features/connection-preview';
 import connectModule from 'diagram-js/lib/features/connect';
 import createModule from 'diagram-js/lib/features/create';
 
@@ -22,12 +22,12 @@ describe('features/modeling - layout connection', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
-      coreModule,
-      modelingModule,
-      connectModule,
-      createModule,
       bendpointsModule,
-      connectionPreviewModule
+      connectionPreviewModule,
+      connectModule,
+      coreModule,
+      createModule,
+      modelingModule
     ]
   }));
 
