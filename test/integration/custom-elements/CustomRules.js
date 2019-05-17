@@ -78,20 +78,7 @@ CustomRules.prototype.init = function() {
 };
 
 function canConnect(source, target) {
-  if (isType(target, 'custom:triangle')) {
-    return true;
-  }
-
-  if (isType(target, 'custom:circle')) {
-    if (isType(source, 'custom:triangle')) {
-      return true;
-    }
-    return false;
-  }
-
-  if (isCustom(source)) {
-    return true;
-  }
+  return !isCustom(source) && !isCustom(target);
 }
 
 function canCreate(shape, target) {
