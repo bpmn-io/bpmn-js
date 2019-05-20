@@ -3,7 +3,7 @@ import {
   inject
 } from 'test/TestHelper';
 
-var getParticipantSizeConstraints = require('lib/features/snapping/BpmnSnappingUtil').getParticipantSizeConstraints;
+import { getParticipantResizeConstraints } from 'lib/features/modeling/behavior/util/ResizeUtil';
 
 import coreModule from 'lib/core';
 
@@ -14,13 +14,13 @@ var LANE_MIN_HEIGHT = 60,
     LANE_BOTTOM_PADDING = 20;
 
 
-describe('features/snapping - BpmnSnappingUtil', function() {
+describe('modeling/behavior/util - Resize', function() {
 
-  describe('#getParticipantSizeConstraints', function() {
+  describe('#getParticipantResizeConstraints', function() {
 
     describe('lanes', function() {
 
-      var diagramXML = require('./BpmnSnappingUtil.lanes.bpmn');
+      var diagramXML = require('./ResizeUtil.lanes.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
 
@@ -32,7 +32,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Lane_B');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 's');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -52,7 +52,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Lane_B');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 's');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -72,7 +72,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Nested_Lane_A');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'n');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -92,7 +92,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Nested_Lane_A');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'n');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -112,7 +112,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             aboveLaneShape = elementRegistry.get('Nested_Lane_A');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n', true);
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'n', true);
 
         // then
         expect(sizeConstraints).to.eql({
@@ -134,7 +134,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherLaneShape = elementRegistry.get('Lane_B');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's', true);
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 's', true);
 
         // then
         expect(sizeConstraints).to.eql({
@@ -153,7 +153,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
 
     describe('flowNodes', function() {
 
-      var diagramXML = require('./BpmnSnappingUtil.lanes-flowNodes.bpmn');
+      var diagramXML = require('./ResizeUtil.lanes-flowNodes.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
 
@@ -165,7 +165,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             taskShape = elementRegistry.get('Task');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 's');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -185,7 +185,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             taskShape = elementRegistry.get('Task');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 's');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 's');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -205,7 +205,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             taskShape = elementRegistry.get('Task_Boundary');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'n');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -225,7 +225,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             taskShape = elementRegistry.get('Task_Boundary');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'n');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'n');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -245,7 +245,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherShape = elementRegistry.get('Boundary_label');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'w');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'w');
 
         // then
         expect(sizeConstraints).to.eql({
@@ -265,7 +265,7 @@ describe('features/snapping - BpmnSnappingUtil', function() {
             otherShape = elementRegistry.get('Task');
 
         // when
-        var sizeConstraints = getParticipantSizeConstraints(resizeShape, 'e');
+        var sizeConstraints = getParticipantResizeConstraints(resizeShape, 'e');
 
         // then
         expect(sizeConstraints).to.eql({
