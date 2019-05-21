@@ -14,7 +14,7 @@ describe('features/modeling/behavior - create boundary events', function() {
 
   var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
 
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules.concat(modelingModule) }));
+  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
 
   it('should execute on attach', inject(function(canvas, elementFactory, modeling) {
