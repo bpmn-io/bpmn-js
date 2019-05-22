@@ -1260,23 +1260,69 @@ describe('features/modeling/rules - BpmnRules', function() {
       }
     ));
 
+  });
 
-    it('attach/move IntermediateThrowEvent -> SubProcess', inject(
-      function(elementRegistry) {
 
-        // given
-        var intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_1');
+  describe('event attaching', function() {
 
-        var elements = [ intermediateThrowEvent ];
+    var testXML = require('./BpmnRules.attaching.bpmn');
 
-        // then
-        expectCanMove(elements, 'SubProcess_1', {
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should allow to attach attachable events to SubProcess', inject(function(elementRegistry) {
+
+      // given
+      var attachableEvents = [
+        'IntermediateThrowEvent',
+        'MessageCatchEvent',
+        'TimerCatchEvent',
+        'SignalCatchEvent',
+        'ConditionalCatchEvent'
+      ];
+
+      var events = attachableEvents.map(function(eventId) {
+        return elementRegistry.get(eventId);
+      });
+
+      // then
+      events.forEach(function(event) {
+
+        expectCanMove([ event ], 'SubProcess_1', {
           attach: 'attach',
           move: true
         });
-      }
-    ));
+      });
+    }));
 
+
+    it('should not allow to attach non-attachable events to SubProcess',
+      inject(function(elementRegistry) {
+
+        // given
+        var nonAttachableEvents = [
+          'MessageThrowEvent',
+          'EscalationThrowEvent',
+          'LinkCatchEvent',
+          'LinkThrowEvent',
+          'CompensateThrowEvent',
+          'SignalThrowEvent'
+        ];
+
+        var events = nonAttachableEvents.map(function(eventId) {
+          return elementRegistry.get(eventId);
+        });
+
+        // then
+        events.forEach(function(event) {
+
+          expectCanMove([ event ], 'SubProcess_1', {
+            attach: false,
+            move: true
+          });
+        });
+      })
+    );
   });
 
 
