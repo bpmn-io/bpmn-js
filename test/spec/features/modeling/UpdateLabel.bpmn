@@ -7,7 +7,11 @@
     <bpmn:textAnnotation id="TextAnnotation_1">
       <bpmn:text></bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:group id="Group_1" categoryValueRef="CategoryValue_1" />
   </bpmn:process>
+  <bpmn:category id="Category_1">
+    <bpmn:categoryValue id="CategoryValue_1" />
+  </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
@@ -24,6 +28,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1_di" bpmnElement="TextAnnotation_1">
         <dc:Bounds x="426" y="220" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <dc:Bounds x="165" y="190" width="150" height="120" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
