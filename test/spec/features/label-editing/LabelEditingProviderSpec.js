@@ -421,6 +421,38 @@ describe('features - label-editing', function() {
   });
 
 
+  describe('group support', function() {
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        labelEditingModule,
+        coreModule,
+        modelingModule
+      ],
+      canvas: { deferUpdate: false }
+    }));
+
+    it('should initialize categoryValue for empty group', inject(
+      function(elementRegistry, directEditing) {
+
+        // given
+        var shape = elementRegistry.get('Group_2');
+
+        // when
+        directEditing.activate(shape);
+        directEditing._textbox.content.innerText = 'FOO';
+        directEditing.complete();
+
+        // then
+        var label = getLabel(shape);
+
+        expect(shape.businessObject.categoryValueRef).to.exist;
+        expect(label).to.equal('FOO');
+      }
+    ));
+
+  });
+
   describe('sizes', function() {
 
     beforeEach(bootstrapModeler(diagramXML, {
