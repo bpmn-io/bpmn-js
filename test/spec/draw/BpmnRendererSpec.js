@@ -123,23 +123,6 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  it('should render group name', function(done) {
-    var xml = require('../../fixtures/bpmn/draw/group-name.bpmn');
-
-    bootstrapViewer(xml).call(this, function(err) {
-
-      inject(function(elementRegistry) {
-
-        var groupGfx = elementRegistry.getGraphics('Group_1');
-
-        expect(domQuery('.djs-label', groupGfx)).to.exist;
-
-        done(err);
-      })();
-    });
-  });
-
-
   it('should render message marker', function(done) {
     var xml = require('../../fixtures/bpmn/draw/message-marker.bpmn');
     bootstrapViewer(xml).call(this, checkErrors(done));
