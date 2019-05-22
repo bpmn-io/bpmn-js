@@ -411,6 +411,11 @@ describe('features - label-editing', function() {
 
       it('data output', directEdit('DataOutput'));
 
+
+      it('group', directEdit('Group_1'));
+
+      it('group via label', directEdit('Group_1_label'));
+
     });
 
   });
