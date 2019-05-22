@@ -11,49 +11,100 @@ describe('features/modeling/behavior - attach events', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
-  var processDiagramXML = require('../../../../fixtures/bpmn/boundary-events.bpmn');
+  var processDiagramXML = require('test/spec/features/rules/BpmnRules.attaching.bpmn');
 
   beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
 
-  it('should execute on attach', inject(function(elementRegistry, modeling) {
+  describe('basics', function() {
 
-    // given
-    var eventId = 'IntermediateThrowEvent_1',
-        intermediateThrowEvent = elementRegistry.get(eventId),
-        subProcess = elementRegistry.get('SubProcess_1'),
-        boundaryEvent;
+    it('should execute on attach', inject(function(elementRegistry, modeling) {
 
-    var elements = [ intermediateThrowEvent ];
+      // given
+      var eventId = 'IntermediateThrowEvent',
+          intermediateThrowEvent = elementRegistry.get(eventId),
+          subProcess = elementRegistry.get('SubProcess_1'),
+          boundaryEvent;
 
-    // when
-    modeling.moveElements(elements, { x: 60, y: -131 }, subProcess, { attach: true });
+      var elements = [ intermediateThrowEvent ];
 
-    // then
-    boundaryEvent = elementRegistry.get(eventId);
+      // when
+      modeling.moveElements(elements, { x: 0, y: -90 }, subProcess, { attach: true });
 
-    expect(intermediateThrowEvent.parent).to.not.exist;
-    expect(boundaryEvent).to.exist;
-    expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
-    expect(boundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
-  }));
+      // then
+      boundaryEvent = elementRegistry.get(eventId);
+
+      expect(intermediateThrowEvent.parent).to.not.exist;
+      expect(boundaryEvent).to.exist;
+      expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
+      expect(boundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
+    }));
 
 
-  it('should NOT execute on drop', inject(function(elementRegistry, modeling) {
+    it('should NOT execute on drop', inject(function(elementRegistry, modeling) {
 
-    // given
-    var eventId = 'IntermediateThrowEvent_1',
-        intermediateThrowEvent = elementRegistry.get(eventId),
-        subProcess = elementRegistry.get('SubProcess_1');
+      // given
+      var eventId = 'IntermediateThrowEvent',
+          intermediateThrowEvent = elementRegistry.get(eventId),
+          subProcess = elementRegistry.get('SubProcess_1');
 
-    var elements = [ intermediateThrowEvent ];
+      var elements = [ intermediateThrowEvent ];
 
-    // when
-    modeling.moveElements(elements, { x: 60, y: -191 }, subProcess);
+      // when
+      modeling.moveElements(elements, { x: 0, y: -150 }, subProcess);
 
-    // then
-    expect(intermediateThrowEvent.parent).to.eql(subProcess);
-    expect(intermediateThrowEvent.type).to.equal('bpmn:IntermediateThrowEvent');
-  }));
+      // then
+      expect(intermediateThrowEvent.parent).to.eql(subProcess);
+      expect(intermediateThrowEvent.type).to.equal('bpmn:IntermediateThrowEvent');
+    }));
+  });
+
+
+  describe('event definition', function() {
+
+    it('should copy event definitions', inject(function(elementRegistry, modeling) {
+
+      // given
+      var attachableEvents = [
+        'IntermediateThrowEvent',
+        'MessageCatchEvent',
+        'TimerCatchEvent',
+        'SignalCatchEvent',
+        'ConditionalCatchEvent'
+      ];
+
+      attachableEvents.forEach(function(eventId) {
+
+        var event = elementRegistry.get(eventId),
+            subProcess = elementRegistry.get('SubProcess_1'),
+            eventDefinitions = event.businessObject.eventDefinitions,
+            boundaryEvent, bo;
+
+        var elements = [ event ];
+
+        // when
+        modeling.moveElements(elements, { x: 0, y: -90 }, subProcess, { attach: true });
+
+        // then
+        boundaryEvent = elementRegistry.get(eventId);
+        bo = boundaryEvent.businessObject;
+
+        expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
+        expect(bo.eventDefinitions).to.jsonEqual(eventDefinitions, skipId);
+      });
+    }));
+  });
 
 });
+
+
+
+// helper //////
+function skipId(key, value) {
+
+  if (key === 'id') {
+    return;
+  }
+
+  return value;
+}
