@@ -1376,8 +1376,9 @@ describe('features/replace - bpmn replace', function() {
 
 
     it('should properly set parent of event definitions', inject(
-      function(elementRegistry, modeling, bpmnReplace) {
+      function(elementRegistry, bpmnReplace) {
 
+        // given
         var startEvent = elementRegistry.get('StartEvent_1');
 
         var messageEvent = bpmnReplace.replaceElement(startEvent, {
@@ -1394,8 +1395,9 @@ describe('features/replace - bpmn replace', function() {
 
 
     it('should add condition with ConditionalEventDefinition', inject(
-      function(elementRegistry, modeling, bpmnReplace) {
+      function(elementRegistry, bpmnReplace) {
 
+        // given
         var startEvent = elementRegistry.get('StartEvent_1');
 
         // when
