@@ -95,6 +95,51 @@ describe('features/modeling/behavior - attach events', function() {
     }));
   });
 
+
+  describe('connections', function() {
+
+    var eventId = 'IntermediateThrowEventWithConnections';
+
+    it('should remove incoming connection', inject(function(elementRegistry, modeling) {
+
+      var event = elementRegistry.get(eventId),
+          subProcess = elementRegistry.get('SubProcess_1'),
+          gateway = elementRegistry.get('Gateway_1'),
+          boundaryEvent;
+
+      var elements = [ event ];
+
+      // when
+      modeling.moveElements(elements, { x: 0, y: -90 }, subProcess, { attach: true });
+
+      // then
+      boundaryEvent = elementRegistry.get(eventId);
+
+      expect(boundaryEvent.incoming).to.have.lengthOf(0);
+      expect(gateway.outgoing).to.have.lengthOf(0);
+    }));
+
+
+    it('should keep outgoing connection', inject(function(elementRegistry, modeling) {
+
+      var event = elementRegistry.get(eventId),
+          subProcess = elementRegistry.get('SubProcess_1'),
+          task = elementRegistry.get('Task_1'),
+          boundaryEvent;
+
+      var elements = [ event ];
+
+      // when
+      modeling.moveElements(elements, { x: 0, y: -90 }, subProcess, { attach: true });
+
+      // then
+      boundaryEvent = elementRegistry.get(eventId);
+
+      expect(boundaryEvent.outgoing).to.have.lengthOf(1);
+      expect(task.incoming).to.have.lengthOf(1);
+    }));
+  });
+
 });
 
 
