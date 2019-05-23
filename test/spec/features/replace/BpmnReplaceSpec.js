@@ -1413,6 +1413,28 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+
+    it('should set host for boundary event if provided',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        var boundaryEvent = bpmnReplace.replaceElement(startEvent, {
+          type: 'bpmn:BoundaryEvent',
+          host: task
+        });
+
+        // then
+        expect(boundaryEvent).to.exist;
+        expect(boundaryEvent).to.have.property('host', task);
+        expect(task).to.have.property('attachers');
+        expect(task.attachers).to.deep.eql([ boundaryEvent ]);
+      })
+    );
+
   });
 
 
