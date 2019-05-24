@@ -30,43 +30,14 @@ describe('features/modeling - move', function() {
   }));
 
 
-  it('should not attach label when moving BoundaryEvent', inject(function(elementRegistry, move, dragging) {
-    // given
-    var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-        subProcess = elementRegistry.get('SubProcess_1'),
-        label = boundaryEvent.label;
-
-    // when
-    move.start(canvasEvent({ x: 190, y: 355 }), boundaryEvent);
-
-    dragging.hover({
-      element: subProcess,
-      gfx: elementRegistry.getGraphics(subProcess)
-    });
-
-    dragging.move(canvasEvent({ x: 220, y: 240 }));
-    dragging.end();
-
-    // then
-    expect(subProcess.attachers).not.to.include(label);
-    expect(subProcess.attachers).to.include(boundaryEvent);
-
-    expect(boundaryEvent.host).to.eql(subProcess);
-    expect(label.host).not.to.exist;
-  }));
-
-
-  it('should only move label when moving BoundaryEvent and Label',
-    inject(function(elementRegistry, move, dragging, selection) {
-
+  it('should not attach label when moving BoundaryEvent',
+    inject(function(elementRegistry, move, dragging) {
       // given
       var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
           subProcess = elementRegistry.get('SubProcess_1'),
           label = boundaryEvent.label;
 
       // when
-      selection.select([ boundaryEvent, label ]);
-
       move.start(canvasEvent({ x: 190, y: 355 }), boundaryEvent);
 
       dragging.hover({
@@ -79,9 +50,6 @@ describe('features/modeling - move', function() {
 
       // then
       expect(subProcess.attachers).not.to.include(label);
-      expect(subProcess.attachers).to.include(boundaryEvent);
-
-      expect(boundaryEvent.host).to.eql(subProcess);
       expect(label.host).not.to.exist;
     })
   );
