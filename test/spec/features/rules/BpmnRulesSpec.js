@@ -1222,57 +1222,6 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('attach/move BoundaryEvent -> Process', inject(function(elementRegistry) {
-
-      // when
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
-
-      var elements = [ boundaryEvent ];
-
-      // then
-      expectCanMove(elements, 'Process_1', {
-        attach: false,
-        move: false
-      });
-
-    }));
-
-
-    it('attach/move BoundaryEvent -> Task', inject(function(elementRegistry) {
-
-      // when
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
-
-      var elements = [ boundaryEvent ];
-
-      // then
-      expectCanMove(elements, 'Task_2', {
-        attach: 'attach',
-        move: false
-      });
-
-    }));
-
-
-    it('attach/move BoundaryEvent label -> SubProcess', inject(
-      function(elementRegistry) {
-
-        // when
-        var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
-            label = boundaryEvent.label;
-
-        var elements = [ label ];
-
-        // then
-        expectCanMove(elements, 'SubProcess_1', {
-          attach: false,
-          move: true
-        });
-
-      }
-    ));
-
-
     it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(
       function(elementRegistry) {
         // when
@@ -1286,7 +1235,7 @@ describe('features/modeling/rules - BpmnRules', function() {
         // then
         expectCanMove(elements, 'SubProcess_1', {
           attach: false,
-          move: false
+          move: true
         });
       }
     ));
@@ -1306,7 +1255,7 @@ describe('features/modeling/rules - BpmnRules', function() {
         // then
         expectCanMove(elements, 'Process_1', {
           attach: false,
-          move: false
+          move: true
         });
       }
     ));

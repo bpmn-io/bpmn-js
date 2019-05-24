@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.1">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_1" name="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess_1" />
+    <bpmn:boundaryEvent id="BoundaryMessageEvent" attachedToRef="SubProcess_1">
+      <bpmn:messageEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryTimerEvent" attachedToRef="SubProcess_1">
+      <bpmn:timerEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEscalationEvent" attachedToRef="SubProcess_1">
+      <bpmn:escalationEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryConditionalEvent" attachedToRef="SubProcess_1">
+      <bpmn:conditionalEventDefinition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryErrorEvent" attachedToRef="SubProcess_1">
+      <bpmn:errorEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundarySignalEvent" attachedToRef="SubProcess_1">
+      <bpmn:signalEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryCompensationEvent" attachedToRef="SubProcess_1">
+      <bpmn:compensateEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryNonInterruptingMessageEvent" cancelActivity="false" attachedToRef="SubProcess_1">
+      <bpmn:messageEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryTimerNonInterruptingEvent" cancelActivity="false" attachedToRef="SubProcess_1">
+      <bpmn:timerEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEscalationNonInterruptingEvent" cancelActivity="false" attachedToRef="SubProcess_1">
+      <bpmn:escalationEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryConditionalNonInterruptingEvent" cancelActivity="false" attachedToRef="SubProcess_1">
+      <bpmn:conditionalEventDefinition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+      </bpmn:conditionalEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryCancelEvent" attachedToRef="SubProcess_1">
+      <bpmn:cancelEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundarySignalNonInterruptingEvent" cancelActivity="false" attachedToRef="SubProcess_1">
+      <bpmn:signalEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEventWithConnections" attachedToRef="SubProcess_1">
+      <bpmn:outgoing>SequenceFlow_06au3yc</bpmn:outgoing>
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Task_1">
+      <bpmn:incoming>SequenceFlow_06au3yc</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_06au3yc" sourceRef="BoundaryEventWithConnections" targetRef="Task_1" />
+    <bpmn:boundaryEvent id="BoundaryEventWithLabel" name="label" attachedToRef="SubProcess_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="156" y="81" width="849" height="201" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_07t981c_di" bpmnElement="BoundaryEvent">
+        <dc:Bounds x="170" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_14eo0nz_di" bpmnElement="BoundaryMessageEvent">
+        <dc:Bounds x="218" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1caoqb9_di" bpmnElement="BoundaryTimerEvent">
+        <dc:Bounds x="261" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0us9p55_di" bpmnElement="BoundaryEscalationEvent">
+        <dc:Bounds x="309" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_10jnkwx_di" bpmnElement="BoundaryConditionalEvent">
+        <dc:Bounds x="353" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0heyf2g_di" bpmnElement="BoundaryErrorEvent">
+        <dc:Bounds x="399" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1a81efa_di" bpmnElement="BoundarySignalEvent">
+        <dc:Bounds x="452" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_08kjzds_di" bpmnElement="BoundaryCompensationEvent">
+        <dc:Bounds x="535" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1jl6ugf_di" bpmnElement="BoundaryNonInterruptingMessageEvent">
+        <dc:Bounds x="590" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0v82qap_di" bpmnElement="BoundaryTimerNonInterruptingEvent">
+        <dc:Bounds x="645" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0nnhzzw_di" bpmnElement="BoundaryEscalationNonInterruptingEvent">
+        <dc:Bounds x="700" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1b3ud2q_di" bpmnElement="BoundaryConditionalNonInterruptingEvent">
+        <dc:Bounds x="758" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1btj0hc_di" bpmnElement="BoundaryCancelEvent">
+        <dc:Bounds x="492" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_04ls5w4_di" bpmnElement="BoundarySignalNonInterruptingEvent">
+        <dc:Bounds x="813" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_06gp814_di" bpmnElement="BoundaryEventWithConnections">
+        <dc:Bounds x="862" y="264" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0k50qut_di" bpmnElement="Task_1">
+        <dc:Bounds x="1010" y="370" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_06au3yc_di" bpmnElement="SequenceFlow_06au3yc">
+        <di:waypoint x="880" y="300" />
+        <di:waypoint x="880" y="410" />
+        <di:waypoint x="1010" y="410" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_111pjze_di" bpmnElement="BoundaryEventWithLabel">
+        <dc:Bounds x="138" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="144" y="205" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
