@@ -391,6 +391,46 @@ describe('features/modeling - layout connection', function() {
         })
       );
     });
+
+
+    describe('attaching event', function() {
+
+      var diagramXML = require('test/spec/features/rules/BpmnRules.attaching.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: [
+          bendpointsModule,
+          connectionPreviewModule,
+          connectModule,
+          coreModule,
+          createModule,
+          modelingModule
+        ]
+      }));
+
+
+      it('should correctly lay out connection after replacement',
+        inject(function(elementRegistry, modeling) {
+
+          // given
+          var event = elementRegistry.get('IntermediateThrowEventWithConnections'),
+              parent = elementRegistry.get('SubProcess_1');
+
+          // when
+          modeling.moveElements([ event ], { x: 0, y: -90 }, parent, { attach: true });
+
+          // then
+          var boundaryEvent = elementRegistry.get('IntermediateThrowEventWithConnections');
+
+          expect(boundaryEvent.outgoing[0]).to.have.waypoints([
+            { x: 769, y: 297 },
+            { x: 769, y: 369 },
+            { x: 837, y: 369 }
+          ]);
+        })
+      );
+
+    });
   });
 
 });
