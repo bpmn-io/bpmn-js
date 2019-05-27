@@ -334,6 +334,62 @@ describe('features/modeling - layout connection', function() {
           expect(task1.incoming[0].waypoints).to.deep.eql(waypointsPreview);
         })
       );
+
+
+      it('should correctly lay out connection preview on inserted bendpoint move',
+        inject(function(bendpointMove, dragging, elementRegistry) {
+
+          // given
+          var task2 = elementRegistry.get('Task_2'),
+              sequenceFlow1 = elementRegistry.get('SequenceFlow_1');
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 700, y: 341 }), sequenceFlow1, 1, true);
+
+          dragging.move(canvasEvent({ x: 700, y: 400 }));
+
+          var ctx = dragging.context();
+          var context = ctx.data.context;
+
+          var connectionPreview = context.getConnection(context.allowed);
+
+          var waypointsPreview = connectionPreview.waypoints.slice();
+
+          dragging.end();
+
+          // then
+          expect(task2.incoming[0]).to.exist;
+          expect(task2.incoming[0].waypoints).to.deep.eql(waypointsPreview);
+        })
+      );
+
+
+      it('should correctly lay out connection preview on existing bendpoint move',
+        inject(function(bendpointMove, dragging, elementRegistry) {
+
+          // given
+          var task2 = elementRegistry.get('Task_2'),
+              sequenceFlow1 = elementRegistry.get('SequenceFlow_1');
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 934, y: 341 }), sequenceFlow1, 1);
+
+          dragging.move(canvasEvent({ x: 960, y: 340 }));
+
+          var ctx = dragging.context();
+          var context = ctx.data.context;
+
+          var connectionPreview = context.getConnection(context.allowed);
+
+          var waypointsPreview = connectionPreview.waypoints.slice();
+
+          dragging.end();
+
+          // then
+          expect(task2.incoming[0]).to.exist;
+          expect(task2.incoming[0].waypoints).to.deep.eql(waypointsPreview);
+        })
+      );
     });
   });
 
