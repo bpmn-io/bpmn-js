@@ -188,17 +188,23 @@ describe('features/modeling/behavior - sub process', function() {
 
     describe('expanded sub process -> collapsed sub process', function() {
 
-      it('should NOT move', inject(function(elementRegistry, modeling) {
+      it('should move', inject(function(elementRegistry, modeling) {
 
         // given
-        var subProcess = elementRegistry.get('SubProcess_4'),
-            subProcessMid = getMid(subProcess);
+        var subProcess = elementRegistry.get('SubProcess_4');
 
         // when
         modeling.toggleCollapse(subProcess);
 
         // then
-        expect(getMid(subProcess)).to.eql(subProcessMid);
+        var expectedBounds = {
+          x: 525,
+          y: 360,
+          width: 100,
+          height: 80
+        };
+
+        expect(subProcess).to.have.bounds(expectedBounds);
       }));
 
     });
