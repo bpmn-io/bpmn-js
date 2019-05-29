@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -20,6 +22,8 @@ describe('features/modeling/behavior - sub process', function() {
       replaceModule
     ]
   }));
+
+  afterEach(sinon.restore);
 
 
   describe('replace', function() {
