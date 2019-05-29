@@ -337,6 +337,34 @@ describe('features/snapping - BpmnSnapping', function() {
       );
 
 
+      it('should not snap to group bounds',
+        inject(function(canvas, create, dragging, elementFactory, elementRegistry) {
+
+          // given
+          var participantShape = elementFactory.createParticipantShape(false),
+              rootElement = canvas.getRootElement(),
+              rootGfx = canvas.getGraphics(rootElement),
+              groupElement = elementRegistry.get('Group_1');
+
+          // when
+          create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
+
+          dragging.hover({ element: rootElement, gfx: rootGfx });
+
+          dragging.move(canvasEvent({ x: 400, y: 400 }));
+          dragging.end(canvasEvent({ x: 400, y: 400 }));
+
+          // then
+          var totalWidth = groupElement.x + groupElement.width + 70,
+              totalHeight = groupElement.y + groupElement.height + 40;
+
+          expect(participantShape).not.to.have.bounds({
+            width: totalWidth, height: totalHeight, x: 100, y: 52
+          });
+        })
+      );
+
+
       it('should snap to process children bounds / bottom right',
         inject(function(canvas, create, dragging, elementFactory) {
 
