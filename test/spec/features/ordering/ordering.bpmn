@@ -4,6 +4,7 @@
     <bpmn2:participant id="Participant" name="Participant" processRef="Process_Tasks" />
     <bpmn2:participant id="Participant_StartEvent" name="Participant_StartEvent" processRef="Process_StartEvent" />
     <bpmn2:messageFlow id="MessageFlow" name="" sourceRef="Task_With_Boundary" targetRef="Participant_StartEvent" />
+    <bpmn2:group id="Group"/>
   </bpmn2:collaboration>
   <bpmn2:process id="Process_Tasks" isExecutable="false">
     <bpmn2:sequenceFlow id="SequenceFlow" name="SequenceFlow" sourceRef="BoundaryEvent" targetRef="Task" />
@@ -95,6 +96,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0vcqjeq_di" bpmnElement="Task_With_Output">
         <dc:Bounds x="747" y="473" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_di" bpmnElement="Group">
+        <dc:Bounds x="250" y="73" width="270" height="287" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataOutputAssociation_1fcd0id_di" bpmnElement="DataOutputAssociation">
         <di:waypoint x="797" y="473" />

@@ -3,28 +3,37 @@
   <category id="Category_1">
     <categoryValue id="CategoryValue_1" value="my group" />
   </category>
+  <collaboration id="Collaboration_1">
+    <participant id="Participant" processRef="Process_1" />
+    <group id="Group" categoryValueRef="CategoryValue_1" />
+  </collaboration>
   <process id="Process_1" processType="None" isExecutable="false">
     <startEvent id="StartEvent" />
     <task id="Task" />
     <subProcess id="SubProcess" />
-    <group id="Group" categoryValueRef="CategoryValue_1" />
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="Group_1di" bpmnElement="Group">
-        <omgdc:Bounds x="180" y="105" width="188" height="154" />
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant" isHorizontal="true">
+        <omgdc:Bounds x="156" y="118" width="724" height="250" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="184" y="107" width="58.28571319580078" height="15" />
+          <omgdc:Bounds x="184" y="107" width="59" height="15" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0yve8vf_di" bpmnElement="StartEvent">
-        <omgdc:Bounds x="450" y="164" width="36" height="36" />
+        <omgdc:Bounds x="192" y="242" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0nb7h9d_di" bpmnElement="Task">
-        <omgdc:Bounds x="418" y="268" width="100" height="80" />
+        <omgdc:Bounds x="280" y="150" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_02cid6e_di" bpmnElement="SubProcess" isExpanded="true">
-        <omgdc:Bounds x="546" y="138" width="350" height="200" />
+        <omgdc:Bounds x="430" y="138" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1di" bpmnElement="Group">
+        <omgdc:Bounds x="220" y="73" width="270" height="387" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="286" y="75" width="46" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
