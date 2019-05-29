@@ -91,6 +91,16 @@ describe('features/modeling - ordering', function() {
     }));
 
 
+    it('should stay behind Group', inject(function() {
+
+      // when
+      move('Participant', 'Collaboration');
+
+      // then
+      expectZOrder('Participant_StartEvent', 'Participant', 'Group');
+    }));
+
+
     it('should stay behind DataInputAssociation when moving Participant with DataStore', inject(function() {
 
       // when
@@ -319,6 +329,16 @@ describe('features/modeling - ordering', function() {
 
         // then
         expectZOrder('SubProcess', 'Group');
+      }));
+
+
+      it('move <Group> onto <Participant>', inject(function() {
+
+        // when
+        move('Group', { x: 50, y: 0 }, 'Participant', false);
+
+        // then
+        expectZOrder('Participant', 'Group');
       }));
 
     });
