@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import TestContainer from 'mocha-test-container-support';
+
 import {
   createCanvasEvent as canvasEvent
 } from '../../../util/MockEvents';
@@ -15,6 +17,8 @@ import resizeModule from 'diagram-js/lib/features/resize';
 import moveModule from 'diagram-js/lib/features/move';
 import rulesModule from 'lib/features/rules';
 import connectModule from 'diagram-js/lib/features/connect';
+
+import { isSnapped } from 'diagram-js/lib/features/snapping/SnapUtil';
 
 
 describe('features/snapping - BpmnSnapping', function() {
@@ -29,7 +33,7 @@ describe('features/snapping - BpmnSnapping', function() {
     connectModule
   ];
 
-  describe('general', function() {
+  describe('on itself', function() {
 
     var diagramXML = require('./BpmnSnapping.general.bpmn');
 
@@ -74,6 +78,7 @@ describe('features/snapping - BpmnSnapping', function() {
     }));
 
   });
+
 
   describe('on Boundary Events', function() {
 
@@ -304,89 +309,43 @@ describe('features/snapping - BpmnSnapping', function() {
 
       var diagramXML = require('../../../fixtures/bpmn/collaboration/process.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, {
-        modules: testModules
-      }));
+      it('should set snapped if outside of constraints', function(done) {
 
-      beforeEach(inject(function(dragging) {
-        dragging.setOptions({ manual: true });
-      }));
-
-
-      it('should snap to process children bounds / top left',
-        inject(function(canvas, create, dragging, elementFactory) {
-
-          // given
-          var participantShape = elementFactory.createParticipantShape(false),
-              rootElement = canvas.getRootElement(),
-              rootGfx = canvas.getGraphics(rootElement);
+        bootstrapModeler(diagramXML, {
+          container: TestContainer.get(this),
+          modules: testModules
+        })(function() {
 
           // when
-          create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
+          inject(function(canvas, create, dragging, elementFactory, eventBus) {
 
-          dragging.hover({ element: rootElement, gfx: rootGfx });
+            // given
+            dragging.setOptions({ manual: true });
 
-          dragging.move(canvasEvent({ x: 65, y: 65 }));
-          dragging.end(canvasEvent({ x: 65, y: 65 }));
+            var participantShape = elementFactory.createParticipantShape(false),
+                rootElement = canvas.getRootElement(),
+                rootGfx = canvas.getGraphics(rootElement);
 
-          // then
-          expect(participantShape).to.have.bounds({
-            width: 600, height: 250, x: 18, y: -8
-          });
-        })
-      );
+            create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
 
+            dragging.hover({ element: rootElement, gfx: rootGfx });
 
-      it('should not snap to group bounds',
-        inject(function(canvas, create, dragging, elementFactory, elementRegistry) {
+            eventBus.once('create.move', function(event) {
 
-          // given
-          var participantShape = elementFactory.createParticipantShape(false),
-              rootElement = canvas.getRootElement(),
-              rootGfx = canvas.getGraphics(rootElement),
-              groupElement = elementRegistry.get('Group_1');
+              // then
+              // expect snapped to avoid snapping outside of constraints
+              expect(isSnapped(event)).to.be.true;
 
-          // when
-          create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
+              done();
+            });
 
-          dragging.hover({ element: rootElement, gfx: rootGfx });
+            // when
+            dragging.move(canvasEvent({ x: 0, y: 0 }));
+          })();
 
-          dragging.move(canvasEvent({ x: 400, y: 400 }));
-          dragging.end(canvasEvent({ x: 400, y: 400 }));
+        });
 
-          // then
-          var totalWidth = groupElement.x + groupElement.width + 70,
-              totalHeight = groupElement.y + groupElement.height + 40;
-
-          expect(participantShape).not.to.have.bounds({
-            width: totalWidth, height: totalHeight, x: 100, y: 52
-          });
-        })
-      );
-
-
-      it('should snap to process children bounds / bottom right',
-        inject(function(canvas, create, dragging, elementFactory) {
-
-          // given
-          var participantShape = elementFactory.createParticipantShape(false),
-              rootElement = canvas.getRootElement(),
-              rootGfx = canvas.getGraphics(rootElement);
-
-          // when
-          create.start(canvasEvent({ x: 50, y: 50 }), participantShape);
-
-          dragging.hover({ element: rootElement, gfx: rootGfx });
-
-          dragging.move(canvasEvent({ x: 400, y: 400 }));
-          dragging.end(canvasEvent({ x: 400, y: 400 }));
-
-          // then
-          expect(participantShape).to.have.bounds({
-            width: 600, height: 250, x: 100, y: 52
-          });
-        })
-      );
+      });
 
     });
 
