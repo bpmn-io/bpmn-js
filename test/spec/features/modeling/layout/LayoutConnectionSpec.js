@@ -197,7 +197,7 @@ describe('features/modeling - layout connection', function() {
       }));
 
 
-      it('should correctly lay out connection preview on create',
+      it.skip('should correctly lay out connection preview on create',
         inject(function(canvas, create, dragging, elementRegistry) {
 
           // given
