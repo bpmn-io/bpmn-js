@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -143,6 +145,27 @@ describe('features/modeling/behavior - detach events', function() {
       expect(intermediateEvent.outgoing).to.have.lengthOf(1);
       expect(task.incoming).to.have.lengthOf(1);
     }));
+
+
+    it('should lay out connection once',
+      inject(function(eventBus, canvas, elementRegistry, modeling) {
+
+        // given
+        var layoutSpy = sinon.spy(),
+            event = elementRegistry.get(eventId),
+            root = canvas.getRootElement();
+
+        eventBus.on('commandStack.connection.layout.execute', layoutSpy);
+
+        var elements = [ event ];
+
+        // when
+        modeling.moveElements(elements, { x: 0, y: 100 }, root);
+
+        // then
+        expect(layoutSpy).to.be.calledOnce;
+      })
+    );
   });
 
 
