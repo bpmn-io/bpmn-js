@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -102,6 +104,7 @@ describe('features/modeling/behavior - attach events', function() {
 
     it('should remove incoming connection', inject(function(elementRegistry, modeling) {
 
+      // given
       var event = elementRegistry.get(eventId),
           subProcess = elementRegistry.get('SubProcess_1'),
           gateway = elementRegistry.get('Gateway_1'),
@@ -122,6 +125,7 @@ describe('features/modeling/behavior - attach events', function() {
 
     it('should keep outgoing connection', inject(function(elementRegistry, modeling) {
 
+      // given
       var event = elementRegistry.get(eventId),
           subProcess = elementRegistry.get('SubProcess_1'),
           task = elementRegistry.get('Task_1'),
@@ -137,6 +141,25 @@ describe('features/modeling/behavior - attach events', function() {
 
       expect(boundaryEvent.outgoing).to.have.lengthOf(1);
       expect(task.incoming).to.have.lengthOf(1);
+    }));
+
+
+    it('should lay out connection once', inject(function(eventBus, elementRegistry, modeling) {
+
+      // given
+      var layoutSpy = sinon.spy(),
+          event = elementRegistry.get(eventId),
+          subProcess = elementRegistry.get('SubProcess_1');
+
+      eventBus.on('commandStack.connection.layout.execute', layoutSpy);
+
+      var elements = [ event ];
+
+      // when
+      modeling.moveElements(elements, { x: 0, y: -90 }, subProcess, { attach: true });
+
+      // then
+      expect(layoutSpy).to.be.calledOnce;
     }));
   });
 
