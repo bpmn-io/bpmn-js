@@ -15,6 +15,7 @@ var testModules = [
   coreModule
 ];
 
+var ATTACH = { attach: true };
 
 describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
@@ -274,6 +275,127 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
           // when
           modeling.updateProperties(element, { name: 'FOO BAR' });
+
+          // then
+          expectLabelOrientation(element, 'top');
+        }
+      ));
+
+    });
+
+  });
+
+
+  describe('boundary-events', function() {
+
+    var diagramXML = require('./AdaptiveLabelPositioningBehavior.boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    describe('on boundary label creation', function() {
+
+      it('should NOT create label onto host', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var element = elementRegistry.get('BoundaryEvent_1');
+
+          // when
+          modeling.updateProperties(element, { name: 'FOO BAR' });
+
+          // then
+          expectLabelOrientation(element, 'bottom');
+        }
+      ));
+
+
+      it('should create label to the left', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var element = elementRegistry.get('BoundaryEvent_4');
+
+          // when
+          modeling.updateProperties(element, { name: 'FOO BAR' });
+
+          // then
+          expectLabelOrientation(element, 'left');
+        }
+      ));
+
+    });
+
+
+    describe('on connect', function() {
+
+      it('should keep label where it is if no better position', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var source = elementRegistry.get('BoundaryEvent_2'),
+              target = elementRegistry.get('EndEvent_2');
+
+          // when
+          modeling.connect(source, target);
+
+          // then
+          expectLabelOrientation(source, 'right');
+        }
+      ));
+
+    });
+
+
+    describe('on reconnect', function() {
+
+      it('should keep label where it is if no better position', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var source = elementRegistry.get('BoundaryEvent_3'),
+              target = elementRegistry.get('EndEvent_1'),
+              connection = elementRegistry.get('SequenceFlow_2');
+
+          // when
+          modeling.reconnectEnd(connection, target, { x: target.x + target.width / 2, y: target.y });
+
+          // then
+          expectLabelOrientation(source, 'bottom');
+        }
+      ));
+
+    });
+
+
+    describe('on boundary move', function() {
+
+      it('should move label to the left', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var element = elementRegistry.get('BoundaryEvent_3'),
+              host = elementRegistry.get('Task_3');
+
+          // when
+          modeling.moveElements([ element ], { x: -50, y: -50 }, host, ATTACH);
+
+          // then
+          expectLabelOrientation(element, 'left');
+        }
+      ));
+
+
+      it('should move label to the top', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var element = elementRegistry.get('BoundaryEvent_3'),
+              host = elementRegistry.get('Task_3');
+
+          // when
+          modeling.moveElements([ element ], { x: 50, y: -80 }, host, ATTACH); // top-right corner
 
           // then
           expectLabelOrientation(element, 'top');

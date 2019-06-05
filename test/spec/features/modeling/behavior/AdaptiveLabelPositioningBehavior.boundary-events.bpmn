@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0">
+  <process id="Process_1" isExecutable="false">
+    <task id="Task_1" />
+    <boundaryEvent id="BoundaryEvent_1" attachedToRef="Task_1">
+      <outgoing>SequenceFlow_1</outgoing>
+    </boundaryEvent>
+    <endEvent id="EndEvent_1">
+      <incoming>SequenceFlow_1</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_1" sourceRef="BoundaryEvent_1" targetRef="EndEvent_1" />
+    <task id="Task_2" />
+    <boundaryEvent id="BoundaryEvent_2" name="foo" attachedToRef="Task_2" />
+    <endEvent id="EndEvent_2" />
+    <task id="Task_3" />
+    <boundaryEvent id="BoundaryEvent_3" name="foo" attachedToRef="Task_3">
+      <outgoing>SequenceFlow_2</outgoing>
+    </boundaryEvent>
+    <endEvent id="EndEvent_3">
+      <incoming>SequenceFlow_2</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_2" sourceRef="BoundaryEvent_3" targetRef="EndEvent_3" />
+    <task id="Task_4" />
+    <boundaryEvent id="BoundaryEvent_4" name="" attachedToRef="Task_4">
+      <outgoing>SequenceFlow_3</outgoing>
+    </boundaryEvent>
+    <endEvent id="EndEvent_4">
+      <incoming>SequenceFlow_3</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_3" name="" sourceRef="BoundaryEvent_4" targetRef="EndEvent_4" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <omgdc:Bounds x="156" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
+        <omgdc:Bounds x="168" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
+        <omgdc:Bounds x="318" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
+        <omgdi:waypoint x="186" y="208" />
+        <omgdi:waypoint x="186" y="250" />
+        <omgdi:waypoint x="318" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <omgdc:Bounds x="156" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
+        <omgdc:Bounds x="238" y="322" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="279" y="332" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_2_di" bpmnElement="EndEvent_2">
+        <omgdc:Bounds x="318" y="422" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <omgdc:Bounds x="484" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_3_di" bpmnElement="BoundaryEvent_3">
+        <omgdc:Bounds x="516" y="172" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="526" y="216" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_3_di" bpmnElement="EndEvent_3">
+        <omgdc:Bounds x="602" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_2_di" bpmnElement="SequenceFlow_2">
+        <omgdi:waypoint x="534" y="208" />
+        <omgdi:waypoint x="534" y="270" />
+        <omgdi:waypoint x="602" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_4_di" bpmnElement="Task_4">
+        <omgdc:Bounds x="484" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_4_di" bpmnElement="BoundaryEvent_4">
+        <omgdc:Bounds x="466" y="362" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="472" y="332" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_4_di" bpmnElement="EndEvent_4">
+        <omgdc:Bounds x="552" y="442" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_3_di" bpmnElement="SequenceFlow_3">
+        <omgdi:waypoint x="484" y="398" />
+        <omgdi:waypoint x="484" y="460" />
+        <omgdi:waypoint x="552" y="460" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="490" y="426" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
