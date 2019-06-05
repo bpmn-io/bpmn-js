@@ -16,19 +16,22 @@ import {
 } from '../../../../util/MockEvents';
 
 
+var testModules = [
+  bendpointsModule,
+  connectionPreviewModule,
+  connectModule,
+  coreModule,
+  createModule,
+  modelingModule
+];
+
+
 describe('features/modeling - layout connection', function() {
 
   var diagramXML = require('../../../../fixtures/bpmn/sequence-flows.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
-    modules: [
-      bendpointsModule,
-      connectionPreviewModule,
-      connectModule,
-      coreModule,
-      createModule,
-      modelingModule
-    ]
+    modules: testModules
   }));
 
 
@@ -393,19 +396,64 @@ describe('features/modeling - layout connection', function() {
     });
 
 
+    describe('connection preview with connection type replacement', function() {
+
+      var diagramXML = require('test/spec/features/modeling/behavior/ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+
+      beforeEach(inject(function(dragging) {
+        dragging.setOptions({ manual: true });
+      }));
+
+      afterEach(inject(function(dragging) {
+        dragging.setOptions({ manual: false });
+      }));
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should correctly lay out connection preview when reconnecting with replacement',
+        inject(function(canvas, bendpointMove, dragging, elementRegistry) {
+
+          // given
+          var participant2 = elementRegistry.get('Participant_2'),
+              participant2Gfx = canvas.getGraphics(participant2),
+              sequenceFlow1 = elementRegistry.get('SequenceFlow_1');
+
+          // when
+          bendpointMove.start(canvasEvent(sequenceFlow1.waypoints[1]), sequenceFlow1, 1);
+
+          dragging.move(canvasEvent({ x: participant2.x + 100, y: participant2.y + 10 }));
+          dragging.hover({ element: participant2, gfx: participant2Gfx });
+          dragging.move(canvasEvent({ x: participant2.x + 105, y: participant2.y + 10 }));
+
+
+          var ctx = dragging.context();
+          var context = ctx.data.context;
+
+          var connectionPreview = context.getConnection(context.allowed);
+
+          var waypointsPreview = connectionPreview.waypoints.slice();
+
+          dragging.end();
+
+          var newWaypoints = participant2.incoming.slice(-1)[0].waypoints;
+
+          // then
+          expect(newWaypoints).to.exist;
+          expect(newWaypoints).to.deep.eql(waypointsPreview);
+        })
+      );
+    });
+
+
     describe('attaching event', function() {
 
       var diagramXML = require('test/spec/features/rules/BpmnRules.attaching.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, {
-        modules: [
-          bendpointsModule,
-          connectionPreviewModule,
-          connectModule,
-          coreModule,
-          createModule,
-          modelingModule
-        ]
+        modules: testModules
       }));
 
 
