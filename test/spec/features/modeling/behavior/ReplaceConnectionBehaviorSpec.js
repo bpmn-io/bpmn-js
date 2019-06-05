@@ -14,6 +14,7 @@ import {
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import coreModule from 'lib/core';
+import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 
 import {
   createCanvasEvent as canvasEvent
@@ -443,6 +444,71 @@ describe('features/modeling - replace connection', function() {
 
           expect(connection.source).to.eql(boundaryEvent);
           expect(connection.target).to.eql(task);
+        })
+      );
+
+    });
+
+
+    describe('dragging selection cleanup', function() {
+
+      var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+
+      beforeEach(bootstrapModeler(processDiagramXML, {
+        modules: testModules.concat(bendpointsModule)
+      }));
+
+
+      it('should select the new connection if replaced one was selected before',
+        inject(function(bendpointMove, dragging, elementRegistry, selection) {
+
+          // given
+          var participant2 = elementRegistry.get('Participant_2'),
+              connection = elementRegistry.get('SequenceFlow_1');
+
+
+          selection.select([ connection ]);
+
+          // when
+          bendpointMove.start(canvasEvent(connection.waypoints[0]), connection, 0);
+
+          dragging.hover({
+            element: participant2
+          });
+
+          dragging.move(canvasEvent({ x: participant2.x + 200, y: participant2.y }));
+          dragging.end();
+
+
+          // then
+          expect(selection.get()).to.deep.eql(participant2.outgoing.slice(-1));
+        })
+      );
+
+
+      it('should not interfere with connection to other element',
+        inject(function(bendpointMove, dragging, elementRegistry, selection) {
+
+          // given
+          var participant2 = elementRegistry.get('Participant_2'),
+              connection = elementRegistry.get('SequenceFlow_1');
+
+
+          selection.select([ participant2 ]);
+
+          // when
+          bendpointMove.start(canvasEvent(connection.waypoints[0]), connection, 0);
+
+          dragging.hover({
+            element: participant2
+          });
+
+          dragging.move(canvasEvent({ x: participant2.x + 200, y: participant2.y }));
+          dragging.end();
+
+
+          // then
+          expect(selection.get()).to.deep.eql([ participant2 ]);
         })
       );
 
