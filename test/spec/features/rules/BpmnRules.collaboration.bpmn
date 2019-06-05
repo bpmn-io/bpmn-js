@@ -7,6 +7,7 @@
     <bpmn2:messageFlow id="MessageFlow_labeled" name="LABEL" sourceRef="Participant" targetRef="OtherParticipant" />
     <bpmn2:messageFlow id="MessageFlow_2" sourceRef="OtherParticipant" targetRef="SubProcess" />
     <bpmn2:textAnnotation id="TextAnnotation_Global" />
+    <bpmn2:group id="Group" />
   </bpmn2:collaboration>
   <bpmn2:process id="Process" isExecutable="false">
     <bpmn2:startEvent id="StartEvent_None" />
@@ -170,6 +171,9 @@
         <di:waypoint x="275" y="252" />
         <di:waypoint x="417" y="252" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_di" bpmnElement="Group">
+        <dc:Bounds x="200" y="200" width="100" height="100" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

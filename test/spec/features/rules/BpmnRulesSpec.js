@@ -1044,6 +1044,10 @@ describe('features/modeling/rules - BpmnRules', function() {
         expectCanDrop(label, 'DataOutputAssociation', true);
       });
 
+      it('-> Group', function() {
+        expectCanDrop(label, 'Group', false);
+      });
+
     });
 
   });
@@ -1629,6 +1633,52 @@ describe('features/modeling/rules - BpmnRules', function() {
 
         // then
         expect(canResize).to.be.true;
+      }));
+
+    });
+
+
+    describe('should not allow move', function() {
+
+      it('Task -> Group', inject(function(elementRegistry, bpmnRules) {
+
+        // given
+        var taskElement = elementRegistry.get('Task_1'),
+            groupElement = elementRegistry.get('Group_1');
+
+        // when
+        var canMove = bpmnRules.canMove([ taskElement ], groupElement);
+
+        // then
+        expect(canMove).to.be.false;
+      }));
+
+
+      it('StartEvent -> Group', inject(function(elementRegistry, bpmnRules) {
+
+        // given
+        var startEventElement = elementRegistry.get('StartEvent_1'),
+            groupElement = elementRegistry.get('Group_1');
+
+        // when
+        var canMove = bpmnRules.canMove([ startEventElement ], groupElement);
+
+        // then
+        expect(canMove).to.be.false;
+      }));
+
+
+      it('StartEvent_label -> Group', inject(function(elementRegistry, bpmnRules) {
+
+        // given
+        var startEventLabel = elementRegistry.get('StartEvent_1').label,
+            groupElement = elementRegistry.get('Group_1');
+
+        // when
+        var canMove = bpmnRules.canMove([ startEventLabel ], groupElement);
+
+        // then
+        expect(canMove).to.be.false;
       }));
 
     });
