@@ -26,65 +26,138 @@ describe('features/modeling - layout', function() {
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-      it('attached top right', function() {
 
-        // when
-        var connection = connect('BoundaryEvent_TopRight', 'SubProcess');
+      describe('in the corner', function() {
 
-        // then
-        expect(connection).to.have.waypoints([
-          { original: { x: 650, y: 300 }, x: 650, y: 282 },
-          { x: 650, y: 262 },
-          { x: 475, y: 262 },
-          { original: { x: 475, y: 400 }, x: 475, y: 300 }
-        ]);
+        it('attached top right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopRight', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 550, y: 200 }, x: 550, y: 182 },
+            { x: 550, y: 162 },
+            { x: 375, y: 162 },
+            { original: { x: 375, y: 300 }, x: 375, y: 200 }
+          ]);
+        });
+
+
+        it('attached bottom right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomRight', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 550, y: 368 } , x: 568, y: 368 },
+            { x: 588, y: 368 },
+            { x: 588, y: 300 },
+            { original: { x: 375, y: 300 } , x: 550, y: 300 }
+          ]);
+        });
+
+
+        it('attached bottom left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomLeft', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 200, y: 500 }, x: 200, y: 418 },
+            { x: 200, y: 438 },
+            { x: 375, y: 438 },
+            { original: { x: 375, y: 300 }, x: 375, y: 400 }
+          ]);
+        });
+
+
+        it('attached top left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopLeft', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 200, y: 238 }, x: 182, y: 238 },
+            { x: 162, y: 238 },
+            { x: 162, y: 300 },
+            { original: { x: 375, y: 300 }, x: 200, y: 300 }
+          ]);
+        });
       });
 
 
-      it('attached bottom right', function() {
+      describe('on the side center', function() {
 
-        // when
-        var connection = connect('BoundaryEvent_BottomRight', 'SubProcess');
+        var host = 'SubProcess_2';
 
-        // then
-        expect(connection).to.have.waypoints([
-          { original: { x: 650, y: 468 }, x: 668, y: 468 },
-          { x: 688, y: 468 },
-          { x: 688, y: 400 },
-          { original: { x: 475, y: 400 }, x: 650, y: 400 }
-        ]);
+
+        it('attached top center', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopCenter', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 375, y: 460 }, x: 375, y: 442 },
+            { x:375, y: 422 },
+            { x:180, y: 422 },
+            { x:180, y: 560 },
+            { original:{ x: 375, y: 560 }, x: 200, y: 560 }
+          ]);
+        });
+
+
+        it('attached center right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_CenterRight', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 550, y: 560 }, x: 568, y: 560 },
+            { x: 588, y: 560 },
+            { x: 588, y: 680 },
+            { x: 375, y: 680 },
+            { original: { x: 375, y: 560 }, x: 375, y: 660 }
+          ]);
+        });
+
+
+        it('attached bottom center', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomCenter', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 375, y: 660 }, x: 375, y: 678 },
+            { x: 375, y: 698 },
+            { x: 180, y: 698 },
+            { x: 180, y: 560 },
+            { original: { x: 375, y: 560 }, x: 200, y: 560 }
+          ]);
+        });
+
+
+        it('attached center left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_CenterLeft', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { original: { x: 200, y: 560 }, x: 182, y: 560 },
+            { x: 162, y: 560 },
+            { x: 162, y: 680 },
+            { x: 375, y: 680 },
+            { original: { x: 375, y: 560 }, x: 375, y: 660 }
+          ]);
+        });
       });
-
-
-      it('attached bottom left', function() {
-
-        // when
-        var connection = connect('BoundaryEvent_BottomLeft', 'SubProcess');
-
-        // then
-        expect(connection).to.have.waypoints([
-          { original: { x: 300, y: 500 }, x: 300, y: 518 },
-          { x: 300, y: 538 },
-          { x: 475, y: 538 },
-          { original: { x: 475, y: 400 }, x: 475, y: 500 }
-        ]);
-      });
-
-
-      it('attached top left', function() {
-
-        // when
-        var connection = connect('BoundaryEvent_TopLeft', 'SubProcess');
-
-        // then
-        expect(connection).to.have.waypoints([
-          { original: { x: 300, y: 338 }, x: 282, y: 338 },
-          { x: 262, y: 338 },
-          { x: 262, y: 400 },
-          { original: { x: 475, y: 400 }, x: 300, y: 400 }
-        ]);
-      });
-
     });
 
 
