@@ -271,7 +271,7 @@ describe('features/modeling - replace connection', function() {
   });
 
 
-  describe('should replace SequenceFlow <> MessageFlow', function() {
+  describe('text/data association', function() {
 
     var processDiagramXML = require('./ReplaceConnectionBehavior.association.bpmn');
 
@@ -320,6 +320,43 @@ describe('features/modeling - replace connection', function() {
 
         // then
         expectConnected(textAnnotationShape, targetShape, element('Association_1'));
+      }));
+
+    });
+
+
+    describe('reconnecting data output association to text annotation', function() {
+
+      it('execute', inject(function(modeling) {
+
+        // given
+        var textAnnotation = element('TextAnnotation_1'),
+            dataObjectReference = element('DataObjectReference'),
+            dataOutputAssociation = element('DataOutputAssociation');
+
+        // when
+        modeling.reconnectStart(dataOutputAssociation, textAnnotation, { x: 708, y: 100 });
+
+        // then
+        expectConnected(textAnnotation, dataObjectReference, 'bpmn:Association');
+      }));
+
+
+      it('undo', inject(function(modeling, commandStack) {
+
+        // given
+        var task = element('Task'),
+            dataObjectReference = element('DataObjectReference'),
+            textAnnotation = element('TextAnnotation_1'),
+            dataOutputAssociation = element('DataOutputAssociation');
+
+        modeling.reconnectStart(dataOutputAssociation, textAnnotation, { x: 708, y: 100 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expectConnected(task, dataObjectReference, dataOutputAssociation);
       }));
 
     });

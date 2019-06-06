@@ -4,8 +4,15 @@
     <bpmn2:participant id="Participant_1" name="Pool" processRef="Process_1"/>
   </bpmn2:collaboration>
   <bpmn2:process id="Process_1" isExecutable="false">
-    <bpmn2:textAnnotation id="TextAnnotation_1"/>
-    <bpmn2:association id="Association_1" sourceRef="TextAnnotation_1" targetRef="Participant_1"/>
+    <bpmn2:task id="Task">
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation">
+        <bpmn2:targetRef>DataObjectReference</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject_12volar" />
+    <bpmn2:dataObject id="DataObject_12volar" />
+    <bpmn2:textAnnotation id="TextAnnotation_1" />
+    <bpmn2:association id="Association_1" sourceRef="TextAnnotation_1" targetRef="Participant_1" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_3">
@@ -16,8 +23,18 @@
         <dc:Bounds height="105.0" width="133.0" x="708.0" y="72.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_Association_1" bpmnElement="Association_1" sourceElement="_BPMNShape_TextAnnotation_2" targetElement="_BPMNShape_Participant_3">
-        <di:waypoint xsi:type="dc:Point" x="708.0" y="136.0"/>
-        <di:waypoint xsi:type="dc:Point" x="612.0" y="153.0"/>
+        <di:waypoint x="708" y="136" />
+        <di:waypoint x="612" y="153" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="302" y="162" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="449" y="177" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation">
+        <di:waypoint x="402" y="202" />
+        <di:waypoint x="449" y="202" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
