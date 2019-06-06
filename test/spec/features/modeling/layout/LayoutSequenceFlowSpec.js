@@ -10,25 +10,11 @@ import {
   reconnectEnd
 } from './Helper';
 
-import Modeler from 'lib/Modeler';
-
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
 
 describe('features/modeling - layout', function() {
-
-  describe.skip('overall experience, flow elements', function() {
-
-    var diagramXML = require('./LayoutSequenceFlowSpec.flowElements.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: Modeler.prototype._modules }));
-
-
-    it('should feel awesome', inject(function() { }));
-
-  });
-
 
   describe('boundary events', function() {
 
