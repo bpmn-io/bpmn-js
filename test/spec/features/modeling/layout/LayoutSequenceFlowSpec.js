@@ -32,14 +32,13 @@ describe('features/modeling - layout', function() {
 
   describe('boundary events', function() {
 
-    var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEvents.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
-
-
     describe('loops', function() {
+
+      var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEventsLoops.bpmn');
+
+      var testModules = [ coreModule, modelingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
       it('attached top right', function() {
 
@@ -104,6 +103,13 @@ describe('features/modeling - layout', function() {
 
 
     describe('non-loops', function() {
+
+      var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEvents.bpmn');
+
+      var testModules = [ coreModule, modelingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
 
       it('attached top right, orientation top', function() {
 
