@@ -34,96 +34,34 @@ describe('features/snapping - BpmnConnectSnapping', function() {
     dragging.setOptions({ manual: true });
   }));
 
-
-  describe('association', function() {
-
-    describe('connect', function() {
-
-      it('should snap target', inject(function(connect, dragging, elementRegistry) {
-
-        // given
-        var task = elementRegistry.get('Task_1'),
-            dataObjectReference = elementRegistry.get('DataObjectReference_1'),
-            dataObjectReferenceGfx = elementRegistry.getGraphics(dataObjectReference);
-
-        // when
-        connect.start(canvasEvent({ x: 300, y: 300 }), task);
-
-        dragging.hover({ element: dataObjectReference, gfx: dataObjectReferenceGfx });
-
-        dragging.move(canvasEvent({ x: 410, y: 410 }));
-
-        dragging.end();
-
-        // then
-        var waypoints = task.outgoing[0].waypoints;
-
-        expect(waypoints[1].original).to.eql({ x: 400, y: 400 });
-      }));
-
-    });
-
-  });
-
-
   describe('sequence flow', function() {
 
     describe('connect', function() {
 
-      it('should snap target', inject(function(connect, dragging, elementRegistry) {
-
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1'),
-            endEvent = elementRegistry.get('EndEvent_1'),
-            endEventGfx = elementRegistry.getGraphics(endEvent);
-
-        // when
-        connect.start(canvasEvent({ x: 100, y: 100 }), startEvent);
-
-        dragging.hover({ element: endEvent, gfx: endEventGfx });
-
-        dragging.move(canvasEvent({ x: 210, y: 210 }));
-
-        dragging.end();
-
-        // then
-        var waypoints = startEvent.outgoing[0].waypoints;
-
-        expect(waypoints[3].original).to.eql({ x: 200, y: 200 });
-      }));
-
-    });
-
-
-    describe('global connect', function() {
-
-      it('should snap target', inject(
-        function(connect, dragging, elementRegistry, eventBus) {
+      it('should snap event if close to target bounds',
+        inject(function(connect, dragging, elementRegistry) {
 
           // given
-          var startEvent = elementRegistry.get('StartEvent_1'),
-              endEvent = elementRegistry.get('EndEvent_1'),
-              endEventGfx = elementRegistry.getGraphics(endEvent);
+          var boundaryEvent = elementRegistry.get('BoundaryEvent'),
+              subProcess = elementRegistry.get('SubProcess'),
+              subProcessGfx = elementRegistry.getGraphics(subProcess);
 
           // when
-          connect.start(null, startEvent, { x: 110, y: 110 });
+          connect.start(canvasEvent({ x: 600, y: 300 }), boundaryEvent);
 
-          dragging.hover({ element: endEvent, gfx: endEventGfx });
+          dragging.hover({ element: subProcess, gfx: subProcessGfx });
 
-          dragging.move(canvasEvent({ x: 210, y: 210 }));
+          dragging.move(canvasEvent({ x: 400, y: 305 }));
 
           dragging.end();
 
           // then
-          var waypoints = startEvent.outgoing[0].waypoints;
+          var waypoints = boundaryEvent.outgoing[0].waypoints;
 
-          expect(waypoints[0].original).to.eql({ x: 100, y: 100 });
-          expect(waypoints[3].original).to.eql({ x: 200, y: 200 });
-        }
-      ));
-
+          expect(waypoints[3].y).to.eql(280);
+        })
+      );
     });
-
   });
 
 
