@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.1">
   <bpmn:collaboration id="Collaboration_1">
     <bpmn:participant id="Participant_1" processRef="Process_1" />
     <bpmn:participant id="Participant_2" processRef="Process_2" />
@@ -10,6 +10,8 @@
     <bpmn:task id="Task_1" />
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject_16xfc7e" />
     <bpmn:dataObject id="DataObject_16xfc7e" />
+    <bpmn:subProcess id="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess" />
   </bpmn:process>
   <bpmn:process id="Process_2" isExecutable="false">
     <bpmn:task id="Task_2" />
@@ -23,7 +25,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
       <bpmndi:BPMNShape id="Participant_03743bx_di" bpmnElement="Participant_1" isHorizontal="true">
-        <dc:Bounds x="32" y="61.5" width="600" height="383" />
+        <dc:Bounds x="32" y="61.5" width="800" height="383" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="82" y="82" width="36" height="36" />
@@ -48,6 +50,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_1jsmhky_di" bpmnElement="IntermediateThrowEvent_1">
         <dc:Bounds x="82" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_di" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds x="411" y="100" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_di" bpmnElement="BoundaryEvent">
+        <dc:Bounds x="582" y="282" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
