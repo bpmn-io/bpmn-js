@@ -5,6 +5,14 @@ import {
   inject
 } from 'test/TestHelper';
 
+import {
+  resizeBounds
+} from 'diagram-js/lib/features/resize/ResizeUtil';
+
+import {
+  pick
+} from 'min-dash';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -370,4 +378,251 @@ describe('behavior - LabelBehavior', function() {
 
   });
 
+
+  describe('resize label target', function() {
+
+    describe('should move label (outside)', function() {
+
+      it('to the top', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_2'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'se', {
+            x: 0,
+            y: -50
+          })
+        );
+
+        // then
+        expect(label.x).to.equal(labelBounds.x);
+        expect(label.y).to.be.below(labelBounds.y);
+
+      }));
+
+
+      it('to the right', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_1'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'se', {
+            x: 50,
+            y: 0
+          })
+        );
+
+        // then
+        expect(label.x).to.be.above(labelBounds.x);
+        expect(label.y).to.equal(labelBounds.y);
+
+      }));
+
+
+      it('to the bottom', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_2'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'se', {
+            x: 0,
+            y: 50
+          })
+        );
+
+        // then
+        expect(label.x).to.equal(labelBounds.x);
+        expect(label.y).to.be.above(labelBounds.y);
+
+      }));
+
+
+      it('to the left', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_3'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'sw', {
+            x: -50,
+            y: 0
+          })
+        );
+
+        // then
+        expect(label.x).to.be.below(labelBounds.x);
+        expect(label.y).to.equal(labelBounds.y);
+
+      }));
+
+
+      it('NOT if reference point not affected', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_2'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'ne', {
+            x: 0,
+            y: -50
+          })
+        );
+
+        // then
+        expect(getBounds(label)).to.eql(labelBounds);
+
+      }));
+
+    });
+
+
+    describe('should move label (inside)', function() {
+
+      it('to the top', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_4'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'nw', {
+            x: 0,
+            y: -50
+          })
+        );
+
+        // then
+        expect(label.x).to.equal(labelBounds.x);
+        expect(label.y).to.be.below(labelBounds.y);
+
+      }));
+
+
+      it('to the right', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_4'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'ne', {
+            x: 50,
+            y: 0
+          })
+        );
+
+        // then
+        expect(label.x).to.be.above(labelBounds.x);
+        expect(label.y).to.equal(labelBounds.y);
+
+      }));
+
+
+      it('to the bottom', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_5'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'sw', {
+            x: 0,
+            y: 50
+          })
+        );
+
+        // then
+        expect(label.x).to.equal(labelBounds.x);
+        expect(label.y).to.be.above(labelBounds.y);
+
+      }));
+
+
+
+      it('to the left', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_4'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'sw', {
+            x: -50,
+            y: 0
+          })
+        );
+
+        // then
+        expect(label.x).to.be.below(labelBounds.x);
+        expect(label.y).to.equal(labelBounds.y);
+
+      }));
+
+
+      it('NOT if reference point not affected', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_4'),
+            label = groupShape.label,
+            labelBounds = getBounds(label);
+
+        // when
+        modeling.resizeShape(
+          groupShape,
+          resizeBounds(groupShape, 'se', {
+            x: 0,
+            y: 50
+          })
+        );
+
+        // then
+        expect(getBounds(label)).to.eql(labelBounds);
+
+      }));
+
+    });
+
+  });
+
 });
+
+// helper //////////
+
+function getBounds(element) {
+  return pick(element, [ 'x', 'y', 'width', 'height' ]);
+}
