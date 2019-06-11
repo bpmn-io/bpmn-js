@@ -11,8 +11,7 @@ import coreModule from 'lib/core';
 
 describe('behavior - LabelBehavior', function() {
 
-  var diagramXML =
-    require('../../../../fixtures/bpmn/features/modeling/behavior/label-behavior.bpmn');
+  var diagramXML = require('./LabelBehavior.bpmn');
 
   var testModules = [ modelingModule, coreModule ];
 
