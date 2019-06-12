@@ -12,6 +12,7 @@
     <bpmn:dataObject id="DataObject_16xfc7e" />
     <bpmn:subProcess id="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEventRight" attachedToRef="SubProcess" />
   </bpmn:process>
   <bpmn:process id="Process_2" isExecutable="false">
     <bpmn:task id="Task_2" />
@@ -56,6 +57,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_di" bpmnElement="BoundaryEvent">
         <dc:Bounds x="582" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEventRight_di" bpmnElement="BoundaryEventRight">
+        <dc:Bounds x="743" y="200" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
