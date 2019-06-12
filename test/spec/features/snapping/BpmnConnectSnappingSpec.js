@@ -38,6 +38,110 @@ describe('features/snapping - BpmnConnectSnapping', function() {
 
     describe('connect', function() {
 
+      describe('Boundary Event loop', function() {
+
+        it('should snap to the left',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEvent'),
+                subProcess = elementRegistry.get('SubProcess'),
+                subProcessGfx = elementRegistry.getGraphics(subProcess);
+
+            // when
+            connect.start(canvasEvent({ x: 600, y: 300 }), boundaryEvent);
+
+            dragging.hover({ element: subProcess, gfx: subProcessGfx });
+
+            dragging.move(canvasEvent({ x: 582, y: 300 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = boundaryEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].x).to.eql(560);
+          })
+        );
+
+
+        it('should snap to the right',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEvent'),
+                subProcess = elementRegistry.get('SubProcess'),
+                subProcessGfx = elementRegistry.getGraphics(subProcess);
+
+            // when
+            connect.start(canvasEvent({ x: 600, y: 300 }), boundaryEvent);
+
+            dragging.hover({ element: subProcess, gfx: subProcessGfx });
+
+            dragging.move(canvasEvent({ x: 618, y: 300 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = boundaryEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].x).to.eql(640);
+          })
+        );
+
+
+        it('should snap above',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEventRight'),
+                subProcess = elementRegistry.get('SubProcess'),
+                subProcessGfx = elementRegistry.getGraphics(subProcess);
+
+            // when
+            connect.start(canvasEvent({ x: 761, y: 218 }), boundaryEvent);
+
+            dragging.hover({ element: subProcess, gfx: subProcessGfx });
+
+            dragging.move(canvasEvent({ x: 761, y: 200 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = boundaryEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].y).to.eql(178);
+          })
+        );
+
+
+        it('should snap below',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEventRight'),
+                subProcess = elementRegistry.get('SubProcess'),
+                subProcessGfx = elementRegistry.getGraphics(subProcess);
+
+            // when
+            connect.start(canvasEvent({ x: 761, y: 218 }), boundaryEvent);
+
+            dragging.hover({ element: subProcess, gfx: subProcessGfx });
+
+            dragging.move(canvasEvent({ x: 761, y: 230 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = boundaryEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].y).to.eql(258);
+          })
+        );
+
+      });
+
+
       it('should snap event if close to target bounds',
         inject(function(connect, dragging, elementRegistry) {
 
