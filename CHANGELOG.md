@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.5.4
+
+* `FIX`: prevent HTML injection in search ([diagram-js#362](https://github.com/bpmn-io/diagram-js/pull/362))
+* `CHORE`: bump to `diagram-js@2.6.2`
+
 ## 2.5.3
 
 * `FIX`: do not evaluate pasted text as HTML ([#1073](https://github.com/bpmn-io/bpmn-js/issues/1073))
