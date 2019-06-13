@@ -78,7 +78,7 @@
     "webpack": "^4.30.0"
   },
   "dependencies": {
-    "bpmn-font": "^0.9.1",
+    "bpmn-font": "^0.9.3",
     "bpmn-moddle": "^5.1.6",
     "css.escape": "^1.5.1",
     "diagram-js": "^4.0.0-beta.2",
