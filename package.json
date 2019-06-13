@@ -82,7 +82,7 @@
     "bpmn-moddle": "^5.1.6",
     "css.escape": "^1.5.1",
     "diagram-js": "^3.3.0",
-    "diagram-js-direct-editing": "^1.4.2",
+    "diagram-js-direct-editing": "^1.4.3",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
     "min-dash": "^3.4.0",
