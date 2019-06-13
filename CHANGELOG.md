@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.4.2
+
+* `FIX`: do not evaluate pasted text as HTML ([#1073](https://github.com/bpmn-io/bpmn-js/issues/1073))
+
+## 2.5.3
+
+* `FIX`: do not evaluate pasted text as HTML ([#1073](https://github.com/bpmn-io/bpmn-js/issues/1073))
+
 ## 3.4.1
 
 _Republish of `v3.4.0` without `.git` folder._
