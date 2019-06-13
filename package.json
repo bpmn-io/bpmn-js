@@ -80,7 +80,7 @@
     "bpmn-font": "^0.8.0",
     "bpmn-moddle": "^5.1.5",
     "css.escape": "^1.5.1",
-    "diagram-js": "^2.6.1",
+    "diagram-js": "^2.6.2",
     "diagram-js-direct-editing": "^1.4.3",
     "ids": "^0.2.0",
     "inherits": "^2.0.1",
