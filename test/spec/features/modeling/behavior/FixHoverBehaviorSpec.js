@@ -11,82 +11,197 @@ import moveModule from 'diagram-js/lib/features/move';
 import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
 
 
+var testModules = [
+  coreModule,
+  createModule,
+  moveModule,
+  modelingModule
+];
+
 describe('features/modeling/behavior - fix hover', function() {
 
-  var testModules = [
-    coreModule,
-    createModule,
-    moveModule,
-    modelingModule
-  ];
+  describe('drop on lane', function() {
 
-  var diagramXML = require('./FixHoverBehavior.participant.bpmn');
+    var diagramXML = require('./FixHoverBehavior.participant.bpmn');
 
-  beforeEach(bootstrapModeler(diagramXML, {
-    modules: testModules
-  }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-  beforeEach(inject(function(dragging) {
-    dragging.setOptions({ manual: true });
-  }));
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
 
-  var lane,
-      laneGfx,
-      participant;
+    var lane,
+        laneGfx,
+        participant;
 
-  beforeEach(inject(function(elementRegistry) {
-    participant = elementRegistry.get('Participant_1');
+    beforeEach(inject(function(elementRegistry) {
+      participant = elementRegistry.get('Participant_1');
 
-    lane = elementRegistry.get('Lane_1');
-    laneGfx = elementRegistry.getGraphics(lane);
-  }));
+      lane = elementRegistry.get('Lane_1');
+      laneGfx = elementRegistry.getGraphics(lane);
+    }));
 
-  describe('create', function() {
 
-    it('should ensure hovering participant', inject(
-      function(create, dragging, elementFactory) {
+    describe('create', function() {
 
-        // given
-        var task = elementFactory.createShape({ type: 'bpmn:Task' });
+      it('should set participant as hover element', inject(
+        function(create, dragging, elementFactory) {
 
-        create.start(canvasEvent({ x: 0, y: 0 }), task, true);
+          // given
+          var task = elementFactory.createShape({ type: 'bpmn:Task' });
 
-        // when
-        dragging.hover({ element: lane, gfx: laneGfx });
+          create.start(canvasEvent({ x: 0, y: 0 }), task, true);
 
-        dragging.move(canvasEvent({ x: 200, y: 200 }));
+          // when
+          dragging.hover({ element: lane, gfx: laneGfx });
 
-        dragging.end();
+          dragging.move(canvasEvent({ x: 200, y: 200 }));
 
-        // then
-        expect(task.parent).to.equal(participant);
-      }
-    ));
+          dragging.end();
+
+          // then
+          expect(task.parent).to.equal(participant);
+        }
+      ));
+
+    });
+
+
+    describe('move', function() {
+
+      it('should set participant as hover element', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          var task = elementRegistry.get('Task_1');
+
+          move.start(canvasEvent({ x: 440, y: 220 }), task, true);
+
+          // when
+          dragging.hover({ element: lane, gfx: laneGfx });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(task.parent).to.equal(participant);
+        }
+      ));
+
+    });
 
   });
 
 
-  describe('move', function() {
+  describe('label', function() {
 
-    it('should ensure hovering participant', inject(
-      function(dragging, elementRegistry, move) {
+    var diagramXML = require('./FixHoverBehavior.label.bpmn');
 
-        // given
-        var task = elementRegistry.get('Task_1');
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-        move.start(canvasEvent({ x: 440, y: 220 }), task, true);
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
 
-        // when
-        dragging.hover({ element: lane, gfx: laneGfx });
 
-        dragging.move(canvasEvent({ x: 240, y: 220 }));
+    describe('move', function() {
 
-        dragging.end();
+      it('should set root as hover element', inject(
+        function(dragging, elementRegistry, move, canvas) {
 
-        // then
-        expect(task.parent).to.equal(participant);
-      }
-    ));
+          // given
+          var startEvent = elementRegistry.get('StartEvent');
+
+          var label = startEvent.label;
+
+          move.start(canvasEvent({ x: 175, y: 150 }), label, true);
+
+          // when
+          dragging.hover({ element: startEvent, gfx: elementRegistry.getGraphics(startEvent) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(label.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
+  });
+
+
+  describe('group', function() {
+
+    var diagramXML = require('./FixHoverBehavior.group.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    describe('create', function() {
+
+      it('should set root as hover element', inject(
+        function(dragging, elementFactory, elementRegistry, create, canvas) {
+
+          // given
+          var task = elementRegistry.get('Task');
+
+          var group = elementFactory.createShape({ type: 'bpmn:Group' });
+
+          create.start(canvasEvent({ x: 0, y: 0 }), group, true);
+
+          // when
+          dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(group.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
+
+    describe('move', function() {
+
+      it('should set root as hover element', inject(
+        function(dragging, elementRegistry, move, canvas) {
+
+          // given
+          var task = elementRegistry.get('Task');
+          var group = elementRegistry.get('Group');
+
+          move.start(canvasEvent({ x: 175, y: 150 }), group, true);
+
+          // when
+          dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(group.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
 
   });
 
