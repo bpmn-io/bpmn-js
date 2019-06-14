@@ -1015,38 +1015,38 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
       it('-> MessageFlow', function() {
-        expectCanDrop(label, 'MessageFlow_labeled', null);
+        expectCanDrop(label, 'MessageFlow_labeled', true);
       });
 
 
       it('-> CollapsedParticipant', function() {
-        expectCanDrop(label, 'CollapsedParticipant', null);
+        expectCanDrop(label, 'CollapsedParticipant', true);
       });
 
 
       it('-> Collaboration', function() {
         // then
-        expectCanDrop(label, 'Collaboration', null);
+        expectCanDrop(label, 'Collaboration', true);
       });
 
 
       it('-> Task_in_SubProcess', function() {
-        expectCanDrop(label, 'Task_in_SubProcess', null);
+        expectCanDrop(label, 'Task_in_SubProcess', true);
       });
 
 
       it('-> SequenceFlow', function() {
-        expectCanDrop(label, 'SequenceFlow', null);
+        expectCanDrop(label, 'SequenceFlow', true);
       });
 
 
       it('-> DataOutputAssociation', function() {
-        expectCanDrop(label, 'DataOutputAssociation', null);
+        expectCanDrop(label, 'DataOutputAssociation', true);
       });
 
 
       it('-> Group', function() {
-        expectCanDrop(label, 'Group', null);
+        expectCanDrop(label, 'Group', true);
       });
 
     });
