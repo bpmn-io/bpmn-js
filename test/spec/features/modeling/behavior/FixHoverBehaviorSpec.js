@@ -7,9 +7,13 @@ import coreModule from 'lib/core';
 import createModule from 'diagram-js/lib/features/create';
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
+import globalConnectModule from 'diagram-js/lib/features/global-connect';
+import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 
 import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
 
+/* global sinon */
+var spy = sinon.spy;
 
 var testModules = [
   coreModule,
@@ -17,6 +21,7 @@ var testModules = [
   moveModule,
   modelingModule
 ];
+
 
 describe('features/modeling/behavior - fix hover', function() {
 
@@ -198,6 +203,178 @@ describe('features/modeling/behavior - fix hover', function() {
 
           // then
           expect(group.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
+  });
+
+
+  describe('connect lane', function() {
+
+    var diagramXML = require('./FixHoverBehavior.lane-connect.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat([
+        globalConnectModule,
+        bendpointsModule
+      ])
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should set global connect source to participant', inject(
+      function(globalConnect, elementRegistry, eventBus, dragging) {
+
+        // given
+        var participant_lanes = elementRegistry.get('Participant_Lanes');
+        var lane_1 = elementRegistry.get('Lane_1');
+
+        var connectSpy = spy(function(event) {
+          expect(event.context.startTarget).to.eql(participant_lanes);
+        });
+
+        eventBus.once('global-connect.end', connectSpy);
+
+        // when
+        globalConnect.start(canvasEvent({ x: 0, y: 0 }));
+
+        dragging.move(canvasEvent({ x: 150, y: 130 }));
+        dragging.hover(canvasEvent({ x: 150, y: 130 }, { element: lane_1 }));
+        dragging.end(canvasEvent({ x: 0, y: 0 }));
+
+        // then
+        expect(connectSpy).to.have.been.called;
+      }
+    ));
+
+
+    describe('reconnect', function() {
+
+      it('should set start to participant', inject(
+        function(bendpointMove, elementRegistry, eventBus, dragging) {
+
+          // given
+          var participant_lanes = elementRegistry.get('Participant_Lanes');
+          var lane_1 = elementRegistry.get('Lane_1');
+
+          var messageFlow = elementRegistry.get('MessageFlow_2');
+
+          var connectSpy = spy(function(event) {
+            expect(event.context.target).to.eql(participant_lanes);
+          });
+
+          eventBus.once('bendpoint.move.end', connectSpy);
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 240, y: 200 }), messageFlow, 0);
+          dragging.move(canvasEvent({ x: 240, y: 280 }));
+
+          dragging.hover({ element: lane_1, gfx: elementRegistry.getGraphics(lane_1) });
+          dragging.end();
+
+          // then
+          expect(connectSpy).to.have.been.called;
+        }
+      ));
+
+
+      it('should set end to participant', inject(
+        function(bendpointMove, elementRegistry, eventBus, dragging) {
+
+          // given
+          var participant_lanes = elementRegistry.get('Participant_Lanes');
+          var lane_1 = elementRegistry.get('Lane_1');
+
+          var messageFlow = elementRegistry.get('MessageFlow_1');
+
+          var connectSpy = spy(function(event) {
+            expect(event.context.target).to.eql(participant_lanes);
+          });
+
+          eventBus.once('bendpoint.move.end', connectSpy);
+
+          // when
+          bendpointMove.start(canvasEvent({ x: 240, y: 200 }), messageFlow, 1);
+          dragging.move(canvasEvent({ x: 240, y: 280 }));
+
+          dragging.hover({ element: lane_1, gfx: elementRegistry.getGraphics(lane_1) });
+          dragging.end();
+
+          // then
+          expect(connectSpy).to.have.been.called;
+        }
+      ));
+
+    });
+
+
+    describe('connect', function() {
+
+      it('should set start to participant', inject(
+        function(connect, dragging, elementRegistry, eventBus) {
+
+          // given
+          var participant_lanes = elementRegistry.get('Participant_Lanes');
+          var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
+          var lane_1 = elementRegistry.get('Lane_1');
+
+          var connectSpy = spy(function(event) {
+
+            var context = event.context,
+                source = context.source;
+
+            expect(source).to.eql(participant_lanes);
+          });
+
+          eventBus.once('connect.end', connectSpy);
+
+          // when
+          connect.start(canvasEvent({ x: 240, y: 300 }), lane_1);
+
+          dragging.move(canvasEvent({ x: 240, y: 0 }));
+
+          dragging.hover(canvasEvent({ x: 240, y: 0 }, { element: participant_no_lanes }));
+          dragging.end();
+
+          // then
+          expect(connectSpy).to.have.been.called;
+        }
+      ));
+
+
+      it('should set end to participant', inject(
+        function(connect, dragging, elementRegistry, eventBus) {
+
+          // given
+          var participant_lanes = elementRegistry.get('Participant_Lanes');
+          var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
+          var lane_1 = elementRegistry.get('Lane_1');
+
+          var connectSpy = spy(function(event) {
+
+            var context = event.context,
+                target = context.target;
+
+            expect(target).to.eql(participant_lanes);
+          });
+
+          eventBus.once('connect.end', connectSpy);
+
+          // when
+          connect.start(canvasEvent({ x: 240, y: 0 }), participant_no_lanes);
+
+          dragging.move(canvasEvent({ x: 240, y: 300 }));
+
+          dragging.hover(canvasEvent({ x: 240, y: 300 }, { element: lane_1 }));
+          dragging.end();
+
+          // then
+          expect(connectSpy).to.have.been.called;
         }
       ));
 
