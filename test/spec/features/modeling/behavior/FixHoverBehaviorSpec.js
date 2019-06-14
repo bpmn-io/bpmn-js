@@ -11,7 +11,7 @@ import moveModule from 'diagram-js/lib/features/move';
 import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
 
 
-describe('features/modeling/behavior - create', function() {
+describe('features/modeling/behavior - fix hover', function() {
 
   var testModules = [
     coreModule,
@@ -20,7 +20,7 @@ describe('features/modeling/behavior - create', function() {
     modelingModule
   ];
 
-  var diagramXML = require('./CreateBehavior.participant.bpmn');
+  var diagramXML = require('./FixHoverBehavior.participant.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: testModules
