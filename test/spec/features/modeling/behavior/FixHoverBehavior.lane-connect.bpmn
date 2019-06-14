@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="4.0.0-beta.1">
+  <collaboration id="Collaboration_07d1e5q">
+    <participant id="Participant_No_Lanes" processRef="Process_1" />
+    <participant id="Participant_Lanes" processRef="Process_2" />
+    <messageFlow id="MessageFlow_1" sourceRef="Participant_No_Lanes" targetRef="Participant_Lanes" />
+    <messageFlow id="MessageFlow_2" sourceRef="Participant_Lanes" targetRef="Participant_No_Lanes" />
+  </collaboration>
+  <process id="Process_1" isExecutable="false">
+    <task id="Task" />
+  </process>
+  <process id="Process_2">
+    <laneSet id="LaneSet_1hz9u1w">
+      <lane id="Lane_1" />
+      <lane id="Lane_2" />
+    </laneSet>
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Collaboration_07d1e5q">
+      <bpmndi:BPMNShape id="Participant_No_Lanes_di" bpmnElement="Participant_No_Lanes" isHorizontal="true">
+        <omgdc:Bounds x="180" y="90" width="460" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <omgdc:Bounds x="330" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Lanes_di" bpmnElement="Participant_Lanes" isHorizontal="true">
+        <omgdc:Bounds x="180" y="280" width="460" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true">
+        <omgdc:Bounds x="210" y="280" width="430" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true">
+        <omgdc:Bounds x="210" y="400" width="430" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1_di" bpmnElement="MessageFlow_1">
+        <di:waypoint x="510" y="230" />
+        <di:waypoint x="510" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_2_di" bpmnElement="MessageFlow_2">
+        <di:waypoint x="540" y="280" />
+        <di:waypoint x="540" y="230" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
