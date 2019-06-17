@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1u6quyt" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.2">
+  <bpmn:collaboration id="Collaboration_1i29mxs">
+    <bpmn:participant id="Participant_1" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" processRef="Process_2" />
+    <bpmn:messageFlow id="MessageFlow_1" sourceRef="Task_1" targetRef="Task_2" />
+    <bpmn:messageFlow id="MessageFlow_2" sourceRef="Task_4" targetRef="Task_3" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true" camunda:modelerTemplate="test">
+    <bpmn:extensionElements>
+      <camunda:properties>
+        <camunda:property name="Test Property" value="" />
+      </camunda:properties>
+    </bpmn:extensionElements>
+    <bpmn:task id="Task_1" />
+    <bpmn:task id="Task_3" />
+  </bpmn:process>
+  <bpmn:process id="Process_2" isExecutable="false">
+    <bpmn:task id="Task_2" />
+    <bpmn:task id="Task_4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1i29mxs">
+      <bpmndi:BPMNShape id="Participant_0ijucrg_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="100" y="100" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1xqykjr_di" bpmnElement="Participant_2" isHorizontal="true">
+        <dc:Bounds x="100" y="400" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0hpqryw_di" bpmnElement="Task_1">
+        <dc:Bounds x="200" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0n6qirq_di" bpmnElement="Task_2">
+        <dc:Bounds x="350" y="500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1rs289f_di" bpmnElement="MessageFlow_1">
+        <di:waypoint x="275" y="280" />
+        <di:waypoint x="275" y="380" />
+        <di:waypoint x="400" y="380" />
+        <di:waypoint x="400" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_09n61pi_di" bpmnElement="Task_3">
+        <dc:Bounds x="400" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0zuw5ek_di" bpmnElement="Task_4">
+        <dc:Bounds x="550" y="500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_0zxikve_di" bpmnElement="MessageFlow_2">
+        <di:waypoint x="600" y="500" />
+        <di:waypoint x="600" y="390" />
+        <di:waypoint x="480" y="390" />
+        <di:waypoint x="480" y="280" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
