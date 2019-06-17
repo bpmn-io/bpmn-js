@@ -76,7 +76,7 @@ describe('features/grid-snapping - layout connection', function() {
     }));
 
 
-    it('should NOT sap on reconnect start', inject(function(modeling) {
+    it('should NOT snap on reconnect start', inject(function(modeling) {
 
       // when
       modeling.moveElements([ task1 ], { x: 50, y: 50 });
@@ -87,7 +87,7 @@ describe('features/grid-snapping - layout connection', function() {
     }));
 
 
-    it('should NOT sap on reconnect end', inject(function(modeling) {
+    it('should NOT snap on reconnect end', inject(function(modeling) {
 
       // when
       modeling.moveElements([ task2 ], { x: -50, y: -50 });
@@ -95,6 +95,36 @@ describe('features/grid-snapping - layout connection', function() {
       // then
       expect(connection.waypoints[1]).to.eql({ x: 225, y: 140 });
       expect(connection.waypoints[2]).to.eql({ x: 225, y: 190 });
+    }));
+
+
+    it('should snap', inject(function(modeling, elementRegistry) {
+
+      // given
+      var flow = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.layoutConnection(flow);
+
+      // then
+      expect(flow.waypoints[1]).to.eql({ x: 530, y: 242 });
+      expect(flow.waypoints[2]).to.eql({ x: 530, y: 310 });
+    }));
+
+
+    it('should UNDO snap', inject(function(modeling, commandStack, elementRegistry) {
+
+      // given
+      var flow = elementRegistry.get('SequenceFlow_1');
+
+      modeling.layoutConnection(flow);
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(flow.waypoints[1]).to.eql({ x: 526, y: 242 });
+      expect(flow.waypoints[2]).to.eql({ x: 526, y: 310 });
     }));
 
   });
