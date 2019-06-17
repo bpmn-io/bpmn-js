@@ -365,6 +365,79 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   });
 
+
+  describe('docking points', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.docking-points.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var participant,
+        participantGfx;
+
+    beforeEach(inject(function(dragging, elementRegistry, move) {
+      participant = elementRegistry.get('Participant_2');
+      participantGfx = elementRegistry.getGraphics(participant);
+
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should snap to docking point (incoming connections)', inject(
+      function(dragging, elementRegistry, move) {
+
+        // given
+        var task = elementRegistry.get('Task_2');
+
+        move.start(canvasEvent({ x: 400, y: 540 }), task);
+
+        dragging.hover({ element: participant, gfx: participantGfx });
+
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+        // when
+        dragging.move(canvasEvent({ x: 270, y: 540 }));
+
+        dragging.end();
+
+        // then
+        expect(mid(task)).to.eql({
+          x: 275,
+          y: 540
+        });
+      }
+    ));
+
+
+    it('should snap to docking point (outgoing connections)', inject(
+      function(dragging, elementRegistry, move) {
+
+        // given
+        var task = elementRegistry.get('Task_4');
+
+        move.start(canvasEvent({ x: 600, y: 540 }), task);
+
+        dragging.hover({ element: participant, gfx: participantGfx });
+
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+        // when
+        dragging.move(canvasEvent({ x: 475, y: 540 }));
+
+        dragging.end();
+
+        // then
+        expect(mid(task)).to.eql({
+          x: 480,
+          y: 540
+        });
+      }
+    ));
+
+  });
+
 });
 
 // helpers //////////
