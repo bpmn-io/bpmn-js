@@ -165,6 +165,57 @@ describe('features/snapping - BpmnConnectSnapping', function() {
           expect(waypoints[3].y).to.eql(280);
         })
       );
+
+
+      it('should snap gateway target mid',
+        inject(function(connect, dragging, elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1'),
+              gateway = elementRegistry.get('Gateway_1'),
+              gatewayGfx = elementRegistry.getGraphics(gateway);
+
+          // when
+          connect.start(canvasEvent({ x: 210, y: 60 }), startEvent);
+
+          dragging.hover({ element: gateway, gfx: gatewayGfx });
+
+          dragging.move(canvasEvent({ x: 300, y: 80 }));
+
+          dragging.end();
+
+          // then
+          var waypoints = startEvent.outgoing[0].waypoints;
+
+          expect(waypoints[1].y).to.eql(100);
+        })
+      );
+
+
+      it('should snap event target mid',
+        inject(function(connect, dragging, elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1'),
+              endEvent = elementRegistry.get('EndEvent_1'),
+              endEventGfx = elementRegistry.getGraphics(endEvent);
+
+          // when
+          connect.start(canvasEvent({ x: 210, y: 60 }), startEvent);
+
+          dragging.hover({ element: endEvent, gfx: endEventGfx });
+
+          dragging.move(canvasEvent({ x: 310, y: 275 }));
+
+          dragging.end();
+
+          // then
+          var waypoints = startEvent.outgoing[0].waypoints;
+
+          expect(waypoints[2].y).to.eql(200);
+        })
+      );
+
     });
   });
 
