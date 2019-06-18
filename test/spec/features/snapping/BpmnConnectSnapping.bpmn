@@ -10,6 +10,7 @@
     <bpmn:task id="Task_1" />
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject_16xfc7e" />
     <bpmn:dataObject id="DataObject_16xfc7e" />
+    <bpmn:exclusiveGateway id="Gateway_1" />
     <bpmn:subProcess id="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEventRight" attachedToRef="SubProcess" />
@@ -60,6 +61,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEventRight_di" bpmnElement="BoundaryEventRight">
         <dc:Bounds x="743" y="200" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1nir8te_di" bpmnElement="Gateway_1" isMarkerVisible="true">
+        <dc:Bounds x="299" y="75" width="50" height="50" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
