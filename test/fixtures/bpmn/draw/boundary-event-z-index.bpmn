@@ -29,7 +29,7 @@
 
         <bpmn2:boundaryEvent attachedToRef="Task_3" name="Event should be drawn above the Task" cancelActivity="false"
                              id="BoundaryEvent_3" parallelMultiple="false">
-            <bpmn2:signalEventDefinition id="5555"/>
+            <bpmn2:signalEventDefinition id="_5555"/>
         </bpmn2:boundaryEvent>
 
         <bpmn2:task completionQuantity="1" id="Task_3" isForCompensation="false" startQuantity="1">
