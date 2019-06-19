@@ -221,6 +221,41 @@ describe('features/modeling - move elements', function() {
     }));
   });
 
+
+  describe('center-to-center connection', function() {
+
+    var diagramXML = require('./MoveElements.centered-connection.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+    it('should properly adjust connection', inject(function(elementRegistry, modeling) {
+
+      // given
+      var targetElement = elementRegistry.get('Task_2');
+
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      // move from centric-left to centric-below
+      var delta = { x: -150, y: 150 };
+
+      var expectedWaypoints = [
+        { x: 200, y: 160 },
+        { x: 200, y: 230 }
+      ];
+
+      // when
+      modeling.moveElements([ targetElement ], delta);
+
+      // then
+      expect(sequenceFlow).to.have.waypoints(expectedWaypoints);
+    }));
+  });
+
 });
 
 
