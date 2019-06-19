@@ -142,6 +142,59 @@ describe('features/snapping - BpmnConnectSnapping', function() {
       });
 
 
+      describe('Task target', function() {
+
+        it('should snap to task mid',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var startEvent = elementRegistry.get('StartEvent_1'),
+                task = elementRegistry.get('Task_1'),
+                taskGfx = elementRegistry.getGraphics(task);
+
+            // when
+            connect.start(canvasEvent({ x: 210, y: 60 }), startEvent);
+
+            dragging.hover({ element: task, gfx: taskGfx });
+
+            dragging.move(canvasEvent({ x: 300, y: 300 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = startEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].y).to.eql(300);
+          })
+        );
+
+
+        it('should snap to grid point',
+          inject(function(connect, dragging, elementRegistry) {
+
+            // given
+            var startEvent = elementRegistry.get('StartEvent_1'),
+                task = elementRegistry.get('Task_1'),
+                taskGfx = elementRegistry.getGraphics(task);
+
+            // when
+            connect.start(canvasEvent({ x: 210, y: 60 }), startEvent);
+
+            dragging.hover({ element: task, gfx: taskGfx });
+
+            dragging.move(canvasEvent({ x: 300, y: 260 }));
+
+            dragging.end();
+
+            // then
+            var waypoints = startEvent.outgoing[0].waypoints;
+
+            expect(waypoints[3].y).to.eql(270);
+          })
+        );
+      });
+
+
       it('should snap event if close to target bounds',
         inject(function(connect, dragging, elementRegistry) {
 
