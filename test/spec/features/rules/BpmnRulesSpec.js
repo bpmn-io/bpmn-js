@@ -470,6 +470,10 @@ describe('features/modeling/rules - BpmnRules', function() {
       });
     }));
 
+
+    it('drop BoundaryEvent -> Task', function() {
+      expectCanDrop('BoundaryEvent_on_SubProcess', 'Task_in_OtherProcess', false);
+    });
   });
 
 
