@@ -382,4 +382,56 @@ describe('features/modeling/behavior - fix hover', function() {
 
   });
 
+
+  describe('participant with lane', function() {
+
+    var diagramXML = require('./FixHoverBehavior.lane-connect.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat([
+        globalConnectModule,
+        bendpointsModule
+      ])
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should move the participant when lane is dragged', inject(
+      function(canvas, eventBus, elementRegistry, move, dragging) {
+
+        // given
+        var lane = elementRegistry.get('Lane_1'),
+            participant = elementRegistry.get('Participant_Lanes');
+
+        var rootElement = canvas.getRootElement(),
+            rootElementGfx = canvas.getGraphics(rootElement);
+
+        var moveEndSpy = spy(function(event) {
+          expect(event.context.shape).to.equal(participant);
+        });
+
+        eventBus.on('shape.move.end', moveEndSpy);
+
+        // when
+        move.start(canvasEvent({ x: 100, y: 100 }), lane);
+
+        dragging.move(canvasEvent({ x: 140, y: 120 }));
+
+        dragging.hover({
+          element: rootElement,
+          gfx: rootElementGfx
+        });
+
+        dragging.end();
+
+        // then
+        expect(moveEndSpy).to.have.been.calledOnce;
+      }
+    ));
+
+  });
+
 });
