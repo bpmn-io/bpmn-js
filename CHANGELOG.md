@@ -6,6 +6,26 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add grid snapping ([#987](https://github.com/bpmn-io/bpmn-js/pull/987))
+* `FEAT`: allow modeling of groups ([#343](https://github.com/bpmn-io/bpmn-js/issues/343))
+* `FEAT`: improve modeling rules behind event-based gateways ([#1006](https://github.com/bpmn-io/bpmn-js/pull/1006))
+* `FEAT`: adjust default collapsed pool to standard height ([`5affe2570`](https://github.com/bpmn-io/bpmn-js/commit/5affe25705082937beace6b4a568f176a0527baf))
+* `FEAT`: add connection previews ([#743](https://github.com/bpmn-io/bpmn-js/issues/743))
+* `FEAT`: create expanded sub-process with start event included ([#1039](https://github.com/bpmn-io/bpmn-js/pull/1039))
+* `FEAT`: improve automatic label adjustment for boundary events ([#1064](https://github.com/bpmn-io/bpmn-js/pull/1064))
+* `FEAT`: improve creation of initial participant ([#1046](https://github.com/bpmn-io/bpmn-js/pull/1046))
+* `FEAT`: improve boundary to host loop layout ([#1070](https://github.com/bpmn-io/bpmn-js/pull/1070))
+* `FEAT`: make connection segment move the primary connection drag behavior
+* `FEAT`: allow label and group movement everywhere ([#1080](https://github.com/bpmn-io/bpmn-js/pull/1080))
+* `FEAT`: improve message flow to participant connection in the presence of lanes ([#950](https://github.com/bpmn-io/bpmn-js/issues/950))
+* `FEAT`: allow detaching of boundary and attaching of intermediate events ([#1045](https://github.com/bpmn-io/bpmn-js/issues/1045))
+* `FEAT`: simplify requested palette and context pad translations ([#1027](https://github.com/bpmn-io/bpmn-js/pull/1027))
+* `FEAT`: rework container drag interaction to prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
+* `FEAT`: simplify participant dragging in the presence of nested lanes ([`fdb299dc`](https://github.com/bpmn-io/bpmn-js/commit/fdb299dc888a7dcdb3f7674b6ed2a857864df457))
+* `CHORE`: validate BPMN 2.0 XML ids as QNames ([`92c03679a`](https://github.com/bpmn-io/bpmn-js/commit/92c03679a4fd3c92a1c5ce3c97f7d366e2a5753a))
+* `FIX`: correctly handle flow reconnection + type replacement ([#896](https://github.com/bpmn-io/bpmn-js/issues/896), [#1008](https://github.com/bpmn-io/bpmn-js/issues/1008))
+
+
 ## 3.4.3
 
 * `FIX`: prevent HTML injection in search ([diagram-js#362](https://github.com/bpmn-io/diagram-js/pull/362))
