@@ -1,5 +1,6 @@
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -32,7 +33,12 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
     modelingModule,
     moveModule,
     rulesModule,
-    snappingModule
+    snappingModule,
+    {
+      __init__: [ function(dragging) {
+        dragging.setOptions({ manual: true });
+      } ]
+    }
   ];
 
 
@@ -160,8 +166,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
         create.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
         dragging.hover({ element: task, gfx: taskGfx });
-
-        dragging.setOptions({ manual: false });
       }));
 
 
@@ -251,8 +255,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
         var process = elementRegistry.get('Process_1'),
             processGfx = elementRegistry.getGraphics(process);
 
-        dragging.setOptions({ manual: true });
-
         move.start(canvasEventTopLeft({ x: 100, y: 400 }, task), task, true);
 
         dragging.hover({ element: process, gfx: processGfx });
@@ -303,8 +305,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
       create.start(canvasEvent({ x: 0, y: 0 }), task);
 
       dragging.hover({ element: sequenceFlow, gfx: sequenceFlowGfx });
-
-      dragging.setOptions({ manual: false });
     }));
 
 
@@ -339,8 +339,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     beforeEach(inject(function(dragging, elementRegistry, move) {
       task = elementRegistry.get('Task_1');
-
-      dragging.setOptions({ manual: false });
 
       move.start(canvasEvent({ x: 200, y: 165 }), task);
     }));
@@ -380,8 +378,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
     beforeEach(inject(function(dragging, elementRegistry, move) {
       participant = elementRegistry.get('Participant_2');
       participantGfx = elementRegistry.getGraphics(participant);
-
-      dragging.setOptions({ manual: true });
     }));
 
 
@@ -435,6 +431,121 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
         });
       }
     ));
+
+  });
+
+
+  describe('TRBL snapping', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.trbl-snapping.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    function get(element) {
+      return getBpmnJS().invoke(function(elementRegistry) {
+        return elementRegistry.get(element);
+      });
+    }
+
+    function absoluteMove(element, toPosition) {
+
+      getBpmnJS().invoke(function(elementRegistry, move, dragging, canvas) {
+
+        var parent = element.parent;
+
+        move.start(canvasEvent({ x: 0, y: 0 }), element);
+
+        dragging.hover({
+          element: parent,
+          gfx: canvas.getGraphics(parent)
+        });
+
+        dragging.move(canvasEvent({ x: 100, y: 100 }), element);
+
+        dragging.move(canvasEvent({
+          x: toPosition.x - element.x,
+          y: toPosition.y - element.y
+        }));
+
+        dragging.end();
+      });
+
+    }
+
+
+    it('should snap text annotations', function() {
+
+      // given
+      var annotation = get('TEXT_1');
+      var otherAnnotation = get('TEXT_2');
+
+      // when
+      absoluteMove(annotation, {
+        x: otherAnnotation.x + 5,
+        y: otherAnnotation.y - 5
+      });
+
+      // then
+      expect(annotation).to.have.position(otherAnnotation);
+    });
+
+
+    it('should snap task to container', function() {
+
+      // given
+      var task = get('TASK');
+      var subProcess = get('SUB_PROCESS_1');
+
+      // when
+      absoluteMove(task, {
+        x: subProcess.x,
+        y: subProcess.y - 5
+      });
+
+      // then
+      expect(task).to.have.position(subProcess);
+    });
+
+
+    it('should snap container to container', function() {
+
+      // given
+      var participant = get('PARTICIPANT_1');
+      var otherParticipant = get('PARTICIPANT_2');
+
+      // when
+      absoluteMove(participant, {
+        x: otherParticipant.x + 5,
+        y: otherParticipant.y
+      });
+
+      // then
+      expect(participant).to.have.position(otherParticipant);
+    });
+
+
+    it('should snap container to container right', function() {
+
+      // given
+      var participant = get('PARTICIPANT_1');
+      var otherParticipant = get('PARTICIPANT_2');
+
+      // when
+      absoluteMove(participant, {
+        x: otherParticipant.x + otherParticipant.width - participant.width + 5,
+        y: 5
+      });
+
+      // then
+      expect(participant).to.have.position({
+        x: otherParticipant.x + otherParticipant.width - participant.width,
+        y: 5
+      });
+
+    });
 
   });
 
