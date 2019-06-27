@@ -6,6 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add top, right, bottom, left snapping with container elements ([#1108](https://github.com/bpmn-io/bpmn-js/pull/1108))
 * `FEAT`: add grid snapping ([#987](https://github.com/bpmn-io/bpmn-js/pull/987))
 * `FEAT`: allow modeling of groups ([#343](https://github.com/bpmn-io/bpmn-js/issues/343))
 * `FEAT`: improve modeling rules behind event-based gateways ([#1006](https://github.com/bpmn-io/bpmn-js/pull/1006))
