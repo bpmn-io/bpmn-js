@@ -769,6 +769,187 @@ describe('Viewer', function() {
   });
 
 
+  describe('#importDefinitions', function() {
+
+    describe('single diagram', function() {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn'),
+          viewer,
+          definitions;
+
+      beforeEach(function(done) {
+        createViewer(xml, null, function(error, _, tmpViewer) {
+          if (error) {
+            return done(error);
+          }
+
+          definitions = tmpViewer.getDefinitions();
+
+          tmpViewer.destroy();
+
+          done();
+        });
+      });
+
+      beforeEach(function() {
+        viewer = new Viewer({ container: container });
+      });
+
+      afterEach(function() {
+        viewer.destroy();
+      });
+
+
+      it('should emit <import.*> events', function(done) {
+
+        // given
+        var events = [];
+
+        viewer.on([
+          'import.parse.start',
+          'import.parse.complete',
+          'import.render.start',
+          'import.render.complete',
+          'import.done'
+        ], function(e) {
+          // log event type + event arguments
+          events.push([
+            e.type,
+            Object.keys(e).filter(function(key) {
+              return key !== 'type';
+            })
+          ]);
+        });
+
+        // when
+        viewer.importDefinitions(definitions, function(err) {
+
+          // then
+          expect(events).to.eql([
+            [ 'import.render.start', [ 'definitions' ] ],
+            [ 'import.render.complete', [ 'error', 'warnings' ] ]
+          ]);
+
+          done(err);
+        });
+      });
+
+
+      it('should work without callback', function(done) {
+
+        // given
+        viewer.on('import.render.complete', function(context) {
+          // then
+          done(context.error);
+        });
+
+        // when
+        viewer.importDefinitions(definitions);
+      });
+
+    });
+
+
+    describe('multiple BPMNDiagram elements', function() {
+
+      var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
+          viewer,
+          definitions;
+
+      beforeEach(function(done) {
+        createViewer(multipleXML, null, function(error, _, tmpViewer) {
+          if (error) {
+            return done(error);
+          }
+
+          definitions = tmpViewer.getDefinitions();
+
+          tmpViewer.destroy();
+
+          done();
+        });
+      });
+
+      beforeEach(function() {
+        viewer = new Viewer({ container: container });
+      });
+
+      afterEach(function() {
+        viewer.destroy();
+      });
+
+
+      it('should import default without bpmnDiagram specified', function(done) {
+
+        // when
+        viewer.importDefinitions(definitions, function(err) {
+
+          // then
+          done(err);
+        });
+      });
+
+
+      it('should import bpmnDiagram specified by id', function(done) {
+
+        // when
+        viewer.importDefinitions(definitions, 'BpmnDiagram_2', function(err) {
+
+          // then
+          done(err);
+        });
+      });
+
+
+      it('should handle diagram not found', function(done) {
+
+        // when
+        viewer.importDefinitions(definitions, 'Diagram_IDontExist', function(err) {
+
+          // then
+          expect(err).to.exist;
+          expect(err.message).to.eql('BPMNDiagram <Diagram_IDontExist> not found');
+
+          done();
+        });
+      });
+
+
+      describe('without callback', function() {
+
+        it('should open default', function(done) {
+
+          // given
+          viewer.on('import.render.complete', function(event) {
+
+            // then
+            done(event.error);
+          });
+
+          // when
+          viewer.importDefinitions(definitions);
+        });
+
+
+        it('should open specified BPMNDiagram', function(done) {
+
+          // given
+          viewer.on('import.render.complete', function(event) {
+
+            // then
+            done(event.error);
+          });
+
+          // when
+          viewer.importDefinitions(definitions, 'BpmnDiagram_2');
+        });
+
+      });
+
+    });
+  });
+
+
   describe('#open', function() {
 
     var multipleXMLSimple = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
