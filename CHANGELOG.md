@@ -23,6 +23,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: simplify requested palette and context pad translations ([#1027](https://github.com/bpmn-io/bpmn-js/pull/1027))
 * `FEAT`: rework container drag interaction to prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
 * `FEAT`: simplify participant dragging in the presence of nested lanes ([`fdb299dc`](https://github.com/bpmn-io/bpmn-js/commit/fdb299dc888a7dcdb3f7674b6ed2a857864df457))
+* `FEAT`: correctly render all kinds of multiple events ([#1091](https://github.com/bpmn-io/bpmn-js/pull/1091))
 * `CHORE`: validate BPMN 2.0 XML ids as QNames ([`92c03679a`](https://github.com/bpmn-io/bpmn-js/commit/92c03679a4fd3c92a1c5ce3c97f7d366e2a5753a))
 * `FIX`: correctly handle flow reconnection + type replacement ([#896](https://github.com/bpmn-io/bpmn-js/issues/896), [#1008](https://github.com/bpmn-io/bpmn-js/issues/1008))
 
