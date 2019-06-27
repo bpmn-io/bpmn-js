@@ -215,7 +215,8 @@ describe('features/snapping - BpmnConnectSnapping', function() {
           // then
           var waypoints = boundaryEvent.outgoing[0].waypoints;
 
-          expect(waypoints[3].y).to.eql(280);
+          expect(waypoints[3].y >= subProcess.y).to.be.true;
+          expect(waypoints[3].y <= subProcess.y + subProcess.width).to.be.true;
         })
       );
 
