@@ -743,7 +743,7 @@ describe('Viewer', function() {
 
           // then
           viewer.on('import.done', function(event) {
-            done();
+            done(event.error);
           });
         });
 
@@ -754,11 +754,11 @@ describe('Viewer', function() {
           var viewer = new Viewer({ container: container });
 
           // when
-          viewer.importXML(multipleXML, 'Diagram_2');
+          viewer.importXML(multipleXML, 'BpmnDiagram_2');
 
           // then
           viewer.on('import.done', function(event) {
-            done();
+            done(event.error);
           });
         });
 
