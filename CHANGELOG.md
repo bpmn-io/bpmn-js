@@ -27,6 +27,9 @@ ___Note:__ Yet to be released changes appear here._
 * `CHORE`: validate BPMN 2.0 XML ids as QNames ([`92c03679a`](https://github.com/bpmn-io/bpmn-js/commit/92c03679a4fd3c92a1c5ce3c97f7d366e2a5753a))
 * `FIX`: correctly handle flow reconnection + type replacement ([#896](https://github.com/bpmn-io/bpmn-js/issues/896), [#1008](https://github.com/bpmn-io/bpmn-js/issues/1008))
 
+## 3.5.0
+
+* `FEAT`: restore `Viewer#importDefinitions` and make it public API ([#1112](https://github.com/bpmn-io/bpmn-js/pull/1112))
 
 ## 3.4.3
 
