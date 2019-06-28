@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.5.0
+
+* `FEAT`: restore `Viewer#importDefinitions` and make it public API ([#1112](https://github.com/bpmn-io/bpmn-js/pull/1112))
+
 ## 3.4.3
 
 * `FIX`: prevent HTML injection in search ([diagram-js#362](https://github.com/bpmn-io/diagram-js/pull/362))
