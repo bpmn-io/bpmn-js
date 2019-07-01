@@ -421,7 +421,6 @@ describe('features/copy-paste', function() {
 
         expect(group).to.exist;
         expect(categoryValue).to.exist;
-        expect(categoryValue.id).to.equal('CategoryValue');
       })
     );
 
