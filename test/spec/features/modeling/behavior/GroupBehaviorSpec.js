@@ -1,3 +1,4 @@
+/* global sinon */
 import {
   bootstrapModeler,
   inject
@@ -11,13 +12,19 @@ import {
   indexOf as collectionIndexOf
 } from 'diagram-js/lib/util/Collections';
 
+import bpmnCopyPasteModule from 'lib/features/copy-paste';
+import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
 
 describe('features/modeling/behavior - groups', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+  var testModules = [
+    coreModule,
+    copyPasteModule,
+    bpmnCopyPasteModule,
+    modelingModule ];
 
 
   var processDiagramXML = require('./GroupBehaviorSpec.bpmn');
@@ -144,6 +151,46 @@ describe('features/modeling/behavior - groups', function() {
 
       }));
 
+    });
+
+
+    describe('should set copied name for pasted group', function() {
+
+      it('execute', inject(function(canvas, elementRegistry, copyPaste, eventBus) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_1'),
+            categoryValue = getBusinessObject(groupShape).categoryValueRef,
+            root = canvas.getRootElement(),
+            listener = sinon.spy(function(event) {
+
+              var context = event.context,
+                  createdElement = context.shape,
+                  businessObject = createdElement.businessObject,
+                  categoryValueRef = businessObject.categoryValueRef;
+
+              expect(categoryValueRef).to.exist;
+              expect(categoryValueRef).to.not.eql(categoryValue);
+              expect(categoryValueRef.value).to.equal(categoryValue.value);
+
+            });
+
+        eventBus.on('commandStack.shape.create.postExecute', listener);
+
+        // when
+        copyPaste.copy(groupShape);
+        copyPaste.paste({
+          element: root,
+          point: {
+            x: 50,
+            y: 50
+          }
+        });
+
+        // then
+        expect(listener).to.have.been.called;
+
+      }));
     });
 
   });
