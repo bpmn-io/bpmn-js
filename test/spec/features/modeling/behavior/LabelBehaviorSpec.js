@@ -151,6 +151,31 @@ describe('behavior - LabelBehavior', function() {
     ));
 
 
+    it('should add to group', inject(
+      function(bpmnFactory, elementRegistry, modeling) {
+
+        // given
+        var parentShape = elementRegistry.get('Process_1'),
+            categoryValue = bpmnFactory.create('bpmn:CategoryValue', {
+              value: 'foo'
+            }),
+            businessObject = bpmnFactory.create('bpmn:Group', {
+              categoryValueRef: categoryValue
+            }),
+            newShapeAttrs = {
+              type: 'bpmn:Group',
+              businessObject: businessObject
+            };
+
+        // when
+        var newShape = modeling.createShape(newShapeAttrs, { x: 50, y: 50 }, parentShape);
+
+        // then
+        expect(newShape.label).to.exist;
+      }
+    ));
+
+
     it('should not add to task', inject(
       function(elementFactory, elementRegistry, modeling) {
 
