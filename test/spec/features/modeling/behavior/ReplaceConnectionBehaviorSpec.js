@@ -11,6 +11,10 @@ import {
   find
 } from 'min-dash';
 
+import {
+  getMid
+} from 'diagram-js/lib/layout/LayoutUtil';
+
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import coreModule from 'lib/core';
@@ -550,6 +554,71 @@ describe('features/modeling - replace connection', function() {
       );
 
     });
+
+  });
+
+
+  describe('reconnecting to create loops', function() {
+
+    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should set correct parents when reconnecting message flow start to task',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var task = elementRegistry.get('Task_4'),
+            connection = elementRegistry.get('MessageFlow_5');
+
+        // when
+        modeling.reconnectStart(connection, task, getMid(task));
+
+        // then
+        expect(connection.parent).to.not.exist;
+        expect(task.outgoing[0]).to.exist;
+        expect(task.outgoing[0]).to.have.property('parent', task.parent);
+      })
+    );
+
+
+    it('should set correct parents when reconnecting message flow end to task',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var task = elementRegistry.get('Task_3'),
+            connection = elementRegistry.get('MessageFlow_1');
+
+        // when
+        modeling.reconnectEnd(connection, task, getMid(task));
+
+        // then
+        expect(connection.parent).to.not.exist;
+        expect(task.outgoing[0]).to.exist;
+        expect(task.outgoing[0]).to.have.property('parent', task.parent);
+      })
+    );
+
+
+    it('should set correct parents when reconnecting message flow from participant to task',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var task = elementRegistry.get('Task_3'),
+            connection = elementRegistry.get('MessageFlow_6');
+
+        // when
+        modeling.reconnectStart(connection, task, getMid(task));
+
+        // then
+        expect(connection.parent).to.not.exist;
+        expect(task.outgoing[1]).to.exist;
+        expect(task.outgoing[1]).to.have.property('parent', task.parent);
+      })
+    );
 
   });
 
