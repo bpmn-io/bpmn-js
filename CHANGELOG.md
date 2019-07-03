@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.0
+
 * `FEAT`: add top, right, bottom, left snapping with container elements ([#1108](https://github.com/bpmn-io/bpmn-js/pull/1108))
 * `FEAT`: add grid snapping ([#987](https://github.com/bpmn-io/bpmn-js/pull/987))
 * `FEAT`: allow modeling of groups ([#343](https://github.com/bpmn-io/bpmn-js/issues/343))
@@ -25,6 +27,10 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: correctly render all kinds of multiple events ([#1091](https://github.com/bpmn-io/bpmn-js/pull/1091))
 * `CHORE`: validate BPMN 2.0 XML ids as QNames ([`92c03679a`](https://github.com/bpmn-io/bpmn-js/commit/92c03679a4fd3c92a1c5ce3c97f7d366e2a5753a))
 * `FIX`: correctly handle flow reconnection + type replacement ([#896](https://github.com/bpmn-io/bpmn-js/issues/896), [#1008](https://github.com/bpmn-io/bpmn-js/issues/1008))
+
+### Breaking Changes
+
+* `CHORE`: bump to [`diagram-js@4.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#400)
 
 ## 3.5.0
 
