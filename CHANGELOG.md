@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: rework container drag interaction to prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
+
 ## 4.0.0
 
 * `FEAT`: add top, right, bottom, left snapping with container elements ([#1108](https://github.com/bpmn-io/bpmn-js/pull/1108))
