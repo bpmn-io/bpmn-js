@@ -6,8 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.1
+
 * `FIX`: prevent adding lane from crashing IE ([#746](https://github.com/bpmn-io/bpmn-js/issues/746))
 * `FIX`: correct inverse space tool visuals ([#1105](https://github.com/bpmn-io/bpmn-js/issues/1105))
+* `CHORE`: update `diagram-js-direct-editing` to prevent install warning
+* `CHORE`: update to `diagram-js@4.0.1`
 
 ## 4.0.0
 
