@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: prevent adding lane from crashing IE ([#746](https://github.com/bpmn-io/bpmn-js/issues/746))
+* `FIX`: correct inverse space tool visuals ([#1105](https://github.com/bpmn-io/bpmn-js/issues/1105))
+
 ## 4.0.0
 
 * `FEAT`: add top, right, bottom, left snapping with container elements ([#1108](https://github.com/bpmn-io/bpmn-js/pull/1108))
