@@ -81,7 +81,7 @@ file an issue or pull request.
 
 ## Related
 
-bpmn-js builds on top of a few additional powerful tools:
+bpmn-js builds on top of a few powerful tools:
 
 * [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
 * [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
