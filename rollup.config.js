@@ -98,9 +98,11 @@ function pgl(plugins=[]) {
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
     nodeResolve({
-      module: true,
-      main: true,
-      browser: true
+      mainFields: [
+        'browser',
+        'module',
+        'main'
+      ]
     }),
     commonjs(),
     json(),
