@@ -48,8 +48,8 @@
     "eslint-plugin-import": "^2.18.0",
     "execa": "^1.0.0",
     "istanbul-instrumenter-loader": "^3.0.1",
-    "karma": "^4.1.0",
-    "karma-chrome-launcher": "^2.1.1",
+    "karma": "^4.2.0",
+    "karma-chrome-launcher": "^3.0.0",
     "karma-coverage": "^1.1.2",
     "karma-env-preprocessor": "^0.1.1",
     "karma-firefox-launcher": "^1.0.1",
@@ -64,8 +64,8 @@
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",
     "phantomjs-prebuilt": "^2.1.12",
-    "puppeteer": "^1.18.0",
-    "raw-loader": "^0.5.1",
+    "puppeteer": "^1.18.1",
+    "raw-loader": "^1.0.0",
     "rollup": "^1.16.2",
     "rollup-plugin-commonjs": "^10.0.0",
     "rollup-plugin-json": "^4.0.0",
@@ -75,7 +75,7 @@
     "rollup-plugin-uglify": "^6.0.2",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.2.0",
-    "webpack": "^4.35.0"
+    "webpack": "^4.35.3"
   },
   "dependencies": {
     "bpmn-font": "^0.9.3",
