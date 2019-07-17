@@ -1,18 +1,22 @@
 import {
   bootstrapModeler,
-  inject
+  inject,
+  getBpmnJS
 } from 'test/TestHelper';
 
 import {
   pick
 } from 'min-dash';
 
-import modelingModule from 'lib/features/modeling';
+import contextPadModule from 'lib/features/context-pad';
 import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
 import {
   getChildLanes
 } from 'lib/features/modeling/util/LaneUtil';
+
+import { query as domQuery } from 'min-dom';
 
 var DEFAULT_LANE_HEIGHT = 120;
 
@@ -262,4 +266,62 @@ describe('features/modeling - add Lane', function() {
 
   });
 
+
+  describe('Internet Explorer', function() {
+
+    var diagramXML = require('./participant-single-lane.bpmn');
+
+    var testModules = [
+      contextPadModule,
+      coreModule,
+      modelingModule
+    ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    // must be executed manually, cannot be reproduced programmatically
+    // https://github.com/bpmn-io/bpmn-js/issues/746
+    it('should NOT blow up in Internet Explorer', inject(
+      function(contextPad, elementRegistry) {
+
+        // given
+        var lane = elementRegistry.get('Lane_1');
+
+        contextPad.open(lane);
+
+        // mock event
+        var event = padEvent('lane-insert-below');
+
+        // when
+        contextPad.trigger('click', event);
+
+        // then
+        // expect Internet Explorer NOT to blow up
+      }
+    ));
+
+  });
+
 });
+
+// helpers //////////
+
+function padEntry(element, name) {
+  return domQuery('[data-action="' + name + '"]', element);
+}
+
+function padEvent(entry) {
+
+  return getBpmnJS().invoke(function(overlays) {
+
+    var target = padEntry(overlays._overlayRoot, entry);
+
+    return {
+      target: target,
+      preventDefault: function() {},
+      clientX: 100,
+      clientY: 100
+    };
+  });
+}
