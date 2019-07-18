@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.2
+
+* `FIX`: correct element positioning update ([#1129](https://github.com/bpmn-io/bpmn-js/issues/1129))
+* `CHORE`: bump to `diagram-js@4.0.2`
+
 ## 4.0.1
 
 * `FIX`: prevent adding lane from crashing IE ([#746](https://github.com/bpmn-io/bpmn-js/issues/746))
