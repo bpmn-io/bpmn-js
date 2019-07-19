@@ -12,6 +12,11 @@ import {
   isFunction
 } from 'min-dash';
 
+import {
+  setBpmnJS,
+  clearBpmnJS
+} from 'test/TestHelper';
+
 
 describe('Viewer', function() {
 
@@ -28,7 +33,11 @@ describe('Viewer', function() {
       diagramId = null;
     }
 
+    clearBpmnJS();
+
     var viewer = new Viewer({ container: container });
+
+    setBpmnJS(viewer);
 
     viewer.importXML(xml, diagramId, function(err, warnings) {
       done(err, warnings, viewer);

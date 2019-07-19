@@ -4,6 +4,11 @@ import EditorActionsModule from 'lib/features/editor-actions';
 
 import TestContainer from 'mocha-test-container-support';
 
+import {
+  setBpmnJS,
+  clearBpmnJS
+} from 'test/TestHelper';
+
 
 describe('NavigatedViewer', function() {
 
@@ -14,9 +19,14 @@ describe('NavigatedViewer', function() {
   });
 
   function createViewer(xml, done) {
+
+    clearBpmnJS();
+
     var viewer = new NavigatedViewer({
       container: container
     });
+
+    setBpmnJS(viewer);
 
     viewer.importXML(xml, function(err, warnings) {
       done(err, warnings, viewer);

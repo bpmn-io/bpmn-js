@@ -8,6 +8,11 @@ import {
   createEvent
 } from '../util/MockEvents';
 
+import {
+  setBpmnJS,
+  clearBpmnJS
+} from 'test/TestHelper';
+
 
 describe('Modeler', function() {
 
@@ -21,12 +26,16 @@ describe('Modeler', function() {
 
   function createModeler(xml, done) {
 
+    clearBpmnJS();
+
     modeler = new Modeler({
       container: container,
       keyboard: {
         bindTo: document
       }
     });
+
+    setBpmnJS(modeler);
 
     modeler.importXML(xml, function(err, warnings) {
       done(err, warnings, modeler);
