@@ -111,14 +111,13 @@ export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
       );
     }
 
-    // clean up old bpmn-js instance
-    if (BPMN_JS) {
-      BPMN_JS.destroy();
-    }
+    clearBpmnJS();
 
-    BPMN_JS = new BpmnJS(_options);
+    var instance = new BpmnJS(_options);
 
-    BPMN_JS.importXML(diagram, done);
+    setBpmnJS(instance);
+
+    instance.importXML(diagram, done);
   };
 }
 
@@ -226,6 +225,18 @@ export function getBpmnJS() {
   return BPMN_JS;
 }
 
+export function clearBpmnJS() {
+  // clean up old bpmn-js instance
+  if (BPMN_JS) {
+    BPMN_JS.destroy();
+
+    BPMN_JS = null;
+  }
+}
+
+export function setBpmnJS(instance) {
+  BPMN_JS = instance;
+}
 
 export function insertCSS(name, css) {
   if (document.querySelector('[data-css-file="' + name + '"]')) {
