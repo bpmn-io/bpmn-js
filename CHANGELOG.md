@@ -8,6 +8,10 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: rework container drag interaction to prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
 
+## 4.0.3
+
+* `FIX`: prevent dropping on labels and `bpmn:Group` elements ([#1131](https://github.com/bpmn-io/bpmn-js/pull/1131))
+
 ## 4.0.2
 
 * `FIX`: correct element positioning update ([#1129](https://github.com/bpmn-io/bpmn-js/issues/1129))
