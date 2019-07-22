@@ -47,6 +47,16 @@ export function expectCanDrop(element, target, expectedResult) {
 }
 
 
+export function expectCanCreate(element, target, expectedResult) {
+
+  var result = getBpmnJS().invoke(function(bpmnRules) {
+    return bpmnRules.canCreate(get(element), get(target));
+  });
+
+  expect(result).to.eql(expectedResult);
+}
+
+
 export function expectCanInsert(element, target, expectedResult) {
 
   var result = getBpmnJS().invoke(function(bpmnRules) {
