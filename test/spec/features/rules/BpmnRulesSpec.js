@@ -7,7 +7,8 @@ import {
   expectCanConnect,
   expectCanDrop,
   expectCanMove,
-  expectCanInsert
+  expectCanInsert,
+  expectCanCreate
 } from './Helper';
 
 import modelingModule from 'lib/features/modeling';
@@ -1052,6 +1053,111 @@ describe('features/modeling/rules - BpmnRules', function() {
       it('-> Group', function() {
         expectCanDrop(label, 'Group', true);
       });
+
+    });
+
+
+    describe('create Group', function() {
+
+      var group;
+
+      beforeEach(inject(function(elementFactory) {
+        group = elementFactory.createShape({
+          type: 'bpmn:Group',
+          x: 413, y: 254
+        });
+      }));
+
+
+      it('-> MessageFlow', function() {
+        expectCanCreate(group, 'MessageFlow_labeled', true);
+      });
+
+
+      it('-> CollapsedParticipant', function() {
+        expectCanCreate(group, 'CollapsedParticipant', true);
+      });
+
+
+      it('-> Collaboration', function() {
+        // then
+        expectCanCreate(group, 'Collaboration', true);
+      });
+
+
+      it('-> Task_in_SubProcess', function() {
+        expectCanCreate(group, 'Task_in_SubProcess', true);
+      });
+
+
+      it('-> SequenceFlow', function() {
+        expectCanCreate(group, 'SequenceFlow', true);
+      });
+
+
+      it('-> DataOutputAssociation', function() {
+        expectCanCreate(group, 'DataOutputAssociation', true);
+      });
+
+
+      it('-> Group', function() {
+        expectCanCreate(group, 'Group', true);
+      });
+
+    });
+
+
+    describe('reject create on Group', function() {
+
+      it('DataStoreReference ->', inject(function(elementFactory) {
+        var dataStoreReference = elementFactory.createShape({
+          type: 'bpmn:DataStoreReference',
+          x: 413, y: 254
+        });
+
+        expectCanCreate(dataStoreReference, 'Group', false);
+      }));
+
+
+      it('Task ->', inject(function(elementFactory) {
+        var task = elementFactory.createShape({
+          type: 'bpmn:Task',
+          x: 413, y: 254
+        });
+
+        expectCanCreate(task, 'Group', false);
+      }));
+
+    });
+
+
+    describe('reject create on label', function() {
+
+      var label;
+
+      beforeEach(inject(function(elementRegistry) {
+        label = elementRegistry.get('MessageFlow_labeled').label;
+      }));
+
+
+      it('DataStoreReference ->', inject(function(elementFactory) {
+        var dataStoreReference = elementFactory.createShape({
+          type: 'bpmn:DataStoreReference',
+          x: 413, y: 254
+        });
+
+        expectCanCreate(dataStoreReference, label, false);
+      }));
+
+
+      it('Task ->', inject(function(elementFactory) {
+        var task = elementFactory.createShape({
+          type: 'bpmn:Task',
+          x: 413, y: 254
+        });
+
+        expectCanCreate(task, label, false);
+      }));
 
     });
 
