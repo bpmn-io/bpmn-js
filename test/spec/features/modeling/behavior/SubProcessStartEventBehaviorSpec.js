@@ -56,6 +56,38 @@ describe('features/modeling/behavior - subprocess start event', function() {
       }
     ));
 
+
+    it('should NOT contain start event child if hint behavior=false', inject(
+      function(canvas, elementFactory, create, dragging) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            subProcess = elementFactory.createShape({
+              type: 'bpmn:SubProcess',
+              isExpanded: true
+            }),
+            startEvents;
+
+        // when
+        create.start(canvasEvent({ x: 0, y: 0 }), subProcess, {
+          hints: {
+            behavior: false
+          }
+        });
+
+        dragging.hover({ element: rootElement });
+
+        dragging.move(canvasEvent({ x: 600, y: 150 }));
+
+        dragging.end();
+
+        // then
+        startEvents = getChildStartEvents(subProcess);
+
+        expect(startEvents).to.have.length(0);
+      }
+    ));
+
   });
 
 
