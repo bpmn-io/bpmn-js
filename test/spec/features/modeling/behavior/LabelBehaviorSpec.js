@@ -272,6 +272,24 @@ describe('behavior - LabelBehavior', function() {
       }
     ));
 
+
+    it('should NOT add label if hint behavior=false', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var parentShape = elementRegistry.get('Process_1'),
+            newShapeAttrs = {
+              type: 'bpmn:ExclusiveGateway'
+            };
+
+        // when
+        var newShape = modeling.createShape(newShapeAttrs, { x: 50, y: 50 }, parentShape);
+
+        // then
+        expect(newShape.label).not.to.exist;
+      }
+    ));
+
   });
 
 
@@ -646,7 +664,7 @@ describe('behavior - LabelBehavior', function() {
 
 });
 
-// helper //////////
+// helpers //////////
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
