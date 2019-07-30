@@ -6,18 +6,19 @@ import {
 
 import bpmnCopyPasteModule from 'lib/features/copy-paste';
 import copyPasteModule from 'diagram-js/lib/features/copy-paste';
-import tooltipsModule from 'diagram-js/lib/features/tooltips';
-import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
 import {
-  map,
-  filter,
+  find,
   forEach,
-  uniqueBy
+  isArray,
+  isNumber,
+  keys,
+  map,
+  pick,
+  reduce
 } from 'min-dash';
-
-import DescriptorTree from './DescriptorTree';
 
 import {
   getBusinessObject,
@@ -30,9 +31,8 @@ describe('features/copy-paste', function() {
   var testModules = [
     bpmnCopyPasteModule,
     copyPasteModule,
-    tooltipsModule,
-    modelingModule,
-    coreModule
+    coreModule,
+    modelingModule
   ];
 
   var basicXML = require('./basic.bpmn'),
@@ -40,7 +40,7 @@ describe('features/copy-paste', function() {
       propertiesXML = require('./properties.bpmn'),
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
-      collaborationAssociations = require('./data-associations.bpmn');
+      collaborationAssociationsXML = require('./data-associations.bpmn');
 
 
   describe('basic diagram', function() {
@@ -55,18 +55,16 @@ describe('features/copy-paste', function() {
       it('should copy sub process', inject(function() {
 
         // when
-        var tree = copy([ 'SubProcess_1' ]);
-
-        var subProcess = tree.getElement('SubProcess_1');
+        var tree = copy('SubProcess_1');
 
         // then
-        expect(tree.getLength()).to.equal(3);
+        expect(keys(tree)).to.have.length(3);
 
-        expect(tree.getDepthLength(0)).to.equal(1);
-        expect(tree.getDepthLength(1)).to.equal(3);
-        expect(tree.getDepthLength(2)).to.equal(12);
+        expect(getAllElementsInTree(tree, 0)).to.have.length(1);
+        expect(getAllElementsInTree(tree, 1)).to.have.length(3);
+        expect(getAllElementsInTree(tree, 2)).to.have.length(12);
 
-        expect(subProcess.isExpanded).to.be.true;
+        expect(findDescriptorInTree('SubProcess_1', tree).isExpanded).to.be.true;
       }));
 
 
@@ -80,14 +78,10 @@ describe('features/copy-paste', function() {
         startEventBo.type = 'external';
 
         // when
-        var tree = copy([ startEvent ]);
-
-        var startEventDescriptor = tree.getElement('StartEvent_1');
+        var tree = copy(startEvent);
 
         // then
-        expect(tree.getLength()).to.equal(1);
-
-        expect(startEventDescriptor.type).to.eql('bpmn:StartEvent');
+        expect(findDescriptorInTree('StartEvent_1', tree).type).to.eql('bpmn:StartEvent');
       }));
 
     });
@@ -96,100 +90,54 @@ describe('features/copy-paste', function() {
     it('should paste twice', inject(function(elementRegistry, canvas, copyPaste) {
 
       // given
-      var element = elementRegistry.get('SubProcess_1'),
+      var subProcess = elementRegistry.get('SubProcess_1'),
           rootElement = canvas.getRootElement();
 
       // when
-      copyPaste.copy(element);
+      copyPaste.copy(subProcess);
 
       copyPaste.paste({
         element: rootElement,
         point: {
           x: 1000,
-          y: 100
+          y: 1000
         }
       });
 
-      copyPaste.paste({
+      var elements = copyPaste.paste({
         element: rootElement,
         point: {
-          x: 1500,
-          y: 275
+          x: 2000,
+          y: 1000
         }
       });
 
       // then
-      // 3 sub-processes
-      // 6 pasted labels
       expect(rootElement.children).to.have.length(9);
 
-      var pastedElements = elementRegistry.filter(function(e) {
-        return e !== element && is(e, 'bpmn:SubProcess');
+      var subProcesses = elements.filter(function(element) {
+        return is(element, 'bpmn:SubProcess');
       });
 
-      expect(pastedElements[0].id).not.to.equal(pastedElements[1].id);
+      expect(subProcesses[0].id).not.to.equal(subProcesses[1].id);
     }));
 
 
     describe('integration', function() {
 
-      it('should retain label\'s relative position',
-        inject(function(copyPaste, canvas, elementRegistry) {
-
-          // given
-          var startEvent = elementRegistry.get('StartEvent_1'),
-              startEventLabel = startEvent.label,
-              seqFlow = elementRegistry.get('SequenceFlow_1'),
-              seqFlowLabel = seqFlow.label,
-              task = elementRegistry.get('Task_1'),
-              rootElement = canvas.getRootElement(),
-              newEvent, newFlow;
-
-          // when
-          copyPaste.copy([ startEvent, task ]);
-
-          copyPaste.paste({
-            element: rootElement,
-            point: {
-              x: 1100,
-              y: 250
-            }
-          });
-
-          newEvent = elementRegistry.filter(function(element) {
-            return element.parent === rootElement && element.type === 'bpmn:StartEvent';
-          })[0];
-
-          newFlow = elementRegistry.filter(function(element) {
-            return element.parent === rootElement && element.type === 'bpmn:SequenceFlow';
-          })[0];
-
-          // then
-          expect(newEvent.label.x - newEvent.x).to.equal(startEventLabel.x - startEvent.x);
-          expect(newEvent.label.y - newEvent.y).to.equal(startEventLabel.y - startEvent.y);
-
-          var seqFlowDeltaX = seqFlow.label.x - seqFlow.waypoints[0].x;
-
-          expect(newFlow.label.x - newFlow.waypoints[0].x).to.be.within(seqFlowDeltaX, seqFlowDeltaX + 1);
-          expect(newFlow.label.y - newFlow.waypoints[0].y).to.equal(seqFlowLabel.y - seqFlow.waypoints[0].y);
-        })
-      );
-
-
-      it('should retain default & conditional flow property',
-        inject(function(elementRegistry, copyPaste, canvas, modeling) {
+      it('should copy conditional and default flow properties',
+        inject(function(canvas, copyPaste, elementRegistry, modeling) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess_1'),
-              rootElement = canvas.getRootElement(),
-              task, defaultFlow, conditionalFlow;
+              rootElement = canvas.getRootElement();
 
           // when
           copyPaste.copy(subProcess);
 
-          modeling.removeElements([ subProcess ]);
+          modeling.removeShape(subProcess);
 
-          copyPaste.paste({
+          var elements = copyPaste.paste({
             element: rootElement,
             point: {
               x: 300,
@@ -197,50 +145,54 @@ describe('features/copy-paste', function() {
             }
           });
 
-          task = elementRegistry.filter(function(element) {
-            return element.type === 'bpmn:Task';
-          })[0];
+          // then
+          var task = elements.find(function(element) {
+            return is(element, 'bpmn:Task');
+          });
 
-          defaultFlow = elementRegistry.filter(function(element) {
-            return !!(element.type === 'bpmn:SequenceFlow' && task.businessObject.default.id === element.id);
-          })[0];
+          var taskBo = getBusinessObject(task);
 
-          conditionalFlow = elementRegistry.filter(function(element) {
-            return !!(element.type === 'bpmn:SequenceFlow' && element.businessObject.conditionExpression);
-          })[0];
+          var conditionalFlow = find(elementRegistry.getAll(), function(element) {
+            return is(element, 'bpmn:SequenceFlow') && element.businessObject.conditionExpression;
+          });
 
-          expect(defaultFlow).to.exist;
+          var defaultFlow = find(elementRegistry.getAll(), function(element) {
+            return is(element, 'bpmn:SequenceFlow') && taskBo.default.id === element.id;
+          });
+
           expect(conditionalFlow).to.exist;
+          expect(defaultFlow).to.exist;
         })
       );
 
 
-      it('should retain loop characteristics',
-        inject(function(elementRegistry, copyPaste, canvas, modeling) {
+      it('should copy loop characteristics porperties',
+        inject(function(canvas, copyPaste, elementRegistry, modeling) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess_2'),
-              rootElement = canvas.getRootElement(),
-              loopCharacteristics;
+              rootElement = canvas.getRootElement();
 
           // when
           copyPaste.copy(subProcess);
 
-          modeling.removeElements([ subProcess ]);
+          modeling.removeShape(subProcess);
 
-          copyPaste.paste({
+          var elements = copyPaste.paste({
             element: rootElement,
             point: {
-              x: 1100,
-              y: 250
+              x: 300,
+              y: 300
             }
           });
 
-          subProcess = elementRegistry.filter(function(element) {
-            return !!(element.id !== 'SubProcess_1' && element.type === 'bpmn:SubProcess');
-          })[0];
+          subProcess = elements.find(function(element) {
+            return is(element, 'bpmn:SubProcess');
+          });
 
-          loopCharacteristics = subProcess.businessObject.loopCharacteristics;
+          var subProcessesBo = getBusinessObject(subProcess);
+
+          var loopCharacteristics = subProcessesBo.loopCharacteristics;
 
           expect(loopCharacteristics.$type).to.equal('bpmn:MultiInstanceLoopCharacteristics');
           expect(loopCharacteristics.isSequential).to.be.true;
@@ -248,41 +200,38 @@ describe('features/copy-paste', function() {
       );
 
 
-      it.skip('selected elements', inject(integrationTest([ 'SubProcess_1' ])));
-
-
-      it('should retain color properties',
-        inject(function(modeling, copyPaste, canvas, elementRegistry) {
+      it('should copy color properties',
+        inject(function(canvas, copyPaste, elementRegistry, modeling) {
 
           // given
           var task = elementRegistry.get('Task_1'),
               rootElement = canvas.getRootElement(),
-              newTask,
-              fill = '#BBDEFB',
-              stroke = '#1E88E5';
+              fill = 'red',
+              stroke = 'green';
 
 
           // when
           modeling.setColor(task, { fill: fill, stroke: stroke });
 
-          copyPaste.copy([ task ]);
+          copyPaste.copy(task);
 
-          copyPaste.paste({
+          var elements = copyPaste.paste({
             element: rootElement,
             point: {
-              x: 1100,
-              y: 250
+              x: 1000,
+              y: 1000
             }
           });
 
-          newTask = elementRegistry.filter(function(element) {
-            return element.parent === rootElement && element.type === 'bpmn:Task' && element.id !== 'Task_1';
-          })[0];
-
           // then
-          expect(newTask.type).to.equal('bpmn:Task');
-          expect(newTask.businessObject.di.fill).to.equal(fill);
-          expect(newTask.businessObject.di.stroke).to.equal(stroke);
+          task = elements.find(function(element) {
+            return is(element, 'bpmn:Task');
+          });
+
+          var taskBo = getBusinessObject(task);
+
+          expect(taskBo.di.fill).to.equal(fill);
+          expect(taskBo.di.stroke).to.equal(stroke);
         })
       );
 
@@ -291,15 +240,15 @@ describe('features/copy-paste', function() {
 
     describe('rules', function() {
 
-      it('disallow individual boundary events copying', inject(function(elementRegistry) {
+      it('should NOT allow copying boundary event without host', inject(function(elementRegistry) {
 
-        var boundaryEventA = elementRegistry.get('BoundaryEvent_1'),
-            boundaryEventB = elementRegistry.get('BoundaryEvent_2');
+        var boundaryEvent1 = elementRegistry.get('BoundaryEvent_1'),
+            boundaryEvent2 = elementRegistry.get('BoundaryEvent_2');
 
         // when
-        var tree = copy([ boundaryEventA, boundaryEventB ]);
+        var tree = copy([ boundaryEvent1, boundaryEvent2 ]);
 
-        expect(tree.getLength()).to.equal(0);
+        expect(keys(tree)).to.have.length(0);
       }));
 
     });
@@ -311,165 +260,160 @@ describe('features/copy-paste', function() {
 
     beforeEach(bootstrapModeler(propertiesXML, { modules: testModules }));
 
-    var subProcesses = [
-      'Sub_non_interrupt',
-      'Sub_event_subprocess',
-      'Sub_interrupt',
-      'Sub_transaction'
-    ];
 
-    function copyPasteElement(elementRegistry, canvas, copyPaste, modeling, element) {
-      // given
-      var elem = elementRegistry.get(element),
-          rootElement = canvas.getRootElement();
+    function copyPasteElement(element) {
 
-      // when
-      copyPaste.copy(elem);
+      return getBpmnJS().invoke(function(canvas, copyPaste, elementRegistry, modeling) {
 
-      modeling.removeElements([ elem ]);
+        // given
+        element = elementRegistry.get(element);
 
-      copyPaste.paste({
-        element: rootElement,
-        point: {
-          x: 175,
-          y: 450
-        }
+        var rootElement = canvas.getRootElement();
+
+        // when
+        copyPaste.copy(element);
+
+        modeling.removeShape(element);
+
+        return copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 1000,
+            y: 1000
+          }
+        });
       });
+
     }
 
-    it('should copy & paste non interrupting (boundary) events',
-      inject(function(elementRegistry, canvas, copyPaste, modeling) {
+    it('should copy and paste non-interrupting boundary event', function() {
 
-        // when
-        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Sub_non_interrupt');
+      // when
+      var elements = copyPasteElement('SubProcess_NonInterrupting');
 
-        var subProcess = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:SubProcess' && (subProcesses.indexOf(element.id) === -1);
-        })[0];
+      var subProcess = elements.find(function(element) {
+        return is(element, 'bpmn:SubProcess');
+      });
 
-        var nonInterruptEvt = subProcess.attachers[0].businessObject;
+      var boundaryEvent = subProcess.attachers[0],
+          boundaryEventBo = getBusinessObject(boundaryEvent);
 
-        // then
-        expect(nonInterruptEvt.cancelActivity).to.be.false;
-      })
-    );
-
-
-    it('should copy & paste event sub processes',
-      inject(function(elementRegistry, canvas, copyPaste, modeling) {
-
-        // when
-        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Sub_event_subprocess');
-
-        var subProcess = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:SubProcess' && (subProcesses.indexOf(element.id) === -1);
-        })[0];
-
-        expect(subProcess.businessObject.triggeredByEvent).to.be.true;
-        expect(subProcess.businessObject.isExpanded).to.be.true;
-      })
-    );
+      // then
+      expect(boundaryEventBo.cancelActivity).to.be.false;
+    });
 
 
-    it('should copy & paste interrupting (boundary) events',
-      inject(function(elementRegistry, canvas, copyPaste, modeling) {
+    it('should copy and paste interrupting boundary event', function() {
 
-        // when
-        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Sub_interrupt');
+      // when
+      var elements = copyPasteElement('SubProcess_Interrupting');
 
-        var subProcess = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:SubProcess' && (subProcesses.indexOf(element.id) === -1);
-        })[0];
+      var subProcess = elements.find(function(element) {
+        return is(element, 'bpmn:SubProcess');
+      });
 
-        var interruptEvt = subProcess.attachers[0].businessObject;
+      var boundaryEvent = subProcess.attachers[0],
+          boundaryEventBo = getBusinessObject(boundaryEvent);
 
-        // then
-        expect(interruptEvt.cancelActivity).to.be.true;
-      })
-    );
-
-
-    it('should copy & paste transactions',
-      inject(function(elementRegistry, canvas, copyPaste, modeling) {
-
-        // when
-        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Sub_transaction');
-
-        var transaction = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:Transaction';
-        })[0];
-
-        expect(transaction).to.exist;
-      })
-    );
+      // then
+      expect(boundaryEventBo.cancelActivity).to.be.true;
+    });
 
 
-    it('should copy & paste groups',
-      inject(function(elementRegistry, canvas, copyPaste, modeling) {
+    it('should copy and paste event sub process', function() {
 
-        // when
-        copyPasteElement(elementRegistry, canvas, copyPaste, modeling, 'Group');
+      // when
+      var elements = copyPasteElement('SubProcess_Event');
 
-        var group = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:Group';
-        })[0];
+      var subProcess = elements.find(function(element) {
+        return is(element, 'bpmn:SubProcess');
+      });
 
-        var categoryValue = getBusinessObject(group).categoryValueRef;
+      var subProcessesBo = getBusinessObject(subProcess);
 
-        expect(group).to.exist;
-        expect(categoryValue).to.exist;
-      })
-    );
+      expect(subProcessesBo.triggeredByEvent).to.be.true;
+      expect(subProcessesBo.isExpanded).to.be.true;
+    });
+
+
+    it('should copy and paste transaction', function() {
+
+      // when
+      var elements = copyPasteElement('SubProcess_Transaction');
+
+      var transaction = elements.find(function(element) {
+        return is(element, 'bpmn:Transaction');
+      });
+
+      expect(transaction).to.exist;
+    });
+
+
+    it('should copy and paste group', function() {
+
+      // when
+      var elements = copyPasteElement('Group');
+
+      var group = elements.find(function(element) {
+        return is(element, 'bpmn:Group');
+      });
+
+      var groupBo = getBusinessObject(group);
+
+      expect(groupBo.categoryValueRef).to.exist;
+    });
 
   });
 
 
-  describe('basic collaboration', function() {
+  describe('collaboration', function() {
 
     beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
 
     describe('integration', function() {
 
-      it('expanded participant', inject(integrationTest([ 'Participant_1' ])));
+      it('expanded participant', integrationTest('Participant_1'));
 
-      it('collapsed participant', inject(integrationTest([ 'Participant_2' ])));
+      it('collapsed participant', integrationTest('Participant_2'));
 
     });
 
 
     describe('rules', function() {
 
-      it('do NOT allow copying lanes without their parent participant', inject(function() {
+      it('should NOT allow copying lanes without their parent participant', function() {
 
         // when
         var tree = copy([ 'Lane_1', 'Lane_2' ]);
 
         // then
-        expect(tree.getLength()).to.equal(0);
-      }));
+        expect(keys(tree)).to.have.length(0);
+      });
 
     });
 
   });
 
 
-  describe('complex collaboration', function() {
+  describe('collaboration (multiple)', function() {
 
     beforeEach(bootstrapModeler(collaborationMultipleXML, { modules: testModules }));
 
+
     describe('basics', function() {
 
-      it('pasting on a lane', inject(function(elementRegistry, copyPaste) {
+      it('should paste onto lane', inject(function(copyPaste, elementRegistry) {
 
         // given
-        var lane = elementRegistry.get('Lane_5'),
-            task = elementRegistry.get('Task_1'),
-            participant = elementRegistry.get('Participant_2');
+        var participant = elementRegistry.get('Participant_2'),
+            lane = elementRegistry.get('Lane_5'),
+            laneBo = getBusinessObject(lane),
+            task = elementRegistry.get('Task_1');
+
+        copyPaste.copy(task);
 
         // when
-        copyPaste.copy([ task ]);
-
         copyPaste.paste({
           element: lane,
           point: {
@@ -479,21 +423,23 @@ describe('features/copy-paste', function() {
         });
 
         // then
-        expect(lane.children).to.be.empty;
-        expect(lane.businessObject.flowNodeRef).to.have.length(2);
-
         expect(participant.children).to.have.length(7);
+
+        expect(lane.children).to.be.empty;
+        expect(laneBo.flowNodeRef).to.have.length(2);
       }));
 
 
-      it('pasting on a nested lane', inject(function(elementRegistry, copyPaste) {
+      it('should paste onto nested lane', inject(function(copyPaste, elementRegistry) {
+
         // given
-        var lane = elementRegistry.get('Lane_3'),
-            task = elementRegistry.get('Task_2'),
-            participant = elementRegistry.get('Participant_1');
+        var participant = elementRegistry.get('Participant_1'),
+            lane = elementRegistry.get('Lane_3'),
+            laneBo = getBusinessObject(lane),
+            task = elementRegistry.get('Task_2');
 
         // when
-        copyPaste.copy([ task ]);
+        copyPaste.copy(task);
 
         copyPaste.paste({
           element: lane,
@@ -504,11 +450,11 @@ describe('features/copy-paste', function() {
         });
 
         // then
-        expect(lane.children).to.be.empty;
-        expect(lane.businessObject.flowNodeRef).to.have.length(2);
-
-        expect(lane.parent.children).to.have.length(2);
         expect(participant.children).to.have.length(5);
+
+        expect(lane.children).to.be.empty;
+        expect(lane.parent.children).to.have.length(2);
+        expect(laneBo.flowNodeRef).to.have.length(2);
       }));
 
     });
@@ -516,10 +462,10 @@ describe('features/copy-paste', function() {
 
     describe('integration', function() {
 
-      it('multiple participants', inject(integrationTest([
+      it('should copy and paste multiple participants', integrationTest([
         'Participant_1',
         'Participant_2'
-      ])));
+      ]));
 
     });
 
@@ -528,52 +474,59 @@ describe('features/copy-paste', function() {
 
   describe('participants', function() {
 
-    beforeEach(bootstrapModeler(collaborationAssociations, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationAssociationsXML, { modules: testModules }));
 
 
-    it('copying participant should copy process as well', inject(
-      function(elementRegistry, copyPaste, canvas) {
+    it('should copy process when copying participant', inject(
+      function(canvas, copyPaste, elementRegistry) {
 
         // given
-        var participants = map([ 'Participant_Input', 'Participant_Output' ], function(e) {
-          return elementRegistry.get(e);
-        });
-        var rootElement = canvas.getRootElement();
+        var participantInput = elementRegistry.get('Participant_Input'),
+            participantInputBo = getBusinessObject(participantInput),
+            participantOutput = elementRegistry.get('Participant_Output'),
+            participantOutputBo = getBusinessObject(participantOutput),
+            rootElement = canvas.getRootElement();
 
         // when
-        copyPaste.copy(participants);
+        copyPaste.copy([ participantInput, participantOutput ]);
 
-        copyPaste.paste({
+        var elements = copyPaste.paste({
           element: rootElement,
           point: {
-            x: 4000,
-            y: 4500
+            x: 5000,
+            y: 5000
           }
         });
 
         // then
-        var elements = elementRegistry.filter(function(element) {
-          return element.type === 'bpmn:Participant';
+        var participants = elements.filter(function(element) {
+          return is(element, 'bpmn:Participant');
         });
 
-        var processIds = map(elements, function(e) {
-          return e.businessObject.processRef.id;
+        forEach(participants, function(participant) {
+          var participantBo = getBusinessObject(participant);
+
+          expect(participantBo.processRef).not.to.equal(participantInputBo.processRef);
+          expect(participantBo.processRef).not.to.equal(participantOutputBo.processRef);
         });
 
-        expect(uniqueBy(function(e) {return e;}, processIds)).to.have.length(4);
+        expect(getBusinessObject(participants[0]).processRef)
+          .not.to.equal(getBusinessObject(participants[1]).processRef);
       }
     ));
 
 
-    it('participant with DataOutputAssociation', inject(integrationTest([ 'Participant_Output' ])));
+    it('should copy and paste participant with DataInputAssociation',
+      integrationTest('Participant_Input'));
 
 
-    it('participant with DataInputAssociation', inject(integrationTest([ 'Participant_Input' ])));
+    it('should copy and paste participant with DataOutputAssociation',
+      integrationTest('Participant_Output'));
 
   });
 
 
-  describe('deep properties', function() {
+  describe('nested properties', function() {
 
     var camundaPackage = require('../../../fixtures/json/model/camunda');
 
@@ -585,45 +538,38 @@ describe('features/copy-paste', function() {
     }));
 
 
-    it('integration', inject(integrationTest([ 'Participant_0x9lnke' ])));
+    it('integration', integrationTest('Participant_1'));
 
 
-    it('should copy UserTask properties',
-      inject(function(elementRegistry, copyPaste, canvas) {
+    it('should copy user task properties', inject(function(copyPaste, elementRegistry) {
 
-        var participant = elementRegistry.get('Participant_0x9lnke'),
-            task = elementRegistry.get('Task_1'),
-            newTask;
+      var participant = elementRegistry.get('Participant_1'),
+          task = elementRegistry.get('Task_1'),
+          taskBo = getBusinessObject(task);
 
-        // when
-        copyPaste.copy([ task ]);
+      // when
+      copyPaste.copy(task);
 
-        copyPaste.paste({
-          element: participant,
-          point: {
-            x: 500,
-            y: 50
-          }
-        });
+      var elements = copyPaste.paste({
+        element: participant,
+        point: {
+          x: 500,
+          y: 50
+        }
+      });
 
-        newTask = filter(participant.children, function(element) {
-          return is(element, 'bpmn:Task');
-        })[0];
+      // then
+      var newTask = elements.find(function(element) {
+        return is(element, 'bpmn:Task');
+      });
 
-        // then
-        var bo = task.businessObject;
-        var copiedBo = newTask.businessObject;
+      var newTaskBo = getBusinessObject(newTask);
 
-
-        expect(copiedBo.asyncBefore).to.eql(bo.asyncBefore);
-        expect(copiedBo.documentation).to.jsonEqual(bo.documentation);
-
-        var copiedExtensions = copiedBo.extensionElements;
-
-        expect(copiedExtensions).to.jsonEqual(bo.extensionElements);
-        expect(copiedExtensions.$parent).to.equal(copiedBo);
-      })
-    );
+      expect(newTaskBo.asyncBefore).to.eql(taskBo.asyncBefore);
+      expect(newTaskBo.documentation).to.jsonEqual(taskBo.documentation);
+      expect(newTaskBo.extensionElements).to.jsonEqual(taskBo.extensionElements);
+      expect(newTaskBo.extensionElements.$parent).to.equal(newTaskBo);
+    }));
 
   });
 
@@ -631,134 +577,194 @@ describe('features/copy-paste', function() {
 
 // helpers //////////
 
-function integrationTest(ids) {
+/**
+ * Integration test involving copying, pasting, moving, undoing and redoing.
+ *
+ * @param {String|Array<String>} elementIds
+ */
+function integrationTest(elementIds) {
+  if (!isArray(elementIds)) {
+    elementIds = [ elementIds ];
+  }
 
-  return function(canvas, commandStack, copyPaste, elementRegistry, modeling) {
+  return function() {
 
-    // given
-    var shapes = elementRegistry.getAll(),
-        rootElement;
+    getBpmnJS().invoke(function(canvas, commandStack, copyPaste, elementRegistry, modeling) {
 
-    var initialContext = {
-          type: mapProperty(shapes, 'type'),
-          ids: mapProperty(shapes, 'id'),
-          length: shapes.length
-        },
-        currentContext;
+      // given
+      var allElements = elementRegistry.getAll();
 
-    var elements = map(ids, function(id) {
-      return elementRegistry.get(id);
+      var initialContext = {
+            length: allElements.length,
+            ids: getPropertyForElements(allElements, 'id'),
+            types: getPropertyForElements(allElements, 'type')
+          },
+          currentContext;
+
+      var elements = map(elementIds, function(elementId) {
+        return elementRegistry.get(elementId);
+      });
+
+      // (1) copy elements
+      copyPaste.copy(elements);
+
+      // (2) remove elements
+      modeling.removeElements(elements);
+
+      var rootElement = canvas.getRootElement();
+
+      // (3) paste elements
+      copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 500,
+          y: 500
+        }
+      });
+
+      // (4) move all elements except root
+      modeling.moveElements(elementRegistry.filter(isRoot), { x: 50, y: -50 });
+
+      // when
+      // (5) undo moving, pasting and removing
+      commandStack.undo();
+      commandStack.undo();
+      commandStack.undo();
+
+      elements = elementRegistry.getAll();
+
+      currentContext = {
+        length: elements.length,
+        ids: getPropertyForElements(elements, 'id')
+      };
+
+      // then
+      expect(initialContext.length).to.equal(currentContext.length);
+      expectCollection(initialContext.ids, currentContext.ids, true);
+
+      // when
+      // (6) redo removing, pasting and moving
+      commandStack.redo();
+      commandStack.redo();
+      commandStack.redo();
+
+      elements = elementRegistry.getAll();
+
+      currentContext = {
+        length: elements.length,
+        ids: getPropertyForElements(elements, 'id'),
+        types: getPropertyForElements(elements, 'type')
+      };
+
+      // then
+      expect(initialContext.length).to.equal(currentContext.length);
+      expectCollection(initialContext.ids, currentContext.ids, false);
+      expectCollection(initialContext.types, currentContext.types, true);
     });
 
-    // (1) copy elements
-    copyPaste.copy(elements);
-
-    // (2) remove elements
-    modeling.removeElements(elements);
-
-    rootElement = canvas.getRootElement();
-
-    // (3) paste elements
-    copyPaste.paste({
-      element: rootElement,
-      point: {
-        x: 500,
-        y: 500
-      }
-    });
-
-    elements = elementRegistry.getAll();
-
-    // remove root
-    elements = elementRegistry.filter(function(element) {
-      return !!element.parent;
-    });
-
-    modeling.moveElements(elements, { x: 50, y: -50 });
-
-    // when
-    commandStack.undo();
-    commandStack.undo();
-    commandStack.undo();
-
-    elements = elementRegistry.getAll();
-
-    currentContext = {
-      type: mapProperty(elements, 'type'),
-      ids: mapProperty(elements, 'id'),
-      length: elements.length
-    };
-
-    // then
-    expect(initialContext).to.have.length(currentContext.length);
-
-    expectCollection(initialContext.ids, currentContext.ids, true);
-
-    // when
-    commandStack.redo();
-    commandStack.redo();
-    commandStack.redo();
-
-    elements = elementRegistry.getAll();
-
-    currentContext = {
-      type: mapProperty(elements, 'type'),
-      ids: mapProperty(elements, 'id'),
-      length: elements.length
-    };
-
-    // then
-    expect(initialContext).to.have.length(currentContext.length);
-
-    expectCollection(initialContext.type, currentContext.type, true);
-    expectCollection(initialContext.ids, currentContext.ids, false);
   };
 }
 
+function isRoot(element) {
+  return !!element.parent;
+}
+
+function getPropertyForElements(elements, property) {
+  return map(elements, function(element) {
+    return element[ property ];
+  });
+}
+
+function expectCollection(collection1, collection2, contains) {
+  expect(collection1).to.have.length(collection2.length);
+
+  forEach(collection2, function(element) {
+    if (!element.parent) {
+      return;
+    }
+
+    if (contains) {
+      expect(collection1).to.contain(element);
+    } else {
+      expect(collection1).not.to.contain(element);
+    }
+  });
+}
+
+function getAllElementsInTree(tree, depth) {
+  var depths;
+
+  if (isNumber(depth)) {
+    depths = pick(tree, [ depth ]);
+  } else {
+    depths = tree;
+  }
+
+  return reduce(depths, function(allElements, depth) {
+    return allElements.concat(depth);
+  }, []);
+}
+
+function findDescriptorInTree(elements, tree, depth) {
+  var foundDescriptors = _findDescriptorsInTree(elements, tree, depth);
+
+  if (foundDescriptors.length !== 1) {
+    return false;
+  }
+
+  return foundDescriptors[0];
+}
+
+function _findDescriptorsInTree(elements, tree, depth) {
+  if (!isArray(elements)) {
+    elements = [ elements ];
+  }
+
+  var depths;
+
+  if (isNumber(depth)) {
+    depths = pick(tree, [ depth ]);
+  } else {
+    depths = tree;
+  }
+
+  return reduce(elements, function(foundDescriptors, element) {
+    var foundDescriptor = reduce(depths, function(foundDescriptor, depth) {
+      return foundDescriptor || find(depth, function(descriptor) {
+        return element === descriptor.id || element.id === descriptor.id;
+      });
+    });
+
+    if (foundDescriptor) {
+      return foundDescriptors.concat(foundDescriptor);
+    }
+
+    return foundDescriptors;
+  }, []);
+}
 
 /**
- * Copy elements (or elements with given ids).
+ * Copy elements.
  *
- * @param {Array<String|djs.model.Base} ids
+ * @param {Array<String|djs.model.Base} elements
  *
- * @return {DescriptorTree}
+ * @returns {Object}
  */
-function copy(ids) {
+function copy(elements) {
+  if (!isArray(elements)) {
+    elements = [ elements ];
+  }
 
   return getBpmnJS().invoke(function(copyPaste, elementRegistry) {
 
-    var elements = ids.map(function(e) {
-      var element = elementRegistry.get(e.id || e);
+    elements = elements.map(function(element) {
+      element = elementRegistry.get(element.id || element);
 
       expect(element).to.exist;
 
       return element;
     });
 
-    var copyResult = copyPaste.copy(elements);
-
-    return new DescriptorTree(copyResult);
-  });
-}
-
-function mapProperty(shapes, prop) {
-  return map(shapes, function(shape) {
-    return shape[prop];
-  });
-}
-
-function expectCollection(collA, collB, contains) {
-  expect(collA).to.have.length(collB.length);
-
-  forEach(collB, function(element) {
-    if (!element.parent) {
-      return;
-    }
-
-    if (contains) {
-      expect(collA).to.contain(element);
-    } else {
-      expect(collA).not.to.contain(element);
-    }
+    return copyPaste.copy(elements);
   });
 }
