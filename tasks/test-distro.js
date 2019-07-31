@@ -10,6 +10,7 @@ function runTest(variant, env) {
   process.env.NODE_ENV = env;
 
   console.log('[TEST] ' + variant + '@' + env);
+  console.log(`[EXEC] VARIANT=${variant} NODE_ENV=${env} karma start test/config/karma.distro.js`);
 
   try {
     execSync('karma', [ 'start', 'test/config/karma.distro.js' ]);
