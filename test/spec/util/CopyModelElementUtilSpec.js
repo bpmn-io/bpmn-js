@@ -11,6 +11,8 @@ import CopyModelElementUtil from 'lib/util/CopyModelElementUtil';
 import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
+import { is } from 'lib/util/ModelUtil';
+
 var HIGH_PRIORITY = 2000;
 
 
@@ -131,7 +133,45 @@ describe('util/CopyModelElementUtil', function() {
     }));
 
 
-    it('should NOT copy empty extension elements', inject(function(eventBus, moddle) {
+    it('should copy extension elements last', inject(function(eventBus, moddle) {
+
+      // given
+      var connector = moddle.create('camunda:Connector'),
+          extensionElements = moddle.create('bpmn:ExtensionElements'),
+          messageEventDefinition = moddle.create('bpmn:MessageEventDefinition'),
+          messageEndEvent = moddle.create('bpmn:EndEvent');
+
+      connector.$parent = extensionElements;
+
+      extensionElements.$parent = messageEventDefinition;
+      extensionElements.values = [ connector ];
+
+      messageEventDefinition.$parent = messageEndEvent;
+      messageEventDefinition.extensionElements = extensionElements;
+
+      messageEndEvent.eventDefinitions = [ messageEventDefinition ];
+
+      var propertyNames = [];
+
+      eventBus.on('element.copyProperty', function(context) {
+        var propertyName = context.propertyName;
+
+        propertyNames.push(propertyName);
+      });
+
+      copyModelElementUtil.copyElement(messageEndEvent, moddle.create('bpmn:EndEvent'), [
+        'extensionElements',
+        'name'
+      ]);
+
+      expect(propertyNames).to.eql([
+        'name',
+        'extensionElements'
+      ]);
+    }));
+
+
+    it('should NOT copy empty extension elements', inject(function(moddle) {
 
       // given
       var connector = moddle.create('camunda:Connector'),
@@ -506,6 +546,26 @@ describe('util/CopyModelElementUtil', function() {
 
 
   describe('events', function() {
+
+    it('should disallow copying properties', inject(function(eventBus, moddle) {
+
+      // given
+      var task = moddle.create('bpmn:Task', {
+        name: 'foo'
+      });
+
+      eventBus.on('element.copyProperties', HIGH_PRIORITY, function(context) {
+        var sourceElement = context.sourceElement;
+
+        if (is(sourceElement, 'bpmn:Task')) {
+          return false;
+        }
+      });
+
+      var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
+
+      expect(userTask.name).not.to.exist;
+    }));
 
     it('should disallow copying property', inject(function(eventBus, moddle) {
 
