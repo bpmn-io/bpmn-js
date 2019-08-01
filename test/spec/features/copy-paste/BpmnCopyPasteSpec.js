@@ -528,7 +528,7 @@ describe('features/copy-paste', function() {
 
   describe('nested properties', function() {
 
-    var camundaPackage = require('../../../fixtures/json/model/camunda');
+    var camundaPackage = require('camunda-bpmn-moddle/resources/camunda.json');
 
     beforeEach(bootstrapModeler(clonePropertiesXML, {
       modules: testModules,
@@ -565,10 +565,9 @@ describe('features/copy-paste', function() {
 
       var newTaskBo = getBusinessObject(newTask);
 
-      expect(newTaskBo.asyncBefore).to.eql(taskBo.asyncBefore);
+      expect(newTaskBo.asyncBefore).to.equal(taskBo.asyncBefore);
       expect(newTaskBo.documentation).to.jsonEqual(taskBo.documentation);
       expect(newTaskBo.extensionElements).to.jsonEqual(taskBo.extensionElements);
-      expect(newTaskBo.extensionElements.$parent).to.equal(newTaskBo);
     }));
 
   });

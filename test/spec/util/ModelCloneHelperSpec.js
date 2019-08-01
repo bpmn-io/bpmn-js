@@ -8,9 +8,10 @@ import modelingModule from 'lib/features/modeling';
 
 import ModelCloneHelper from 'lib/util/model/ModelCloneHelper';
 
-import camundaPackage from '../../fixtures/json/model/camunda';
+import camundaModdleModule from 'camunda-bpmn-moddle/lib';
+import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
-import camundaModdleModule from './camunda-moddle';
+var HIGH_PRIORITY = 2000;
 
 
 describe('util/clone/ModelCloneHelper', function() {
@@ -32,35 +33,124 @@ describe('util/clone/ModelCloneHelper', function() {
 
   var helper;
 
-  beforeEach(inject(function(eventBus, bpmnFactory) {
-    helper = new ModelCloneHelper(eventBus, bpmnFactory);
+  beforeEach(inject(function(injector) {
+    helper = injector.instantiate(ModelCloneHelper);
   }));
 
-  describe('simple', function() {
+  describe.only('simple', function() {
 
-    it('should pass property', inject(function(moddle) {
+    it('should copy primitive properties', inject(function(moddle) {
 
       // given
       var userTask = moddle.create('bpmn:UserTask', {
         asyncBefore: true
       });
 
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), [ 'camunda:asyncBefore' ]);
+      // when
+      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
 
-      expect(getProp(serviceTask, 'camunda:asyncBefore')).to.be.true;
+      // then
+      expect(serviceTask.asyncBefore).to.be.true;
+
+      expectNoAttrs(serviceTask);
     }));
 
 
-    it('should not pass property', inject(function(moddle) {
+    it('should copy arrays of properties', inject(function(moddle) {
+
+      // given
+      var messageEventDefinition = moddle.create('bpmn:MessageEventDefinition'),
+          signalEventDefinition = moddle.create('bpmn:SignalEventDefinition'),
+          startEvent = moddle.create('bpmn:StartEvent');
+
+      startEvent.eventDefinitions = [ messageEventDefinition, signalEventDefinition ];
+
+      // when
+      var endEvent = helper.clone(startEvent, moddle.create('bpmn:EndEvent'));
+
+      // then
+      var eventDefinitions = endEvent.eventDefinitions;
+
+      expect(eventDefinitions).to.have.length(2);
+      expect(eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
+      expect(eventDefinitions[1].$type).to.equal('bpmn:SignalEventDefinition');
+
+      expectNoAttrs(endEvent);
+    }));
+
+
+    it('should NOT copy properties that are not allowed in target element', inject(
+      function(moddle) {
+
+        // given
+        var userTask = moddle.create('bpmn:UserTask', {
+          assignee: 'foobar'
+        });
+
+        // when
+        var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
+
+        // then
+        expect(serviceTask.assignee).not.to.exist;
+
+        expectNoAttrs(serviceTask);
+      }
+    ));
+
+
+    it('should NOT copy IDs', inject(function(moddle) {
+
+      // given
+      var task = moddle.create('bpmn:Task', {
+        id: 'foo'
+      });
+
+      // when
+      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
+
+      // then
+      expect(userTask.id).not.to.equal('foo');
+
+      expectNoAttrs(userTask);
+    }));
+
+
+    it('should NOT copy references', inject(function(moddle) {
+
+      // given
+      var processRef = moddle.create('bpmn:Process'),
+          participant = moddle.create('bpmn:Participant');
+
+      participant.processRef = processRef;
+
+      // when
+      participant = helper.clone(participant, moddle.create('bpmn:Participant'));
+
+      // then
+      expect(participant.processRef).not.to.equal(processRef);
+    }));
+
+
+    it('should only copy specified properties', inject(function(moddle) {
 
       // given
       var userTask = moddle.create('bpmn:UserTask', {
-        assignee: 'foobar'
+        asyncBefore: true,
+        name: 'foo'
       });
 
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), []);
+      // when
+      var serviceTask = helper.clone(
+        userTask,
+        moddle.create('bpmn:ServiceTask'),
+        'asyncBefore'
+      );
 
-      expect(getProp(serviceTask, 'camunda:assignee')).not.to.exist;
+      // then
+      expect(serviceTask.asyncBefore).to.be.true;
+      expect(serviceTask.name).not.to.exist;
+
+      expectNoAttrs(serviceTask);
     }));
 
   });
@@ -68,33 +158,31 @@ describe('util/clone/ModelCloneHelper', function() {
 
   describe('nested', function() {
 
-    it('should pass nested property - documentation', inject(function(moddle) {
+    it('should copy documentation', inject(function(moddle) {
 
       // given
+      var documentation = [
+        moddle.create('bpmn:Documentation', { text: 'FOO\nBAR', textFormat: 'xyz' }),
+        moddle.create('bpmn:Documentation', { text: '<html></html>' })
+      ];
+
       var userTask = moddle.create('bpmn:UserTask');
 
-      var docs = userTask.get('documentation');
+      userTask.documentation = documentation;
 
-      docs.push(moddle.create('bpmn:Documentation', { textFormat: 'xyz', text: 'FOO\nBAR' }));
-      docs.push(moddle.create('bpmn:Documentation', { text: '<some /><html></html>' }));
+      // when
+      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
 
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), [ 'bpmn:documentation' ]);
+      expect(serviceTask.documentation[0].$parent).to.equal(serviceTask);
+      expect(serviceTask.documentation[0].text).to.equal('FOO\nBAR');
+      expect(serviceTask.documentation[0].textFormat).to.equal('xyz');
 
-      var serviceTaskDocs = getProp(serviceTask, 'bpmn:documentation'),
-          userTaskDocs = getProp(userTask, 'bpmn:documentation');
-
-      expect(userTaskDocs[0]).not.to.equal(serviceTaskDocs[0]);
-
-      expect(serviceTaskDocs[0].$parent).to.equal(serviceTask);
-
-      expect(serviceTaskDocs[0].text).to.equal('FOO\nBAR');
-      expect(serviceTaskDocs[0].textFormat).to.equal('xyz');
-
-      expect(serviceTaskDocs[1].text).to.equal('<some /><html></html>');
+      expect(serviceTask.documentation[1].$parent).to.equal(serviceTask);
+      expect(serviceTask.documentation[1].text).to.equal('<html></html>');
     }));
 
 
-    it('should pass deeply nested property - executionListener', inject(function(moddle) {
+    it('should copy execution listener', inject(function(moddle) {
 
       // given
       var script = moddle.create('camunda:Script', {
@@ -102,46 +190,47 @@ describe('util/clone/ModelCloneHelper', function() {
         value: 'foo = bar;'
       });
 
-      var execListener = moddle.create('camunda:ExecutionListener', {
+      var executionListener = moddle.create('camunda:ExecutionListener', {
         event: 'start',
         script: script
       });
 
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ execListener ] });
+      var extensionElements = moddle.create('bpmn:ExtensionElements'),
+          userTask = moddle.create('bpmn:UserTask');
 
-      var userTask = moddle.create('bpmn:UserTask', {
-        extensionElements: extensionElements
-      });
+      executionListener.$parent = extensionElements;
 
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), [
-        'bpmn:extensionElements',
-        'camunda:executionListener'
-      ]);
+      extensionElements.$parent = userTask;
+      extensionElements.values = [ executionListener ];
 
-      var executionListener = serviceTask.extensionElements.values[0];
+      userTask.extensionElements = extensionElements;
+
+      // when
+      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
 
       // then
-      expect(executionListener).not.to.equal(userTask.extensionElements.values[0]);
-      expect(executionListener.$type).to.equal('camunda:ExecutionListener');
+      executionListener = serviceTask.extensionElements.values[0];
 
+      expect(executionListener).to.exist;
       expect(executionListener.$type).to.equal('camunda:ExecutionListener');
       expect(executionListener.$parent).to.equal(serviceTask.extensionElements);
-
       expect(executionListener.event).to.equal('start');
 
-      expect(executionListener.script.$type).to.equal('camunda:Script');
-      expect(executionListener.script.$parent).to.equal(executionListener);
+      script = executionListener.script;
 
-      expect(executionListener.script.scriptFormat).to.equal('groovy');
-      expect(executionListener.script.value).to.equal('foo = bar;');
+      expect(script).to.exist;
+      expect(script.$type).to.equal('camunda:Script');
+      expect(script.$parent).to.equal(executionListener);
+      expect(script.scriptFormat).to.equal('groovy');
+      expect(script.value).to.equal('foo = bar;');
     }));
 
 
-    it('should pass deeply nested property - inputOutput', inject(function(moddle) {
+    it('should copy output parameter', inject(function(moddle) {
 
       // given
       var outputParameter = moddle.create('camunda:OutputParameter', {
-        name: 'var1',
+        name: 'foo',
         definition: moddle.create('camunda:List', {
           items: [
             moddle.create('camunda:Value', { value: '${1+1}' }),
@@ -155,227 +244,283 @@ describe('util/clone/ModelCloneHelper', function() {
         outputParameters: [ outputParameter ]
       });
 
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ inputOutput ] });
+      var extensionElements = moddle.create('bpmn:ExtensionElements'),
+          userTask = moddle.create('bpmn:UserTask');
 
-      var userTask = moddle.create('bpmn:UserTask', {
-        extensionElements: extensionElements
-      });
+      extensionElements.$parent = userTask;
+      extensionElements.values = [ inputOutput ];
 
-      var subProcess = helper.clone(userTask, moddle.create('bpmn:SubProcess'), [
-        'bpmn:extensionElements'
-      ]);
+      userTask.extensionElements = extensionElements;
 
-      expect(subProcess.extensionElements.values[0].$type).to.equal('camunda:InputOutput');
-
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'), [
-        'bpmn:extensionElements',
-        'camunda:inputOutput'
-      ]);
-
-      var executionListener = serviceTask.extensionElements.values[0];
+      // when
+      var subProcess = helper.clone(userTask, moddle.create('bpmn:SubProcess'));
 
       // then
-      expect(executionListener.$type).to.equal('camunda:InputOutput');
+      extensionElements = subProcess.extensionElements;
 
-      var newOutParam = executionListener.outputParameters[0];
-      var oldOutParam = userTask.extensionElements.values[0].outputParameters[0];
+      inputOutput = extensionElements.values[0];
 
-      expect(newOutParam).not.to.equal(oldOutParam);
+      expect(inputOutput.$type).to.equal('camunda:InputOutput');
+      expect(inputOutput.$parent).to.equal(extensionElements);
 
-      expect(newOutParam.$parent).to.equal(executionListener);
-      expect(newOutParam.definition).not.to.equal(oldOutParam.definition);
-      expect(newOutParam.definition.$parent).to.equal(newOutParam);
+      outputParameter = inputOutput.outputParameters[0];
 
-      expect(newOutParam.definition.items[0]).not.to.equal(oldOutParam.definition.items[0]);
+      expect(outputParameter.$type).to.equal('camunda:OutputParameter');
+      expect(outputParameter.$parent).to.equal(inputOutput);
+      expect(outputParameter.name).to.equal('foo');
 
-      expect(newOutParam.definition.items[0].$parent).not.to.equal(newOutParam.definition.$parent);
+      var definition = outputParameter.definition;
 
-      expect(newOutParam.$type).to.equal('camunda:OutputParameter');
-      expect(newOutParam.definition.$type).to.equal('camunda:List');
-      expect(newOutParam.definition.items[0].value).to.equal('${1+1}');
-    }));
+      expect(definition.$type).to.equal('camunda:List');
+      expect(definition.$parent).to.equal(outputParameter);
 
+      var items = definition.items;
 
-    it('should not pass disallowed deeply nested property - connector', inject(function(moddle) {
+      expect(items[0].$type).to.equal('camunda:Value');
+      expect(items[0].$parent).to.equal(definition);
+      expect(items[0].value).to.equal('${1+1}');
 
-      // given
-      var connector = moddle.create('camunda:Connector', {
-        connectorId: 'hello_connector'
-      });
+      expect(items[1].$type).to.equal('camunda:Value');
+      expect(items[1].$parent).to.equal(definition);
+      expect(items[1].value).to.equal('${1+2}');
 
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ connector ] });
-
-      var serviceTask = moddle.create('bpmn:UserTask', {
-        extensionElements: extensionElements
-      });
-
-      var userTask = helper.clone(serviceTask, moddle.create('bpmn:UserTask'), [
-        'bpmn:extensionElements'
-      ]);
-
-      var extElem = userTask.extensionElements;
-
-      // then
-      expect(extElem).not.to.exist;
+      expect(items[2].$type).to.equal('camunda:Value');
+      expect(items[2].$parent).to.equal(definition);
+      expect(items[2].value).to.equal('${1+3}');
     }));
 
   });
 
 
-  describe('special cases', function() {
+  describe('integration', function() {
 
-    it('failed job retry time cycle', inject(function(moddle) {
+    describe('camunda:Connector', function() {
 
-      function createExtElems() {
-        var retryTimeCycle = moddle.create('camunda:FailedJobRetryTimeCycle', { body: 'foobar' });
+      it('should copy if parent is message event definition and is child of end event', inject(
+        function(moddle) {
 
-        return moddle.create('bpmn:ExtensionElements', { values: [ retryTimeCycle ] });
-      }
+          // given
+          var connector = moddle.create('camunda:Connector', {
+            connectorId: 'foo'
+          });
+
+          var extensionElements = moddle.create('bpmn:ExtensionElements'),
+              messageEventDefinition = moddle.create('bpmn:MessageEventDefinition'),
+              messageIntermediateThrowEvent = moddle.create('bpmn:IntermediateThrowEvent');
+
+          connector.$parent = extensionElements;
+
+          extensionElements.$parent = messageEventDefinition;
+          extensionElements.values = [ connector ];
+          
+          messageEventDefinition.$parent = messageIntermediateThrowEvent;
+          messageEventDefinition.extensionElements = extensionElements;
+
+          messageIntermediateThrowEvent.eventDefinitions = [ messageEventDefinition ];
+
+          // when
+          var endEvent =
+            helper.clone(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
+
+          // then
+          extensionElements = endEvent.eventDefinitions[0].extensionElements;
+
+          expect(extensionElements.values[0].$type).to.equal('camunda:Connector');
+          expect(extensionElements.values[0].connectorId).to.equal('foo');
+        }
+      ));
+
+    });
+
+
+    describe('camunda:Field', function() {
+
+      it('should copy if parent is message event definition and is child of end event', inject(
+        function(moddle) {
+
+          // given
+          var field = moddle.create('camunda:Field', {
+            name: 'foo'
+          });
+
+          var extensionElements = moddle.create('bpmn:ExtensionElements'),
+              messageEventDefinition = moddle.create('bpmn:MessageEventDefinition'),
+              messageIntermediateThrowEvent = moddle.create('bpmn:IntermediateThrowEvent');
+
+          field.$parent = extensionElements;
+
+          extensionElements.$parent = messageEventDefinition;
+          extensionElements.values = [ field ];
+
+          messageEventDefinition.$parent = messageIntermediateThrowEvent;
+          messageEventDefinition.extensionElements = extensionElements;
+
+          messageIntermediateThrowEvent.eventDefinitions = [ messageEventDefinition ];
+
+          // when
+          var endEvent =
+            helper.clone(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
+
+          // then
+          extensionElements = endEvent.eventDefinitions[0].extensionElements;
+
+          expect(extensionElements.values[0].$type).to.equal('camunda:Field');
+          expect(extensionElements.values[0].name).to.equal('foo');
+        }
+      ));
+
+    });
+
+
+    describe('camunda:FailedJobRetryTimeCycle', function() {
+
+      it('should copy if parent is SignalEventDefinition and is intermediate throwing', inject(
+        function(moddle) {
+
+          // given
+          var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
+            body: 'foo'
+          });
+
+          var extensionElements = moddle.create('bpmn:ExtensionElements'),
+              signalEventDefinition = moddle.create('bpmn:SignalEventDefinition'),
+              signalIntermediateThrowEvent = moddle.create('bpmn:IntermediateThrowEvent');
+
+          retryCycle.$parent = extensionElements;
+
+          extensionElements.$parent = signalEventDefinition;
+          extensionElements.values = [ retryCycle ];
+
+          signalEventDefinition.$parent = signalIntermediateThrowEvent;
+          signalEventDefinition.extensionElements = extensionElements;
+
+          signalIntermediateThrowEvent.eventDefinitions = [ signalEventDefinition ];
+
+          // when
+          var intermediateThrowEvent =
+            helper.clone(signalIntermediateThrowEvent, moddle.create('bpmn:IntermediateThrowEvent'));
+
+          // then
+          extensionElements = intermediateThrowEvent.eventDefinitions[0].extensionElements;
+
+          expect(extensionElements.values[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
+          expect(extensionElements.values[0].body).to.equal('foo');
+        }
+      ));
+
+
+      it('should copy if parent is TimerEventDefinition and is catching', inject(
+        function(moddle) {
+
+          // given
+          var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
+            body: 'foo'
+          });
+
+          var extensionElements = moddle.create('bpmn:ExtensionElements'),
+              timerEventDefinition = moddle.create('bpmn:TimerEventDefinition'),
+              timerStartEvent = moddle.create('bpmn:StartEvent');
+
+          retryCycle.$parent = extensionElements;
+
+          extensionElements.$parent = timerEventDefinition;
+          extensionElements.values = [ retryCycle ];
+
+          timerEventDefinition.$parent = timerStartEvent;
+          timerEventDefinition.extensionElements = extensionElements;
+
+          timerStartEvent.eventDefinitions = [ timerEventDefinition ];
+
+          // when
+          var intermediateCatchEvent =
+            helper.clone(timerStartEvent, moddle.create('bpmn:IntermediateCatchEvent'));
+
+          // then
+          extensionElements = intermediateCatchEvent.eventDefinitions[0].extensionElements;
+
+          expect(extensionElements.values[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
+          expect(extensionElements.values[0].body).to.equal('foo');
+        }
+      ));
+
+
+      it('should copy if parent is call activity', inject(function(moddle) {
+
+        // given
+        var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
+          body: 'foo'
+        });
+
+        var extensionElements = moddle.create('bpmn:ExtensionElements'),
+            loopCharacteristics = moddle.create('bpmn:MultiInstanceLoopCharacteristics'),
+            subProcess = moddle.create('bpmn:SubProcess');
+
+        retryCycle.$parent = extensionElements;
+
+        extensionElements.$parent = loopCharacteristics;
+        extensionElements.values = [ retryCycle ];
+
+        loopCharacteristics.$parent = subProcess;
+        loopCharacteristics.extensionElements = extensionElements;
+
+        subProcess.loopCharacteristics = loopCharacteristics;
+
+        // when
+        var callActivity = helper.clone(subProcess, moddle.create('bpmn:CallActivity'));
+
+        // then
+        extensionElements = callActivity.loopCharacteristics.extensionElements;
+
+        expect(extensionElements.values[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
+        expect(extensionElements.values[0].body).to.equal('foo');
+      }));
+
+    });
+
+  });
+
+
+  describe('events', function() {
+
+    it('should disallow copying property', inject(function(eventBus, moddle) {
 
       // given
-      var timerEvtDef = moddle.create('bpmn:TimerEventDefinition', {
-        timeDuration: 'foobar'
+      var task = moddle.create('bpmn:Task', {
+        name: 'foo'
       });
 
-      var signalEvtDef = moddle.create('bpmn:SignalEventDefinition', {
-        async: true
+      eventBus.on('element.copyProperty', HIGH_PRIORITY, function(context) {
+        var propertyName = context.propertyName;
+
+        if (propertyName === 'name') {
+          return false;
+        }
       });
 
-      var multiInst = moddle.create('bpmn:MultiInstanceLoopCharacteristics', {
-        elementVariable: 'foobar'
-      });
+      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
 
-      var timerStartEvent = moddle.create('bpmn:StartEvent', {
-        extensionElements: createExtElems(),
-        eventDefinitions: [ timerEvtDef ]
-      });
-
-      var signalStartEvt = moddle.create('bpmn:StartEvent', {
-        extensionElements: createExtElems(),
-        eventDefinitions: [ signalEvtDef ]
-      });
-
-      var subProcess = moddle.create('bpmn:SubProcess', {
-        extensionElements: createExtElems(),
-        loopCharacteristics: multiInst
-      });
-
-      var intCatchEvt = helper.clone(timerStartEvent, moddle.create('bpmn:IntermediateCatchEvent'), [
-        'bpmn:extensionElements',
-        'bpmn:eventDefinitions'
-      ]);
-
-      var startEvt = helper.clone(signalStartEvt, moddle.create('bpmn:StartEvent'), [
-        'bpmn:extensionElements',
-        'bpmn:eventDefinitions'
-      ]);
-
-      var newSubProcess = helper.clone(subProcess, moddle.create('bpmn:SubProcess'), [
-        'bpmn:extensionElements',
-        'bpmn:loopCharacteristics'
-      ]);
-
-      var intCatchEvtExtElems = intCatchEvt.extensionElements.values,
-          startEvtExtElems = startEvt.extensionElements.values,
-          newSubProcessExtElems = newSubProcess.extensionElements.values;
-
-      // then
-      expect(intCatchEvtExtElems[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
-      expect(intCatchEvtExtElems[0].body).to.equal('foobar');
-
-      expect(startEvtExtElems[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
-      expect(startEvtExtElems[0].body).to.equal('foobar');
-
-      expect(newSubProcessExtElems[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
-      expect(newSubProcessExtElems[0].body).to.equal('foobar');
+      expect(userTask.name).not.to.exist;
     }));
 
 
-    it('connector', inject(function(moddle) {
+    it('should copy property', inject(function(eventBus, moddle) {
 
       // given
-      var connector = moddle.create('camunda:Connector', {
-        connectorId: 'hello_connector'
+      var task = moddle.create('bpmn:Task', {
+        name: 'foo'
       });
 
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ connector ] });
+      eventBus.on('element.copyProperty', HIGH_PRIORITY, function(context) {
+        var propertyName = context.propertyName;
 
-      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition', {
-        extensionElements: extensionElements
+        if (propertyName === 'name') {
+          return 'bar';
+        }
       });
 
-      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
-        eventDefinitions: [ msgEvtDef ]
-      });
+      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
 
-      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:EndEvent'), [
-        'bpmn:extensionElements',
-        'bpmn:eventDefinitions'
-      ]);
-
-      var extElems = clonedElement.eventDefinitions[0].extensionElements.values;
-
-      // then
-      expect(extElems[0].$type).to.equal('camunda:Connector');
-      expect(extElems[0].connectorId).to.equal('hello_connector');
-    }));
-
-
-    it('field', inject(function(moddle) {
-
-      // given
-      var field = moddle.create('camunda:Field', {
-        name: 'hello_field'
-      });
-
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ field ] });
-
-      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition', {
-        extensionElements: extensionElements
-      });
-
-      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
-        eventDefinitions: [ msgEvtDef ]
-      });
-
-      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:EndEvent'), [
-        'bpmn:extensionElements',
-        'bpmn:eventDefinitions'
-      ]);
-
-      var extElems = clonedElement.eventDefinitions[0].extensionElements.values;
-
-      // then
-      expect(extElems[0].$type).to.equal('camunda:Field');
-      expect(extElems[0].name).to.equal('hello_field');
-    }));
-
-
-    it('not clone field', inject(function(moddle) {
-
-      // given
-      var field = moddle.create('camunda:Field', {
-        name: 'hello_field'
-      });
-
-      var extensionElements = moddle.create('bpmn:ExtensionElements', { values: [ field ] });
-
-      var msgEvtDef = moddle.create('bpmn:MessageEventDefinition', {
-        extensionElements: extensionElements
-      });
-
-      var msgIntermThrowEvt = moddle.create('bpmn:IntermediateThrowEvent', {
-        eventDefinitions: [ msgEvtDef ]
-      });
-
-      var clonedElement = helper.clone(msgIntermThrowEvt, moddle.create('bpmn:IntermediateThrowEvent'), [
-        'bpmn:extensionElements'
-      ]);
-
-      var extElems = clonedElement.extensionElements;
-
-      // then
-      expect(extElems).not.to.exist;
+      expect(userTask.name).to.equal('bar');
     }));
 
   });
@@ -383,8 +528,8 @@ describe('util/clone/ModelCloneHelper', function() {
 });
 
 
-// helpers ////////////
+// helpers //////////
 
-function getProp(element, property) {
-  return element && element.$model.properties.get(element, property);
+function expectNoAttrs(element) {
+  expect(element.$attrs).to.be.empty;
 }

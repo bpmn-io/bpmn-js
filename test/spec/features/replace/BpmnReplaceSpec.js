@@ -13,6 +13,9 @@ import replaceModule from 'lib/features/replace';
 import moveModule from 'diagram-js/lib/features/move';
 import coreModule from 'lib/core';
 
+import camundaModdleModule from 'camunda-bpmn-moddle/lib';
+import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
+
 import {
   is
 } from 'lib/util/ModelUtil';
@@ -28,10 +31,11 @@ import {
 describe('features/replace - bpmn replace', function() {
 
   var testModules = [
+    camundaModdleModule,
     coreModule,
     modelingModule,
-    replaceModule,
-    moveModule
+    moveModule,
+    replaceModule
   ];
 
 
@@ -39,7 +43,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('task', inject(function(elementRegistry, bpmnReplace) {
@@ -288,7 +297,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('./BpmnReplace.collaboration.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -341,7 +353,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('./BpmnReplace.poolMessageFlows.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -372,7 +387,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('./BpmnReplace.dataObjects.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -413,7 +431,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should keep position', inject(function(elementRegistry, bpmnReplace) {
@@ -458,7 +481,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should select after replace',
@@ -485,7 +513,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
     it('should keep internal labels',
       inject(function(elementRegistry, bpmnReplace) {
@@ -533,7 +566,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -595,7 +631,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -830,7 +869,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should update bpmn containment properly', inject(function(elementRegistry, modeling, bpmnReplace) {
@@ -871,7 +915,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should allow morphing expanded into expanded ad hoc',
@@ -1010,7 +1059,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -1063,7 +1115,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('./BpmnReplace.compensation.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -1089,7 +1144,12 @@ describe('features/replace - bpmn replace', function() {
 
     var diagramXML = require('./BpmnReplace.eventSubProcesses.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should remove connections',
@@ -1371,7 +1431,10 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
     }));
 
 
@@ -1441,8 +1504,6 @@ describe('features/replace - bpmn replace', function() {
   describe('properties', function() {
     var clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn');
 
-    var camundaPackage = require('../../../fixtures/json/model/camunda');
-
     beforeEach(bootstrapModeler(clonePropertiesXML, {
       modules: testModules,
       moddleExtensions: {
@@ -1450,9 +1511,11 @@ describe('features/replace - bpmn replace', function() {
       }
     }));
 
-    it('should copy properties', inject(function(elementRegistry, bpmnReplace) {
+    it('should copy properties', inject(function(bpmnReplace, elementRegistry) {
+
       // given
       var task = elementRegistry.get('Task_1');
+
       var newElementData = {
         type: 'bpmn:ServiceTask'
       };
@@ -1465,39 +1528,46 @@ describe('features/replace - bpmn replace', function() {
 
       expect(businessObject.asyncBefore).to.be.true;
       expect(businessObject.jobPriority).to.equal('100');
-      expect(businessObject.documentation[0].text).to.equal('hello world');
 
-      var extensionElements = businessObject.extensionElements.values;
+      var documentation = businessObject.documentation;
 
-      expect(extensionElements).to.have.length(4);
+      expect(documentation).to.have.length(1);
+      expect(documentation[0]).to.exist;
+      expect(documentation[0].text).to.equal('hello world');
 
-      expect(is(extensionElements[0], 'camunda:InputOutput')).to.be.true;
+      var extensionElements = businessObject.extensionElements;
 
-      expect(is(extensionElements[0].inputParameters[0], 'camunda:InputParameter')).to.be.true;
+      expect(extensionElements.values).to.have.length(4);
 
-      expect(extensionElements[0].inputParameters[0].name).to.equal('Input_1');
-      expect(extensionElements[0].inputParameters[0].value).to.equal('foo');
+      var inputOutput = extensionElements.values[0],
+          properties = extensionElements.values[1],
+          executionListener = extensionElements.values[2],
+          retryCycle = extensionElements.values[3];
 
-      expect(is(extensionElements[0].outputParameters[0], 'camunda:OutputParameter')).to.be.true;
+      expect(is(inputOutput, 'camunda:InputOutput')).to.be.true;
 
-      expect(extensionElements[0].outputParameters[0].name).to.equal('Output_1');
-      expect(extensionElements[0].outputParameters[0].value).to.equal('bar');
+      expect(is(inputOutput.inputParameters[0], 'camunda:InputParameter')).to.be.true;
+      expect(inputOutput.inputParameters[0].name).to.equal('Input_1');
+      expect(inputOutput.inputParameters[0].value).to.equal('foo');
 
-      expect(is(extensionElements[1], 'camunda:Properties')).to.be.true;
+      expect(is(inputOutput.outputParameters[0], 'camunda:OutputParameter')).to.be.true;
+      expect(inputOutput.outputParameters[0].name).to.equal('Output_1');
+      expect(inputOutput.outputParameters[0].value).to.equal('bar');
 
-      expect(is(extensionElements[1].values[0], 'camunda:Property')).to.be.true;
+      expect(is(properties, 'camunda:Properties')).to.be.true;
 
-      expect(extensionElements[1].values[0].name).to.equal('bar');
-      expect(extensionElements[1].values[0].value).to.equal('foo');
+      expect(is(properties.values[0], 'camunda:Property')).to.be.true;
+      expect(properties.values[0].name).to.equal('bar');
+      expect(properties.values[0].value).to.equal('foo');
 
-      expect(is(extensionElements[2], 'camunda:ExecutionListener')).to.be.true;
+      expect(is(executionListener, 'camunda:ExecutionListener')).to.be.true;
 
-      expect(extensionElements[2].class).to.equal('reallyClassy');
-      expect(extensionElements[2].event).to.equal('start');
+      expect(executionListener.class).to.equal('reallyClassy');
+      expect(executionListener.event).to.equal('start');
 
-      expect(is(extensionElements[3], 'camunda:FailedJobRetryTimeCycle')).to.be.true;
+      expect(is(retryCycle, 'camunda:FailedJobRetryTimeCycle')).to.be.true;
 
-      expect(extensionElements[3].body).to.equal('10');
+      expect(retryCycle.body).to.equal('10');
     }));
 
   });
