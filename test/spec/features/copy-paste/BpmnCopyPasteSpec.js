@@ -36,7 +36,7 @@ describe('features/copy-paste', function() {
   ];
 
   var basicXML = require('./basic.bpmn'),
-      clonePropertiesXML = require('./clone-properties.bpmn'),
+      copyPropertiesXML = require('./copy-properties.bpmn'),
       propertiesXML = require('./properties.bpmn'),
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
@@ -530,7 +530,7 @@ describe('features/copy-paste', function() {
 
     var camundaPackage = require('camunda-bpmn-moddle/resources/camunda.json');
 
-    beforeEach(bootstrapModeler(clonePropertiesXML, {
+    beforeEach(bootstrapModeler(copyPropertiesXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage

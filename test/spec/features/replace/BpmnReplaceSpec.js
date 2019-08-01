@@ -1502,9 +1502,9 @@ describe('features/replace - bpmn replace', function() {
 
 
   describe('properties', function() {
-    var clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn');
+    var copyPropertiesXML = require('../../../fixtures/bpmn/features/replace/copy-properties.bpmn');
 
-    beforeEach(bootstrapModeler(clonePropertiesXML, {
+    beforeEach(bootstrapModeler(copyPropertiesXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage

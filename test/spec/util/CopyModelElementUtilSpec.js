@@ -6,7 +6,7 @@ import {
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 
-import ModelCloneHelper from 'lib/util/model/ModelCloneHelper';
+import CopyModelElementUtil from 'lib/util/CopyModelElementUtil';
 
 import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
@@ -14,7 +14,7 @@ import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 var HIGH_PRIORITY = 2000;
 
 
-describe('util/clone/ModelCloneHelper', function() {
+describe('util/CopyModelElementUtil', function() {
 
   var testModules = [
     camundaModdleModule,
@@ -31,13 +31,13 @@ describe('util/clone/ModelCloneHelper', function() {
     }
   }));
 
-  var helper;
+  var copyModelElementUtil;
 
   beforeEach(inject(function(injector) {
-    helper = injector.instantiate(ModelCloneHelper);
+    copyModelElementUtil = injector.instantiate(CopyModelElementUtil);
   }));
 
-  describe.only('simple', function() {
+  describe('simple', function() {
 
     it('should copy primitive properties', inject(function(moddle) {
 
@@ -47,7 +47,7 @@ describe('util/clone/ModelCloneHelper', function() {
       });
 
       // when
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
+      var serviceTask = copyModelElementUtil.copyElement(userTask, moddle.create('bpmn:ServiceTask'));
 
       // then
       expect(serviceTask.asyncBefore).to.be.true;
@@ -66,7 +66,7 @@ describe('util/clone/ModelCloneHelper', function() {
       startEvent.eventDefinitions = [ messageEventDefinition, signalEventDefinition ];
 
       // when
-      var endEvent = helper.clone(startEvent, moddle.create('bpmn:EndEvent'));
+      var endEvent = copyModelElementUtil.copyElement(startEvent, moddle.create('bpmn:EndEvent'));
 
       // then
       var eventDefinitions = endEvent.eventDefinitions;
@@ -88,7 +88,7 @@ describe('util/clone/ModelCloneHelper', function() {
         });
 
         // when
-        var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
+        var serviceTask = copyModelElementUtil.copyElement(userTask, moddle.create('bpmn:ServiceTask'));
 
         // then
         expect(serviceTask.assignee).not.to.exist;
@@ -106,7 +106,7 @@ describe('util/clone/ModelCloneHelper', function() {
       });
 
       // when
-      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
+      var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
       // then
       expect(userTask.id).not.to.equal('foo');
@@ -124,7 +124,7 @@ describe('util/clone/ModelCloneHelper', function() {
       participant.processRef = processRef;
 
       // when
-      participant = helper.clone(participant, moddle.create('bpmn:Participant'));
+      participant = copyModelElementUtil.copyElement(participant, moddle.create('bpmn:Participant'));
 
       // then
       expect(participant.processRef).not.to.equal(processRef);
@@ -140,7 +140,7 @@ describe('util/clone/ModelCloneHelper', function() {
       });
 
       // when
-      var serviceTask = helper.clone(
+      var serviceTask = copyModelElementUtil.copyElement(
         userTask,
         moddle.create('bpmn:ServiceTask'),
         'asyncBefore'
@@ -171,7 +171,7 @@ describe('util/clone/ModelCloneHelper', function() {
       userTask.documentation = documentation;
 
       // when
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
+      var serviceTask = copyModelElementUtil.copyElement(userTask, moddle.create('bpmn:ServiceTask'));
 
       expect(serviceTask.documentation[0].$parent).to.equal(serviceTask);
       expect(serviceTask.documentation[0].text).to.equal('FOO\nBAR');
@@ -206,7 +206,7 @@ describe('util/clone/ModelCloneHelper', function() {
       userTask.extensionElements = extensionElements;
 
       // when
-      var serviceTask = helper.clone(userTask, moddle.create('bpmn:ServiceTask'));
+      var serviceTask = copyModelElementUtil.copyElement(userTask, moddle.create('bpmn:ServiceTask'));
 
       // then
       executionListener = serviceTask.extensionElements.values[0];
@@ -253,7 +253,7 @@ describe('util/clone/ModelCloneHelper', function() {
       userTask.extensionElements = extensionElements;
 
       // when
-      var subProcess = helper.clone(userTask, moddle.create('bpmn:SubProcess'));
+      var subProcess = copyModelElementUtil.copyElement(userTask, moddle.create('bpmn:SubProcess'));
 
       // then
       extensionElements = subProcess.extensionElements;
@@ -312,7 +312,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
           extensionElements.$parent = messageEventDefinition;
           extensionElements.values = [ connector ];
-          
+
           messageEventDefinition.$parent = messageIntermediateThrowEvent;
           messageEventDefinition.extensionElements = extensionElements;
 
@@ -320,7 +320,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
           // when
           var endEvent =
-            helper.clone(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
+            copyModelElementUtil.copyElement(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
 
           // then
           extensionElements = endEvent.eventDefinitions[0].extensionElements;
@@ -359,7 +359,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
           // when
           var endEvent =
-            helper.clone(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
+            copyModelElementUtil.copyElement(messageIntermediateThrowEvent, moddle.create('bpmn:EndEvent'));
 
           // then
           extensionElements = endEvent.eventDefinitions[0].extensionElements;
@@ -398,7 +398,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
           // when
           var intermediateThrowEvent =
-            helper.clone(signalIntermediateThrowEvent, moddle.create('bpmn:IntermediateThrowEvent'));
+            copyModelElementUtil.copyElement(signalIntermediateThrowEvent, moddle.create('bpmn:IntermediateThrowEvent'));
 
           // then
           extensionElements = intermediateThrowEvent.eventDefinitions[0].extensionElements;
@@ -433,7 +433,7 @@ describe('util/clone/ModelCloneHelper', function() {
 
           // when
           var intermediateCatchEvent =
-            helper.clone(timerStartEvent, moddle.create('bpmn:IntermediateCatchEvent'));
+            copyModelElementUtil.copyElement(timerStartEvent, moddle.create('bpmn:IntermediateCatchEvent'));
 
           // then
           extensionElements = intermediateCatchEvent.eventDefinitions[0].extensionElements;
@@ -466,7 +466,7 @@ describe('util/clone/ModelCloneHelper', function() {
         subProcess.loopCharacteristics = loopCharacteristics;
 
         // when
-        var callActivity = helper.clone(subProcess, moddle.create('bpmn:CallActivity'));
+        var callActivity = copyModelElementUtil.copyElement(subProcess, moddle.create('bpmn:CallActivity'));
 
         // then
         extensionElements = callActivity.loopCharacteristics.extensionElements;
@@ -497,7 +497,7 @@ describe('util/clone/ModelCloneHelper', function() {
         }
       });
 
-      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
+      var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
       expect(userTask.name).not.to.exist;
     }));
@@ -518,7 +518,7 @@ describe('util/clone/ModelCloneHelper', function() {
         }
       });
 
-      var userTask = helper.clone(task, moddle.create('bpmn:UserTask'));
+      var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
       expect(userTask.name).to.equal('bar');
     }));
