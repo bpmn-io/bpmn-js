@@ -1,11 +1,11 @@
-/* global sinon */
 import {
   bootstrapModeler,
   inject
 } from 'test/TestHelper';
 
 import {
-  getBusinessObject
+  getBusinessObject,
+  is
 } from 'lib/util/ModelUtil';
 
 import {
@@ -16,6 +16,8 @@ import bpmnCopyPasteModule from 'lib/features/copy-paste';
 import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+
+import { find } from 'min-dash';
 
 
 describe('features/modeling/behavior - groups', function() {
@@ -154,42 +156,34 @@ describe('features/modeling/behavior - groups', function() {
     });
 
 
-    describe('should set copied name for pasted group', function() {
+    describe('integration', function() {
 
-      it('execute', inject(function(canvas, elementRegistry, copyPaste, eventBus) {
+      it('should copy category', inject(function(canvas, copyPaste, elementRegistry) {
 
         // given
-        var groupShape = elementRegistry.get('Group_1'),
-            categoryValue = getBusinessObject(groupShape).categoryValueRef,
-            root = canvas.getRootElement(),
-            listener = sinon.spy(function(event) {
+        var group = elementRegistry.get('Group_1'),
+            rootElement = canvas.getRootElement();
 
-              var context = event.context,
-                  createdElement = context.shape,
-                  businessObject = createdElement.businessObject,
-                  categoryValueRef = businessObject.categoryValueRef;
-
-              expect(categoryValueRef).to.exist;
-              expect(categoryValueRef).to.not.eql(categoryValue);
-              expect(categoryValueRef.value).to.equal(categoryValue.value);
-
-            });
-
-        eventBus.on('commandStack.shape.create.postExecute', listener);
+        copyPaste.copy(group);
 
         // when
-        copyPaste.copy(groupShape);
-        copyPaste.paste({
-          element: root,
+        var elements = copyPaste.paste({
+          element: rootElement,
           point: {
-            x: 50,
-            y: 50
+            x: 500,
+            y: 500
           }
         });
 
         // then
-        expect(listener).to.have.been.called;
+        group = find(elements, function(element) {
+          return is(element, 'bpmn:Group');
+        });
 
+        var groupBo = getBusinessObject(group);
+
+        expect(groupBo.categoryValueRef).to.exist;
+        expect(groupBo.categoryValueRef.value).to.equal('Value 1');
       }));
     });
 
