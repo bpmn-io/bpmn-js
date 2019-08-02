@@ -17,8 +17,6 @@ import {
   createCanvasEvent as canvasEvent
 } from '../../../../util/MockEvents';
 
-import Elements from 'diagram-js/lib/features/create/Elements';
-
 
 describe('features/modeling - create participant', function() {
 
@@ -68,7 +66,7 @@ describe('features/modeling - create participant', function() {
         participant2Bo = participant2.businessObject;
         participant2Di = participant2Bo.di;
 
-        participants = new Elements([ participant, participant2 ]);
+        participants = [ participant, participant2 ];
       }));
 
 

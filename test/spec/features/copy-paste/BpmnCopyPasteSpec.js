@@ -146,7 +146,7 @@ describe('features/copy-paste', function() {
           });
 
           // then
-          var task = elements.find(function(element) {
+          var task = find(elements, function(element) {
             return is(element, 'bpmn:Task');
           });
 
@@ -186,7 +186,7 @@ describe('features/copy-paste', function() {
             }
           });
 
-          subProcess = elements.find(function(element) {
+          subProcess = find(elements, function(element) {
             return is(element, 'bpmn:SubProcess');
           });
 
@@ -224,7 +224,7 @@ describe('features/copy-paste', function() {
           });
 
           // then
-          task = elements.find(function(element) {
+          task = find(elements, function(element) {
             return is(element, 'bpmn:Task');
           });
 
@@ -291,7 +291,7 @@ describe('features/copy-paste', function() {
       // when
       var elements = copyPasteElement('SubProcess_NonInterrupting');
 
-      var subProcess = elements.find(function(element) {
+      var subProcess = find(elements, function(element) {
         return is(element, 'bpmn:SubProcess');
       });
 
@@ -308,7 +308,7 @@ describe('features/copy-paste', function() {
       // when
       var elements = copyPasteElement('SubProcess_Interrupting');
 
-      var subProcess = elements.find(function(element) {
+      var subProcess = find(elements, function(element) {
         return is(element, 'bpmn:SubProcess');
       });
 
@@ -325,7 +325,7 @@ describe('features/copy-paste', function() {
       // when
       var elements = copyPasteElement('SubProcess_Event');
 
-      var subProcess = elements.find(function(element) {
+      var subProcess = find(elements, function(element) {
         return is(element, 'bpmn:SubProcess');
       });
 
@@ -341,7 +341,7 @@ describe('features/copy-paste', function() {
       // when
       var elements = copyPasteElement('SubProcess_Transaction');
 
-      var transaction = elements.find(function(element) {
+      var transaction = find(elements, function(element) {
         return is(element, 'bpmn:Transaction');
       });
 
@@ -354,7 +354,7 @@ describe('features/copy-paste', function() {
       // when
       var elements = copyPasteElement('Group');
 
-      var group = elements.find(function(element) {
+      var group = find(elements, function(element) {
         return is(element, 'bpmn:Group');
       });
 
@@ -559,7 +559,7 @@ describe('features/copy-paste', function() {
       });
 
       // then
-      var newTask = elements.find(function(element) {
+      var newTask = find(elements, function(element) {
         return is(element, 'bpmn:Task');
       });
 
