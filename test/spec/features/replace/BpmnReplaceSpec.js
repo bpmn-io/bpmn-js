@@ -1586,8 +1586,8 @@ describe('features/replace - bpmn replace', function() {
       var newElementData = {
             type: 'bpmn:UserTask'
           },
-          fill = '#BBDEFB',
-          stroke = '#1E88E5';
+          fill = 'red',
+          stroke = 'green';
 
       modeling.setColor(task, { fill: fill, stroke: stroke });
 
@@ -1599,8 +1599,6 @@ describe('features/replace - bpmn replace', function() {
 
       expect(businessObject.di.fill).to.equal(fill);
       expect(businessObject.di.stroke).to.equal(stroke);
-
-      expect(newElement.colors).not.to.exist;
     }));
 
   });
