@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.1">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" processRef="Process_08nr0a7" />
+    <bpmn:messageFlow id="MessageFlow_1" sourceRef="IntermediateThrowEvent_1" targetRef="Task_2" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_2">
+        <bpmn:flowNodeRef>Task_2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1">
+        <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
+        <bpmn:childLaneSet>
+          <bpmn:lane id="Lane_4" />
+          <bpmn:lane id="Lane_3">
+            <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
+          </bpmn:lane>
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:task id="Task_1" />
+    <bpmn:task id="Task_2" />
+  </bpmn:process>
+  <bpmn:process id="Process_08nr0a7" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_7">
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_6">
+        <bpmn:flowNodeRef>IntermediateThrowEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_5">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1" />
+    <bpmn:endEvent id="EndEvent_1" />
+    <bpmn:startEvent id="StartEvent_1" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_0pgdgt4_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="156" y="96" width="360" height="308" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1id96b4_di" bpmnElement="Participant_2" isHorizontal="true">
+        <dc:Bounds x="156" y="440" width="360" height="246" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1gzt96j_di" bpmnElement="Lane_1" isHorizontal="true">
+        <dc:Bounds x="186" y="96" width="330" height="183" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1kulv9k_di" bpmnElement="Lane_2" isHorizontal="true">
+        <dc:Bounds x="186" y="279" width="330" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0aws6ii_di" bpmnElement="Lane_5" isHorizontal="true">
+        <dc:Bounds x="186" y="440" width="330" height="83" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1sd1zl3_di" bpmnElement="Lane_6" isHorizontal="true">
+        <dc:Bounds x="186" y="523" width="330" height="83" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_16ah5rn_di" bpmnElement="Lane_7" isHorizontal="true">
+        <dc:Bounds x="186" y="606" width="330" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_07r1iyh_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="204" y="462" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="154" y="491" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_0audt6r_di" bpmnElement="IntermediateThrowEvent_1">
+        <dc:Bounds x="274" y="550" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="338" y="578" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1u50ypf_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="454" y="630" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="514" y="672" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1pamrp2_di" bpmnElement="Task_1">
+        <dc:Bounds x="242" y="116" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0n0k2nj_di" bpmnElement="Task_2">
+        <dc:Bounds x="242" y="302" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_150lriv_di" bpmnElement="MessageFlow_1">
+        <di:waypoint x="292" y="550" />
+        <di:waypoint x="292" y="382" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="338" y="453.5" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Lane_1yo0kyz_di" bpmnElement="Lane_3" isHorizontal="true">
+        <dc:Bounds x="216" y="96" width="300" height="121" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_022an7b_di" bpmnElement="Lane_4" isHorizontal="true">
+        <dc:Bounds x="216" y="217" width="300" height="62" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

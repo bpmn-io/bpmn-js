@@ -17,6 +17,8 @@ import {
   createCanvasEvent as canvasEvent
 } from '../../../../util/MockEvents';
 
+import Elements from 'diagram-js/lib/features/create/Elements';
+
 
 describe('features/modeling - create participant', function() {
 
@@ -28,7 +30,7 @@ describe('features/modeling - create participant', function() {
 
   describe('process', function() {
 
-    describe('should turn diagram into collaboration', function() {
+    describe('should turn process into collaboration', function() {
 
       var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
 
@@ -39,13 +41,17 @@ describe('features/modeling - create participant', function() {
           collaborationDi,
           diRoot,
           participant,
+          participant2,
+          participants,
           participantBo,
+          participant2Bo,
           participantDi,
+          participant2Di,
           process,
           processBo,
           processDi;
 
-      beforeEach(inject(function(canvas, elementFactory, modeling) {
+      beforeEach(inject(function(canvas, elementFactory) {
 
         // given
         process = canvas.getRootElement();
@@ -54,48 +60,116 @@ describe('features/modeling - create participant', function() {
 
         diRoot = processBo.di.$parent;
 
-        participant = elementFactory.createParticipantShape();
+        participant = elementFactory.createParticipantShape({ x: 100, y: 100 });
         participantBo = participant.businessObject;
         participantDi = participantBo.di;
 
-        // when
-        modeling.createShape(participant, { x: 350, y: 200 }, process);
+        participant2 = elementFactory.createParticipantShape({ x: 100, y: 400 });
+        participant2Bo = participant2.businessObject;
+        participant2Di = participant2Bo.di;
 
-        collaboration = canvas.getRootElement();
-        collaborationBo = collaboration.businessObject;
-        collaborationDi = collaborationBo.di;
+        participants = new Elements([ participant, participant2 ]);
       }));
 
 
-      it('execute', function() {
+      describe('creating one participant', function() {
 
-        // then
-        expect(participantBo.$parent).to.equal(collaborationBo);
-        expect(participantBo.processRef).to.equal(processBo);
+        beforeEach(inject(function(canvas, modeling) {
 
-        expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
-        expect(collaborationBo.$parent).to.equal(processBo.$parent);
-        expect(collaborationBo.participants).to.include(participantBo);
+          // when
+          modeling.createShape(participant, { x: 400, y: 225 }, process);
 
-        expect(participantDi.$parent).to.equal(collaborationDi);
-        expect(collaborationDi.$parent).to.equal(diRoot);
+          collaboration = canvas.getRootElement();
+          collaborationBo = collaboration.businessObject;
+          collaborationDi = collaborationBo.di;
+        }));
+
+
+        it('execute', function() {
+
+          // then
+          expect(participantBo.$parent).to.equal(collaborationBo);
+          expect(participantBo.processRef).to.equal(processBo);
+
+          expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
+          expect(collaborationBo.$parent).to.equal(processBo.$parent);
+          expect(collaborationBo.participants).to.include(participantBo);
+
+          expect(participantDi.$parent).to.equal(collaborationDi);
+          expect(collaborationDi.$parent).to.equal(diRoot);
+        });
+
+
+        it('undo', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(participantBo.$parent).not.to.exist;
+          expect(participantBo.processRef).not.to.equal(processBo);
+
+          expect(collaborationBo.$parent).not.to.exist;
+          expect(collaborationBo.participants).not.to.include(participantBo);
+
+          expect(processDi.$parent).to.equal(diRoot);
+        }));
+
       });
 
 
-      it('undo', inject(function(commandStack) {
+      describe('creating two participants', function() {
 
-        // when
-        commandStack.undo();
+        beforeEach(inject(function(canvas, modeling) {
 
-        // then
-        expect(participantBo.$parent).not.to.exist;
-        expect(participantBo.processRef).not.to.equal(processBo);
+          // when
+          modeling.createElements(participants, { x: 400, y: 375 }, process);
 
-        expect(collaborationBo.$parent).not.to.exist;
-        expect(collaborationBo.participants).not.to.include(participantBo);
+          collaboration = canvas.getRootElement();
+          collaborationBo = collaboration.businessObject;
+          collaborationDi = collaborationBo.di;
+        }));
 
-        expect(processDi.$parent).to.equal(diRoot);
-      }));
+
+        it('execute', function() {
+
+          // then
+          expect(participantBo.$parent).to.equal(collaborationBo);
+          expect(participantBo.processRef).to.equal(processBo);
+
+          expect(participant2Bo.$parent).to.equal(collaborationBo);
+          expect(participant2Bo.processRef).not.to.equal(processBo);
+
+          expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
+          expect(collaborationBo.$parent).to.equal(processBo.$parent);
+          expect(collaborationBo.participants).to.include(participantBo);
+
+          expect(participantDi.$parent).to.equal(collaborationDi);
+          expect(participant2Di.$parent).to.equal(collaborationDi);
+          expect(collaborationDi.$parent).to.equal(diRoot);
+        });
+
+
+        it('undo', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(participantBo.$parent).not.to.exist;
+          expect(participantBo.processRef).not.to.equal(processBo);
+
+          expect(participant2Bo.$parent).not.to.exist;
+          expect(participant2Bo.processRef).not.to.equal(processBo);
+
+          expect(collaborationBo.$parent).not.to.exist;
+          expect(collaborationBo.participants).not.to.include(participantBo);
+          expect(collaborationBo.participants).not.to.include(participant2Bo);
+
+          expect(processDi.$parent).to.equal(diRoot);
+        }));
+
+      });
 
     });
 

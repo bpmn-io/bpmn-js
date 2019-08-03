@@ -1,5 +1,3 @@
-/* global sinon */
-
 import {
   bootstrapModeler,
   getBpmnJS,
@@ -37,12 +35,12 @@ describe('features/copy-paste', function() {
     coreModule
   ];
 
-  var basicXML = require('../../../fixtures/bpmn/features/copy-paste/basic.bpmn'),
-      clonePropertiesXML = require('../../../fixtures/bpmn/features/replace/clone-properties.bpmn'),
-      propertiesXML = require('../../../fixtures/bpmn/features/copy-paste/properties.bpmn'),
-      collaborationXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration.bpmn'),
-      collaborationMultipleXML = require('../../../fixtures/bpmn/features/copy-paste/collaboration-multiple.bpmn'),
-      collaborationAssociations = require('../../../fixtures/bpmn/features/copy-paste/data-associations.bpmn');
+  var basicXML = require('./basic.bpmn'),
+      clonePropertiesXML = require('./clone-properties.bpmn'),
+      propertiesXML = require('./properties.bpmn'),
+      collaborationXML = require('./collaboration.bpmn'),
+      collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
+      collaborationAssociations = require('./data-associations.bpmn');
 
 
   describe('basic diagram', function() {
@@ -54,12 +52,12 @@ describe('features/copy-paste', function() {
 
     describe('copy', function() {
 
-      it('selected elements', inject(function(elementRegistry, copyPaste) {
+      it('should copy sub process', inject(function() {
 
         // when
-        var tree = copy([ 'SubProcess_1kd6ist' ]);
+        var tree = copy([ 'SubProcess_1' ]);
 
-        var subProcess = tree.getElement('SubProcess_1kd6ist');
+        var subProcess = tree.getElement('SubProcess_1');
 
         // then
         expect(tree.getLength()).to.equal(3);
@@ -72,78 +70,78 @@ describe('features/copy-paste', function() {
       }));
 
 
-      it('selected elements 2', inject(function(elementRegistry, copyPaste) {
+      it('should NOT override type property of descriptor', inject(function(elementRegistry) {
 
         // given
-        var event = elementRegistry.get('StartEvent_1');
+        var startEvent = elementRegistry.get('StartEvent_1'),
+            startEventBo = getBusinessObject(startEvent);
 
-        // add business object type property
-        event.businessObject.type = 'Foo';
+        // add type property to business object
+        startEventBo.type = 'external';
 
         // when
-        var tree = copy([ event ]);
+        var tree = copy([ startEvent ]);
 
-        var eventDescriptor = tree.getElement('StartEvent_1');
+        var startEventDescriptor = tree.getElement('StartEvent_1');
 
         // then
         expect(tree.getLength()).to.equal(1);
 
-        expect(eventDescriptor.type).to.eql('bpmn:StartEvent');
+        expect(startEventDescriptor.type).to.eql('bpmn:StartEvent');
       }));
 
     });
 
 
-    it('should paste twice', inject(
-      function(elementRegistry, canvas, copyPaste) {
-        // given
-        var element = elementRegistry.get('SubProcess_1kd6ist'),
-            rootElement = canvas.getRootElement();
+    it('should paste twice', inject(function(elementRegistry, canvas, copyPaste) {
 
-        // when
-        copyPaste.copy(element);
+      // given
+      var element = elementRegistry.get('SubProcess_1'),
+          rootElement = canvas.getRootElement();
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 1000,
-            y: 100
-          }
-        });
+      // when
+      copyPaste.copy(element);
 
-        copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 1500,
-            y: 275
-          }
-        });
+      copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 1000,
+          y: 100
+        }
+      });
 
-        // then
-        // 3 sub-processes
-        // 6 pasted labels
-        expect(rootElement.children).to.have.length(9);
+      copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 1500,
+          y: 275
+        }
+      });
 
-        var pastedElements = elementRegistry.filter(function(e) {
-          return e !== element && is(e, 'bpmn:SubProcess');
-        });
+      // then
+      // 3 sub-processes
+      // 6 pasted labels
+      expect(rootElement.children).to.have.length(9);
 
-        expect(pastedElements[0].id).not.to.equal(pastedElements[1].id);
-      }
-    ));
+      var pastedElements = elementRegistry.filter(function(e) {
+        return e !== element && is(e, 'bpmn:SubProcess');
+      });
+
+      expect(pastedElements[0].id).not.to.equal(pastedElements[1].id);
+    }));
 
 
     describe('integration', function() {
 
       it('should retain label\'s relative position',
-        inject(function(modeling, copyPaste, canvas, elementRegistry) {
+        inject(function(copyPaste, canvas, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1'),
               startEventLabel = startEvent.label,
-              seqFlow = elementRegistry.get('SequenceFlow_1rtr33r'),
+              seqFlow = elementRegistry.get('SequenceFlow_1'),
               seqFlowLabel = seqFlow.label,
-              task = elementRegistry.get('Task_1fo63a7'),
+              task = elementRegistry.get('Task_1'),
               rootElement = canvas.getRootElement(),
               newEvent, newFlow;
 
@@ -182,7 +180,7 @@ describe('features/copy-paste', function() {
         inject(function(elementRegistry, copyPaste, canvas, modeling) {
 
           // given
-          var subProcess = elementRegistry.get('SubProcess_1kd6ist'),
+          var subProcess = elementRegistry.get('SubProcess_1'),
               rootElement = canvas.getRootElement(),
               task, defaultFlow, conditionalFlow;
 
@@ -194,8 +192,8 @@ describe('features/copy-paste', function() {
           copyPaste.paste({
             element: rootElement,
             point: {
-              x: 1100,
-              y: 250
+              x: 300,
+              y: 300
             }
           });
 
@@ -221,7 +219,7 @@ describe('features/copy-paste', function() {
         inject(function(elementRegistry, copyPaste, canvas, modeling) {
 
           // given
-          var subProcess = elementRegistry.get('SubProcess_0gev7mx'),
+          var subProcess = elementRegistry.get('SubProcess_2'),
               rootElement = canvas.getRootElement(),
               loopCharacteristics;
 
@@ -239,7 +237,7 @@ describe('features/copy-paste', function() {
           });
 
           subProcess = elementRegistry.filter(function(element) {
-            return !!(element.id !== 'SubProcess_1kd6ist' && element.type === 'bpmn:SubProcess');
+            return !!(element.id !== 'SubProcess_1' && element.type === 'bpmn:SubProcess');
           })[0];
 
           loopCharacteristics = subProcess.businessObject.loopCharacteristics;
@@ -250,14 +248,14 @@ describe('features/copy-paste', function() {
       );
 
 
-      it.skip('selected elements', inject(integrationTest([ 'SubProcess_1kd6ist' ])));
+      it.skip('selected elements', inject(integrationTest([ 'SubProcess_1' ])));
 
 
       it('should retain color properties',
         inject(function(modeling, copyPaste, canvas, elementRegistry) {
 
           // given
-          var task = elementRegistry.get('Task_1fo63a7'),
+          var task = elementRegistry.get('Task_1'),
               rootElement = canvas.getRootElement(),
               newTask,
               fill = '#BBDEFB',
@@ -278,7 +276,7 @@ describe('features/copy-paste', function() {
           });
 
           newTask = elementRegistry.filter(function(element) {
-            return element.parent === rootElement && element.type === 'bpmn:Task' && element.id !== 'Task_1fo63a7';
+            return element.parent === rootElement && element.type === 'bpmn:Task' && element.id !== 'Task_1';
           })[0];
 
           // then
@@ -293,18 +291,17 @@ describe('features/copy-paste', function() {
 
     describe('rules', function() {
 
-      it('disallow individual boundary events copying', inject(
-        function(copyPaste, elementRegistry, canvas) {
+      it('disallow individual boundary events copying', inject(function(elementRegistry) {
 
-          var boundaryEventA = elementRegistry.get('BoundaryEvent_1404oxd'),
-              boundaryEventB = elementRegistry.get('BoundaryEvent_1c94bi9');
+        var boundaryEventA = elementRegistry.get('BoundaryEvent_1'),
+            boundaryEventB = elementRegistry.get('BoundaryEvent_2');
 
-          // when
-          var tree = copy([ boundaryEventA, boundaryEventB ]);
+        // when
+        var tree = copy([ boundaryEventA, boundaryEventB ]);
 
-          expect(tree.getLength()).to.equal(0);
-        }
-      ));
+        expect(tree.getLength()).to.equal(0);
+      }));
+
     });
 
   });
@@ -434,86 +431,23 @@ describe('features/copy-paste', function() {
 
     describe('integration', function() {
 
-      it('participant with including lanes + elements', inject(integrationTest([ 'Participant_0uu1rvj' ])));
+      it('expanded participant', inject(integrationTest([ 'Participant_1' ])));
 
-      it('collapsed pool', inject(integrationTest([ 'Participant_145muai' ])));
+      it('collapsed participant', inject(integrationTest([ 'Participant_2' ])));
 
     });
 
 
     describe('rules', function() {
 
-      it('disallow individual lanes copying', inject(function(copyPaste, elementRegistry, canvas) {
+      it('do NOT allow copying lanes without their parent participant', inject(function() {
 
         // when
-        var tree = copy([ 'Lane_13h648l', 'Lane_1gl63sa' ]);
+        var tree = copy([ 'Lane_1', 'Lane_2' ]);
 
         // then
         expect(tree.getLength()).to.equal(0);
       }));
-
-
-      it('pasting on a collaboration is disallowed when NOT every element is a Participant',
-        inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus) {
-
-          var collaboration = canvas.getRootElement();
-
-          var pasteRejected = sinon.spy(function() {});
-
-          // when
-          var tree = copy([ 'Task_13xbgyg', 'Participant_145muai' ]);
-
-          // then
-          expect(tree.getDepthLength(0)).to.equal(2);
-
-          // when
-          eventBus.on('elements.paste.rejected', pasteRejected);
-
-          copyPaste.paste({
-            element: collaboration,
-            point: {
-              x: 1000,
-              y: 1000
-            }
-          });
-
-          expect(pasteRejected).to.have.been.called;
-        })
-      );
-
-
-      it('pasting participants on a process is disallowed when it\'s not a collaboration',
-        inject(function(copyPaste, elementRegistry, canvas, tooltips, eventBus, modeling, elementFactory) {
-
-          var participant = elementRegistry.get('Participant_145muai'),
-              otherParticipant = elementRegistry.get('Participant_0uu1rvj'),
-              startEvent = elementFactory.create('shape', { type: 'bpmn:StartEvent' }),
-              rootElement;
-
-          var pasteRejected = sinon.spy(function() {});
-
-          // when
-          copyPaste.copy([ participant ]);
-
-          modeling.removeElements([ participant, otherParticipant ]);
-
-          rootElement = canvas.getRootElement();
-
-          modeling.createShape(startEvent, { x: 50, y: 50 }, rootElement);
-
-          eventBus.on('elements.paste.rejected', pasteRejected);
-
-          copyPaste.paste({
-            element: rootElement,
-            point: {
-              x: 500,
-              y: 200
-            }
-          });
-
-          expect(pasteRejected).to.have.been.called;
-        })
-      );
 
     });
 
@@ -529,9 +463,9 @@ describe('features/copy-paste', function() {
       it('pasting on a lane', inject(function(elementRegistry, copyPaste) {
 
         // given
-        var lane = elementRegistry.get('Lane_0aws6ii'),
-            task = elementRegistry.get('Task_1pamrp2'),
-            participant = elementRegistry.get('Participant_1id96b4');
+        var lane = elementRegistry.get('Lane_5'),
+            task = elementRegistry.get('Task_1'),
+            participant = elementRegistry.get('Participant_2');
 
         // when
         copyPaste.copy([ task ]);
@@ -554,9 +488,9 @@ describe('features/copy-paste', function() {
 
       it('pasting on a nested lane', inject(function(elementRegistry, copyPaste) {
         // given
-        var lane = elementRegistry.get('Lane_1yo0kyz'),
-            task = elementRegistry.get('Task_0n0k2nj'),
-            participant = elementRegistry.get('Participant_0pgdgt4');
+        var lane = elementRegistry.get('Lane_3'),
+            task = elementRegistry.get('Task_2'),
+            participant = elementRegistry.get('Participant_1');
 
         // when
         copyPaste.copy([ task ]);
@@ -564,8 +498,8 @@ describe('features/copy-paste', function() {
         copyPaste.paste({
           element: lane,
           point: {
-            x: 200,
-            y: 75
+            x: 450,
+            y: 150
           }
         });
 
@@ -583,13 +517,8 @@ describe('features/copy-paste', function() {
     describe('integration', function() {
 
       it('multiple participants', inject(integrationTest([
-        'Participant_0pgdgt4',
-        'Participant_1id96b4'
-      ])));
-
-      it('multiple participants', inject(integrationTest([
-        'Participant_0pgdgt4',
-        'Participant_1id96b4'
+        'Participant_1',
+        'Participant_2'
       ])));
 
     });
@@ -700,14 +629,12 @@ describe('features/copy-paste', function() {
 
 });
 
-
-
-// test helpers //////////////////////
-
+// helpers //////////
 
 function integrationTest(ids) {
 
-  return function(canvas, elementRegistry, modeling, copyPaste, commandStack) {
+  return function(canvas, commandStack, copyPaste, elementRegistry, modeling) {
+
     // given
     var shapes = elementRegistry.getAll(),
         rootElement;
@@ -723,17 +650,20 @@ function integrationTest(ids) {
       return elementRegistry.get(id);
     });
 
+    // (1) copy elements
     copyPaste.copy(elements);
 
+    // (2) remove elements
     modeling.removeElements(elements);
 
     rootElement = canvas.getRootElement();
 
+    // (3) paste elements
     copyPaste.paste({
       element: rootElement,
       point: {
-        x: 1100,
-        y: 250
+        x: 500,
+        y: 500
       }
     });
 
