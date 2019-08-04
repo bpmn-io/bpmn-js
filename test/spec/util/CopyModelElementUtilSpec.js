@@ -562,10 +562,13 @@ describe('util/CopyModelElementUtil', function() {
         }
       });
 
+      // when
       var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
+      // then
       expect(userTask.name).not.to.exist;
     }));
+
 
     it('should disallow copying property', inject(function(eventBus, moddle) {
 
@@ -582,8 +585,10 @@ describe('util/CopyModelElementUtil', function() {
         }
       });
 
+      // when
       var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
+      // then
       expect(userTask.name).not.to.exist;
     }));
 
@@ -603,13 +608,15 @@ describe('util/CopyModelElementUtil', function() {
         }
       });
 
+      // when
       var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
+      // then
       expect(userTask.name).not.to.exist;
     }));
 
 
-    it('should copy property', inject(function(eventBus, moddle) {
+    it('should copy primitive property', inject(function(eventBus, moddle) {
 
       // given
       var task = moddle.create('bpmn:Task', {
@@ -624,9 +631,39 @@ describe('util/CopyModelElementUtil', function() {
         }
       });
 
+      // when
       var userTask = copyModelElementUtil.copyElement(task, moddle.create('bpmn:UserTask'));
 
+      // then
       expect(userTask.name).to.equal('bar');
+    }));
+
+
+    it('should copy model element property', inject(function(eventBus, moddle) {
+
+      // given
+      var categoryValue = moddle.create('bpmn:CategoryValue'),
+          group = moddle.create('bpmn:Group');
+
+      categoryValue.$parent = group;
+
+      group.categoryValueRef = categoryValue;
+
+      eventBus.on('element.copyProperty', HIGH_PRIORITY, function(context) {
+        var propertyName = context.propertyName;
+
+        if (propertyName === 'categoryValueRef') {
+          return moddle.create('bpmn:CategoryValue');
+        }
+      });
+
+      // when
+      group = copyModelElementUtil.copyElement(group, moddle.create('bpmn:Group'));
+
+      // then
+      expect(group.categoryValueRef).to.exist;
+      expect(group.categoryValueRef).not.to.equal(categoryValue);
+      expect(group.categoryValueRef.$parent).to.equal(group);
     }));
 
   });
