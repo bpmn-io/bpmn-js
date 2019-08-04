@@ -20,6 +20,69 @@ describe('features/modeling/rules - BpmnRules', function() {
   var testModules = [ coreModule, modelingModule ];
 
 
+  describe('create elements', function() {
+
+    var testXML = require('./BpmnRules.process.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('create tasks -> process', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task' });
+
+      // then
+      expectCanCreate([ task1, task2 ], 'Process', true);
+    }));
+
+
+    it('create tasks -> task', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task' });
+
+      // then
+      expectCanCreate([ task1, task2 ], 'Task', false);
+    }));
+
+
+    it('create tasks and sequence flow -> process', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          sequenceFlow = elementFactory.createConnection({
+            type: 'bpmn:SequenceFlow',
+            source: task1,
+            target: task2
+          });
+
+      // then
+      expectCanCreate([ task1, task2, sequenceFlow ], 'Process', true);
+    }));
+
+
+    it('create tasks and message flow -> process', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          sequenceFlow = elementFactory.createConnection({
+            type: 'bpmn:MessageFlow',
+            source: task1,
+            target: task2
+          });
+
+      // then
+      expectCanCreate([ task1, task2, sequenceFlow ], 'Process', false);
+    }));
+
+  });
+
+
   describe('on process diagram', function() {
 
     var testXML = require('./BpmnRules.process.bpmn');
@@ -1939,6 +2002,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       ];
 
       types.forEach(function(type) {
+
         // when
         var element = elementFactory.createShape({ type: type });
 
