@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.4
+
+* `FIX`: creating `bpmn:Participant` on single `bpmn:Group` throwing error ([#1133](https://github.com/bpmn-io/bpmn-js/issues/1133))
+* `CHORE`: bump to `diagram-js@4.0.3`
+
 ## 4.0.3
 
 * `FIX`: prevent dropping on labels and `bpmn:Group` elements ([#1131](https://github.com/bpmn-io/bpmn-js/pull/1131))
