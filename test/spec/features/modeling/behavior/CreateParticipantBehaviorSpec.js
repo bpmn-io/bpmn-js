@@ -342,6 +342,39 @@ describe('features/modeling - create participant', function() {
 
     });
 
+
+    describe('fitting participant (only groups)', function() {
+
+      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
+
+      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+      it('should fit participant', inject(
+        function(canvas, create, dragging, elementFactory, modeling) {
+
+          // given
+          var process = canvas.getRootElement(),
+              processGfx = canvas.getGraphics(process),
+              participant = elementFactory.createParticipantShape(),
+              participantBo = participant.businessObject,
+              groupElement = elementFactory.createShape({ type: 'bpmn:Group' });
+
+          modeling.createShape(groupElement, { x: 100, y: 100 }, process);
+
+          // when
+          create.start(canvasEvent({ x: 100, y: 100 }), participant);
+          dragging.hover({ element: process, gfx: processGfx });
+
+          // then
+          var defaultSize = elementFactory._getDefaultSize(participantBo);
+
+          expect(participant.width).to.equal(defaultSize.width);
+          expect(participant.height).to.equal(defaultSize.height);
+        }
+      ));
+
+    });
+
   });
 
 
