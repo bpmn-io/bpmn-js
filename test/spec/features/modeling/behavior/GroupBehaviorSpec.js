@@ -183,7 +183,6 @@ describe('features/modeling/behavior - groups', function() {
         var groupBo = getBusinessObject(group);
 
         expect(groupBo.categoryValueRef).to.exist;
-        expect(groupBo.categoryValueRef.$parent).to.equal(groupBo);
         expect(groupBo.categoryValueRef.value).to.equal('Value 1');
       }));
     });

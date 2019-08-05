@@ -11,9 +11,12 @@ import CopyModelElementUtil from 'lib/util/CopyModelElementUtil';
 import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  getBusinessObject,
+  is
+} from 'lib/util/ModelUtil';
 
-var HIGH_PRIORITY = 2000;
+var HIGH_PRIORITY = 3000;
 
 
 describe('util/CopyModelElementUtil', function() {
@@ -639,31 +642,85 @@ describe('util/CopyModelElementUtil', function() {
     }));
 
 
-    it('should copy model element property', inject(function(eventBus, moddle) {
+    describe('copy model element property', function() {
+
+      it('should copy and set parent', inject(function(eventBus, moddle) {
+
+        // given
+        var startEvent = moddle.create('bpmn:StartEvent'),
+            messageEventDefinition = moddle.create('bpmn:MessageEventDefinition');
+
+        messageEventDefinition.$parent = startEvent;
+
+        startEvent.eventDefinitions = [ messageEventDefinition ];
+
+        eventBus.on('element.copyProperty', HIGH_PRIORITY, function(context) {
+          var property = context.property;
+
+          if (is(property, 'bpmn:MessageEventDefinition')) {
+            return moddle.create('bpmn:MessageEventDefinition');
+          }
+        });
+
+        // when
+        var endEvent = copyModelElementUtil.copyElement(startEvent, moddle.create('bpmn:EndEvent'));
+
+        // then
+        expect(endEvent.eventDefinitions).to.have.length(1);
+        expect(endEvent.eventDefinitions[0]).not.to.equal(messageEventDefinition);
+        expect(endEvent.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
+      }));
+
+    });
+
+
+    it('should copy and NOT set parent', inject(function(canvas, eventBus, moddle) {
 
       // given
-      var categoryValue = moddle.create('bpmn:CategoryValue'),
-          group = moddle.create('bpmn:Group');
+      var definitions = getDefinitions(canvas.getRootElement()),
+          categoryValue = moddle.create('bpmn:CategoryValue'),
+          category = moddle.create('bpmn:Category'),
+          group = moddle.create('bpmn:Group'),
+          newCategoryValue,
+          newCategory,
+          newGroup;
 
-      categoryValue.$parent = group;
+      categoryValue.$parent = category;
+
+      category.$parent = definitions;
+      category.categoryValue = [ categoryValue ];
+
+      definitions.rootElements.push(category);
 
       group.categoryValueRef = categoryValue;
 
       eventBus.on('element.copyProperty', HIGH_PRIORITY, function(context) {
         var propertyName = context.propertyName;
 
-        if (propertyName === 'categoryValueRef') {
-          return moddle.create('bpmn:CategoryValue');
+        if (propertyName !== 'categoryValueRef') {
+          return;
         }
+
+        newCategoryValue = moddle.create('bpmn:CategoryValue');
+        newCategory = moddle.create('bpmn:Category');
+
+        newCategoryValue.$parent = newCategory;
+
+        newCategory.$parent = definitions;
+        newCategory.categoryValue = [ newCategoryValue ];
+
+        definitions.rootElements.push(newCategory);
+
+        return newCategoryValue;
       });
 
       // when
-      group = copyModelElementUtil.copyElement(group, moddle.create('bpmn:Group'));
+      newGroup = copyModelElementUtil.copyElement(group, moddle.create('bpmn:Group'));
 
       // then
-      expect(group.categoryValueRef).to.exist;
-      expect(group.categoryValueRef).not.to.equal(categoryValue);
-      expect(group.categoryValueRef.$parent).to.equal(group);
+      expect(newGroup.categoryValueRef).to.exist;
+      expect(newGroup.categoryValueRef).not.to.equal(categoryValue);
+      expect(newGroup.categoryValueRef.$parent).to.equal(newCategory);
     }));
 
   });
@@ -675,4 +732,10 @@ describe('util/CopyModelElementUtil', function() {
 
 function expectNoAttrs(element) {
   expect(element.$attrs).to.be.empty;
+}
+
+function getDefinitions(rootElement) {
+  var businessObject = getBusinessObject(rootElement);
+
+  return businessObject.$parent;
 }
