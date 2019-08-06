@@ -6,7 +6,18 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add two-step copy and paste ([#1137](https://github.com/bpmn-io/bpmn-js/pull/1137))
+* `FEAT` add `elements.create` rule for creating multiple elements ([#1137](https://github.com/bpmn-io/bpmn-js/pull/1137))
 * `FEAT`: rework container drag interaction to prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
+* `CHORE`: use `element.copyProperty` event to copy category value when copying group ([`12bedca5`](https://github.com/bpmn-io/bpmn-js/pull/1137/commits/12bedca5ba2a05791591e53f554dc2310f6c1a6f))
+* `CHORE`: bump to `diagram-js@5`
+
+### Breaking Changes
+
+* `CopyPaste`: remove `ModelCloneHelper` in favor of `ModdleCopy` service, remove `property.clone` event, add `moddleCopy.canCopyProperties`, `moddleCopy.canCopyProperty` and `moddleCopy.canSetCopiedProperty` event
+* `BpmnRules`: removed `elements.paste` rule in favor of `elements.create` rule
+* `BpmnRules`: removed `element.paste` rule
+* `ElementFactory`: use `attrs.di` property instead of `attrs.colors` for fill and stroke when creating element through `ElementFactory#createBpmnElement`
 
 ## 4.0.4
 
