@@ -277,19 +277,6 @@ describe('features/auto-resize', function() {
       expect(participantShape).to.have.bounds(originalBounds);
     }));
 
-
-    it('should not auto-resize when creating with { root: false } hint', inject(function(modeling) {
-
-      // given
-      var taskAttrs = { type: 'bpmn:Task' };
-
-      // when
-      modeling.createShape(taskAttrs, { x: 600, y: 320 }, participantShape, { root: false });
-
-      // then
-      expect(participantShape).to.have.bounds(originalBounds);
-    }));
-
   });
 
 
