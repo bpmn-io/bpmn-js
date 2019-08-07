@@ -272,6 +272,29 @@ describe('behavior - LabelBehavior', function() {
       }
     ));
 
+
+    it('should NOT add label if hint createElementsBehavior=false', inject(
+      function(bpmnFactory, elementFactory, elementRegistry, modeling) {
+
+        // given
+        var parentShape = elementRegistry.get('Process_1'),
+            newShape = elementFactory.createShape({
+              type: 'bpmn:ExclusiveGateway',
+              businessObject: bpmnFactory.create('bpmn:ExclusiveGateway', {
+                name: 'foo'
+              })
+            });
+
+        // when
+        newShape = modeling.createShape(newShape, { x: 50, y: 50 }, parentShape, {
+          createElementsBehavior: false
+        });
+
+        // then
+        expect(newShape.label).not.to.exist;
+      }
+    ));
+
   });
 
 
@@ -646,7 +669,7 @@ describe('behavior - LabelBehavior', function() {
 
 });
 
-// helper //////////
+// helpers //////////
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
