@@ -200,7 +200,7 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
           parentLane = parentLaneShape.businessObject;
 
       // when
-      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 200, y: 300 }, parentLaneShape);
+      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 500, y: 150 }, parentLaneShape);
       task = taskShape.businessObject;
 
       // then
@@ -215,7 +215,7 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
           parentLaneShape = elementRegistry.get('Lane'),
           parentLane = parentLaneShape.businessObject;
 
-      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 200, y: 300 }, parentLaneShape);
+      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 500, y: 150 }, parentLaneShape);
       task = taskShape.businessObject;
 
       // when
@@ -233,7 +233,7 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
           parentLaneShape = elementRegistry.get('Lane'),
           parentLane = parentLaneShape.businessObject;
 
-      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 200, y: 300 }, parentLaneShape);
+      taskShape = modeling.createShape({ type: 'bpmn:Task' }, { x: 500, y: 150 }, parentLaneShape);
       task = taskShape.businessObject;
 
       // when

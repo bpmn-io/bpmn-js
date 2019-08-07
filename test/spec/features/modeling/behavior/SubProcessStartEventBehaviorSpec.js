@@ -4,13 +4,10 @@ import {
 } from 'test/TestHelper';
 
 import coreModule from 'lib/core';
-import createModule from 'diagram-js/lib/features/create';
-import draggingModule from 'diagram-js/lib/features/create';
 import modelingModule from 'lib/features/modeling';
 import replaceModule from 'lib/features/replace';
 
 import { is } from 'lib/util/ModelUtil';
-import { createCanvasEvent as canvasEvent } from 'test/util/MockEvents';
 
 describe('features/modeling/behavior - subprocess start event', function() {
 
@@ -19,44 +16,10 @@ describe('features/modeling/behavior - subprocess start event', function() {
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
       coreModule,
-      createModule,
-      draggingModule,
       modelingModule,
       replaceModule
     ]
   }));
-
-
-  describe('create', function() {
-
-    it('should contain start event child', inject(
-      function(canvas, elementFactory, create, dragging) {
-
-        // given
-        var rootElement = canvas.getRootElement(),
-            subProcess = elementFactory.createShape({
-              type: 'bpmn:SubProcess',
-              isExpanded: true
-            }),
-            startEvents;
-
-        // when
-        create.start(canvasEvent({ x: 0, y: 0 }), subProcess);
-
-        dragging.hover({ element: rootElement });
-
-        dragging.move(canvasEvent({ x: 600, y: 150 }));
-
-        dragging.end();
-
-        // then
-        startEvents = getChildStartEvents(subProcess);
-
-        expect(startEvents).to.have.length(1);
-      }
-    ));
-
-  });
 
 
   describe('replace', function() {

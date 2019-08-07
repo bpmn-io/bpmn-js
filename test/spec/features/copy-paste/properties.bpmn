@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.2">
+  <bpmn:category id="Category">
+    <bpmn:categoryValue id="CategoryValue" value="Group" />
+  </bpmn:category>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_NonInterrupting" />
+    <bpmn:subProcess id="SubProcess_Event" triggeredByEvent="true" />
+    <bpmn:boundaryEvent id="BoundaryEvent_1" cancelActivity="false" attachedToRef="SubProcess_NonInterrupting">
+      <bpmn:messageEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:subProcess id="SubProcess_Interrupting" />
+    <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="SubProcess_Interrupting">
+      <bpmn:timerEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:transaction id="SubProcess_Transaction" />
+    <bpmn:group id="Group" categoryValueRef="CategoryValue" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_1pvi3qq_di" bpmnElement="SubProcess_NonInterrupting" isExpanded="true">
+        <dc:Bounds x="100" y="100" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_0k446tj_di" bpmnElement="SubProcess_Event" isExpanded="true">
+        <dc:Bounds x="300" y="100" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1a6busd_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="152" y="202" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="92" y="178" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_0pj87vw_di" bpmnElement="SubProcess_Interrupting" isExpanded="true">
+        <dc:Bounds x="100" y="300" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1aqt6gt_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="152" y="402" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="97" y="345" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Transaction_1so7kki_di" bpmnElement="SubProcess_Transaction" isExpanded="true">
+        <dc:Bounds x="300" y="300" width="140" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_di" bpmnElement="Group">
+        <dc:Bounds x="500" y="100" width="140" height="120" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

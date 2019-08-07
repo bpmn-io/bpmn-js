@@ -7,16 +7,17 @@ import {
 
 import { forEach } from 'min-dash';
 
+import copyPasteModule from 'lib/features/copy-paste';
 import coreModule from 'lib/core';
 import editorActionsModule from 'lib/features/editor-actions';
-import searchModule from 'lib/features/search';
 import globalConnectModule from 'diagram-js/lib/features/global-connect';
-import spaceToolModule from 'diagram-js/lib/features/space-tool';
-import lassoToolModule from 'diagram-js/lib/features/lasso-tool';
 import handToolModule from 'diagram-js/lib/features/hand-tool';
 import keyboardModule from 'lib/features/keyboard';
-import modelingModule from 'lib/features/modeling';
 import labelEditingModule from 'lib/features/label-editing';
+import lassoToolModule from 'diagram-js/lib/features/lasso-tool';
+import modelingModule from 'lib/features/modeling';
+import searchModule from 'lib/features/search';
+import spaceToolModule from 'diagram-js/lib/features/space-tool';
 
 import {
   createKeyEvent
@@ -28,16 +29,17 @@ describe('features/keyboard', function() {
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [
+    copyPasteModule,
     coreModule,
     editorActionsModule,
-    keyboardModule,
-    modelingModule,
     globalConnectModule,
-    spaceToolModule,
-    lassoToolModule,
     handToolModule,
+    keyboardModule,
+    labelEditingModule,
+    lassoToolModule,
+    modelingModule,
     searchModule,
-    labelEditingModule
+    spaceToolModule
   ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
@@ -46,10 +48,13 @@ describe('features/keyboard', function() {
   describe('bpmn keyboard bindings', function() {
 
     it('should include triggers inside editorActions', inject(function(editorActions) {
+
       // given
       var expectedActions = [
         'undo',
         'redo',
+        'copy',
+        'paste',
         'zoom',
         'removeSelection',
         'selectElements',
