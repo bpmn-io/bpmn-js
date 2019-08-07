@@ -235,6 +235,40 @@ describe('features/copy-paste', function() {
         })
       );
 
+
+      it('should copy name property', inject(
+        function(canvas, copyPaste, elementRegistry, modeling) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1'),
+              rootElement = canvas.getRootElement();
+
+          copyPaste.copy(startEvent);
+
+          modeling.removeShape(startEvent);
+
+          // when
+          var elements = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 300,
+              y: 300
+            }
+          });
+
+          // then
+          expect(elements).to.have.length(2);
+
+          startEvent = find(elements, function(element) {
+            return is(element, 'bpmn:StartEvent');
+          });
+
+          var startEventBo = getBusinessObject(startEvent);
+
+          expect(startEventBo.name).to.equal('hello');
+        }
+      ));
+
     });
 
 
