@@ -5,10 +5,11 @@ import {
 
 import {
   expectCanConnect,
+  expectCanCopy,
+  expectCanCreate,
   expectCanDrop,
-  expectCanMove,
   expectCanInsert,
-  expectCanCreate
+  expectCanMove
 } from './Helper';
 
 import modelingModule from 'lib/features/modeling';
@@ -78,6 +79,81 @@ describe('features/modeling/rules - BpmnRules', function() {
 
       // then
       expectCanCreate([ task1, task2, sequenceFlow ], 'Process', false);
+    }));
+
+  });
+
+
+  describe('copy elements', function() {
+
+    var testXML = require('./BpmnRules.process.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('copy task', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' });
+
+      // then
+      expectCanCopy(task1, [ task1 ], true);
+    }));
+
+
+    it('copy label', inject(function(elementFactory) {
+
+      // given
+      var task = elementFactory.createShape({ type: 'bpmn:Task' }),
+          label = elementFactory.createLabel({ labelTarget: task });
+
+      // then
+      // copying labels should always be allowed
+      expectCanCopy(label, [], true);
+    }));
+
+
+    it('copy lane with parent participant', inject(function(elementFactory) {
+
+      // given
+      var participant = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          lane = elementFactory.createShape({ type: 'bpmn:Lane', parent: participant });
+
+      // then
+      expectCanCopy(lane, [ participant ], true);
+    }));
+
+
+    it('copy lane without parent participant', inject(function(elementFactory) {
+
+      // given
+      var participant = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          lane = elementFactory.createShape({ type: 'bpmn:Lane', parent: participant });
+
+      // then
+      expectCanCopy(lane, [], false);
+    }));
+
+
+    it('copy boundary event with host', inject(function(elementFactory) {
+
+      // given
+      var task = elementFactory.createShape({ type: 'bpmn:Task' }),
+          boundaryEvent = elementFactory.createShape({ type: 'bpmn:BoundaryEvent', host: task });
+
+      // then
+      expectCanCopy(boundaryEvent, [ task ], true);
+    }));
+
+
+    it('copy boundary event without host', inject(function(elementFactory) {
+
+      // given
+      var task = elementFactory.createShape({ type: 'bpmn:Task' }),
+          boundaryEvent = elementFactory.createShape({ type: 'bpmn:BoundaryEvent', host: task });
+
+      // then
+      expectCanCopy(boundaryEvent, [], false);
     }));
 
   });
