@@ -70,6 +70,19 @@ export function expectCanCreate(shape, target, expectedResult) {
 }
 
 
+export function expectCanCopy(element, elements, expectedResult) {
+
+  var result = getBpmnJS().invoke(function(rules) {
+    return rules.allowed('element.copy', {
+      element: element,
+      elements: elements
+    });
+  });
+
+  expect(result).to.eql(expectedResult);
+}
+
+
 export function expectCanInsert(element, target, expectedResult) {
 
   var result = getBpmnJS().invoke(function(bpmnRules) {
