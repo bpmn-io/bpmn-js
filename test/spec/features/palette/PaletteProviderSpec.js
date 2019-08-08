@@ -14,6 +14,10 @@ import { createMoveEvent } from 'diagram-js/lib/features/mouse/Mouse';
 import { is } from 'lib/util/ModelUtil';
 
 import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
+
+import {
   query as domQuery,
   queryAll as domQueryAll
 } from 'min-dom';
@@ -46,7 +50,7 @@ describe('features/palette', function() {
 
   describe('sub process', function() {
 
-    it('should create sub process with start event', inject(function(dragging, palette) {
+    it('should create sub process with start event', inject(function(dragging) {
 
       // when
       triggerPaletteEntry('create.subprocess-expanded');
@@ -58,6 +62,28 @@ describe('features/palette', function() {
       expect(elements).to.have.length(2);
       expect(is(elements[0], 'bpmn:SubProcess')).to.be.true;
       expect(is(elements[1], 'bpmn:StartEvent')).to.be.true;
+    }));
+
+
+    it('should select start event', inject(function(canvas, dragging, selection) {
+
+      // given
+      var rootElement = canvas.getRootElement(),
+          rootGfx = canvas.getGraphics(rootElement);
+
+      triggerPaletteEntry('create.subprocess-expanded');
+
+      // when
+      dragging.hover({ element: rootElement, gfx: rootGfx });
+
+      dragging.move(canvasEvent({ x: 100, y: 100 }));
+
+      // when
+      dragging.end();
+
+      // then
+      expect(selection.get()).to.have.length(1);
+      expect(is(selection.get()[0], 'bpmn:StartEvent')).to.be.true;
     }));
 
   });
