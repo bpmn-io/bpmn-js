@@ -26,30 +26,97 @@ var LOW_PRIORITY = 500;
 
 describe('features/grid-snapping', function() {
 
-  var diagramXML = require('./BpmnGridSnapping.bpmn');
+  describe('basics', function() {
 
-  beforeEach(bootstrapModeler(diagramXML, {
-    modules: [
-      coreModule,
-      createModule,
-      gridSnappingModule,
-      modelingModule,
-      moveModule
-    ]
-  }));
+    describe('create', function() {
 
-  var participant,
-      subProcess,
-      textAnnotation;
+      var diagramXML = require('./basic.bpmn');
 
-  beforeEach(inject(function(elementRegistry) {
-    participant = elementRegistry.get('Participant_1');
-    subProcess = elementRegistry.get('SubProcess_1');
-    textAnnotation = elementRegistry.get('TextAnnotation_1');
-  }));
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: [
+          coreModule,
+          createModule,
+          gridSnappingModule,
+          modelingModule,
+          moveModule
+        ]
+      }));
+
+
+      it('start event', inject(function(canvas, create, dragging, elementFactory, eventBus) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            rootGfx = canvas.getGraphics(rootElement);
+
+        var startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+
+        var events = recordEvents(eventBus, [
+          'create.move',
+          'create.end'
+        ]);
+
+        // when
+        create.start(canvasEvent({ x: 100, y: 100 }), startEvent);
+
+        dragging.hover({ element: rootElement, gfx: rootGfx });
+
+        dragging.move(canvasEvent({ x: 106, y: 112 }));
+        dragging.move(canvasEvent({ x: 112, y: 124 }));
+        dragging.move(canvasEvent({ x: 118, y: 136 }));
+        dragging.move(canvasEvent({ x: 124, y: 148 }));
+        dragging.move(canvasEvent({ x: 130, y: 160 }));
+
+        dragging.end();
+
+        // then
+        expect(events.map(position)).to.eql([
+          { x: 100, y: 100 }, // move (triggered on create.start thanks to autoActivate)
+          { x: 110, y: 110 }, // move
+          { x: 110, y: 120 }, // move
+          { x: 120, y: 140 }, // move
+          { x: 120, y: 150 }, // move
+          { x: 130, y: 160 }, // move
+          { x: 130, y: 160 } // end
+        ]);
+
+        // expect snapped
+        expect(getMid(startEvent)).to.eql({
+          x: 130,
+          y: 160
+        });
+      }));
+
+    });
+
+  });
 
 
   describe('snap top-left on move', function() {
+
+    var diagramXML = require('./BpmnGridSnapping.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        createModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule,
+        gridSnappingModule
+      ]
+    }));
+
+    var participant,
+        subProcess,
+        textAnnotation;
+
+    beforeEach(inject(function(elementRegistry) {
+      participant = elementRegistry.get('Participant_1');
+      subProcess = elementRegistry.get('SubProcess_1');
+      textAnnotation = elementRegistry.get('TextAnnotation_1');
+    }));
+
 
     it('participant', inject(function(dragging, eventBus, move) {
 
@@ -159,6 +226,28 @@ describe('features/grid-snapping', function() {
 
 
   describe('auto resize <nwse> on toggle collapse', function() {
+
+    var diagramXML = require('./BpmnGridSnapping.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        createModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule,
+        gridSnappingModule
+      ]
+    }));
+
+    var participant,
+        subProcess;
+
+    beforeEach(inject(function(elementRegistry) {
+      participant = elementRegistry.get('Participant_1');
+      subProcess = elementRegistry.get('SubProcess_1');
+    }));
+
 
     describe('collapsing', function() {
 
