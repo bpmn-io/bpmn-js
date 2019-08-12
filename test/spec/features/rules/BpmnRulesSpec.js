@@ -81,6 +81,36 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanCreate([ task1, task2, sequenceFlow ], 'Process', false);
     }));
 
+
+    it('create task and non-interrupting boundary event', inject(function(elementFactory) {
+
+      // given
+      var task = elementFactory.createShape({ type: 'bpmn:Task' }),
+          boundaryEvent = elementFactory.createShape({
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:EscalationEventDefinition',
+            cancelActivity: false,
+            host: task
+          });
+
+      // then
+      expectCanCreate([ task, boundaryEvent ], 'Process', true);
+    }));
+
+
+    it('create task and interrupting boundary event', inject(function(elementFactory) {
+
+      // given
+      var task = elementFactory.createShape({ type: 'bpmn:Task' }),
+          boundaryEvent = elementFactory.createShape({
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:EscalationEventDefinition',
+            host: task
+          });
+
+      // then
+      expectCanCreate([ task, boundaryEvent ], 'Process', true);
+    }));
   });
 
 
