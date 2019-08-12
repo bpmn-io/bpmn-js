@@ -13,6 +13,10 @@ import {
   getLabel
 } from 'lib/features/label-editing/LabelUtil';
 
+import {
+  createCanvasEvent as canvasEvent
+} from '../../../util/MockEvents';
+
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
 var DELTA = 3;
@@ -164,17 +168,23 @@ describe('features - label-editing', function() {
       ]
     }));
 
-    var elementRegistry,
-        eventBus,
-        directEditing;
-
+    var create,
+        directEditing,
+        dragging,
+        elementFactory,
+        elementRegistry,
+        eventBus;
 
     beforeEach(inject([
-      'elementRegistry', 'eventBus', 'directEditing',
-      function(_elementRegistry, _eventBus, _directEditing) {
+      'create', 'directEditing', 'dragging',
+      'elementFactory', 'elementRegistry', 'eventBus',
+      function(_create, _directEditing, _dragging, _elementFactory, _elementRegistry, _eventBus) {
+        create = _create;
+        directEditing = _directEditing;
+        dragging = _dragging;
+        elementFactory = _elementFactory;
         elementRegistry = _elementRegistry;
         eventBus = _eventBus;
-        directEditing = _directEditing;
       }
     ]));
 
@@ -418,6 +428,56 @@ describe('features - label-editing', function() {
 
     });
 
+
+    describe('after elements create', function() {
+
+      var createTaskElement;
+
+      beforeEach(function() {
+
+        createTaskElement = function(context) {
+
+          var shape = elementFactory.create('shape', { type: 'bpmn:Task' }),
+              parent = elementRegistry.get('SubProcess_1'),
+              parentGfx = elementRegistry.getGraphics(parent);
+
+          create.start(canvasEvent({ x: 0, y: 0 }), [ shape ], context);
+          dragging.hover({
+            element: parent,
+            gfx: parentGfx
+          });
+          dragging.move(canvasEvent({ x: 400, y: 250 }));
+          dragging.end();
+        };
+
+      });
+
+      it('should activate', function() {
+
+        // when
+        createTaskElement();
+
+        // then
+        expect(directEditing.isActive()).to.be.true;
+
+      });
+
+
+      it('should NOT activate with behavior hint', function() {
+
+        // when
+        createTaskElement({
+          hints: { createElementsBehavior: false }
+        });
+
+        // then
+        expect(directEditing.isActive()).to.be.false;
+
+      });
+
+
+    });
+
   });
 
 
@@ -452,6 +512,7 @@ describe('features - label-editing', function() {
     ));
 
   });
+
 
   describe('sizes', function() {
 
