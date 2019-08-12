@@ -40,7 +40,8 @@ describe('features/copy-paste', function() {
       propertiesXML = require('./properties.bpmn'),
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
-      collaborationAssociationsXML = require('./data-associations.bpmn');
+      collaborationAssociationsXML = require('./data-associations.bpmn'),
+      eventBasedGatewayXML = require('./event-based-gateway.bpmn');
 
 
   describe('basic diagram', function() {
@@ -604,6 +605,20 @@ describe('features/copy-paste', function() {
       expect(newTaskBo.extensionElements).to.jsonEqual(taskBo.extensionElements);
     }));
 
+  });
+
+
+  describe('event based gateway', function() {
+
+    beforeEach(bootstrapModeler(eventBasedGatewayXML, {
+      modules: testModules
+    }));
+
+
+    it('should copy and paste event based gateway connected to an event', integrationTest([
+      'EventBasedGateway_1',
+      'IntermediateCatchEvent_1'
+    ]));
   });
 
 });
