@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "5.0.0-beta.2",
+  "version": "5.0.0-beta.3",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "all": "run-s lint test distro test:distro",
