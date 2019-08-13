@@ -15,6 +15,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
 * `FIX`: keep labels during pool extraction ([#921](https://github.com/bpmn-io/bpmn-js/issues/921))
 * `FIX`: duplicate `bpmn:CategoryValue` when copying groups ([#1055](https://github.com/bpmn-io/bpmn-js/issues/1055))
+* `FIX`: translate group creation entry in palette ([#1146](https://github.com/bpmn-io/bpmn-js/issues/1146))
 * `CHORE`: use `element.copyProperty` event to copy category value when copying group ([`12bedca5`](https://github.com/bpmn-io/bpmn-js/pull/1137/commits/12bedca5ba2a05791591e53f554dc2310f6c1a6f))
 * `CHORE`: bump to `diagram-js@5`
 
