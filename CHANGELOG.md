@@ -6,19 +6,27 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.0
+
 * `FEAT`: add two-step copy and paste ([#1137](https://github.com/bpmn-io/bpmn-js/pull/1137))
 * `FEAT` add `elements.create` rule for creating multiple elements ([#1137](https://github.com/bpmn-io/bpmn-js/pull/1137))
 * `FEAT`: make containers draggable via their borders / labels only ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
+* `FEAT`: allow copied elements to be filtered ([#888](https://github.com/bpmn-io/bpmn-js/issues/888))
 * `FIX`: prevent accidental dragging of participants and sub-processes ([#1097](https://github.com/bpmn-io/bpmn-js/pull/1097), [#957](https://github.com/bpmn-io/bpmn-js/issues/957))
+* `FIX`: keep labels during pool extraction ([#921](https://github.com/bpmn-io/bpmn-js/issues/921))
+* `FIX`: duplicate `bpmn:CategoryValue` when copying groups ([#1055](https://github.com/bpmn-io/bpmn-js/issues/1055))
 * `CHORE`: use `element.copyProperty` event to copy category value when copying group ([`12bedca5`](https://github.com/bpmn-io/bpmn-js/pull/1137/commits/12bedca5ba2a05791591e53f554dc2310f6c1a6f))
 * `CHORE`: bump to `diagram-js@5`
 
 ### Breaking Changes
 
+Copy and paste as well as create is completely reworked:
+
 * `CopyPaste`: remove `ModelCloneHelper` in favor of `ModdleCopy` service, remove `property.clone` event, add `moddleCopy.canCopyProperties`, `moddleCopy.canCopyProperty` and `moddleCopy.canSetCopiedProperty` event
 * `BpmnRules`: removed `elements.paste` rule in favor of `elements.create` rule
 * `BpmnRules`: removed `element.paste` rule
 * `ElementFactory`: use `attrs.di` property instead of `attrs.colors` for fill and stroke when creating element through `ElementFactory#createBpmnElement`
+* To prevent additional behavior on create after paste you should check for the `createElementsBehavior` hint, cf. [`bf180321`](https://github.com/bpmn-io/bpmn-js/commit/bf180321a3a40428c3f87b639b87cc3fc578066e#diff-2f0de25761fb7459e88071f83fd845c5R22)
 
 ## 4.0.4
 
