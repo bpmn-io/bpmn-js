@@ -10,6 +10,8 @@ import {
   reconnectEnd
 } from './Helper';
 
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -305,6 +307,85 @@ describe('features/modeling - layout', function() {
           { x: 282, y: 220 }
         ]);
       });
+
+
+      it('should NOT relayout loop', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 382, y: 241 },
+          { x: 559, y: 241 },
+          { x: 559, y: 220 },
+          { x: 382, y: 220 }
+        ]);
+      }));
+
+
+      it('should relayout loop (b:l)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_2'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 332, y: 260 },
+          { x: 332, y: 280 },
+          { x: 262, y: 280 },
+          { x: 262, y: 220 },
+          { x: 282, y: 220 }
+        ]);
+      }));
+
+
+      it('should relayout loop (l:t)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 282, y: 220 },
+          { x: 262, y: 220 },
+          { x: 262, y: 160 },
+          { x: 332, y: 160 },
+          { x: 332, y: 180 }
+        ]);
+      }));
+
+
+      it('should relayout loop (t:r)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_4'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 332, y: 180 },
+          { x: 332, y: 160 },
+          { x: 402, y: 160 },
+          { x: 402, y: 220 },
+          { x: 382, y: 220 }
+        ]);
+      }));
 
     });
 
