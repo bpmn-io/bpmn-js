@@ -145,6 +145,24 @@ describe('import - associations', function() {
       });
     });
 
+
+    it('boundary event -> data object', function(done) {
+
+      var xml = require('./AssociationSpec.data-association.bpmn');
+
+      // given
+      bootstrapViewer(xml)(function(err) {
+
+        // then
+        expectRendered([
+          'DataOutputAssociation_2'
+        ]);
+
+        done(err);
+      });
+
+    });
+
   });
 
 });

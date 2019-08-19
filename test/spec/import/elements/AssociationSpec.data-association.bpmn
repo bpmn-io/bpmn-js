@@ -13,27 +13,43 @@
         <bpmn2:sourceRef>DataObjectReference_1</bpmn2:sourceRef>
       </bpmn2:dataInputAssociation>
     </bpmn2:task>
+    <bpmn2:task id="Task_3" />
+    <bpmn2:boundaryEvent id="BoundaryEvent" attachedToRef="Task_3">
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
+        <bpmn2:targetRef>DataObjectReference_1</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:boundaryEvent>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_1">
+      <bpmndi:BPMNShape id="_BPMNShape_Task_1" bpmnElement="Task_1">
         <dc:Bounds height="80.0" width="100.0" x="122.0" y="145.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_2">
+      <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_2">
         <dc:Bounds height="80.0" width="100.0" x="504.0" y="145.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_2" bpmnElement="DataObjectReference_1">
+      <bpmndi:BPMNShape id="_BPMNShape_DataObjectReference_1" bpmnElement="DataObjectReference_1">
         <dc:Bounds height="50.0" width="36.0" x="341.0" y="27.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation" bpmnElement="DataOutputAssociation" sourceElement="_BPMNShape_Task_2" targetElement="_BPMNShape_DataObjectReference_2">
+      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation" bpmnElement="DataOutputAssociation" sourceElement="_BPMNShape_Task_1" targetElement="_BPMNShape_DataObjectReference_1">
         <di:waypoint xsi:type="dc:Point" x="172.0" y="145.0"/>
         <di:waypoint xsi:type="dc:Point" x="172.0" y="52.0"/>
         <di:waypoint xsi:type="dc:Point" x="341.0" y="52.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation" bpmnElement="DataInputAssociation" sourceElement="_BPMNShape_DataObjectReference_2" targetElement="_BPMNShape_Task_3">
+      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation" bpmnElement="DataInputAssociation" sourceElement="_BPMNShape_DataObjectReference_1" targetElement="_BPMNShape_Task_2">
         <di:waypoint xsi:type="dc:Point" x="377.0" y="52.0"/>
         <di:waypoint xsi:type="dc:Point" x="554.0" y="52.0"/>
         <di:waypoint xsi:type="dc:Point" x="554.0" y="145.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task_3">
+        <dc:Bounds x="230" y="150" width="100" height="80" />      
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent" bpmnElement="BoundaryEvent">
+        <dc:Bounds x="280" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation_2" bpmnElement="DataOutputAssociation_2" sourceElement="_BPMNShape_BoundaryEvent" targetElement="_BPMNShape_DataObjectReference_1">
+       <di:waypoint xsi:type="dc:Point" x="302" y="132" />
+       <di:waypoint xsi:type="dc:Point" x="350" y="76" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
