@@ -27,6 +27,7 @@ describe('features/modeling - id claim management', function() {
   describe('unclaim', function() {
 
     it('should unclaim id when removing element', inject(function(modeling, moddle) {
+
       // when
       modeling.removeElements([ element ]);
 
@@ -36,6 +37,7 @@ describe('features/modeling - id claim management', function() {
 
 
     it('should revert unclaim action on restoring element', inject(function(modeling, moddle, commandStack) {
+
       // given
       modeling.removeElements([ element ]);
 

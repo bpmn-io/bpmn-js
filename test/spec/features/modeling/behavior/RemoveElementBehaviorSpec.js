@@ -60,6 +60,7 @@ describe('features/modeling - remove element behavior', function() {
 
         // then
         var waypoints = elementRegistry.get('SequenceFlow7').waypoints;
+
         // connection has two vertically equal waypoints
         expect(waypoints).to.have.length(2);
         expect(waypoints[0].x).to.eql(waypoints[1].x);

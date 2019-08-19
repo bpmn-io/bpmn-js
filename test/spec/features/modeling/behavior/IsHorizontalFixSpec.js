@@ -28,6 +28,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
 
     it('should set isHorizontal=true when participant is created',
       inject(function(canvas, elementFactory, modeling) {
+
         // given
         var processShape = canvas.getRootElement(),
             participantShape = elementFactory.createParticipantShape(true);
@@ -45,6 +46,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
 
     it('should set isHorizontal=true when lane is created',
       inject(function(canvas, elementFactory, modeling) {
+
         // given
         var processShape = canvas.getRootElement(),
             participantShape = elementFactory.createParticipantShape(true),

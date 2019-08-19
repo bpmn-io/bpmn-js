@@ -22,6 +22,7 @@ describe('features/modeling - append shape', function() {
   describe('shape handling', function() {
 
     it('should execute', inject(function(elementRegistry, modeling) {
+
       // given
       var startEventShape = elementRegistry.get('StartEvent_1');
 

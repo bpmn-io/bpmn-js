@@ -181,6 +181,7 @@ describe('features/modeling - layout message flows', function() {
 
           // when
           modeling.moveElements([ participantShape ], { x: 300, y: 50 });
+
           // then
 
           // expect cropped, repaired manhattan connection

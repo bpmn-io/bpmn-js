@@ -12,5 +12,6 @@ CustomRules.$inject = [ 'eventBus' ];
 inherits(CustomRules, RuleProvider);
 
 CustomRules.prototype.init = function() {
+
   // placeholder
 };

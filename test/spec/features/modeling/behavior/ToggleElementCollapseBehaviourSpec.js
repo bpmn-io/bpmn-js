@@ -299,6 +299,7 @@ describe('features/modeling - collapse and expand elements', function() {
           originalChildren.forEach(function(c) {
             expect(collapsedSubProcess.children).to.include(c);
           });
+
           // and hide them
           expect(collapsedSubProcess.children).to.satisfy(allHidden());
         })
@@ -634,6 +635,7 @@ function allShown() {
 function childrenHidden(hidden) {
   return function(children) {
     return children.every(function(child) {
+
       // empty labels are allways hidden
       if (child.type === 'label' && !child.businessObject.name) {
         return child.hidden;

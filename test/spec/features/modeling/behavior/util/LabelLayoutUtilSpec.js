@@ -7,10 +7,13 @@ describe('modeling/behavior/util - LabelLayoutUtil#getLabelAdjustment', function
 
     var newLine = [
       { x: 10, y: 10 },
+
       // -
       { x: 15, y: 10 },
+
       // |
       { x: 15, y: 5 },
+
       // -
       { x: 30, y: 5 }
     ];
@@ -21,6 +24,7 @@ describe('modeling/behavior/util - LabelLayoutUtil#getLabelAdjustment', function
       // given
       var line = [
         { x: 10, y: 10 },
+
         // -
         { x: 20, y: 10 }
       ];
@@ -47,6 +51,7 @@ describe('modeling/behavior/util - LabelLayoutUtil#getLabelAdjustment', function
       // given
       var line = [
         { x: 10, y: 10 },
+
         // -
         { x: 10, y: 10 }
       ];

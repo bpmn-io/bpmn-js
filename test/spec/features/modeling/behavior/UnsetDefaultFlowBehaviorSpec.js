@@ -27,6 +27,7 @@ describe('features/modeling - delete default connection', function() {
 
 
   it('should remove default connection', inject(function(modeling) {
+
     // when
     modeling.removeConnection(defaultConnection);
 
@@ -37,6 +38,7 @@ describe('features/modeling - delete default connection', function() {
 
 
   it('should revert default connection', inject(function(modeling, commandStack) {
+
     // given
     modeling.removeConnection(defaultConnection);
 
@@ -50,6 +52,7 @@ describe('features/modeling - delete default connection', function() {
 
 
   it('should NOT remove default connection on removing other connections', inject(function(modeling) {
+
     // when
     modeling.removeConnection(normalConnection);
 
@@ -62,6 +65,7 @@ describe('features/modeling - delete default connection', function() {
 
 
   it('should NOT remove default connection on restoring other connections', inject(function(modeling, commandStack) {
+
     // given
     modeling.removeConnection(normalConnection);
 

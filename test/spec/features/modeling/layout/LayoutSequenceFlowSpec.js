@@ -229,6 +229,7 @@ describe('features/modeling - layout', function() {
 
 
       it('attached bottom center, orientation bottom', function() {
+
         // when
         var connection = connect('BoundaryEvent_BottomCenter', 'Task_Bottom');
 
@@ -240,6 +241,7 @@ describe('features/modeling - layout', function() {
 
 
       it('attached top center, orientation top', function() {
+
         // when
         var connection = connect('BoundaryEvent_TopCenter', 'Task_Top');
 
@@ -251,6 +253,7 @@ describe('features/modeling - layout', function() {
 
 
       it('attached right center, orientation right', function() {
+
         // when
         var connection = connect('BoundaryEvent_RightCenter', 'Task_Right');
 
@@ -262,6 +265,7 @@ describe('features/modeling - layout', function() {
 
 
       it('attached right center, orientation left', function() {
+
         // when
         var connection = connect('BoundaryEvent_RightCenter', 'Task_Left');
 

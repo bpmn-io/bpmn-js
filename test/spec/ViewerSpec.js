@@ -644,6 +644,7 @@ describe('Viewer', function() {
         'import.render.complete',
         'import.done'
       ], function(e) {
+
         // log event type + event arguments
         events.push([
           e.type,
@@ -812,6 +813,7 @@ describe('Viewer', function() {
           'import.render.complete',
           'import.done'
         ], function(e) {
+
           // log event type + event arguments
           events.push([
             e.type,
@@ -839,6 +841,7 @@ describe('Viewer', function() {
 
         // given
         viewer.on('import.render.complete', function(context) {
+
           // then
           done(context.error);
         });
@@ -1169,6 +1172,7 @@ describe('Viewer', function() {
           'import.render.complete',
           'import.done'
         ], function(e) {
+
           // log event type + event arguments
           events.push([
             e.type,
@@ -1232,6 +1236,7 @@ describe('Viewer', function() {
           'saveXML.serialized',
           'saveXML.done'
         ], function(e) {
+
           // log event type + event arguments
           events.push([
             e.type,
@@ -1245,6 +1250,7 @@ describe('Viewer', function() {
 
           // when
           viewer.saveXML(function(err) {
+
             // then
             expect(events).to.eql([
               [ 'saveXML.start', [ 'definitions' ] ],
@@ -1405,6 +1411,7 @@ describe('Viewer', function() {
           'saveSVG.start',
           'saveSVG.done'
         ], function(e) {
+
           // log event type + event arguments
           events.push([
             e.type,
@@ -1418,6 +1425,7 @@ describe('Viewer', function() {
 
           // when
           viewer.saveSVG(function() {
+
             // then
             expect(events).to.eql([
               [ 'saveSVG.start', [ ] ],

@@ -908,6 +908,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should show default replace option [gateway]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -920,6 +921,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should show Default replace option [task]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
@@ -932,6 +934,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should NOT show default replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_4');
 
@@ -955,6 +958,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should show default replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 
@@ -971,6 +975,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should NOT show default replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
@@ -998,6 +1003,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should show default replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 
@@ -1014,6 +1020,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should NOT show default replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
@@ -1041,6 +1048,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should show ConditionalFlow replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -1057,6 +1065,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should NOT show ConditionalFlow replace option', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
@@ -1133,6 +1142,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace SequenceFlow with DefaultFlow [gateway]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
 
@@ -1151,6 +1161,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace SequenceFlow with DefaultFlow [task]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
@@ -1169,6 +1180,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph DefaultFlow into a SequenceFlow [task]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
             entries;
@@ -1224,6 +1236,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph DefaultFlow into a ConditionalFlow [task]', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
             task = elementRegistry.get('Task_1ei94kl'),
@@ -1322,6 +1335,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should only have one DefaultFlow', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             sequenceFlow3 = elementRegistry.get('SequenceFlow_3');
@@ -1514,6 +1528,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should keep DefaultFlow when morphing Gateway', inject(function(elementRegistry, popupMenu, bpmnReplace) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
             exclusiveGateway = elementRegistry.get('ExclusiveGateway_1');
@@ -1533,6 +1548,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should keep DefaultFlow when morphing Task', inject(function(elementRegistry, bpmnReplace, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
             task = elementRegistry.get('Task_1ei94kl');
@@ -1648,6 +1664,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph into a ConditionalFlow', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 
@@ -1665,6 +1682,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
       it('should morph into a ConditionalFlow -> undo', inject(
         function(elementRegistry, popupMenu, commandStack) {
+
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 
@@ -1684,6 +1702,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph back into a SequenceFlow', inject(function(elementRegistry, popupMenu) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
 

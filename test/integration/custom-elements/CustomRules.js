@@ -47,6 +47,7 @@ CustomRules.prototype.init = function() {
   });
 
   this.addRule('connection.updateWaypoints', HIGH_PRIORITY, function(context) {
+
     // OK! but visually ignore
     return null;
   });

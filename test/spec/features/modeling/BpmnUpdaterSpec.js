@@ -104,6 +104,7 @@ describe('features - bpmn-updater', function() {
 
     it('should crop connection only once per reconnect', inject(
       function(modeling, elementRegistry, connectionDocking) {
+
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
             target = elementRegistry.get('EndEvent_2'),
