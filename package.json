@@ -45,7 +45,7 @@
     "cpx": "^1.5.0",
     "del": "^3.0.0",
     "eslint": "^5.16.0",
-    "eslint-plugin-bpmn-io": "^0.8.2",
+    "eslint-plugin-bpmn-io": "^0.10.0",
     "eslint-plugin-import": "^2.18.0",
     "execa": "^1.0.0",
     "istanbul-instrumenter-loader": "^3.0.1",
