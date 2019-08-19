@@ -24,6 +24,7 @@ describe('features - BPMN search provider', function() {
 
 
     it('should not return root element (collaboration)', inject(function(bpmnSearch) {
+
       // given
       var pattern = 'collaboration';
 
@@ -43,6 +44,7 @@ describe('features - BPMN search provider', function() {
 
 
     it('find should return all elements that match label or ID', inject(function(bpmnSearch) {
+
       // given
       var pattern = '123456';
 
@@ -60,6 +62,7 @@ describe('features - BPMN search provider', function() {
 
 
     it('matches IDs', inject(function(bpmnSearch) {
+
       // given
       var pattern = 'datastore';
 
@@ -79,6 +82,7 @@ describe('features - BPMN search provider', function() {
 
 
     it('should not return root element (process)', inject(function(bpmnSearch) {
+
       // given
       var pattern = 'process';
 
@@ -93,6 +97,7 @@ describe('features - BPMN search provider', function() {
     describe('should split result into matched and non matched tokens', function() {
 
       it('matched all', inject(function(bpmnSearch) {
+
         // given
         var pattern = 'all matched';
 
@@ -107,6 +112,7 @@ describe('features - BPMN search provider', function() {
 
 
       it('matched start', inject(function(bpmnSearch) {
+
         // given
         var pattern = 'before';
 
@@ -122,6 +128,7 @@ describe('features - BPMN search provider', function() {
 
 
       it('matched middle', inject(function(bpmnSearch) {
+
         // given
         var pattern = 'middle';
 
@@ -138,6 +145,7 @@ describe('features - BPMN search provider', function() {
 
 
       it('matched end', inject(function(bpmnSearch) {
+
         // given
         var pattern = 'after';
 

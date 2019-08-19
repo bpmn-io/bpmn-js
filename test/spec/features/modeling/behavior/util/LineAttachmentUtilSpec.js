@@ -15,10 +15,13 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
   //
   var line = [
     { x: 10, y: 10 },
+
     // -
     { x: 30, y: 10 },
+
     // |
     { x: 30, y: 30 },
+
     // \
     { x: 130, y: 130 }
   ];
@@ -199,10 +202,13 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
     //
     var floatingPointLine = [
       { x: 10.141592, y: 10.653589 },
+
       // -
       { x: 30.793238, y: 10.462643 },
+
       // |
       { x: 30.383279, y: 30.502884 },
+
       // \
       { x: 130.197169, y: 130.399375 }
     ];
@@ -246,6 +252,7 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
 
     var zeroLengthLine = [
       { x: 10, y: 10 },
+
       // -
       { x: 10, y: 10 }
     ];
@@ -253,6 +260,7 @@ describe('modeling/behavior/util - LineAttachmentUtil#getAttachment', function()
 
     var zeroLengthFloatingPointLine = [
       { x: 10.1, y: 10.12313 },
+
       // -
       { x: 10, y: 10.112 }
     ];

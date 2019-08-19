@@ -87,6 +87,7 @@ describe('label bounds', function() {
 
 
       it('should reduce width', inject(function(elementRegistry) {
+
         // given
         var shape = elementRegistry.get('StartEvent_1'),
             oldLabelWidth = shape.label.width;
@@ -100,6 +101,7 @@ describe('label bounds', function() {
 
 
       it('should reduce height', inject(function(elementRegistry) {
+
         // given
         var shape = elementRegistry.get('StartEvent_3'),
             oldLabelHeight = shape.label.height;

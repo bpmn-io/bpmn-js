@@ -54,6 +54,7 @@ describe('custom elements', function() {
 
 
     it('should render custom elements', inject(function(elementRegistry) {
+
       // when
 
       // then
@@ -63,6 +64,7 @@ describe('custom elements', function() {
 
 
     it('should get the correct custom elements path', inject(function(graphicsFactory) {
+
       // when
       var trianglePath = graphicsFactory.getShapePath(triangle),
           circlePath = graphicsFactory.getShapePath(circle);
@@ -74,6 +76,7 @@ describe('custom elements', function() {
 
 
     it('should still render bpmn elements', inject(function(elementFactory) {
+
       // when
       var startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
 

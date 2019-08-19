@@ -32,6 +32,7 @@ describe('features/modeling - move', function() {
 
   it('should not attach label when moving BoundaryEvent',
     inject(function(elementRegistry, move, dragging) {
+
       // given
       var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
           subProcess = elementRegistry.get('SubProcess_1'),

@@ -98,6 +98,7 @@ describe('modeling/behavior/util - GeometricUtil', function() {
 
     // given
     var testVectors = [
+
       // x=-10 because we have system with flipped y axis
       { vector: { x: 0, y: 10 }, angle: 90, rotated: { x: -10, y: 0 } },
       { vector: { x: 10, y: 0 }, angle: 90, rotated: { x: 0, y: 10 } },

@@ -57,6 +57,7 @@ export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
     // This is needed if other libraries rely on this helper for testing
     // while not adding the mocha-test-container-support as a dependency.
     try {
+
       // 'this' is the current test context
       testContainer = TestContainer.get(this);
     } catch (e) {

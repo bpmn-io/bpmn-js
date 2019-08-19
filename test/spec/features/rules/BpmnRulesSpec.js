@@ -1199,6 +1199,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
       it('-> Collaboration', function() {
+
         // then
         expectCanDrop(label, 'Collaboration', true);
       });
@@ -1249,6 +1250,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
       it('-> Collaboration', function() {
+
         // then
         expectCanCreate(group, 'Collaboration', true);
       });
@@ -1508,6 +1510,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(
       function(elementRegistry) {
+
         // when
         var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
             boundaryEvent2 = elementRegistry.get('BoundaryEvent_2');
@@ -1527,6 +1530,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     it('attach/move SubProcess, BoundaryEvent and label -> Process', inject(
       function(elementRegistry) {
+
         // when
         var subProcess = elementRegistry.get('SubProcess_1'),
             boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
@@ -2108,6 +2112,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       ];
 
       types.forEach(function(type) {
+
         // when
         var element = elementFactory.createShape({ type: type });
 
@@ -2231,6 +2236,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
     it('should allow start for given element types', inject(function(elementFactory, rules) {
+
       // given
       var types = [
         'bpmn:FlowNode',
@@ -2253,6 +2259,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
     it('should ignore label elements', inject(function(elementFactory, rules) {
+
       // given
       var label = elementFactory.createShape({ type: 'bpmn:FlowNode', labelTarget: {} });
 
@@ -2265,6 +2272,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
 
     it('should NOT allow start on unknown element', inject(function(rules) {
+
       // given
       var element = { type: 'bpmn:SomeUnknownType' };
 

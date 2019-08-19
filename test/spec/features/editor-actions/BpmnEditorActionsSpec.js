@@ -37,6 +37,7 @@ describe('features/editor-actions', function() {
 
 
         it('should move to origin', inject(function(editorActions) {
+
           // given
           var elements = editorActions.trigger('selectElements'),
               boundingBox;
@@ -73,6 +74,7 @@ describe('features/editor-actions', function() {
 
       it('should ignore children of subprocesses', inject(
         function(editorActions, elementRegistry) {
+
           // given
           var startEvent = elementRegistry.get('StartEvent_3'),
               startEventParent = getParent(startEvent);

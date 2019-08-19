@@ -476,6 +476,7 @@ describe('features - context-pad', function() {
 
       it('should not open non-existing replace menu', inject(
         function(create, dragging, canvas, elementFactory) {
+
           // given
           var rootShape = canvas.getRootElement(),
               dataObject = elementFactory.createShape({ type: 'bpmn:DataObjectReference' }),

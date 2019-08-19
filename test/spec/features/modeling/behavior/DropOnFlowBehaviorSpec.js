@@ -169,6 +169,7 @@ describe('modeling/behavior - drop on connection', function() {
 
       it('should connect start -> target -> end (with bendpointBefore inside bbox)', inject(
         function(modeling, elementRegistry, elementFactory) {
+
           // given
           var taskShape = elementFactory.createShape({ type: 'bpmn:Task' }),
               sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -345,6 +346,7 @@ describe('modeling/behavior - drop on connection', function() {
 
       it('should connect start -> target -> end (with bendpointBefore inside bbox)', inject(
         function(elementRegistry, selection, move, dragging) {
+
           // given
           var task3 = elementRegistry.get('Task_3'),
               sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -378,6 +380,7 @@ describe('modeling/behavior - drop on connection', function() {
 
       it('should connect start -> target -> end (with bendpointAfter inside bbox)', inject(
         function(elementRegistry, selection, move, dragging) {
+
           // given
           var task3 = elementRegistry.get('Task_3'),
               sequenceFlow = elementRegistry.get('SequenceFlow_1'),
