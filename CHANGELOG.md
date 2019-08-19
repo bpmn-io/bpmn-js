@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.1
+
+* `FIX`: import boundary event associations ([#1170](https://github.com/bpmn-io/bpmn-js/issues/1170))
+
 ## 5.0.0
 
 * `FEAT`: add two-step copy and paste ([#1137](https://github.com/bpmn-io/bpmn-js/pull/1137))
