@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.3
+
+_Republish of `v5.0.2`._
+
 ## 5.0.2
 
 * `FIX`: allow reconnecting to loops ([#1121](https://github.com/bpmn-io/bpmn-js/issues/1121))
