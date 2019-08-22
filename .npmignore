@@ -11,3 +11,4 @@ test/*
 .eslintrc
 .travis.yml
 rollup.config.js
+coverage
