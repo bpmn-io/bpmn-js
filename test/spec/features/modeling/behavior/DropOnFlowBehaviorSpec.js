@@ -17,6 +17,8 @@ import {
   createCanvasEvent as canvasEvent
 } from '../../../../util/MockEvents';
 
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
 
 describe('modeling/behavior - drop on connection', function() {
 
@@ -60,7 +62,6 @@ describe('modeling/behavior - drop on connection', function() {
           );
 
           // then
-
           var targetConnection = newShape.outgoing[0];
 
           // new incoming connection
@@ -212,6 +213,62 @@ describe('modeling/behavior - drop on connection', function() {
           ]));
 
           expect(targetConnection).to.have.startDocking({ x: 340, y: 299 });
+        }
+      ));
+
+
+      it('should handle shape created with bounds', inject(
+        function(elementFactory, elementRegistry, modeling) {
+
+          // given
+          var intermediateThrowEvent = elementFactory.createShape({
+            type: 'bpmn:IntermediateThrowEvent'
+          });
+
+          var startEvent = elementRegistry.get('StartEvent'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+              task = elementRegistry.get('Task_1');
+
+          var originalWaypoints = sequenceFlow.waypoints;
+
+          var dropBounds = { x: 322, y: 102, width: 36, height: 36 }; // first bendpoint
+
+          // when
+          var newShape = modeling.createShape(
+            intermediateThrowEvent,
+            dropBounds,
+            sequenceFlow
+          );
+
+          // then
+          var targetConnection = newShape.outgoing[0];
+
+          // new incoming connection
+          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming[0]).to.eql(sequenceFlow);
+
+          // new outgoing connection
+          expect(newShape.outgoing.length).to.equal(1);
+          expect(targetConnection).to.exist;
+          expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+
+          expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
+          expect(task.incoming[1]).to.equal(newShape.outgoing[0]);
+
+          // split target at insertion point
+          expect(sequenceFlow).to.have.waypoints(flatten([
+            originalWaypoints.slice(0, 1),
+            { x: 322, y: 120 }
+          ]));
+
+          expect(sequenceFlow).to.have.endDocking(getMid(dropBounds));
+
+          expect(targetConnection).to.have.waypoints(flatten([
+            { x: 340, y: 138 },
+            originalWaypoints.slice(2)
+          ]));
+
+          expect(targetConnection).to.have.startDocking(getMid(dropBounds));
         }
       ));
 
