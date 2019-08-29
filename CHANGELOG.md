@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.4
+
+* `FIX`: correct sequence flow layout after drop on flow ([#1178](https://github.com/bpmn-io/bpmn-js/issues/1178))
+
 ## 5.0.3
 
 _Republish of `v5.0.2`._
