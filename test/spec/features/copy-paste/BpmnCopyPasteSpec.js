@@ -9,6 +9,8 @@ import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 
+import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
+
 import {
   find,
   forEach,
@@ -509,7 +511,12 @@ describe('features/copy-paste', function() {
 
   describe('participants', function() {
 
-    beforeEach(bootstrapModeler(collaborationAssociationsXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationAssociationsXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
 
 
     it('should copy process when copying participant', inject(
@@ -543,6 +550,16 @@ describe('features/copy-paste', function() {
 
           expect(participantBo.processRef).not.to.equal(participantInputBo.processRef);
           expect(participantBo.processRef).not.to.equal(participantOutputBo.processRef);
+
+          expect(participantBo.processRef.isExecutable).to.be.true;
+
+          expect(participantBo.processRef.extensionElements.values).to.have.length(1);
+
+          var executionListener = participantBo.processRef.extensionElements.values[0];
+
+          expect(executionListener.$type).to.equal('camunda:ExecutionListener');
+          expect(executionListener.class).to.equal('Foo');
+          expect(executionListener.event).to.equal('start');
         });
 
         expect(getBusinessObject(participants[0]).processRef)
@@ -562,8 +579,6 @@ describe('features/copy-paste', function() {
 
 
   describe('nested properties', function() {
-
-    var camundaPackage = require('camunda-bpmn-moddle/resources/camunda.json');
 
     beforeEach(bootstrapModeler(copyPropertiesXML, {
       modules: testModules,
