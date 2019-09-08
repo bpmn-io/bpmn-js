@@ -220,7 +220,7 @@ describe('features - context-pad', function() {
         'append.receive-task',
         'append.message-intermediate-event',
         'append.timer-intermediate-event',
-        'append.condition-intermediate-event',
+        'append.condtion-intermediate-event',
         'append.signal-intermediate-event',
         'append.text-annotation',
         '!append.task'
