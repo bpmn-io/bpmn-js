@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
   <bpmn:collaboration id="Collaboration_1">
     <bpmn:participant id="Participant_1" processRef="Process_1" />
     <bpmn:participant id="Participant_2" processRef="Process_2" />
+    <bpmn:participant id="Participant_3" processRef="Process_3" />
   </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" />
     <bpmn:endEvent id="EndEvent_1" />
-    <bpmn:task id="Task_1" />
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject_16xfc7e" />
     <bpmn:dataObject id="DataObject_16xfc7e" />
     <bpmn:exclusiveGateway id="Gateway_1" />
     <bpmn:subProcess id="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="SubProcess" />
     <bpmn:boundaryEvent id="BoundaryEventRight" attachedToRef="SubProcess" />
+    <bpmn:startEvent id="StartEvent_1" />
+    <bpmn:task id="Task_1" />
   </bpmn:process>
   <bpmn:process id="Process_2" isExecutable="false">
     <bpmn:task id="Task_2" />
@@ -23,6 +24,10 @@
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1">
       <bpmn:messageEventDefinition />
     </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_3" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_2" />
+    <bpmn:task id="Task_3" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
@@ -64,6 +69,15 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1nir8te_di" bpmnElement="Gateway_1" isMarkerVisible="true">
         <dc:Bounds x="299" y="75" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0echqt5_di" bpmnElement="Participant_3" isHorizontal="true">
+        <dc:Bounds x="32" y="760" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0dv3wii_di" bpmnElement="StartEvent_2">
+        <dc:Bounds x="82" y="877" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_04e4734_di" bpmnElement="Task_3">
+        <dc:Bounds x="170" y="855" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

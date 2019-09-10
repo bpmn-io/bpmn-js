@@ -148,23 +148,23 @@ describe('features/snapping - BpmnConnectSnapping', function() {
           inject(function(connect, dragging, elementRegistry) {
 
             // given
-            var startEvent = elementRegistry.get('StartEvent_1'),
-                task = elementRegistry.get('Task_1'),
+            var startEvent = elementRegistry.get('StartEvent_2'),
+                task = elementRegistry.get('Task_3'),
                 taskGfx = elementRegistry.getGraphics(task);
 
             // when
-            connect.start(canvasEvent({ x: 210, y: 60 }), startEvent);
+            connect.start(canvasEvent({ x: 130, y: 850 }), startEvent);
 
             dragging.hover({ element: task, gfx: taskGfx });
 
-            dragging.move(canvasEvent({ x: 300, y: 300 }));
+            dragging.move(canvasEvent({ x: 171, y: 893 }));
 
             dragging.end();
 
             // then
             var waypoints = startEvent.outgoing[0].waypoints;
 
-            expect(waypoints[3].y).to.eql(300);
+            expect(waypoints[waypoints.length-1].y).to.eql(895);
           })
         );
 
