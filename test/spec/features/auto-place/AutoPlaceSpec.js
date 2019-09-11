@@ -1,13 +1,19 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
 } from 'test/TestHelper';
 
 import autoPlaceModule from 'lib/features/auto-place';
+import coreModule from 'lib/core';
+import labelEditingModule from 'lib/features/label-editing';
 import modelingModule from 'lib/features/modeling';
 import selectionModule from 'diagram-js/lib/features/selection';
-import labelEditingModule from 'lib/features/label-editing';
-import coreModule from 'lib/core';
+
+import { getBusinessObject } from '../../../../lib/util/ModelUtil';
+
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
 
 
 describe('features/auto-place', function() {
@@ -110,31 +116,52 @@ describe('features/auto-place', function() {
   });
 
 
-  describe('modeling flow', function() {
+  describe('integration', function() {
 
     var diagramXML = require('./AutoPlace.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
-        coreModule,
-        modelingModule,
         autoPlaceModule,
-        selectionModule,
-        labelEditingModule
+        coreModule,
+        labelEditingModule,
+        modelingModule,
+        selectionModule
       ]
     }));
+
+
+    it('should complete direct edit on autoPlace', inject(
+      function(autoPlace, directEditing, elementFactory, elementRegistry) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('TASK_2');
+
+        directEditing.activate(source);
+
+        directEditing._textbox.content.textContent = 'foo';
+
+        // when
+        autoPlace.append(source, element);
+
+        // then
+        expect(getBusinessObject(source).name).to.equal('foo');
+      }
+    ));
 
 
     it('should select + direct edit on autoPlace', inject(
       function(autoPlace, elementRegistry, elementFactory, selection, directEditing) {
 
         // given
-        var el = elementFactory.createShape({ type: 'bpmn:Task' });
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
 
         var source = elementRegistry.get('TASK_2');
 
         // when
-        var newShape = autoPlace.append(source, el);
+        var newShape = autoPlace.append(source, element);
 
         // then
         expect(selection.get()).to.eql([ newShape ]);
@@ -227,6 +254,108 @@ describe('features/auto-place', function() {
       behind: 'BOUNDARY_SUBPROCESS_TOP',
       expectedBounds: { x: 275, y: 194, width: 100, height: 80 }
     }));
+
+  });
+
+
+  describe('eventbus integration', function() {
+
+    var diagramXML = require('./AutoPlace.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        autoPlaceModule,
+        coreModule,
+        labelEditingModule,
+        modelingModule,
+        selectionModule
+      ]
+    }));
+
+
+    it('<autoPlace.start>', inject(
+      function(autoPlace, elementFactory, elementRegistry, eventBus) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('TASK_2');
+
+        var listener = sinon.spy(function(event) {
+
+          // then
+          expect(event.shape).to.equal(element);
+          expect(event.source).to.equal(source);
+        });
+
+        eventBus.on('autoPlace.start', listener);
+
+        // when
+        autoPlace.append(source, element);
+
+        expect(listener).to.have.been.called;
+      }
+    ));
+
+
+    it('<autoPlace>', inject(
+      function(autoPlace, elementFactory, elementRegistry, eventBus) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('TASK_2');
+
+        var listener = sinon.spy(function(event) {
+
+          // then
+          expect(event.shape).to.equal(element);
+          expect(event.source).to.equal(source);
+
+          return {
+            x: 0,
+            y: 0
+          };
+        });
+
+        eventBus.on('autoPlace', listener);
+
+        // when
+        autoPlace.append(source, element);
+
+        expect(listener).to.have.been.called;
+
+        expect(getMid(element)).to.eql({
+          x: 0,
+          y: 0
+        });
+      }
+    ));
+
+
+    it('<autoPlace.end>', inject(
+      function(autoPlace, elementFactory, elementRegistry, eventBus) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('TASK_2');
+
+        var listener = sinon.spy(function(event) {
+
+          // then
+          expect(event.shape).to.equal(element);
+          expect(event.source).to.equal(source);
+        });
+
+        eventBus.on('autoPlace.end', listener);
+
+        // when
+        autoPlace.append(source, element);
+
+        expect(listener).to.have.been.called;
+      }
+    ));
 
   });
 
