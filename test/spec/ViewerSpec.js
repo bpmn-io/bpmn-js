@@ -1614,6 +1614,25 @@ describe('Viewer', function() {
 
   describe('#clear', function() {
 
+    it('should NOT clear if no diagram', function() {
+
+      // given
+      var viewer = new Viewer({ container: container });
+
+      var eventBus = viewer.get('eventBus');
+
+      var spy = sinon.spy();
+
+      eventBus.on('diagram.clear', spy);
+
+      // when
+      viewer.clear();
+
+      // then
+      expect(spy).not.to.have.been.called;
+    });
+
+
     it('should not throw if diagram is already empty', function() {
 
       // given
