@@ -167,6 +167,38 @@ describe('features/copy-paste', function() {
       );
 
 
+      it('should copy attacher properties', inject(function(canvas, copyPaste, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_1'),
+            boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+            rootElement = canvas.getRootElement();
+
+        // when
+        copyPaste.copy([ task, boundaryEvent ]);
+
+        var elements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 1000,
+            y: 1000
+          }
+        });
+
+        // then
+        task = find(elements, function(element) {
+          return is(element, 'bpmn:Task');
+        });
+
+        boundaryEvent = find(elements, function(element) {
+          return is(element, 'bpmn:BoundaryEvent');
+        });
+
+        // then
+        expect(getBusinessObject(boundaryEvent).attachedToRef).to.equal(getBusinessObject(task));
+      }));
+
+
       it('should copy loop characteristics porperties',
         inject(function(canvas, copyPaste, elementRegistry, modeling) {
 
