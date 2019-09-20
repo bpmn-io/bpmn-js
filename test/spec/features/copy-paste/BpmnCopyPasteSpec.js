@@ -71,6 +71,75 @@ describe('features/copy-paste', function() {
       }));
 
 
+      describe('should copy boundary events without host', function() {
+
+        it('should copy/paste', inject(function(elementRegistry, canvas, copyPaste) {
+
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              rootElement = canvas.getRootElement();
+
+          // when
+          copyPaste.copy(boundaryEvent);
+
+          var copiedElements = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1000,
+              y: 1000
+            }
+          });
+
+          // then
+          expect(rootElement.children).to.have.length(2);
+
+          expect(copiedElements).to.have.length(1);
+
+          expect(copiedElements[0].type).to.equal('bpmn:IntermediateCatchEvent');
+
+          expect(copiedElements[0].id).not.to.equal(boundaryEvent.id);
+        }));
+
+
+        it('should copy/paste and reattach', inject(function(elementRegistry, canvas, copyPaste) {
+
+          // given
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+              task = elementRegistry.get('Task_1'),
+              rootElement = canvas.getRootElement();
+
+          // when
+          copyPaste.copy(boundaryEvent);
+
+          var copiedElement = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 1000,
+              y: 1000
+            }
+          })[0];
+
+          copyPaste.copy(copiedElement);
+
+          var attachedBoundaryEvent = copyPaste.paste({
+            element: task,
+            point: {
+              x: task.x,
+              y: task.y
+            },
+            hints: {
+              attach: 'attach'
+            }
+          })[0].businessObject;
+
+          // then
+          expect(attachedBoundaryEvent.attachedToRef).to.eql(task.businessObject);
+
+        }));
+
+      });
+
+
       it('should NOT override type property of descriptor', inject(function(elementRegistry) {
 
         // given
@@ -277,7 +346,7 @@ describe('features/copy-paste', function() {
 
     describe('rules', function() {
 
-      it('should NOT allow copying boundary event without host', inject(function(elementRegistry) {
+      it('should allow copying boundary event without host', inject(function(elementRegistry) {
 
         var boundaryEvent1 = elementRegistry.get('BoundaryEvent_1'),
             boundaryEvent2 = elementRegistry.get('BoundaryEvent_2');
@@ -285,7 +354,7 @@ describe('features/copy-paste', function() {
         // when
         var tree = copy([ boundaryEvent1, boundaryEvent2 ]);
 
-        expect(keys(tree)).to.have.length(0);
+        expect(keys(tree)).to.have.length(1);
       }));
 
     });

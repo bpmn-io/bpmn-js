@@ -6,12 +6,13 @@ import {
 } from 'test/TestHelper';
 
 import modelingModule from 'lib/features/modeling';
+import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import coreModule from 'lib/core';
 
 
 describe('features/modeling/behavior - detach events', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+  var testModules = [ coreModule, modelingModule, copyPasteModule ];
 
   var processDiagramXML = require('test/spec/features/rules/BpmnRules.detaching.bpmn');
 
@@ -61,6 +62,29 @@ describe('features/modeling/behavior - detach events', function() {
       expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
       expect(boundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
     }));
+
+
+    it('should execute on pasting a BoundaryEvent outside', inject(function(canvas, elementRegistry, copyPaste) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent'),
+          root = canvas.getRootElement();
+
+      copyPaste.copy(boundaryEvent);
+
+      // when
+      var pastedElement = copyPaste.paste({
+        element: root,
+        point: {
+          x: 450,
+          y: 450
+        }
+      })[0];
+
+      // then
+      expect(pastedElement.type).to.eql('bpmn:IntermediateThrowEvent');
+    }));
+
   });
 
 
