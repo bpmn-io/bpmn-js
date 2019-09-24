@@ -1817,7 +1817,8 @@ describe('features/popup-menu - replace menu provider', function() {
       [
         'bpmn:Activity',
         'bpmn:EndEvent',
-        'bpmn:IntermediateThrowEvent'
+        'bpmn:IntermediateThrowEvent',
+        'bpmn:IntermediateCatchEvent'
       ].forEach(function(type) {
 
         it('should keep ConditionalFlow when changing target to ' + type,
