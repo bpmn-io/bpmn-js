@@ -6,6 +6,15 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.0.5
+
+* `FIX`: snap connections to task mid ([`86c61b0`](https://github.com/bpmn-io/bpmn-js/commit/86c61b0c0d6dcf776adda94b6d72b621644c2abe))
+* `FIX`: snap connections to sub process mid ([`83e9f05`](https://github.com/bpmn-io/bpmn-js/commit/83e9f05efab6fbe57100e11d0443291a561bdfe4))
+* `FIX`: complete direct editing when auto place starts ([`dcf440b`](https://github.com/bpmn-io/bpmn-js/commit/dcf440b07684339bdb52ba97cd1c83f9eb234044))
+* `FIX`: do not clear diagram if no diagram to clear ([#1181](https://github.com/bpmn-io/bpmn-js/issues/1181))
+* `FIX`: copy boundary events attachments ([#1190](https://github.com/bpmn-io/bpmn-js/issues/1190))
+* `FIX`: do not copy generic properties ([`a74d83`](https://github.com/bpmn-io/bpmn-js/commit/a74d838dc78aceddf88e07231cf85a4cf9e0dd95))
+
 ## 5.0.4
 
 * `FIX`: correct sequence flow layout after drop on flow ([#1178](https://github.com/bpmn-io/bpmn-js/issues/1178))
