@@ -39,7 +39,7 @@ describe('features/copy-paste/ModdleCopy', function() {
 
   describe('simple', function() {
 
-    it('should copy primitive properties', inject(function(moddleCopy, moddle) {
+    it('should copy primitive properties', inject(function(moddle, moddleCopy) {
 
       // given
       var userTask = moddle.create('bpmn:UserTask', {
@@ -56,7 +56,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should copy arrays of properties', inject(function(moddleCopy, moddle) {
+    it('should copy arrays of properties', inject(function(moddle, moddleCopy) {
 
       // given
       var messageEventDefinition = moddle.create('bpmn:MessageEventDefinition'),
@@ -80,7 +80,7 @@ describe('features/copy-paste/ModdleCopy', function() {
 
 
     it('should NOT copy properties that are not allowed in target element', inject(
-      function(moddleCopy, moddle) {
+      function(moddle, moddleCopy) {
 
         // given
         var userTask = moddle.create('bpmn:UserTask', {
@@ -98,7 +98,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     ));
 
 
-    it('should NOT copy IDs', inject(function(moddleCopy, moddle) {
+    it('should NOT copy IDs', inject(function(moddle, moddleCopy) {
 
       // given
       var task = moddle.create('bpmn:Task', {
@@ -115,7 +115,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should NOT copy references', inject(function(moddleCopy, moddle) {
+    it('should NOT copy references', inject(function(moddle, moddleCopy) {
 
       // given
       var processRef = moddle.create('bpmn:Process'),
@@ -169,7 +169,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should NOT copy empty extension elements', inject(function(moddleCopy, moddle) {
+    it('should NOT copy empty extension elements', inject(function(moddle, moddleCopy) {
 
       // given
       var connector = moddle.create('camunda:Connector'),
@@ -194,7 +194,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should only copy specified properties', inject(function(moddleCopy, moddle) {
+    it('should only copy specified properties', inject(function(moddle, moddleCopy) {
 
       // given
       var userTask = moddle.create('bpmn:UserTask', {
@@ -221,7 +221,7 @@ describe('features/copy-paste/ModdleCopy', function() {
 
   describe('nested', function() {
 
-    it('should copy documentation', inject(function(moddleCopy, moddle) {
+    it('should copy documentation', inject(function(moddle, moddleCopy) {
 
       // given
       var documentation = [
@@ -245,7 +245,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should copy execution listener', inject(function(moddleCopy, moddle) {
+    it('should copy execution listener', inject(function(moddle, moddleCopy) {
 
       // given
       var script = moddle.create('camunda:Script', {
@@ -289,7 +289,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should copy output parameter', inject(function(moddleCopy, moddle) {
+    it('should copy output parameter', inject(function(moddle, moddleCopy) {
 
       // given
       var outputParameter = moddle.create('camunda:OutputParameter', {
@@ -360,7 +360,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     describe('camunda:Connector', function() {
 
       it('should copy if parent is message event definition and is child of end event', inject(
-        function(moddleCopy, moddle) {
+        function(moddle, moddleCopy) {
 
           // given
           var connector = moddle.create('camunda:Connector', {
@@ -399,7 +399,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     describe('camunda:Field', function() {
 
       it('should copy if parent is message event definition and is child of end event', inject(
-        function(moddleCopy, moddle) {
+        function(moddle, moddleCopy) {
 
           // given
           var field = moddle.create('camunda:Field', {
@@ -438,7 +438,7 @@ describe('features/copy-paste/ModdleCopy', function() {
     describe('camunda:FailedJobRetryTimeCycle', function() {
 
       it('should copy if parent is SignalEventDefinition and is intermediate throwing', inject(
-        function(moddleCopy, moddle) {
+        function(moddle, moddleCopy) {
 
           // given
           var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
@@ -475,7 +475,7 @@ describe('features/copy-paste/ModdleCopy', function() {
 
 
       it('should copy if parent is TimerEventDefinition and is catching', inject(
-        function(moddleCopy, moddle) {
+        function(moddle, moddleCopy) {
 
           // given
           var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
@@ -509,7 +509,7 @@ describe('features/copy-paste/ModdleCopy', function() {
       ));
 
 
-      it('should copy if parent is call activity', inject(function(moddleCopy, moddle) {
+      it('should copy if parent is call activity', inject(function(moddle, moddleCopy) {
 
         // given
         var retryCycle = moddle.create('camunda:FailedJobRetryTimeCycle', {
@@ -538,6 +538,35 @@ describe('features/copy-paste/ModdleCopy', function() {
 
         expect(extensionElements.values[0].$type).to.equal('camunda:FailedJobRetryTimeCycle');
         expect(extensionElements.values[0].body).to.equal('foo');
+      }));
+
+    });
+
+
+    describe('generic properties', function() {
+
+      it('should not copy generic extension elements', inject(function(moddle, moddleCopy) {
+
+        // given
+        var genericExtensionElement = moddle.createAny('foo:property', {
+          value: 'foo'
+        });
+
+        var extensionElements = moddle.create('bpmn:ExtensionElements'),
+            startEvent = moddle.create('bpmn:StartEvent');
+
+        genericExtensionElement.$parent = extensionElements;
+
+        extensionElements.$parent = startEvent;
+        extensionElements.values = [ genericExtensionElement ];
+
+        startEvent.extensionElements = extensionElements;
+
+        // when
+        var endEvent = moddleCopy.copyElement(startEvent, moddle.create('bpmn:EndEvent'));
+
+        // then
+        expect(endEvent.extensionElements).not.to.exist;
       }));
 
     });
