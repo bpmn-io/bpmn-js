@@ -6,7 +6,6 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
-
 describe('features/modeling/behavior - create boundary events', function() {
 
   var testModules = [ coreModule, modelingModule ];
@@ -53,4 +52,26 @@ describe('features/modeling/behavior - create boundary events', function() {
     expect(newEvent.type).to.equal('bpmn:IntermediateThrowEvent');
   }));
 
+
+  it('should copy properties when attached', inject(function(canvas, elementFactory, modeling) {
+
+    // given
+    var rootElement = canvas.getRootElement(),
+        task = elementFactory.createShape({ type: 'bpmn:Task' }),
+        intermediateEvent = elementFactory.createShape({ type: 'bpmn:IntermediateThrowEvent' }),
+        srcBO = intermediateEvent.businessObject,
+        nameProperty = 'TEST_NAME';
+
+    srcBO.set('name', nameProperty);
+
+    modeling.createShape(task, { x: 100, y: 100 }, rootElement);
+
+    // when
+    var newEvent = modeling.createShape(intermediateEvent, { x: 65, y: 100 }, task, { attach: true });
+    var newBO = newEvent.businessObject;
+
+    // then
+    expect(newBO.get('name')).to.equal(nameProperty);
+
+  }));
 });
