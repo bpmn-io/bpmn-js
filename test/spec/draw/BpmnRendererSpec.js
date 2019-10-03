@@ -16,7 +16,7 @@ import {
   query as domQuery
 } from 'min-dom';
 
-import { isAny } from 'lib/features/modeling/util/ModelingUtil';
+import { isAny } from 'lib/util/ModelUtil';
 
 import {
   getDi
