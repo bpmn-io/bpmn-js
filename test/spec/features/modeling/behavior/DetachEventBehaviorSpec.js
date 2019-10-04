@@ -35,7 +35,6 @@ describe('features/modeling/behavior - detach events', function() {
 
       // then
       intermediateThrowEvent = elementRegistry.get(eventId);
-
       expect(boundaryEvent.parent).to.not.exist;
       expect(intermediateThrowEvent).to.exist;
       expect(intermediateThrowEvent.type).to.equal('bpmn:IntermediateThrowEvent');
@@ -60,6 +59,55 @@ describe('features/modeling/behavior - detach events', function() {
       expect(boundaryEvent.host).to.eql(subProcess);
       expect(boundaryEvent.type).to.equal('bpmn:BoundaryEvent');
       expect(boundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
+    }));
+
+
+    it('should execute on batch', inject(function(canvas, elementRegistry, modeling) {
+
+      // given
+      var eventIds = [ 'BoundaryEventWithLabel', 'BoundaryEvent', 'BoundaryTimerEvent', 'BoundaryNonInterruptingMessageEvent', 'BoundaryEventWithConnections' ],
+          elements = eventIds.map(function(eventId) {
+            return elementRegistry.get(eventId);
+          }),
+          clone = elements.slice(),
+          root = canvas.getRootElement();
+
+      // when
+      modeling.moveElements(elements, { x: 0, y: 300 }, root);
+
+      // then
+      elements.forEach(function(element, index) {
+        var expectedType = isCatchEvent(element) ? 'bpmn:IntermediateCatchEvent' : 'bpmn:IntermediateThrowEvent';
+
+        expect(clone[ index ].parent).to.not.exist;
+        expect(element.parent).to.exist;
+        expect(element.type).to.equal(expectedType);
+        expect(element.businessObject.attachedToRef).to.not.exist;
+        expect(element.parent).to.equal(root);
+      });
+    }));
+
+
+    it('should not execute when moved with host', inject(function(canvas, elementRegistry, modeling) {
+
+      // given
+      var eventIds = [ 'BoundaryEventWithLabel', 'BoundaryEvent', 'BoundaryTimerEvent' ],
+          elements = eventIds.map(function(eventId) {
+            return elementRegistry.get(eventId);
+          }),
+          subProcess = elementRegistry.get('SubProcess_1'),
+          root = canvas.getRootElement(),
+          elementsToMove = elements.concat(subProcess);
+
+      // when
+      modeling.moveElements(elementsToMove, { x: 0, y: 300 }, root);
+
+      // then
+      elements.forEach(function(element) {
+        expect(element.host).to.eql(subProcess);
+        expect(element.type).to.equal('bpmn:BoundaryEvent');
+        expect(element.businessObject.attachedToRef).to.equal(subProcess.businessObject);
+      });
     }));
   });
 
@@ -201,4 +249,14 @@ function skipId(key, value) {
   }
 
   return value;
+}
+
+function getEventDefinition(element) {
+  var bo = element.businessObject;
+
+  return bo && bo.eventDefinitions && bo.eventDefinitions[0];
+}
+
+function isCatchEvent(shape) {
+  return !!getEventDefinition(shape);
 }
