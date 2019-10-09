@@ -266,4 +266,28 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
     expect(sourceLane.flowNodeRef).not.to.contain(event);
   }));
 
+
+  it('should not create duplicate refs on attaching / detaching', inject(function(elementRegistry, modeling) {
+
+    // given
+    var eventID = 'IntermediateThrowEvent',
+        throwEvent = elementRegistry.get(eventID),
+        task1 = elementRegistry.get('Task_1'),
+        task2 = elementRegistry.get('Task_2'),
+        lane1 = elementRegistry.get('Participant_C_Lane_1').businessObject,
+        lane2 = elementRegistry.get('Participant_C_Lane_2').businessObject;
+
+    // when
+    modeling.moveElements([ throwEvent ], { x: -280, y: 30 }, task1, { attach: true });
+
+    var boundaryEvent = elementRegistry.get(eventID);
+
+    modeling.moveElements([ boundaryEvent ], { x: 0, y: 150 }, task2, { attach: true });
+
+    // then
+    expect(lane1.flowNodeRef).not.to.contain(boundaryEvent.businessObject);
+    expect(lane2.flowNodeRef).to.contain(boundaryEvent.businessObject);
+    expect(lane1.flowNodeRef).to.have.length(1);
+    expect(lane2.flowNodeRef).to.have.length(2);
+  }));
 });
