@@ -65,7 +65,8 @@ describe('features/keyboard', function() {
         'setColor',
         'directEditing',
         'find',
-        'moveToOrigin'
+        'moveToOrigin',
+        'saveEditing'
       ];
 
       // then

@@ -232,7 +232,8 @@ describe('Modeler', function() {
         'setColor',
         'directEditing',
         'find',
-        'moveToOrigin'
+        'moveToOrigin',
+        'saveEditing'
       ];
 
       var modeler = new Modeler();

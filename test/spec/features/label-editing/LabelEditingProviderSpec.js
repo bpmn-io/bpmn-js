@@ -127,6 +127,26 @@ describe('features - label-editing', function() {
     ));
 
 
+    it('should complete on editor save', inject(
+      function(elementRegistry, directEditing, eventBus) {
+
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
+
+        directEditing.activate(shape);
+
+        directEditing._textbox.content.textContent = 'FOO BAR';
+
+        // when
+        eventBus.fire('editor.saveEditing');
+
+        // then
+        expect(task.name).to.equal('FOO BAR');
+      }
+    ));
+
+
     it('should submit on root element click', inject(
       function(elementRegistry, directEditing, canvas, eventBus) {
 

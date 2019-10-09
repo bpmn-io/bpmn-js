@@ -52,7 +52,8 @@ describe('NavigatedViewer', function() {
         'stepZoom',
         'zoom',
         'moveCanvas',
-        'selectElements'
+        'selectElements',
+        'saveEditing'
       ];
 
       var navigatedViewer = new NavigatedViewer({
