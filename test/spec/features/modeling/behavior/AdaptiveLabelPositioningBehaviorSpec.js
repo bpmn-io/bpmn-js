@@ -3,12 +3,15 @@ import {
   inject
 } from 'test/TestHelper';
 
-import {
-  getOrientation
-} from 'diagram-js/lib/layout/LayoutUtil';
+import { getOrientation } from 'diagram-js/lib/layout/LayoutUtil';
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+
+import {
+  DEFAULT_LABEL_SIZE,
+  getExternalLabelMid
+} from 'lib/util/LabelUtil';
 
 var testModules = [
   modelingModule,
@@ -281,6 +284,45 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
         }
       ));
 
+
+      it('should not adjust position', inject(function(bpmnFactory, elementFactory, elementRegistry, modeling, textRenderer) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+        var intermediateThrowEvent = elementFactory.createShape({
+          businessObject: bpmnFactory.create('bpmn:IntermediateThrowEvent', {
+            name: 'Foo'
+          }),
+          type: 'bpmn:IntermediateThrowEvent',
+          x: 0,
+          y: 0
+        });
+
+        var externalLabelMid = getExternalLabelMid(intermediateThrowEvent);
+
+        var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
+
+        var label = elementFactory.createLabel({
+          labelTarget: intermediateThrowEvent,
+          x: externalLabelMid.x - externalLabelBounds.width / 2,
+          y: externalLabelMid.y - externalLabelBounds.height / 2,
+          width: externalLabelBounds.width,
+          height: externalLabelBounds.height
+        });
+
+        var sequenceFlowMid = getConnectionMid(sequenceFlow.waypoints[0], sequenceFlow.waypoints[1]);
+
+        // when
+        modeling.createElements([ intermediateThrowEvent, label ], sequenceFlowMid, sequenceFlow);
+
+        // then
+        expect(label.x).to.be.closeTo(325, 1);
+        expect(label.y).to.be.closeTo(335, 1);
+        expect(label.width).to.be.closeTo(19, 1);
+        expect(label.height).to.be.closeTo(14, 1);
+      }));
+
     });
 
   });
@@ -407,3 +449,12 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
   });
 
 });
+
+// helpers //////////
+
+function getConnectionMid(a, b) {
+  return {
+    x: (a.x + b.x) / 2,
+    y: (a.y + b.y) / 2
+  };
+}
