@@ -20,6 +20,11 @@ import {
 
 import { createCanvasEvent as canvasEvent } from '../../../util/MockEvents';
 
+import {
+  DEFAULT_LABEL_SIZE,
+  getExternalLabelMid
+} from 'lib/util/LabelUtil';
+
 import { queryAll as domQueryAll } from 'min-dom';
 
 import { attr as svgAttr } from 'tiny-svg';
@@ -155,86 +160,201 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
       var task, taskGfx, intermediateThrowEvent;
 
-      beforeEach(inject(function(create, dragging, elementRegistry, elementFactory) {
-        task = elementRegistry.get('Task_1');
-        taskGfx = elementRegistry.getGraphics(task);
 
-        intermediateThrowEvent = elementFactory.createShape({
-          type: 'bpmn:IntermediateThrowEvent'
-        });
+      describe('without label', function() {
 
-        create.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
+        beforeEach(inject(function(create, dragging, elementRegistry, elementFactory) {
+          task = elementRegistry.get('Task_1');
 
-        dragging.hover({ element: task, gfx: taskGfx });
-      }));
+          taskGfx = elementRegistry.getGraphics(task);
 
+          intermediateThrowEvent = elementFactory.createShape({
+            type: 'bpmn:IntermediateThrowEvent'
+          });
 
-      it('should snap to top', inject(function(dragging) {
+          create.start(canvasEvent({ x: 0, y: 0 }), intermediateThrowEvent);
 
-        // when
-        dragging.move(canvasEvent({ x: 150, y: 95 }));
-
-        dragging.end();
-
-        // then
-        var boundaryEvent = getBoundaryEvent(task);
-
-        expect(mid(boundaryEvent)).to.eql({
-          x: 150,
-          y: 100 // 95 snapped to 100
-        });
-      }));
+          dragging.hover({ element: task, gfx: taskGfx });
+        }));
 
 
-      it('should snap to right', inject(function(dragging) {
+        it('should snap to top', inject(function(dragging) {
 
-        // when
-        dragging.move(canvasEvent({ x: 195, y: 140 }));
+          // when
+          dragging.move(canvasEvent({ x: 150, y: 95 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        var boundaryEvent = getBoundaryEvent(task);
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
 
-        expect(mid(boundaryEvent)).to.eql({
-          x: 200, // 195 snapped to 200
-          y: 140
-        });
-      }));
-
-
-      it('should snap to bottom', inject(function(dragging) {
-
-        // when
-        dragging.move(canvasEvent({ x: 150, y: 175 }));
-
-        dragging.end();
-
-        // then
-        var boundaryEvent = getBoundaryEvent(task);
-
-        expect(mid(boundaryEvent)).to.eql({
-          x: 150,
-          y: 180 // 175 snapped to 180
-        });
-      }));
+          expect(mid(boundaryEvent)).to.eql({
+            x: 150,
+            y: 100 // 95 snapped to 100
+          });
+        }));
 
 
-      it('should snap to left', inject(function(dragging) {
+        it('should snap to right', inject(function(dragging) {
 
-        // when
-        dragging.move(canvasEvent({ x: 95, y: 140 }));
+          // when
+          dragging.move(canvasEvent({ x: 195, y: 140 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        var boundaryEvent = getBoundaryEvent(task);
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
 
-        expect(mid(boundaryEvent)).to.eql({
-          x: 100, // 95 snapped to 100
-          y: 140
-        });
-      }));
+          expect(mid(boundaryEvent)).to.eql({
+            x: 200, // 195 snapped to 200
+            y: 140
+          });
+        }));
+
+
+        it('should snap to bottom', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 150, y: 175 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 150,
+            y: 180 // 175 snapped to 180
+          });
+        }));
+
+
+        it('should snap to left', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 95, y: 140 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 100, // 95 snapped to 100
+            y: 140
+          });
+        }));
+      });
+
+
+      describe('with label', function() {
+
+        beforeEach(inject(function(
+            bpmnFactory,
+            create,
+            dragging,
+            elementFactory,
+            elementRegistry,
+            textRenderer
+        ) {
+          task = elementRegistry.get('Task_1');
+
+          taskGfx = elementRegistry.getGraphics(task);
+
+          intermediateThrowEvent = elementFactory.createShape({
+            businessObject: bpmnFactory.create('bpmn:IntermediateThrowEvent', {
+              name: 'Foo'
+            }),
+            type: 'bpmn:IntermediateThrowEvent',
+            x: 0,
+            y: 0
+          });
+
+          var externalLabelMid = getExternalLabelMid(intermediateThrowEvent);
+
+          var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
+
+          var label = elementFactory.createLabel({
+            labelTarget: intermediateThrowEvent,
+            x: externalLabelMid.x - externalLabelBounds.width / 2,
+            y: externalLabelMid.y - externalLabelBounds.height / 2,
+            width: externalLabelBounds.width,
+            height: externalLabelBounds.height
+          });
+
+          create.start(canvasEvent({ x: 0, y: 0 }), [ intermediateThrowEvent, label ]);
+
+          dragging.hover({ element: task, gfx: taskGfx });
+        }));
+
+
+        it('should snap to top-left', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 90, y: 95 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 100, // 90 snapped to 100
+            y: 100 // 95 snapped to 100
+          });
+        }));
+
+
+        it('should snap to top-right', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 210, y: 95 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 200, // 210 snapped to 200
+            y: 100 // 95 snapped to 100
+          });
+        }));
+
+
+        it('should snap to bottom-left', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 90, y: 190 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 100, // 90 snapped to 100
+            y: 180 // 190 snapped to 180
+          });
+        }));
+
+
+        it('should snap to bottom-right', inject(function(dragging) {
+
+          // when
+          dragging.move(canvasEvent({ x: 210, y: 190 }));
+
+          dragging.end();
+
+          // then
+          var boundaryEvent = getBoundaryEvent(task);
+
+          expect(mid(boundaryEvent)).to.eql({
+            x: 200, // 210 snapped to 200
+            y: 180 // 190 snapped to 180
+          });
+        }));
+      });
 
     });
 
