@@ -183,7 +183,7 @@ describe('features/modeling/rules - BpmnRules', function() {
           boundaryEvent = elementFactory.createShape({ type: 'bpmn:BoundaryEvent', host: task });
 
       // then
-      expectCanCopy(boundaryEvent, [], false);
+      expectCanCopy(boundaryEvent, [ boundaryEvent ], true);
     }));
 
   });
