@@ -270,58 +270,68 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
     describe('on label creation', function() {
 
-      it('should create label at TOP', inject(
-        function(elementRegistry, modeling) {
+      describe('through <create.shape>', function() {
+
+        it('should create at LEFT', inject(function(bpmnFactory, elementFactory, elementRegistry, modeling, textRenderer) {
 
           // given
-          var element = elementRegistry.get('NoLabel');
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+          var intermediateThrowEvent = elementFactory.createShape({
+            businessObject: bpmnFactory.create('bpmn:IntermediateThrowEvent', {
+              name: 'Foo'
+            }),
+            type: 'bpmn:IntermediateThrowEvent',
+            x: 0,
+            y: 0
+          });
+
+          var externalLabelMid = getExternalLabelMid(intermediateThrowEvent);
+
+          var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
+
+          var label = elementFactory.createLabel({
+            labelTarget: intermediateThrowEvent,
+            x: externalLabelMid.x - externalLabelBounds.width / 2,
+            y: externalLabelMid.y - externalLabelBounds.height / 2,
+            width: externalLabelBounds.width,
+            height: externalLabelBounds.height
+          });
+
+          var sequenceFlowMid = getConnectionMid(sequenceFlow.waypoints[0], sequenceFlow.waypoints[1]);
 
           // when
-          modeling.updateProperties(element, { name: 'FOO BAR' });
+          modeling.createElements([ intermediateThrowEvent, label ], sequenceFlowMid, sequenceFlow, {
+            createElementsBehavior: false
+          });
 
           // then
-          expectLabelOrientation(element, 'top');
-        }
-      ));
+          expect(label.x).to.be.closeTo(287, 1);
+          expect(label.y).to.be.closeTo(307, 1);
+          expect(label.width).to.be.closeTo(19, 1);
+          expect(label.height).to.be.closeTo(14, 1);
+        }));
+
+      });
 
 
-      it('should not adjust position', inject(function(bpmnFactory, elementFactory, elementRegistry, modeling, textRenderer) {
+      describe('through <element.updateProperties>', function() {
 
-        // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+        it('should create label at TOP', inject(
+          function(elementRegistry, modeling) {
 
-        var intermediateThrowEvent = elementFactory.createShape({
-          businessObject: bpmnFactory.create('bpmn:IntermediateThrowEvent', {
-            name: 'Foo'
-          }),
-          type: 'bpmn:IntermediateThrowEvent',
-          x: 0,
-          y: 0
-        });
+            // given
+            var element = elementRegistry.get('NoLabel');
 
-        var externalLabelMid = getExternalLabelMid(intermediateThrowEvent);
+            // when
+            modeling.updateProperties(element, { name: 'FOO BAR' });
 
-        var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
+            // then
+            expectLabelOrientation(element, 'top');
+          }
+        ));
 
-        var label = elementFactory.createLabel({
-          labelTarget: intermediateThrowEvent,
-          x: externalLabelMid.x - externalLabelBounds.width / 2,
-          y: externalLabelMid.y - externalLabelBounds.height / 2,
-          width: externalLabelBounds.width,
-          height: externalLabelBounds.height
-        });
-
-        var sequenceFlowMid = getConnectionMid(sequenceFlow.waypoints[0], sequenceFlow.waypoints[1]);
-
-        // when
-        modeling.createElements([ intermediateThrowEvent, label ], sequenceFlowMid, sequenceFlow);
-
-        // then
-        expect(label.x).to.be.closeTo(325, 1);
-        expect(label.y).to.be.closeTo(335, 1);
-        expect(label.width).to.be.closeTo(19, 1);
-        expect(label.height).to.be.closeTo(14, 1);
-      }));
+      });
 
     });
 
