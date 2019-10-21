@@ -6,15 +6,21 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## 5.1.0    
+## 5.1.1
 
-* `FEAT`: adjust label position post creation ([`41c6af18`](https://github.com/bpmn-io/bpmn-js/commit/41c6af183014626a0f84e0bda0f8e39018f9151e))        
-* `FEAT`: copy and paste boundary events ([`2e27d743`](https://github.com/bpmn-io/bpmn-js/commit/2e27d7430642439e30806941d0df43018ca729eb))    
-* `FIX`: ordering after moving boundary events between hosts ([#1207](https://github.com/bpmn-io/bpmn-js/issues/1207))    
-* `FIX`: do not remove sequence flow condition on type change ([`b2900786`](https://github.com/bpmn-io/bpmn-js/commit/b290078600ae4e45e7c72bd37919732e3f8fcbea))    
-* `FIX`: do not remove default sequence flow on type change ([`37bcd070`](https://github.com/bpmn-io/bpmn-js/commit/37bcd070e8406a43a7316893c6b68debeaae5e26))    
-* `FIX`: do not duplicate flow node references ([`168a1493`](https://github.com/bpmn-io/bpmn-js/commit/168a1493b26c3059d2440a70f7aa5991745b51e5))    
-* `FIX`: ignore labels that are being created in adaptive label positioning ([`44cceb5d`](https://github.com/bpmn-io/bpmn-js/commit/44cceb5da287a0ad01d9389f475284c88eda7f7b))    
+* `FIX`: re-select only existing elements when dragging is finished ([#1225](https://github.com/bpmn-io/bpmn-js/issues/1225))
+* `FIX`: correctly hide nested children of a collapsed shape
+* `CHORE`: bump to [`diagram-js@5.1.1`](https://github.com/bpmn-io/diagram-js/blob/develop/CHANGELOG.md#511)
+
+## 5.1.0
+
+* `FEAT`: adjust label position post creation ([`41c6af18`](https://github.com/bpmn-io/bpmn-js/commit/41c6af183014626a0f84e0bda0f8e39018f9151e))
+* `FEAT`: copy and paste boundary events ([`2e27d743`](https://github.com/bpmn-io/bpmn-js/commit/2e27d7430642439e30806941d0df43018ca729eb))
+* `FIX`: ordering after moving boundary events between hosts ([#1207](https://github.com/bpmn-io/bpmn-js/issues/1207))
+* `FIX`: do not remove sequence flow condition on type change ([`b2900786`](https://github.com/bpmn-io/bpmn-js/commit/b290078600ae4e45e7c72bd37919732e3f8fcbea))
+* `FIX`: do not remove default sequence flow on type change ([`37bcd070`](https://github.com/bpmn-io/bpmn-js/commit/37bcd070e8406a43a7316893c6b68debeaae5e26))
+* `FIX`: do not duplicate flow node references ([`168a1493`](https://github.com/bpmn-io/bpmn-js/commit/168a1493b26c3059d2440a70f7aa5991745b51e5))
+* `FIX`: ignore labels that are being created in adaptive label positioning ([`44cceb5d`](https://github.com/bpmn-io/bpmn-js/commit/44cceb5da287a0ad01d9389f475284c88eda7f7b))
 
 ## 5.0.5
 
