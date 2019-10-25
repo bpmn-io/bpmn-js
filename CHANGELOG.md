@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 5.1.2
+
+* `FIX`: account for label pasting in label behavior ([#1227](https://github.com/bpmn-io/bpmn-js/issues/1227))
+
 ## 5.1.1
 
 * `FIX`: re-select only existing elements when dragging is finished ([#1225](https://github.com/bpmn-io/bpmn-js/issues/1225))
