@@ -15,15 +15,19 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import gridSnappingModule from 'lib/features/grid-snapping';
 
 
 describe('behavior - LabelBehavior', function() {
 
   var diagramXML = require('./LabelBehavior.bpmn');
 
-  var testModules = [ modelingModule, coreModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      modelingModule,
+      coreModule
+    ]
+  }));
 
 
   describe('updating name property', function() {
@@ -664,6 +668,59 @@ describe('behavior - LabelBehavior', function() {
       }));
 
     });
+
+  });
+
+});
+
+
+describe('behavior - LabelBehavior', function() {
+
+  describe('copy/paste integration', function() {
+
+    var diagramXML = require('./LabelBehavior.copyPaste.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        modelingModule,
+        coreModule,
+        gridSnappingModule
+      ]
+    }));
+
+
+    it('should skip adjustment during creation', inject(
+      function(elementRegistry, copyPaste, canvas, dragging) {
+
+        // given
+        var elements = [
+          elementRegistry.get('Source'),
+          elementRegistry.get('Target'),
+          elementRegistry.get('SequenceFlow'),
+          elementRegistry.get('SequenceFlow').label
+        ];
+
+        var rootElement = canvas.getRootElement();
+
+        copyPaste.copy(elements);
+
+        // when
+        var pastedElements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 700,
+            y: 300
+          }
+        });
+
+        var label = pastedElements[3];
+
+        // then
+        expect(label).to.exist;
+
+        expect(label).to.have.position({ x: 681, y: 287 });
+      }
+    ));
 
   });
 
