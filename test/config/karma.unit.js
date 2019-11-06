@@ -105,7 +105,8 @@ module.exports = function(karma) {
           'node_modules',
           absoluteBasePath
         ]
-      }
+      },
+      devtool: 'eval-source-map'
     }
   });
 };
