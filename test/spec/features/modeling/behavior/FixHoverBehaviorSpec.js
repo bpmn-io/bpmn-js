@@ -255,7 +255,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
     describe('reconnect', function() {
 
-      it('should set start to participant', inject(
+      it('should set hover to participant', inject(
         function(bendpointMove, elementRegistry, eventBus, dragging) {
 
           // given
@@ -265,7 +265,7 @@ describe('features/modeling/behavior - fix hover', function() {
           var messageFlow = elementRegistry.get('MessageFlow_2');
 
           var connectSpy = spy(function(event) {
-            expect(event.context.target).to.eql(participant_lanes);
+            expect(event.context.hover).to.equal(participant_lanes);
           });
 
           eventBus.once('bendpoint.move.end', connectSpy);
@@ -324,11 +324,7 @@ describe('features/modeling/behavior - fix hover', function() {
           var lane_1 = elementRegistry.get('Lane_1');
 
           var connectSpy = spy(function(event) {
-
-            var context = event.context,
-                source = context.source;
-
-            expect(source).to.eql(participant_lanes);
+            expect(event.context.source).to.eql(participant_lanes);
           });
 
           eventBus.once('connect.end', connectSpy);
@@ -339,6 +335,7 @@ describe('features/modeling/behavior - fix hover', function() {
           dragging.move(canvasEvent({ x: 240, y: 0 }));
 
           dragging.hover(canvasEvent({ x: 240, y: 0 }, { element: participant_no_lanes }));
+
           dragging.end();
 
           // then
