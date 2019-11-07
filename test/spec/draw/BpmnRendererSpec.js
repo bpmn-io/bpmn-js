@@ -245,18 +245,18 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should properly render colored markers', function(done) {
-
     var xml = require('./BpmnRenderer.colors.bpmn');
-    bootstrapViewer(xml).call(this, function(err) {
 
+    bootstrapViewer(xml).call(this, function(err) {
       inject(function(canvas) {
-        var svg = canvas._svg;
-        var markers = svg.querySelectorAll('marker');
+        var svg = canvas._svg,
+            markers = svg.querySelectorAll('marker');
 
         expect(markers).to.have.length(7);
         expect(markers[0].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
         expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
         expect(markers[2].id).to.match(/^sequenceflow-end-white-_3399aa-[A-Za-z0-9]{25}$/);
+        expect(markers[3].id).to.match(/^sequenceflow-end-white-rgba_255_0_0_0_9_-[A-Za-z0-9]{25}$/);
         expect(markers[4].id).to.match(/^association-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
         expect(markers[5].id).to.match(/^messageflow-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
         expect(markers[6].id).to.match(/^messageflow-start-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
@@ -268,13 +268,12 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should properly render connection markers (2)', function(done) {
-
     var xml = require('./BpmnRenderer.connection-colors.bpmn');
-    bootstrapViewer(xml).call(this, function(err) {
 
+    bootstrapViewer(xml).call(this, function(err) {
       inject(function(canvas) {
-        var svg = canvas._svg;
-        var markers = svg.querySelectorAll('marker');
+        var svg = canvas._svg,
+            markers = svg.querySelectorAll('marker');
 
         expect(markers).to.have.length(4);
         expect(markers[0].id).to.match(/^association-end-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
@@ -338,7 +337,7 @@ describe('draw - bpmn renderer', function() {
       var defaultFillColor = 'red',
           defaultStrokeColor = 'lime';
 
-      // TODO(philippfromme): remove once PhantomJS is not used anymore
+      // TODO(philippfromme): remove once we drop PhantomJS
       function expectedColors(color) {
 
         var conversionValues = {
@@ -368,12 +367,42 @@ describe('draw - bpmn renderer', function() {
         }
       }));
 
+      // TODO(philippfromme): remove once we drop PhantomJS
+      /**
+       * Ensure alpha channel of RGB (rgba) color has one decimal point.
+       *
+       * @param {string} color
+       *
+       * @return {string}
+       */
+      function fixRgba(color) {
+        if (color.indexOf('rgba') !== -1) {
+          return [
+            'rgba(',
+            color
+              .replace(/rgba\(|\)/g, '')
+              .split(',')
+              .map(function(string) {
+                if (string.indexOf('.') !== -1) {
+                  return parseFloat(string).toFixed(1);
+                }
+
+                return parseInt(string);
+              })
+              .join(', '),
+            ')'
+          ].join('');
+        }
+
+        return color;
+      }
+
       function expectFillColor(element, color) {
-        expect(expectedColors(color)).to.include(element.style.fill);
+        expect(expectedColors(color)).to.include(fixRgba(element.style.fill));
       }
 
       function expectStrokeColor(element, color) {
-        expect(expectedColors(color)).to.include(element.style.stroke);
+        expect(expectedColors(color)).to.include(fixRgba(element.style.stroke));
       }
 
       /**
@@ -422,20 +451,20 @@ describe('draw - bpmn renderer', function() {
       it('should render default colors without overriding', inject(function(canvas, elementRegistry) {
         var rootElement = canvas.getRootElement();
 
-        elementRegistry.forEach(function(e) {
-          if (e === rootElement) {
+        elementRegistry.forEach(function(element) {
+          if (element === rootElement) {
             return;
           }
 
-          var gfx = elementRegistry.getGraphics(e),
-              di = getDi(e),
+          var gfx = elementRegistry.getGraphics(element),
+              di = getDi(element),
               fillColor = di.get('bioc:fill'),
               strokeColor = di.get('bioc:stroke');
 
           if (fillColor || strokeColor) {
-            expectColors(e, gfx, fillColor, strokeColor);
+            expectColors(element, gfx, fillColor, strokeColor);
           } else {
-            expectColors(e, gfx, defaultFillColor, defaultStrokeColor);
+            expectColors(element, gfx, defaultFillColor, defaultStrokeColor);
           }
         });
       }));
