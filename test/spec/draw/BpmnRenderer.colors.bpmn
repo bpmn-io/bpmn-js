@@ -74,7 +74,7 @@
           <dc:Bounds x="320" y="163" width="45" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0h9s0mp_di" bpmnElement="SequenceFlow_0h9s0mp">
+      <bpmndi:BPMNEdge id="SequenceFlow_0h9s0mp_di" bpmnElement="SequenceFlow_0h9s0mp" bioc:stroke="rgba(255, 0, 0, 0.9)">
         <di:waypoint x="296" y="229" />
         <di:waypoint x="318" y="229" />
         <bpmndi:BPMNLabel>
