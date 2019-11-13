@@ -1884,7 +1884,9 @@ describe('features/popup-menu - replace menu provider', function() {
 
 // helper /////
 function queryEntry(id) {
-  return domQuery('.djs-popup [data-id="' + id + '"]');
+  var container = getBpmnJS().get('canvas').getContainer();
+
+  return domQuery('.djs-popup [data-id="' + id + '"]', container);
 }
 
 /**
@@ -1895,7 +1897,9 @@ function queryEntry(id) {
  * @return {<Array>}
  */
 function queryEntries() {
-  return domQueryAll('.djs-popup .entry');
+  var container = getBpmnJS().get('canvas').getContainer();
+
+  return domQueryAll('.djs-popup .entry', container);
 }
 
 function triggerAction(popupMenu, id) {
