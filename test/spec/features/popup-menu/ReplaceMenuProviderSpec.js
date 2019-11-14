@@ -1354,40 +1354,6 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       [
-        'bpmn:StartEvent'
-      ].forEach(function(type) {
-
-        it('should replace DefaultFlow with SequenceFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
-
-            // given
-            var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-                root = canvas.getRootElement();
-
-            var intermediateEvent = elementFactory.createShape({ type: type });
-
-            modeling.createShape(intermediateEvent, { x: 686, y: 50 }, root);
-
-            openPopup(sequenceFlow);
-
-            triggerAction(popupMenu, 'replace-with-default-flow');
-
-            // when
-            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-              { x: 686, y: 267, original: { x: 686, y: 307 } },
-              { x: 686, y: 50, original: { x: 686, y: 75 } }
-            ]);
-
-            var gateway = elementRegistry.get('ExclusiveGateway_1');
-
-            // then
-            expect(gateway.businessObject.default).not.to.exist;
-          })
-        );
-      });
-
-
-      [
         'bpmn:Activity',
         'bpmn:EndEvent',
         'bpmn:IntermediateThrowEvent',
@@ -1684,38 +1650,6 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
         })
       );
-
-
-      [
-        'bpmn:StartEvent'
-      ].forEach(function(type) {
-
-        it('should replace ConditionalFlow with SequenceFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
-
-            // given
-            var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-                root = canvas.getRootElement(),
-                intermediateEvent = elementFactory.createShape({ type: type });
-
-            modeling.createShape(intermediateEvent, { x: 497, y: 197 }, root);
-
-            openPopup(sequenceFlow);
-
-            triggerAction(popupMenu, 'replace-with-conditional-flow');
-
-            // when
-            modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
-              { x: 389, y: 197, original: { x: 389, y: 197 } },
-              { x: 497, y: 197, original: { x: 497, y: 197 } }
-            ]);
-
-            // then
-            expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
-          })
-        );
-
-      });
 
 
       [
