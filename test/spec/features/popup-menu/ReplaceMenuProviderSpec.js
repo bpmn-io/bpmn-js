@@ -1016,7 +1016,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(taskElement);
 
         var callActivityEntry = queryEntry('replace-with-call-activity'),
-            subProcessEntry = queryEntry('replace-with-collapsed-subprocess');
+            subProcessEntry = queryEntry('replace-with-subprocess');
 
         // then
         expect(callActivityEntry).to.exist;
@@ -1044,6 +1044,21 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(collapsedSubProcessEntry).not.to.exist;
+      }));
+
+
+      it('should allow to expand when sub process has children', inject(function(elementRegistry) {
+
+        // given
+        var collapsedSubProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        openPopup(collapsedSubProcess);
+
+        var expandEntry = queryEntry('expand-subprocess');
+
+        // then
+        expect(expandEntry).to.exist;
       }));
 
     });
