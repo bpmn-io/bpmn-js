@@ -164,6 +164,41 @@ describe('features/copy-paste', function() {
         expect(findDescriptorInTree('StartEvent_1', tree).type).to.eql('bpmn:StartEvent');
       }));
 
+
+      it.skip('should not mutate copied elements', inject(function(copyPaste, elementRegistry, modeling) {
+
+        // given
+        var process = elementRegistry.get('Process_1'),
+            intermediateThrowEvent = elementRegistry.get('IntermediateThrowEvent_1');
+
+        copyPaste.copy(intermediateThrowEvent);
+
+        // when
+        modeling.updateProperties(intermediateThrowEvent, {
+          name: 'foo'
+        });
+
+        var elements = copyPaste.paste({
+          element: process,
+          point: {
+            x: 1000,
+            y: 1000
+          }
+        });
+
+        // then
+        intermediateThrowEvent = find(elements, function(element) {
+          return is(element, 'bpmn:IntermediateThrowEvent');
+        });
+
+        var intermediateThrowEventBo = getBusinessObject(intermediateThrowEvent);
+
+        // due to https://github.com/bpmn-io/bpmn-js/blob/v5.1.2/lib/features/modeling/behavior/LabelBehavior.js#L97
+        // the business object of the copied element is mutated
+        // see https://github.com/bpmn-io/bpmn-js/issues/798
+        expect(intermediateThrowEventBo.name).not.to.exist;
+      }));
+
     });
 
 
