@@ -13,7 +13,7 @@ if [ "$TRAVIS_TAG" == "" ]; then
 
   npm install "diagram-js@bpmn-io/diagram-js#$FEATURE_BRANCH";
 
-  if [ $? -ne 0 ]; then
+  if [ $? -ne 0 ] && [ "$TRAVIS_BRANCH" != "master" ]; then
     echo "Falling back to diagram-js@develop";
 
     npm install "diagram-js@bpmn-io/diagram-js#develop";
