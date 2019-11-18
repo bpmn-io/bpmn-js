@@ -69,7 +69,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('active attribute', function() {
 
-      it('should be true for parallel marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should be true for parallel marker', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask'),
@@ -89,7 +89,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for sequential marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should be true for sequential marker', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask'),
@@ -107,7 +107,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for loop marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should be true for loop marker', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask'),
@@ -125,7 +125,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for ad hoc marker', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should be true for ad hoc marker', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var AdHocSubProcess = elementRegistry.get('AdHocSubProcess');
@@ -142,22 +142,18 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('exclusive toggle buttons', function() {
 
-      it('should not toggle non exclusive buttons off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should not toggle non exclusive buttons off', inject(function(bpmnReplace, elementRegistry) {
         var subProcess = elementRegistry.get('AdHocSubProcess');
 
         openPopup(subProcess);
 
-        var entry = queryEntry('toggle-parallel-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-parallel-mi');
 
         openPopup(subProcess);
 
         // then
-        var adHocEntry = queryEntry('toggle-adhoc');
-
-        expect(domClasses(adHocEntry).has('active')).to.be.true;
+        expect(domClasses(queryEntry('toggle-adhoc')).has('active')).to.be.true;
       }));
 
     });
@@ -166,7 +162,7 @@ describe('features/popup-menu - replace menu provider', function() {
     describe('non exclusive toggle buttons', function() {
 
       it('should not toggle exclusive buttons off',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess');
@@ -176,22 +172,18 @@ describe('features/popup-menu - replace menu provider', function() {
           // toggle parallel on
           openPopup(subProcess);
 
-          var parallelEntry = queryEntry('toggle-parallel-mi');
-
-          popupMenu.trigger(globalEvent(parallelEntry, { x: 0, y: 0 }));
+          triggerAction('toggle-parallel-mi');
 
           // toggle ad hoc on
           openPopup(subProcess);
 
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          var adHocSubProcess = popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          var adHocSubProcess = triggerAction('toggle-adhoc');
 
           openPopup(adHocSubProcess);
 
           // then
-          parallelEntry = queryEntry('toggle-parallel-mi');
-          adHocEntry = queryEntry('toggle-adhoc');
+          var parallelEntry = queryEntry('toggle-parallel-mi');
+          var adHocEntry = queryEntry('toggle-adhoc');
 
           expect(domClasses(parallelEntry).has('active')).to.be.true;
           expect(domClasses(adHocEntry).has('active')).to.be.true;
@@ -204,17 +196,15 @@ describe('features/popup-menu - replace menu provider', function() {
     describe('parallel toggle button', function() {
 
       it('should toggle parallel marker off',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var task = elementRegistry.get('ParallelTask');
 
           openPopup(task);
 
-          var entry = queryEntry('toggle-parallel-mi');
-
           // when
-          popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+          triggerAction('toggle-parallel-mi');
 
           openPopup(task);
 
@@ -227,17 +217,15 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should toggle parallel marker on', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should toggle parallel marker on', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-parallel-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-parallel-mi');
 
         openPopup(task);
 
@@ -250,17 +238,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set sequential button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set sequential button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-parallel-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-parallel-mi');
 
         openPopup(task);
 
@@ -271,17 +257,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set loop button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-parallel-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-parallel-mi');
 
         openPopup(task);
 
@@ -296,17 +280,15 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('sequential toggle button', function() {
 
-      it('should toggle sequential marker off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should toggle sequential marker off', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-sequential-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-sequential-mi');
 
         openPopup(task);
 
@@ -318,17 +300,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should toggle sequential marker on', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should toggle sequential marker on', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-sequential-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-sequential-mi');
 
         openPopup(task);
 
@@ -341,17 +321,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set loop button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-sequential-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-sequential-mi');
 
         openPopup(task);
 
@@ -362,17 +340,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set parallel button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set parallel button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-sequential-mi');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-sequential-mi');
 
         openPopup(task);
 
@@ -387,17 +363,15 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('loop toggle button', function() {
 
-      it('should toggle loop marker off', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should toggle loop marker off', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-loop');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-loop');
 
         openPopup(task);
 
@@ -409,17 +383,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should toggle loop marker on', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should toggle loop marker on', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-loop');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-loop');
 
         openPopup(task);
 
@@ -431,18 +403,16 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set sequential button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set sequential button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-loop');
+        triggerAction('toggle-loop');
 
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
-
         openPopup(task);
 
         var sequentialEntry = queryEntry('toggle-sequential-mi');
@@ -452,17 +422,15 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set parallel button inactive', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      it('should set parallel button inactive', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask');
 
         openPopup(task);
 
-        var entry = queryEntry('toggle-loop');
-
         // when
-        popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        triggerAction('toggle-loop');
 
         openPopup(task);
 
@@ -480,18 +448,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
     beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
 
-    it('should retain the loop characteristics', inject(function(popupMenu, bpmnReplace, elementRegistry) {
+    it('should retain the loop characteristics', inject(function(bpmnReplace, elementRegistry) {
 
       // given
       var task = elementRegistry.get('SequentialTask');
 
       openPopup(task);
 
-      var entry = queryEntry('replace-with-send-task');
-
       // when
       // replacing the task with a send task
-      var sendTask = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+      var sendTask = triggerAction('replace-with-send-task');
 
       // then
       expect(sendTask.businessObject.loopCharacteristics).to.exist;
@@ -501,18 +467,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the loop characteristics for call activites',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
 
         openPopup(task);
 
-        var entry = queryEntry('replace-with-call-activity');
-
         // when
         // replacing the task with a call activity
-        var callActivity = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var callActivity = triggerAction('replace-with-call-activity');
 
         // then
         expect(callActivity.businessObject.loopCharacteristics).to.exist;
@@ -523,18 +487,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain expanded status for sub processes',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var subProcess = elementRegistry.get('SubProcess');
 
         openPopup(subProcess);
 
-        var entry = queryEntry('replace-with-transaction');
-
         // when
         // replacing the expanded sub process with a transaction
-        var transaction = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var transaction = triggerAction('replace-with-transaction');
 
         // then
         expect(isExpanded(transaction)).to.equal(isExpanded(subProcess));
@@ -543,18 +505,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should replace sub processes -> event sub process',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var subProcess = elementRegistry.get('SubProcess');
 
         openPopup(subProcess);
 
-        var entry = queryEntry('replace-with-event-subprocess');
-
         // when
         // replacing the expanded sub process with a eventSubProcess
-        var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var eventSubProcess = triggerAction('replace-with-event-subprocess');
 
         // then
         expect(eventSubProcess.businessObject.triggeredByEvent).to.be.true;
@@ -563,18 +523,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should replace event sub processes -> sub process',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var eventSubProcess = elementRegistry.get('EventSubProcess');
 
         openPopup(eventSubProcess);
 
-        var entry = queryEntry('replace-with-subprocess');
-
         // when
         // replacing the expanded sub process with a eventSubProcess
-        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var subProcess = triggerAction('replace-with-subprocess');
 
         // then
         expect(subProcess.businessObject.triggeredByEvent).to.be.false;
@@ -583,18 +541,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the loop characteristics and the expanded status for transactions',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
 
         openPopup(transaction);
 
-        var entry = queryEntry('replace-with-subprocess');
-
         // when
         // replacing the transaction with an expanded sub process
-        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var subProcess = triggerAction('replace-with-subprocess');
 
         // then
         expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
@@ -603,7 +559,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should not retain the loop characteristics morphing to an event sub process',
-      inject(function(popupMenu, bpmnReplace, elementRegistry, modeling) {
+      inject(function(bpmnReplace, elementRegistry, modeling) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
@@ -612,11 +568,9 @@ describe('features/popup-menu - replace menu provider', function() {
 
         openPopup(transaction);
 
-        var entry = queryEntry('replace-with-event-subprocess');
-
         // when
         // replacing the transaction with an event sub process
-        var subProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var subProcess = triggerAction('replace-with-event-subprocess');
 
         // then
         expect(isExpanded(subProcess)).to.equal(isExpanded(transaction));
@@ -625,18 +579,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the expanded property morphing to an event sub processes',
-      inject(function(popupMenu, bpmnReplace, elementRegistry) {
+      inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
 
         openPopup(transaction);
 
-        var entry = queryEntry('replace-with-event-subprocess');
-
         // when
         // replacing the transaction with an expanded sub process
-        var eventSubProcess = popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+        var eventSubProcess = triggerAction('replace-with-event-subprocess');
 
         // then
         expect(isExpanded(eventSubProcess)).to.equal(isExpanded(transaction));
@@ -648,13 +600,12 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('replace menu', function() {
 
-
     describe('events', function() {
 
       beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
       it('should contain all except the current one',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1');
@@ -670,7 +621,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all start events inside event sub process except the current one',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_3');
@@ -688,7 +639,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all non interrupting start events inside event sub process except the current one',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_3');
@@ -712,7 +663,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all intermediate events except the current one',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var intermediateEvent = elementRegistry.get('IntermediateThrowEvent_1');
@@ -729,7 +680,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all end events except the current one',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var endEvent = elementRegistry.get('EndEvent_1');
@@ -820,7 +771,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
       it('should contain all boundary events for an interrupting boundary event',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
@@ -836,7 +787,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all boundary events for a non interrupting boundary event',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
@@ -852,7 +803,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain compensation boundary event',
-        inject(function(popupMenu, bpmnReplace, elementRegistry) {
+        inject(function(bpmnReplace, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
@@ -1111,7 +1062,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('should replace SequenceFlow with DefaultFlow [gateway]', inject(function(elementRegistry, popupMenu) {
+      it('should replace SequenceFlow with DefaultFlow [gateway]', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3');
@@ -1119,7 +1070,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         var gateway = elementRegistry.get('ExclusiveGateway_1');
 
@@ -1128,7 +1079,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should replace SequenceFlow with DefaultFlow [task]', inject(function(elementRegistry, popupMenu) {
+      it('should replace SequenceFlow with DefaultFlow [task]', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
@@ -1136,7 +1087,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         var task = elementRegistry.get('Task_1ei94kl');
 
@@ -1145,19 +1096,19 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should morph DefaultFlow into a SequenceFlow [task]', inject(function(elementRegistry, popupMenu) {
+      it('should morph DefaultFlow into a SequenceFlow [task]', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-sequence-flow');
+        triggerAction('replace-with-sequence-flow');
 
         var task = elementRegistry.get('Task_1ei94kl');
 
@@ -1167,19 +1118,19 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph DefaultFlow into a SequenceFlow [task] -> undo',
-        inject(function(elementRegistry, popupMenu, commandStack) {
+        inject(function(elementRegistry, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
 
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-sequence-flow');
+          triggerAction('replace-with-sequence-flow');
 
           commandStack.undo();
 
@@ -1191,7 +1142,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should morph DefaultFlow into a ConditionalFlow [task]', inject(function(elementRegistry, popupMenu) {
+      it('should morph DefaultFlow into a ConditionalFlow [task]', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
@@ -1199,12 +1150,12 @@ describe('features/popup-menu - replace menu provider', function() {
 
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-conditional-flow');
+        triggerAction('replace-with-conditional-flow');
 
         // then
         expect(task.businessObject.default).not.to.exist;
@@ -1212,7 +1163,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph DefaultFlow into a ConditionalFlow [task] -> undo',
-        inject(function(elementRegistry, popupMenu, commandStack) {
+        inject(function(elementRegistry, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
@@ -1220,12 +1171,12 @@ describe('features/popup-menu - replace menu provider', function() {
 
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-conditional-flow');
+          triggerAction('replace-with-conditional-flow');
 
           commandStack.undo();
 
@@ -1236,7 +1187,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace SequenceFlow with DefaultFlow [gateway] -> undo',
-        inject(function(elementRegistry, popupMenu, commandStack) {
+        inject(function(elementRegistry, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1245,7 +1196,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           commandStack.undo();
 
@@ -1256,7 +1207,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace SequenceFlow with DefaultFlow [task] -> undo',
-        inject(function(elementRegistry, popupMenu, commandStack) {
+        inject(function(elementRegistry, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn');
@@ -1264,7 +1215,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           commandStack.undo();
 
@@ -1276,7 +1227,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should only have one DefaultFlow', inject(function(elementRegistry, popupMenu) {
+      it('should only have one DefaultFlow', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -1287,12 +1238,12 @@ describe('features/popup-menu - replace menu provider', function() {
         // trigger morphing sequenceFlow3 to default flow
         openPopup(sequenceFlow3);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         // trigger morphing sequenceFlow to default flow
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         var gateway = elementRegistry.get('ExclusiveGateway_1');
 
@@ -1302,7 +1253,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace DefaultFlow with SequenceFlow when changing source',
-        inject(function(elementRegistry, popupMenu, modeling) {
+        inject(function(elementRegistry, modeling) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -1310,7 +1261,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // when
           modeling.reconnectStart(sequenceFlow, task, [
@@ -1327,7 +1278,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace DefaultFlow with SequenceFlow when changing source -> undo',
-        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
+        inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -1335,7 +1286,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // when
           modeling.reconnectStart(sequenceFlow, task, [
@@ -1361,7 +1312,7 @@ describe('features/popup-menu - replace menu provider', function() {
       ].forEach(function(type) {
 
         it('should keep DefaultFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          inject(function(elementRegistry, elementFactory, canvas, modeling) {
 
             // given
             var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -1373,7 +1324,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
             openPopup(sequenceFlow);
 
-            triggerAction(popupMenu, 'replace-with-default-flow');
+            triggerAction('replace-with-default-flow');
 
             // when
             modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1391,7 +1342,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace DefaultFlow with SequenceFlow when changing target -> undo',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
+        inject(function(elementRegistry, elementFactory, canvas, modeling, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
@@ -1403,7 +1354,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // when
           modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1421,7 +1372,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should keep DefaultFlow when morphing Gateway', inject(function(elementRegistry, popupMenu, bpmnReplace) {
+      it('should keep DefaultFlow when morphing Gateway', inject(function(elementRegistry, bpmnReplace) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1430,7 +1381,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-default-flow');
+        triggerAction('replace-with-default-flow');
 
         var inclusiveGateway = bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway' });
 
@@ -1440,7 +1391,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should keep DefaultFlow when morphing Task', inject(
-        function(elementRegistry, popupMenu, bpmnReplace) {
+        function(elementRegistry, bpmnReplace) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_15f5knn'),
@@ -1450,7 +1401,7 @@ describe('features/popup-menu - replace menu provider', function() {
           openPopup(sequenceFlow);
 
           // trigger DefaultFlow replacement
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           var sendTask = bpmnReplace.replaceElement(task, { type: 'bpmn:SendTask' });
 
@@ -1461,7 +1412,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should keep DefaultFlow when morphing Gateway -> undo',
-        inject(function(elementRegistry, bpmnReplace, popupMenu, commandStack) {
+        inject(function(elementRegistry, bpmnReplace, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1470,7 +1421,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           bpmnReplace.replaceElement(exclusiveGateway, { type: 'bpmn:InclusiveGateway' });
 
@@ -1483,7 +1434,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should remove any conditionExpression when morphing to DefaultFlow',
-        inject(function(elementRegistry, modeling, popupMenu, moddle) {
+        inject(function(elementRegistry, modeling, moddle) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1501,7 +1452,7 @@ describe('features/popup-menu - replace menu provider', function() {
           openPopup(sequenceFlow);
 
           // trigger DefaultFlow replacement
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           // then
           expect(exclusiveGateway.businessObject.default).to.equal(sequenceFlow.businessObject);
@@ -1511,7 +1462,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should remove any conditionExpression when morphing to DefaultFlow -> undo',
-        inject(function(elementRegistry, modeling, popupMenu, moddle, commandStack) {
+        inject(function(elementRegistry, modeling, moddle, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1525,7 +1476,7 @@ describe('features/popup-menu - replace menu provider', function() {
           openPopup(sequenceFlow);
 
           // trigger DefaultFlow replacement
-          triggerAction(popupMenu, 'replace-with-default-flow');
+          triggerAction('replace-with-default-flow');
 
           commandStack.undo();
 
@@ -1547,7 +1498,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should morph into a ConditionalFlow', inject(function(elementRegistry, popupMenu) {
+      it('should morph into a ConditionalFlow', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
@@ -1555,7 +1506,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // when
         openPopup(sequenceFlow);
 
-        triggerAction(popupMenu, 'replace-with-conditional-flow');
+        triggerAction('replace-with-conditional-flow');
 
         // then
         expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
@@ -1563,7 +1514,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should morph into a ConditionalFlow -> undo', inject(
-        function(elementRegistry, popupMenu, commandStack) {
+        function(elementRegistry, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_2');
@@ -1571,7 +1522,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-conditional-flow');
+          triggerAction('replace-with-conditional-flow');
 
           commandStack.undo();
 
@@ -1581,7 +1532,7 @@ describe('features/popup-menu - replace menu provider', function() {
       ));
 
 
-      it('should morph back into a SequenceFlow', inject(function(elementRegistry, popupMenu) {
+      it('should morph back into a SequenceFlow', inject(function(elementRegistry) {
 
         // given
         var sequenceFlow = elementRegistry.get('SequenceFlow_2');
@@ -1590,12 +1541,12 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(sequenceFlow);
 
         // trigger ConditionalFlow replacement
-        triggerAction(popupMenu, 'replace-with-conditional-flow');
+        triggerAction('replace-with-conditional-flow');
 
         openPopup(sequenceFlow);
 
         // replace with SequenceFlow
-        triggerAction(popupMenu, 'replace-with-sequence-flow');
+        triggerAction('replace-with-sequence-flow');
 
         // then
         expect(sequenceFlow.businessObject.conditionExpression).not.to.exist;
@@ -1603,7 +1554,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace ConditionalFlow with SequenceFlow when changing source',
-        inject(function(elementRegistry, popupMenu, modeling) {
+        inject(function(elementRegistry, modeling) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1612,7 +1563,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-conditional-flow');
+          triggerAction('replace-with-conditional-flow');
 
           // when
           modeling.reconnectStart(sequenceFlow, startEvent, [
@@ -1627,7 +1578,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace ConditionalFlow with SequenceFlow when changing source -> undo',
-        inject(function(elementRegistry, popupMenu, modeling, commandStack) {
+        inject(function(elementRegistry, modeling, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1636,7 +1587,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(sequenceFlow);
 
-          triggerAction(popupMenu, 'replace-with-conditional-flow');
+          triggerAction('replace-with-conditional-flow');
 
           // when
           modeling.reconnectStart(sequenceFlow, startEvent, [
@@ -1660,7 +1611,7 @@ describe('features/popup-menu - replace menu provider', function() {
       ].forEach(function(type) {
 
         it('should keep ConditionalFlow when changing target to ' + type,
-          inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling) {
+          inject(function(elementRegistry, elementFactory, canvas, modeling) {
 
             // given
             var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1671,7 +1622,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
             openPopup(sequenceFlow);
 
-            triggerAction(popupMenu, 'replace-with-conditional-flow');
+            triggerAction('replace-with-conditional-flow');
 
             // when
             modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1688,7 +1639,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should replace ConditionalFlow with SequenceFlow when changing target -> undo',
-        inject(function(elementRegistry, elementFactory, canvas, popupMenu, modeling, commandStack) {
+        inject(function(elementRegistry, elementFactory, canvas, modeling, commandStack) {
 
           // given
           var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
@@ -1700,7 +1651,7 @@ describe('features/popup-menu - replace menu provider', function() {
           openPopup(sequenceFlow);
 
           // trigger ConditionalFlow replacement
-          triggerAction(popupMenu, 'replace-with-conditional-flow');
+          triggerAction('replace-with-conditional-flow');
 
           // when
           modeling.reconnectEnd(sequenceFlow, intermediateEvent, [
@@ -1729,7 +1680,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
       describe('sub process -> adhoc', function() {
 
-        it('should not resize', inject(function(elementRegistry, modeling, popupMenu) {
+        it('should not resize', inject(function(elementRegistry, modeling) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess_1');
@@ -1739,16 +1690,14 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(subProcess);
 
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          triggerAction('toggle-adhoc');
 
           // then
           expect(resizeShapeSpy).not.to.have.been.called;
         }));
 
 
-        it('should not lay out connection', inject(function(elementRegistry, modeling, popupMenu) {
+        it('should not lay out connection', inject(function(elementRegistry, modeling) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess_1');
@@ -1758,9 +1707,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(subProcess);
 
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          triggerAction('toggle-adhoc');
 
           // then
           expect(layoutConnectionSpy).not.to.have.been.called;
@@ -1770,7 +1717,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
       describe('adhoc -> sub process', function() {
 
-        it('should not resize', inject(function(elementRegistry, modeling, popupMenu) {
+        it('should not resize', inject(function(elementRegistry, modeling) {
 
           // given
           var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
@@ -1780,16 +1727,14 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(adhocSubProcess);
 
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          triggerAction('toggle-adhoc');
 
           // then
           expect(resizeShapeSpy).not.to.have.been.called;
         }));
 
 
-        it('should not lay out connection', inject(function(elementRegistry, modeling, popupMenu) {
+        it('should not lay out connection', inject(function(elementRegistry, modeling) {
 
           // given
           var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
@@ -1799,9 +1744,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(adhocSubProcess);
 
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+          triggerAction('toggle-adhoc');
 
           // then
           expect(layoutConnectionSpy).not.to.have.been.called;
@@ -1837,7 +1780,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should get entries when custom rule returns true',
-      inject(function(elementRegistry, popupMenu, customRules) {
+      inject(function(elementRegistry, customRules) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
@@ -1856,7 +1799,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should get no entries when custom rule returns false',
-      inject(function(elementRegistry, popupMenu, customRules) {
+      inject(function(elementRegistry, customRules) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1');
@@ -1874,7 +1817,7 @@ describe('features/popup-menu - replace menu provider', function() {
     );
 
 
-    it('should provide element to custom rules', inject(function(elementRegistry, popupMenu, customRules) {
+    it('should provide element to custom rules', inject(function(elementRegistry, customRules) {
 
       // given
       var startEvent = elementRegistry.get('StartEvent_1');
@@ -1892,7 +1835,7 @@ describe('features/popup-menu - replace menu provider', function() {
     }));
 
 
-    it('should evaluate rule once', inject(function(elementRegistry, popupMenu, customRules) {
+    it('should evaluate rule once', inject(function(elementRegistry, customRules) {
 
       // given
       var callCount = 0;
@@ -1915,32 +1858,28 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
 
-// helper /////
+// helpers ////////////
+
 function queryEntry(id) {
   var container = getBpmnJS().get('canvas').getContainer();
 
   return domQuery('.djs-popup [data-id="' + id + '"]', container);
 }
 
-/**
- * Gets all menu entries from the current open popup menu
- *
- * @param  {PopupMenu} popupMenu
- *
- * @return {<Array>}
- */
 function queryEntries() {
   var container = getBpmnJS().get('canvas').getContainer();
 
   return domQueryAll('.djs-popup .entry', container);
 }
 
-function triggerAction(popupMenu, id) {
+function triggerAction(id) {
   var entry = queryEntry(id);
 
   if (!entry) {
     throw new Error('entry "'+ id +'" not found in replace menu');
   }
 
-  popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+  var popupMenu = getBpmnJS().get('popupMenu');
+
+  return popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
 }
