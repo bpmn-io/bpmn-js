@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   getBpmnJS,
@@ -8,10 +10,11 @@ import {
   createEvent as globalEvent
 } from '../../../util/MockEvents';
 
+import autoResizeModule from 'lib/features/auto-resize';
 import coreModule from 'lib/core';
+import customRulesModule from '../../../util/custom-rules';
 import modelingModule from 'lib/features/modeling';
 import replaceMenuProviderModule from 'lib/features/popup-menu';
-import customRulesModule from '../../../util/custom-rules';
 
 import {
   query as domQuery,
@@ -22,6 +25,8 @@ import {
 import { is } from 'lib/util/ModelUtil';
 
 import { isExpanded } from 'lib/util/DiUtil';
+
+var spy = sinon.spy;
 
 
 describe('features/popup-menu - replace menu provider', function() {
@@ -1775,6 +1780,100 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(sequenceFlow.businessObject.conditionExpression.$type).to.equal('bpmn:FormalExpression');
         })
       );
+
+    });
+
+
+    describe('adhoc sub process', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules.concat(autoResizeModule)
+      }));
+
+
+      describe('sub process -> adhoc', function() {
+
+        it('should not resize', inject(function(elementRegistry, modeling, popupMenu) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_1');
+
+          var resizeShapeSpy = spy(modeling, 'resizeShape');
+
+          // when
+          openPopup(subProcess);
+
+          var adHocEntry = queryEntry('toggle-adhoc');
+
+          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+
+          // then
+          expect(resizeShapeSpy).not.to.have.been.called;
+        }));
+
+
+        it('should not lay out connection', inject(function(elementRegistry, modeling, popupMenu) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_1');
+
+          var layoutConnectionSpy = spy(modeling, 'layoutConnection');
+
+          // when
+          openPopup(subProcess);
+
+          var adHocEntry = queryEntry('toggle-adhoc');
+
+          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+
+          // then
+          expect(layoutConnectionSpy).not.to.have.been.called;
+        }));
+
+      });
+
+      describe('adhoc -> sub process', function() {
+
+        it('should not resize', inject(function(elementRegistry, modeling, popupMenu) {
+
+          // given
+          var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          var resizeShapeSpy = spy(modeling, 'resizeShape');
+
+          // when
+          openPopup(adhocSubProcess);
+
+          var adHocEntry = queryEntry('toggle-adhoc');
+
+          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+
+          // then
+          expect(resizeShapeSpy).not.to.have.been.called;
+        }));
+
+
+        it('should not lay out connection', inject(function(elementRegistry, modeling, popupMenu) {
+
+          // given
+          var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          var layoutConnectionSpy = spy(modeling, 'layoutConnection');
+
+          // when
+          openPopup(adhocSubProcess);
+
+          var adHocEntry = queryEntry('toggle-adhoc');
+
+          popupMenu.trigger(globalEvent(adHocEntry, { x: 0, y: 0 }));
+
+          // then
+          expect(layoutConnectionSpy).not.to.have.been.called;
+        }));
+
+      });
 
     });
 
