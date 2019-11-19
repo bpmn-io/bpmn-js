@@ -2,20 +2,24 @@
 
 FEATURE_BRANCH=
 
-if [ "$TRAVIS_TAG" == "" ]; then
-  if [ "$TRAVIS_PULL_REQUEST_BRANCH" != "" ]; then
-    FEATURE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH";
-  else
-    FEATURE_BRANCH="$TRAVIS_BRANCH";
-  fi
+# https://docs.travis-ci.com/user/environment-variables
 
-  echo "Attempting to install diagram-js@$FEATURE_BRANCH";
+if [ "$TRAVIS_TAG" <> "" ] || [ "$TRAVIS_BRANCH" == "master" ]; then
+  exit 0;
+fi
 
-  npm install "diagram-js@bpmn-io/diagram-js#$FEATURE_BRANCH";
+if [ "$TRAVIS_PULL_REQUEST_BRANCH" != "" ]; then
+  FEATURE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH";
+else
+  FEATURE_BRANCH="$TRAVIS_BRANCH";
+fi
 
-  if [ $? -ne 0 ]; then
-    echo "Falling back to diagram-js@develop";
+echo "Attempting to install diagram-js@$FEATURE_BRANCH";
 
-    npm install "diagram-js@bpmn-io/diagram-js#develop";
-  fi
+npm install "diagram-js@bpmn-io/diagram-js#$FEATURE_BRANCH";
+
+if [ $? -ne 0 ]; then
+  echo "Falling back to diagram-js@develop";
+
+  npm install "diagram-js@bpmn-io/diagram-js#develop";
 fi
