@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:task id="Task_1" />
+    <bpmn:boundaryEvent id="MessageBoundaryEvent_1" attachedToRef="Task_1">
+      <bpmn:messageEventDefinition messageRef="Message_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="EscalationBoundaryEvent_1" attachedToRef="Task_1">
+      <bpmn:escalationEventDefinition escalationRef="Escalation_1" camunda:escalationCodeVariable="foo" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="ErrorBoundaryEvent_1" attachedToRef="Task_1">
+      <bpmn:errorEventDefinition errorRef="Error_1" camunda:errorCodeVariable="foo" camunda:errorMessageVariable="bar" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="SignalBoundaryEvent_1" attachedToRef="Task_1">
+      <bpmn:signalEventDefinition signalRef="Signal_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Task_2" />
+  </bpmn:process>
+  <bpmn:message id="Message_1" name="Message_1" />
+  <bpmn:escalation id="Escalation_1" name="Escalation_1" escalationCode="42" />
+  <bpmn:error id="Error_1" name="Error_1" errorCode="1" />
+  <bpmn:signal id="Signal_1" name="Signal_1" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <dc:Bounds x="50" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="MessageBoundaryEvent_1_di" bpmnElement="MessageBoundaryEvent_1">
+        <dc:Bounds x="32" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EscalationBoundaryEvent_1_di" bpmnElement="EscalationBoundaryEvent_1">
+        <dc:Bounds x="132" y="42" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ErrorBoundaryEvent_1_di" bpmnElement="ErrorBoundaryEvent_1">
+        <dc:Bounds x="32" y="42" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SignalBoundaryEvent_1_di" bpmnElement="SignalBoundaryEvent_1">
+        <dc:Bounds x="132" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <dc:Bounds x="250" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
