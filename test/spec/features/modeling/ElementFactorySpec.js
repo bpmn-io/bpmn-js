@@ -92,7 +92,7 @@ describe('features - element factory', function() {
       }));
 
 
-      it('should create formal expression with ID', inject(function(elementFactory) {
+      it('should NOT create formal expression with ID', inject(function(elementFactory) {
 
         // when
         var intermediateCatchEvent = elementFactory.createShape({
