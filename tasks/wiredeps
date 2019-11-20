@@ -4,7 +4,7 @@ FEATURE_BRANCH=
 
 # https://docs.travis-ci.com/user/environment-variables
 
-if [ "$TRAVIS_TAG" <> "" ] || [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_TAG" != "" ] || [ "$TRAVIS_BRANCH" == "master" ]; then
   exit 0;
 fi
 
