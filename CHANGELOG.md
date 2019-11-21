@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+BREAKING CHANGES:
+
+Connecting and re-connecting shapes got reworked via [#427](https://github.com/bpmn-io/bpmn-js/pull/1230):
+
+* The rules `connection.reconnectStart` and `connection.reconnectEnd` got replaced with `connection.reconnect` rule
+* `BpmnLayouter#layoutConnection` waypoints can be specified via hint
+
 ## 5.1.2
 
 * `FIX`: account for label pasting in label behavior ([#1227](https://github.com/bpmn-io/bpmn-js/issues/1227))
