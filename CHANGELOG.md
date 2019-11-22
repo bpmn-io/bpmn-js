@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.1
+
+* `CHORE`: bump to `diagram-js@6.0.1`
+
+## 6.0.0
+
 BREAKING CHANGES:
 
 Connecting and re-connecting shapes got reworked via [#427](https://github.com/bpmn-io/bpmn-js/pull/1230):
