@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.2
+
+* `CHORE`: bump `diagram-js-direct-editing` dependency
+
 ## 6.0.1
 
 * `CHORE`: bump to `diagram-js@6.0.1`
