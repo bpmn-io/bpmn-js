@@ -25,7 +25,9 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 6.0.0
 
-BREAKING CHANGES:
+* `FEAT`: rework (re-)connecting of shapes ([#427](https://github.com/bpmn-io/bpmn-js/pull/1230))
+
+### Breaking Changes
 
 Connecting and re-connecting shapes got reworked via [#427](https://github.com/bpmn-io/bpmn-js/pull/1230):
 
