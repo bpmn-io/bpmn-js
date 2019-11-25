@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1nek5tb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <bpmn:process id="Process_12xkoyc" isExecutable="true">
+    <bpmn:group id="Group_08irt25" categoryValueRef="CategoryValue_16jt3xn" />
+  </bpmn:process>
+  <bpmn:category id="Category_1313spp">
+    <bpmn:categoryValue id="CategoryValue_16jt3xn" value="ASD" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_12xkoyc">
+      <bpmndi:BPMNShape id="Group_08irt25_di" bpmnElement="Group_08irt25" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="170" y="70" width="300" height="190" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="189" y="83" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
