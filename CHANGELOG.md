@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.3
+
+* `FIX`: render colored BPMN groups ([#1246](https://github.com/bpmn-io/bpmn-js/pull/1246))
+
 ## 6.0.2
 
 * `CHORE`: bump `diagram-js-direct-editing` dependency
