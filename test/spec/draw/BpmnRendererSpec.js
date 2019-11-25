@@ -326,9 +326,15 @@ describe('draw - bpmn renderer', function() {
 
     var xml = require('./BpmnRenderer.colors.bpmn');
 
+    var groupXML = require('./BpmnRenderer.group-colors.bpmn');
 
     it('should render colors without warnings and errors', function(done) {
       bootstrapViewer(xml).call(this, checkErrors(done));
+    });
+
+
+    it('should render group colors', function(done) {
+      bootstrapViewer(groupXML).call(this, checkErrors(done));
     });
 
 
