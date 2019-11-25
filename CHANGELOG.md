@@ -13,6 +13,7 @@ ___Note:__ Yet to be released changes appear here._
 ## 6.0.3
 
 * `FIX`: render colored BPMN groups ([#1246](https://github.com/bpmn-io/bpmn-js/pull/1246))
+* `CHORE`: bump to `diagram-js@6.0.2`
 
 ## 6.0.2
 
