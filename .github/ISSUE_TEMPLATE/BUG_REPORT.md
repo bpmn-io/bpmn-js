@@ -1,15 +1,8 @@
 ---
 name: Bug report
-about: Create a report to help us fix a library error
+about: Report a problem and help us fix it.
+labels: "bug"
 ---
-
-<!--
-
-Thanks for filing this bug report!
-
-Please take your time to provide the relevant context to your bug report. This helps us to process it and get it fixed, eventually.
-
--->
 
 
 __Describe the Bug__
