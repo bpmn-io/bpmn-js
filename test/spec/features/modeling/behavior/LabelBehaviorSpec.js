@@ -10,12 +10,19 @@ import {
 } from 'diagram-js/lib/features/resize/ResizeUtil';
 
 import {
+  DEFAULT_LABEL_SIZE,
+  getExternalLabelMid
+} from 'lib/util/LabelUtil';
+
+import {
   pick
 } from 'min-dash';
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 import gridSnappingModule from 'lib/features/grid-snapping';
+
+var spy = sinon.spy;
 
 
 describe('behavior - LabelBehavior', function() {
@@ -194,6 +201,47 @@ describe('behavior - LabelBehavior', function() {
         expect(newShape.label).not.to.exist;
       }
     ));
+
+
+    it('should not add label if created shape is label', inject(
+      function(bpmnFactory, elementFactory, elementRegistry, modeling, textRenderer) {
+
+        // given
+        var parentShape = elementRegistry.get('Process_1');
+
+        var createLabelSpy = spy(modeling, 'createLabel');
+
+        var exclusiveGatewayBo = bpmnFactory.create('bpmn:ExclusiveGateway', {
+          name: 'Foo'
+        });
+
+        var exclusiveGateway = elementFactory.createShape({
+          type: 'bpmn:ExclusiveGateway',
+          businessObject: exclusiveGatewayBo
+        });
+
+        modeling.createElements([ exclusiveGateway ], { x: 50, y: 50 }, parentShape, {
+          createElementsBehavior: false
+        });
+
+        var externalLabelMid = getExternalLabelMid(exclusiveGateway);
+
+        var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
+
+        var label = elementFactory.createLabel({
+          businessObject: exclusiveGatewayBo,
+          labelTarget: exclusiveGateway,
+          width: externalLabelBounds.width,
+          height: externalLabelBounds.height
+        });
+
+        // when
+        modeling.createElements([ label ], externalLabelMid, parentShape);
+
+        // then
+        expect(createLabelSpy).not.to.have.been.called;
+      })
+    );
 
 
     describe('on append', function() {

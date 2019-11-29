@@ -1,3 +1,5 @@
+/* global sinon */
+
 import {
   bootstrapModeler,
   inject
@@ -8,15 +10,12 @@ import { getOrientation } from 'diagram-js/lib/layout/LayoutUtil';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
-import {
-  DEFAULT_LABEL_SIZE,
-  getExternalLabelMid
-} from 'lib/util/LabelUtil';
-
 var testModules = [
   modelingModule,
   coreModule
 ];
+
+var spy = sinon.spy;
 
 var ATTACH = { attach: true };
 
@@ -270,51 +269,6 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
     describe('on label creation', function() {
 
-      describe('through <create.shape>', function() {
-
-        it('should create at LEFT', inject(function(bpmnFactory, elementFactory, elementRegistry, modeling, textRenderer) {
-
-          // given
-          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
-
-          var intermediateThrowEvent = elementFactory.createShape({
-            businessObject: bpmnFactory.create('bpmn:IntermediateThrowEvent', {
-              name: 'Foo'
-            }),
-            type: 'bpmn:IntermediateThrowEvent',
-            x: 0,
-            y: 0
-          });
-
-          var externalLabelMid = getExternalLabelMid(intermediateThrowEvent);
-
-          var externalLabelBounds = textRenderer.getExternalLabelBounds(DEFAULT_LABEL_SIZE, 'Foo');
-
-          var label = elementFactory.createLabel({
-            labelTarget: intermediateThrowEvent,
-            x: externalLabelMid.x - externalLabelBounds.width / 2,
-            y: externalLabelMid.y - externalLabelBounds.height / 2,
-            width: externalLabelBounds.width,
-            height: externalLabelBounds.height
-          });
-
-          var sequenceFlowMid = getConnectionMid(sequenceFlow.waypoints[0], sequenceFlow.waypoints[1]);
-
-          // when
-          modeling.createElements([ intermediateThrowEvent, label ], sequenceFlowMid, sequenceFlow, {
-            createElementsBehavior: false
-          });
-
-          // then
-          expect(label.x).to.be.closeTo(287, 1);
-          expect(label.y).to.be.closeTo(307, 1);
-          expect(label.width).to.be.closeTo(19, 1);
-          expect(label.height).to.be.closeTo(14, 1);
-        }));
-
-      });
-
-
       describe('through <element.updateProperties>', function() {
 
         it('should create label at TOP', inject(
@@ -458,13 +412,45 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
   });
 
+
+  describe('integration', function() {
+
+    describe('copy and paste', function() {
+
+      var diagramXML = require('./AdaptiveLabelPositioningBehavior.basics.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should NOT adjust on paste', inject(
+        function(canvas, copyPaste, elementRegistry, modeling) {
+
+          // given
+          var exclusiveGateway = elementRegistry.get('ExclusiveGateway_1'),
+              endEvent = elementRegistry.get('EndEvent_1');
+
+          var moveShapeSpy = spy(modeling, 'moveShape');
+
+          // when
+          copyPaste.copy([ exclusiveGateway, endEvent ]);
+
+          copyPaste.paste({
+            element: canvas.getRootElement(),
+            point: {
+              x: 1000,
+              y: 1000
+            }
+          });
+
+          // then
+          expect(moveShapeSpy).not.to.have.been.called;
+        })
+      );
+
+    });
+
+  });
+
 });
-
-// helpers //////////
-
-function getConnectionMid(a, b) {
-  return {
-    x: (a.x + b.x) / 2,
-    y: (a.y + b.y) / 2
-  };
-}
