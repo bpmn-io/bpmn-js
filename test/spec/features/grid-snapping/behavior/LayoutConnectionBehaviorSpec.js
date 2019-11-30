@@ -7,23 +7,26 @@ import coreModule from 'lib/core';
 import gridSnappingModule from 'lib/features/grid-snapping';
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
+import copyPasteModule from 'lib/features/copy-paste';
+
+/* global sinon */
 
 
 describe('features/grid-snapping - layout connection', function() {
 
-  var diagramXML = require('./LayoutConnectionBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
-    modules: [
-      coreModule,
-      gridSnappingModule,
-      modelingModule,
-      moveModule
-    ]
-  }));
-
-
   describe('on connection create', function() {
+
+    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule
+      ]
+    }));
+
 
     it('should snap 3 segment connection (1 middle segment)', inject(
       function(elementRegistry, modeling) {
@@ -63,6 +66,17 @@ describe('features/grid-snapping - layout connection', function() {
 
 
   describe('on connection layout', function() {
+
+    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule
+      ]
+    }));
 
     var task1, task2, connection;
 
@@ -126,6 +140,52 @@ describe('features/grid-snapping - layout connection', function() {
       expect(flow.waypoints[1]).to.eql({ x: 526, y: 242 });
       expect(flow.waypoints[2]).to.eql({ x: 526, y: 310 });
     }));
+
+  });
+
+
+  describe('on paste multiple', function() {
+
+    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule,
+        copyPasteModule
+      ]
+    }));
+
+
+    it('should not update waypoints', inject(
+      function(canvas, eventBus, copyPaste, elementRegistry) {
+
+        // given
+        var layoutSpy = sinon.spy();
+
+        copyPaste.copy([
+          elementRegistry.get('Task_2'),
+          elementRegistry.get('SequenceFlow_1'),
+          elementRegistry.get('Task_5')
+        ]);
+
+        eventBus.on('commandStack.connection.updateWaypoints.execute', layoutSpy);
+
+        // when
+        copyPaste.paste({
+          element: canvas.getRootElement(),
+          point: {
+            x: 100,
+            y: 200
+          }
+        });
+
+        // then
+        expect(layoutSpy).not.to.have.been.called;
+      }
+    ));
 
   });
 
