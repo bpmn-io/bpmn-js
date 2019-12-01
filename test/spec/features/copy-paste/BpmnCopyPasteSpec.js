@@ -27,6 +27,8 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
+/* global sinon */
+
 
 describe('features/copy-paste', function() {
 
@@ -40,6 +42,7 @@ describe('features/copy-paste', function() {
   var basicXML = require('./basic.bpmn'),
       copyPropertiesXML = require('./copy-properties.bpmn'),
       propertiesXML = require('./properties.bpmn'),
+      complexXML = require('./complex.bpmn'),
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
       collaborationAssociationsXML = require('./data-associations.bpmn'),
@@ -780,7 +783,53 @@ describe('features/copy-paste', function() {
     ]));
   });
 
+
+  describe('complex', function() {
+
+    beforeEach(bootstrapModeler(complexXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    it('should mark as changed', inject(
+      function(canvas, eventBus, copyPaste, elementRegistry, commandStack) {
+
+        // given
+        var participant = elementRegistry.get('sid-187453C6-5AB5-4A6D-9A62-BF537E04EA0D'),
+            rootElement = canvas.getRootElement();
+
+        var changedSpy = sinon.spy(function(event) {
+          expect(event.elements).to.have.length(56);
+        });
+
+        // when
+        eventBus.on('elements.changed', changedSpy);
+
+        copyPaste.copy([ participant ]);
+
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 800,
+            y: 300
+          }
+        });
+
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(changedSpy).to.have.been.calledThrice;
+      }
+    ));
+
+  });
+
 });
+
 
 // helpers //////////
 
