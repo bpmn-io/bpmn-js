@@ -1,5 +1,3 @@
-/* global sinon */
-
 import {
   bootstrapModeler,
   inject
@@ -15,9 +13,8 @@ var testModules = [
   coreModule
 ];
 
-var spy = sinon.spy;
-
 var ATTACH = { attach: true };
+
 
 describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
@@ -431,7 +428,7 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
           var exclusiveGateway = elementRegistry.get('ExclusiveGateway_1'),
               endEvent = elementRegistry.get('EndEvent_1');
 
-          var moveShapeSpy = spy(modeling, 'moveShape');
+          var moveShapeSpy = sinon.spy(modeling, 'moveShape');
 
           // when
           copyPaste.copy([ exclusiveGateway, endEvent ]);

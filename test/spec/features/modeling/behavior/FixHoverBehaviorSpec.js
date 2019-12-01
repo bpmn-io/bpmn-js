@@ -13,9 +13,6 @@ import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 
 import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
 
-/* global sinon */
-var spy = sinon.spy;
-
 var testModules = [
   coreModule,
   createModule,
@@ -238,7 +235,7 @@ describe('features/modeling/behavior - fix hover', function() {
           var participant_lanes = elementRegistry.get('Participant_Lanes');
           var lane_1 = elementRegistry.get('Lane_1');
 
-          var connectSpy = spy(function(event) {
+          var connectSpy = sinon.spy(function(event) {
             expect(event.context.startTarget).to.eql(participant_lanes);
           });
 
@@ -266,7 +263,7 @@ describe('features/modeling/behavior - fix hover', function() {
             var participant_lanes = elementRegistry.get('Participant_Lanes');
             var lane_1 = elementRegistry.get('Lane_1');
 
-            var connectSpy = spy(function(event) {
+            var connectSpy = sinon.spy(function(event) {
               expect(event.hover).to.eql(participant_lanes);
             });
 
@@ -293,7 +290,7 @@ describe('features/modeling/behavior - fix hover', function() {
             var participant_lanes = elementRegistry.get('Participant_Lanes');
             var lane_1 = elementRegistry.get('Lane_1');
 
-            var connectSpy = spy(function(event) {
+            var connectSpy = sinon.spy(function(event) {
               expect(event.hover).to.eql(participant_lanes);
             });
 
@@ -328,7 +325,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
           var messageFlow = elementRegistry.get('MessageFlow_2');
 
-          var connectSpy = spy(function(event) {
+          var connectSpy = sinon.spy(function(event) {
             expect(event.context.hover).to.equal(participant_lanes);
           });
 
@@ -356,7 +353,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
           var messageFlow = elementRegistry.get('MessageFlow_1');
 
-          var connectSpy = spy(function(event) {
+          var connectSpy = sinon.spy(function(event) {
             expect(event.context.target).to.eql(participant_lanes);
           });
 
@@ -387,7 +384,7 @@ describe('features/modeling/behavior - fix hover', function() {
           var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
           var lane_1 = elementRegistry.get('Lane_1');
 
-          var connectSpy = spy(function(event) {
+          var connectSpy = sinon.spy(function(event) {
             expect(event.context.source).to.eql(participant_lanes);
           });
 
@@ -416,7 +413,7 @@ describe('features/modeling/behavior - fix hover', function() {
           var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
           var lane_1 = elementRegistry.get('Lane_1');
 
-          var connectSpy = spy(function(event) {
+          var connectSpy = sinon.spy(function(event) {
 
             var context = event.context,
                 target = context.target;
@@ -450,7 +447,7 @@ describe('features/modeling/behavior - fix hover', function() {
             var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
             var lane_1 = elementRegistry.get('Lane_1');
 
-            var connectSpy = spy(function(event) {
+            var connectSpy = sinon.spy(function(event) {
               expect(event.hover).to.eql(participant_lanes);
             });
 
@@ -478,7 +475,7 @@ describe('features/modeling/behavior - fix hover', function() {
             var participant_no_lanes = elementRegistry.get('Participant_No_Lanes');
             var lane_1 = elementRegistry.get('Lane_1');
 
-            var connectSpy = spy(function(event) {
+            var connectSpy = sinon.spy(function(event) {
               expect(event.hover).to.eql(participant_lanes);
             });
 
@@ -531,7 +528,7 @@ describe('features/modeling/behavior - fix hover', function() {
         var rootElement = canvas.getRootElement(),
             rootElementGfx = canvas.getGraphics(rootElement);
 
-        var moveEndSpy = spy(function(event) {
+        var moveEndSpy = sinon.spy(function(event) {
           expect(event.context.shape).to.equal(participant);
         });
 

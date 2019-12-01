@@ -1,5 +1,3 @@
-/* global sinon */
-
 import {
   bootstrapModeler,
   inject
@@ -21,8 +19,6 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 import gridSnappingModule from 'lib/features/grid-snapping';
-
-var spy = sinon.spy;
 
 
 describe('behavior - LabelBehavior', function() {
@@ -209,7 +205,7 @@ describe('behavior - LabelBehavior', function() {
         // given
         var parentShape = elementRegistry.get('Process_1');
 
-        var createLabelSpy = spy(modeling, 'createLabel');
+        var createLabelSpy = sinon.spy(modeling, 'createLabel');
 
         var exclusiveGatewayBo = bpmnFactory.create('bpmn:ExclusiveGateway', {
           name: 'Foo'
