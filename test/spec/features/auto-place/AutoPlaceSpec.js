@@ -1,5 +1,3 @@
-/* global sinon */
-
 import {
   bootstrapModeler,
   inject

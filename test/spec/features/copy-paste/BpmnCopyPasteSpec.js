@@ -27,8 +27,6 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
-/* global sinon */
-
 
 describe('features/copy-paste', function() {
 

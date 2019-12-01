@@ -1,5 +1,3 @@
-/* global sinon */
-
 import BpmnTreeWalker from 'lib/import/BpmnTreeWalker';
 
 import BpmnModdle from 'bpmn-moddle';

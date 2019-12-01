@@ -6,8 +6,6 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
-/* global sinon */
-
 var testModules = [ modelingModule, coreModule ];
 
 

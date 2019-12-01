@@ -1565,7 +1565,6 @@ describe('Viewer', function() {
         // assume
         expect(viewer._container.parentNode).not.to.exist;
 
-        /* global sinon */
         var resizedSpy = sinon.spy();
 
         viewer.on('canvas.resized', resizedSpy);

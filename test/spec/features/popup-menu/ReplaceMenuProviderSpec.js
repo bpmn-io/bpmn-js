@@ -1,5 +1,3 @@
-/* global sinon */
-
 import {
   bootstrapModeler,
   getBpmnJS,
@@ -25,8 +23,6 @@ import {
 import { is } from 'lib/util/ModelUtil';
 
 import { isExpanded } from 'lib/util/DiUtil';
-
-var spy = sinon.spy;
 
 
 describe('features/popup-menu - replace menu provider', function() {
@@ -1685,7 +1681,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var subProcess = elementRegistry.get('SubProcess_1');
 
-          var resizeShapeSpy = spy(modeling, 'resizeShape');
+          var resizeShapeSpy = sinon.spy(modeling, 'resizeShape');
 
           // when
           openPopup(subProcess);
@@ -1702,7 +1698,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var subProcess = elementRegistry.get('SubProcess_1');
 
-          var layoutConnectionSpy = spy(modeling, 'layoutConnection');
+          var layoutConnectionSpy = sinon.spy(modeling, 'layoutConnection');
 
           // when
           openPopup(subProcess);
@@ -1722,7 +1718,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
 
-          var resizeShapeSpy = spy(modeling, 'resizeShape');
+          var resizeShapeSpy = sinon.spy(modeling, 'resizeShape');
 
           // when
           openPopup(adhocSubProcess);
@@ -1739,7 +1735,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
 
-          var layoutConnectionSpy = spy(modeling, 'layoutConnection');
+          var layoutConnectionSpy = sinon.spy(modeling, 'layoutConnection');
 
           // when
           openPopup(adhocSubProcess);
