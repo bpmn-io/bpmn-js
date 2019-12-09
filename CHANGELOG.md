@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.5
+
+* `FIX`: only update `Lane#flownNodeRefs` once during paste ([`4455c3fc`](https://github.com/bpmn-io/bpmn-js/commit/4455c3fc35290e51220566fb6539a1efc4d3612f))
+* `FIX`: do not adjust labels on paste ([`b2b607f5`](https://github.com/bpmn-io/bpmn-js/commit/b2b607f5582d3409c789d831a0896aaa55949899))
+* `FIX`: do not snap connection waypoints on paste ([`d769e6dd`](https://github.com/bpmn-io/bpmn-js/commit/d769e6ddb0cb2dc8befb2e7b31682925089ba8f1))
+
 ## 6.0.4
 
 * `FIX`: correctly fix hover on cleanup ([#1247](https://github.com/bpmn-io/bpmn-js/pull/1247))
