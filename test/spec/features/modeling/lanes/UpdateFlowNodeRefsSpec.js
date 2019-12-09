@@ -5,15 +5,22 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import copyPasteModule from 'lib/features/copy-paste';
+
+/* global sinon */
 
 
 describe('features/modeling - lanes - flowNodeRefs', function() {
 
   var diagramXML = require('./flowNodeRefs.bpmn');
 
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      copyPasteModule
+    ]
+  }));
 
 
   describe('should unwire during move', function() {
@@ -290,4 +297,34 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
     expect(lane1.flowNodeRef).to.have.length(1);
     expect(lane2.flowNodeRef).to.have.length(2);
   }));
+
+
+  describe('should wire once during paste', function() {
+
+    it('execute', inject(function(canvas, eventBus, elementRegistry, copyPaste) {
+
+      // given
+      var participant = elementRegistry.get('Participant_A');
+
+      var updateRefsSpy = sinon.spy();
+
+      eventBus.on('commandStack.lane.updateRefs.execute', updateRefsSpy);
+
+      // when
+      copyPaste.copy(participant);
+
+      copyPaste.paste({
+        element: canvas.getRootElement(),
+        point: {
+          x: 350,
+          y: 150
+        }
+      });
+
+      // then
+      expect(updateRefsSpy).to.have.been.calledOnce;
+    }));
+
+  });
+
 });
