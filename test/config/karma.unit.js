@@ -27,7 +27,7 @@ var browsers =
       return browser;
     });
 
-var suite = coverage ? 'test/all.js' : 'test/suite.js';
+var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 
 
 module.exports = function(karma) {
