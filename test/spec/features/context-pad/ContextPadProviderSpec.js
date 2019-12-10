@@ -498,6 +498,31 @@ describe('features - context-pad', function() {
         }
       ));
 
+
+      it('should NOT open replace menu if context pad NOT open', inject(
+        function(canvas, create, dragging, elementFactory) {
+
+          // given
+          var rootShape = canvas.getRootElement(),
+              startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' }),
+              task = elementFactory.createShape({ type: 'bpmn:Task' });
+
+          // when
+          create.start(canvasEvent({ x: 0, y: 0 }), [ startEvent, task ]);
+
+          dragging.move(canvasEvent({ x: 50, y: 50 }));
+          dragging.hover({ element: rootShape });
+          dragging.move(canvasEvent({ x: 75, y: 75 }));
+
+          dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
+
+          // then
+          var replaceMenu = domQuery('.bpmn-replace', container);
+
+          expect(replaceMenu).not.to.exist;
+        }
+      ));
+
     });
 
   });
