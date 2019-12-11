@@ -119,6 +119,34 @@ describe('features - bpmn-updater', function() {
       }
     ));
 
+
+    it('should not crop connection after pasting', inject(
+      function(canvas, copyPaste, elementRegistry, connectionDocking) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_5'),
+            target = elementRegistry.get('Task_2'),
+            cropSpy = sinon.spy(connectionDocking, 'getCroppedWaypoints');
+
+        copyPaste.copy([
+          target,
+          sequenceFlow
+        ]);
+
+        // when
+        copyPaste.paste({
+          element: canvas.getRootElement(),
+          point: {
+            x: 500,
+            y: 500
+          }
+        });
+
+        // then
+        expect(cropSpy).not.to.have.been.calledOnce;
+      }
+    ));
+
   });
 
 
