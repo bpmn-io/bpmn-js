@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.0.7
+
+* `FIX`: disable waypoints-cropping after pasting connections ([`9f8a724e`](https://github.com/bpmn-io/bpmn-js/commit/9f8a724e9a3ff66bfce14e06ab38066189111a95))
+
 ## 6.0.6
 
 * `FIX`: create nested lanes in the correct parent again ([#1256](https://github.com/bpmn-io/bpmn-js/issues/1256), [#1253](https://github.com/bpmn-io/bpmn-js/issues/1253), [#1254](https://github.com/bpmn-io/bpmn-js/issues/1254))
