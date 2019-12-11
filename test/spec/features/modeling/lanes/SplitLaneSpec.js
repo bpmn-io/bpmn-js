@@ -18,11 +18,12 @@ function getBounds(element) {
 
 describe('features/modeling - SplitLane', function() {
 
+  var testModules = [ coreModule, modelingModule ];
+
+
   describe('should split Participant with Lane', function() {
 
     var diagramXML = require('./participant-lane.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -124,8 +125,6 @@ describe('features/modeling - SplitLane', function() {
 
     var diagramXML = require('./participant-no-lane.bpmn');
 
-    var testModules = [ coreModule, modelingModule ];
-
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
@@ -148,7 +147,7 @@ describe('features/modeling - SplitLane', function() {
       expect(participantShape).to.have.bounds(oldBounds);
 
       // and two child lanes
-      expect(childLanes.length).to.eql(2);
+      expect(childLanes).to.have.length(2);
 
       // with respective bounds
       expect(childLanes[0]).to.have.bounds({
@@ -186,7 +185,7 @@ describe('features/modeling - SplitLane', function() {
       expect(participantShape).to.have.bounds(oldBounds);
 
       // and two child lanes
-      expect(childLanes.length).to.eql(3);
+      expect(childLanes).to.have.length(3);
 
       // with respective bounds
       expect(childLanes[0]).to.have.bounds({
@@ -209,6 +208,62 @@ describe('features/modeling - SplitLane', function() {
         width: participantShape.width - 30,
         height: newLaneHeight + 1 // compensate for rounding issues
       });
+    }));
+
+  });
+
+
+  describe('should split nested Lane', function() {
+
+    var diagramXML = require('./SplitLane.nested.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('into two lanes', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Lane'),
+          laneBo = laneShape.businessObject,
+          oldBounds = getBounds(laneShape);
+
+      // when
+      modeling.splitLane(laneShape, 2);
+
+      var childLanes = getChildLanes(laneShape);
+
+      var newLaneHeight = Math.round(laneShape.height / 2);
+
+      // then
+
+      // participant has original size
+      expect(laneShape).to.have.bounds(oldBounds);
+
+      // and two child lanes
+      expect(childLanes).to.have.length(2);
+
+      // with respective bounds
+      expect(childLanes[0]).to.have.bounds({
+        x: laneShape.x + 30,
+        y: laneShape.y,
+        width: laneShape.width - 30,
+        height: newLaneHeight
+      });
+
+      expect(childLanes[1]).to.have.bounds({
+        x: laneShape.x + 30,
+        y: laneShape.y + newLaneHeight,
+        width: laneShape.width - 30,
+        height: newLaneHeight
+      });
+
+      // BPMN internals are properly updated
+      expect(laneBo.childLaneSet).to.exist;
+      expect(laneBo.childLaneSet.lanes).to.eql([
+        childLanes[0].businessObject,
+        childLanes[1].businessObject
+      ]);
+
     }));
 
   });
