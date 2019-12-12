@@ -7,13 +7,12 @@ import {
 import inherits from 'inherits';
 
 
-export default function LoggingCroppingConnectionDocking(elementRegistry, graphicsFactory) {
-  CroppingConnectionDocking.call(this, elementRegistry, graphicsFactory);
+export default function LoggingCroppingConnectionDocking(injector) {
+  injector.invoke(CroppingConnectionDocking, this);
 }
 
 LoggingCroppingConnectionDocking.$inject = [
-  'elementRegistry',
-  'graphicsFactory'
+  'injector'
 ];
 
 inherits(LoggingCroppingConnectionDocking, CroppingConnectionDocking);

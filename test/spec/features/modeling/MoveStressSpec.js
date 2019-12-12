@@ -6,6 +6,8 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
+import LoggingCroppingConnectionDocking from './LoggingCroppingConnectionDocking';
+
 
 describe.skip('modeling / MoveShape - connection cropping', function() {
 
@@ -16,7 +18,7 @@ describe.skip('modeling / MoveShape - connection cropping', function() {
       coreModule,
       modelingModule,
       {
-        connectionDocking: [ 'type', require('./LoggingCroppingConnectionDocking') ]
+        connectionDocking: [ 'type', LoggingCroppingConnectionDocking ]
       }
     ]
   }));
@@ -59,8 +61,7 @@ describe.skip('modeling / MoveShape - connection cropping', function() {
 
     function tick() {
       setTimeout(function() {
-        console.log('ITERATION #', count);
-        console.log('NO INTERSECT', window.noIntersectCount);
+        console.log('#%s rate=%s, no-intersections=%s', count, window.noIntersectCount / count, window.noIntersectCount);
 
         if (!window.__STOPTEST) {
           tick();
