@@ -6,6 +6,15 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.1.0
+
+* `FEAT`: copy signals, escalations and errors ([#1245](https://github.com/bpmn-io/bpmn-js/pull/1245))
+* `FEAT`: provide base viewer / modeler distributions ([`bb94b206`](https://github.com/bpmn-io/bpmn-js/commit/bb94b206a7c9ab3b80e283d6513600a9591c437d))
+* `FEAT`: add horizontal and vertical resize handles
+* `FEAT`: improve connection cropping (bump to `path-intersection@2`)
+* `FIX`: correctly mark elements as changed on `{shape|connection}.create` undo
+* `CHORE`: update to `diagram-js@6.2.0`
+
 ## 6.0.7
 
 * `FIX`: disable waypoints-cropping after pasting connections ([`9f8a724e`](https://github.com/bpmn-io/bpmn-js/commit/9f8a724e9a3ff66bfce14e06ab38066189111a95))
