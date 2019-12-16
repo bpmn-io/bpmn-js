@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: do not open replace menu after multi create ([#1255](https://github.com/bpmn-io/bpmn-js/pull/1255))
+
 ## 6.0.7
 
 * `FIX`: disable waypoints-cropping after pasting connections ([`9f8a724e`](https://github.com/bpmn-io/bpmn-js/commit/9f8a724e9a3ff66bfce14e06ab38066189111a95))
