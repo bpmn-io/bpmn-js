@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:signavio="http://www.signavio.com" id="sid-0b0aaa25-3baf-4875-9d7a-0907d599a9ef" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="6.1.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <dataStore id="FinancialAccountingSystem" name="Financial Accounting System" isUnlimited="false">
+    <dataState id="DataState_1" />
+  </dataStore>
+  <message id="foxMessage_en" name="foxMessage_en" />
+  <collaboration id="collaboration_3">
+    <participant id="Process_Engine_1" name="Invoice Receipt" processRef="invoice" />
+  </collaboration>
+  <process id="invoice" name="Invoice Receipt" isExecutable="true" camunda:versionTag="V1.0" camunda:historyTimeToLive="30">
+    <laneSet id="laneSet_5">
+      <lane id="Accountant" name="Accountant">
+        <flowNodeRef>prepareBankTransfer</flowNodeRef>
+      </lane>
+      <lane id="teamAssistant" name="Team Assistant" />
+      <lane id="Approver" name="Approver" />
+    </laneSet>
+    <dataStoreReference id="DataStoreReference_1" name="Financial Accounting System" dataStoreRef="FinancialAccountingSystem" />
+    <userTask id="prepareBankTransfer" name="Prepare&#10;Bank&#10;Transfer" camunda:formKey="embedded:app:forms/prepare-bank-transfer.html" camunda:candidateGroups="accounting" camunda:dueDate="${dateTime().plusWeeks(1).toDate()}">
+      <documentation>Prepare the bank transfer.</documentation>
+    </userTask>
+    <association id="Association_1" sourceRef="DataStoreReference_1" targetRef="prepareBankTransfer" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_73">
+    <bpmndi:BPMNPlane id="BPMNPlane_73" bpmnElement="collaboration_3">
+      <bpmndi:BPMNShape id="Process_Engine_1_gui" bpmnElement="Process_Engine_1" isHorizontal="true">
+        <omgdc:Bounds x="160" y="80" width="1118" height="496" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Freigebender_105_gui" bpmnElement="Approver" isHorizontal="true">
+        <omgdc:Bounds x="190" y="272" width="1088" height="161" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Team-Assistenz_110_gui" bpmnElement="teamAssistant" isHorizontal="true">
+        <omgdc:Bounds x="190" y="80" width="1088" height="193" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Buchhaltung_119_gui" bpmnElement="Accountant" isHorizontal="true">
+        <omgdc:Bounds x="190" y="432" width="1088" height="144" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="zberweisung_vorbereiten_169_gui" bpmnElement="prepareBankTransfer" isHorizontal="true">
+        <omgdc:Bounds x="907" y="473" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1_gui" bpmnElement="DataStoreReference_1" isHorizontal="true">
+        <omgdc:Bounds x="804" y="606" width="63" height="61" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="808" y="672" width="54" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1_gui" bpmnElement="Association_1" sourceElement="DataStoreReference_1_gui" targetElement="zberweisung_vorbereiten_169_gui">
+        <omgdi:waypoint x="835" y="606" />
+        <omgdi:waypoint x="905" y="543" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

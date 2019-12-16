@@ -176,6 +176,40 @@ describe('features/modeling - move elements', function() {
   });
 
 
+  describe('association', function() {
+
+    var testXML = require('./MoveElements.collaboration-association.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+
+    it('move association', inject(function(elementRegistry, modeling) {
+
+      // given
+      var association = elementRegistry.get('Association_1'),
+          participant = elementRegistry.get('Process_Engine_1');
+
+      var elements = [
+        elementRegistry.get('DataStoreReference_1'),
+        association,
+        elementRegistry.get('prepareBankTransfer')
+      ];
+
+      // when
+      modeling.moveElements(elements, { x: 10, y: 10 }, participant);
+
+      // then
+      expect(association.parent).to.exist;
+    }));
+
+  });
+
+
   describe('incoming sequence flows of event based targets', function() {
 
     var diagramXML = require('./MoveElements.eventBasedTargets.bpmn');
