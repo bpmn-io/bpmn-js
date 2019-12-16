@@ -296,7 +296,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'DataObjectReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -307,7 +307,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataObjectReference', 'EndEvent_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -329,7 +329,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Task', 'DataObjectReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -340,7 +340,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataObjectReference', 'Task', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -351,7 +351,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('SubProcess', 'DataObjectReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -362,7 +362,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataObjectReference', 'SubProcess', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -428,7 +428,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('StartEvent_None', 'DataStoreReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -439,7 +439,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataStoreReference', 'EndEvent_None', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -461,7 +461,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('Task', 'DataStoreReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -472,7 +472,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataStoreReference', 'Task', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -483,7 +483,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('SubProcess', 'DataStoreReference', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataOutputAssociation' }
       });
     }));
@@ -494,7 +494,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('DataStoreReference', 'SubProcess', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: { type: 'bpmn:DataInputAssociation' }
       });
     }));
@@ -666,17 +666,6 @@ describe('features/modeling/rules - BpmnRules', function() {
       }));
 
 
-      it('connect EventBasedGateway -> IntermediateCatchEvent_Message', inject(function() {
-
-        expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Message', {
-          sequenceFlow: true,
-          messageFlow: false,
-          association: false,
-          dataAssociation: false
-        });
-      }));
-
-
       it('connect EventBasedGateway -> IntermediateCatchEvent_Signal', inject(function() {
 
         expectCanConnect('EventBasedGateway', 'IntermediateCatchEvent_Signal', {
@@ -746,17 +735,6 @@ describe('features/modeling/rules - BpmnRules', function() {
       it('connect EventBasedGateway -> Task_None', inject(function() {
 
         expectCanConnect('EventBasedGateway', 'Task_None', {
-          sequenceFlow: false,
-          messageFlow: false,
-          association: false,
-          dataAssociation: false
-        });
-      }));
-
-
-      it('connect EventBasedGateway -> ParallelGateway', inject(function() {
-
-        expectCanConnect('EventBasedGateway', 'ParallelGateway', {
           sequenceFlow: false,
           messageFlow: false,
           association: false,
@@ -1498,6 +1476,7 @@ describe('features/modeling/rules - BpmnRules', function() {
         move: true
       });
     }));
+
   });
 
 
