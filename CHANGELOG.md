@@ -13,6 +13,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: add horizontal and vertical resize handles
 * `FEAT`: improve connection cropping (bump to `path-intersection@2`)
 * `FIX`: correctly mark elements as changed on `{shape|connection}.create` undo
+* `FIX`: do not open replace menu after multi create ([#1255](https://github.com/bpmn-io/bpmn-js/pull/1255))
 * `CHORE`: update to `diagram-js@6.2.0`
 
 ## 6.0.7
