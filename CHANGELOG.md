@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.1.1
+
+_Republish of `v6.1.0`._
+
 ## 6.1.0
 
 * `FEAT`: copy signals, escalations and errors ([#1245](https://github.com/bpmn-io/bpmn-js/pull/1245))
