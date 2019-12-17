@@ -559,38 +559,43 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
       var diagramXML = require('./BpmnCreateMoveSnapping.docking-create-mode.bpmn');
 
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
       it('should correctly set snap origins', function(done) {
 
-        bootstrapModeler(diagramXML, {
-          container: TestContainer.get(this),
-          modules: testModules
-        })(function() {
-          inject(function(elementRegistry, copyPaste, eventBus) {
+        var test = inject(function(elementRegistry, copyPaste, eventBus) {
 
-            // given
-            var task1 = elementRegistry.get('Task_1');
-            eventBus.on('create.start', function(event) {
+          // given
+          var task1 = elementRegistry.get('Task_1');
+          eventBus.on('create.start', function(event) {
 
-              var snapContext = event.context.snapContext;
-              var snapLocations = snapContext.getSnapLocations();
-              var sequenceFlowSnapOrigin = snapContext.getSnapOrigin(snapLocations[3]);
+            var snapContext = event.context.snapContext;
+            var snapLocations = snapContext.getSnapLocations();
+            var sequenceFlowSnapOrigin = snapContext.getSnapOrigin(snapLocations[3]);
 
-              // then
+            // then
+            try {
               expect(sequenceFlowSnapOrigin.x).to.be.eql(-30);
               expect(sequenceFlowSnapOrigin.y).to.be.eql(-10);
 
               done();
-            });
+            } catch (error) {
+              done(error);
+            }
+          });
 
-            // when
-            copyPaste.copy(task1);
-            copyPaste.paste();
+          // when
+          copyPaste.copy(task1);
+          copyPaste.paste();
 
-          })();
         });
 
+        test();
       });
-
     });
   });
 
