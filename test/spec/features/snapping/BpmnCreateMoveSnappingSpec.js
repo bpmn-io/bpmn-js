@@ -486,72 +486,117 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   describe('docking points', function() {
 
-    var diagramXML = require('./BpmnCreateMoveSnapping.docking-points.bpmn');
+    describe('move mode', function() {
 
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
-    }));
+      var diagramXML = require('./BpmnCreateMoveSnapping.docking-points.bpmn');
 
-    var participant,
-        participantGfx;
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
 
-    beforeEach(inject(function(dragging, elementRegistry, move) {
-      participant = elementRegistry.get('Participant_2');
-      participantGfx = elementRegistry.getGraphics(participant);
-    }));
+      var participant,
+          participantGfx;
+
+      beforeEach(inject(function(dragging, elementRegistry, move) {
+        participant = elementRegistry.get('Participant_2');
+        participantGfx = elementRegistry.getGraphics(participant);
+      }));
+
+      it('should snap to docking point (incoming connections)', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          var task = elementRegistry.get('Task_2');
+
+          move.start(canvasEvent({ x: 400, y: 540 }), task);
+
+          dragging.hover({ element: participant, gfx: participantGfx });
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          // when
+          dragging.move(canvasEvent({ x: 270, y: 540 }));
+
+          dragging.end();
+
+          // then
+          expect(mid(task)).to.eql({
+            x: 275,
+            y: 540
+          });
+        }
+      ));
 
 
-    it('should snap to docking point (incoming connections)', inject(
-      function(dragging, elementRegistry, move) {
+      it('should snap to docking point (outgoing connections)', inject(
+        function(dragging, elementRegistry, move) {
 
-        // given
-        var task = elementRegistry.get('Task_2');
+          // given
+          var task = elementRegistry.get('Task_4');
 
-        move.start(canvasEvent({ x: 400, y: 540 }), task);
+          move.start(canvasEvent({ x: 600, y: 540 }), task);
 
-        dragging.hover({ element: participant, gfx: participantGfx });
+          dragging.hover({ element: participant, gfx: participantGfx });
 
-        dragging.move(canvasEvent({ x: 0, y: 0 }));
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
 
-        // when
-        dragging.move(canvasEvent({ x: 270, y: 540 }));
+          // when
+          dragging.move(canvasEvent({ x: 475, y: 540 }));
 
-        dragging.end();
+          dragging.end();
 
-        // then
-        expect(mid(task)).to.eql({
-          x: 275,
-          y: 540
+          // then
+          expect(mid(task)).to.eql({
+            x: 480,
+            y: 540
+          });
+        }
+      ));
+    });
+
+
+    describe('create mode', function() {
+
+      var diagramXML = require('./BpmnCreateMoveSnapping.docking-create-mode.bpmn');
+
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should correctly set snap origins', function(done) {
+
+        var test = inject(function(elementRegistry, copyPaste, eventBus) {
+
+          // given
+          var task1 = elementRegistry.get('Task_1');
+          eventBus.on('create.start', function(event) {
+
+            var snapContext = event.context.snapContext;
+            var snapLocations = snapContext.getSnapLocations();
+            var sequenceFlowSnapOrigin = snapContext.getSnapOrigin(snapLocations[3]);
+
+            // then
+            try {
+              expect(sequenceFlowSnapOrigin.x).to.be.eql(-30);
+              expect(sequenceFlowSnapOrigin.y).to.be.eql(-10);
+
+              done();
+            } catch (error) {
+              done(error);
+            }
+          });
+
+          // when
+          copyPaste.copy(task1);
+          copyPaste.paste();
+
         });
-      }
-    ));
 
-
-    it('should snap to docking point (outgoing connections)', inject(
-      function(dragging, elementRegistry, move) {
-
-        // given
-        var task = elementRegistry.get('Task_4');
-
-        move.start(canvasEvent({ x: 600, y: 540 }), task);
-
-        dragging.hover({ element: participant, gfx: participantGfx });
-
-        dragging.move(canvasEvent({ x: 0, y: 0 }));
-
-        // when
-        dragging.move(canvasEvent({ x: 475, y: 540 }));
-
-        dragging.end();
-
-        // then
-        expect(mid(task)).to.eql({
-          x: 480,
-          y: 540
-        });
-      }
-    ));
-
+        test();
+      });
+    });
   });
 
 
