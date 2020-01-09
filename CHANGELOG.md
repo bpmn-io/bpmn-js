@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.1.2
+
+* `FIX`: translate _Append ReceiveTask_
+* `FIX`: allow associations where data associations are allowed, too ([`4a675b37`](https://github.com/bpmn-io/bpmn-js/commit/4a675b378027532db413186ea292daeac087285b))
+
 ## 6.1.1
 
 _Republish of `v6.1.0`._
