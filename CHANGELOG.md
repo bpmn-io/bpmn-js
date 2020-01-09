@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: translate _Append ReceiveTask_
 * `FIX`: allow associations where data associations are allowed, too ([`4a675b37`](https://github.com/bpmn-io/bpmn-js/commit/4a675b378027532db413186ea292daeac087285b))
 * `FIX`: correct origin snapping on multi-element create ([`27fec8bd`](https://github.com/bpmn-io/bpmn-js/commit/27fec8bdf1c6236e7ca09b5721b74b1b45b45d39))
+* `CHORE`: update to `diagram-js@6.2.2`
 
 ## 6.1.1
 
