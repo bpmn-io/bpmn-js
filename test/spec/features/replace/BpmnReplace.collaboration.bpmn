@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:collaboration id="Collaboration_1wsnry3">
-    <bpmn:participant id="Participant_1" name="Pool" processRef="Process_1" />
-    <bpmn:participant id="Participant_2" name="Pool" />
-    <bpmn:messageFlow id="MessageFlow_2" sourceRef="Participant_2" targetRef="Participant_1" />
+    <bpmn:participant id="Participant_1" name="A" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" name="B" />
+    <bpmn:messageFlow id="MessageFlow_B_to_A" sourceRef="Participant_2" targetRef="Participant_1" />
     <bpmn:messageFlow id="MessageFlow_1" sourceRef="Task_1" targetRef="Participant_2" />
     <bpmn:messageFlow id="MessageFlow_3" sourceRef="EndEvent_1" targetRef="Participant_2" />
   </bpmn:collaboration>
@@ -35,7 +35,7 @@
       <bpmndi:BPMNShape id="Participant_06fwm9a_di" bpmnElement="Participant_2">
         <dc:Bounds x="237" y="436" width="378" height="115" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="MessageFlow_1xdh89f_di" bpmnElement="MessageFlow_2">
+      <bpmndi:BPMNEdge id="MessageFlow_1xdh89f_di" bpmnElement="MessageFlow_B_to_A">
         <di:waypoint xsi:type="dc:Point" x="368" y="436" />
         <di:waypoint xsi:type="dc:Point" x="368" y="353" />
         <bpmndi:BPMNLabel>
@@ -58,7 +58,7 @@
           <dc:Bounds x="508" y="170" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="MessageFlow_15s8xey_di" bpmnElement="MessageFlow_3">
+      <bpmndi:BPMNEdge id="MessageFlow_B_to_A_di" bpmnElement="MessageFlow_3">
         <di:waypoint xsi:type="dc:Point" x="553" y="170" />
         <di:waypoint xsi:type="dc:Point" x="553" y="434" />
         <bpmndi:BPMNLabel>

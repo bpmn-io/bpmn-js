@@ -309,6 +309,8 @@ describe('features/replace - bpmn replace', function() {
       // given
       var shape = elementRegistry.get('Participant_1');
 
+      var messageFlow = elementRegistry.get('MessageFlow_B_to_A');
+
       var collapsedBounds = assign({}, getBounds(shape), { height: 60 });
 
       // when
@@ -322,6 +324,11 @@ describe('features/replace - bpmn replace', function() {
       expect(newShape.children).to.be.empty;
 
       expect(newShape).to.have.bounds(collapsedBounds);
+
+      expect(messageFlow).to.have.waypoints([
+        { x: 368, y: 436 },
+        { x: 368, y: newShape.y + collapsedBounds.height }
+      ]);
     }));
 
 
