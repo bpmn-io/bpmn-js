@@ -281,6 +281,7 @@ describe('modeling/behavior - drop on connection', function() {
         dragging.setOptions({ manual: true });
       }));
 
+
       it('should connect start -> target -> end', inject(
         function(dragging, move, elementRegistry, selection) {
 
@@ -465,6 +466,36 @@ describe('modeling/behavior - drop on connection', function() {
           ]));
 
           expect(sequenceFlow).to.have.endDocking({ x: 340, y: 299 });
+        }
+      ));
+
+
+      it('should connect start -> target -> end (keeping target outgoing flows)', inject(
+        function(elementRegistry, selection, move, dragging) {
+
+          // given
+          var gateway_C = elementRegistry.get('Gateway_C'),
+              task_B = elementRegistry.get('task_B'),
+              sequenceFlow = elementRegistry.get('SequenceFlow_D'),
+              sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
+
+          // when
+          selection.select(gateway_C);
+
+          move.start(canvasEvent({ x: 0, y: 0 }), gateway_C);
+
+          dragging.hover({
+            element: sequenceFlow,
+            gfx: sequenceFlowGfx
+          });
+
+          dragging.move(canvasEvent({ x: 160, y: -130 }));
+          dragging.end();
+
+          // then
+          expect(gateway_C.outgoing).to.have.length(2);
+
+          expect(gateway_C.outgoing[0].gateway_C).to.eql(task_B);
         }
       ));
 
