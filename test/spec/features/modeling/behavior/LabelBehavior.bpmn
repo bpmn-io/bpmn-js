@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.2.0-dev">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
   <bpmn:category id="Category_1">
     <bpmn:categoryValue id="CategoryValue_1" value="Value" />
   </bpmn:category>
@@ -7,6 +7,13 @@
     <bpmn:startEvent id="StartEvent_1" name="foo" />
     <bpmn:task id="Task_1" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1" />
+    <bpmn:startEvent id="StartEvent_2">
+      <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_1">
+      <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1" name="SequenceFlow_1" sourceRef="StartEvent_2" targetRef="EndEvent_1" />
     <bpmn:textAnnotation id="TextAnnotation_1">
       <bpmn:text>foo</bpmn:text>
     </bpmn:textAnnotation>
@@ -68,6 +75,19 @@
           <dc:Bounds x="403" y="583" width="28" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0c95td1_di" bpmnElement="StartEvent_2">
+        <dc:Bounds x="564" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0r7j2ed_di" bpmnElement="EndEvent_1">
+        <dc:Bounds x="700" y="582" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0pgg94c_di" bpmnElement="SequenceFlow_1">
+        <di:waypoint x="600" y="600" />
+        <di:waypoint x="700" y="600" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="608" y="582" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

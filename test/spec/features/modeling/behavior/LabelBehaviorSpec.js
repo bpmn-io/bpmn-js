@@ -13,6 +13,8 @@ import {
 } from 'lib/util/LabelUtil';
 
 import {
+  assign,
+  map,
   pick
 } from 'min-dash';
 
@@ -412,6 +414,28 @@ describe('behavior - LabelBehavior', function() {
         }
       ));
 
+
+      it('should NOT move label if labelBehavior=false', inject(function(elementRegistry, modeling) {
+
+        // given
+        var connection = elementRegistry.get('SequenceFlow_1'),
+            waypoints = copyWaypoints(connection),
+            label = connection.label,
+            oldLabelPosition = pick(label, [ 'x', 'y' ]);
+
+        var newWaypoints = [
+          waypoints[ 0 ],
+          { x: 0, y: 0 },
+          waypoints[ 1 ]
+        ];
+
+        // when
+        modeling.updateWaypoints(connection, newWaypoints, { labelBehavior: false });
+
+        // then
+        expect(pick(label, [ 'x', 'y' ])).to.eql(oldLabelPosition);
+      }));
+
     });
 
   });
@@ -771,6 +795,23 @@ describe('behavior - LabelBehavior', function() {
 });
 
 // helpers //////////
+
+function copyWaypoint(waypoint) {
+  return assign({}, waypoint);
+}
+
+function copyWaypoints(connection) {
+  return map(connection.waypoints, function(waypoint) {
+
+    waypoint = copyWaypoint(waypoint);
+
+    if (waypoint.original) {
+      waypoint.original = copyWaypoint(waypoint.original);
+    }
+
+    return waypoint;
+  });
+}
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
