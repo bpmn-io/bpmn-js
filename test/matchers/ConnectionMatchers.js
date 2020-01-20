@@ -2,10 +2,18 @@ import {
   pick
 } from 'min-dash';
 
+import {
+  getBusinessObject
+} from 'lib/util/ModelUtil';
+
 var POSITION_ATTRS = [ 'x', 'y' ];
 
-function extractPoints(point) {
+function getPoint(point) {
   return pick(point, POSITION_ATTRS);
+}
+
+function getPoints(waypoints) {
+  return waypoints.map(getPoint);
 }
 
 
@@ -32,28 +40,36 @@ export default function(chai, utils) {
   Assertion.addMethod('waypoints', function(exp) {
     var obj = this._obj;
 
-    var strippedWaypoints = obj.waypoints.map(extractPoints),
-        strippedExpectedWaypoints = exp.map(extractPoints);
+    expect(obj).to.have.property('waypoints');
 
-    var matches = utils.eql(strippedWaypoints, strippedExpectedWaypoints);
-
-    var strippedWaypointsStr = inspect(strippedWaypoints),
-        strippedExpectedWaypointsStr = inspect(strippedExpectedWaypoints);
-
-    var theAssert = new Assertion(strippedWaypoints);
-
-    // transfer negate status
-    utils.transferFlags(this, theAssert, false);
-
-    theAssert.assert(
-      matches,
-      'expected <' + obj.id + '#waypoints> ' +
-          'to equal \n  ' + strippedExpectedWaypointsStr +
-          '\nbut got\n  ' + strippedWaypointsStr,
-      'expected <' + obj.id + '#waypoints> ' +
-          'not to equal \n  ' + strippedExpectedWaypoints
-    );
+    assertWaypoints(this, obj.id + '#waypoints', getPoints(obj.waypoints), getPoints(exp));
   });
+
+
+  /**
+   * A simple waypoints matcher, that verifies a connection
+   * consists of the correct DI waypoints.
+   *
+   * Does not take the original docking into account.
+   *
+   * @example
+   *
+   * expect(connection).to.have.diWaypoints([ { x: 100, y: 100 }, { x: 0, y: 0 } ]);
+   *
+   * @param {Connection|Array<Point>} exp
+   */
+  Assertion.addMethod('diWaypoints', function(exp) {
+    var obj = this._obj;
+
+    var bo = getBusinessObject(obj);
+
+    expect(bo).to.have.property('di');
+
+    expect(bo.di).to.have.property('waypoint');
+
+    assertWaypoints(this, obj.id + '#di#waypoint', getPoints(bo.di.waypoint), getPoints(exp));
+  });
+
 
   /**
    * A simple waypoints matcher, that verifies a connection
@@ -120,5 +136,30 @@ export default function(chai, utils) {
         expectedEndDockingStr + ' but got ' + endDockingStr
     );
   });
+
+
+  // helpers ////////////////
+
+  function assertWaypoints(self, desc, waypoints, expectedWaypoints) {
+
+    var matches = utils.eql(waypoints, expectedWaypoints);
+
+    var waypointsStr = inspect(waypoints),
+        expectedWaypointsStr = inspect(expectedWaypoints);
+
+    var theAssert = new Assertion(waypoints);
+
+    // transfer negate status
+    utils.transferFlags(self, theAssert, false);
+
+    theAssert.assert(
+      matches,
+      'expected <' + desc + '> ' +
+          'to equal \n  ' + expectedWaypointsStr +
+          '\nbut got\n  ' + waypointsStr,
+      'expected <' + desc + '> ' +
+          'not to equal \n  ' + expectedWaypoints
+    );
+  }
 
 }
