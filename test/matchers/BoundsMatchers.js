@@ -197,7 +197,8 @@ export default function(chai, utils) {
           'to equal \n  ' + expectedBoundsStr +
           '\nbut got\n  ' + boundsStr,
       'expected <' + desc + '> bounds ' +
-          'not to equal \n  ' + expectedBoundsStr
+          'not to equal \n  ' + expectedBoundsStr,
+      expectedBounds
     );
   }
 
@@ -219,7 +220,8 @@ export default function(chai, utils) {
           'to equal \n  ' + expectedDimensionsStr +
           '\nbut got\n  ' + dimensionsStr,
       'expected <' + desc + '> dimensions ' +
-          'not to equal \n  ' + expectedDimensionsStr
+          'not to equal \n  ' + expectedDimensionsStr,
+      expectedDimensions
     );
   }
 
@@ -242,7 +244,8 @@ export default function(chai, utils) {
           'to equal \n  ' + expectedPositionStr +
           '\nbut got\n  ' + positionStr,
       'expected <' + desc + '> position ' +
-          'not to equal \n  ' + expectedPositionStr
+          'not to equal \n  ' + expectedPositionStr,
+      expectedPosition
     );
   }
 

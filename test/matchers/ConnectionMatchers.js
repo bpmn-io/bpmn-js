@@ -158,7 +158,8 @@ export default function(chai, utils) {
           'to equal \n  ' + expectedWaypointsStr +
           '\nbut got\n  ' + waypointsStr,
       'expected <' + desc + '> ' +
-          'not to equal \n  ' + expectedWaypoints
+          'not to equal \n  ' + expectedWaypoints,
+      expectedWaypoints
     );
   }
 
