@@ -532,7 +532,7 @@ describe('modeling - label layouting', function() {
       }));
 
 
-      it('should move with a skewed line', inject(function(elementRegistry, spaceTool, dragging) {
+      it('should NOT adjust / move with a skewed line', inject(function(elementRegistry, spaceTool, dragging) {
 
         // given
         var connection = elementRegistry.get('SequenceFlow_1'),
@@ -545,7 +545,7 @@ describe('modeling - label layouting', function() {
         dragging.end();
 
         // then
-        expectLabelMoved(connection, labelPosition, { x: 25, y: 0 });
+        expectLabelMoved(connection, labelPosition, { x: 0, y: 0 });
       }));
 
     });
