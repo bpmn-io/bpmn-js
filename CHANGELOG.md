@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: keep non-duplicate outgoing connection when dropping on flows ([#1263](https://github.com/bpmn-io/bpmn-js/issues/1263))
 * `FIX`: properly reconnect message flows when collapsing participant
 * `CHORE`: update to `diagram-js@6.3.0`
+* `CHORE`: update to `bpmn-moddle@6.0.1`
 
 ## 6.1.2
 
