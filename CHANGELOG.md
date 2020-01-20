@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.2.0
+
+* `FIX`: keep non-duplicate outgoing connection when dropping on flows ([#1263](https://github.com/bpmn-io/bpmn-js/issues/1263))
+* `FIX`: properly reconnect message flows when collapsing participant
+* `CHORE`: update to `diagram-js@6.3.0`
+
 ## 6.1.2
 
 * `FIX`: translate _Append ReceiveTask_
