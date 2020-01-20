@@ -191,6 +191,37 @@ describe('features/modeling - create/remove space', function() {
 
   });
 
+
+  describe('case 1', function() {
+
+    var diagramXML = require('./SpaceTool.case1.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should create space to the left', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_C'),
+          sequenceFlowLabel = sequenceFlow.label;
+
+      var sequenceFlowLabelBounds_old = getPosition(sequenceFlowLabel);
+
+      // when
+      makeSpace({ x: 200, y: 100 }, { dx: 200 });
+
+      // then
+
+      expect(sequenceFlowLabel).to.have.position({
+        x: sequenceFlowLabelBounds_old.x + 200,
+        y: sequenceFlowLabelBounds_old.y
+      });
+    }));
+
+  });
+
 });
 
 

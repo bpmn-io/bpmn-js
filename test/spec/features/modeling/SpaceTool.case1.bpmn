@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="6.1.2">
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="StartEvent_A" name="A">
+      <outgoing>SequenceFlow_C</outgoing>
+    </startEvent>
+    <task id="Task_B" name="B">
+      <incoming>SequenceFlow_C</incoming>
+    </task>
+    <sequenceFlow id="SequenceFlow_C" name="C" sourceRef="StartEvent_A" targetRef="Task_B" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_A_di" bpmnElement="StartEvent_A">
+        <omgdc:Bounds x="152" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="167" y="125" width="7" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_B_di" bpmnElement="Task_B">
+        <omgdc:Bounds x="330" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_C_di" bpmnElement="SequenceFlow_C">
+        <omgdi:waypoint x="179" y="115" />
+        <omgdi:waypoint x="355" y="400" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="276" y="233" width="9" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
