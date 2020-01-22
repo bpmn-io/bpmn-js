@@ -17,6 +17,8 @@ jobs:
       script: './tasks/stages/update-examples'
     - stage: update demo
       script: './tasks/stages/update-demo'
+    - stage: update website
+      script: './tasks/stages/update-website'
 
 stages:
   - test
@@ -25,4 +27,6 @@ stages:
   - name: update examples
     if: tag =~ ^v\d
   - name: update demo
+    if: tag =~ ^v\d
+  - name: update website
     if: tag =~ ^v\d

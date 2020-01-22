@@ -1,0 +1,34 @@
+#! /bin/bash
+
+# update bpmn-js version in the <bpmn.io> project
+
+PWD="$(pwd)"
+WORKDIR="$(pwd)/tmp"
+CLONE_DIR="$WORKDIR/bpmn.io"
+
+# create work dir
+mkdir -p "$WORKDIR"
+
+git clone --depth=1 https://github.com/bpmn-io/bpmn.io.git "$CLONE_DIR"
+
+cd "$CLONE_DIR"
+
+echo "Updating toolkit version to $TRAVIS_TAG on bpmn.io"
+
+cat src/data/site.yml | tr "\r?\n" "\r" | sed -e "s#bpmnjs:\r  version: [^\r]*\r#bpmnjs:\r  version: $TRAVIS_TAG\r#" | tr "\r" "\n" > src/data/site.yml
+
+if [[ "x$SKIP_COMMIT" = "x" ]]; then
+
+  git config user.email "$BPMN_IO_EMAIL"
+  git config user.name "$BPMN_IO_USERNAME"
+  git config push.default simple
+
+  # add all resources
+  git add -A
+  git commit -m "chore(project): bump bpmn-js to $TRAVIS_TAG"
+  git push -q "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn.io.git" &2>/dev/null
+else
+  echo "Skipping commit (SKIP_COMMIT=$SKIP_COMMIT)"
+fi
+
+cd "$PWD"
