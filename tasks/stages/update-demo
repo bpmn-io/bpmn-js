@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# bumps bpmn-js and diagram-js dependencies in bpmn-io-demo
+
+PWD="$(pwd)"
+WORKDIR="$(pwd)/tmp"
+CLONE_DIR="$WORKDIR/bpmn-io-demo"
+
+# create work dir
+mkdir -p "$WORKDIR"
+
+git clone --depth=1 https://github.com/$BPMN_IO_DEMO_ENDPOINT.git "$CLONE_DIR"
+
+cd "$CLONE_DIR"
+
+npm install --save bpmn-js@latest diagram-js@latest
+
+git config user.email "$BPMN_IO_EMAIL"
+git config user.name "$BPMN_IO_USERNAME"
+git config push.default simple
+
+git add -A
+git commit -m "chore(project): bump bpmn-js to $TRAVIS_TAG"
+git tag "bpmn-js-$TRAVIS_TAG"
+git push -q "https://$GITHUB_AUTH@github.com/$BPMN_IO_DEMO_ENDPOINT.git" &2>/dev/null
+git push --tags -q "https://$GITHUB_AUTH@github.com/$BPMN_IO_DEMO_ENDPOINT.git" &2>/dev/null
+
+cd "$PWD"

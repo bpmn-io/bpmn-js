@@ -15,10 +15,14 @@ jobs:
       script: './tasks/stages/update-integration-test'
     - stage: update examples
       script: './tasks/stages/update-examples'
+    - stage: update demo
+      script: './tasks/stages/update-demo'
 
 stages:
   - test
   - name: update integration test
     if: tag =~ ^v\d
   - name: update examples
+    if: tag =~ ^v\d
+  - name: update demo
     if: tag =~ ^v\d
