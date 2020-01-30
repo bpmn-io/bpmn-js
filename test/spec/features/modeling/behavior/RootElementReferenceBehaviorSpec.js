@@ -51,9 +51,10 @@ describe('features/modeling - root element reference behavior', function() {
 
         var boundaryEvent,
             host,
-            rootElement;
+            rootElement,
+            pastedRootElement;
 
-        describe('should add', function() {
+        describe('should add a copy', function() {
 
           beforeEach(inject(function(bpmnjs, copyPaste, elementRegistry, modeling) {
 
@@ -87,13 +88,19 @@ describe('features/modeling - root element reference behavior', function() {
                 attach: 'attach'
               }
             })[0];
+
+            businessObject = getBusinessObject(boundaryEvent);
+            pastedRootElement = getRootElementReferenced(
+              businessObject.get('eventDefinitions')[ 0 ]
+            );
           }));
 
 
           it('<do>', function() {
 
             // then
-            expect(hasRootElement(rootElement)).to.be.true;
+            expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.true;
           });
 
 
@@ -104,6 +111,7 @@ describe('features/modeling - root element reference behavior', function() {
 
             // then
             expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.false;
           }));
 
 
@@ -116,7 +124,8 @@ describe('features/modeling - root element reference behavior', function() {
             commandStack.redo();
 
             // then
-            expect(hasRootElement(rootElement)).to.be.true;
+            expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.true;
           }));
 
         });
