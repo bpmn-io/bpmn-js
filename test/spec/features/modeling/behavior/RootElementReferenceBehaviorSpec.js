@@ -145,6 +145,10 @@ describe('features/modeling - root element reference behavior', function() {
 
           rootElement = getRootElementReferenced(eventDefinition);
 
+          var rootElementsOfTypeCount = filter(
+            rootElements, matchPattern({ $type: rootElement.$type })
+          ).length;
+
           copyPaste.copy(boundaryEvent);
 
           modeling.removeShape(boundaryEvent);
@@ -174,11 +178,132 @@ describe('features/modeling - root element reference behavior', function() {
           // then
           var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
 
-          expect(rootElementsOfType).to.have.lengthOf(1);
+          expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
         }));
 
       });
 
+    });
+
+
+    describe('receiveTask', function() {
+
+      var id = 'ReceiveTask';
+
+      var receiveTask,
+          rootElement,
+          pastedRootElement;
+
+      describe('should add a copy', function() {
+
+        beforeEach(inject(function(bpmnjs, copyPaste, elementRegistry, modeling, canvas) {
+
+          // given
+          receiveTask = elementRegistry.get(id);
+
+          var businessObject = getBusinessObject(receiveTask),
+              rootElement = businessObject.messageRef;
+
+          // when
+          copyPaste.copy(receiveTask);
+
+          modeling.removeShape(receiveTask);
+
+          collectionRemove(bpmnjs.getDefinitions().get('rootElements'), rootElement);
+
+          expect(hasRootElement(rootElement)).to.be.false;
+
+          receiveTask = copyPaste.paste({
+            element: canvas.getRootElement(),
+            point: {
+              x: receiveTask.x,
+              y: receiveTask.y + 200
+            }
+          })[0];
+
+          businessObject = getBusinessObject(receiveTask);
+          pastedRootElement = businessObject.messageRef;
+        }));
+
+
+        it('<do>', function() {
+
+          // then
+          expect(hasRootElement(rootElement)).to.be.false;
+          expect(hasRootElement(pastedRootElement)).to.be.true;
+        });
+
+
+        it('<undo>', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(hasRootElement(rootElement)).to.be.false;
+          expect(hasRootElement(pastedRootElement)).to.be.false;
+        }));
+
+
+        it('<redo>', inject(function(commandStack) {
+
+          // given
+          commandStack.undo();
+
+          // when
+          commandStack.redo();
+
+          // then
+          expect(hasRootElement(rootElement)).to.be.false;
+          expect(hasRootElement(pastedRootElement)).to.be.true;
+        }));
+
+      });
+
+
+      it('should NOT add', inject(function(
+          bpmnFactory, bpmnjs, copyPaste, elementRegistry, moddleCopy, modeling, canvas
+      ) {
+
+        // given
+        receiveTask = elementRegistry.get(id);
+
+        var businessObject = getBusinessObject(receiveTask),
+            rootElement = businessObject.messageRef,
+            rootElements = bpmnjs.getDefinitions().get('rootElements');
+
+        var rootElementsOfTypeCount = filter(
+          rootElements, matchPattern({ $type: rootElement.$type })
+        ).length;
+
+        copyPaste.copy(receiveTask);
+
+        modeling.removeShape(receiveTask);
+
+        collectionRemove(rootElements, rootElement);
+
+        expect(hasRootElement(rootElement)).to.be.false;
+
+        var rootElementWithSameId = bpmnFactory.create(rootElement.$type);
+
+        moddleCopy.copyElement(rootElement, rootElementWithSameId);
+
+        collectionRemove(rootElements, rootElementWithSameId);
+
+        // when
+        receiveTask = copyPaste.paste({
+          element: canvas.getRootElement(),
+          point: {
+            x: receiveTask.x,
+            y: receiveTask.y + 200
+          }
+        })[0];
+
+        // then
+        var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
+
+        expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
+      }));
     });
 
   });
@@ -244,6 +369,44 @@ describe('features/modeling - root element reference behavior', function() {
 
     });
 
+
+    describe('receiveTask', function() {
+
+      var receiveTask,
+          rootElement;
+
+      beforeEach(inject(function(copyPaste, elementRegistry, canvas) {
+
+        // given
+        receiveTask = elementRegistry.get('ReceiveTask');
+
+        var businessObject = getBusinessObject(receiveTask);
+
+        rootElement = businessObject.messageRef;
+
+        copyPaste.copy(receiveTask);
+
+        // when
+        receiveTask = copyPaste.paste({
+          element: canvas.getRootElement(),
+          point: {
+            x: receiveTask.x,
+            y: receiveTask.y + 200,
+          }
+        })[0];
+      }));
+
+
+      it('should copy root element reference', function() {
+
+        // then
+        var businessObject = getBusinessObject(receiveTask),
+            copiedRootElement = businessObject.messageRef;
+
+        expect(copiedRootElement).to.equal(rootElement);
+      });
+    });
+
   });
 
 });
@@ -266,7 +429,7 @@ function hasRootElement(rootElement) {
   var definitions = getBpmnJS().getDefinitions(),
       rootElements = definitions.get('rootElements');
 
-  return !!find(rootElements, matchPattern({ id: rootElement.id }));
+  return !!rootElement && !!find(rootElements, matchPattern({ id: rootElement.id }));
 }
 
 function capitalizeFirstChar(string) {
