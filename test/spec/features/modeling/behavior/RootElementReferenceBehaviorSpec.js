@@ -186,124 +186,130 @@ describe('features/modeling - root element reference behavior', function() {
     });
 
 
-    describe('receiveTask', function() {
+    describe('receive and send task', function() {
 
-      var id = 'ReceiveTask';
+      forEach([
+        'ReceiveTask',
+        'SendTask'
+      ], function(type) {
 
-      var receiveTask,
-          rootElement,
-          pastedRootElement;
+        var id = type;
 
-      describe('should add a copy', function() {
+        var task,
+            rootElement,
+            pastedRootElement;
 
-        beforeEach(inject(function(bpmnjs, copyPaste, elementRegistry, modeling, canvas) {
+        describe('should add a copy', function() {
 
-          // given
-          receiveTask = elementRegistry.get(id);
+          beforeEach(inject(function(bpmnjs, copyPaste, elementRegistry, modeling, canvas) {
 
-          var businessObject = getBusinessObject(receiveTask),
-              rootElement = businessObject.messageRef;
+            // given
+            task = elementRegistry.get(id);
 
-          // when
-          copyPaste.copy(receiveTask);
+            var businessObject = getBusinessObject(task),
+                rootElement = businessObject.messageRef;
 
-          modeling.removeShape(receiveTask);
+            // when
+            copyPaste.copy(task);
 
-          collectionRemove(bpmnjs.getDefinitions().get('rootElements'), rootElement);
+            modeling.removeShape(task);
 
-          expect(hasRootElement(rootElement)).to.be.false;
+            collectionRemove(bpmnjs.getDefinitions().get('rootElements'), rootElement);
 
-          receiveTask = copyPaste.paste({
-            element: canvas.getRootElement(),
-            point: {
-              x: receiveTask.x,
-              y: receiveTask.y + 200
-            }
-          })[0];
+            expect(hasRootElement(rootElement)).to.be.false;
 
-          businessObject = getBusinessObject(receiveTask);
-          pastedRootElement = businessObject.messageRef;
-        }));
+            task = copyPaste.paste({
+              element: canvas.getRootElement(),
+              point: {
+                x: task.x,
+                y: task.y + 200
+              }
+            })[0];
+
+            businessObject = getBusinessObject(task);
+            pastedRootElement = businessObject.messageRef;
+          }));
 
 
-        it('<do>', function() {
+          it('<do>', function() {
 
-          // then
-          expect(hasRootElement(rootElement)).to.be.false;
-          expect(hasRootElement(pastedRootElement)).to.be.true;
+            // then
+            expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.true;
+          });
+
+
+          it('<undo>', inject(function(commandStack) {
+
+            // when
+            commandStack.undo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.false;
+          }));
+
+
+          it('<redo>', inject(function(commandStack) {
+
+            // given
+            commandStack.undo();
+
+            // when
+            commandStack.redo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.false;
+            expect(hasRootElement(pastedRootElement)).to.be.true;
+          }));
+
         });
 
 
-        it('<undo>', inject(function(commandStack) {
-
-          // when
-          commandStack.undo();
-
-          // then
-          expect(hasRootElement(rootElement)).to.be.false;
-          expect(hasRootElement(pastedRootElement)).to.be.false;
-        }));
-
-
-        it('<redo>', inject(function(commandStack) {
+        it('should NOT add', inject(function(
+            bpmnFactory, bpmnjs, copyPaste, elementRegistry, moddleCopy, modeling, canvas
+        ) {
 
           // given
-          commandStack.undo();
+          task = elementRegistry.get(id);
+
+          var businessObject = getBusinessObject(task),
+              rootElement = businessObject.messageRef,
+              rootElements = bpmnjs.getDefinitions().get('rootElements');
+
+          var rootElementsOfTypeCount = filter(
+            rootElements, matchPattern({ $type: rootElement.$type })
+          ).length;
+
+          copyPaste.copy(task);
+
+          modeling.removeShape(task);
+
+          collectionRemove(rootElements, rootElement);
+
+          expect(hasRootElement(rootElement)).to.be.false;
+
+          var rootElementWithSameId = bpmnFactory.create(rootElement.$type);
+
+          moddleCopy.copyElement(rootElement, rootElementWithSameId);
+
+          collectionRemove(rootElements, rootElementWithSameId);
 
           // when
-          commandStack.redo();
+          task = copyPaste.paste({
+            element: canvas.getRootElement(),
+            point: {
+              x: task.x,
+              y: task.y + 200
+            }
+          })[0];
 
           // then
-          expect(hasRootElement(rootElement)).to.be.false;
-          expect(hasRootElement(pastedRootElement)).to.be.true;
+          var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
+
+          expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
         }));
-
       });
-
-
-      it('should NOT add', inject(function(
-          bpmnFactory, bpmnjs, copyPaste, elementRegistry, moddleCopy, modeling, canvas
-      ) {
-
-        // given
-        receiveTask = elementRegistry.get(id);
-
-        var businessObject = getBusinessObject(receiveTask),
-            rootElement = businessObject.messageRef,
-            rootElements = bpmnjs.getDefinitions().get('rootElements');
-
-        var rootElementsOfTypeCount = filter(
-          rootElements, matchPattern({ $type: rootElement.$type })
-        ).length;
-
-        copyPaste.copy(receiveTask);
-
-        modeling.removeShape(receiveTask);
-
-        collectionRemove(rootElements, rootElement);
-
-        expect(hasRootElement(rootElement)).to.be.false;
-
-        var rootElementWithSameId = bpmnFactory.create(rootElement.$type);
-
-        moddleCopy.copyElement(rootElement, rootElementWithSameId);
-
-        collectionRemove(rootElements, rootElementWithSameId);
-
-        // when
-        receiveTask = copyPaste.paste({
-          element: canvas.getRootElement(),
-          point: {
-            x: receiveTask.x,
-            y: receiveTask.y + 200
-          }
-        })[0];
-
-        // then
-        var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
-
-        expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
-      }));
     });
 
   });
@@ -370,40 +376,47 @@ describe('features/modeling - root element reference behavior', function() {
     });
 
 
-    describe('receiveTask', function() {
+    describe('receive and send task', function() {
 
-      var receiveTask,
-          rootElement;
+      forEach([
+        'ReceiveTask',
+        'SendTask'
+      ], function(type) {
 
-      beforeEach(inject(function(copyPaste, elementRegistry, canvas) {
+        var id = type,
+            task,
+            rootElement;
 
-        // given
-        receiveTask = elementRegistry.get('ReceiveTask');
+        beforeEach(inject(function(copyPaste, elementRegistry, canvas) {
 
-        var businessObject = getBusinessObject(receiveTask);
+          // given
+          task = elementRegistry.get(id);
 
-        rootElement = businessObject.messageRef;
+          var businessObject = getBusinessObject(task);
 
-        copyPaste.copy(receiveTask);
+          rootElement = businessObject.messageRef;
 
-        // when
-        receiveTask = copyPaste.paste({
-          element: canvas.getRootElement(),
-          point: {
-            x: receiveTask.x,
-            y: receiveTask.y + 200,
-          }
-        })[0];
-      }));
+          copyPaste.copy(task);
+
+          // when
+          task = copyPaste.paste({
+            element: canvas.getRootElement(),
+            point: {
+              x: task.x,
+              y: task.y + 200,
+            }
+          })[0];
+        }));
 
 
-      it('should copy root element reference', function() {
+        it('should copy root element reference', function() {
 
-        // then
-        var businessObject = getBusinessObject(receiveTask),
-            copiedRootElement = businessObject.messageRef;
+          // then
+          var businessObject = getBusinessObject(task),
+              copiedRootElement = businessObject.messageRef;
 
-        expect(copiedRootElement).to.equal(rootElement);
+          expect(copiedRootElement).to.equal(rootElement);
+        });
       });
     });
 

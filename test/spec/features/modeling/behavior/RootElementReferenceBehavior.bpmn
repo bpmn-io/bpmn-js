@@ -14,14 +14,16 @@
     <bpmn:boundaryEvent id="SignalBoundaryEvent_1" attachedToRef="Task_1">
       <bpmn:signalEventDefinition signalRef="Signal_1" />
     </bpmn:boundaryEvent>
-    <bpmn:task id="Task_2" />
     <bpmn:receiveTask id="ReceiveTask" messageRef="Message_2" />
+    <bpmn:task id="Task_2" />
+    <bpmn:sendTask id="SendTask" messageRef="Message_3" />
   </bpmn:process>
   <bpmn:message id="Message_1" name="Message_1" />
   <bpmn:escalation id="Escalation_1" name="Escalation_1" escalationCode="42" />
   <bpmn:error id="Error_1" name="Error_1" errorCode="1" />
   <bpmn:signal id="Signal_1" name="Signal_1" />
   <bpmn:message id="Message_2" name="Message_2" />
+  <bpmn:message id="Message_3" name="Message_3" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
@@ -39,11 +41,14 @@
       <bpmndi:BPMNShape id="SignalBoundaryEvent_1_di" bpmnElement="SignalBoundaryEvent_1">
         <dc:Bounds x="252" y="122" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_di" bpmnElement="ReceiveTask">
+        <dc:Bounds x="170" y="220" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
         <dc:Bounds x="370" y="60" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ReceiveTask_di" bpmnElement="ReceiveTask">
-        <dc:Bounds x="170" y="220" width="100" height="80" />
+      <bpmndi:BPMNShape id="SendTask_1y80j0q_di" bpmnElement="SendTask">
+        <dc:Bounds x="370" y="220" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
