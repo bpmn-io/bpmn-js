@@ -15,7 +15,8 @@ cd "$CLONE_DIR"
 
 echo "Updating toolkit version to $TRAVIS_TAG on bpmn.io"
 
-cat src/data/site.yml | tr "\r?\n" "\r" | sed -e "s#bpmnjs:\r  version: [^\r]*\r#bpmnjs:\r  version: $TRAVIS_TAG\r#" | tr "\r" "\n" > src/data/site.yml
+cat src/data/site.yml | tr "\r?\n" "\r" | sed -e "s#bpmnjs:\r  version: [^\r]*\r#bpmnjs:\r  version: $TRAVIS_TAG\r#" | tr "\r" "\n" > src/data/site.yml_new
+mv -f src/data/site.yml_new src/data/site.yml
 
 if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
