@@ -9,7 +9,7 @@ CLONE_DIR="$WORKDIR/bpmn-io-demo"
 # create work dir
 mkdir -p "$WORKDIR"
 
-git clone --depth=1 https://github.com/$BPMN_IO_DEMO_ENDPOINT.git "$CLONE_DIR"
+git clone --depth=1 "https://$GITHUB_AUTH@github.com/$BPMN_IO_DEMO_ENDPOINT.git" "$CLONE_DIR"
 
 cd "$CLONE_DIR"
 
@@ -22,7 +22,7 @@ git config push.default simple
 git add -A
 git commit -m "chore(project): bump bpmn-js to $TRAVIS_TAG"
 git tag "bpmn-js-$TRAVIS_TAG"
-git push -q "https://$GITHUB_AUTH@github.com/$BPMN_IO_DEMO_ENDPOINT.git" &2>/dev/null
-git push --tags -q "https://$GITHUB_AUTH@github.com/$BPMN_IO_DEMO_ENDPOINT.git" &2>/dev/null
+git push -q &2>/dev/null
+git push --tags -q &2>/dev/null
 
 cd "$PWD"
