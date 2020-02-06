@@ -27,14 +27,6 @@ describe('features - bpmn-factory', function() {
 
 
     it('should assign id (with semantic prefix)', inject(function(bpmnFactory) {
-      var task = bpmnFactory.create('bpmn:ServiceTask');
-
-      expect(task.$type).to.equal('bpmn:ServiceTask');
-      expect(task.id).to.match(/^ServiceTask_/g);
-    }));
-
-
-    it('should assign id (with semantic prefix)', inject(function(bpmnFactory) {
       var plane = bpmnFactory.create('bpmndi:BPMNPlane');
 
       expect(plane.$type).to.equal('bpmndi:BPMNPlane');
@@ -48,6 +40,42 @@ describe('features - bpmn-factory', function() {
       expect(set.id).to.exist;
     }));
 
+
+    describe('generic id', function() {
+
+      it('should assign id with generic semantic prefix (Activity)', inject(function(bpmnFactory) {
+        var task = bpmnFactory.create('bpmn:ServiceTask');
+
+        expect(task.$type).to.equal('bpmn:ServiceTask');
+        expect(task.id).to.match(/^Activity_/g);
+      }));
+
+
+      it('should assign id with generic semantic prefix (Gateway)', inject(function(bpmnFactory) {
+        var task = bpmnFactory.create('bpmn:ParallelGateway');
+
+        expect(task.$type).to.equal('bpmn:ParallelGateway');
+        expect(task.id).to.match(/^Gateway_/g);
+      }));
+
+
+      it('should assign id with generic semantic prefix (Event)', inject(function(bpmnFactory) {
+        var task = bpmnFactory.create('bpmn:EndEvent');
+
+        expect(task.$type).to.equal('bpmn:EndEvent');
+        expect(task.id).to.match(/^Event_/g);
+      }));
+
+
+      it('should assign id with generic semantic prefix (FlowElement)', inject(
+        function(bpmnFactory) {
+          var task = bpmnFactory.create('bpmn:SequenceFlow');
+
+          expect(task.$type).to.equal('bpmn:SequenceFlow');
+          expect(task.id).to.match(/^Flow_/g);
+        })
+      );
+    });
   });
 
 
