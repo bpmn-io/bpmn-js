@@ -480,6 +480,38 @@ describe('import - Importer', function() {
       });
     });
 
+
+    it('should import groups', function(done) {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/groups.bpmn');
+
+      var events = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        events.push({
+          type: 'add',
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id,
+          isFrame: e.element && e.element.isFrame
+        });
+      });
+
+      // when
+      runImport(diagram, xml, function(err) {
+
+        // then
+        expect(events).to.eql([
+          { type: 'add', semantic: 'Process_1', di: 'BPMNPlane_1', diagramElement: 'Process_1', isFrame: undefined },
+          { type: 'add', semantic: 'Group_1', di: 'Group_1_di', diagramElement: 'Group_1', isFrame: true }
+        ]);
+
+        done(err);
+      });
+    });
+
   });
 
 
