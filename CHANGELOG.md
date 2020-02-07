@@ -6,6 +6,17 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.3.0
+
+* `FEAT`: generate more generic IDs for new elements ([`035bb0c1`](https://github.com/bpmn-io/bpmn-js/commit/035bb0c1fd01adbaab8a340cb1075aa57736540d))
+* `FEAT`: copy referenced root elements (message, signal, ...) ([`dc5a566e`](https://github.com/bpmn-io/bpmn-js/commit/dc5a566e107bc156505a40de3331b3832afc4b8d))
+* `FEAT`: ensure minimum size when resizing elements with space tool ([`7ee304f4`](https://github.com/bpmn-io/bpmn-js/commit/7ee304f424d1c9db46633523165d25ca1fabba1b))
+* `FIX`: correct interaction events inside `bpmn:Group` elements ([#1278](https://github.com/bpmn-io/bpmn-js/issues/1278))
+* `FIX`: correct copy and paste of collapsed sub-processes ([#1270](https://github.com/bpmn-io/bpmn-js/issues/1270))
+* `FIX`: correct various space tool related issues ([#1019](https://github.com/bpmn-io/bpmn-js/issues/1019), [#878](https://github.com/bpmn-io/bpmn-js/issues/878))
+* `CHORE`: rework space tool
+* `CHORE`: update to `diagram-js@6.4.0`
+
 ## 6.2.1
 
 * `FIX`: correct serialization of `DataAssociation#assignment`
