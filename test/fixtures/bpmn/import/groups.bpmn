@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="simple" targetNamespace="http://bpmn.io/schema/bpmn" exporter="camunda modeler" exporterVersion="2.6.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="Process_1" isExecutable="false">
+    <bpmn2:group id="Group_1" categoryValueRef="CategoryValue_1o9po2j" />
+  </bpmn2:process>
+  <bpmn2:category id="Category_0fj5y1s">
+    <bpmn2:categoryValue id="CategoryValue_1o9po2j" />
+  </bpmn2:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <dc:Bounds x="280" y="60" width="430" height="360" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
