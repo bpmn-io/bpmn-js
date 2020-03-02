@@ -607,6 +607,12 @@ describe('features/copy-paste/ModdleCopy', function() {
       });
 
       eventBus.on('moddleCopy.canCopyProperty', HIGH_PRIORITY, function(context) {
+
+        // verify provided properties
+        expect(context).to.have.property('parent');
+        expect(context).to.have.property('property');
+        expect(context).to.have.property('propertyName');
+
         var propertyName = context.propertyName;
 
         if (propertyName === 'name') {
@@ -630,6 +636,12 @@ describe('features/copy-paste/ModdleCopy', function() {
       });
 
       eventBus.on('moddleCopy.canSetCopiedProperty', HIGH_PRIORITY, function(context) {
+
+        // verify provided properties
+        expect(context).to.have.property('parent');
+        expect(context).to.have.property('property');
+        expect(context).to.have.property('propertyName');
+
         var property = context.property;
 
         if (property === 'foo') {
