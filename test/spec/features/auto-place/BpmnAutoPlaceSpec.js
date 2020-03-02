@@ -11,14 +11,12 @@ import selectionModule from 'diagram-js/lib/features/selection';
 
 import { getBusinessObject } from '../../../../lib/util/ModelUtil';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
-
 
 describe('features/auto-place', function() {
 
   describe('element placement', function() {
 
-    var diagramXML = require('./AutoPlace.bpmn');
+    var diagramXML = require('./BpmnAutoPlace.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
@@ -116,7 +114,7 @@ describe('features/auto-place', function() {
 
   describe('integration', function() {
 
-    var diagramXML = require('./AutoPlace.bpmn');
+    var diagramXML = require('./BpmnAutoPlace.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
@@ -174,7 +172,7 @@ describe('features/auto-place', function() {
 
   describe('multi connection handling', function() {
 
-    var diagramXML = require('./AutoPlace.multi-connection.bpmn');
+    var diagramXML = require('./BpmnAutoPlace.multi-connection.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
@@ -209,7 +207,7 @@ describe('features/auto-place', function() {
 
   describe('boundary event connection handling', function() {
 
-    var diagramXML = require('./AutoPlace.boundary-events.bpmn');
+    var diagramXML = require('./BpmnAutoPlace.boundary-events.bpmn');
 
     before(bootstrapModeler(diagramXML, {
       modules: [
@@ -241,11 +239,13 @@ describe('features/auto-place', function() {
       expectedBounds: { x: 242, y: -27, width: 100, height: 80 }
     }));
 
+
     it('should place top right of BOUNDARY_TOP_RIGHT without infinite loop', autoPlace({
       element: 'bpmn:Task',
       behind: 'BOUNDARY_TOP_RIGHT',
       expectedBounds: { x: 473, y: -27, width: 100, height: 80 }
     }));
+
 
     it('should place top right of BOUNDARY_SUBPROCESS_TOP', autoPlace({
       element: 'bpmn:Task',
@@ -255,114 +255,10 @@ describe('features/auto-place', function() {
 
   });
 
-
-  describe('eventbus integration', function() {
-
-    var diagramXML = require('./AutoPlace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: [
-        autoPlaceModule,
-        coreModule,
-        labelEditingModule,
-        modelingModule,
-        selectionModule
-      ]
-    }));
-
-
-    it('<autoPlace.start>', inject(
-      function(autoPlace, elementFactory, elementRegistry, eventBus) {
-
-        // given
-        var element = elementFactory.createShape({ type: 'bpmn:Task' });
-
-        var source = elementRegistry.get('TASK_2');
-
-        var listener = sinon.spy(function(event) {
-
-          // then
-          expect(event.shape).to.equal(element);
-          expect(event.source).to.equal(source);
-        });
-
-        eventBus.on('autoPlace.start', listener);
-
-        // when
-        autoPlace.append(source, element);
-
-        expect(listener).to.have.been.called;
-      }
-    ));
-
-
-    it('<autoPlace>', inject(
-      function(autoPlace, elementFactory, elementRegistry, eventBus) {
-
-        // given
-        var element = elementFactory.createShape({ type: 'bpmn:Task' });
-
-        var source = elementRegistry.get('TASK_2');
-
-        var listener = sinon.spy(function(event) {
-
-          // then
-          expect(event.shape).to.equal(element);
-          expect(event.source).to.equal(source);
-
-          return {
-            x: 0,
-            y: 0
-          };
-        });
-
-        eventBus.on('autoPlace', listener);
-
-        // when
-        autoPlace.append(source, element);
-
-        expect(listener).to.have.been.called;
-
-        expect(getMid(element)).to.eql({
-          x: 0,
-          y: 0
-        });
-      }
-    ));
-
-
-    it('<autoPlace.end>', inject(
-      function(autoPlace, elementFactory, elementRegistry, eventBus) {
-
-        // given
-        var element = elementFactory.createShape({ type: 'bpmn:Task' });
-
-        var source = elementRegistry.get('TASK_2');
-
-        var listener = sinon.spy(function(event) {
-
-          // then
-          expect(event.shape).to.equal(element);
-          expect(event.source).to.equal(source);
-        });
-
-        eventBus.on('autoPlace.end', listener);
-
-        // when
-        autoPlace.append(source, element);
-
-        expect(listener).to.have.been.called;
-      }
-    ));
-
-  });
-
 });
 
 
-
-
-// helpers //////////////////////
+// helpers //////////
 
 function autoPlace(cfg) {
 
