@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.3.1
+
+* `FIX`: prevent editor crash in some strict execution environments ([#1283](https://github.com/bpmn-io/bpmn-js/pull/1283))
+
 ## 6.3.0
 
 * `FEAT`: generate more generic IDs for new elements ([`035bb0c1`](https://github.com/bpmn-io/bpmn-js/commit/035bb0c1fd01adbaab8a340cb1075aa57736540d))
