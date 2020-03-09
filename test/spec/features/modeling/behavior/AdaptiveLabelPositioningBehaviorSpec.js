@@ -450,4 +450,39 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
   });
 
+
+  describe('advanced', function() {
+
+    describe('on cross participant move', function() {
+
+      var diagramXML = require('./AdaptiveLabelPositioningBehavior.cross-participant-move.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should keep labels where they are', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          var element = elementRegistry.get('Task');
+          var target = elementRegistry.get('Participant_B');
+
+          var gatewayBefore = elementRegistry.get('Gateway_A');
+          var gatewayAfter = elementRegistry.get('Gateway_B');
+
+          // when
+          modeling.moveElements([ element ], { x: 0, y: 250 }, target);
+
+          // then
+          expectLabelOrientation(gatewayBefore, 'bottom');
+          expectLabelOrientation(gatewayAfter, 'bottom');
+        }
+      ));
+
+    });
+
+  });
+
 });

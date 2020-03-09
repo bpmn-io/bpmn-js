@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="3.0.1">
+  <collaboration id="Collaboration">
+    <participant id="Participant_A" name="Participant_A" processRef="Process_1" />
+    <participant id="Participant_B" name="Participant_B" processRef="Process_1ab1kcr" />
+  </collaboration>
+  <process id="Process_1" isExecutable="false">
+    <exclusiveGateway id="Gateway_B" name="B">
+      <incoming>Flow_2</incoming>
+    </exclusiveGateway>
+    <exclusiveGateway id="Gateway_A" name="A">
+      <outgoing>Flow_1</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_2" sourceRef="Task" targetRef="Gateway_B" />
+    <sequenceFlow id="Flow_1" sourceRef="Gateway_A" targetRef="Task" />
+    <task id="Task" name="Task">
+      <incoming>Flow_1</incoming>
+      <outgoing>Flow_2</outgoing>
+    </task>
+  </process>
+  <process id="Process_1ab1kcr" isExecutable="false" />
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Participant_A_di" bpmnElement="Participant_A" isHorizontal="true">
+        <omgdc:Bounds x="121" y="61" width="516" height="174" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0kmcz3u_di" bpmnElement="Task">
+        <omgdc:Bounds x="311" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_04ookgz_di" bpmnElement="Gateway_B" isMarkerVisible="true">
+        <omgdc:Bounds x="473" y="96" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="494" y="155" width="8" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_B_di" bpmnElement="Participant_B" isHorizontal="true">
+        <omgdc:Bounds x="121" y="280" width="516" height="173" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_A_di" bpmnElement="Gateway_A" isMarkerVisible="true">
+        <omgdc:Bounds x="195" y="96" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="217" y="153" width="7" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <omgdi:waypoint x="411" y="121" />
+        <omgdi:waypoint x="473" y="121" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="427" y="177" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <omgdi:waypoint x="245" y="121" />
+        <omgdi:waypoint x="311" y="121" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
