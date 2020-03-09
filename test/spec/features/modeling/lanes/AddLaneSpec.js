@@ -20,6 +20,8 @@ import { query as domQuery } from 'min-dom';
 
 var DEFAULT_LANE_HEIGHT = 120;
 
+var testModules = [ coreModule, modelingModule ];
+
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
@@ -32,9 +34,10 @@ describe('features/modeling - add Lane', function() {
 
     var diagramXML = require('./lanes.bpmn');
 
-    var testModules = [ coreModule, modelingModule ];
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     it('should add after Lane', inject(function(elementRegistry, modeling) {
 
@@ -191,9 +194,9 @@ describe('features/modeling - add Lane', function() {
 
     var diagramXML = require('./participant-no-lane.bpmn');
 
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
 
 
     it('should add after Participant', inject(function(elementRegistry, modeling) {
@@ -262,6 +265,47 @@ describe('features/modeling - add Lane', function() {
         height: DEFAULT_LANE_HEIGHT
       });
 
+    }));
+
+  });
+
+
+  describe('flow node handling', function() {
+
+    var diagramXML = require('./lanes.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should move flow nodes and sequence flows', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Nested_Lane_B'),
+          task_Boundary = elementRegistry.get('Task_Boundary'),
+          boundary = elementRegistry.get('Boundary'),
+          sequenceFlow = elementRegistry.get('SequenceFlow'),
+          sequenceFlow_From_Boundary = elementRegistry.get('SequenceFlow_From_Boundary');
+
+      // when
+      var newLane = modeling.addLane(laneShape, 'top');
+
+      // then
+      expect(task_Boundary).to.have.position({ x: 264, y: -57 });
+      expect(boundary).to.have.position({ x: 311, y: 5 });
+
+      expect(sequenceFlow_From_Boundary).to.have.waypoints([
+        { x: 329, y: 161 - newLane.height },
+        { x: 329, y: 188 - newLane.height },
+        { x: 482, y: 188 - newLane.height },
+        { x: 482, y: 143 - newLane.height }
+      ]);
+
+      expect(sequenceFlow).to.have.waypoints([
+        { x: 364, y: 103 - newLane.height },
+        { x: 432, y: 103 - newLane.height }
+      ]);
     }));
 
   });
