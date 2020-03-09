@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_4bAZoD9WEeWLcNBL4nCk1A" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="6.3.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="_Collaboration_2">
+    <bpmn2:participant id="Participant_Lane" name="Participant_Lane" processRef="Process_Lane" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_Lane" isExecutable="false">
+    <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+      <bpmn2:lane id="Lane_A" name="Lane_A">
+        <bpmn2:flowNodeRef>Task_Boundary</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>Task</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>Event</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>Boundary</bpmn2:flowNodeRef>
+        <bpmn2:childLaneSet id="LaneSet_2">
+          <bpmn2:lane id="Nested_Lane_B" name="Nested_Lane_B" />
+          <bpmn2:lane id="Nested_Lane_A" name="Nested_Lane_A">
+            <bpmn2:flowNodeRef>Task_Boundary</bpmn2:flowNodeRef>
+            <bpmn2:flowNodeRef>Task</bpmn2:flowNodeRef>
+            <bpmn2:flowNodeRef>Event</bpmn2:flowNodeRef>
+            <bpmn2:flowNodeRef>Boundary</bpmn2:flowNodeRef>
+          </bpmn2:lane>
+        </bpmn2:childLaneSet>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:task id="Task_Boundary" name="Task_Boundary">
+      <bpmn2:outgoing>SequenceFlow</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:task id="Task" name="Task">
+      <bpmn2:incoming>SequenceFlow_From_Boundary</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow</bpmn2:incoming>
+    </bpmn2:task>
+    <bpmn2:startEvent id="Event" name="Start" />
+    <bpmn2:boundaryEvent id="Boundary" name="Boundary" attachedToRef="Task_Boundary">
+      <bpmn2:outgoing>SequenceFlow_From_Boundary</bpmn2:outgoing>
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow" name="Flow" sourceRef="Task_Boundary" targetRef="Task" />
+    <bpmn2:sequenceFlow id="SequenceFlow_From_Boundary" name="" sourceRef="Boundary" targetRef="Task" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_2" bpmnElement="Participant_Lane" isHorizontal="true">
+        <dc:Bounds x="152" y="83" width="540" height="537" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_Boundary">
+        <dc:Bounds x="344" y="113" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="Boundary">
+        <dc:Bounds x="391" y="175" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="339" y="210" width="48" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="Task">
+        <dc:Bounds x="512" y="113" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_From_Boundary" sourceElement="_BPMNShape_BoundaryEvent_2" targetElement="_BPMNShape_Task_3">
+        <di:waypoint x="409" y="211" />
+        <di:waypoint x="409" y="238" />
+        <di:waypoint x="562" y="238" />
+        <di:waypoint x="562" y="193" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="377" y="188" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow" sourceElement="_BPMNShape_Task_2" targetElement="_BPMNShape_Task_3">
+        <di:waypoint x="444" y="153" />
+        <di:waypoint x="512" y="153" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="466" y="135" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_3" bpmnElement="Lane_A" isHorizontal="true">
+        <dc:Bounds x="182" y="83" width="510" height="537" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_4" bpmnElement="Nested_Lane_A" isHorizontal="true">
+        <dc:Bounds x="212" y="83" width="480" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_5" bpmnElement="Nested_Lane_B" isHorizontal="true">
+        <dc:Bounds x="212" y="263" width="480" height="357" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_di" bpmnElement="Event">
+        <dc:Bounds x="262" y="135" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="268" y="178" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
