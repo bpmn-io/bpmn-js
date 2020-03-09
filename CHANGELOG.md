@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.3.2
+
+* `FIX`: correctly move flows when adding lane ([#1287](https://github.com/bpmn-io/bpmn-js/pull/1287))
+* `FIX`: restore semantic IDs for non flow nodes ([#1285](https://github.com/bpmn-io/bpmn-js/issues/1285))
+
 ## 6.3.1
 
 * `FIX`: prevent editor crash in some strict execution environments ([#1283](https://github.com/bpmn-io/bpmn-js/pull/1283))
