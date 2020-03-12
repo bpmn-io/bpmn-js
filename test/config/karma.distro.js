@@ -2,27 +2,15 @@
 
 // configures browsers to run test against
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'IE', 'PhantomJS' ]
-var browsers =
-  (process.env.TEST_BROWSERS || 'PhantomJS')
-    .replace(/^\s+|\s+$/, '')
-    .split(/\s*,\s*/g)
-    .map(function(browser) {
-      if (browser === 'ChromeHeadless') {
-        process.env.CHROME_BIN = require('puppeteer').executablePath();
+var browsers = (process.env.TEST_BROWSERS || 'PhantomJS').split(',');
 
-        // workaround https://github.com/GoogleChrome/puppeteer/issues/290
-        if (process.platform === 'linux') {
-          return 'ChromeHeadless_Linux';
-        }
-      }
-
-      return browser;
-    });
-
+// use puppeteer provided Chrome for testing
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 var VARIANT = process.env.VARIANT;
 
 var NODE_ENV = process.env.NODE_ENV;
+
 
 module.exports = function(karma) {
   karma.set({
@@ -46,18 +34,7 @@ module.exports = function(karma) {
 
     reporters: [ 'progress' ],
 
-    customLaunchers: {
-      ChromeHeadless_Linux: {
-        base: 'ChromeHeadless',
-        flags: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox'
-        ],
-        debug: true
-      }
-    },
-
-    browsers: browsers,
+    browsers,
 
     browserNoActivityTimeout: 30000,
 
