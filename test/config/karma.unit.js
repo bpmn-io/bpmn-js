@@ -1,31 +1,19 @@
-var coverage = process.env.COVERAGE;
+/* global process */
 
 var path = require('path');
 
-var basePath = '../../';
-
-var absoluteBasePath = path.resolve(path.join(__dirname, basePath));
-
-/* global process */
+var coverage = process.env.COVERAGE;
 
 // configures browsers to run test against
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'IE', 'PhantomJS' ]
-var browsers =
-  (process.env.TEST_BROWSERS || 'PhantomJS')
-    .replace(/^\s+|\s+$/, '')
-    .split(/\s*,\s*/g)
-    .map(function(browser) {
-      if (browser === 'ChromeHeadless') {
-        process.env.CHROME_BIN = require('puppeteer').executablePath();
+var browsers = (process.env.TEST_BROWSERS || 'PhantomJS').split(',');
 
-        // workaround https://github.com/GoogleChrome/puppeteer/issues/290
-        if (process.platform === 'linux') {
-          return 'ChromeHeadless_Linux';
-        }
-      }
+// use puppeteer provided Chrome for testing
+process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-      return browser;
-    });
+var basePath = '../..';
+
+var absoluteBasePath = path.resolve(path.join(__dirname, basePath));
 
 var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 
@@ -33,7 +21,7 @@ var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 module.exports = function(karma) {
   karma.set({
 
-    basePath: basePath,
+    basePath,
 
     frameworks: [
       'mocha',
@@ -50,24 +38,13 @@ module.exports = function(karma) {
 
     reporters: [ 'progress' ].concat(coverage ? 'coverage' : []),
 
-    customLaunchers: {
-      ChromeHeadless_Linux: {
-        base: 'ChromeHeadless',
-        flags: [
-          '--no-sandbox',
-          '--disable-setuid-sandbox'
-        ],
-        debug: true
-      }
-    },
-
     coverageReporter: {
       reporters: [
         { type: 'lcov', subdir: '.' }
       ]
     },
 
-    browsers: browsers,
+    browsers,
 
     browserNoActivityTimeout: 30000,
 
