@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.3.3
+
+* `FIX`: resize empty text annotations
+* `CHORE`: bump `min-dom` version
+* `CHORE`: bump to `diagram-js@6.4.1`
+
 ## 6.3.2
 
 * `FIX`: correctly move flows when adding lane ([#1287](https://github.com/bpmn-io/bpmn-js/pull/1287))
