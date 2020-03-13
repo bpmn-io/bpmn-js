@@ -70,7 +70,7 @@ describe('features/modeling - space tool behavior', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('should ensure participant minimum dimensions', inject(
+      it('should ensure participant minimum width', inject(
         function(dragging, elementRegistry, spaceTool) {
 
           // given
@@ -79,7 +79,7 @@ describe('features/modeling - space tool behavior', function() {
           // when
           spaceTool.activateMakeSpace(canvasEvent({ x: 300, y: 0 }));
 
-          dragging.move(canvasEvent({ x: 0, y: 0 }));
+          dragging.move(canvasEvent({ x: -200, y: 0 }));
 
           dragging.end();
 
@@ -89,7 +89,26 @@ describe('features/modeling - space tool behavior', function() {
       );
 
 
-      it('should ensure lane minimum dimensions', inject(
+      it('should ensure participant minimum height', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var participant = elementRegistry.get('Participant_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 0, y: 100 }));
+
+          dragging.move(canvasEvent({ x: 0, y: -400 }));
+
+          dragging.end();
+
+          // then
+          expect(participant.height).to.equal(PARTICIPANT_MIN_DIMENSIONS.height);
+        })
+      );
+
+
+      it('should ensure lane minimum height', inject(
         function(dragging, elementRegistry, spaceTool) {
 
           // given
@@ -108,7 +127,7 @@ describe('features/modeling - space tool behavior', function() {
       );
 
 
-      it('should ensure nested lane minimum dimensions', inject(
+      it('should ensure nested lane minimum height', inject(
         function(dragging, elementRegistry, spaceTool) {
 
           // given
