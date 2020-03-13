@@ -307,6 +307,85 @@ describe('features/modeling - add Lane', function() {
         { x: 432, y: 103 - newLane.height }
       ]);
     }));
+  });
+
+  describe('flow node handling', function() {
+
+    var diagramXML = require('./lanes-flow-nodes.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    function addLaneAbove(laneId) {
+
+      return getBpmnJS().invoke(function(elementRegistry, modeling) {
+        var existingLane = elementRegistry.get(laneId);
+
+        expect(existingLane).to.exist;
+
+        return modeling.addLane(existingLane, 'top');
+      });
+    }
+
+
+    it('should move flow nodes', inject(function(elementRegistry, modeling) {
+
+      // given
+      var task_Boundary = elementRegistry.get('Task_Boundary'),
+          boundary = elementRegistry.get('Boundary');
+
+      // when
+      addLaneAbove('Nested_Lane_B');
+
+      // then
+      expect(task_Boundary).to.have.position({ x: 344, y: -7 });
+      expect(boundary).to.have.position({ x: 391, y: 55 });
+    }));
+
+
+    it('should move sequence flows', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow'),
+          sequenceFlow_From_Boundary = elementRegistry.get('SequenceFlow_From_Boundary');
+
+      // when
+      addLaneAbove('Nested_Lane_B');
+
+      // then
+      expect(sequenceFlow_From_Boundary).to.have.waypoints([
+        { x: 409, y: 91 },
+        { x: 409, y: 118 },
+        { x: 562, y: 118 },
+        { x: 562, y: 73 }
+      ]);
+
+      expect(sequenceFlow).to.have.waypoints([
+        { x: 444, y: 33 },
+        { x: 512, y: 33 }
+      ]);
+    }));
+
+
+    it('should move external labels', inject(function(elementRegistry, modeling) {
+
+      // given
+      var event = elementRegistry.get('Event'),
+          label = event.label;
+
+      // TODO(nikku): consolidate import + editing behavior => not consistent right now
+
+      // when
+      // force move label to trigger label editing + update parent behavior
+      modeling.moveElements([ label ], { x: 0, y: 0 });
+
+      addLaneAbove('Nested_Lane_B');
+
+      // then
+      expect(label.y).to.eql(58);
+    }));
 
   });
 

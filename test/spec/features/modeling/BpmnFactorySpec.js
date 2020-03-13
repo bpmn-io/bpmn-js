@@ -52,27 +52,67 @@ describe('features - bpmn-factory', function() {
 
 
       it('should assign id with generic semantic prefix (Gateway)', inject(function(bpmnFactory) {
-        var task = bpmnFactory.create('bpmn:ParallelGateway');
+        var gateway = bpmnFactory.create('bpmn:ParallelGateway');
 
-        expect(task.$type).to.equal('bpmn:ParallelGateway');
-        expect(task.id).to.match(/^Gateway_/g);
+        expect(gateway.$type).to.equal('bpmn:ParallelGateway');
+        expect(gateway.id).to.match(/^Gateway_/g);
       }));
 
 
       it('should assign id with generic semantic prefix (Event)', inject(function(bpmnFactory) {
-        var task = bpmnFactory.create('bpmn:EndEvent');
+        var event = bpmnFactory.create('bpmn:EndEvent');
 
-        expect(task.$type).to.equal('bpmn:EndEvent');
-        expect(task.id).to.match(/^Event_/g);
+        expect(event.$type).to.equal('bpmn:EndEvent');
+        expect(event.id).to.match(/^Event_/g);
       }));
 
 
-      it('should assign id with generic semantic prefix (FlowElement)', inject(
+      it('should assign id with generic semantic prefix (Flow)', inject(
         function(bpmnFactory) {
-          var task = bpmnFactory.create('bpmn:SequenceFlow');
+          var flow = bpmnFactory.create('bpmn:SequenceFlow');
 
-          expect(task.$type).to.equal('bpmn:SequenceFlow');
-          expect(task.id).to.match(/^Flow_/g);
+          expect(flow.$type).to.equal('bpmn:SequenceFlow');
+          expect(flow.id).to.match(/^Flow_/g);
+        })
+      );
+
+
+      it('should assign id with generic semantic prefix (Flow)', inject(
+        function(bpmnFactory) {
+          var flow = bpmnFactory.create('bpmn:MessageFlow');
+
+          expect(flow.$type).to.equal('bpmn:MessageFlow');
+          expect(flow.id).to.match(/^Flow_/g);
+        })
+      );
+
+
+      it('should assign id with specific semantic prefix (DataStore)', inject(
+        function(bpmnFactory) {
+          var dataStore = bpmnFactory.create('bpmn:DataStore');
+
+          expect(dataStore.$type).to.equal('bpmn:DataStore');
+          expect(dataStore.id).to.match(/^DataStore_/g);
+        })
+      );
+
+
+      it('should assign id with specific semantic prefix (DataObject)', inject(
+        function(bpmnFactory) {
+          var dataObject = bpmnFactory.create('bpmn:DataObject');
+
+          expect(dataObject.$type).to.equal('bpmn:DataObject');
+          expect(dataObject.id).to.match(/^DataObject_/g);
+        })
+      );
+
+
+      it('should assign id with specific semantic prefix (DataObjectReference)', inject(
+        function(bpmnFactory) {
+          var dataObjectReference = bpmnFactory.create('bpmn:DataObjectReference');
+
+          expect(dataObjectReference.$type).to.equal('bpmn:DataObjectReference');
+          expect(dataObjectReference.id).to.match(/^DataObjectReference_/g);
         })
       );
     });

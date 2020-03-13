@@ -20,7 +20,7 @@ describe('features/modeling - update label', function() {
 
 
   it('should change name of start event', inject(
-    function(modeling, elementRegistry, eventBus) {
+    function(modeling, elementRegistry) {
 
       // given
       var startEvent_1 = elementRegistry.get('StartEvent_1');
@@ -189,5 +189,20 @@ describe('features/modeling - update label', function() {
       expect(changedEvent.elements).to.include(startEvent_1);
     }
   ));
+
+
+  it('should resize empty text annotation', inject(function(modeling, elementRegistry) {
+
+    // given
+    var element = elementRegistry.get('TextAnnotation_1');
+
+    var newBounds = { x: 100, y: 100, width: 100, height: 30 };
+
+    // when
+    modeling.updateLabel(element, null, newBounds);
+
+    // then
+    expect(element).to.have.bounds(newBounds);
+  }));
 
 });
