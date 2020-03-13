@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:trisobpmn="http://www.trisotech.com/2014/triso/bpmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:rss="http://purl.org/rss/2.0/" xmlns:trisofeed="http://trisotech.com/feed" xmlns:drools="http://www.jboss.org/drools" xmlns:openapi="https://openapis.org/bpmn/extension/1.0" xmlns="http://bpmn.io/schema/bpmn" id="Definitions_0v32ciy" name="Drawing 1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.0" trisobpmn:logoChoice="Default">
+  <semantic:process id="Page1Process" name="Page 1" isClosed="false" isExecutable="true">
+    <semantic:subProcess id="MakeBookingSubProcess" name="Make Booking">
+      <semantic:incoming>SequenceFlow_13g7fzw</semantic:incoming>
+      <semantic:startEvent id="StartEvent_1">
+        <semantic:outgoing>SequenceFlow_0e0tkzl</semantic:outgoing>
+      </semantic:startEvent>
+      <semantic:parallelGateway id="ExclusiveGateway_1l6x19l" gatewayDirection="Diverging">
+        <semantic:incoming>SequenceFlow_0e0tkzl</semantic:incoming>
+        <semantic:outgoing>SequenceFlow_1244t37</semantic:outgoing>
+        <semantic:outgoing>SequenceFlow</semantic:outgoing>
+      </semantic:parallelGateway>
+      <semantic:serviceTask id="BookFlightTask" name="Book Flight" implementation="##WebService">
+        <semantic:incoming>SequenceFlow_1244t37</semantic:incoming>
+        <semantic:outgoing>SequenceFlow_1</semantic:outgoing>
+      </semantic:serviceTask>
+      <semantic:serviceTask id="CancelFlightTask" name="Cancel Flight" isForCompensation="true" implementation="##WebService" />
+      <semantic:serviceTask id="BookHotelTask" name="Book Hotel" implementation="##WebService">
+        <semantic:incoming>SequenceFlow</semantic:incoming>
+        <semantic:outgoing>SequenceFlow_2</semantic:outgoing>
+      </semantic:serviceTask>
+      <semantic:parallelGateway id="ParalelGateway" gatewayDirection="Converging">
+        <semantic:incoming>SequenceFlow_1</semantic:incoming>
+        <semantic:incoming>SequenceFlow_2</semantic:incoming>
+        <semantic:outgoing>SequenceFlow_3</semantic:outgoing>
+      </semantic:parallelGateway>
+      <semantic:endEvent id="TravelBookedEndEvent" name="Travel Booked">
+        <semantic:incoming>SequenceFlow_3</semantic:incoming>
+      </semantic:endEvent>
+      <semantic:serviceTask id="CancelHotelTask" name="Cancel Hotel" isForCompensation="true" implementation="##WebService" />
+      <semantic:boundaryEvent id="HotelBoundaryEvent" name="Hotel" attachedToRef="BookHotelTask">
+        <semantic:compensateEventDefinition id="_c758645b-bc1c-4d96-90ad-4c510c386752" />
+      </semantic:boundaryEvent>
+      <semantic:boundaryEvent id="FlightBoundaryEvent" name="Flight" attachedToRef="BookFlightTask">
+        <semantic:compensateEventDefinition />
+      </semantic:boundaryEvent>
+      <semantic:sequenceFlow id="SequenceFlow_0e0tkzl" sourceRef="StartEvent_1" targetRef="ExclusiveGateway_1l6x19l" />
+      <semantic:sequenceFlow id="SequenceFlow_1244t37" sourceRef="ExclusiveGateway_1l6x19l" targetRef="BookFlightTask" />
+      <semantic:sequenceFlow id="SequenceFlow" sourceRef="ExclusiveGateway_1l6x19l" targetRef="BookHotelTask" />
+      <semantic:sequenceFlow id="SequenceFlow_1" sourceRef="BookFlightTask" targetRef="ParalelGateway" />
+      <semantic:sequenceFlow id="SequenceFlow_2" sourceRef="BookHotelTask" targetRef="ParalelGateway" />
+      <semantic:sequenceFlow id="SequenceFlow_3" sourceRef="ParalelGateway" targetRef="TravelBookedEndEvent" />
+      <semantic:subProcess id="HandleCompensationSubProcess" name="Handle Compensation" triggeredByEvent="true">
+        <semantic:startEvent id="BookingStartEvent" name="Booking">
+          <semantic:outgoing>SequenceFlow_0e6xitm</semantic:outgoing>
+          <semantic:compensateEventDefinition id="CompensateEventDefinition_0gbwp0m" />
+        </semantic:startEvent>
+        <semantic:parallelGateway id="ParallelGateway_0vh9j6n">
+          <semantic:incoming>SequenceFlow_0e6xitm</semantic:incoming>
+          <semantic:outgoing>SequenceFlow_03663sw</semantic:outgoing>
+          <semantic:outgoing>SequenceFlow_0zpw5ma</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:intermediateThrowEvent id="FlightEvent" name="Flight">
+          <semantic:incoming>SequenceFlow_0zpw5ma</semantic:incoming>
+          <semantic:outgoing>SequenceFlow_0i33vwg</semantic:outgoing>
+          <semantic:compensateEventDefinition id="CompensateEventDefinition_1jzvrat" />
+        </semantic:intermediateThrowEvent>
+        <semantic:intermediateThrowEvent id="HotelEvent" name="Hotel">
+          <semantic:incoming>SequenceFlow_03663sw</semantic:incoming>
+          <semantic:outgoing>SequenceFlow_09qgqyw</semantic:outgoing>
+          <semantic:compensateEventDefinition id="CompensateEventDefinition_072qtxl" />
+        </semantic:intermediateThrowEvent>
+        <semantic:parallelGateway id="ParallelGateway_1ycdyix" name="">
+          <semantic:incoming>SequenceFlow_09qgqyw</semantic:incoming>
+          <semantic:incoming>SequenceFlow_0i33vwg</semantic:incoming>
+          <semantic:outgoing>SequenceFlow_0cip1mz</semantic:outgoing>
+        </semantic:parallelGateway>
+        <semantic:endEvent id="EndEvent_0nr3cro" name="">
+          <semantic:incoming>SequenceFlow_0cip1mz</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sequenceFlow id="SequenceFlow_0cip1mz" isImmediate="true" sourceRef="ParallelGateway_1ycdyix" targetRef="EndEvent_0nr3cro" />
+        <semantic:sequenceFlow id="SequenceFlow_09qgqyw" isImmediate="true" sourceRef="HotelEvent" targetRef="ParallelGateway_1ycdyix" />
+        <semantic:sequenceFlow id="SequenceFlow_0i33vwg" isImmediate="true" sourceRef="FlightEvent" targetRef="ParallelGateway_1ycdyix" />
+        <semantic:sequenceFlow id="SequenceFlow_03663sw" isImmediate="true" sourceRef="ParallelGateway_0vh9j6n" targetRef="HotelEvent" />
+        <semantic:sequenceFlow id="SequenceFlow_0zpw5ma" sourceRef="ParallelGateway_0vh9j6n" targetRef="FlightEvent" />
+        <semantic:sequenceFlow id="SequenceFlow_0e6xitm" sourceRef="BookingStartEvent" targetRef="ParallelGateway_0vh9j6n" />
+      </semantic:subProcess>
+      <semantic:association id="Association_0qea76h" associationDirection="One" sourceRef="FlightBoundaryEvent" targetRef="CancelFlightTask" />
+      <semantic:association id="Association_1" associationDirection="One" sourceRef="HotelBoundaryEvent" targetRef="CancelHotelTask" />
+    </semantic:subProcess>
+    <semantic:endEvent id="CancelRequestEndEvent" name="Cancel Request" />
+    <semantic:endEvent id="RequestCancelledEndEvent" name="Request Cancelled">
+      <semantic:incoming>SequenceFlow_0zafwi9</semantic:incoming>
+    </semantic:endEvent>
+    <semantic:eventBasedGateway id="GatewayGateway" name="Gateway">
+      <semantic:incoming>SequenceFlow_0nqtgik</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_0qen1he</semantic:outgoing>
+      <semantic:outgoing>SequenceFlow_1ysz115</semantic:outgoing>
+      <semantic:outgoing>SequenceFlow_1sv6jqd</semantic:outgoing>
+    </semantic:eventBasedGateway>
+    <semantic:intermediateCatchEvent id="OfferApprovedEvent" name="Offer Approved">
+      <semantic:incoming>SequenceFlow_0qen1he</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_1kwx6kg</semantic:outgoing>
+      <semantic:messageEventDefinition id="MessageEventDefinition_16r7ej1" />
+    </semantic:intermediateCatchEvent>
+    <semantic:intermediateCatchEvent id="N24HoursEvent" name="24 Hours">
+      <semantic:incoming>SequenceFlow_1ysz115</semantic:incoming>
+      <semantic:timerEventDefinition id="TimerEventDefinition_0i6m1ju" />
+    </semantic:intermediateCatchEvent>
+    <semantic:intermediateCatchEvent id="N24HoursEvent1" name="24 Hours">
+      <semantic:compensateEventDefinition id="CompensateEventDefinition_0484wis" />
+    </semantic:intermediateCatchEvent>
+    <semantic:intermediateCatchEvent id="CancelRequestEvent" name="Cancel Request">
+      <semantic:incoming>SequenceFlow_1sv6jqd</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_1fp5smb</semantic:outgoing>
+      <semantic:messageEventDefinition id="MessageEventDefinition_1bkmr3i" />
+    </semantic:intermediateCatchEvent>
+    <semantic:sendTask id="MakeFlyAndHotelOfferTask" name="Make Fly and Hotel Offer">
+      <semantic:incoming>SequenceFlow_1c22uay</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_0nqtgik</semantic:outgoing>
+    </semantic:sendTask>
+    <semantic:sendTask id="RequestCreditCardInformationTask" name="Request
+&#10;Credit Card Information">
+      <semantic:incoming>SequenceFlow_1kwx6kg</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_13g7fzw</semantic:outgoing>
+    </semantic:sendTask>
+    <semantic:sendTask id="NotifyCustomerOfferExpiredTask" name="Notify Customer
+&#10;Offer Expired" isForCompensation="true" />
+    <semantic:serviceTask id="UpdateCustomerRecordTask" name="Update Customer Record">
+      <semantic:incoming>SequenceFlow_1fp5smb</semantic:incoming>
+      <semantic:outgoing>SequenceFlow_0zafwi9</semantic:outgoing>
+    </semantic:serviceTask>
+    <semantic:startEvent id="ReceiveTravelRequestStartEvent" name="Receive Travel Request">
+      <semantic:outgoing>SequenceFlow_1c22uay</semantic:outgoing>
+      <semantic:messageEventDefinition id="MessageEventDefinition_145aeab" />
+    </semantic:startEvent>
+    <semantic:sequenceFlow id="SequenceFlow_0zafwi9" name="" sourceRef="UpdateCustomerRecordTask" targetRef="RequestCancelledEndEvent" />
+    <semantic:sequenceFlow id="SequenceFlow_0nqtgik" name="" sourceRef="MakeFlyAndHotelOfferTask" targetRef="GatewayGateway" />
+    <semantic:sequenceFlow id="SequenceFlow_0qen1he" name="" sourceRef="GatewayGateway" targetRef="OfferApprovedEvent" />
+    <semantic:sequenceFlow id="SequenceFlow_1ysz115" name="" sourceRef="GatewayGateway" targetRef="N24HoursEvent" />
+    <semantic:sequenceFlow id="SequenceFlow_1sv6jqd" name="" sourceRef="GatewayGateway" targetRef="CancelRequestEvent" />
+    <semantic:sequenceFlow id="SequenceFlow_1kwx6kg" name="" sourceRef="OfferApprovedEvent" targetRef="RequestCreditCardInformationTask" />
+    <semantic:sequenceFlow id="SequenceFlow_1fp5smb" name="" sourceRef="CancelRequestEvent" targetRef="UpdateCustomerRecordTask" />
+    <semantic:sequenceFlow id="SequenceFlow_1c22uay" name="" sourceRef="ReceiveTravelRequestStartEvent" targetRef="MakeFlyAndHotelOfferTask" />
+    <semantic:sequenceFlow id="SequenceFlow_13g7fzw" sourceRef="RequestCreditCardInformationTask" targetRef="MakeBookingSubProcess" />
+  </semantic:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Page 1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Page1Process" trisobpmn:diagramWidth="1485" trisobpmn:diagramHeight="1050">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1126.5" y="249" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_0k3zjvh_di" bpmnElement="ExclusiveGateway_1l6x19l" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1211.5" y="242" width="50" height="50" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0ffqml6_di" bpmnElement="BookFlightTask" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1281.5" y="101" width="100" height="80" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1fpw0uu_di" bpmnElement="FlightBoundaryEvent" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1335.5" y="163" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000">
+          <dc:Bounds x="1367" y="201" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0svlfsd_di" bpmnElement="CancelFlightTask" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1421.5" y="221" width="100" height="80" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_55ed0b6b-78a4-45c7-be2b-c9f2ae62e059" bpmnElement="BookHotelTask" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1283.5" y="353" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="362.5" y="365" width="89" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_735cd99a-991d-4a1e-bf06-e58f24e6fa67" bpmnElement="ParalelGateway" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1587.5" y="247" width="42" height="40" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_26e09c29-a907-4aec-93ae-816bc7d44f83" bpmnElement="TravelBookedEndEvent" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1683.5" y="249" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1667" y="295" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_ae3ae527-4d03-4cee-b2da-c756fe0a027b" bpmnElement="HotelBoundaryEvent" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1313.5" y="411" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000">
+          <dc:Bounds x="1340" y="452" width="26" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_9d5749f4-9f59-4e40-8dbd-53ac6fa256ca" bpmnElement="CancelHotelTask" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1423.5" y="464" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="496.5" y="476" width="89" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0e0tkzl_di" bpmnElement="SequenceFlow_0e0tkzl" color:border-color="#000000">
+        <di:waypoint x="1162.5" y="267" />
+        <di:waypoint x="1211.5" y="267" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1244t37_di" bpmnElement="SequenceFlow_1244t37" color:border-color="#000000">
+        <di:waypoint x="1236.5" y="242" />
+        <di:waypoint x="1236.5" y="141" />
+        <di:waypoint x="1281.5" y="141" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0qea76h_di" bpmnElement="Association_0qea76h" color:border-color="#000000">
+        <di:waypoint x="1353.5" y="199" />
+        <di:waypoint x="1353.5" y="261" />
+        <di:waypoint x="1421.5" y="261" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_bdb1c43c-917f-413d-ba77-431ce93be3ef" bpmnElement="SequenceFlow" color:border-color="#000000">
+        <di:waypoint x="1236.5" y="292" />
+        <di:waypoint x="1236.5" y="391" />
+        <di:waypoint x="1283.5" y="391" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_45eebdc5-ae17-4472-b76c-7880b58ab0be" bpmnElement="SequenceFlow_1" color:border-color="#000000">
+        <di:waypoint x="1381.5" y="141" />
+        <di:waypoint x="1608.5" y="141" />
+        <di:waypoint x="1608.5" y="247" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_bd0e4152-53c1-4d3d-a13b-6d7df71dffa2" bpmnElement="SequenceFlow_2" color:border-color="#000000">
+        <di:waypoint x="1379.5" y="414" />
+        <di:waypoint x="1608.5" y="414" />
+        <di:waypoint x="1608.5" y="287" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_667de68d-c8b2-47f2-94f5-9602806a3175" bpmnElement="SequenceFlow_3" color:border-color="#000000">
+        <di:waypoint x="1629.5" y="267" />
+        <di:waypoint x="1683.5" y="267" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_f25774cf-e810-4deb-aae7-5e077671fb67" bpmnElement="Association_1" color:border-color="#000000">
+        <di:waypoint x="1331.5" y="447" />
+        <di:waypoint x="1331.5" y="502" />
+        <di:waypoint x="1423.5" y="502" />
+        <bpmndi:BPMNLabel labelStyle="LSBPMNDiagram_1_0" color:color="#000000" triso:defaultBounds="true" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcess_01o85pt_di" bpmnElement="MakeBookingSubProcess" isExpanded="true">
+        <dc:Bounds x="1106.5" y="81" width="658" height="822" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_01ag946_di" bpmnElement="HandleCompensationSubProcess" isExpanded="true">
+        <dc:Bounds x="1149.5" y="586" width="595" height="297" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0q6mpzc_di" bpmnElement="BookingStartEvent">
+        <dc:Bounds x="1210.5" y="714" width="32" height="32" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1207" y="746" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_0vh9j6n_di" bpmnElement="ParallelGateway_0vh9j6n">
+        <dc:Bounds x="1297.5" y="710" width="42" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_1iv1cgd_di" bpmnElement="FlightEvent">
+        <dc:Bounds x="1420.5" y="621" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1424" y="656" width="27" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_0hqqa6z_di" bpmnElement="HotelEvent">
+        <dc:Bounds x="1380.5" y="801" width="32" height="32" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1385" y="833" width="26" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ParallelGateway_1ycdyix_di" bpmnElement="ParallelGateway_1ycdyix">
+        <dc:Bounds x="1532.5" y="714" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0nr3cro_di" bpmnElement="EndEvent_0nr3cro">
+        <dc:Bounds x="1630.5" y="719" width="32" height="32" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0cip1mz_di" bpmnElement="SequenceFlow_0cip1mz">
+        <di:waypoint x="1572.5" y="734" />
+        <di:waypoint x="1630.5" y="734" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09qgqyw_di" bpmnElement="SequenceFlow_09qgqyw">
+        <di:waypoint x="1412.5" y="817" />
+        <di:waypoint x="1551.5" y="817" />
+        <di:waypoint x="1551.5" y="753" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0i33vwg_di" bpmnElement="SequenceFlow_0i33vwg">
+        <di:waypoint x="1456.5" y="638" />
+        <di:waypoint x="1552.5" y="638" />
+        <di:waypoint x="1552.5" y="714" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_03663sw_di" bpmnElement="SequenceFlow_03663sw">
+        <di:waypoint x="1317.5" y="749" />
+        <di:waypoint x="1317.5" y="817" />
+        <di:waypoint x="1380.5" y="817" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0zpw5ma_di" bpmnElement="SequenceFlow_0zpw5ma">
+        <di:waypoint x="1317.5" y="708" />
+        <di:waypoint x="1317.5" y="638" />
+        <di:waypoint x="1419.5" y="638" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0e6xitm_di" bpmnElement="SequenceFlow_0e6xitm">
+        <di:waypoint x="1242.5" y="730" />
+        <di:waypoint x="1296.5" y="730" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0501mm2_di" bpmnElement="CancelRequestEndEvent">
+        <dc:Bounds x="989.5" y="330" width="33" height="33" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="967" y="363" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0lptyhz_di" bpmnElement="RequestCancelledEndEvent">
+        <dc:Bounds x="992.5" y="441" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="984" y="471" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EventBasedGateway_03g6mga_di" bpmnElement="GatewayGateway">
+        <dc:Bounds x="508.5" y="323" width="48" height="48" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="511" y="371" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0lmkar8_di" bpmnElement="OfferApprovedEvent">
+        <dc:Bounds x="635.5" y="216" width="35" height="35" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="616" y="251" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0n4cdam_di" bpmnElement="N24HoursEvent">
+        <dc:Bounds x="635.5" y="329" width="35" height="35" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="632" y="364" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_0oknvc2_di" bpmnElement="N24HoursEvent1">
+        <dc:Bounds x="839.5" y="247" width="35" height="35" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="836" y="282" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_1vy79dn_di" bpmnElement="CancelRequestEvent">
+        <dc:Bounds x="640.5" y="441" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="617" y="471" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_07zf11a_di" bpmnElement="MakeFlyAndHotelOfferTask">
+        <dc:Bounds x="323.5" y="317" width="104" height="61" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_05wxp2q_di" bpmnElement="RequestCreditCardInformationTask">
+        <dc:Bounds x="777.5" y="203" width="104" height="61" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_11fseq5_di" bpmnElement="NotifyCustomerOfferExpiredTask">
+        <dc:Bounds x="777.5" y="317" width="104" height="61" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0ym6hsb_di" bpmnElement="UpdateCustomerRecordTask">
+        <dc:Bounds x="785.5" y="420" width="96" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_03stt9p_di" bpmnElement="ReceiveTravelRequestStartEvent">
+        <dc:Bounds x="174.5" y="329" width="35" height="35" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="156" y="364" width="73" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0zafwi9_di" bpmnElement="SequenceFlow_0zafwi9">
+        <di:waypoint x="881.5" y="456" />
+        <di:waypoint x="992.5" y="456" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nqtgik_di" bpmnElement="SequenceFlow_0nqtgik">
+        <di:waypoint x="427.5" y="347" />
+        <di:waypoint x="508.5" y="347" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qen1he_di" bpmnElement="SequenceFlow_0qen1he">
+        <di:waypoint x="532.5" y="323" />
+        <di:waypoint x="532.5" y="234" />
+        <di:waypoint x="635.5" y="234" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ysz115_di" bpmnElement="SequenceFlow_1ysz115">
+        <di:waypoint x="556.5" y="347" />
+        <di:waypoint x="574.5" y="347" />
+        <di:waypoint x="574.5" y="347" />
+        <di:waypoint x="635.5" y="347" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1sv6jqd_di" bpmnElement="SequenceFlow_1sv6jqd">
+        <di:waypoint x="532.5" y="371" />
+        <di:waypoint x="532.5" y="456" />
+        <di:waypoint x="640.5" y="456" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1kwx6kg_di" bpmnElement="SequenceFlow_1kwx6kg">
+        <di:waypoint x="670.5" y="234" />
+        <di:waypoint x="688.5" y="234" />
+        <di:waypoint x="688.5" y="234" />
+        <di:waypoint x="776.5" y="234" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp5smb_di" bpmnElement="SequenceFlow_1fp5smb">
+        <di:waypoint x="670.5" y="456" />
+        <di:waypoint x="785.5" y="456" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1c22uay_di" bpmnElement="SequenceFlow_1c22uay">
+        <di:waypoint x="209.5" y="347" />
+        <di:waypoint x="226.5" y="347" />
+        <di:waypoint x="226.5" y="347" />
+        <di:waypoint x="323.5" y="347" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13g7fzw_di" bpmnElement="SequenceFlow_13g7fzw">
+        <di:waypoint x="881.5" y="234" />
+        <di:waypoint x="1106.5" y="234" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="LSBPMNDiagram_1_0">
+      <dc:Font name="arial,helvetica,sans-serif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>
