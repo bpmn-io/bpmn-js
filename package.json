@@ -87,7 +87,7 @@
     "ids": "^1.0.0",
     "inherits": "^2.0.1",
     "min-dash": "^3.5.1",
-    "min-dom": "^3.0.0",
+    "min-dom": "^3.1.2",
     "object-refs": "^0.3.0",
     "tiny-svg": "^2.2.1"
   }
