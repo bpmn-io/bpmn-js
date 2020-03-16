@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.3.4
+
+* `FIX`: export BPMNDI in correct order ([#985](https://github.com/bpmn-io/bpmn-js/issues/985))
+
 ## 6.3.3
 
 * `FIX`: resize empty text annotations
