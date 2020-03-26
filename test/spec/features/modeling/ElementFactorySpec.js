@@ -73,6 +73,34 @@ describe('features - element factory', function() {
     }));
 
 
+    it('should create with link event definition', inject(function(elementFactory) {
+
+      // when
+      var intermediateThrowEvent = elementFactory.createShape({
+        type: 'bpmn:IntermediateThrowEvent',
+        eventDefinitionType: 'bpmn:LinkEventDefinition',
+        eventDefinitionAttrs: {
+          name: ''
+        }
+      });
+
+      // then
+      expect(intermediateThrowEvent).to.exist;
+      expect(is(intermediateThrowEvent, 'bpmn:IntermediateThrowEvent')).to.be.true;
+
+      var intermediateThrowEventBo = getBusinessObject(intermediateThrowEvent),
+          eventDefinitions = intermediateThrowEventBo.eventDefinitions;
+
+      expect(eventDefinitions).to.exist;
+      expect(eventDefinitions).to.have.length(1);
+
+      var eventDefinition = eventDefinitions[ 0 ];
+
+      expect(is(eventDefinition, 'bpmn:LinkEventDefinition')).to.be.true;
+      expect(eventDefinition.name).to.eql('');
+    }));
+
+
     describe('integration', function() {
 
       it('should create event definition with ID', inject(function(elementFactory) {
