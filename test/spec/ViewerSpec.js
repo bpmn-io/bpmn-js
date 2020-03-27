@@ -781,12 +781,17 @@ describe('Viewer', function() {
 
       it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
 
+        var originalPromise = window.Promise;
+
+        after(function() {
+          window.Promise = originalPromise;
+        });
+
         // given
         var viewer = new Viewer({ container: container });
 
         var xml = require('../fixtures/bpmn/simple.bpmn');
 
-        var originalPromise = window.Promise;
         window.Promise = undefined;
 
         // when
@@ -1378,6 +1383,141 @@ describe('Viewer', function() {
       });
     });
 
+
+    describe('Promisification', function() {
+
+      it('should return a Promise if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          var result = viewer.saveXML({ format: true });
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+          done();
+        });
+      });
+
+
+      it('should warn about deprecation if callback is passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        sinon.restore();
+        console.warn = sinon.spy();
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          viewer.saveXML({ format: true }, function() { });
+
+          // then
+          expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to saveXML API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+          done();
+        });
+      });
+
+
+      it('should resolve xml if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          var promise = viewer.saveXML({ format: true });
+
+          promise.then(function(savedXML) {
+
+            // then
+            expect(savedXML).to.contain('<?xml version="1.0" encoding="UTF-8"?>');
+            expect(savedXML).to.contain('<bpmn2:definitions');
+            expect(savedXML).to.contain('  ');
+
+            done();
+          });
+        });
+      });
+
+
+      it('should return a Promise for errored cases if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          viewer._definitions = null;
+
+          var result = viewer.saveXML({ format: true });
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+          done();
+        });
+      });
+
+
+      it('should reject Promise with error message for error cases if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          viewer._definitions = null;
+
+          var promise = viewer.saveXML({ format: true });
+
+          promise.catch(function(err) {
+
+            // then
+            expect(err.error).not.to.be.undefined;
+            done();
+          });
+        });
+      });
+
+
+      it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+        var originalPromise = window.Promise;
+
+        after(function() {
+          window.Promise = originalPromise;
+        });
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        window.Promise = null;
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          viewer._definitions = null;
+
+          try {
+            viewer.saveXML({ format: true });
+          } catch (err) {
+
+            // then
+            expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+          }
+
+          window.Promise = originalPromise;
+          done();
+        });
+      });
+    });
   });
 
 
