@@ -17,6 +17,7 @@ import {
   clearBpmnJS
 } from 'test/TestHelper';
 
+/* global Promise */
 
 describe('Viewer', function() {
 
@@ -688,6 +689,114 @@ describe('Viewer', function() {
 
       // then
       viewer.on('import.done', function(event) {
+        done();
+      });
+    });
+
+
+    describe('Promisification', function() {
+
+      it('should return a Promise if callback not passed', function() {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        // when
+        var returnValue = viewer.importXML(xml);
+
+        // then
+        expect(returnValue).to.be.instanceOf(Promise);
+      });
+
+
+      it('should warn about deprecation if callback is passed', function() {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        sinon.restore();
+        console.warn = sinon.spy();
+
+        // when
+        viewer.importXML(xml, function() { });
+
+        // then
+        expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to importXML API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+      });
+
+
+      it('should resolve warnings if callback not passed', function(done) {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        // when
+        viewer.importXML(xml).then(function(warnings) {
+
+          // then
+          expect(warnings).to.be.instanceOf(Array);
+          done();
+        });
+      });
+
+
+      it('should return a Promise for errored diagrams if callback not passed', function() {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/error/invalid-child.bpmn');
+
+        // when
+        var returnValue = viewer.importXML(xml);
+
+        // then
+        expect(returnValue).to.be.instanceOf(Promise);
+      });
+
+
+      it('should reject Promise with error message and warnings for errored diagrams if callback not passed', function(done) {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/error/invalid-child.bpmn');
+
+        // when
+        viewer.importXML(xml).catch(function(err) {
+
+          // then
+          expect(err.error).not.to.be.undefined;
+          expect(err.payload).to.be.instanceOf(Array);
+          done();
+        });
+      });
+
+
+      it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        var originalPromise = window.Promise;
+        window.Promise = undefined;
+
+        // when
+        try {
+          viewer.importXML(xml);
+        } catch (err) {
+          expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+        }
+
+        window.Promise = originalPromise;
         done();
       });
     });
