@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_tkxkICCPEeWwcL3w8i7dvw" targetNamespace="http://activiti.org/bpmn" exporter="camunda modeler" exporterVersion="2.7.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_tkxkICCPEeWwcL3w8i7dvw" targetNamespace="http://activiti.org/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="Process_1" isExecutable="false">
     <bpmn2:subProcess id="SubProcess_1">
       <bpmn2:startEvent id="StartEvent_1">
@@ -15,42 +15,31 @@
     <bpmn2:boundaryEvent id="BoundaryEvent_2" name="superman" attachedToRef="Task_2" />
     <bpmn2:task id="CompensationTask" isForCompensation="true" />
     <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_1" name="joker" />
+    <bpmn2:boundaryEvent id="BoundaryEvent_3" name="wonder woman" attachedToRef="SubProcess_1" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="204" y="78" width="457" height="289" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_Task_2">
+        <di:waypoint x="311" y="232" />
+        <di:waypoint x="431" y="232" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="332" y="236" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="275" y="214" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="293" y="255" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds x="204" y="78" width="457" height="289" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_1">
         <dc:Bounds x="431" y="192" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_Task_2">
-        <di:waypoint xsi:type="dc:Point" x="311" y="232" />
-        <di:waypoint xsi:type="dc:Point" x="431" y="232" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="332" y="236" width="6" height="6" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
-        <dc:Bounds x="185" y="349" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="155" y="390" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
         <dc:Bounds x="795" y="75" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
-        <dc:Bounds x="781" y="140" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="754" y="176" width="90" height="20" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CompensationTask_di" bpmnElement="CompensationTask">
         <dc:Bounds x="795" y="249" width="100" height="80" />
@@ -59,6 +48,24 @@
         <dc:Bounds x="185" y="480" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="191" y="525" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="781" y="140" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="754" y="176" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds x="185" y="349" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="155" y="390" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1kn7msk_di" bpmnElement="BoundaryEvent_3">
+        <dc:Bounds x="412" y="349" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="393" y="392" width="75" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

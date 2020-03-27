@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { pick } from 'min-dash';
+
 import {
   getBusinessObject
 } from 'lib/util/ModelUtil';
@@ -123,4 +125,35 @@ describe('features/modeling - resize shape', function() {
 
   });
 
+
+  describe('integration', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should not move Boundary Event if unnecessary', inject(function(elementRegistry, modeling) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_3'),
+          originalPosition = getPosition(boundaryEvent),
+          subProcessElement = elementRegistry.get('SubProcess_1');
+
+      // when
+      modeling.resizeShape(subProcessElement, { x: 204, y: 28, width: 400, height: 339 });
+
+      // then
+      expect(getPosition(boundaryEvent)).to.jsonEqual(originalPosition);
+    }));
+
+  });
+
 });
+
+// helper /////
+function getPosition(shape) {
+  return pick(shape, [ 'x', 'y' ]);
+}
