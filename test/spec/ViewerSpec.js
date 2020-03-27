@@ -1692,6 +1692,141 @@ describe('Viewer', function() {
       });
     });
 
+
+    describe('Promisification', function() {
+
+      it('should return a Promise if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          var result = viewer.saveSVG();
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+          done();
+        });
+      });
+
+
+      it('should warn about deprecation if callback is passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        sinon.restore();
+        console.warn = sinon.spy();
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          viewer.saveSVG(function() {});
+
+          // then
+          expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to saveSVG API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+          done();
+        });
+      });
+
+
+      it('should resolve svgStr if callback not passed', function(done) {
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          var promise = viewer.saveSVG();
+
+          promise.then(function(svgStr) {
+
+            // then
+            expect(validSVG(svgStr)).to.be.true;
+            done();
+          });
+        });
+      });
+
+
+      it('should return a Promise for errored cases if callback not passed', function(done) {
+
+        after(sinon.restore);
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          var originalGet = viewer.get;
+          var stub = sinon.stub(viewer, 'get');
+          stub.withArgs('canvas').throws('Error').withArgs('eventBus').returns(originalGet('eventBus'));
+
+          // when
+          var result = viewer.saveSVG();
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+          done();
+        });
+      });
+
+
+      it('should reject Promise with error message for error cases if callback not passed', function(done) {
+
+        after(sinon.restore);
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          var originalGet = viewer.get;
+          var stub = sinon.stub(viewer, 'get');
+          stub.withArgs('canvas').throws('Error').withArgs('eventBus').returns(originalGet('eventBus'));
+
+          // when
+          var promise = viewer.saveSVG();
+
+          promise.catch(function(err) {
+
+            // then
+            expect(err.error).not.to.be.undefined;
+            done();
+          });
+        });
+      });
+
+
+      it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+        var originalPromise = window.Promise;
+
+        after(function() {
+          window.Promise = originalPromise;
+        });
+
+        window.promise = null;
+
+        // given
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        createViewer(xml, function(err, warnings, viewer) {
+
+          // when
+          try {
+            viewer.saveSVG();
+          } catch (err) {
+            expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+          }
+
+          done();
+        });
+      });
+    });
   });
 
 
