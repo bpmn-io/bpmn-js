@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0yl4vso" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:process id="Process_07klzkj" isExecutable="true">
+    <bpmn:startEvent id="StartEvent" />
+    <bpmn:intermediateThrowEvent id="IntermediateEvent" />
+    <bpmn:endEvent id="EndEvent" />
+    <bpmn:subProcess id="Activity_0vmnap0" />
+    <bpmn:boundaryEvent id="BoundaryEvent" attachedToRef="Activity_0vmnap0" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_07klzkj">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nfgnhx_di" bpmnElement="IntermediateEvent">
+        <dc:Bounds x="342" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0bbnae8_di" bpmnElement="EndEvent">
+        <dc:Bounds x="502" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vmnap0_di" bpmnElement="Activity_0vmnap0" isExpanded="true">
+        <dc:Bounds x="185" y="200" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0so9mwz_di" bpmnElement="BoundaryEvent">
+        <dc:Bounds x="332" y="382" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
