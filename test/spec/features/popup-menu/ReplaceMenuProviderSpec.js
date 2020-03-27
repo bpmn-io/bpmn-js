@@ -1750,6 +1750,74 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+
+    describe('events', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.events.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should set default link name for a link catch event', inject(function(elementRegistry) {
+
+        // given
+        var event = elementRegistry.get('IntermediateEvent');
+
+        // when
+        openPopup(event);
+
+        triggerAction('replace-with-link-intermediate-catch');
+
+        // then
+        event = elementRegistry.get('IntermediateEvent');
+
+        expect(event).to.exist;
+        expect(is(event, 'bpmn:IntermediateCatchEvent'), 'is not a catch event').to.be.true;
+
+        var eventBo = event.businessObject,
+            eventDefinitions = eventBo.eventDefinitions;
+
+        expect(eventDefinitions).to.exist;
+        expect(eventDefinitions).to.have.length(1);
+
+        var eventDefinition = eventDefinitions[ 0 ];
+
+        expect(is(eventDefinition, 'bpmn:LinkEventDefinition')).to.be.true;
+        expect(eventDefinition.name, 'name is not set').to.eql('');
+      }));
+
+
+      it('should set default link name for a link throw event', inject(function(elementRegistry) {
+
+        // given
+        var event = elementRegistry.get('IntermediateEvent');
+
+        // when
+        openPopup(event);
+
+        triggerAction('replace-with-link-intermediate-throw');
+
+        // then
+        event = elementRegistry.get('IntermediateEvent');
+
+        expect(event).to.exist;
+        expect(is(event, 'bpmn:IntermediateThrowEvent'), 'is not a throw event').to.be.true;
+
+        var eventBo = event.businessObject,
+            eventDefinitions = eventBo.eventDefinitions;
+
+        expect(eventDefinitions).to.exist;
+        expect(eventDefinitions).to.have.length(1);
+
+        var eventDefinition = eventDefinitions[ 0 ];
+
+        expect(is(eventDefinition, 'bpmn:LinkEventDefinition')).to.be.true;
+        expect(eventDefinition.name, 'name is not set').to.eql('');
+      }));
+    });
+
   });
 
 
