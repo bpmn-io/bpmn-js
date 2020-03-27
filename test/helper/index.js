@@ -45,6 +45,19 @@ var OPTIONS, BPMN_JS;
 
 import translationModule from './TranslationCollector';
 
+/* global sinon */
+
+// Since we have promisified our public APIs, we don't want to have
+// 'callbacks are deprecated' warning messages on each test.
+var consoleWarnStub;
+
+beforeEach(function() {
+  consoleWarnStub = sinon.stub(window.console, 'warn');
+});
+
+afterEach(function() {
+  consoleWarnStub.restore();
+});
 
 export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
