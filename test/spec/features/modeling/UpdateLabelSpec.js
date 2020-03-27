@@ -50,6 +50,27 @@ describe('features/modeling - update label', function() {
   ));
 
 
+  it('should not create label on empty text', inject(
+    function(modeling, elementRegistry) {
+
+      // given
+      var startEvent_2 = elementRegistry.get('StartEvent_2');
+
+      // when
+      modeling.updateLabel(startEvent_2, '');
+
+      // then
+      expect(startEvent_2.businessObject.name).to.equal('');
+      expect(startEvent_2.label).not.to.exist;
+
+      expect(startEvent_2).to.have.dimensions({
+        width: 36,
+        height: 36
+      });
+    }
+  ));
+
+
   describe('should delete label', function() {
 
     it('when setting null', inject(
