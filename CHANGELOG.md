@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.4.0
+
+* `FEAT`: serialize link events with an empty name ([#1296](https://github.com/bpmn-io/bpmn-js/issues/1296))
+
+## 6.3.5
+
+* `FIX`: correct accidental resizing of label target ([#1294](https://github.com/bpmn-io/bpmn-js/issues/1294))
+
 ## 6.3.4
 
 * `FIX`: export BPMNDI in correct order ([#985](https://github.com/bpmn-io/bpmn-js/issues/985))
