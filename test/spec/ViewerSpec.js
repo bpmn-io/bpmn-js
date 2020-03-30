@@ -1522,6 +1522,123 @@ describe('Viewer', function() {
       });
     });
 
+    describe('Promisification', function() {
+
+      it('should return a Promise if callback not passed', function(done) {
+
+        // given
+        createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
+
+          // when
+          var result = viewer.open();
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+          done();
+        });
+      });
+
+
+      it('should warn about deprecation if callback is passed', function(done) {
+
+        // given
+        sinon.restore();
+        console.warn = sinon.spy();
+
+        createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
+
+          // when
+          viewer.open(function() {});
+
+          // then
+          expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to open API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+          done();
+        });
+      });
+
+
+      it('should resolve warnings if callback not passed', function(done) {
+
+        // given
+        createViewer(multipleXMLSimple, diagram1, function(err, warnings, viewer) {
+
+          // when
+          var result = viewer.open();
+
+          result.then(function(payload) {
+
+            expect(payload).to.be.instanceOf(Array);
+            done();
+          });
+        });
+      });
+
+
+      it('should return a Promise for errored cases if callback not passed', function() {
+
+        // given
+        var viewer = new Viewer();
+
+        // when
+        var result = viewer.open();
+
+        // then
+        expect(result).to.be.instanceOf(Promise);
+      });
+
+
+      it('should reject Promise with error message for error cases if callback not passed', function(done) {
+
+        // given
+        var viewer = new Viewer();
+
+        // when
+        var promise = viewer.open();
+
+        // then
+        promise.catch(function(err) {
+
+          expect(err.error).not.to.be.undefined;
+          done();
+        });
+      });
+
+
+      it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+        var originalPromise = window.Promise;
+
+        after(function() {
+          window.Promise = originalPromise;
+        });
+
+        // given
+        var spy = sinon.spy();
+
+        window.Promise = undefined;
+
+        var viewer = new Viewer();
+
+        // when
+        try {
+
+          viewer.open();
+        } catch (err) {
+
+          spy();
+
+          // then
+          expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+        }
+
+        window.Promise = originalPromise;
+
+        expect(spy).to.have.been.called;
+
+        done();
+      });
+    });
+
   });
 
 
