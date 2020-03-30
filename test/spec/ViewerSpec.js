@@ -788,6 +788,8 @@ describe('Viewer', function() {
         });
 
         // given
+        var spy = sinon.spy();
+
         var viewer = new Viewer({ container: container });
 
         var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -798,8 +800,14 @@ describe('Viewer', function() {
         try {
           viewer.importXML(xml);
         } catch (err) {
+
+          spy();
+
+          // then
           expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
         }
+
+        expect(spy).to.have.been.called;
 
         window.Promise = originalPromise;
         done();
@@ -969,6 +977,108 @@ describe('Viewer', function() {
         viewer.importDefinitions(definitions);
       });
 
+
+      describe('Promisification', function() {
+
+        it('should return a Promise if callback not passed', function() {
+
+          // given
+          var result = viewer.importDefinitions(definitions);
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+        });
+
+
+        it('should warn about deprecation if callback is passed', function() {
+
+          // given
+          sinon.restore();
+          console.warn = sinon.spy();
+
+          // when
+          viewer.importDefinitions(definitions, function() { });
+
+          // then
+          expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to importDefinitions API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+        });
+
+
+        it('should resolve warnings if callback not passed', function(done) {
+
+          // given
+          var promise = viewer.importDefinitions(definitions);
+
+          // when
+          promise.then(function(payload) {
+
+            // then
+            expect(payload).to.be.instanceOf(Array);
+            done();
+          });
+        });
+
+
+        it('should return a Promise for errored cases if callback not passed', function() {
+
+          // given
+          viewer.clear = sinon.stub().throws();
+
+          // when
+          var result = viewer.importDefinitions(definitions);
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+        });
+
+
+        it('should reject Promise with error message and warnings for error cases if callback not passed', function(done) {
+
+          // given
+          viewer.clear = sinon.stub().throws();
+
+          // when
+          var promise = viewer.importDefinitions(definitions);
+
+          promise.catch(function(err) {
+
+            // then
+            expect(err.error).not.to.be.undefined;
+            done();
+          });
+        });
+
+
+        it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+          var originalPromise = window.Promise;
+
+          after(function() {
+            window.Promise = originalPromise;
+          });
+
+          // given
+          window.Promise = undefined;
+
+          var spy = sinon.spy();
+
+          // when
+          try {
+            viewer.importDefinitions(definitions);
+          } catch (err) {
+
+            spy();
+
+            // then
+            expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+          }
+
+          expect(spy).to.have.been.called;
+
+          window.Promise = originalPromise;
+          done();
+        });
+      });
     });
 
 
@@ -1068,7 +1178,104 @@ describe('Viewer', function() {
 
       });
 
+
+      describe('Promisification', function() {
+
+        it('should return a Promise if callback not passed', function() {
+
+          // given
+          var result = viewer.importDefinitions(definitions, 'BpmnDiagram_2');
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+        });
+
+
+        it('should warn about deprecation if callback is passed', function() {
+
+          // given
+          sinon.restore();
+          console.warn = sinon.spy();
+
+          // when
+          viewer.importDefinitions(definitions, 'BpmnDiagram_2' ,function() { });
+
+          // then
+          expect(console.warn).to.have.been.calledWith('Warning: passing callbacks to importDefinitions API will be deprecated in the next major bpmn-js release. Consider switching to promises instead. See the API documentation.');
+        });
+
+
+        it('should resolve warnings if callback not passed', function(done) {
+
+          // given
+          var promise = viewer.importDefinitions(definitions, 'BpmnDiagram_2');
+
+          // when
+          promise.then(function(payload) {
+
+            // then
+            expect(payload).to.be.instanceOf(Array);
+            done();
+          });
+        });
+
+
+        it('should return a Promise for errored cases if callback not passed', function() {
+
+          // when
+          var result = viewer.importDefinitions(definitions, 'Diagram_IDontExist');
+
+          // then
+          expect(result).to.be.instanceOf(Promise);
+        });
+
+
+        it('should reject Promise with error message and warnings for error cases if callback not passed', function(done) {
+
+          // when
+          var promise = viewer.importDefinitions(definitions, 'Diagram_IDontExist');
+
+          promise.catch(function(err) {
+
+            // then
+            expect(err.error).not.to.be.undefined;
+            done();
+          });
+        });
+
+
+        it('should throw error if Promise is not polyfilled and callback not passed', function(done) {
+
+          var originalPromise = window.Promise;
+
+          after(function() {
+            window.Promise = originalPromise;
+          });
+
+          // given
+          window.Promise = undefined;
+
+          var spy = sinon.spy();
+
+          // when
+          try {
+            viewer.importDefinitions(definitions, 'Diagram_IDontExist');
+          } catch (err) {
+
+            spy();
+
+            // then
+            expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
+          }
+
+          expect(spy).to.have.been.called;
+
+          window.Promise = originalPromise;
+          done();
+        });
+      });
     });
+
   });
 
 
@@ -1496,6 +1703,9 @@ describe('Viewer', function() {
         });
 
         // given
+
+        var spy = sinon.spy();
+
         var xml = require('../fixtures/bpmn/simple.bpmn');
 
         window.Promise = null;
@@ -1509,9 +1719,13 @@ describe('Viewer', function() {
             viewer.saveXML({ format: true });
           } catch (err) {
 
+            spy();
+
             // then
             expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
           }
+
+          expect(spy).to.have.been.called;
 
           window.Promise = originalPromise;
           done();
@@ -1809,9 +2023,12 @@ describe('Viewer', function() {
           window.Promise = originalPromise;
         });
 
-        window.promise = null;
-
         // given
+
+        window.Promise = null;
+
+        var spy = sinon.spy();
+
         var xml = require('../fixtures/bpmn/simple.bpmn');
 
         createViewer(xml, function(err, warnings, viewer) {
@@ -1820,8 +2037,14 @@ describe('Viewer', function() {
           try {
             viewer.saveSVG();
           } catch (err) {
+
+            spy();
+
+            // then
             expect(err.message).to.be.eql('Promises are not supported for this browser. Consider polyfilling Promises.');
           }
+
+          expect(spy).to.have.been.called;
 
           done();
         });
