@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.4.1
+
+* `FIX`: parse `>` in attribute names
+* `CHORE`: bump to `bpmn-moddle@6.0.3`
+
 ## 6.4.0
 
 * `FEAT`: serialize link events with an empty name ([#1296](https://github.com/bpmn-io/bpmn-js/issues/1296))
