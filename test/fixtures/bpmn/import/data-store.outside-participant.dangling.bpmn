@@ -6,7 +6,7 @@
   <bpmn:process id="Process_1" isExecutable="false" />
   <bpmn:process id="Process_2" isExecutable="false">
     <bpmn:laneSet id="LaneSet">
-        <bpmn:lane name="Lane 1" id="Lane" />>
+        <bpmn:lane name="Lane 1" id="Lane" />
     </bpmn:laneSet>
     <bpmn:dataStoreReference id="DataStoreReference" />
   </bpmn:process>
