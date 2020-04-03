@@ -834,7 +834,7 @@ describe('features/copy-paste', function() {
 /**
  * Integration test involving copying, pasting, moving, undoing and redoing.
  *
- * @param {String|Array<String>} elementIds
+ * @param {string|Array<string>} elementIds
  */
 function integrationTest(elementIds) {
   if (!isArray(elementIds)) {
@@ -1000,7 +1000,7 @@ function _findDescriptorsInTree(elements, tree, depth) {
 /**
  * Copy elements.
  *
- * @param {Array<String|djs.model.Base} elements
+ * @param {Array<string|djs.model.Base} elements
  *
  * @returns {Object}
  */
