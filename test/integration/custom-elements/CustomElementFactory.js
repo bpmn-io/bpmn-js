@@ -61,7 +61,7 @@ CustomElementFactory.$inject = [ 'injector' ];
  *   return shapes[type];
  *
  *
- * @param  {String} type
+ * @param  {string} type
  *
  * @return {Bounds} { width, height}
  */
