@@ -6,7 +6,7 @@ import {
 /**
  * Create a fake key event for testing purposes.
  *
- * @param {string|Number} key the key or keyCode/charCode
+ * @param {string|number} key the key or keyCode/charCode
  * @param {Object} [attrs]
  *
  * @return {Event}
