@@ -552,4 +552,119 @@ describe('features/modeling - layout', function() {
 
   });
 
+
+  describe('subProcess', function() {
+
+    var diagramXML = require('./LayoutSequenceFlowSpec.subProcess.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should layout straight between subProcesses (top -> bottom)', function() {
+
+      // when
+      var connection = connect('SubProcess_Center', 'SubProcess_Bottom'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedX = getMid(target).x;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: expectedX, y: source.y + source.height },
+        { x: expectedX, y: target.y }
+      ]);
+    });
+
+
+    it('should layout straight between subProcesses (bottom -> top)', function() {
+
+      // when
+      var connection = connect('SubProcess_Bottom', 'SubProcess_Center'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedX = getMid(target).x;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: expectedX, y: source.y },
+        { x: expectedX, y: target.y + target.height }
+      ]);
+    });
+
+
+    it('should layout straight between subProcess and task next to it (subProcess -> task)',
+      function() {
+
+        // when
+        var connection = connect('SubProcess_Center', 'Task_Right'),
+            source = connection.source,
+            target = connection.target;
+
+        var expectedY = getMid(target).y;
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: source.x + source.width, y: expectedY },
+          { x: target.x, y: expectedY }
+        ]);
+      }
+    );
+
+
+    it('should layout straight between subProcess and task next to it (task -> subProcess)',
+      function() {
+
+        // when
+        var connection = connect('Task_Right', 'SubProcess_Center'),
+            source = connection.source,
+            target = connection.target;
+
+        var expectedY = getMid(source).y;
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: source.x, y: expectedY },
+          { x: target.x + target.width, y: expectedY }
+        ]);
+      }
+    );
+
+
+    it('should layout straight between subProcess and task above (subProcess -> task)', function() {
+
+      // when
+      var connection = connect('SubProcess_Center', 'Task_Top'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedX = getMid(target).x;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: expectedX, y: source.y },
+        { x: expectedX, y: target.y + target.height }
+      ]);
+    });
+
+
+    it('should layout straight between subProcess and task above (task -> subProcess)', function() {
+
+      // when
+      var connection = connect('Task_Top', 'SubProcess_Center'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedX = getMid(source).x;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: expectedX, y: source.y + source.height },
+        { x: expectedX, y: target.y }
+      ]);
+    });
+  });
 });
