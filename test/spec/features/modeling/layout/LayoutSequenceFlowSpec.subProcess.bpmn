@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_00dfyhw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:process id="Process_00i7uqd" isExecutable="true">
+    <bpmn:subProcess id="SubProcess_Center" />
+    <bpmn:subProcess id="SubProcess_Bottom" />
+    <bpmn:task id="Task_Right" />
+    <bpmn:task id="Task_Top" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_00i7uqd">
+      <bpmndi:BPMNShape id="Activity_0r2w32m_di" bpmnElement="SubProcess_Center" isExpanded="true">
+        <dc:Bounds x="270" y="270" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tbriov_di" bpmnElement="SubProcess_Bottom" isExpanded="true">
+        <dc:Bounds x="160" y="600" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fm36cc_di" bpmnElement="Task_Right">
+        <dc:Bounds x="780" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16fbgsj_di" bpmnElement="Task_Top">
+        <dc:Bounds x="520" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
