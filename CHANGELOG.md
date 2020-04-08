@@ -8,8 +8,8 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 6.4.1
 
-* `FIX`: parse `>` in attribute names
-* `CHORE`: bump to `bpmn-moddle@6.0.3`
+* `FIX`: parse `>` in attribute names and body tag
+* `CHORE`: bump to `bpmn-moddle@6.0.4`
 
 ## 6.4.0
 
