@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.4.2
+
+* `CHORE`: bump to `bpmn-moddle@6.0.5`
+
 ## 6.4.1
 
 * `FIX`: parse `>` in attribute names and body tag
