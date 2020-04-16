@@ -3,9 +3,9 @@ import BpmnModdle from 'bpmn-moddle';
 
 describe('bpmn-moddle', function() {
 
-  function parse(xml, done) {
+  function parse(xml) {
     var moddle = new BpmnModdle();
-    moddle.fromXML(xml, 'bpmn:Definitions', done);
+    return moddle.fromXML(xml, 'bpmn:Definitions');
   }
 
 
@@ -22,11 +22,9 @@ describe('bpmn-moddle', function() {
         '</bpmn2:definitions>';
 
       // when
-      parse(xml, function(err, definitions) {
+      parse(xml).then(function(result) {
 
-        if (err) {
-          return done(err);
-        }
+        var definitions = result.rootElement;
 
         // then
         expect(definitions.id).to.equal('simple');
@@ -36,6 +34,8 @@ describe('bpmn-moddle', function() {
         expect(definitions.rootElements[0].id).to.equal('Process_1');
 
         done();
+      }).catch(function(err) {
+        done(err);
       });
     });
 
@@ -47,16 +47,15 @@ describe('bpmn-moddle', function() {
       var start = new Date().getTime();
 
       // when
-      parse(xml, function(err) {
+      parse(xml).then(function() {
 
+        // then
         // parsing a XML document should not take too long
         expect((new Date().getTime() - start)).to.be.below(1000);
-
+        done();
+      }).catch(function(err) {
         done(err);
       });
-
-      // then
-      // everything should be a.o.k
     });
 
   });
