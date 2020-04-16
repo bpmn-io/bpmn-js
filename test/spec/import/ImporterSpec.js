@@ -50,7 +50,9 @@ describe('import - Importer', function() {
 
     var moddle = new BpmnModdle();
 
-    moddle.fromXML(xml, function(err, definitions) {
+    moddle.fromXML(xml).then(function(result) {
+
+      var definitions = result.rootElement;
 
       var selectedDiagram = find(definitions.diagrams, function(element) {
         return element.id === diagramId;
