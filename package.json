@@ -39,6 +39,7 @@
     "*.css"
   ],
   "devDependencies": {
+    "bpmn-font": "^0.9.3",
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "^4.1.2",
     "chai-match": "^1.1.1",
@@ -79,7 +80,6 @@
     "webpack": "^4.35.3"
   },
   "dependencies": {
-    "bpmn-font": "^0.9.3",
     "bpmn-moddle": "^6.0.5",
     "css.escape": "^1.5.1",
     "diagram-js": "^6.6.0",
