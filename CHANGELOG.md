@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.5.0
+
+* `FEAT`: prefer straight layout for sub-process connections ([#1309](https://github.com/bpmn-io/bpmn-js/pull/1309))
+* `FEAT`: move common auto-place feature to diagram-js, add BPMN-specific auto-place feature ([#1284](https://github.com/bpmn-io/bpmn-js/pull/1284))
+* `CHORE`: make bpmn-font a development dependency ([`63045bdf`](https://github.com/bpmn-io/bpmn-js/commit/63045bdfa87b9f1989a2a7a509facbeb4616acda))
+* `CHORE`: bump to `diagram-js@6.6.1`
+
 ## 6.4.2
 
 * `CHORE`: bump to `bpmn-moddle@6.0.5`
