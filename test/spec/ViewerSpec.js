@@ -635,7 +635,7 @@ describe('Viewer', function() {
         // then
         expect(events).to.eql([
           [ 'import.parse.start', [ 'xml' ] ],
-          [ 'import.parse.complete', ['error', 'definitions', 'context' ] ],
+          [ 'import.parse.complete', [ 'error', 'definitions', 'elementsById', 'references', 'warnings', 'context' ] ],
           [ 'import.render.start', [ 'definitions' ] ],
           [ 'import.render.complete', [ 'error', 'warnings' ] ],
           [ 'import.done', [ 'error', 'warnings' ] ]
@@ -1673,7 +1673,7 @@ describe('Viewer', function() {
           // then
           expect(events).to.eql([
             [ 'import.parse.start', [ 'xml' ] ],
-            [ 'import.parse.complete', ['error', 'definitions', 'context' ] ],
+            [ 'import.parse.complete', ['error', 'definitions', 'elementsById', 'references', 'warnings', 'context' ] ],
             [ 'import.render.start', [ 'definitions' ] ],
             [ 'import.render.complete', [ 'error', 'warnings' ] ],
             [ 'import.done', [ 'error', 'warnings' ] ]
@@ -1681,6 +1681,32 @@ describe('Viewer', function() {
 
           done(err);
         });
+      });
+
+
+      it('should emit <import.parse.complete> event', function() {
+
+        // given
+        var viewer = new Viewer({ container: container });
+
+        var xml = require('../fixtures/bpmn/simple.bpmn');
+
+        viewer.on([
+          'import.parse.complete'
+        ], function(event) {
+
+          // then
+          var context = event.context;
+
+          expect(context).to.exist;
+
+          expect(context.warnings).to.equal(event.warnings);
+          expect(context.elementsById).to.equal(event.elementsById);
+          expect(context.references).to.equal(event.references);
+        });
+
+        // when
+        return viewer.importXML(xml);
       });
 
     });
