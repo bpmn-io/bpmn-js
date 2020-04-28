@@ -5,6 +5,7 @@ import {
 } from 'test/TestHelper';
 
 import {
+  map,
   pick
 } from 'min-dash';
 
@@ -272,11 +273,51 @@ describe('features/modeling - add Lane', function() {
 
   describe('flow node handling', function() {
 
+    var diagramXML = require('./lanes.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should move flow nodes and sequence flows', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Nested_Lane_B'),
+          task_Boundary = elementRegistry.get('Task_Boundary'),
+          boundary = elementRegistry.get('Boundary'),
+          sequenceFlow = elementRegistry.get('SequenceFlow'),
+          sequenceFlow_From_Boundary = elementRegistry.get('SequenceFlow_From_Boundary');
+
+      // when
+      var newLane = modeling.addLane(laneShape, 'top');
+
+      // then
+      expect(task_Boundary).to.have.position({ x: 264, y: -57 });
+      expect(boundary).to.have.position({ x: 311, y: 5 });
+
+      expect(sequenceFlow_From_Boundary).to.have.waypoints([
+        { x: 329, y: 161 - newLane.height },
+        { x: 329, y: 188 - newLane.height },
+        { x: 482, y: 188 - newLane.height },
+        { x: 482, y: 143 - newLane.height }
+      ]);
+
+      expect(sequenceFlow).to.have.waypoints([
+        { x: 364, y: 103 - newLane.height },
+        { x: 432, y: 103 - newLane.height }
+      ]);
+    }));
+  });
+
+  describe('flow node handling', function() {
+
     var diagramXML = require('./lanes-flow-nodes.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: testModules
     }));
+
 
     function addLaneAbove(laneId) {
 
@@ -289,19 +330,32 @@ describe('features/modeling - add Lane', function() {
       });
     }
 
+    function addLaneBelow(laneId) {
+
+      return getBpmnJS().invoke(function(elementRegistry, modeling) {
+        var existingLane = elementRegistry.get(laneId);
+
+        expect(existingLane).to.exist;
+
+        return modeling.addLane(existingLane, 'bottom');
+      });
+    }
+
 
     it('should move flow nodes', inject(function(elementRegistry, modeling) {
 
       // given
       var task_Boundary = elementRegistry.get('Task_Boundary'),
-          boundary = elementRegistry.get('Boundary');
+          taskPosition = getPosition(task_Boundary),
+          boundary = elementRegistry.get('Boundary'),
+          boundaryPosition = getPosition(boundary);
 
       // when
       addLaneAbove('Nested_Lane_B');
 
       // then
-      expect(task_Boundary).to.have.position({ x: 344, y: -7 });
-      expect(boundary).to.have.position({ x: 391, y: 55 });
+      expect(task_Boundary).to.have.position({ x: taskPosition.x, y: taskPosition.y - 120 });
+      expect(boundary).to.have.position({ x: boundaryPosition.x, y: boundaryPosition.y - 120 });
     }));
 
 
@@ -309,22 +363,54 @@ describe('features/modeling - add Lane', function() {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow'),
-          sequenceFlow_From_Boundary = elementRegistry.get('SequenceFlow_From_Boundary');
+          sequenceFlowWaypoints = sequenceFlow.waypoints,
+          sequenceFlow_From_Boundary = elementRegistry.get('SequenceFlow_From_Boundary'),
+          sequenceFlow_From_BoundaryWaypoints = sequenceFlow_From_Boundary.waypoints;
 
       // when
       addLaneAbove('Nested_Lane_B');
 
       // then
-      expect(sequenceFlow_From_Boundary).to.have.waypoints([
-        { x: 409, y: 91 },
-        { x: 409, y: 118 },
-        { x: 562, y: 118 },
-        { x: 562, y: 73 }
-      ]);
+      expect(sequenceFlow_From_Boundary).to.have.waypoints(
+        moveWaypoints(sequenceFlow_From_BoundaryWaypoints, 0, -120)
+      );
 
-      expect(sequenceFlow).to.have.waypoints([
-        { x: 444, y: 33 },
-        { x: 512, y: 33 }
+      expect(sequenceFlow).to.have.waypoints(
+        moveWaypoints(sequenceFlowWaypoints, 0, -120)
+      );
+    }));
+
+
+    it('should move message flows when lane added above', inject(function(elementRegistry) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlowAbove'),
+          messageFlowWaypoints = messageFlow.waypoints;
+
+      // when
+      addLaneAbove('Nested_Lane_B');
+
+      // then
+      expect(messageFlow).to.have.waypoints([
+        movePosition(messageFlowWaypoints[0], 0, -120),
+        messageFlowWaypoints[1]
+      ]);
+    }));
+
+
+    it('should move message flows when lane added below', inject(function(elementRegistry) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlowBelow'),
+          messageFlowWaypoints = messageFlow.waypoints;
+
+      // when
+      addLaneBelow('Nested_Lane_B');
+
+      // then
+      expect(messageFlow).to.have.waypoints([
+        messageFlowWaypoints[0],
+        movePosition(messageFlowWaypoints[1], 0, 120)
       ]);
     }));
 
@@ -333,7 +419,8 @@ describe('features/modeling - add Lane', function() {
 
       // given
       var event = elementRegistry.get('Event'),
-          label = event.label;
+          label = event.label,
+          labelPosition = getPosition(label);
 
       // TODO(nikku): consolidate import + editing behavior => not consistent right now
 
@@ -344,7 +431,10 @@ describe('features/modeling - add Lane', function() {
       addLaneAbove('Nested_Lane_B');
 
       // then
-      expect(label.y).to.eql(58);
+      expect(label).to.have.position({
+        x: labelPosition.x,
+        y: labelPosition.y - 120
+      });
     }));
 
   });
@@ -407,4 +497,24 @@ function padEvent(entry) {
       clientY: 100
     };
   });
+}
+
+function getPosition(element) {
+  return {
+    x: element.x,
+    y: element.y
+  };
+}
+
+function moveWaypoints(waypoints, deltaX, deltaY) {
+  return map(waypoints, function(waypoint) {
+    return movePosition(waypoint, deltaX, deltaY);
+  });
+}
+
+function movePosition(point, deltaX, deltaY) {
+  return {
+    x: point.x + deltaX,
+    y: point.y + deltaY
+  };
 }

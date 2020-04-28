@@ -267,6 +267,21 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should throw error due to missing diagram', function(done) {
+
+      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
+
+      // when
+      createViewer(xml, function(err, warnings) {
+
+        // then
+        expect(err.message).to.eql('no diagram to display');
+
+        done();
+      });
+    });
+
   });
 
 
@@ -545,25 +560,6 @@ describe('Viewer', function() {
         expect(extensionElements.values[1].$instanceOf('custom:CustomSendElementOverride')).to.be.true;
 
         done(err);
-      });
-
-    });
-
-
-    it('should throw error due to missing diagram', function(done) {
-
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
-
-      // given
-      viewer = new Viewer({ container: container, additionalModules: testModules });
-
-      // when
-      viewer.importXML(xml, function(err) {
-
-        // then
-        expect(err.message).to.eql('no diagram to display');
-
-        done();
       });
 
     });

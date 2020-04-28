@@ -416,8 +416,8 @@ describe('draw - bpmn renderer', function() {
        *
        * @param {djs.model.base} element - Element.
        * @param {SVG} gfx - Graphics of element.
-       * @param {String} fillColor - Fill color to expect.
-       * @param {String} strokeColor - Stroke color to expect.
+       * @param {string} fillColor - Fill color to expect.
+       * @param {string} strokeColor - Stroke color to expect.
        */
       function expectColors(element, gfx, fillColor, strokeColor) {
         var djsVisual = domQuery('.djs-visual', gfx);
