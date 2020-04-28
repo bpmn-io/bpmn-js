@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 6.5.1
+
+* `FIX`: correct namespaces being removed on diagram export ([#1310](https://github.com/bpmn-io/bpmn-js/issues/1310))
+* `CHORE`: bump to `bpmn-moddle@6.0.6`
+
 ## 6.5.0
 
 * `FEAT`: prefer straight layout for sub-process connections ([#1309](https://github.com/bpmn-io/bpmn-js/pull/1309))
