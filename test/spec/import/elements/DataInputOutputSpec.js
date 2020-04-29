@@ -8,12 +8,16 @@ describe('import - data input/output', function() {
 
   describe('should import external labels', function() {
 
-    it('with di', function(done) {
+    it('with di', function() {
 
       var xml = require('./DataInputOutput.bpmn');
 
       // given
-      bootstrapViewer(xml).call(this, function(err) {
+      return bootstrapViewer(xml).call(this).then(function(result) {
+
+        var err = result.error;
+
+        expect(err).not.to.exist;
 
         // when
         inject(function(elementRegistry) {
@@ -34,8 +38,6 @@ describe('import - data input/output', function() {
           expect(outputCenter.y).to.be.within(190, 210);
           expect(outputLabel.width).to.be.above(20);
           expect(outputLabel.height).to.be.above(10);
-
-          done(err);
         })();
 
       });

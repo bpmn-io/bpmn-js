@@ -8,12 +8,16 @@ describe('import - associations', function() {
 
   describe('should import association', function() {
 
-    it('connecting task -> text annotation', function(done) {
+    it('connecting task -> text annotation', function() {
 
       var xml = require('./AssociationSpec.text-annotation.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
+
+        expect(err).not.to.exist;
 
         // when
         inject(function(elementRegistry) {
@@ -22,20 +26,22 @@ describe('import - associations', function() {
 
           // then
           expect(association).to.exist;
-
-          done(err);
         })();
 
       });
     });
 
 
-    it('connecting boundary -> compensate task', function(done) {
+    it('connecting boundary -> compensate task', function() {
 
       var xml = require('./AssociationSpec.compensation.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
+
+        expect(err).not.to.exist;
 
         // when
         inject(function(elementRegistry) {
@@ -44,8 +50,6 @@ describe('import - associations', function() {
 
           // then
           expect(association).to.exist;
-
-          done();
         })();
 
       });
@@ -74,91 +78,100 @@ describe('import - associations', function() {
     }
 
 
-    it('task -> data object -> task', function(done) {
+    it('task -> data object -> task', function() {
 
       var xml = require('./AssociationSpec.data-association.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
 
         // then
+        expect(err).not.to.exist;
+
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
-
-        done(err);
       });
     });
 
 
-    it('data input -> task -> data output', function(done) {
+    it('data input -> task -> data output', function() {
 
       var xml = require('./AssociationSpec.data-input-output.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
 
         // then
+        expect(err).not.to.exist;
+
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
-
-        done(err);
       });
     });
 
 
-    it('in collaboration', function(done) {
+    it('in collaboration', function() {
 
       var xml = require('./AssociationSpec.collaboration.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
 
         // then
+        expect(err).not.to.exist;
+
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
-
-        done(err);
       });
     });
 
 
-    it('catch event -> data object -> throw event', function(done) {
+    it('catch event -> data object -> throw event', function() {
 
       var xml = require('./AssociationSpec.events.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
 
         // then
+        expect(err).not.to.exist;
+
         expectRendered([
           'DataInputAssociation',
           'DataOutputAssociation'
         ]);
-
-        done(err);
       });
     });
 
 
-    it('boundary event -> data object', function(done) {
+    it('boundary event -> data object', function() {
 
       var xml = require('./AssociationSpec.data-association.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
 
         // then
+        expect(err).not.to.exist;
         expectRendered([
           'DataOutputAssociation_2'
         ]);
-
-        done(err);
       });
 
     });

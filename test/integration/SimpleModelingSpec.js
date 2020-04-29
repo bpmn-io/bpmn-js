@@ -12,16 +12,13 @@ describe('scenario - simple modeling', function() {
   });
 
 
-  it('should build process from start to end event', function(done) {
+  it('should build process from start to end event', function() {
 
     // given
     var modeler = new Modeler({ container: container });
 
     // when
-    modeler.createDiagram(function(err) {
-
-      done(err);
-    });
+    return modeler.createDiagram();
   });
 
 });

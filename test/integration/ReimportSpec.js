@@ -68,15 +68,12 @@ describe.skip('scenario - successive reopening', function() {
       var xml = allDiagrams[i];
 
       // when
-      modeler.importXML(xml, function(err) {
-
+      modeler.importXML(xml).then(function() {
         count++;
 
-        if (err) {
-          return finish(err);
-        }
-
         delay(importNext);
+      }).catch(function(err) {
+        return finish(err);
       });
     }
 

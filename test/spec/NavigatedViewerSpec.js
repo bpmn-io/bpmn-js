@@ -5,8 +5,7 @@ import EditorActionsModule from 'lib/features/editor-actions';
 import TestContainer from 'mocha-test-container-support';
 
 import {
-  setBpmnJS,
-  clearBpmnJS
+  createViewer
 } from 'test/TestHelper';
 
 
@@ -18,25 +17,13 @@ describe('NavigatedViewer', function() {
     container = TestContainer.get(this);
   });
 
-  function createViewer(xml, done) {
 
-    clearBpmnJS();
-
-    var viewer = new NavigatedViewer({
-      container: container
-    });
-
-    setBpmnJS(viewer);
-
-    viewer.importXML(xml, function(err, warnings) {
-      done(err, warnings, viewer);
-    });
-  }
-
-
-  it('should import simple process', function(done) {
+  it('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
-    createViewer(xml, done);
+    return createViewer(container, NavigatedViewer, xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
@@ -79,7 +66,6 @@ describe('NavigatedViewer', function() {
 
       expect(actualActions).to.eql(expectedActions);
     });
-
   });
 
 
@@ -87,24 +73,28 @@ describe('NavigatedViewer', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
-    it('should include zoomScroll', function(done) {
+    it('should include zoomScroll', function() {
 
-      createViewer(xml, function(err, warnings, viewer) {
+      return createViewer(container, NavigatedViewer, xml).then(function(result) {
+
+        var viewer = result.viewer;
+        var err = result.error;
+
+        expect(err).not.to.exist;
         expect(viewer.get('zoomScroll')).to.exist;
-
-        done(err);
       });
     });
 
 
-    it('should include moveCanvas', function(done) {
-      createViewer(xml, function(err, warnings, viewer) {
+    it('should include moveCanvas', function() {
+      return createViewer(container, NavigatedViewer, xml).then(function(result) {
+
+        var viewer = result.viewer;
+        var err = result.error;
+
+        expect(err).not.to.exist;
         expect(viewer.get('moveCanvas')).to.exist;
-
-        done(err);
       });
     });
-
   });
-
 });

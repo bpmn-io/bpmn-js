@@ -8,11 +8,15 @@ describe('import - groups', function() {
 
   describe('should import groups', function() {
 
-    it('with frame property set', function(done) {
+    it('with frame property set', function() {
       var xml = require('./Groups.bpmn');
 
       // given
-      bootstrapModeler(xml)(function(err) {
+      return bootstrapModeler(xml)().then(function(result) {
+
+        var err = result.error;
+
+        expect(err).not.to.exist;
 
         // when
         inject(function(elementRegistry) {
@@ -22,8 +26,6 @@ describe('import - groups', function() {
 
           expect(groupElement).to.exist;
           expect(groupElement.isFrame).to.be.true;
-
-          done(err);
         })();
 
       });
