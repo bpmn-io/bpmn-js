@@ -25,7 +25,6 @@ var viewer = new BpmnJS({
 });
 
 try {
-
   const { warnings } = await viewer.importXML(xml);
 
   console.log('rendered');
