@@ -24,14 +24,14 @@ var viewer = new BpmnJS({
   container: 'body'
 });
 
-viewer.importXML(xml, function(err) {
+try {
 
-  if (err) {
-    console.log('error rendering', err);
-  } else {
-    console.log('rendered');
-  }
-});
+  const { warnings } = await viewer.importXML(xml);
+
+  console.log('rendered');
+} catch (err) {
+  console.log('error rendering', err);
+}
 ```
 
 Checkout our [examples](https://github.com/bpmn-io/bpmn-js-examples) for many

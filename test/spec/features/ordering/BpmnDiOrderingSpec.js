@@ -23,7 +23,7 @@ describe('features/modeling - di ordering', function() {
     beforeEach(bootstrapModeler(emptyProcessXML, { modules: testModules }));
 
 
-    it('should place after tasks', function(done) {
+    it('should place after tasks', function() {
 
       // when
       var task1 = add({ type: 'bpmn:Task' }, { x: 100, y: 100 }),
@@ -35,7 +35,7 @@ describe('features/modeling - di ordering', function() {
           task2 = add({ type: 'bpmn:Task' }, { x: 300, y: 100 });
 
       // then
-      expectDiOrder([ 'Process_1', task1.id, task2.id, event.id ], done);
+      return expectDiOrder([ 'Process_1', task1.id, task2.id, event.id ]);
     });
   });
 
@@ -45,7 +45,7 @@ describe('features/modeling - di ordering', function() {
     beforeEach(bootstrapModeler(emptyProcessXML, { modules: testModules }));
 
 
-    it('should place di elements in correct order', function(done) {
+    it('should place di elements in correct order', function() {
 
       // given
       var canvas = getBpmnJS().get('canvas'),
@@ -66,7 +66,7 @@ describe('features/modeling - di ordering', function() {
           sequenceFlow = connect(task2, task1);
 
       // then
-      expectDiOrder([
+      return expectDiOrder([
         root.id,
         participant1.id,
         sequenceFlow.id,
@@ -75,7 +75,7 @@ describe('features/modeling - di ordering', function() {
         participant2.id,
         messageFlow1.id,
         messageFlow2.id
-      ], done);
+      ]);
     });
   });
 
@@ -85,7 +85,7 @@ describe('features/modeling - di ordering', function() {
     beforeEach(bootstrapModeler(emptyProcessXML, { modules: testModules }));
 
 
-    it('should place di elements in correct order', function(done) {
+    it('should place di elements in correct order', function() {
 
       // given
       var canvas = getBpmnJS().get('canvas'),
@@ -102,12 +102,12 @@ describe('features/modeling - di ordering', function() {
       root = canvas.getRootElement();
 
       // then
-      expectDiOrder([
+      return expectDiOrder([
         root.id,
         participant.id,
         subProcess.id,
         task1.id,
-      ], done);
+      ]);
     });
   });
 
@@ -117,10 +117,10 @@ describe('features/modeling - di ordering', function() {
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-    it('should correctly order di elements on export', function(done) {
+    it('should correctly order di elements on export', function() {
 
       // then
-      expectDiOrder(
+      return expectDiOrder(
         [
           'Page1Process',
           'SequenceFlow_13g7fzw',
@@ -176,19 +176,17 @@ describe('features/modeling - di ordering', function() {
           'NotifyCustomerOfferExpiredTask',
           'UpdateCustomerRecordTask',
           'ReceiveTravelRequestStartEvent'
-        ],
-        done
+        ]
       );
     });
   });
 });
 
 // helper
-function expectDiOrder(expectedOrder, done) {
-  getBpmnJS().saveXML({ format: true }, function(error, xml) {
-    if (error) {
-      return done(error);
-    }
+function expectDiOrder(expectedOrder) {
+  return getBpmnJS().saveXML({ format: true }).then(function(result) {
+
+    var xml = result.xml;
 
     var pattern = /bpmnElement="([^"]+)"/g,
         exportedOrder = [],
@@ -200,12 +198,6 @@ function expectDiOrder(expectedOrder, done) {
       match = pattern.exec(xml);
     }
 
-    try {
-      expect(exportedOrder).to.eql(expectedOrder);
-
-      done();
-    } catch (err) {
-      return done(err);
-    }
+    expect(exportedOrder).to.eql(expectedOrder);
   });
 }

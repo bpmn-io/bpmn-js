@@ -12,11 +12,13 @@ var DELTA = 2;
 
 describe('label bounds', function() {
 
-  function createModeler(xml, done) {
+  function createModeler(xml) {
     var modeler = new Modeler({ container: container });
 
-    modeler.importXML(xml, function(err, warnings) {
-      done(err, warnings, modeler);
+    return modeler.importXML(xml).then(function(result) {
+      return { error: null, warnings: result.warnings, modeler: modeler };
+    }).catch(function(err) {
+      return { error: err, warnings: err.warnings, modeler: modeler };
     });
   }
 
@@ -28,9 +30,12 @@ describe('label bounds', function() {
 
   describe('on import', function() {
 
-    it('should import simple label process', function(done) {
+    it('should import simple label process', function() {
       var xml = require('./LabelBoundsSpec.simple.bpmn');
-      createModeler(xml, done);
+      return createModeler(xml).then(function(result) {
+
+        expect(result.error).not.to.exist;
+      });
     });
 
   });
@@ -228,107 +233,116 @@ describe('label bounds', function() {
 
   describe('on export', function() {
 
-    it('should create DI when label has changed', function(done) {
+    it('should create DI when label has changed', function() {
 
       var xml = require('./LabelBoundsSpec.simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      var shape;
+
+      return createModeler(xml).then(function(result) {
+
+        var err = result.error;
+        var modeler = result.modeler;
 
         if (err) {
-          return done(err);
+          throw err;
         }
 
         var elementRegistry = modeler.get('elementRegistry'),
             directEditing = modeler.get('directEditing');
 
-        var shape = elementRegistry.get('StartEvent_1');
+        shape = elementRegistry.get('StartEvent_1');
 
         directEditing.activate(shape);
         directEditing._textbox.content.innerText = 'BARBAZ';
         directEditing.complete();
 
-        modeler.saveXML({ format: true }, function(err, result) {
+        return modeler.saveXML({ format: true });
+      }).then(function(result) {
 
-          // strip spaces and line breaks after '>'
-          result = result.replace(/>\s+/g,'>');
+        var xml = result.xml;
 
-          // get label width and height from XML
-          var matches = result.match(/StartEvent_1_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
+        // strip spaces and line breaks after '>'
+        xml = xml.replace(/>\s+/g,'>');
 
-          var width = parseInt(matches[1]),
-              height = parseInt(matches[2]);
+        // get label width and height from XML
+        var matches = xml.match(/StartEvent_1_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
 
-          expect(width).to.equal(shape.label.width);
-          expect(height).to.equal(shape.label.height);
+        var width = parseInt(matches[1]),
+            height = parseInt(matches[2]);
 
-          done(err);
-        });
+        expect(width).to.equal(shape.label.width);
+        expect(height).to.equal(shape.label.height);
       });
     });
 
 
-    it('should update existing DI when label has changed', function(done) {
+    it('should update existing DI when label has changed', function() {
 
       var xml = require('./LabelBoundsSpec.simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      var shape;
+
+      return createModeler(xml).then(function(result) {
+
+        var err = result.error;
+        var modeler = result.modeler;
 
         if (err) {
-          return done(err);
+          throw err;
         }
 
         var elementRegistry = modeler.get('elementRegistry'),
             directEditing = modeler.get('directEditing');
 
-        var shape = elementRegistry.get('StartEvent_3');
+        shape = elementRegistry.get('StartEvent_3');
 
         directEditing.activate(shape);
         directEditing._textbox.content.innerText = 'BARBAZ';
         directEditing.complete();
 
-        modeler.saveXML({ format: true }, function(err, result) {
+        return modeler.saveXML({ format: true });
+      }).then(function(result) {
 
-          // strip spaces and line breaks after '>'
-          result = result.replace(/>\s+/g,'>');
+        var xml = result.xml;
 
-          // get label width and height from XML
-          var matches = result.match(/StartEvent_3_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
+        // strip spaces and line breaks after '>'
+        xml = xml.replace(/>\s+/g,'>');
 
-          var width = parseInt(matches[1]),
-              height = parseInt(matches[2]);
+        // get label width and height from XML
+        var matches = xml.match(/StartEvent_3_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
 
-          expect(width).to.equal(shape.label.width);
-          expect(height).to.equal(shape.label.height);
+        var width = parseInt(matches[1]),
+            height = parseInt(matches[2]);
 
-          done(err);
-        });
+        expect(width).to.equal(shape.label.width);
+        expect(height).to.equal(shape.label.height);
       });
     });
 
 
-    it('should not update DI of untouched labels', function(done) {
+    it('should not update DI of untouched labels', function() {
 
       var xml = require('./LabelBoundsSpec.simple.bpmn');
 
       // strip windows line breaks (if any)
       xml = xml.replace(/\r/g, '');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var err = result.error;
+        var modeler = result.modeler;
 
         if (err) {
-          return done(err);
+          throw err;
         }
 
-        modeler.saveXML({ format: true }, function(err, result) {
+        return modeler.saveXML({ format: true });
+      }).then(function(result) {
 
-          if (err) {
-            return done(err);
-          }
+        var savedXML = result.xml;
 
-          expect(result).to.equal(xml);
-
-          done(err);
-        });
+        expect(savedXML).to.equal(xml);
       });
     });
 

@@ -12,24 +12,30 @@ describe('direct editing - touch integration', function() {
   });
 
 
-  function createModeler(xml, done) {
+  function createModeler(xml) {
     var modeler = new Modeler({ container: container });
 
-    modeler.importXML(xml, function(err) {
-      done(err, modeler);
+    return modeler.importXML(xml).then(function(result) {
+      return { error: null, modeler: modeler };
+    }).catch(function(err) {
+      return { error: err, modeler: modeler };
     });
   }
 
 
-  it('should work on modeler (manual test)', function(done) {
+  it('should work on modeler (manual test)', function() {
     var xml = require('../../../fixtures/bpmn/simple.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it('should edit labels via double tap (manual test)', function(done) {
+  it('should edit labels via double tap (manual test)', function() {
     var xml = require('./LabelEditing.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+      expect(result.error).not.to.exist;
+    });
   });
 
 });

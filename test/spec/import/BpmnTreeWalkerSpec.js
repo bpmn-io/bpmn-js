@@ -22,7 +22,7 @@ describe('import - BpmnTreeWalker', function() {
   });
 
 
-  it('should walk bpmn:Definitions', function(done) {
+  it('should walk bpmn:Definitions', function() {
 
     // given
     var elementSpy = sinon.spy(),
@@ -35,7 +35,7 @@ describe('import - BpmnTreeWalker', function() {
       error: errorSpy
     });
 
-    createModdle(simpleXML).then(function(result) {
+    return createModdle(simpleXML).then(function(result) {
 
       var definitions = result.rootElement;
 
@@ -46,16 +46,11 @@ describe('import - BpmnTreeWalker', function() {
       expect(elementSpy.callCount).to.equal(8);
       expect(rootSpy.calledOnce).to.be.true;
       expect(errorSpy.notCalled).to.be.true;
-
-      done();
-    }).catch(function(err) {
-
-      done(err);
     });
   });
 
 
-  it('should walk bpmn:SubProcess', function(done) {
+  it('should walk bpmn:SubProcess', function() {
 
     // given
     var elementSpy = sinon.spy(),
@@ -68,7 +63,7 @@ describe('import - BpmnTreeWalker', function() {
       error: errorSpy
     });
 
-    createModdle(simpleXML).then(function(result) {
+    return createModdle(simpleXML).then(function(result) {
 
       var definitions = result.rootElement;
 
@@ -90,15 +85,11 @@ describe('import - BpmnTreeWalker', function() {
       expect(rootSpy.notCalled).to.be.true;
       expect(errorSpy.notCalled).to.be.true;
 
-      done();
-    }).catch(function(err) {
-
-      done(err);
     });
   });
 
 
-  it('should error', function(done) {
+  it('should error', function() {
 
     // given
     var elementSpy = sinon.spy(),
@@ -111,7 +102,7 @@ describe('import - BpmnTreeWalker', function() {
       error: errorSpy
     });
 
-    createModdle(simpleXML).then(function(result) {
+    return createModdle(simpleXML).then(function(result) {
 
       var definitions = result.rootElement;
 
@@ -127,11 +118,6 @@ describe('import - BpmnTreeWalker', function() {
       expect(elementSpy.callCount).to.equal(8);
       expect(rootSpy.calledOnce).to.be.true;
       expect(errorSpy.calledOnce).to.be.true;
-
-      done();
-    }).catch(function(err) {
-
-      done(err);
     });
   });
 
@@ -140,7 +126,7 @@ describe('import - BpmnTreeWalker', function() {
 
 // helpers //////////
 
-function createModdle(xml, done) {
+function createModdle(xml) {
   var moddle = new BpmnModdle();
 
   return moddle.fromXML(xml, 'bpmn:Definitions');

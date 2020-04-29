@@ -59,7 +59,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
         bootstrapModeler(diagramXML, {
           container: TestContainer.get(this),
           modules: testModules
-        })(function() {
+        })().then(function() {
 
           // when
           inject(function(canvas, create, dragging, elementFactory, eventBus) {
@@ -107,7 +107,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
         bootstrapModeler(diagramXML, {
           container: container,
           modules: testModules
-        })(function() {
+        })().then(function() {
 
           // when
           inject(function(create, dragging, elementFactory, elementRegistry, eventBus) {

@@ -8,21 +8,27 @@ describe('import - labels', function() {
 
   describe('should import embedded labels', function() {
 
-    it('on flow nodes', function(done) {
+    it('on flow nodes', function() {
       var xml = require('../../../fixtures/bpmn/import/labels/embedded.bpmn');
-      bootstrapViewer(xml)(done);
+      return bootstrapViewer(xml)().then(function(result) {
+        expect(result.error).not.to.exist;
+      });
     });
 
 
-    it('on pools and lanes', function(done) {
+    it('on pools and lanes', function() {
       var xml = require('../../../fixtures/bpmn/import/labels/collaboration.bpmn');
-      bootstrapViewer(xml)(done);
+      return bootstrapViewer(xml)().then(function(result) {
+        expect(result.error).not.to.exist;
+      });
     });
 
 
-    it('on message flows', function(done) {
+    it('on message flows', function() {
       var xml = require('../../../fixtures/bpmn/import/labels/collaboration-message-flows.bpmn');
-      bootstrapViewer(xml)(done);
+      return bootstrapViewer(xml)().then(function(result) {
+        expect(result.error).not.to.exist;
+      });
     });
 
   });
@@ -30,11 +36,15 @@ describe('import - labels', function() {
 
   describe('should import external labels', function() {
 
-    it('with di', function(done) {
+    it('with di', function() {
       var xml = require('../../../fixtures/bpmn/import/labels/external.bpmn');
 
       // given
-      bootstrapViewer(xml)(function(err) {
+      return bootstrapViewer(xml)().then(function(result) {
+
+        var err = result.error;
+
+        expect(err).not.to.exist;
 
         // when
         inject(function(elementRegistry) {
@@ -55,17 +65,17 @@ describe('import - labels', function() {
           expect(sequenceFlowCenter.y).to.be.within(323, 335);
           expect(sequenceFlowLabel.width).to.be.above(64);
           expect(sequenceFlowLabel.height).to.be.above(11);
-
-          done(err);
         })();
 
       });
     });
 
 
-    it('without di', function(done) {
+    it('without di', function() {
       var xml = require('../../../fixtures/bpmn/import/labels/external-no-di.bpmn');
-      bootstrapViewer(xml)(done);
+      return bootstrapViewer(xml)().then(function(result) {
+        expect(result.error).not.to.exist;
+      });
     });
 
   });

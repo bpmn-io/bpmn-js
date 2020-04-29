@@ -24,7 +24,7 @@ describe('Modeler', function() {
     container = TestContainer.get(this);
   });
 
-  function createModeler(xml, done) {
+  function createModeler(xml) {
 
     clearBpmnJS();
 
@@ -37,108 +37,122 @@ describe('Modeler', function() {
 
     setBpmnJS(modeler);
 
-    modeler.importXML(xml, function(err, warnings) {
-      done(err, warnings, modeler);
+    return modeler.importXML(xml).then(function(result) {
+      return { error: null, warnings: result.warnings, modeler: modeler };
+    }).catch(function(err) {
+      return { error: err, warnings: err.warnings, modeler: modeler };
     });
   }
 
 
-  it('should import simple process', function(done) {
+  it('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it('should import collaboration', function(done) {
+  it('should import collaboration', function() {
     var xml = require('../fixtures/bpmn/collaboration-message-flows.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it('should import nested lanes', function(done) {
+  it('should import nested lanes', function() {
     var xml = require('./features/modeling/lanes/lanes.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it('should import ioSpecification', function(done) {
+  it('should import ioSpecification', function() {
     var xml = require('./features/modeling/input-output/DataInputOutput.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it.skip('should import complex', function(done) {
+  it.skip('should import complex', function() {
     var xml = require('../fixtures/bpmn/complex.bpmn');
-    createModeler(xml, done);
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
   });
 
 
-  it('should not import empty definitions', function(done) {
+  it('should not import empty definitions', function() {
     var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
 
     // given
-    createModeler(xml, function(err, warnings, modeler) {
+    return createModeler(xml).then(function(result) {
+
+      var modeler = result.modeler;
 
       // when
-      modeler.importXML(xml, function(err, warnings) {
+      return modeler.importXML(xml);
+    }).catch(function(err) {
 
-        // then
-        expect(err.message).to.equal('no diagram to display');
-
-        done();
-      });
-
+      // then
+      expect(err.message).to.equal('no diagram to display');
     });
   });
 
 
-  it('should re-import simple process', function(done) {
+  it('should re-import simple process', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // given
-    createModeler(xml, function(err, warnings, modeler) {
+    return createModeler(xml).then(function(result) {
+
+      var modeler = result.modeler;
 
       // when
       // mimic re-import of same diagram
-      modeler.importXML(xml, function(err, warnings) {
+      return modeler.importXML(xml);
+    }).then(function(result) {
 
-        // then
-        expect(warnings).to.be.empty;
+      var warnings = result.warnings;
 
-        done();
-      });
-
+      // then
+      expect(warnings).to.be.empty;
     });
   });
 
 
-  it('should switch between diagrams', function(done) {
+  it('should switch between diagrams', function() {
 
     var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
     // given
-    createModeler(multipleXML, function(err, warnings, modeler) {
+    return createModeler(multipleXML).then(function(result) {
+
+      var modeler = result.modeler;
+      var err = result.error;
 
       if (err) {
-        return done(err);
+        throw err;
       }
 
       // when
-      modeler.open('BpmnDiagram_2', function(err, warnings) {
+      return modeler.open('BpmnDiagram_2');
+    }).then(function(result) {
 
-        if (err) {
-          return done(err);
-        }
+      var warnings = result.warnings;
 
-        // then
-        expect(warnings).to.be.empty;
-
-        done();
-      });
-
+      // then
+      expect(warnings).to.be.empty;
     });
-
   });
 
 
@@ -146,9 +160,16 @@ describe('Modeler', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
-    it('should allow translation of multi-lingual strings', function(done) {
+    it('should allow translation of multi-lingual strings', function() {
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
+
+        if (err) {
+          throw err;
+        }
 
         // given
         var translate = modeler.get('translate');
@@ -161,8 +182,6 @@ describe('Modeler', function() {
 
         // then
         expect(interpolatedString).to.eql('HELLO WALT!');
-
-        done(err);
       });
 
     });
@@ -172,11 +191,18 @@ describe('Modeler', function() {
 
   describe('overlay support', function() {
 
-    it('should allow to add overlays', function(done) {
+    it('should allow to add overlays', function() {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
+
+        if (err) {
+          throw err;
+        }
 
         // given
         var overlays = modeler.get('overlays'),
@@ -207,8 +233,6 @@ describe('Modeler', function() {
         // then
         expect(overlays.get({ element: 'SubProcess_1', type: 'badge' })).to.have.length(1);
         expect(overlays.get({ element: 'StartEvent_1', type: 'badge' })).to.have.length(1);
-
-        done(err);
       });
 
     });
@@ -260,11 +284,18 @@ describe('Modeler', function() {
 
   describe('bendpoint editing support', function() {
 
-    it('should allow to edit bendpoints', function(done) {
+    it('should allow to edit bendpoints', function() {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
+
+        if (err) {
+          throw err;
+        }
 
         // given
         var bendpointMove = modeler.get('bendpointMove'),
@@ -282,8 +313,6 @@ describe('Modeler', function() {
           1
         );
         dragging.move(createEvent(canvas, { x: 200, y: 200 }));
-
-        done(err);
       });
 
     });
@@ -293,11 +322,13 @@ describe('Modeler', function() {
 
   describe('color support', function() {
 
-    it('should allow color changes', function(done) {
+    it('should allow color changes', function() {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
 
         // given
         var modeling = modeler.get('modeling'),
@@ -312,14 +343,13 @@ describe('Modeler', function() {
         });
 
         // test saving process to get XML
-        modeler.saveXML({ format: true }, function(err, xml) {
-          expect(xml).not.to.contain('di="[object Object]"');
+        return modeler.saveXML({ format: true });
+      }).then(function(result) {
+        var xml = result.xml;
 
-          done();
-        });
+        expect(xml).not.to.contain('di="[object Object]"');
       });
     });
-
   });
 
 
@@ -328,7 +358,7 @@ describe('Modeler', function() {
     // given
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
-    it('should configure Canvas', function(done) {
+    it('should configure Canvas', function() {
 
       // given
       var modeler = new Modeler({
@@ -339,18 +369,14 @@ describe('Modeler', function() {
       });
 
       // when
-      modeler.importXML(xml, function(err) {
+      return modeler.importXML(xml).then(function() {
 
         var canvasConfig = modeler.get('config.canvas');
 
         // then
         expect(canvasConfig.deferUpdate).to.be.true;
-
-        done();
       });
-
     });
-
   });
 
 
@@ -369,7 +395,7 @@ describe('Modeler', function() {
     });
 
 
-    it('should populate ids on import', function(done) {
+    it('should populate ids on import', function() {
 
       // given
       var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -380,7 +406,7 @@ describe('Modeler', function() {
       var elementRegistry = modeler.get('elementRegistry');
 
       // when
-      modeler.importXML(xml, function(err) {
+      return modeler.importXML(xml).then(function() {
 
         var subProcess = elementRegistry.get('SubProcess_1').businessObject;
         var bpmnEdge = elementRegistry.get('SequenceFlow_3').businessObject.di;
@@ -388,14 +414,12 @@ describe('Modeler', function() {
         // then
         expect(moddle.ids.assigned('SubProcess_1')).to.eql(subProcess);
         expect(moddle.ids.assigned('BPMNEdge_SequenceFlow_3')).to.eql(bpmnEdge);
-
-        done();
       });
 
     });
 
 
-    it('should clear ids before re-import', function(done) {
+    it('should clear ids before re-import', function() {
 
       // given
       var someXML = require('../fixtures/bpmn/simple.bpmn'),
@@ -407,60 +431,71 @@ describe('Modeler', function() {
       var elementRegistry = modeler.get('elementRegistry');
 
       // when
-      modeler.importXML(someXML, function() {
+      return modeler.importXML(someXML).then(function() {
 
-        modeler.importXML(otherXML, function() {
+        return modeler.importXML(otherXML);
+      }).then(function() {
 
-          var task = elementRegistry.get('Task_1').businessObject;
+        var task = elementRegistry.get('Task_1').businessObject;
 
-          // then
-          // not in other.bpmn
-          expect(moddle.ids.assigned('SubProcess_1')).to.be.false;
+        // then
+        // not in other.bpmn
+        expect(moddle.ids.assigned('SubProcess_1')).to.be.false;
 
-          // in other.bpmn
-          expect(moddle.ids.assigned('Task_1')).to.eql(task);
-
-          done();
-        });
+        // in other.bpmn
+        expect(moddle.ids.assigned('Task_1')).to.eql(task);
       });
-
     });
-
   });
 
 
-  it('should handle errors', function(done) {
+  it('should handle errors', function() {
 
     var xml = 'invalid stuff';
 
     var modeler = new Modeler({ container: container });
 
-    modeler.importXML(xml, function(err) {
+    return modeler.importXML(xml).catch(function(err) {
 
       expect(err).to.exist;
-
-      done();
     });
   });
 
 
-  it('should create new diagram', function(done) {
+  it('should create new diagram', function() {
     var modeler = new Modeler({ container: container });
-    modeler.createDiagram(done);
+    return modeler.createDiagram();
+  });
+
+
+  it('should create new diagram - Legacy', function(done) {
+    var modeler = new Modeler({ container: container });
+    modeler.createDiagram(function(err, warnings) {
+
+      expect(warnings).to.exist;
+      expect(warnings).to.have.length(0);
+
+      done(err);
+    });
   });
 
 
   describe('dependency injection', function() {
 
-    it('should provide self as <bpmnjs>', function(done) {
+    it('should provide self as <bpmnjs>', function() {
 
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
+
+        if (err) {
+          throw err;
+        }
 
         expect(modeler.get('bpmnjs')).to.equal(modeler);
-
-        done(err);
       });
     });
 
@@ -477,7 +512,7 @@ describe('Modeler', function() {
     });
 
 
-    it('should keep references to services across re-import', function(done) {
+    it('should keep references to services across re-import', function() {
 
       // given
       var someXML = require('../fixtures/bpmn/simple.bpmn'),
@@ -489,33 +524,39 @@ describe('Modeler', function() {
           canvas = modeler.get('canvas');
 
       // when
-      modeler.importXML(someXML, function() {
+      return modeler.importXML(someXML).then(function() {
 
         // then
         expect(modeler.get('canvas')).to.equal(canvas);
         expect(modeler.get('eventBus')).to.equal(eventBus);
 
-        modeler.importXML(otherXML, function() {
+        return modeler.importXML(otherXML);
+      }).then(function() {
 
-          // then
-          expect(modeler.get('canvas')).to.equal(canvas);
-          expect(modeler.get('eventBus')).to.equal(eventBus);
-
-          done();
-        });
+        // then
+        expect(modeler.get('canvas')).to.equal(canvas);
+        expect(modeler.get('eventBus')).to.equal(eventBus);
       });
 
     });
 
-    it('should inject mandatory modules', function(done) {
+    it('should inject mandatory modules', function() {
 
       // given
       var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
-      createModeler(xml, function(err, warnings, modeler) {
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
 
         // then
+
+        if (err) {
+          throw err;
+        }
+
         expect(modeler.get('alignElements')).to.exist;
         expect(modeler.get('autoPlace')).to.exist;
         expect(modeler.get('bpmnAutoResize')).to.exist;
@@ -536,8 +577,6 @@ describe('Modeler', function() {
         expect(modeler.get('paletteProvider')).to.exist;
         expect(modeler.get('resize')).to.exist;
         expect(modeler.get('snapping')).to.exist;
-
-        done(err);
       });
 
     });
