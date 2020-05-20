@@ -10,10 +10,10 @@ following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-The source code responsible for displaying the bpmn.io logo (two green cogwheels in
-a box) that links back to http://bpmn.io as part of rendered diagrams MUST NOT be
+The source code responsible for displaying the bpmn.io project watermark that
+links back to https://bpmn.io as part of rendered diagrams MUST NOT be
 removed or changed. When this software is being used in a website or application,
-the logo must stay fully visible and not visually overlapped by other elements.
+the watermark must stay fully visible and not visually overlapped by other elements.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
