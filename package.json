@@ -39,7 +39,7 @@
     "*.css"
   ],
   "devDependencies": {
-    "bpmn-font": "^0.9.3",
+    "bpmn-font": "^0.10.0",
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "^4.1.2",
     "chai-match": "^1.1.1",
