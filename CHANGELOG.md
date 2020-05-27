@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: make import and export APIs awaitable ([#812](https://github.com/bpmn-io/bpmn-js/issues/812))
+* `FEAT`: update watermark ([#1281](https://github.com/bpmn-io/bpmn-js/pull/1281))
+* `CHORE`: clarify license terms ([`bc98a637`](https://github.com/bpmn-io/bpmn-js/commit/bc98a63712f6ac5c66d39f59bf93e296e59ad1e0))
+
+### Breaking Changes
+
+* The toolkit now requires the ES6 `Promise` to be present. To support IE11 you must polyfill it.
+
 ## 6.5.1
 
 * `FIX`: correct namespaces being removed on diagram export ([#1310](https://github.com/bpmn-io/bpmn-js/issues/1310))
