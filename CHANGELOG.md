@@ -8,7 +8,9 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: make import and export APIs awaitable ([#812](https://github.com/bpmn-io/bpmn-js/issues/812))
 * `FEAT`: update watermark ([#1281](https://github.com/bpmn-io/bpmn-js/pull/1281))
+* `CHORE`: deprecated `import.parse.complete` context payload ([`157aec6e`](https://github.com/bpmn-io/bpmn-js/commit/157aec6e))
 * `CHORE`: clarify license terms ([`bc98a637`](https://github.com/bpmn-io/bpmn-js/commit/bc98a63712f6ac5c66d39f59bf93e296e59ad1e0))
+* `CHORE`: bump to `bpmn-moddle@7.0.1`
 
 ### Breaking Changes
 
