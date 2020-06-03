@@ -281,6 +281,16 @@ describe('features - context-pad', function() {
       ]);
     }));
 
+
+    it('should provide Group entries', inject(function() {
+
+      expectContextPadEntries('Group_1', [
+        'append.text-annotation',
+        'delete',
+        '!replace'
+      ]);
+    }));
+
   });
 
 
