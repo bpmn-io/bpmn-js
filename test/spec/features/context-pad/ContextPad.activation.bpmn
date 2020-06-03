@@ -11,7 +11,11 @@
     <bpmn2:dataStoreReference id="DataStoreReference" />
     <bpmn2:dataObject id="DataObject_1" name="Data Object 1"/>
     <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject_1"/>
+    <bpmn2:group id="Group_1" categoryValueRef="CategoryValue_1" />
   </bpmn2:process>
+  <bpmn2:category id="Category_1">
+    <bpmn2:categoryValue id="CategoryValue_1" />
+  </bpmn2:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_EventBasedGateway_2" bpmnElement="EventBasedGateway_1">
@@ -46,6 +50,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds height="21.0" width="149.0" x="257.0" y="367.0"/>
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <dc:Bounds x="40" y="410" width="190" height="110" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
