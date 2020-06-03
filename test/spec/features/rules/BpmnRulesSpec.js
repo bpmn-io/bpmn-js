@@ -423,6 +423,28 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect Group -> TextAnnotation', inject(function() {
+
+      expectCanConnect('Group', 'TextAnnotation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect TextAnnotation -> Group', inject(function() {
+
+      expectCanConnect('TextAnnotation', 'Group', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
     it('connect StartEvent_None -> DataStoreReference', inject(function() {
 
       expectCanConnect('StartEvent_None', 'DataStoreReference', {
