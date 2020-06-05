@@ -2243,7 +2243,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         'bpmn:FlowNode',
         'bpmn:InteractionNode',
         'bpmn:DataObjectReference',
-        'bpmn:DataStoreReference'
+        'bpmn:DataStoreReference',
+        'bpmn:Group'
       ];
 
       // when
