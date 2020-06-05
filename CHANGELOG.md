@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.0.0
+
 * `FEAT`: make import and export APIs awaitable ([#812](https://github.com/bpmn-io/bpmn-js/issues/812))
 * `FEAT`: update watermark ([#1281](https://github.com/bpmn-io/bpmn-js/pull/1281))
 * `CHORE`: deprecated `import.parse.complete` context payload ([`157aec6e`](https://github.com/bpmn-io/bpmn-js/commit/157aec6e))
