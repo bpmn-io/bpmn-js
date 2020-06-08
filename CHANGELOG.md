@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.1.0
+
+* `FEAT`: allow annotating groups ([#1327](https://github.com/bpmn-io/bpmn-js/issues/1327))
+
 ## 7.0.1
 
 * `CHORE`: bump to `bpmn-moddle@7.0.3`
