@@ -12,6 +12,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 7.0.1
 
+* `FIX`: roundtrip default `xml` namespace ([#1319](https://github.com/bpmn-io/bpmn-js/issues/1319))
 * `CHORE`: bump to `bpmn-moddle@7.0.3`
 
 ## 7.0.0
