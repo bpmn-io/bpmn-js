@@ -1,0 +1,66 @@
+.modal-outer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-inner {
+  background: #FAFAFA;
+  border: solid 1px #CCC;
+  border-radius: 2px;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.modal-inner {
+  font-size: 16px;
+}
+
+.modal-inner h3, h5 {
+  margin: 0 0 10px 0;
+}
+
+.modal-inner .form-group {
+  margin-bottom: 10px;
+}
+
+.modal-inner label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.modal-inner input,
+.modal-inner select {
+  border: solid 1px #CCC;
+  border-radius: 2px;
+  display: block;
+  padding: 5px 10px;
+}
+
+.modal-inner input:focus,
+.modal-inner select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.modal-inner button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 2px;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+.modal-inner button:hover,
+.modal-inner button:focus {
+  background-color: #0069d9;
+  box-shadow: 0 0 0 0.2rem rgba(38,143,255,.5);
+  cursor: pointer;
+}

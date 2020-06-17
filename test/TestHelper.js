@@ -7,11 +7,18 @@ import {
 insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
 
 insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
+insertCSS('app-embedded.css', require('./app-embedded.css'));
+insertCSS('snippets.css', require('./snippets.css'));
 
-insertCSS('diagram-js-testing.css',
-  'body .test-container { height: auto }' +
-  'body .test-container .test-content-container { height: 90vmin; }'
-);
+insertCSS('diagram-js-testing.css', `
+* {
+  margin: 0;
+}
+
+html, body, .container {
+  height: 100%;
+}
+`);
 
 
 import ChaiMatch from 'chai-match';

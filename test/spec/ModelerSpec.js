@@ -13,6 +13,10 @@ import {
   clearBpmnJS
 } from 'test/TestHelper';
 
+import NativeClipboardModule from 'lib/features/native-clipboard';
+
+import NativeCopyPasteModule from 'lib/features/native-copy-paste';
+
 
 describe('Modeler', function() {
 
@@ -21,10 +25,16 @@ describe('Modeler', function() {
   var modeler;
 
   beforeEach(function() {
-    container = TestContainer.get(this);
+    container = document.createElement('div');
+
+    container.classList.add('container');
+
+    // container = TestContainer.get(this);
+    
+    document.body.appendChild(container);
   });
 
-  function createModeler(xml, done) {
+  function createModeler(xml, done, additionalOptions) {
 
     clearBpmnJS();
 
@@ -32,7 +42,8 @@ describe('Modeler', function() {
       container: container,
       keyboard: {
         bindTo: document
-      }
+      },
+      ...additionalOptions
     });
 
     setBpmnJS(modeler);
@@ -43,9 +54,35 @@ describe('Modeler', function() {
   }
 
 
-  it.only('should import simple process', function(done) {
+  it('should import simple process', function(done) {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     createModeler(xml, done);
+  });
+
+
+  it('should use native clipboard', function(done) {
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    createModeler(xml, done, {
+      additionalModules: [
+        NativeClipboardModule
+      ]
+    });
+  });
+
+
+  it('should plug into native copy and paste', function(done) {
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    createModeler(xml, done, {
+      keyboardBindings: {
+        copyPaste: false
+      },
+      additionalModules: [
+        NativeCopyPasteModule
+      ],
+      keyboard: {}
+    });
   });
 
 
