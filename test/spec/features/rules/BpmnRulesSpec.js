@@ -656,7 +656,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
       expectCanConnect('Task_in_OtherProcess', 'BoundaryEvent_on_SubProcess', {
         sequenceFlow: false,
-        messageFlow: true,
+        messageFlow: false,
         association: false,
         dataAssociation: false
       });
