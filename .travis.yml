@@ -20,7 +20,7 @@ jobs:
     - stage: update website
       script: './tasks/stages/update-website'
 
-stages:
+stages: 
   - test
   - name: update integration test
     if: tag =~ ^v\d
