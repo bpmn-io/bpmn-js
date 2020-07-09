@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.2.1
+
+* `FIX`: disallow boundary events as message flow targets ([#1300](https://github.com/bpmn-io/bpmn-js/issues/1300))
+
 ## 7.2.0
 
 _Republish of `v7.1.0`._
