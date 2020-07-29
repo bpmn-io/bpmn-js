@@ -1058,6 +1058,44 @@ describe('features/replace - bpmn replace', function() {
         expect(is(newElement, 'bpmn:CallActivity')).to.be.true;
       }));
 
+    it('should drop event type from start event after moving it into sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_4'),
+            subProcess = elementRegistry.get('SubProcess_2');
+
+        // when
+        modeling.moveElements([startEvent], { x: 100, y: 0 }, subProcess);
+
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
+        })[0];
+
+        // then
+        expect(startEventAfter.businessObject.eventDefinitions).to.be.undefined;
+      })
+    );
+
+    it('should not drop event type from start event after moving it into event sub process',
+      inject(function(bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_5'),
+            subProcess = elementRegistry.get('EventSubProcess_2');
+
+        // when
+        modeling.moveElements([startEvent], { x: -100, y: 0 }, subProcess);
+
+        var startEventAfter = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
+        })[0];
+
+        // then
+        expect(startEventAfter.businessObject.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
+      })
+    );
+
   });
 
 
