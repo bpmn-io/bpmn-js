@@ -657,6 +657,24 @@ describe('features/popup-menu - replace menu provider', function() {
         })
       );
 
+      it('should contain only start event, end event and intermediate throw event inside sub process except the current one',
+        inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_2');
+
+          // when
+          openPopup(startEvent);
+
+          // then
+          expect(queryEntry('replace-with-message-start')).to.be.null;
+          expect(queryEntry('replace-with-none-end')).to.exist;
+          expect(queryEntry('replace-with-none-intermediate-throwing')).to.exist;
+
+          expect(queryEntries()).to.have.length(2);
+        })
+      );
+
 
       it('should contain all intermediate events except the current one',
         inject(function(bpmnReplace, elementRegistry) {
