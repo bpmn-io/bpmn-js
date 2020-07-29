@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: disallow typed start events inside non-event based sub processes ([#831](https://github.com/bpmn-io/bpmn-js/issues/831))
+
 ## 7.2.1
 
 * `FIX`: disallow boundary events as message flow targets ([#1300](https://github.com/bpmn-io/bpmn-js/issues/1300))
