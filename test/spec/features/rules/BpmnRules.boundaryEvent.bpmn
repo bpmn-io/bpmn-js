@@ -18,6 +18,9 @@
     <bpmn:boundaryEvent id="BoundaryEvent_on_Task" attachedToRef="Task" />
     <bpmn:startEvent id="StartEvent_None" />
     <bpmn:exclusiveGateway id="ExclusiveGateway" />
+    <bpmn:boundaryEvent id="MessageBoundaryEvent_onSubProcess" attachedToRef="SubProcess">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1owasie" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
   <bpmn:process id="OtherProcess">
     <bpmn:task id="Task_in_OtherProcess" name="3" />
@@ -87,6 +90,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="474" y="275" width="90" height="20" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="MessageBoundaryEvent_onSubProcess_di" bpmnElement="MessageBoundaryEvent_onSubProcess">
+        <dc:Bounds x="362" y="204" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

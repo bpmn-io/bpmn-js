@@ -663,6 +663,17 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect Task_in_OtherProcess -> MessageBoundaryEvent_onSubProcess', inject(function() {
+
+      expectCanConnect('Task_in_OtherProcess', 'MessageBoundaryEvent_onSubProcess', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: false,
+        dataAssociation: false
+      });
+    }));
+
+
     it('drop BoundaryEvent -> Task', function() {
       expectCanDrop('BoundaryEvent_on_SubProcess', 'Task_in_OtherProcess', false);
     });
