@@ -4,6 +4,8 @@
 
 View and edit BPMN 2.0 diagrams in the browser.
 
+A standard Business Process Model and Notation (BPMN) will provide businesses with the capability of understanding their iternal business procedures in a graphical notation and will give organizations the ability to communicate these procedures in a standard manner.
+
 [![bpmn-js screencast](./resources/screencast.gif "bpmn-js in action")](http://demo.bpmn.io/s/start)
 
 
