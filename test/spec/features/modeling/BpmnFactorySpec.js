@@ -138,7 +138,7 @@ describe('features - bpmn-factory', function() {
         bpmnFactory.create('dc:Point', { x: 0, y: 0 })
       ]);
 
-      // expect original not to have been accidently serialized
+      // expect original not to have been accidentally serialized
       expect(result[0].$attrs).to.eql({});
     }));
   });

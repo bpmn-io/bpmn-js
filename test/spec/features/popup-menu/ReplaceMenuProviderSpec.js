@@ -462,7 +462,7 @@ describe('features/popup-menu - replace menu provider', function() {
     }));
 
 
-    it('should retain the loop characteristics for call activites',
+    it('should retain the loop characteristics for call activities',
       inject(function(bpmnReplace, elementRegistry) {
 
         // given
