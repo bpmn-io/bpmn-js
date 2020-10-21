@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.4.0
+
+* `CHORE`: bump to `diagram-js@6.8.0`
+* `CHORE`: migrate to `travis-ci.com`
+
 ## 7.3.1
 
 * `CHORE`: bump to `diagram-js@6.7.1`
