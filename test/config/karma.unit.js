@@ -2,6 +2,8 @@
 
 var path = require('path');
 
+var collectTranslations = process.env.COLLECT_TRANSLATIONS;
+
 var coverage = process.env.COVERAGE;
 
 // configures browsers to run test against
@@ -19,7 +21,8 @@ var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 
 
 module.exports = function(karma) {
-  karma.set({
+
+  var config = {
 
     basePath,
 
@@ -86,5 +89,16 @@ module.exports = function(karma) {
       },
       devtool: 'eval-source-map'
     }
-  });
+  };
+
+  if (collectTranslations) {
+    config.plugins = [].concat(config.plugins || [], 'karma-*', require('./translation-reporter'));
+    config.reporters = [].concat(config.reporters || [], 'translation-reporter');
+
+    config.envPreprocessor = [
+      'TRANSLATIONS'
+    ];
+  }
+
+  karma.set(config);
 };

@@ -10,7 +10,8 @@ import {
 
 import {
   setBpmnJS,
-  clearBpmnJS
+  clearBpmnJS,
+  collectTranslations
 } from 'test/TestHelper';
 
 
@@ -156,7 +157,7 @@ describe('Modeler', function() {
   });
 
 
-  describe('translate support', function() {
+  !collectTranslations && describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
