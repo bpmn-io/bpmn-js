@@ -268,6 +268,21 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should handle missing process/collaboration', function() {
+
+      var xml = require('../fixtures/bpmn/error/no-process-collaboration.bpmn');
+
+      // when
+      return createViewer(container, Viewer, xml).then(function(result) {
+
+        var err = result.error;
+
+        // then
+        expect(err.message).to.eql('no process or collaboration to display');
+      });
+    });
+
   });
 
 
