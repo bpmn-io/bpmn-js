@@ -10,7 +10,7 @@ var {
 function TranslationReporter() {
   process.env.TRANSLATIONS = 'enabled';
 
-  var outputFile = path.join(__dirname, '../../docs/translations.json');
+  var translationsFile = path.join(__dirname, '../../docs/translations.json');
 
   var translations = [];
 
@@ -38,10 +38,10 @@ function TranslationReporter() {
 
 
   this.onRunComplete = function() {
-    translations = uniqueBy(function(e) {return e;}, translations);
-    translations = sortBy(translations, function(e) {return e;});
+    translations = uniqueBy(function(e) { return e; }, translations);
+    translations = sortBy(translations, function(e) { return e; });
 
-    fs.writeFileSync(outputFile, JSON.stringify(translations, null, 2));
+    fs.writeFileSync(translationsFile, JSON.stringify(translations, null, 2));
   };
 }
 

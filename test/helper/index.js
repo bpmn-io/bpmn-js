@@ -39,12 +39,22 @@ import {
 import TestContainer from 'mocha-test-container-support';
 
 import Modeler from '../../lib/Modeler';
+import NavigatedViewer from '../../lib/NavigatedViewer';
 import Viewer from '../../lib/Viewer';
 
 var OPTIONS, BPMN_JS;
 
 import translationModule from './TranslationCollector';
 
+export var collectTranslations = window.__env__ && window.__env__.TRANSLATIONS === 'enabled';
+
+// inject logging translation module into default modules
+if (collectTranslations) {
+
+  [ Modeler, Viewer, NavigatedViewer ].forEach(function(constructor) {
+    constructor.prototype._modules.push(translationModule);
+  });
+}
 
 export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
 
@@ -105,7 +115,7 @@ export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
     }
 
     // used to extract translations used during tests
-    if (window.__env__ && window.__env__.TRANSLATIONS === 'enabled') {
+    if (collectTranslations) {
       _options.additionalModules = [].concat(
         _options.additionalModules || [],
         [ translationModule ]
