@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject" />
+    <bpmn:dataObject id="DataObject" />
+    <bpmn:dataObjectReference id="DataObjectReference_2" dataObjectRef="DataObject" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
+      <bpmndi:BPMNShape id="DataObjectReference_1_di" bpmnElement="DataObjectReference_1">
+        <dc:Bounds x="201" y="184" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="174" y="234" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_2_di" bpmnElement="DataObjectReference_2">
+        <dc:Bounds x="301" y="184" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="274" y="234" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

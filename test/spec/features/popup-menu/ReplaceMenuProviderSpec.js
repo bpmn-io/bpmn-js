@@ -28,7 +28,8 @@ import { isExpanded } from 'lib/util/DiUtil';
 describe('features/popup-menu - replace menu provider', function() {
 
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
-      diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+      diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn'),
+      diagramXMLDataObject = require('../../../fixtures/bpmn/features/replace/data-object.bpmn');
 
   var testModules = [
     coreModule,
@@ -49,6 +50,144 @@ describe('features/popup-menu - replace menu provider', function() {
     });
   };
 
+  describe('data object - collection marker', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLDataObject, { modules: testModules }));
+
+
+    it('should toggle on', inject(function(elementRegistry) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      openPopup(dataObjectReference);
+
+      // when
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).to.be.true;
+      expect(dataObjectReference.businessObject.dataObjectRef.isCollection).to.be.true;
+    }));
+
+
+    it('should undo toggle on', inject(function(commandStack, elementRegistry) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      openPopup(dataObjectReference);
+
+      triggerAction('toggle-is-collection');
+
+      // when
+      commandStack.undo();
+
+      openPopup(dataObjectReference);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).not.to.be.true;
+      expect(dataObjectReference.businessObject.dataObjectRef.isCollection).not.to.be.true;
+    }));
+
+
+    it('should redo toggle on', inject(function(commandStack, elementRegistry) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      openPopup(dataObjectReference);
+
+      triggerAction('toggle-is-collection');
+
+      commandStack.undo();
+
+      // when
+      commandStack.redo();
+
+      openPopup(dataObjectReference);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).to.be.true;
+      expect(dataObjectReference.businessObject.dataObjectRef.isCollection).to.be.true;
+    }));
+
+
+    it('should toggle off', inject(function(elementRegistry) {
+
+      // given
+      var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+      openPopup(dataObjectReference);
+
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference);
+
+      // when
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).to.be.false;
+      expect(dataObjectReference.businessObject.dataObjectRef.isCollection).to.be.false;
+    }));
+
+
+    it('should activate marker of linked data object reference', inject(function(elementRegistry) {
+
+      // given
+      var dataObjectReference1 = elementRegistry.get('DataObjectReference_1');
+      var dataObjectReference2 = elementRegistry.get('DataObjectReference_2');
+
+      openPopup(dataObjectReference1);
+
+      // when
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference2);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).to.be.true;
+    }));
+
+
+    it('should deactivate marker of linked data object reference', inject(function(elementRegistry) {
+
+      // given
+      var dataObjectReference1 = elementRegistry.get('DataObjectReference_1');
+      var dataObjectReference2 = elementRegistry.get('DataObjectReference_2');
+
+      openPopup(dataObjectReference1);
+
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference1);
+
+      // when
+      triggerAction('toggle-is-collection');
+
+      openPopup(dataObjectReference2);
+
+      var isCollectionMarker = queryEntry('toggle-is-collection');
+
+      // then
+      expect(domClasses(isCollectionMarker).has('active')).to.be.false;
+    }));
+  });
 
   describe('toggle', function() {
 
