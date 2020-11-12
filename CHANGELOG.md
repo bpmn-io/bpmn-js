@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.4.1
+
+* `FIX`: correct keyboard zoom in key on international keyboard shortcuts ([#1362](https://github.com/bpmn-io/bpmn-js/issues/1362))
+
 ## 7.4.0
 
 * `CHORE`: bump to `diagram-js@6.8.0`
