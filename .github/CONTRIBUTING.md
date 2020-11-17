@@ -11,6 +11,8 @@ Great to see you! Help us out by [filing bugs or feature requests](#working-with
 * [Contributing Improvements](#contributing-improvements)
     * [Setting up the Project locally](#setting-up-the-project-locally)
     * [Discussing Code Changes](#discussing-code-changes)
+    * [Adhering to the Code Style](#adhering-to-the-code-style)
+    * [Adhering to the Unit Test Style](#adhering-to-the-unit-test-style)
     * [Creating a Pull Request](#creating-a-pull-request)
 
 
@@ -58,7 +60,7 @@ For details consult our in depth [setup guide](https://github.com/bpmn-io/bpmn-j
 Create a [pull request](#creating-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
 
-### Code Style
+### Adhering to the Code Style
 
 In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
 
@@ -67,6 +69,9 @@ In addition to our automatically enforced [lint rules](https://github.com/bpmn-i
 
 __Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
 
+### Adhering to the Unit Test Style
+
+In order to retrieve a sign-off for your contribution, it needs to be sufficiently and well tested. Please structure your unit tests into **given**, **when** and **then** ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L116), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L38)). To increase overall readability and understandability please also leave two empty lines before `describe(...)`, `it(...)` or *setup* blocks on the same indentation level ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L49), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L36)).
 
 ### Creating a Pull Request
 
