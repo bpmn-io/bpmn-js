@@ -1648,6 +1648,136 @@ describe('features/replace - bpmn replace', function() {
 
   });
 
+
+  describe('center', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn');
+
+    var testModules = [
+      modelingModule,
+      coreModule
+    ];
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    describe('data store reference to data object reference', function() {
+
+      it('should center on replace', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var dataStoreReference = elementRegistry.get('DataStoreReference_1');
+        var positionX = dataStoreReference.x;
+
+        // when
+        bpmnReplace.replaceElement(dataStoreReference, { type: 'bpmn:DataObjectReference' });
+
+        var dataObjectReference = elementRegistry.get('DataStoreReference_1');
+        var newPositionX = positionX + (dataStoreReference.width - dataObjectReference.width) / 2;
+
+        // then
+        expect(dataObjectReference.x).to.eql(newPositionX);
+      }));
+
+
+      it('should undo', inject(function(bpmnReplace, commandStack, elementRegistry) {
+
+        // given
+        var dataStoreReference = elementRegistry.get('DataStoreReference_1');
+        var positionX = dataStoreReference.x;
+
+        bpmnReplace.replaceElement(dataStoreReference, { type: 'bpmn:DataObjectReference' });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(elementRegistry.get('DataStoreReference_1').x).to.eql(positionX);
+      }));
+
+
+      it('should redo', inject(function(bpmnReplace, commandStack, elementRegistry) {
+
+        // given
+        var dataStoreReference = elementRegistry.get('DataStoreReference_1');
+        var positionX = dataStoreReference.x;
+
+        bpmnReplace.replaceElement(dataStoreReference, { type: 'bpmn:DataObjectReference' });
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        var dataObjectReference = elementRegistry.get('DataStoreReference_1');
+        var newPositionX = positionX + (dataStoreReference.width - dataObjectReference.width) / 2;
+
+        // then
+        expect(dataObjectReference.x).to.eql(newPositionX);
+      }));
+
+    });
+
+
+    describe('data object reference to data store reference', function() {
+
+      it('should center on replace', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+        var positionX = dataObjectReference.x;
+
+        // when
+        bpmnReplace.replaceElement(dataObjectReference, { type: 'bpmn:DataStoreReference' });
+
+        var dataStoreReference = elementRegistry.get('DataObjectReference_1');
+        var newPositionX = positionX + (dataObjectReference.width - dataStoreReference.width) / 2;
+
+        // then
+        expect(dataStoreReference.x).to.eql(newPositionX);
+      }));
+
+
+      it('should undo', inject(function(bpmnReplace, commandStack, elementRegistry) {
+
+        // given
+        var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+        var positionX = dataObjectReference.x;
+
+        bpmnReplace.replaceElement(dataObjectReference, { type: 'bpmn:DataStoreReference' });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(elementRegistry.get('DataObjectReference_1').x).to.eql(positionX);
+      }));
+
+
+      it('should redo', inject(function(bpmnReplace, commandStack, elementRegistry) {
+
+        // given
+        var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+        var positionX = dataObjectReference.x;
+
+        bpmnReplace.replaceElement(dataObjectReference, { type: 'bpmn:DataStoreReference' });
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        var dataStoreReference = elementRegistry.get('DataObjectReference_1');
+        var newPositionX = positionX + (dataObjectReference.width - dataStoreReference.width) / 2;
+
+        // then
+        expect(dataStoreReference.x).to.eql(newPositionX);
+      }));
+
+    });
+
+  });
+
 });
 
 
