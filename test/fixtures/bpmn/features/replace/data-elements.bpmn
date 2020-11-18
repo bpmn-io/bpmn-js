@@ -4,20 +4,19 @@
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject" />
     <bpmn:dataObject id="DataObject" />
     <bpmn:dataObjectReference id="DataObjectReference_2" dataObjectRef="DataObject" />
+    <bpmn:dataStoreReference id="DataStoreReference_1" dataStoreRef="DataStore" />
+    <bpmn:dataStore id="DataStore" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process">
       <bpmndi:BPMNShape id="DataObjectReference_1_di" bpmnElement="DataObjectReference_1">
-        <dc:Bounds x="201" y="184" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="174" y="234" width="90" height="20" />
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="200" y="200" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_2_di" bpmnElement="DataObjectReference_2">
-        <dc:Bounds x="301" y="184" width="36" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="274" y="234" width="90" height="20" />
-        </bpmndi:BPMNLabel>
+        <dc:Bounds x="300" y="200" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_1_di" bpmnElement="DataStoreReference_1">
+        <dc:Bounds x="400" y="200" width="50" height="50" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

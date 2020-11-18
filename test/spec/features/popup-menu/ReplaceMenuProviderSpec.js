@@ -29,7 +29,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
       diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn'),
-      diagramXMLDataObject = require('../../../fixtures/bpmn/features/replace/data-object.bpmn');
+      diagramXMLDataElements = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn');
 
   var testModules = [
     coreModule,
@@ -50,9 +50,10 @@ describe('features/popup-menu - replace menu provider', function() {
     });
   };
 
+
   describe('data object - collection marker', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLDataObject, { modules: testModules }));
+    beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
 
 
     it('should toggle on', inject(function(elementRegistry) {
@@ -1201,6 +1202,50 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+
+    describe('data object', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
+
+
+      it('should only contain data store reference', inject(function(elementRegistry) {
+
+        // given
+        var dataObjectReference = elementRegistry.get('DataObjectReference_1');
+
+        // when
+        openPopup(dataObjectReference);
+
+        // then
+        expect(queryEntries()).to.have.length(2);
+        expect(queryEntry('toggle-is-collection')).to.exist;
+        expect(queryEntry('replace-with-data-store-reference')).to.exist;
+        expect(queryEntry('replace-with-data-object-reference')).to.be.null;
+      }));
+    });
+
+
+    describe('data store', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
+
+
+      it('should only contain data object reference', inject(function(elementRegistry) {
+
+        // given
+        var dataStoreReference = elementRegistry.get('DataStoreReference_1');
+
+        // when
+        openPopup(dataStoreReference);
+
+        // then
+        expect(queryEntries()).to.have.length(1);
+        expect(queryEntry('toggle-is-collection')).to.be.null;
+        expect(queryEntry('replace-with-data-store-reference')).to.be.null;
+        expect(queryEntry('replace-with-data-object-reference')).to.exist;
+      }));
+
+    });
 
   });
 

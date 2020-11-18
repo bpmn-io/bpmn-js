@@ -265,7 +265,7 @@ describe('features - context-pad', function() {
       expectContextPadEntries('DataStoreReference', [
         'connect',
         'append.text-annotation',
-        '!replace',
+        'replace',
         '!append.end-event'
       ]);
     }));
@@ -489,11 +489,11 @@ describe('features - context-pad', function() {
 
           // given
           var rootShape = canvas.getRootElement(),
-              dataStore = elementFactory.createShape({ type: 'bpmn:DataStoreReference' }),
+              group = elementFactory.createShape({ type: 'bpmn:Group' }),
               replaceMenu;
 
           // when
-          create.start(canvasEvent({ x: 0, y: 0 }), dataStore);
+          create.start(canvasEvent({ x: 0, y: 0 }), group);
 
           dragging.move(canvasEvent({ x: 50, y: 50 }));
           dragging.hover({ element: rootShape });
