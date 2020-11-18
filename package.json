@@ -10,7 +10,7 @@
     "distro": "node tasks/build-distro.js",
     "collect-translations": "COLLECT_TRANSLATIONS=1 npm test",
     "test:distro": "node tasks/test-distro.js",
-    "preversion": "run-s distro test:distro"
+    "postversion": "run-s distro test:distro"
   },
   "repository": {
     "type": "git",
