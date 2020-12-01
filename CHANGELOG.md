@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.4.2
+
+* `FIX`: correctly emit out `element.event` after drop-on-flow ([#1366](https://github.com/bpmn-io/bpmn-js/issues/1366))
+
 ## 7.4.1
 
 * `FIX`: correct keyboard zoom in key on international keyboard shortcuts ([#1362](https://github.com/bpmn-io/bpmn-js/issues/1362))
