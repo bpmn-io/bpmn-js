@@ -9,8 +9,6 @@ import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import copyPasteModule from 'lib/features/copy-paste';
 
-/* global sinon */
-
 
 describe('features/grid-snapping - layout connection', function() {
 
