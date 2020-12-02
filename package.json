@@ -87,10 +87,10 @@
     "diagram-js": "^6.8.2",
     "diagram-js-direct-editing": "^1.6.1",
     "ids": "^1.0.0",
-    "inherits": "^2.0.1",
-    "min-dash": "^3.5.1",
-    "min-dom": "^3.1.2",
+    "inherits": "^2.0.4",
+    "min-dash": "^3.5.2",
+    "min-dom": "^3.1.3",
     "object-refs": "^0.3.0",
-    "tiny-svg": "^2.2.1"
+    "tiny-svg": "^2.2.2"
   }
 }
