@@ -11,8 +11,6 @@ import {
   find
 } from 'min-dash';
 
-/* global sinon */
-
 
 describe('features/modeling - lanes - flowNodeRefs', function() {
 
