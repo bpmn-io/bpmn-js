@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 7.5.0
+
+* `FEAT`: update translatable strings ([#1364](https://github.com/bpmn-io/bpmn-js/pull/1364))
+* `FEAT`: add collection marker to DataObjectReference ([#381](https://github.com/bpmn-io/bpmn-js/issues/381))
+* `FEAT`: provide generic command for updating moddle properties ([#1376](https://github.com/bpmn-io/bpmn-js/pull/1376))
+* `FEAT`: add switch between DataStoreReference and DataObjectReference in replace menu ([#1372](https://github.com/bpmn-io/bpmn-js/issues/1372))
+* `FIX`: align collection and parallel instance markers style ([#1371](https://github.com/bpmn-io/bpmn-js/issues/1371))
+
 ## 7.4.2
 
 * `FIX`: correctly emit out `element.event` after drop-on-flow ([#1366](https://github.com/bpmn-io/bpmn-js/issues/1366))
