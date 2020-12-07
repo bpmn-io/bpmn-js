@@ -190,6 +190,7 @@ describe('features/popup-menu - replace menu provider', function() {
     }));
   });
 
+
   describe('toggle', function() {
 
     beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
@@ -1179,6 +1180,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+
     describe('collapsed subprocesses', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
@@ -1198,6 +1200,47 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(collapsedSubProcessEntry).not.to.exist;
+      }));
+
+    });
+
+
+    describe('pools', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.pools.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should indicate removing content', inject(function(elementRegistry) {
+
+        // given
+        var expandedPool = elementRegistry.get('Participant_1');
+
+        // when
+        openPopup(expandedPool);
+
+        var emptyPoolLabel = queryEntryLabel('replace-with-collapsed-pool');
+
+        // then
+        expect(emptyPoolLabel).to.exist;
+        expect(emptyPoolLabel.innerHTML).to.eql('Empty Pool (removes content)');
+      }));
+
+
+      it('should NOT indicate removing content', inject(function(elementRegistry) {
+
+        // given
+        var expandedPool = elementRegistry.get('Participant_2');
+
+        // when
+        openPopup(expandedPool);
+
+        var emptyPoolLabel = queryEntryLabel('replace-with-collapsed-pool');
+
+        // then
+        expect(emptyPoolLabel).to.exist;
+        expect(emptyPoolLabel.innerHTML).to.eql('Empty Pool');
       }));
 
     });
@@ -2136,6 +2179,12 @@ function queryEntries() {
   var container = getBpmnJS().get('canvas').getContainer();
 
   return domQueryAll('.djs-popup .entry', container);
+}
+
+function queryEntryLabel(id) {
+  var entry = queryEntry(id);
+
+  return domQuery('span', entry);
 }
 
 function triggerAction(id) {
