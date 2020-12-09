@@ -71,7 +71,7 @@
     "phantomjs-prebuilt": "^2.1.12",
     "promise-polyfill": "^8.2.0",
     "puppeteer": "^5.5.0",
-    "raw-loader": "^1.0.0",
+    "raw-loader": "^4.0.2",
     "rollup": "^2.34.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^2.2.0",
