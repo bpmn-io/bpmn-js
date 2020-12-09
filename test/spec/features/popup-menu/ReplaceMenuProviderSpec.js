@@ -29,7 +29,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
       diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn'),
-      diagramXMLDataElements = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn');
+      diagramXMLDataElements = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn'),
+      diagramXMLParticipants = require('../../../fixtures/bpmn/features/replace/participants.bpmn');
 
   var testModules = [
     coreModule,
@@ -76,7 +77,7 @@ describe('features/popup-menu - replace menu provider', function() {
     }));
 
 
-    it('should undo toggle on', inject(function(commandStack, elementRegistry) {
+    it('should undo', inject(function(commandStack, elementRegistry) {
 
       // given
       var dataObjectReference = elementRegistry.get('DataObjectReference_1');
@@ -93,12 +94,12 @@ describe('features/popup-menu - replace menu provider', function() {
       var isCollectionMarker = queryEntry('toggle-is-collection');
 
       // then
-      expect(domClasses(isCollectionMarker).has('active')).not.to.be.true;
+      expect(domClasses(isCollectionMarker).has('active')).to.be.false;
       expect(dataObjectReference.businessObject.dataObjectRef.isCollection).not.to.be.true;
     }));
 
 
-    it('should redo toggle on', inject(function(commandStack, elementRegistry) {
+    it('should redo', inject(function(commandStack, elementRegistry) {
 
       // given
       var dataObjectReference = elementRegistry.get('DataObjectReference_1');
@@ -188,6 +189,104 @@ describe('features/popup-menu - replace menu provider', function() {
       // then
       expect(domClasses(isCollectionMarker).has('active')).to.be.false;
     }));
+
+  });
+
+
+  describe('participants - multiplicity marker', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLParticipants, { modules: testModules }));
+
+
+    it('should toggle on', inject(function(elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('Participant_1');
+
+      openPopup(participant);
+
+      // when
+      triggerAction('toggle-participant-multiplicity');
+
+      openPopup(participant);
+
+      var multiplicityMarker = queryEntry('toggle-participant-multiplicity');
+
+      // then
+      expect(domClasses(multiplicityMarker).has('active')).to.be.true;
+      expect(participant.businessObject.participantMultiplicity).to.exist;
+    }));
+
+
+    it('should undo', inject(function(commandStack, elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('Participant_1');
+
+      openPopup(participant);
+
+      triggerAction('toggle-participant-multiplicity');
+
+      // when
+      commandStack.undo();
+
+      openPopup(participant);
+
+      var multiplicityMarker = queryEntry('toggle-participant-multiplicity');
+
+      // then
+      expect(domClasses(multiplicityMarker).has('active')).to.be.false;
+      expect(participant.businessObject.participantMultiplicity).not.to.exist;
+    }));
+
+
+    it('should redo', inject(function(commandStack, elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('Participant_1');
+
+      openPopup(participant);
+
+      triggerAction('toggle-participant-multiplicity');
+
+      commandStack.undo();
+
+      // when
+      commandStack.redo();
+
+      openPopup(participant);
+
+      var multiplicityMarker = queryEntry('toggle-participant-multiplicity');
+
+      // then
+      expect(domClasses(multiplicityMarker).has('active')).to.be.true;
+      expect(participant.businessObject.participantMultiplicity).to.exist;
+    }));
+
+
+    it('should toggle off', inject(function(elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('Participant_1');
+
+      openPopup(participant);
+
+      triggerAction('toggle-participant-multiplicity');
+
+      openPopup(participant);
+
+      // when
+      triggerAction('toggle-participant-multiplicity');
+
+      openPopup(participant);
+
+      var multiplicityMarker = queryEntry('toggle-participant-multiplicity');
+
+      // then
+      expect(domClasses(multiplicityMarker).has('active')).to.be.false;
+      expect(participant.businessObject.participantMultiplicity).not.to.exist;
+    }));
+
   });
 
 
