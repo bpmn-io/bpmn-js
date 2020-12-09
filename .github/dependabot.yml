@@ -1,0 +1,21 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://help.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    reviewers: # Automatically assign reviewer
+      - "bpmn-io/modeling-dev"
+    commit-message:
+      prefix: "chore:"
+    versioning-strategy: "increase-if-necessary"
+    # Disable version updates unless they are for security reasons.
+    open-pull-requests-limit: 0
