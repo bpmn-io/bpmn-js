@@ -10,7 +10,7 @@ updates:
     schedule:
       interval: "monthly"
       day: "monday"
-      time: "9:00"
+      time: "09:00"
       timezone: "Europe/Berlin"
     reviewers: # Automatically assign reviewer
       - "bpmn-io/modeling-dev"
