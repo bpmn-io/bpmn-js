@@ -19,8 +19,8 @@ To get started, create a [bpmn-js](https://github.com/bpmn-io/bpmn-js) instance
 and render [BPMN 2.0 diagrams](https://www.omg.org/spec/BPMN/2.0.2/) in the browser:
 
 ```javascript
-var xml; // my BPMN 2.0 xml
-var viewer = new BpmnJS({
+const xml = '...'; // my BPMN 2.0 xml
+const viewer = new BpmnJS({
   container: 'body'
 });
 
@@ -42,7 +42,7 @@ more supported usage scenarios.
 You may attach or detach the viewer dynamically to any element on the page, too:
 
 ```javascript
-var viewer = new BpmnJS();
+const viewer = new BpmnJS();
 
 // attach it to some element
 viewer.attachTo('#container');
