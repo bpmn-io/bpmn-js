@@ -45,7 +45,8 @@ export function createEvent(target, position, data) {
       clientX: position.x,
       clientY: position.y,
       offsetX: position.x,
-      offsetY: position.y
+      offsetY: position.y,
+      button: 0
     }, data || {});
 
     return eventBus.createEvent(data);
