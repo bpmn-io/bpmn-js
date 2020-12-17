@@ -6,6 +6,20 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.0.0
+
+* `FEAT`: improve replace label for collapsed pools ([`8faee2bd`](https://github.com/bpmn-io/bpmn-js/commit/8faee2bde9a74b75b4b6bb9b003507652e75c9c5))
+* `FEAT`: allow participant multiplicity marker to be toggled ([#533](https://github.com/bpmn-io/bpmn-js/issues/533))
+* `FEAT`: support soft breaks / discretionary hyphens in labels ([#1383](https://github.com/bpmn-io/bpmn-js/issues/1383))
+* `FEAT`: improve tool activation via keyboard shortcuts or editor actions
+* `FEAT`: allow components to react to auxiliary mouse button interactions
+* `FEAT`: move canvas on auxiliary button mouse down
+* `CHORE`: bump to `diagram-js@7`
+
+### Breaking Changes
+
+* Auxiliary mouse button events will now be passed as `element.*` mouse events to components. You must filter your event listeners to prevent reactions to these events ([`1063f7c1`](https://github.com/bpmn-io/diagram-js/commit/1063f7c18474096d3d7c9e400ce82a1bf762a157)).
+
 ## 7.5.0
 
 * `FEAT`: update translatable strings ([#1364](https://github.com/bpmn-io/bpmn-js/pull/1364))
