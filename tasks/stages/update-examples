@@ -27,7 +27,7 @@ if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
   # add all resources
   git add -A
-  git commit -m "chore(project): bump examples to $TRAVIS_TAG"
+  git commit -m "chore: bump examples to $TRAVIS_TAG"
   git tag "$TRAVIS_TAG"
   git push -q &2>/dev/null
   git push --tags -q &2>/dev/null
