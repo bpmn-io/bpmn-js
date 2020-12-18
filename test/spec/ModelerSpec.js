@@ -46,7 +46,7 @@ describe('Modeler', function() {
   }
 
 
-  it('should import simple process', function() {
+  (__karma__.config.singleModeler ? it.only : it)('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     return createModeler(xml).then(function(result) {
 

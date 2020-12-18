@@ -22,6 +22,8 @@ module.exports = function(karma) {
 
   var config = {
 
+    client : { singleModeler: karma.singleModeler },
+
     basePath,
 
     frameworks: [

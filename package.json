@@ -6,6 +6,7 @@
     "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
     "dev": "npm test -- --auto-watch --no-single-run",
+    "browser": "npm test -- --auto-watch --no-single-run --single-modeler",
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
     "collect-translations": "COLLECT_TRANSLATIONS=1 npm test",
