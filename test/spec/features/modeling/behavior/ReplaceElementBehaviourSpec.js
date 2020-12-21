@@ -315,7 +315,7 @@ describe('features/modeling - move start event behavior', function() {
           commandStack.undo();
 
           var afterBoundaryEvent = elementRegistry.filter(function(element) {
-            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+            return (element.type === 'bpmn:BoundaryEvent' && element.id === 'BoundaryEvent_1');
           })[0];
 
           // then
@@ -344,7 +344,7 @@ describe('features/modeling - move start event behavior', function() {
           modeling.moveElements([ newBoundaryEvent ], { x: 500, y: 0 }, subProcess, ATTACH);
 
           var movedBoundaryEvent = elementRegistry.filter(function(element) {
-            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+            return (element.type === 'bpmn:BoundaryEvent' && element.id === 'BoundaryEvent_1');
           })[0];
 
           // then
@@ -378,7 +378,7 @@ describe('features/modeling - move start event behavior', function() {
           commandStack.undo();
 
           var movedBoundaryEvent = elementRegistry.filter(function(element) {
-            return (element.type === 'bpmn:BoundaryEvent' && element.id !== 'BoundaryEvent_2');
+            return (element.type === 'bpmn:BoundaryEvent' && element.id === 'BoundaryEvent_1');
           })[0];
 
           // then
