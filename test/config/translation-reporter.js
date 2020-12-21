@@ -8,8 +8,6 @@ var {
 
 
 function TranslationReporter() {
-  process.env.TRANSLATIONS = 'enabled';
-
   var translationsFile = path.join(__dirname, '../../docs/translations.json');
 
   var translations = [];
