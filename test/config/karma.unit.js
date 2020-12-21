@@ -2,6 +2,8 @@ var path = require('path');
 
 var collectTranslations = process.env.COLLECT_TRANSLATIONS;
 
+var singleStart = process.env.SINGLE_START;
+
 var coverage = process.env.COVERAGE;
 
 // configures browsers to run test against
@@ -90,9 +92,14 @@ module.exports = function(karma) {
   };
 
   if (collectTranslations) {
-    config.plugins = [].concat(config.plugins || [], 'karma-*', require('./translation-reporter'));
+    config.plugins = [].concat(config.plugins || ['karma-*'], require('./translation-reporter'));
     config.reporters = [].concat(config.reporters || [], 'translation-reporter');
     config.envPreprocessor = [].concat(config.envPreprocessor || [], 'COLLECT_TRANSLATIONS');
+  }
+
+  if (singleStart) {
+    config.browsers = [].concat(config.browsers, 'Debug');
+    config.envPreprocessor = [].concat(config.envPreprocessor || [], 'SINGLE_START');
   }
 
   karma.set(config);

@@ -5,6 +5,9 @@
   "scripts": {
     "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
+    "start": "SINGLE_START=modeler npm run dev",
+    "start:viewer": "SINGLE_START=viewer npm run dev",
+    "start:navigated-viewer": "SINGLE_START=navigated-viewer npm run dev",
     "dev": "npm test -- --auto-watch --no-single-run",
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
@@ -56,6 +59,7 @@
     "karma": "^5.2.3",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage": "^2.0.3",
+    "karma-debug-launcher": "0.0.3",
     "karma-env-preprocessor": "^0.1.1",
     "karma-firefox-launcher": "^2.1.0",
     "karma-ie-launcher": "^1.0.0",

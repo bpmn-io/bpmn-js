@@ -12,6 +12,8 @@ import {
   createViewer
 } from 'test/TestHelper';
 
+var singleStart = window.__env__ && window.__env__.SINGLE_START === 'viewer';
+
 
 describe('Viewer', function() {
 
@@ -22,7 +24,7 @@ describe('Viewer', function() {
   });
 
 
-  it('should import simple process', function() {
+  (singleStart ? it.only : it)('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // when
