@@ -479,7 +479,7 @@ describe('features - context-pad', function() {
           // then
           var replaceMenu = domQueryAll('[data-id$="-boundary"]', popupMenu._current.container);
           expect(replaceMenu).to.exist;
-          expect(replaceMenu.length).to.eql(13);
+          expect(replaceMenu.length).to.eql(12);
         }
       ));
 

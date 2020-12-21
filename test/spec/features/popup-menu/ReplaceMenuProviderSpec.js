@@ -39,18 +39,6 @@ describe('features/popup-menu - replace menu provider', function() {
     customRulesModule
   ];
 
-  var openPopup = function(element, offset) {
-    offset = offset || 100;
-
-    getBpmnJS().invoke(function(popupMenu) {
-
-      popupMenu.open(element, 'bpmn-replace', {
-        x: element.x + offset, y: element.y + offset
-      });
-
-    });
-  };
-
 
   describe('data object - collection marker', function() {
 
@@ -952,70 +940,120 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
-    describe('cancel events', function() {
+    describe('cancel event definition', function() {
 
       var diagramXML = require('../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
-      it('should contain cancel event replace option',
-        inject(function(elementRegistry) {
 
-          // given
-          var endEvent = elementRegistry.get('EndEvent_1');
+      describe('for end events', function() {
 
-          // when
-          openPopup(endEvent);
+        it('should contain cancel event replace option in transaction',
+          inject(function(elementRegistry) {
 
-          // then
-          expect(queryEntries()).to.have.length(9);
-        })
-      );
+            // given
+            var endEvent = elementRegistry.get('EndEvent_3');
 
+            // when
+            openPopup(endEvent);
 
-      it('should NOT contain cancel event replace option',
-        inject(function(elementRegistry) {
+            // then
+            expect(queryEntries()).to.have.length(9);
 
-          // given
-          var endEvent = elementRegistry.get('EndEvent_2');
-
-          // when
-          openPopup(endEvent);
-
-          // then
-          expect(queryEntries()).to.have.length(8);
-        })
-      );
+            expect(queryEntry('replace-with-cancel-end')).to.exist;
+          })
+        );
 
 
-      it('should contain cancel event replace option (boundary events)',
-        inject(function(elementRegistry) {
+        it('should NOT contain cancel event replace option in transaction when already set',
+          inject(function(elementRegistry) {
 
-          // given
-          var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+            // given
+            var endEvent = elementRegistry.get('EndEvent_1');
 
-          // when
-          openPopup(boundaryEvent);
+            // when
+            openPopup(endEvent);
 
-          // then
-          expect(queryEntries()).to.have.length(13);
-        })
-      );
+            // then
+            expect(queryEntries()).to.have.length(9);
+            expect(queryEntry('replace-with-cancel-end')).to.be.null;
+          })
+        );
 
 
-      it('should NOT contain cancel event replace option (boundary events)',
-        inject(function(elementRegistry) {
+        it('should NOT contain cancel event replace option outside transaction',
+          inject(function(elementRegistry) {
 
-          // given
-          var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+            // given
+            var endEvent = elementRegistry.get('EndEvent_2');
 
-          // when
-          openPopup(boundaryEvent, 40);
+            // when
+            openPopup(endEvent);
 
-          // then
-          expect(queryEntries()).to.have.length(13);
-        })
-      );
+            // then
+            expect(queryEntries()).to.have.length(8);
+
+            expect(queryEntry('replace-with-cancel-end')).to.be.null;
+          })
+        );
+
+      });
+
+
+      describe('for boundary events', function() {
+
+        it('should contain cancel event replace option attachted to Transaction',
+          inject(function(elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+            // when
+            openPopup(boundaryEvent);
+
+            // then
+            expect(queryEntries()).to.have.length(13);
+
+            expect(queryEntry('replace-with-cancel-boundary')).to.exist;
+          })
+        );
+
+
+        it('should NOT contain cancel event replace option attached to SubProcess',
+          inject(function(elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+
+            // when
+            openPopup(boundaryEvent);
+
+            // then
+            expect(queryEntries()).to.have.length(12);
+
+            expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
+          })
+        );
+
+
+        it('should NOT contain cancel event replace option attached to Activity',
+          inject(function(elementRegistry) {
+
+            // given
+            var boundaryEvent = elementRegistry.get('BoundaryEvent_3');
+
+            // when
+            openPopup(boundaryEvent);
+
+            // then
+            expect(queryEntries()).to.have.length(12);
+
+            expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
+          })
+        );
+
+      });
 
     });
 
@@ -1024,7 +1062,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
       beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
-      it('should contain all boundary events for an interrupting boundary event',
+      it('should contain all boundary events (except for cancel and currently active) for an interrupting boundary event',
         inject(function(bpmnReplace, elementRegistry) {
 
           // given
@@ -1035,12 +1073,13 @@ describe('features/popup-menu - replace menu provider', function() {
 
           // then
           expect(queryEntry('replace-with-conditional-intermediate-catch')).to.be.null;
-          expect(queryEntries()).to.have.length(12);
+          expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
+          expect(queryEntries()).to.have.length(11);
         })
       );
 
 
-      it('should contain all boundary events for a non interrupting boundary event',
+      it('should contain all boundary events (except for cancel and currently active) for a non interrupting boundary event',
         inject(function(bpmnReplace, elementRegistry) {
 
           // given
@@ -1051,7 +1090,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
           // then
           expect(queryEntry('replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
-          expect(queryEntries()).to.have.length(12);
+          expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
+          expect(queryEntries()).to.have.length(11);
         })
       );
 
@@ -2267,6 +2307,18 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
 // helpers ////////////
+
+function openPopup(element, offset) {
+  offset = offset || 100;
+
+  getBpmnJS().invoke(function(popupMenu) {
+
+    popupMenu.open(element, 'bpmn-replace', {
+      x: element.x + offset, y: element.y + offset
+    });
+
+  });
+}
 
 function queryEntry(id) {
   var container = getBpmnJS().get('canvas').getContainer();
