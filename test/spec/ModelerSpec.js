@@ -15,6 +15,9 @@ import {
 } from 'test/TestHelper';
 
 
+var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
+
+
 describe('Modeler', function() {
 
   var container;
@@ -46,7 +49,7 @@ describe('Modeler', function() {
   }
 
 
-  it('should import simple process', function() {
+  (singleStart ? it.only : it)('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     return createModeler(xml).then(function(result) {
 

@@ -8,6 +8,8 @@ import {
   createViewer
 } from 'test/TestHelper';
 
+var singleStart = window.__env__ && window.__env__.SINGLE_START === 'navigated-viewer';
+
 
 describe('NavigatedViewer', function() {
 
@@ -18,7 +20,7 @@ describe('NavigatedViewer', function() {
   });
 
 
-  it('should import simple process', function() {
+  (singleStart ? it.only : it)('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     return createViewer(container, NavigatedViewer, xml).then(function(result) {
 
