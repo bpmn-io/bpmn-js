@@ -46,7 +46,7 @@ var OPTIONS, BPMN_JS;
 
 import translationModule from './TranslationCollector';
 
-export var collectTranslations = window.__env__ && window.__env__.TRANSLATIONS === 'enabled';
+export var collectTranslations = window.__env__ && window.__env__.COLLECT_TRANSLATIONS;
 
 // inject logging translation module into default modules
 if (collectTranslations) {
