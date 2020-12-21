@@ -61,14 +61,25 @@ viewer.detach();
 * [Changelog](./CHANGELOG.md)
 
 
-## Building the Project
+## Build and Run
 
-Perform the following steps to build the library, including running all tests:
+Prepare the project by installing all dependencies:
 
-```
-cd bpmn-js
+```sh
 npm install
+```
+
+Then, depending on your use-case you may run any of the following commands:
+
+```sh
+# build the library and run all tests
 npm run all
+
+# spin up a single local modeler instance
+npm start
+
+# run the full development setup
+npm run dev
 ```
 
 You may need to perform [additional project setup](./docs/project/SETUP.md) when
