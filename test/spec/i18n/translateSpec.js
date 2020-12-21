@@ -1,10 +1,8 @@
 import {
   bootstrapModeler,
+  collectTranslations,
   inject
 } from 'test/TestHelper';
-
-// skipping this file during translation extraction
-var skip = window.__env__ && window.__env__.TRANSLATIONS === 'enabled';
 
 import coreModule from 'lib/core';
 import translateModule from 'diagram-js/lib/i18n/translate';
@@ -16,8 +14,9 @@ import contextPadModule from 'lib/features/context-pad';
 var diagramXML = require('test/fixtures/bpmn/simple.bpmn');
 
 
-skip ? describe.only : describe('i18n - translate', function() {
+// skipping this file during translation extraction
 
+collectTranslations ? describe.skip : describe('i18n - translate', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
