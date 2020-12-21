@@ -1,37 +1,41 @@
 # How to Contribute
 
-Great to see you! Help us out by [filing bugs or feature requests](#working-with-issues), assisting others in our [forums](https://forum.bpmn.io/) or by [contributing improvements](#contributing-improvements).
+Great to see you! Help us out by [filing bugs or feature requests](#work-with-issues), assisting others [in our forums](https://forum.bpmn.io/), or [contributing improvements](#contribute-improvements).
 
 
 ## Table of Contents
 
-* [Working with Issues](#working-with-issues)
-    * [Creating an Issue](#creating-an-issue)
-    * [Helping out](#helping-out)
-* [Contributing Improvements](#contributing-improvements)
-    * [Setting up the Project locally](#setting-up-the-project-locally)
-    * [Discussing Code Changes](#discussing-code-changes)
-    * [Adhering to the Code Style](#adhering-to-the-code-style)
-    * [Adhering to the Unit Test Style](#adhering-to-the-unit-test-style)
-    * [Creating a Pull Request](#creating-a-pull-request)
+* [Work with Issues](#work-with-issues)
+    * [Create an Issue](#Create-an-issue)
+    * [Help Out](#help-out)
+* [Contribute Improvements](#contribute-improvements)
+    * [Setup the Project](#Setup-the-project)
+    * [Build and Run the Project](#build-and-run-the-project)
+    * [Discuss Code Changes](#discuss-code-changes)
+    * [Adhere to the Code Style](#adhere-to-the-code-style)
+    * [Adhere to the Unit Test Style](#adhere-to-the-unit-test-style)
+    * [Create a Pull Request](#create-a-pull-request)
 
 
-## Working with Issues
+## Work with Issues
 
-We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication, discussion and planning.
+We use our [issue tracker](https://github.com/bpmn-io/bpmn-js/issues) for project communication, discussion, and planning.
 
+### Create an Issue
 
-### Helping out
+File bug reports or feature requests via [our issue tracker](https://github.com/bpmn-io/bpmn-js/issues/new/choose). Please mind the existing issue templates. These guide you and ensure you provide the details needed for us to follow up on your issue.
+
+### Help Out
 
 * Share your perspective on issues
 * Be helpful and respect others when commenting
 
 
-## Contributing Improvements
+## Contribute Improvements
 
-Learn how to setup the project locally, make changes and contribute bug fixes and new features through pull requests.
+Learn how to set up the project locally, make changes, and contribute bug fixes and new features through pull requests.
 
-### Setting up the Project
+### Setup the Project
 
 The project development runs on top of the [diagram-js](https://github.com/bpmn-io/diagram-js) master branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
 
@@ -70,12 +74,12 @@ npm run all
 ```
 
 
-### Discussing Code Changes
+### Discuss Code Changes
 
-Create a [pull request](#creating-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
+Create a [pull request](#Create-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
 
-### Adhering to the Code Style
+### Adhere to the Code Style
 
 In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
 
@@ -84,13 +88,13 @@ In addition to our automatically enforced [lint rules](https://github.com/bpmn-i
 
 __Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
 
-### Adhering to the Unit Test Style
+### Adhere to the Unit Test Style
 
 In order to retrieve a sign-off for your contribution, it needs to be sufficiently and well tested. Please structure your unit tests into **given**, **when** and **then** ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L116), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L38)). To increase overall readability and understandability please also leave two empty lines before `describe(...)`, `it(...)` or *setup* blocks on the same indentation level ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L49), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L36)).
 
-### Creating a Pull Request
+### Create a Pull Request
 
-We use pull requests for feature additions and bug fixes. If you are not yet familiar on how to create a pull request, [read this great guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
+We use pull requests for feature additions and bug fixes. If you are not yet familiar with pull requests, [read this excellent guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
 
 Some things that make it easier for us to accept your pull requests
 
@@ -106,5 +110,9 @@ Some things that make it easier for us to accept your pull requests
 
 We'd be glad to assist you if you do not get these things right in the first place.
 
+
+---
+
+Thanks for your interest in our library.
 
 :heart: from the bpmn.io team.
