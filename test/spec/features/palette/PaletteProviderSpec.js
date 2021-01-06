@@ -88,6 +88,30 @@ describe('features/palette', function() {
 
   });
 
+
+  describe('tools', function() {
+
+    // skip on PhantomJS to prevent unwanted <forEach> behaviors
+    // cf. https://github.com/bpmn-io/diagram-js/pull/517
+    (isPhantomJS() ? it.skip : it)('should not fire <move> on globalConnect', inject(
+      function(eventBus) {
+
+        // given
+        var moveSpy = sinon.spy();
+
+        eventBus.on('global-connect.move', moveSpy);
+
+        // when
+        triggerPaletteEntry('global-connect-tool');
+
+        // then
+        expect(moveSpy).to.not.have.been.called;
+
+      }
+    ));
+
+  });
+
 });
 
 // helpers //////////
@@ -100,4 +124,8 @@ function triggerPaletteEntry(id) {
       entry.action.click(createMoveEvent(0, 0));
     }
   });
+}
+
+function isPhantomJS() {
+  return /PhantomJS/.test(window.navigator.userAgent);
 }
