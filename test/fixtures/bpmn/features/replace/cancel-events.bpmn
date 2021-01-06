@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:transaction id="Transaction_1">
       <bpmn:endEvent id="EndEvent_1">
@@ -11,38 +11,57 @@
       <bpmn:endEvent id="EndEvent_2" />
     </bpmn:subProcess>
     <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="SubProcess_1" />
+    <bpmn:transaction id="Transaction_2">
+      <bpmn:endEvent id="EndEvent_3">
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0jj8o4w" />
+      </bpmn:endEvent>
+    </bpmn:transaction>
+    <bpmn:task id="Activity_1" />
+    <bpmn:boundaryEvent id="BoundaryEvent_3" attachedToRef="Activity_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
-      <bpmndi:BPMNShape id="EndEvent_2_di" bpmnElement="EndEvent_2">
-        <dc:Bounds x="555" y="131" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="528" y="167" width="90" height="20" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Activity_1rswf6m_di" bpmnElement="Activity_1">
+        <dc:Bounds x="630" y="400" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Transaction_1_di" bpmnElement="Transaction_1" isExpanded="true">
-        <dc:Bounds x="46" y="45" width="350" height="200" />
+        <dc:Bounds x="156" y="45" width="350" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="EndEvent_1">
-        <dc:Bounds x="208" y="126" width="36" height="36" />
+        <dc:Bounds x="318" y="126" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="181" y="162" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="564" y="45" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_2_di" bpmnElement="EndEvent_2">
+        <dc:Bounds x="665" y="131" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="528" y="167" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0hggfqa_di" bpmnElement="Transaction_2" isExpanded="true">
+        <dc:Bounds x="156" y="370" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fewq9p_di" bpmnElement="EndEvent_3">
+        <dc:Bounds x="318" y="451" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="593" y="227" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="680" y="350" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_1_di" bpmnElement="BoundaryEvent_1">
-        <dc:Bounds x="96" y="227" width="36" height="36" />
+        <dc:Bounds x="206" y="227" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="379" y="350" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds x="454" y="45" width="350" height="200" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
-        <dc:Bounds x="483" y="227" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="680" y="350" width="90" height="20" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="Event_1fm3j1i_di" bpmnElement="BoundaryEvent_3">
+        <dc:Bounds x="662" y="462" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
