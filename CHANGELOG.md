@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.0.1
+
+* `FIX`: activate, not toggle global connect tool on palette click
+* `FIX`: only allow cancel boundary events on transactions
+* `CHORE`: add `npm start` script for demo purposes
+
 ## 8.0.0
 
 * `FEAT`: improve replace label for collapsed pools ([`8faee2bd`](https://github.com/bpmn-io/bpmn-js/commit/8faee2bde9a74b75b4b6bb9b003507652e75c9c5))
