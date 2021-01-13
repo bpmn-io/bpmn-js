@@ -72,10 +72,10 @@ export function bootstrapBpmnJS(BpmnJS, diagram, options, locals) {
       testContainer = TestContainer.get(this);
     } catch (e) {
       testContainer = document.createElement('div');
+      testContainer.classList.add('test-content-container');
+
       document.body.appendChild(testContainer);
     }
-
-    testContainer.classList.add('test-container');
 
     var _options = options,
         _locals = locals;
