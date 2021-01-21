@@ -86,6 +86,7 @@
     "webpack": "^4.44.2"
   },
   "dependencies": {
+    "align-to-origin-xml": "git://github.com/philippfromme/align-to-origin-xml.git",
     "bpmn-moddle": "^7.0.4",
     "css.escape": "^1.5.1",
     "diagram-js": "^7.0.0",

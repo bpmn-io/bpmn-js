@@ -14,6 +14,8 @@ import {
   collectTranslations
 } from 'test/TestHelper';
 
+import AlignToOrigin from 'align-to-origin-xml';
+
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
 
@@ -36,7 +38,10 @@ describe('Modeler', function() {
       container: container,
       keyboard: {
         bindTo: document
-      }
+      },
+      additionalModules: [
+        AlignToOrigin
+      ]
     });
 
     setBpmnJS(modeler);
@@ -49,11 +54,17 @@ describe('Modeler', function() {
   }
 
 
-  (singleStart ? it.only : it)('should import simple process', function() {
+  it.only('should import simple process', function() {
     var xml = require('../fixtures/bpmn/simple.bpmn');
     return createModeler(xml).then(function(result) {
 
       expect(result.error).not.to.exist;
+
+      result.modeler.on('commandStack.changed', function() {
+        result.modeler.saveXML({ format: true }).then(function(result) {
+          console.log(result.xml);
+        });
+      })
     });
   });
 
