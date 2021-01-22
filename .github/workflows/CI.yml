@@ -28,6 +28,8 @@ jobs:
           ${{ runner.OS }}-
     - name: Install dependencies
       run: npm ci
+    - name: Wire dependencies
+      run: ./tasks/wiredeps_github
     - name: Build
       env:
         COVERAGE: 1
