@@ -53,7 +53,7 @@ describe('custom elements', function() {
     }));
 
 
-    it('should render custom elements', inject(function(elementRegistry) {
+    (isWindows() ? it.skip : it)('should render custom elements', inject(function(elementRegistry) {
 
       // when
 
@@ -228,3 +228,7 @@ describe('custom elements', function() {
   });
 
 });
+
+function isWindows() {
+  return (/win/i).test(navigator.platform);
+}
