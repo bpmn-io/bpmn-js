@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # update bpmn-js version in the <bpmn-js-examples> project
 
