@@ -31,7 +31,14 @@ jobs:
     - name: Build
       env:
         COVERAGE: 1
-        TEST_BROWSERS: Firefox,PhantomJS,ChromeHeadless 
-      run: npm run all
+        TEST_BROWSERS: Firefox,PhantomJS,ChromeHeadless
+      if: matrix.os == 'ubuntu-latest'
+      run: xvfb-run npm run all
     - name: Upload Coverage
       run: npx codecov
+      if: matrix.os == 'ubuntu-latest'
+    - name: Build
+      env:
+        TEST_BROWSERS: PhantomJS,ChromeHeadless
+      if: matrix.os != 'ubuntu-latest'
+      run: npm run all
