@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.1.0
+
+* `TEST`: simplify markup created by built-in test helpers
+
 ## 8.0.1
 
 * `FIX`: activate, not toggle global connect tool on palette click
