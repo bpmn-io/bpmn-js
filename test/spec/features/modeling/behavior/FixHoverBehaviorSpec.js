@@ -37,10 +37,12 @@ describe('features/modeling/behavior - fix hover', function() {
 
     var lane,
         laneGfx,
-        participant;
+        participant,
+        participantGfx;
 
     beforeEach(inject(function(elementRegistry) {
       participant = elementRegistry.get('Participant_1');
+      participantGfx = elementRegistry.getGraphics(participant);
 
       lane = elementRegistry.get('Lane_1');
       laneGfx = elementRegistry.getGraphics(lane);
@@ -49,7 +51,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
     describe('create', function() {
 
-      it('should set participant as hover element', inject(
+      it('should <create.hover> participant', inject(
         function(create, dragging, elementFactory) {
 
           // given
@@ -69,12 +71,42 @@ describe('features/modeling/behavior - fix hover', function() {
         }
       ));
 
+
+      it('should <create.out> participant', inject(
+        function(create, dragging, elementFactory, eventBus) {
+
+          // given
+          var task = elementFactory.createShape({ type: 'bpmn:Task' });
+
+          var outSpy = sinon.spy(function(event) {
+            expect(event.hover).to.eql(participant);
+            expect(event.hoverGfx).to.eql(participantGfx);
+          });
+
+          eventBus.on('create.out', outSpy);
+
+          create.start(canvasEvent({ x: 0, y: 0 }), task, true);
+
+          dragging.hover({ element: lane, gfx: laneGfx });
+
+          dragging.move(canvasEvent({ x: 200, y: 200 }));
+
+          // when
+          dragging.out({ element: lane, gfx: laneGfx });
+
+          dragging.end();
+
+          // then
+          expect(outSpy).to.have.been.calledOnce;
+        }
+      ));
+
     });
 
 
     describe('move', function() {
 
-      it('should set participant as hover element', inject(
+      it('should <shape.move.hover> participant', inject(
         function(dragging, elementRegistry, move) {
 
           // given
@@ -91,6 +123,34 @@ describe('features/modeling/behavior - fix hover', function() {
 
           // then
           expect(task.parent).to.equal(participant);
+        }
+      ));
+
+
+      it('should <shape.move.out> participant', inject(
+        function(dragging, elementRegistry, move, eventBus) {
+
+          // given
+          var task = elementRegistry.get('Task_1');
+
+          var outSpy = sinon.spy(function(event) {
+            expect(event.hover).to.eql(participant);
+            expect(event.hoverGfx).to.eql(participantGfx);
+          });
+
+          eventBus.on('shape.move.out', outSpy);
+
+          move.start(canvasEvent({ x: 440, y: 220 }), task, true);
+
+          dragging.hover({ element: lane, gfx: laneGfx });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          // when
+          dragging.out({ element: lane, gfx: laneGfx });
+
+          // then
+          expect(outSpy).to.have.been.calledOnce;
         }
       ));
 
@@ -114,7 +174,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
     describe('move', function() {
 
-      it('should set root as hover element', inject(
+      it('should <shape.move.hover> root', inject(
         function(dragging, elementRegistry, move, canvas) {
 
           // given
@@ -156,7 +216,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
     describe('create', function() {
 
-      it('should set root as hover element', inject(
+      it('should <create.hover> root', inject(
         function(dragging, elementFactory, elementRegistry, create, canvas) {
 
           // given
@@ -183,7 +243,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
     describe('move', function() {
 
-      it('should set root as hover element', inject(
+      it('should <shape.move.hover> root', inject(
         function(dragging, elementRegistry, move, canvas) {
 
           // given
