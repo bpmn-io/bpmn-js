@@ -31,20 +31,15 @@ jobs:
     - name: Wire dependencies
       run: ./tasks/wiredeps_github
     - name: Build
-      env:
-        TEST_BROWSERS: PhantomJS,ChromeHeadless
-      if: matrix.os == 'macos-latest'
-      run: npm run all
-    - name: Build
+      if: matrix.os == 'ubuntu-latest'
       env:
         COVERAGE: 1
         TEST_BROWSERS: Firefox,PhantomJS,ChromeHeadless
-      if: matrix.os == 'ubuntu-latest'
       run: xvfb-run npm run all
     - name: Build
+      if: matrix.os != 'ubuntu-latest'
       env:
         TEST_BROWSERS: ChromeHeadless
-      if: matrix.os == 'windows-latest'
       run: npm run all
     - name: Upload Coverage
       run: npx codecov
