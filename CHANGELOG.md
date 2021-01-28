@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.2.0
+
+* `FIX`: correct label colors on connect / hover ([#1380](https://github.com/bpmn-io/bpmn-js/issues/1380))
+* `FIX`: correct new parent indicator when leaving lane ([#1413](https://github.com/bpmn-io/bpmn-js/issues/1413))
+* `CHORE`: update to `diagram-js@7.2.0`
+
 ## 8.1.0
 
 * `TEST`: simplify markup created by built-in test helpers
