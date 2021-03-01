@@ -1242,10 +1242,64 @@ describe('Viewer', function() {
         // then
         expect(events).to.eql([
           [ 'saveXML.start', [ 'definitions' ] ],
-          [ 'saveXML.serialized', ['error', 'xml' ] ],
-          [ 'saveXML.done', ['error', 'xml' ] ]
+          [ 'saveXML.serialized', [ 'xml' ] ],
+          [ 'saveXML.done', [ 'xml' ] ]
         ]);
       });
+    });
+
+
+    it('should emit <saveXML.done> on error', function() {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer;
+      var events = [];
+
+      return createViewer(container, Viewer, xml).then(function(result) {
+
+        var err = result.error;
+        viewer = result.viewer;
+
+        expect(err).not.to.exist;
+
+        // when
+        viewer.on('saveXML.start', 250, function() {
+          throw new Error('failing pre-save listener');
+        });
+
+        viewer.on([
+          'saveXML.start',
+          'saveXML.serialized',
+          'saveXML.done'
+        ], function(e) {
+
+          // log event type + event arguments
+          events.push([
+            e.type,
+            Object.keys(e).filter(function(key) {
+              return key !== 'type';
+            })
+          ]);
+        });
+
+        return viewer.importXML(xml);
+      }).then(function(result) {
+
+        // when
+        return viewer.saveXML();
+      }).catch(function(error) {
+        events.push([ 'error' ]);
+      }).finally(function() {
+
+        // then
+        expect(events).to.eql([
+          [ 'saveXML.start', [ 'definitions' ] ],
+          [ 'saveXML.done', [ 'error' ] ],
+          [ 'error' ]
+        ]);
+      });
+
     });
 
   });
@@ -2170,8 +2224,8 @@ describe('Viewer', function() {
             // then
             expect(events).to.eql([
               [ 'saveXML.start', [ 'definitions' ] ],
-              [ 'saveXML.serialized', ['error', 'xml' ] ],
-              [ 'saveXML.done', ['error', 'xml' ] ]
+              [ 'saveXML.serialized', [ 'xml' ] ],
+              [ 'saveXML.done', [ 'xml' ] ]
             ]);
 
             done();
