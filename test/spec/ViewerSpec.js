@@ -1305,7 +1305,6 @@ describe('Viewer', function() {
 
     it('should emit <saveXML.done> on no definitions loaded', async function() {
 
-      var viewer;
       var events = [];
 
       var viewer = new Viewer({
