@@ -1302,6 +1302,44 @@ describe('Viewer', function() {
 
     });
 
+
+    it('should emit <saveXML.done> on no definitions loaded', async function() {
+
+      var viewer;
+      var events = [];
+
+      var viewer = new Viewer({
+        container: container
+      });
+
+      viewer.on([
+        'saveXML.start',
+        'saveXML.serialized',
+        'saveXML.done'
+      ], function(e) {
+
+        // log event type + event arguments
+        events.push([
+          e.type,
+          Object.keys(e).filter(function(key) {
+            return key !== 'type';
+          })
+        ]);
+      });
+
+      return viewer.saveXML().catch(function(error) {
+        events.push([ 'error' ]);
+      }).finally(function() {
+
+        // then
+        expect(events).to.eql([
+          [ 'saveXML.done', [ 'error' ] ],
+          [ 'error' ]
+        ]);
+      });
+
+    });
+
   });
 
 
