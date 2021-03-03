@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.2.1
+
+* `FIX`: prevent bendpoint hover error ([#1387](https://github.com/bpmn-io/bpmn-js/issues/1387))
+
 ## 8.2.0
 
 * `FIX`: correct label colors on connect / hover ([#1380](https://github.com/bpmn-io/bpmn-js/issues/1380))
