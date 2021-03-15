@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.2.2
+
+* `FIX`: always emit `saveXML.done`
+* `FIX`: correct path intersections not being detected in certain cases
+* `CHORE`: bump to `diagram-js@7.2.3`
+
 ## 8.2.1
 
 * `FIX`: prevent bendpoint hover error ([#1387](https://github.com/bpmn-io/bpmn-js/issues/1387))
