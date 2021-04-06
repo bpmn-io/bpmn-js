@@ -12,6 +12,9 @@
     <bpmn2:dataObject id="DataObject_1" name="Data Object 1"/>
     <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject_1"/>
     <bpmn2:group id="Group_1" categoryValueRef="CategoryValue_1" />
+    <bpmn2:textAnnotation id="TextAnnotation_1">
+      <bpmn2:text>simple text annotation</bpmn2:text>
+    </bpmn2:textAnnotation>
   </bpmn2:process>
   <bpmn2:category id="Category_1">
     <bpmn2:categoryValue id="CategoryValue_1" />
