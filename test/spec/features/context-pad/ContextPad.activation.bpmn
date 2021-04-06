@@ -59,7 +59,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1" bpmnElement="TextAnnotation_1">
         <dc:Bounds x="760" y="120" width="100" height="30" />
-      </bpmndi:BPMNShape
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
