@@ -2255,7 +2255,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         'bpmn:InteractionNode',
         'bpmn:DataObjectReference',
         'bpmn:DataStoreReference',
-        'bpmn:Group'
+        'bpmn:Group',
+        'bpmn:TextAnnotation'
       ];
 
       // when
