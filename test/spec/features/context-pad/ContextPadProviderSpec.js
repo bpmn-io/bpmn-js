@@ -291,7 +291,8 @@ describe('features - context-pad', function() {
       ]);
     }));
 
-    it('should provide text annotation entries', inject(function() {
+    it('should provide Text Annotation entries', inject(function() {
+
       expectContextPadEntries('TextAnnotation_1', [
         'connect',
         'delete',
