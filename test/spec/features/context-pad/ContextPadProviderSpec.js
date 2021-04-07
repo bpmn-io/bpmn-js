@@ -296,7 +296,8 @@ describe('features - context-pad', function() {
       expectContextPadEntries('TextAnnotation_1', [
         'connect',
         'delete',
-        '!replace'
+        '!replace',
+        '!append.text-annotation'
       ]);
     }));
 
