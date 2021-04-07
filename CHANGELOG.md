@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.3.0
+
+* `FEAT`: enable connection tool for text annotations ([#1428](https://github.com/bpmn-io/bpmn-js/pull/1428))
+
 ## 8.2.2
 
 * `FIX`: always emit `saveXML.done`
