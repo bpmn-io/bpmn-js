@@ -291,6 +291,17 @@ describe('features - context-pad', function() {
       ]);
     }));
 
+
+    it('should provide Text Annotation entries', inject(function() {
+
+      expectContextPadEntries('TextAnnotation_1', [
+        'connect',
+        'delete',
+        '!replace',
+        '!append.text-annotation'
+      ]);
+    }));
+
   });
 
 
