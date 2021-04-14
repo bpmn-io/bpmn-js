@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1ipuizk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1ipuizk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0">
   <bpmn:process id="Process_1" isExecutable="true">
     <bpmn:eventBasedGateway id="EventBasedGateway_1" />
     <bpmn:receiveTask id="ReceiveTask_1" />
     <bpmn:boundaryEvent id="BoundaryEvent_1" attachedToRef="ReceiveTask_1" />
     <bpmn:exclusiveGateway id="ExclusiveGateway_1" />
+    <bpmn:task id="Task_2" />
+    <bpmn:boundaryEvent id="BoundaryEvent_2" attachedToRef="Task_2">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_3" attachedToRef="Task_2">
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_1" escalationRef="Escalation_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_4" attachedToRef="Task_2">
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1" errorRef="Error_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_5" attachedToRef="Task_2">
+      <bpmn:signalEventDefinition id="SignalEventDefinition_1" signalRef="Signal_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_6" cancelActivity="false" attachedToRef="Task_2">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_05x99ob" messageRef="Message_1" />
+    </bpmn:boundaryEvent>
   </bpmn:process>
+  <bpmn:message id="Message_1" name="Message_1" />
+  <bpmn:escalation id="Escalation_1" name="Escalation_1" />
+  <bpmn:error id="Error_1" name="Error_1" />
+  <bpmn:signal id="Signal_1" name="Signal_1" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="EventBasedGateway_1cu8t9h_di" bpmnElement="EventBasedGateway_1">
@@ -14,11 +34,29 @@
       <bpmndi:BPMNShape id="ReceiveTask_1vk05s6_di" bpmnElement="ReceiveTask_1">
         <dc:Bounds x="300" y="103" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1qf26hs_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <dc:Bounds x="172" y="221" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_083btya_di" bpmnElement="Task_2">
+        <dc:Bounds x="450" y="103" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ti3ldv_di" bpmnElement="BoundaryEvent_5">
+        <dc:Bounds x="532" y="85" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yced78_di" bpmnElement="BoundaryEvent_4">
+        <dc:Bounds x="532" y="165" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1v79yci_di" bpmnElement="BoundaryEvent_3">
+        <dc:Bounds x="482" y="165" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0dw2m3x_di" bpmnElement="BoundaryEvent_2">
+        <dc:Bounds x="432" y="165" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_0xg8xmx_di" bpmnElement="BoundaryEvent_1">
         <dc:Bounds x="331" y="165" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1qf26hs_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds x="172" y="221" width="50" height="50" />
+      <bpmndi:BPMNShape id="Event_0gfnflr_di" bpmnElement="BoundaryEvent_6">
+        <dc:Bounds x="432" y="85" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
