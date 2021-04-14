@@ -6,6 +6,8 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
+import { is } from 'lib/util/ModelUtil';
+
 
 describe('features/modeling/behavior - boundary event', function() {
 
@@ -61,4 +63,130 @@ describe('features/modeling/behavior - boundary event', function() {
 
   });
 
+
+  describe('copy reference on replace', function() {
+
+    it('interrupting to non-interrupting', function() {
+
+      it('should copy message reference', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_2'),
+            message = getReferencedRootElement(interruptingBoundaryEvent, 'messageRef');
+
+        // assume
+        expect(is(message, 'bpmn:Message')).to.be.true;
+
+        // when
+        var nonInterruptingBoundaryEvent = bpmnReplace.replaceElement(interruptingBoundaryEvent, {
+          type: 'bpmn:BoundaryEvent',
+          eventDefinitionType: 'bpmn:MessageEventDefinition',
+          cancelActivity: false
+        });
+
+        // then
+        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'messageRef')).to.equal(message);
+      }));
+
+
+      it('should copy escalation reference', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_3'),
+            escalation = getReferencedRootElement(interruptingBoundaryEvent, 'escalationRef');
+
+        // assume
+        expect(is(escalation, 'bpmn:Escalation')).to.be.true;
+
+        // when
+        var nonInterruptingBoundaryEvent = bpmnReplace.replaceElement(interruptingBoundaryEvent, {
+          type: 'bpmn:BoundaryEvent',
+          eventDefinitionType: 'bpmn:EscalationEventDefinition',
+          cancelActivity: false
+        });
+
+        // then
+        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'escalationRef')).to.equal(escalation);
+      }));
+
+
+      it('should copy error reference', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_4'),
+            error = getReferencedRootElement(interruptingBoundaryEvent, 'errorRef');
+
+        // assume
+        expect(is(error, 'bpmn:Error')).to.be.true;
+
+        // when
+        var nonInterruptingBoundaryEvent = bpmnReplace.replaceElement(interruptingBoundaryEvent, {
+          type: 'bpmn:BoundaryEvent',
+          eventDefinitionType: 'bpmn:ErrorEventDefinition',
+          cancelActivity: false
+        });
+
+        // then
+        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'errorRef')).to.equal(error);
+      }));
+
+
+      it('should copy signal reference', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_5'),
+            signal = getReferencedRootElement(interruptingBoundaryEvent, 'signalRef');
+
+        // assume
+        expect(is(signal, 'bpmn:Signal')).to.be.true;
+
+        // when
+        var nonInterruptingBoundaryEvent = bpmnReplace.replaceElement(interruptingBoundaryEvent, {
+          type: 'bpmn:BoundaryEvent',
+          eventDefinitionType: 'bpmn:SignalEventDefinition',
+          cancelActivity: false
+        });
+
+        // then
+        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'signalRef')).to.equal(signal);
+      }));
+
+    });
+
+
+    it('non-interrupting to interrupting', function() {
+
+      it('should copy message reference', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_6'),
+            message = getReferencedRootElement(interruptingBoundaryEvent, 'messageRef');
+
+        // assume
+        expect(is(message, 'bpmn:Message')).to.be.true;
+
+        // when
+        var nonInterruptingBoundaryEvent = bpmnReplace.replaceElement(interruptingBoundaryEvent, {
+          type: 'bpmn:BoundaryEvent',
+          eventDefinitionType: 'bpmn:MessageEventDefinition',
+          cancelActivity: true
+        });
+
+        // then
+        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'messageRef')).to.equal(message);
+      }));
+
+    });
+
+  });
+
 });
+
+// helpers //////////
+
+function getReferencedRootElement(element, propertyName) {
+  var businessObject = element.businessObject,
+      eventDefinition = businessObject.eventDefinitions[ 0 ];
+
+  return eventDefinition.get(propertyName);
+}
