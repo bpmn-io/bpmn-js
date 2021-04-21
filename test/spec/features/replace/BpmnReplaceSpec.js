@@ -355,7 +355,7 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
-  describe('should collapse pool, removing message flows', function() {
+  describe('should collapse pool, reconnecting message flows', function() {
 
     var diagramXML = require('./BpmnReplace.poolMessageFlows.bpmn');
 
@@ -382,8 +382,8 @@ describe('features/replace - bpmn replace', function() {
       expect(isExpanded(newShape)).to.be.false; // collapsed
       expect(newShape.children).to.be.empty;
 
-      expect(elementRegistry.get('MessageFlow_1')).not.to.exist;
-      expect(elementRegistry.get('MessageFlow_2')).not.to.exist;
+      expect(elementRegistry.get('MessageFlow_1')).to.exist;
+      expect(elementRegistry.get('MessageFlow_2')).to.exist;
     }));
 
   });
