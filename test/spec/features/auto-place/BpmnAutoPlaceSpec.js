@@ -4,6 +4,7 @@ import {
 } from 'test/TestHelper';
 
 import autoPlaceModule from 'lib/features/auto-place';
+import { getScrollOffset } from 'lib/features/auto-place/BpmnAutoPlaceUtil';
 import coreModule from 'lib/core';
 import labelEditingModule from 'lib/features/label-editing';
 import modelingModule from 'lib/features/modeling';
@@ -252,6 +253,73 @@ describe('features/auto-place', function() {
       behind: 'BOUNDARY_SUBPROCESS_TOP',
       expectedBounds: { x: 275, y: 194, width: 100, height: 80 }
     }));
+
+  });
+
+
+  describe('scroll handling', function() {
+
+    it('scrolls element into view', function() {
+
+      // given
+      var element = { x: 0, y: 0, width: 20, height: 20 };
+      var viewBox = { x: 100, y: 100, width: 100, height: 100 };
+
+      // when
+      var scrollArguments = getScrollOffset(element, viewBox);
+
+      // then
+      expect(scrollArguments.dx).to.equal(110);
+      expect(scrollArguments.dy).to.equal(110);
+
+    });
+
+
+    it('does not scroll when inside bounds', function() {
+
+      // given
+      var element = { x: 10, y: 10, width: 10, height: 10 };
+      var viewBox = { x: 0, y: 0, width: 100, height: 100 };
+
+      // when
+      var scrollArguments = getScrollOffset(element, viewBox);
+
+      // then
+      expect(scrollArguments.dx).to.equal(0);
+      expect(scrollArguments.dy).to.equal(0);
+
+    });
+
+
+    it('adds padding', function() {
+
+      // given
+      var element = { x: 0, y: 0, width: 10, height: 10 };
+      var viewBox = { x: 0, y: 0, width: 100, height: 100 };
+
+      // when
+      var scrollArguments = getScrollOffset(element, viewBox);
+
+      // then
+      expect(scrollArguments.dx).to.equal(10);
+      expect(scrollArguments.dy).to.equal(10);
+
+    });
+
+
+    it('adds more padding on the right', function() {
+
+      // given
+      var element = { x: 90, y: 10, width: 10, height: 10 };
+      var viewBox = { x: 0, y: 0, width: 100, height: 100 };
+
+      // when
+      var scrollArguments = getScrollOffset(element, viewBox);
+
+      // then
+      expect(scrollArguments.dx).to.equal(-80);
+
+    });
 
   });
 
