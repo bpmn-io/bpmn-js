@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "8.3.0",
+  "version": "8.3.1",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "scripts": {
     "all": "run-s lint test distro test:distro",
@@ -87,7 +87,7 @@
     "webpack": "^4.44.2"
   },
   "dependencies": {
-    "bpmn-moddle": "^7.0.4",
+    "bpmn-moddle": "^7.0.5",
     "css.escape": "^1.5.1",
     "diagram-js": "^7.2.3",
     "diagram-js-direct-editing": "^1.6.2",
