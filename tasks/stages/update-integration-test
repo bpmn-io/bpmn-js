@@ -9,7 +9,7 @@ IT_DIR="$WORKDIR/bpmn-js-integration"
 # create work dir
 mkdir -p "$WORKDIR"
 
-git clone --depth=1 "https://$GITHUB_AUTH@github.com/bpmn-io/bpmn-js-integration.git" "$IT_DIR"
+git clone --depth=1 "https://$GH_AUTH@github.com/bpmn-io/bpmn-js-integration.git" "$IT_DIR"
 
 cd "$IT_DIR"
 
@@ -20,8 +20,8 @@ git config user.name "$BPMN_IO_USERNAME"
 git config push.default simple
 
 git add -A
-git commit -m "deps: bump bpmn-js to $TRAVIS_TAG"
-git tag "$TRAVIS_TAG"
+git commit -m "deps: bump bpmn-js to $TAG"
+git tag "$TAG"
 git push -q &2>/dev/null
 git push --tags -q &2>/dev/null
 
