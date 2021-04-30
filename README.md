@@ -1,6 +1,6 @@
 # bpmn-js - BPMN 2.0 for the web
 
-[![Build Status](https://travis-ci.com/bpmn-io/bpmn-js.svg?branch=develop)](https://travis-ci.com/bpmn-io/bpmn-js)
+[![Build Status](https://github.com/bpmn-io/bpmn-js/workflows/CI/badge.svg)](https://github.com/bpmn-io/bpmn-js/actions?query=workflow%3ACI)
 
 View and edit BPMN 2.0 diagrams in the browser.
 
