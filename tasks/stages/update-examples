@@ -27,7 +27,7 @@ if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
   # add all resources
   git add -A
-  git commit -m "chore: bump examples to $TAG"
+  git commit -m "deps: bump bpmn-js to $TAG"
   git tag "$TAG"
   git push -q &2>/dev/null
   git push --tags -q &2>/dev/null
