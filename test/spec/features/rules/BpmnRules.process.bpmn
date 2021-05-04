@@ -1,98 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_biH3sOTeEeS2YerRfpjPrw" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_biH3sOTeEeS2YerRfpjPrw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="4.7.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="Process" isExecutable="false">
-    <bpmn2:startEvent id="StartEvent_None"/>
+    <bpmn2:startEvent id="StartEvent_None" />
     <bpmn2:subProcess id="EventSubProcess" triggeredByEvent="true">
       <bpmn2:startEvent id="StartEvent_Message_in_EventSubProcess">
-        <bpmn2:messageEventDefinition id="MessageEventDefinition_1"/>
+        <bpmn2:messageEventDefinition id="MessageEventDefinition_1" />
       </bpmn2:startEvent>
     </bpmn2:subProcess>
-    <bpmn2:task id="Task"/>
+    <bpmn2:task id="Task" />
     <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_Link">
-      <bpmn2:linkEventDefinition id="_LinkEventDefinition_2"/>
+      <bpmn2:linkEventDefinition id="_LinkEventDefinition_2" />
     </bpmn2:intermediateThrowEvent>
     <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_Link">
-      <bpmn2:linkEventDefinition id="_LinkEventDefinition_3"/>
+      <bpmn2:linkEventDefinition id="_LinkEventDefinition_3" />
     </bpmn2:intermediateCatchEvent>
     <bpmn2:subProcess id="SubProcess">
-      <bpmn2:endEvent id="EndEvent_in_SubProcess"/>
+      <bpmn2:endEvent id="EndEvent_in_SubProcess" />
     </bpmn2:subProcess>
-    <bpmn2:endEvent id="EndEvent_None"/>
-    <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject"/>
-    <bpmn2:dataObject id="DataObject"/>
-    <bpmn2:dataStoreReference id="DataStoreReference" name="" dataStoreRef="DataStore_1"/>
-    <bpmn2:subProcess id="CollapsedSubProcess"/>
-    <bpmn2:textAnnotation id="TextAnnotation"/>
+    <bpmn2:endEvent id="EndEvent_None" />
+    <bpmn2:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject" />
+    <bpmn2:dataObject id="DataObject" />
+    <bpmn2:dataStoreReference id="DataStoreReference" name="" dataStoreRef="DataStore_1" />
+    <bpmn2:subProcess id="CollapsedSubProcess" />
+    <bpmn2:task id="SourceTask">
+      <bpmn2:outgoing>SequenceFlow</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:task id="TargetTask">
+      <bpmn2:incoming>SequenceFlow</bpmn2:incoming>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow" sourceRef="SourceTask" targetRef="TargetTask" />
+    <bpmn2:textAnnotation id="TextAnnotation" />
     <bpmn2:group id="Group" categoryValueRef="CategoryValue" />
   </bpmn2:process>
-  <bpmn2:dataStore id="DataStore_1" name="Data Store 1"/>
+  <bpmn2:dataStore id="DataStore_1" name="Data Store 1" />
   <bpmn2:category id="Category">
     <bpmn2:categoryValue id="CategoryValue" />
   </bpmn2:category>
   <bpmndi:BPMNDiagram id="_BPMNDiagram_2">
     <bpmndi:BPMNPlane id="_BPMNPlane_2" bpmnElement="Process">
-      <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task">
-        <dc:Bounds height="80.0" width="100.0" x="172.0" y="147.0"/>
+      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_2" bpmnElement="TextAnnotation">
+        <dc:Bounds x="676" y="86" width="85" height="85" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1b3d6i3_di" bpmnElement="SequenceFlow">
+        <di:waypoint x="372" y="129" />
+        <di:waypoint x="422" y="129" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_4" bpmnElement="StartEvent_None">
-        <dc:Bounds height="36.0" width="36.0" x="65.0" y="169.0"/>
+        <dc:Bounds x="165" y="219" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="83.0" y="210.0"/>
+          <dc:Bounds x="83" y="210" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_4" bpmnElement="EventSubProcess" isExpanded="true">
-        <dc:Bounds height="169.0" width="313.0" x="132.0" y="360.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_5" bpmnElement="StartEvent_Message_in_EventSubProcess">
-        <dc:Bounds height="36.0" width="36.0" x="171.0" y="419.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="189.0" y="460.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task">
+        <dc:Bounds x="272" y="197" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_3" bpmnElement="IntermediateThrowEvent_Link">
-        <dc:Bounds height="36.0" width="36.0" x="336.0" y="168.0"/>
+        <dc:Bounds x="436" y="218" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="354.0" y="209.0"/>
+          <dc:Bounds x="354" y="209" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateThrowEvent_2" bpmnElement="IntermediateCatchEvent_Link">
-        <dc:Bounds height="36.0" width="36.0" x="425.0" y="168.0"/>
+        <dc:Bounds x="525" y="218" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="443.0" y="209.0"/>
+          <dc:Bounds x="443" y="209" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_5" bpmnElement="SubProcess" isExpanded="true">
-        <dc:Bounds height="169.0" width="205.0" x="516.0" y="360.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_TextAnnotation_2" bpmnElement="TextAnnotation">
-        <dc:Bounds height="85.0" width="85.0" x="576.0" y="36.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_in_SubProcess">
-        <dc:Bounds height="36.0" width="36.0" x="639.0" y="451.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_6" bpmnElement="EndEvent_None">
-        <dc:Bounds height="36.0" width="36.0" x="516.0" y="168.0"/>
+        <dc:Bounds x="616" y="218" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="534.0" y="209.0"/>
+          <dc:Bounds x="534" y="209" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
-        <dc:Bounds height="50.0" width="36.0" x="601.0" y="162.0"/>
+        <dc:Bounds x="701" y="212" width="36" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="20.0" width="90.0" x="574.0" y="212.0"/>
+          <dc:Bounds x="574" y="212" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_DataStoreReference_2" bpmnElement="DataStoreReference">
-        <dc:Bounds height="50.0" width="50.0" x="671.0" y="161.0"/>
+        <dc:Bounds x="771" y="211" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="21.0" width="79.0" x="657.0" y="216.0"/>
+          <dc:Bounds x="657" y="216" width="79" height="21" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_08mshr6_di" bpmnElement="SourceTask">
+        <dc:Bounds x="272" y="89" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1c9pfmg_di" bpmnElement="TargetTask">
+        <dc:Bounds x="422" y="89" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_4" bpmnElement="EventSubProcess" isExpanded="true">
+        <dc:Bounds x="232" y="410" width="313" height="169" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_5" bpmnElement="StartEvent_Message_in_EventSubProcess">
+        <dc:Bounds x="271" y="469" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="189" y="460" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_5" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds x="616" y="410" width="205" height="169" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_5" bpmnElement="EndEvent_in_SubProcess">
+        <dc:Bounds x="739" y="501" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CollapsedSubProcess_di" bpmnElement="CollapsedSubProcess">
-        <dc:Bounds x="756" y="358" width="100" height="80"/>
+        <dc:Bounds x="856" y="408" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_di" bpmnElement="Group">
-        <dc:Bounds x="770" y="90" width="210" height="120" />
+        <dc:Bounds x="870" y="140" width="210" height="120" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
