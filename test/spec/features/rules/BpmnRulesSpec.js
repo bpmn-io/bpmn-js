@@ -111,6 +111,18 @@ describe('features/modeling/rules - BpmnRules', function() {
       // then
       expectCanCreate([ task, boundaryEvent ], 'Process', true);
     }));
+
+
+    it('can\'t create multiple elements on flow', inject(function(elementFactory) {
+
+      // given
+      var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task' });
+
+      // then
+      expectCanCreate([task1, task2], 'SequenceFlow', false);
+    }));
+
   });
 
 
