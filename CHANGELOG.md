@@ -6,9 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: show message name on message flow ([#777](https://github.com/bpmn-io/bpmn-js/issues/777))
+
 ## 8.4.0
 
-* `FEAT`: show message name on message flow ([#777](https://github.com/bpmn-io/bpmn-js/issues/777))
 * `FIX`: disallow inserting multiple elements on a sequence flow ([#1440](https://github.com/bpmn-io/bpmn-js/issues/1440))
 
 ## 8.3.1
