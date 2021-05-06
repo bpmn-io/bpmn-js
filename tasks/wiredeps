@@ -2,17 +2,14 @@
 
 FEATURE_BRANCH=
 
-# https://docs.travis-ci.com/user/environment-variables
+# https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
 
-if [ "$TRAVIS_TAG" != "" ] || [ "$TRAVIS_BRANCH" == "master" ]; then
+# skip default branch and tags
+if [[ $GITHUB_REF =~ ^refs/heads/master$ ]] || [[ $GITHUB_REF =~ ^refs/tags/ ]]; then
   exit 0;
 fi
 
-if [ "$TRAVIS_PULL_REQUEST_BRANCH" != "" ]; then
-  FEATURE_BRANCH="$TRAVIS_PULL_REQUEST_BRANCH";
-else
-  FEATURE_BRANCH="$TRAVIS_BRANCH";
-fi
+FEATURE_BRANCH=$(echo "$GITHUB_REF" | cut -d"/" -f3)
 
 echo "Attempting to install diagram-js@$FEATURE_BRANCH";
 

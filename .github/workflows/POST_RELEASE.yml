@@ -1,0 +1,66 @@
+name: POST_RELEASE
+on:
+  push:
+    tags:
+      - 'v[0-9]+.*'
+jobs:
+  post-release:
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        node-version: [ 14 ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    - name: Set TAG
+      run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+    - name: Check for stable release
+      run: |
+        if [[ ${{ env.TAG }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+        then echo "STABLE_RELEASE=true" >> $GITHUB_ENV
+        fi
+    - name: Update integration test
+      env:
+        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+      run: bash tasks/stages/update-integration-test
+    - name: Update demo
+      if: ${{ env.STABLE_RELEASE == 'true' }}
+      env:
+        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+        BPMN_IO_DEMO_ENDPOINT: ${{ secrets.BPMN_IO_DEMO_ENDPOINT }}
+      run: bash tasks/stages/update-demo
+    - name: Update examples
+      if: ${{ env.STABLE_RELEASE == 'true' }}
+      env:
+        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+      run: bash tasks/stages/update-examples
+    - name: Update website
+      if: ${{ env.STABLE_RELEASE == 'true' }}
+      env:
+        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+      run: bash tasks/stages/update-website

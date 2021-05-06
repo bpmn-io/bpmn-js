@@ -174,6 +174,20 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render message label', function() {
+    var xml = require('../../fixtures/bpmn/draw/message-label.bpmn');
+    return bootstrapViewer(xml).call(this).then(function(result) {
+      checkErrors(result.error, result.warnings);
+      inject(function(elementRegistry) {
+
+        var dataFlow = elementRegistry.getGraphics('dataFlow');
+
+        expect(domQuery('.djs-label', dataFlow)).to.exist;
+      })();
+    });
+  });
+
+
   it('should render pools', function() {
     var xml = require('../../fixtures/bpmn/draw/pools.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
