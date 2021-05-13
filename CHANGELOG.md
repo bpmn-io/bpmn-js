@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: reconnect message flows when participant is collapsed ([#1432](https://github.com/bpmn-io/bpmn-js/pull/1432))
 * `FEAT`: replace elements on create ([#1340](https://github.com/bpmn-io/bpmn-js/issues/1340))
 * `FEAT`: show message name on message flow ([#777](https://github.com/bpmn-io/bpmn-js/issues/777))
+* `FEAT`: ensure auto-placed elements are visible
 * `FIX`: fix reversed connection preview ([#1431](https://github.com/bpmn-io/bpmn-js/issues/1431))
 * `FIX`: copy root element references on replace ([#1430](https://github.com/bpmn-io/bpmn-js/issues/1431))
 * `DEPS`: update to `diagram-js@7.3.0`
