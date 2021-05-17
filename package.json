@@ -2,6 +2,7 @@
   "name": "bpmn-js",
   "version": "8.5.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
+  "main": "index.js",
   "scripts": {
     "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
