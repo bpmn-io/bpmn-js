@@ -226,7 +226,7 @@ export function inject(fn) {
       );
     }
 
-    BPMN_JS.invoke(fn);
+    return BPMN_JS.invoke(fn);
   };
 }
 
