@@ -3,6 +3,15 @@
   "version": "8.5.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "index.js",
+  "files": [
+    ".babelrc",
+    "dist",
+    "lib",
+    "test/util",
+    "test/helper",
+    "test/matchers",
+    "!.eslintrc"
+  ],
   "scripts": {
     "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
