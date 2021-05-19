@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.6.0
+
+* `FEAT`: support Promise in `inject` test helper ([#1450](https://github.com/bpmn-io/bpmn-js/pull/1450))
+* `DEPS`: update to `hosted-git@2.8.9` ([#1447](https://github.com/bpmn-io/bpmn-js/pull/1447))
+
 ## 8.5.0
 
 * `FEAT`: reconnect message flows when participant is collapsed ([#1432](https://github.com/bpmn-io/bpmn-js/pull/1432))
