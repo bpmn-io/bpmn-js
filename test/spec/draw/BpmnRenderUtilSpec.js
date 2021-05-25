@@ -9,7 +9,8 @@ import {
   getDiamondPath,
   getRectPath,
   getFillColor,
-  getStrokeColor
+  getStrokeColor,
+  getLabelColor
 } from 'lib/draw/BpmnRenderUtil';
 
 
@@ -83,4 +84,10 @@ describe('BpmnRenderUtil', function() {
 
   });
 
+
+  it('should expose getLabelColor', function() {
+
+    expect(getLabelColor).to.be.a('function');
+
+  });
 });
