@@ -355,7 +355,7 @@ describe('draw - bpmn renderer', function() {
         expect(markers).to.have.length(7);
         expect(markers[0].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
         expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
-        expect(markers[2].id).to.match(/^sequenceflow-end-white-_3399aa-[A-Za-z0-9]{25}$/);
+        expect(markers[2].id).to.match(/^sequenceflow-end-white-_FB8C00-[A-Za-z0-9]{25}$/);
         expect(markers[3].id).to.match(/^sequenceflow-end-white-rgba_255_0_0_0_9_-[A-Za-z0-9]{25}$/);
         expect(markers[4].id).to.match(/^association-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
         expect(markers[5].id).to.match(/^messageflow-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
@@ -450,7 +450,8 @@ describe('draw - bpmn renderer', function() {
     describe('default colors', function() {
 
       var defaultFillColor = 'red',
-          defaultStrokeColor = 'lime';
+          defaultStrokeColor = 'lime',
+          defaultLabelColor = 'blue';
 
       // TODO(philippfromme): remove once we drop PhantomJS
       function expectedColors(color) {
@@ -478,7 +479,8 @@ describe('draw - bpmn renderer', function() {
       beforeEach(bootstrapViewer(xml,{
         bpmnRenderer: {
           defaultFillColor: defaultFillColor,
-          defaultStrokeColor: defaultStrokeColor
+          defaultStrokeColor: defaultStrokeColor,
+          defaultLabelColor: defaultLabelColor
         }
       }));
 
@@ -528,7 +530,7 @@ describe('draw - bpmn renderer', function() {
        * @param {string} fillColor - Fill color to expect.
        * @param {string} strokeColor - Stroke color to expect.
        */
-      function expectColors(element, gfx, fillColor, strokeColor) {
+      function expectColors(element, gfx, fillColor, strokeColor, labelColor) {
         var djsVisual = domQuery('.djs-visual', gfx);
 
         var circle, path, polygon, polyline, rect, text;
@@ -536,7 +538,7 @@ describe('draw - bpmn renderer', function() {
         if (element.labelTarget) {
           text = domQuery('text', djsVisual);
 
-          expectFillColor(text, strokeColor);
+          expectFillColor(text, labelColor);
         } else if (element.waypoints) {
           path = domQuery('path', djsVisual);
           polyline = domQuery('polyline', djsVisual);
@@ -547,13 +549,13 @@ describe('draw - bpmn renderer', function() {
 
           expectFillColor(circle, fillColor);
           expectStrokeColor(circle, strokeColor);
-        } else if (isAny(element, [ 'bpmn:Task', 'bpmn:SubProcess', 'bpmn:Particpant' ])) {
+        } else if (isAny(element, [ 'bpmn:Task', 'bpmn:SubProcess', 'bpmn:Participant' ])) {
           rect = domQuery('rect', djsVisual);
           text = domQuery('text', djsVisual);
 
           expectFillColor(rect, fillColor);
           expectStrokeColor(rect, strokeColor);
-          expectFillColor(text, strokeColor);
+          expectFillColor(text, labelColor);
         } else if (isAny(element, [ 'bpmn:Gateway' ])) {
           polygon = domQuery('polygon', djsVisual);
 
@@ -573,14 +575,12 @@ describe('draw - bpmn renderer', function() {
 
           var gfx = elementRegistry.getGraphics(element),
               di = getDi(element),
-              fillColor = di.get('bioc:fill'),
-              strokeColor = di.get('bioc:stroke');
+              fillColor = di.get('color:background-color') || di.get('bioc:fill') || defaultFillColor,
+              strokeColor = di.get('color:border-color') || di.get('bioc:stroke') || defaultStrokeColor,
+              labelDi = di.get('label'),
+              labelColor = labelDi && labelDi.get('color:color') || defaultLabelColor;
 
-          if (fillColor || strokeColor) {
-            expectColors(element, gfx, fillColor, strokeColor);
-          } else {
-            expectColors(element, gfx, defaultFillColor, defaultStrokeColor);
-          }
+          expectColors(element, gfx, fillColor, strokeColor, labelColor);
         });
       }));
 

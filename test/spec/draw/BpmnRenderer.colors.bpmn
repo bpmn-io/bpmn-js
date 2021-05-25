@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
   <bpmn:collaboration id="Collaboration_12gf8gk">
     <bpmn:participant id="Participant_11xqomt" name="Regressnahme &#10;Sachbearbeiter" processRef="Process_1" />
     <bpmn:participant id="Participant_0igvg0r" />
@@ -84,14 +84,14 @@
       <bpmndi:BPMNShape id="Task_02fdytg_di" bpmnElement="Task_02fdytg">
         <dc:Bounds x="430" y="189" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0pqo7zt_di" bpmnElement="SequenceFlow_0pqo7zt" bioc:stroke="#3399aa">
+      <bpmndi:BPMNEdge id="SequenceFlow_0pqo7zt_di" bpmnElement="SequenceFlow_0pqo7zt" color:border-color="#FB8C00" bioc:stroke="#3399aa">
         <di:waypoint x="368" y="229" />
         <di:waypoint x="430" y="229" />
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel color:color="#FB8C00">
           <dc:Bounds x="392" y="210" width="13" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Task_04aofbe_di" bpmnElement="Task_04aofbe">
+      <bpmndi:BPMNShape id="Task_04aofbe_di" bpmnElement="Task_04aofbe" color:border-color="#FB8C00">
         <dc:Bounds x="430" y="311" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qt82pt_di" bpmnElement="SequenceFlow_1qt82pt" bioc:stroke="blue" bioc:fill="yellow">
@@ -132,7 +132,7 @@
           <dc:Bounds x="471" y="470" width="90" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="DataStoreReference_1clvrcw_di" bpmnElement="DataStoreReference_1clvrcw">
+      <bpmndi:BPMNShape id="DataStoreReference_1clvrcw_di" bpmnElement="DataStoreReference_1clvrcw" color:background-color="#FFE0B2">
         <dc:Bounds x="143" y="364" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="154" y="414" width="29" height="12" />
