@@ -15,7 +15,7 @@ updates:
     reviewers: # Automatically assign reviewer
       - "bpmn-io/modeling-dev"
     commit-message:
-      prefix: "chore:"
+      prefix: "deps:"
     versioning-strategy: "increase-if-necessary"
     # Disable version updates unless they are for security reasons.
     open-pull-requests-limit: 0
