@@ -6,6 +6,8 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
+var FUCHSIA_HEX = '#ff00ff',
+    YELLOW_HEX = '#ffff00';
 
 describe('features/modeling - set color', function() {
 
@@ -30,7 +32,7 @@ describe('features/modeling - set color', function() {
       modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
       // then
-      expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
+      expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
     }));
 
 
@@ -44,7 +46,7 @@ describe('features/modeling - set color', function() {
       modeling.setColor(taskShape);
 
       // then
-      expect(taskShape.businessObject.di.fill).not.to.exist;
+      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
     }));
 
 
@@ -59,8 +61,8 @@ describe('features/modeling - set color', function() {
         modeling.setColor(taskShape, { fill: 'YELLOW' });
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('YELLOW');
-        expect(taskShape.businessObject.di.stroke).to.equal('YELLOW');
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(YELLOW_HEX);
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(YELLOW_HEX);
       }
     ));
 
@@ -76,8 +78,8 @@ describe('features/modeling - set color', function() {
         modeling.setColor(taskShape, { fill: undefined });
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(taskShape.businessObject.di.stroke).to.equal('YELLOW');
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(YELLOW_HEX);
       }
     ));
 
@@ -93,8 +95,8 @@ describe('features/modeling - set color', function() {
         modeling.setColor(taskShape);
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
@@ -108,8 +110,8 @@ describe('features/modeling - set color', function() {
       modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
       // then
-      expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
-      expect(taskShape.businessObject.di.fill).not.to.exist;
+      expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
     }));
 
 
@@ -123,8 +125,8 @@ describe('features/modeling - set color', function() {
       modeling.setColor(taskShape);
 
       // then
-      expect(taskShape.businessObject.di.stroke).not.to.exist;
-      expect(taskShape.businessObject.di.fill).not.to.exist;
+      expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
     }));
 
 
@@ -139,10 +141,10 @@ describe('features/modeling - set color', function() {
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.fill).to.equal('FUCHSIA');
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
-        expect(startEventShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
@@ -159,8 +161,8 @@ describe('features/modeling - set color', function() {
         modeling.setColor([ taskShape, startEventShape ]);
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(startEventShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -179,10 +181,10 @@ describe('features/modeling - set color', function() {
         ], { stroke: 'FUCHSIA' });
 
         // then
-        expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.stroke).to.equal('FUCHSIA');
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(startEventShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -202,11 +204,53 @@ describe('features/modeling - set color', function() {
         modeling.setColor([ taskShape, startEventShape ]);
 
         // then
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
-        expect(startEventShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
+
+    it('should not set background-color on BPMNEdge', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      modeling.setColor(sequenceFlow, { fill: 'FUCHSIA' });
+
+      // then
+      expect(sequenceFlow.businessObject.di.get('background-color')).not.to.exist;
+    }));
+
+
+    it('should throw for an invalid color', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      function setColor() {
+        modeling.setColor(sequenceFlow, { fill: 'INVALID_COLOR' });
+      }
+
+      // then
+      expect(setColor).to.throw(/^invalid color value/);
+    }));
+
+
+    it('should throw for a color with alpha', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+      // when
+      function setColor() {
+        modeling.setColor(sequenceFlow, { fill: 'rgba(0, 255, 0, 0.5)' });
+      }
+
+      // then
+      expect(setColor).to.throw(/^invalid color value/);
+    }));
   });
 
 
@@ -223,7 +267,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -240,7 +284,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -256,7 +300,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
@@ -273,7 +317,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -290,8 +334,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(startEventShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -309,8 +353,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.fill).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -330,8 +374,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
-        expect(startEventShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
@@ -349,8 +393,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.stroke).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -371,7 +415,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -389,7 +433,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -406,7 +450,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -424,7 +468,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
@@ -442,8 +486,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.fill).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.fill).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -462,8 +506,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.fill).not.to.exist;
-        expect(startEventShape.businessObject.di.fill).not.to.exist;
+        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
       }
     ));
 
@@ -481,8 +525,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).to.equal('FUCHSIA');
-        expect(startEventShape.businessObject.di.stroke).to.equal('FUCHSIA');
+        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -504,11 +548,48 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.stroke).not.to.exist;
-        expect(startEventShape.businessObject.di.stroke).not.to.exist;
+        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
       }
     ));
 
   });
 
+
+  // TODO @barmac: remove once we drop bpmn.io properties
+  describe('legacy', function() {
+
+    it('should set both BPMN in Color and bpmn.io properties on BPMNShape', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var taskShape = elementRegistry.get('Task_1');
+
+        // when
+        modeling.setColor(taskShape, { stroke: '#abcdef', fill: '#fedcba' });
+
+        // then
+        expect(taskShape.businessObject.di.get('border-color')).to.eql('#abcdef');
+        expect(taskShape.businessObject.di.get('stroke')).to.eql('#abcdef');
+        expect(taskShape.businessObject.di.get('background-color')).to.eql('#fedcba');
+        expect(taskShape.businessObject.di.get('fill')).to.eql('#fedcba');
+      }
+    ));
+
+
+    it('should set both BPMN in Color and bpmn.io properties on BPMNEdge', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+        // when
+        modeling.setColor(sequenceFlow, { stroke: '#abcdef' });
+
+        // then
+        expect(sequenceFlow.businessObject.di.get('border-color')).to.eql('#abcdef');
+        expect(sequenceFlow.businessObject.di.get('stroke')).to.eql('#abcdef');
+      }
+    ));
+  });
 });
