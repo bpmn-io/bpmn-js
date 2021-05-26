@@ -354,8 +354,8 @@ describe('features/copy-paste', function() {
           // given
           var task = elementRegistry.get('Task_1'),
               rootElement = canvas.getRootElement(),
-              fill = 'red',
-              stroke = 'green';
+              fill = '#ff0000',
+              stroke = '#00ff00';
 
 
           // when
@@ -378,6 +378,10 @@ describe('features/copy-paste', function() {
 
           var taskBo = getBusinessObject(task);
 
+          expect(taskBo.di.get('background-color')).to.equal(fill);
+          expect(taskBo.di.get('border-color')).to.equal(stroke);
+
+          // TODO @barmac: remove when we drop bpmn.io properties
           expect(taskBo.di.fill).to.equal(fill);
           expect(taskBo.di.stroke).to.equal(stroke);
         })

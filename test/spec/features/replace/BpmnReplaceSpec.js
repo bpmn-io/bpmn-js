@@ -1631,8 +1631,8 @@ describe('features/replace - bpmn replace', function() {
       var newElementData = {
             type: 'bpmn:UserTask'
           },
-          fill = 'red',
-          stroke = 'green';
+          fill = '#ff0000',
+          stroke = '#00ff00';
 
       modeling.setColor(task, { fill: fill, stroke: stroke });
 
@@ -1642,6 +1642,10 @@ describe('features/replace - bpmn replace', function() {
       // then
       var businessObject = newElement.businessObject;
 
+      expect(businessObject.di.get('background-color')).to.equal(fill);
+      expect(businessObject.di.get('border-color')).to.equal(stroke);
+
+      // TODO @barmac: remove when we drop bpmn.io properties
       expect(businessObject.di.fill).to.equal(fill);
       expect(businessObject.di.stroke).to.equal(stroke);
     }));
