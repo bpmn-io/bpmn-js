@@ -123,6 +123,26 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanCreate([task1, task2], 'SequenceFlow', false);
     }));
 
+
+    describe('empty pool', function() {
+
+      var testXML = require('./BpmnRules.collaboration-empty.bpmn');
+
+      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+      it('should not allow to drop DataStoreReference when there is no process to append to',
+        inject(function(elementFactory) {
+
+          // given
+          var dataStoreReference = elementFactory.createShape({ type: 'bpmn:DataStoreReference' });
+
+          // then
+          expectCanCreate(dataStoreReference, 'Collaboration', false);
+        })
+      );
+    });
+
   });
 
 
