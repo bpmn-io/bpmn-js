@@ -190,6 +190,48 @@ describe('import - Importer', function() {
 
     });
 
+
+    it('should import a mixed diagram', function() {
+
+      // given
+      var xml = require('../../fixtures/bpmn/import/mixed.bpmn');
+
+      var events = [];
+
+      // log events
+      diagram.get('eventBus').on('bpmnElement.added', function(e) {
+        events.push({
+          type: 'add',
+          semantic: e.element.businessObject.id,
+          di: e.element.businessObject.di.id,
+          diagramElement: e.element && e.element.id
+        });
+      });
+
+      // when
+      return runImport(diagram, xml).then(function(result) {
+
+        // then
+        expect(result.warnings).to.be.empty;
+        expect(events).to.eql([
+          { type: 'add', semantic: 'Collaboration', di: 'BPMNPlane_1', diagramElement: 'Collaboration' },
+          { type: 'add', semantic: 'Participant', di: 'Participant_di', diagramElement: 'Participant' },
+          { type: 'add', semantic: 'StartEvent_1', di: 'StartEvent_1_di', diagramElement: 'StartEvent_1' },
+          { type: 'add', semantic: 'Task_1', di: 'Task_1_di', diagramElement: 'Task_1' },
+          { type: 'add', semantic: 'EndEvent_1', di: 'EndEvent_1_di', diagramElement: 'EndEvent_1' },
+          { type: 'add', semantic: 'StartEvent_2', di: 'StartEvent_2_di', diagramElement: 'StartEvent_2' },
+          { type: 'add', semantic: 'Task_2', di: 'Task_2_di', diagramElement: 'Task_2' },
+          { type: 'add', semantic: 'EndEvent_2', di: 'EndEvent_2_di', diagramElement: 'EndEvent_2' },
+          { type: 'add', semantic: 'SequenceFlow_1', di: 'SequenceFlow_1_di', diagramElement: 'SequenceFlow_1' },
+          { type: 'add', semantic: 'SequenceFlow_2', di: 'SequenceFlow_2_di', diagramElement: 'SequenceFlow_2' },
+          { type: 'add', semantic: 'MessageFlow', di: 'MessageFlow_di', diagramElement: 'MessageFlow' },
+          { type: 'add', semantic: 'Flow_1', di: 'Flow_1_di', diagramElement: 'Flow_1' },
+          { type: 'add', semantic: 'Flow_2', di: 'Flow_2_di', diagramElement: 'Flow_2' }
+        ]);
+      });
+
+    });
+
   });
 
 
