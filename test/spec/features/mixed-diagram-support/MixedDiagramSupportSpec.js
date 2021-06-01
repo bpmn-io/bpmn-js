@@ -20,7 +20,7 @@ describe('features/mixed-diagram-support', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  describe.only('init', function() {
+  describe('init', function() {
 
     function verify(diagram, expected) {
       return function() {
