@@ -59,7 +59,7 @@ describe('features/mixed-diagram-support', function() {
   describe.skip('appending shape', function() {
 
 
-    it.only('should execute', inject(function(elementRegistry, modeling) {
+    it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
       var task = elementRegistry.get('Task_2');
