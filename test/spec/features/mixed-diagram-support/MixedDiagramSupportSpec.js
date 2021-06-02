@@ -20,18 +20,23 @@ describe('features/mixed-diagram-support', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  describe('init', function() {
+  describe('#getTopLevelProcess', function() {
 
-    function verify(diagram, expected) {
+    function verify(diagram, shouldExist) {
       return function() {
         var bootstrap = bootstrapModeler(diagram, { modules: testModules });
 
         // when
         return bootstrap()
           .then(inject(function(mixedDiagramSupport) {
+            var topLevelProcess = mixedDiagramSupport.getTopLevelProcess();
 
             // then
-            expect(mixedDiagramSupport).to.have.property('initialized', expected);
+            if (shouldExist) {
+              expect(topLevelProcess).to.exist;
+            } else {
+              expect(topLevelProcess).not.to.exist;
+            }
           }));
       };
     }
