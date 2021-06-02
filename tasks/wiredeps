@@ -9,7 +9,8 @@ if [[ $GITHUB_REF =~ ^refs/heads/master$ ]] || [[ $GITHUB_REF =~ ^refs/tags/ ]];
   exit 0;
 fi
 
-FEATURE_BRANCH=$(echo "$GITHUB_REF" | cut -d"/" -f3)
+# GITHUB_HEAD_REF is set for pull request
+FEATURE_BRANCH=$([ $GITHUB_HEAD_REF != "" ] && echo $GITHUB_HEAD_REF || echo "$GITHUB_REF" | cut -d"/" -f3)
 
 echo "Attempting to install diagram-js@$FEATURE_BRANCH";
 

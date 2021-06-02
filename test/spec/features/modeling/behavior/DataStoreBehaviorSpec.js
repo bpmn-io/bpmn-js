@@ -45,7 +45,7 @@ describe('features/modeling/behavior - data store', function() {
     }));
 
 
-    it('should create DataStoreReference on sub process', inject(function(elementRegistry, modeling, bpmnjs) {
+    it('should create DataStoreReference on sub process', inject(function(elementRegistry, modeling) {
 
       // give
       var subProcessElement = elementRegistry.get('SubProcess'),
@@ -70,7 +70,7 @@ describe('features/modeling/behavior - data store', function() {
     }));
 
 
-    it('should create DataStoreReference on collaboration', inject(function(elementRegistry, modeling, bpmnjs) {
+    it('should create DataStoreReference on collaboration', inject(function(elementRegistry, modeling) {
 
       // give
       var collaborationElement = elementRegistry.get('Collaboration'),
@@ -95,6 +95,41 @@ describe('features/modeling/behavior - data store', function() {
       expect(dataStoreReference.dataStoreRef).not.to.exist;
     }));
 
+
+    describe('empty pool', function() {
+
+      var processDiagramXML = require('./DataStoreBehavior.empty-pool.bpmn');
+
+      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+
+      it('should create DataStoreReference on collaboration if first participant is an empty pool',
+        inject(function(elementRegistry, modeling) {
+
+          // give
+          var collaboration = elementRegistry.get('Collaboration'),
+              participantWithProcess = elementRegistry.get('Participant_2').businessObject;
+
+          // when
+          var dataStoreShape = modeling.createShape(
+            { type: 'bpmn:DataStoreReference' },
+            { x: 420, y: 370 },
+            collaboration
+          );
+
+          var dataStoreReference = dataStoreShape.businessObject;
+
+          // then
+          // reference correctly wired
+          expect(dataStoreReference.$parent).to.exist;
+          expect(dataStoreReference.$parent).to.eql(participantWithProcess.processRef);
+          expect(participantWithProcess.processRef.flowElements).to.contain(dataStoreReference);
+
+          // no actual data store created
+          expect(dataStoreReference.dataStoreRef).not.to.exist;
+        })
+      );
+    });
+
   });
 
 
@@ -105,7 +140,7 @@ describe('features/modeling/behavior - data store', function() {
     beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
 
-    it('should move DataStoreReference to Participant', inject(function(elementRegistry, modeling, bpmnjs) {
+    it('should move DataStoreReference to Participant', inject(function(elementRegistry, modeling) {
 
       // give
       var participantElement = elementRegistry.get('Participant'),
@@ -123,7 +158,7 @@ describe('features/modeling/behavior - data store', function() {
 
 
     it('should move DataStoreReference from partipant to Collaboration keeping parent particpant', inject(
-      function(elementRegistry, modeling, bpmnjs) {
+      function(elementRegistry, modeling) {
 
         // give
         var collaborationElement = elementRegistry.get('Collaboration'),
@@ -143,7 +178,7 @@ describe('features/modeling/behavior - data store', function() {
 
 
     it('should move DataStoreReference from subprocess to Collaboration keeping parent particpant', inject(
-      function(elementRegistry, modeling, bpmnjs) {
+      function(elementRegistry, modeling) {
 
         // give
         var collaborationElement = elementRegistry.get('Collaboration'),
@@ -163,7 +198,7 @@ describe('features/modeling/behavior - data store', function() {
 
 
     it('should move without changing parent', inject(
-      function(elementRegistry, modeling, bpmnjs) {
+      function(elementRegistry, modeling) {
 
         // give
         var collaborationElement = elementRegistry.get('Collaboration'),
