@@ -61,30 +61,22 @@ describe('features/mixed-diagram-support', function() {
   });
 
 
-  describe.skip('appending shape', function() {
-
+  describe('appending shape', function() {
 
     it('should execute', inject(function(elementRegistry, modeling) {
 
       // given
-      var task = elementRegistry.get('Task_2');
-      console.log(task.parent, task.businessObject.$parent);
+      var task = elementRegistry.get('Task_2'),
+          processBo = task.$parent;
 
       // when
-      try {
-
-        var targetShape = modeling.appendShape(task, { type: 'bpmn:Task' }),
-            target = targetShape.businessObject;
-      } finally {
-
-        console.log(task.parent, task.businessObject.$parent);
-      }
-
-
+      var targetShape = modeling.appendShape(task, { type: 'bpmn:Task' }),
+          target = targetShape.businessObject;
 
       // then
       expect(targetShape).to.exist;
       expect(target.$instanceOf('bpmn:Task')).to.be.true;
+      expect(target.$parent).to.be.eql(processBo);
     }));
   });
 });
