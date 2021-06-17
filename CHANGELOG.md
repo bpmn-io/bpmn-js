@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.6.2
+
+* `DEPS`: update diagram-js-direct-editing to v1.6.3
+
 ## 8.6.1
 
 * `FIX`: serialize `bpmn:DataStoreReference` correctly in case if first participant is an empty pool ([#1456](https://github.com/bpmn-io/bpmn-js/issues/1456))
