@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.7.0
+
+* `FEAT`: support BPMN in Color ([#1453](https://github.com/bpmn-io/bpmn-js/pull/1453))
+* `DEPS`: update to `bpmn-moddle@7.1.1`
+
 ## 8.6.2
 
 * `DEPS`: update diagram-js-direct-editing to v1.6.3
