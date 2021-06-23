@@ -60,6 +60,10 @@ module.exports = function(karma) {
       module: {
         rules: [
           {
+            test: require.resolve('../TestHelper.js'),
+            sideEffects: true
+          },
+          {
             test: /\.css|\.bpmn$/,
             use: 'raw-loader'
           }
