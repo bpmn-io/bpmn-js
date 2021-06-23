@@ -1,6 +1,8 @@
 export default function(chai, utils) {
 
-  utils.addMethod(chai.Assertion.prototype, 'jsonEqual', function(comparison, filter) {
+  var Assertion = chai.Assertion;
+
+  Assertion.addMethod('jsonEqual', function(comparison, filter) {
 
     var actual = JSON.stringify(this._obj, filter, '  ');
     var expected = JSON.stringify(comparison, filter, '  ');
