@@ -23,7 +23,8 @@
     "distro": "node tasks/build-distro.js",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
     "test:distro": "node tasks/test-distro.js",
-    "postversion": "run-s distro test:distro"
+    "postversion": "run-s distro test:distro",
+    "prepare": "run-s distro"
   },
   "repository": {
     "type": "git",
