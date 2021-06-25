@@ -1204,6 +1204,17 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect CallActivity -> Participant', function() {
+
+      expectCanConnect('CallActivity', 'Participant', {
+        sequenceFlow: false,
+        messageFlow: true,
+        association: false,
+        dataAssociation: false
+      });
+    });
+
+
     it('drop TextAnnotation_Global -> Participant', inject(function() {
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));
