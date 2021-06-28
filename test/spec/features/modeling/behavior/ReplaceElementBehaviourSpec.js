@@ -515,5 +515,30 @@ describe('features/modeling - replace element behavior', function() {
         ).to.be.true;
       })
     );
+
+
+    it('should replace Non-Interrupting Start Event when created in Process',
+      inject(function(elementRegistry, modeling, elementFactory) {
+
+        // given
+        var processElement = elementRegistry.get('Process_1'),
+            startEvent = elementFactory.createShape({
+              type: 'bpmn:StartEvent', eventDefinitionType: 'bpmn:TimerEventDefinition',
+              isInterrupting: false
+            }),
+            id = startEvent.businessObject.id;
+
+        // when
+        modeling.createElements(
+          startEvent, { x: 30, y: 30 }, processElement);
+
+        // then
+        var createdEvent = elementRegistry.get(id);
+
+        expect(createdEvent).to.eql(startEvent);
+        expect(createdEvent.businessObject.eventDefinitions).not.to.exist;
+        expect(createdEvent.businessObject.get('isInterrupting')).to.be.true;
+      })
+    );
   });
 });
