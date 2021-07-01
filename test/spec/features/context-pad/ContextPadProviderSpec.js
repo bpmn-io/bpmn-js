@@ -124,7 +124,7 @@ describe('features - context-pad', function() {
       // then
       expect(function() {
         contextPad.open(element);
-      }).not.to.throw;
+      }).not.to.throw();
     }));
 
 
