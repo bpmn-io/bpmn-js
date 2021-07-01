@@ -386,6 +386,72 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   });
 
+
+  describe('boundary events', function() {
+
+    var diagramXML = require('./BpmnSpaceTool.boundary-events.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should move boundary event when moving subprocess', inject(function(elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+
+      var boundaryEventMid = getMid(boundaryEvent);
+
+      // when
+      makeSpace({ x: boundaryEventMid.x + 5, y: boundaryEventMid.y }, { dx: -100 }, true);
+
+      // then
+      expect(getMid(boundaryEvent)).to.eql({
+        x: boundaryEventMid.x - 100,
+        y: boundaryEventMid.y,
+      });
+    }));
+
+
+    it('should move boundary event when resizing subprocess', inject(function(elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+
+      var boundaryEventMid = getMid(boundaryEvent);
+
+      // when
+      makeSpace({ x: boundaryEventMid.x - 5, y: boundaryEventMid.y }, { dx: 100 });
+
+      // then
+      expect(getMid(boundaryEvent)).to.eql({
+        x: boundaryEventMid.x + 100,
+        y: boundaryEventMid.y,
+      });
+    }));
+
+
+    it('should not move boundary event if subprocess not moving or resizing', inject(function(elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+
+      var boundaryEventMid = getMid(boundaryEvent);
+
+      // when
+      makeSpace({ x: boundaryEventMid.x + 5, y: boundaryEventMid.y }, { dx: 100 });
+
+      // then
+      expect(getMid(boundaryEvent)).to.eql(boundaryEventMid);
+    }));
+
+  });
+
 });
 
 
