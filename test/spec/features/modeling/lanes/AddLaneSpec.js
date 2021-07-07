@@ -271,7 +271,7 @@ describe('features/modeling - add Lane', function() {
   });
 
 
-  describe('flow node handling', function() {
+  describe('flow node handling - basics', function() {
 
     var diagramXML = require('./lanes.bpmn');
 
@@ -308,7 +308,9 @@ describe('features/modeling - add Lane', function() {
         { x: 432, y: 103 - newLane.height }
       ]);
     }));
+
   });
+
 
   describe('flow node handling', function() {
 
@@ -420,7 +422,10 @@ describe('features/modeling - add Lane', function() {
       // given
       var event = elementRegistry.get('Event'),
           label = event.label,
-          labelPosition = getPosition(label);
+          labelPosition = getPosition(label),
+          boundary = elementRegistry.get('Boundary'),
+          boundaryLabel = boundary.label,
+          boundaryLabelPosition = getPosition(boundaryLabel);
 
       // TODO(nikku): consolidate import + editing behavior => not consistent right now
 
@@ -434,6 +439,11 @@ describe('features/modeling - add Lane', function() {
       expect(label).to.have.position({
         x: labelPosition.x,
         y: labelPosition.y - 120
+      });
+
+      expect(boundaryLabel).to.have.position({
+        x: boundaryLabelPosition.x,
+        y: boundaryLabelPosition.y - 120
       });
     }));
 
