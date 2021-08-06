@@ -24,6 +24,7 @@ import {
 
 import {
   getBusinessObject,
+  getDi,
   is
 } from 'lib/util/ModelUtil';
 
@@ -376,14 +377,14 @@ describe('features/copy-paste', function() {
             return is(element, 'bpmn:Task');
           });
 
-          var taskBo = getBusinessObject(task);
+          var di = getDi(task);
 
-          expect(taskBo.di.get('background-color')).to.equal(fill);
-          expect(taskBo.di.get('border-color')).to.equal(stroke);
+          expect(di.get('background-color')).to.equal(fill);
+          expect(di.get('border-color')).to.equal(stroke);
 
           // TODO @barmac: remove when we drop bpmn.io properties
-          expect(taskBo.di.fill).to.equal(fill);
-          expect(taskBo.di.stroke).to.equal(stroke);
+          expect(di.fill).to.equal(fill);
+          expect(di.stroke).to.equal(stroke);
         })
       );
 

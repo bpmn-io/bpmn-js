@@ -6,7 +6,7 @@ import {
 import { pick } from 'min-dash';
 
 import {
-  getBusinessObject
+  getDi
 } from 'lib/util/ModelUtil';
 
 import modelingModule from 'lib/features/modeling';
@@ -51,8 +51,8 @@ describe('features/modeling - resize shape', function() {
         modeling.resizeShape(subProcessElement, { x: 339, y: 142, width: 250, height: 200 });
 
         // then
-        var bo = getBusinessObject(subProcessElement);
-        expect(bo.di.bounds.width).to.equal(250);
+        var di = getDi(subProcessElement);
+        expect(di.bounds.width).to.equal(250);
       }));
 
 
@@ -65,8 +65,8 @@ describe('features/modeling - resize shape', function() {
         modeling.resizeShape(subProcessElement, { x: 250, y: 250, width: 550, height: 400 });
 
         // then
-        var bo = getBusinessObject(subProcessElement);
-        expect(bo.di.bounds.width).to.equal(550);
+        var di = getDi(subProcessElement);
+        expect(di.bounds.width).to.equal(550);
       }));
 
     });
@@ -80,7 +80,7 @@ describe('features/modeling - resize shape', function() {
         var subProcessElement = elementRegistry.get('SubProcess_1');
 
         var sequenceFlowElement = elementRegistry.get('SequenceFlow_2'),
-            sequenceFlow = sequenceFlowElement.businessObject;
+            sequenceFlowDi = getDi(sequenceFlowElement);
 
         // when
 
@@ -95,7 +95,7 @@ describe('features/modeling - resize shape', function() {
           { x: 821, y: 242 }
         ]);
 
-        expect(sequenceFlow.di.waypoint).eql(diWaypoints);
+        expect(sequenceFlowDi.waypoint).eql(diWaypoints);
       }));
 
 
@@ -105,7 +105,7 @@ describe('features/modeling - resize shape', function() {
         var subProcessElement = elementRegistry.get('SubProcess_1');
 
         var sequenceFlowElement = elementRegistry.get('SequenceFlow_2'),
-            sequenceFlow = sequenceFlowElement.businessObject;
+            sequenceFlowDi = getDi(sequenceFlowElement);
 
         // when
         modeling.moveShape(subProcessElement, { x: -50, y: 0 });
@@ -118,7 +118,7 @@ describe('features/modeling - resize shape', function() {
           { x: 821, y: 242 }
         ]);
 
-        expect(sequenceFlow.di.waypoint).eql(diWaypoints);
+        expect(sequenceFlowDi.waypoint).eql(diWaypoints);
       }));
 
     });

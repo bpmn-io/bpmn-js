@@ -3,7 +3,7 @@ import {
 } from 'min-dash';
 
 import {
-  getBusinessObject
+  getDi
 } from 'lib/util/ModelUtil';
 
 var BOUNDS_ATTRS = [ 'x', 'y', 'width', 'height' ],
@@ -82,11 +82,11 @@ export default function(chai, utils) {
   Assertion.addMethod('diBounds', function(exp) {
     var obj = this._obj;
 
-    var bo = getBusinessObject(obj);
+    var di = getDi(obj);
 
-    expect(bo).to.have.property('di');
+    expect(di).to.exist;
 
-    assertBounds(this, bo.id + '#di', getBounds(bo.di), getBounds(exp));
+    assertBounds(this, di.id, getBounds(di), getBounds(exp));
   });
 
   /**
@@ -125,11 +125,11 @@ export default function(chai, utils) {
 
     var obj = this._obj;
 
-    var bo = getBusinessObject(obj);
+    var di = getDi(obj);
 
-    expect(bo).to.have.property('di');
+    expect(di).to.exist;
 
-    assertDimensions(this, bo.id + '#di', getDimensions(bo.di), getDimensions(exp));
+    assertDimensions(this, di.id, getDimensions(di), getDimensions(exp));
   });
 
 
@@ -169,11 +169,11 @@ export default function(chai, utils) {
 
     var obj = this._obj;
 
-    var bo = getBusinessObject(obj);
+    var di = getDi(obj);
 
-    expect(bo).to.have.property('di');
+    expect(di).to.exist;
 
-    assertPosition(this, bo.id + '#di', getPosition(bo.di), getPosition(exp));
+    assertPosition(this, di.id, getPosition(di), getPosition(exp));
   });
 
 

@@ -12,6 +12,8 @@ import {
   createViewer
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'viewer';
 
 
@@ -960,13 +962,13 @@ describe('Viewer', function() {
 
         expect(err).not.to.exist;
 
-        renderedDiagram = viewer.get('canvas').getRootElement().businessObject.di;
+        renderedDiagram = getDi(viewer.get('canvas').getRootElement());
 
         return viewer.open();
       }).then(function() {
 
         // then
-        expect(viewer.get('canvas').getRootElement().businessObject.di).to.equal(renderedDiagram);
+        expect(getDi(viewer.get('canvas').getRootElement())).to.equal(renderedDiagram);
       });
     });
 
@@ -1715,28 +1717,6 @@ describe('Viewer', function() {
       expect(clearDiagram).to.not.throw();
     });
 
-
-    it('should remove di property', function() {
-
-      var xml = require('../fixtures/bpmn/simple.bpmn');
-
-      var viewer = new Viewer({ container: container }),
-          elementRegistry = viewer.get('elementRegistry');
-
-      return viewer.importXML(xml).then(function(result) {
-
-        var elements = elementRegistry.getAll();
-
-        // when
-        viewer.clear();
-
-        // then
-        expect(elements.some(function(el) {
-          return el && el.businessObject && el.businessObject.di;
-        }), 'at least one element still has di').to.be.false;
-      });
-    });
-
   });
 
 
@@ -1976,11 +1956,11 @@ describe('Viewer', function() {
 
           expect(err).not.to.exist;
 
-          renderedDiagram = viewer.get('canvas').getRootElement().businessObject.di;
+          renderedDiagram = getDi(viewer.get('canvas').getRootElement());
 
           viewer.open(function(err) {
 
-            expect(viewer.get('canvas').getRootElement().businessObject.di).to.equal(renderedDiagram);
+            expect(getDi(viewer.get('canvas').getRootElement())).to.equal(renderedDiagram);
 
             done(err);
           });

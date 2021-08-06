@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -11,7 +13,7 @@ describe('features/modeling/behavior - update semantic parent', function() {
 
   var diagramXML = require('./UpdateSemanticParent.bpmn');
 
-  var participant1Bo, participant2Bo, dataStoreBo;
+  var participant1Bo, participant1Di, participant2Bo, participant2Di, dataStoreBo, dataStoreDi;
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
@@ -26,14 +28,18 @@ describe('features/modeling/behavior - update semantic parent', function() {
         dataStore = elementRegistry.get('DataStoreReference');
 
     participant1Bo = participant1.businessObject;
+    participant1Di = getDi(participant1);
     participant2Bo = participant2.businessObject;
+    participant2Di = getDi(participant2);
     dataStoreBo = dataStore.businessObject;
+    dataStoreDi = getDi(dataStore);
 
     // when
     commandStack.execute('dataStore.updateContainment', {
       dataStoreBo: dataStoreBo,
+      dataStoreDi: dataStoreDi,
       newSemanticParent: participant2Bo.processRef,
-      newDiParent: participant2Bo.di
+      newDiParent: participant2Di
     });
   }));
 
@@ -42,7 +48,7 @@ describe('features/modeling/behavior - update semantic parent', function() {
 
     // then
     expect(dataStoreBo.$parent).to.eql(participant2Bo.processRef);
-    expect(dataStoreBo.di.$parent).to.eql(participant2Bo.di.$parent);
+    expect(dataStoreDi.$parent).to.eql(participant2Di.$parent);
   });
 
 
@@ -53,7 +59,7 @@ describe('features/modeling/behavior - update semantic parent', function() {
 
     // then
     expect(dataStoreBo.$parent).to.eql(participant1Bo.processRef);
-    expect(dataStoreBo.di.$parent).to.eql(participant1Bo.di.$parent);
+    expect(dataStoreDi.$parent).to.eql(participant1Di.$parent);
   }));
 
 
@@ -65,7 +71,7 @@ describe('features/modeling/behavior - update semantic parent', function() {
 
     // then
     expect(dataStoreBo.$parent).to.eql(participant2Bo.processRef);
-    expect(dataStoreBo.di.$parent).to.eql(participant2Bo.di.$parent);
+    expect(dataStoreDi.$parent).to.eql(participant2Di.$parent);
   }));
 
 });

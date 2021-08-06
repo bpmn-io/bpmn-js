@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -238,7 +240,8 @@ describe('features/modeling - update properties', function() {
 
       // given
       var flowConnection = elementRegistry.get('SequenceFlow_1'),
-          flowBo = flowConnection.businessObject;
+          flowBo = flowConnection.businessObject,
+          flowDi = getDi(flowConnection);
 
       // when
       modeling.updateProperties(flowConnection, {
@@ -248,7 +251,7 @@ describe('features/modeling - update properties', function() {
       });
 
       // then
-      expect(flowBo.di.fill).to.equal('FUCHSIA');
+      expect(flowDi.fill).to.equal('FUCHSIA');
 
       expect(flowBo.get('di')).not.to.exist;
     }));
@@ -257,14 +260,16 @@ describe('features/modeling - update properties', function() {
     it('unsetting di properties', inject(function(elementRegistry, modeling) {
 
       // given
-      var flowConnection = elementRegistry.get('SequenceFlow_1');
+      var flowConnection = elementRegistry.get('SequenceFlow_1'),
+          flowDi = getDi(flowConnection);
+
       modeling.updateProperties(flowConnection, { di: { fill: 'FUCHSIA' } });
 
       // when
       modeling.updateProperties(flowConnection, { di: { fill: undefined } });
 
       // then
-      expect(flowConnection.businessObject.di.fill).not.to.exist;
+      expect(flowDi.fill).not.to.exist;
     }));
 
   });
@@ -560,11 +565,11 @@ describe('features/modeling - update properties', function() {
     ));
 
 
-    it('should ignore setting color on root', inject(
-      function(canvas, modeling) {
+    it('should ignore setting color on elements without di', inject(
+      function(modeling, bpmnFactory) {
 
         // given
-        var rootElement = canvas.getRootElement();
+        var rootElement = bpmnFactory.create('bpmn:RootElement');
 
         // when
         modeling.updateProperties(rootElement, {
@@ -574,7 +579,7 @@ describe('features/modeling - update properties', function() {
         });
 
         // then
-        expect(rootElement.di).not.to.exist;
+        expect(getDi(rootElement)).not.to.exist;
       }
     ));
 
