@@ -5,6 +5,7 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import { getDi } from 'lib/util/ModelUtil';
 
 
 describe('features/modeling - move shape', function() {
@@ -22,10 +23,10 @@ describe('features/modeling - move shape', function() {
 
       // given
       var startEventElement = elementRegistry.get('StartEvent_1'),
-          startEvent = startEventElement.businessObject;
+          startEventDi = getDi(startEventElement);
 
       var sequenceFlowElement = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowElement.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowElement);
 
       var oldPosition = {
         x: startEventElement.x,
@@ -36,7 +37,7 @@ describe('features/modeling - move shape', function() {
       modeling.moveShape(startEventElement, { x: 0, y: 50 });
 
       // then
-      expect(startEvent.di).to.have.position({
+      expect(startEventDi).to.have.position({
         x: oldPosition.x,
         y: oldPosition.y + 50
       });
@@ -50,7 +51,7 @@ describe('features/modeling - move shape', function() {
       // see LayoutSpec for actual connection layouting tests
 
       // expect di waypoints update
-      expect(sequenceFlow.di.waypoint).to.eql(expectedDiWaypoints);
+      expect(sequenceFlowDi.waypoint).to.eql(expectedDiWaypoints);
     }));
 
 
@@ -58,7 +59,7 @@ describe('features/modeling - move shape', function() {
 
       // given
       var labelElement = elementRegistry.get('StartEvent_1_label'),
-          startEvent = labelElement.businessObject;
+          startEventDi = getDi(elementRegistry.get('StartEvent_1'));
 
       var oldPosition = {
         x: labelElement.x,
@@ -69,7 +70,7 @@ describe('features/modeling - move shape', function() {
       modeling.moveShape(labelElement, { x: 0, y: 50 });
 
       // then
-      expect(startEvent.di.label).to.have.position({
+      expect(startEventDi.label).to.have.position({
         x: oldPosition.x,
         y: oldPosition.y + 50
       });
@@ -103,21 +104,21 @@ describe('features/modeling - move shape', function() {
       it('should undo', inject(function(elementRegistry, commandStack, modeling) {
 
         // given
-        var startEventElement = elementRegistry.get('StartEvent_1'),
-            startEvent = startEventElement.businessObject;
+        var startEvent = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEvent);
 
         var oldPosition = {
-          x: startEventElement.x,
-          y: startEventElement.y
+          x: startEvent.x,
+          y: startEvent.y
         };
 
-        modeling.moveShape(startEventElement, { x: 0, y: 50 });
+        modeling.moveShape(startEvent, { x: 0, y: 50 });
 
         // when
         commandStack.undo();
 
         // then
-        expect(startEvent.di).to.have.position(oldPosition);
+        expect(startEventDi).to.have.position(oldPosition);
       }));
 
 
@@ -125,7 +126,8 @@ describe('features/modeling - move shape', function() {
 
         // given
         var labelElement = elementRegistry.get('StartEvent_1_label'),
-            startEvent = labelElement.businessObject;
+            startEvent = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEvent);
 
         var oldPosition = {
           x: labelElement.x,
@@ -138,7 +140,7 @@ describe('features/modeling - move shape', function() {
         commandStack.undo();
 
         // then
-        expect(startEvent.di.label).to.have.position(oldPosition);
+        expect(startEventDi.label).to.have.position(oldPosition);
       }));
 
     });
@@ -150,7 +152,7 @@ describe('features/modeling - move shape', function() {
 
         // given
         var startEventElement = elementRegistry.get('StartEvent_1'),
-            startEvent = startEventElement.businessObject;
+            startEventDi = getDi(startEventElement);
 
 
         modeling.moveShape(startEventElement, { x: 0, y: 50 });
@@ -165,7 +167,7 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(startEvent.di).to.have.position(newPosition);
+        expect(startEventDi).to.have.position(newPosition);
       }));
 
 
@@ -173,7 +175,8 @@ describe('features/modeling - move shape', function() {
 
         // given
         var labelElement = elementRegistry.get('StartEvent_1_label'),
-            startEvent = labelElement.businessObject;
+            startEvent = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEvent);
 
         modeling.moveShape(labelElement, { x: 0, y: 50 });
 
@@ -187,7 +190,7 @@ describe('features/modeling - move shape', function() {
         commandStack.redo();
 
         // then
-        expect(startEvent.di.label).to.have.position(newPosition);
+        expect(startEventDi.label).to.have.position(newPosition);
       }));
 
     });

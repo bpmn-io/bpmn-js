@@ -131,7 +131,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id
         });
       });
@@ -167,7 +167,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id
         });
       });
@@ -293,7 +293,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id
         });
       });
@@ -404,7 +404,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id
         });
       });
@@ -438,7 +438,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id
         });
       });
@@ -474,7 +474,7 @@ describe('import - Importer', function() {
         events.push({
           type: 'add',
           semantic: e.element.businessObject.id,
-          di: e.element.businessObject.di.id,
+          di: e.element.di.id,
           diagramElement: e.element && e.element.id,
           isFrame: e.element && e.element.isFrame
         });

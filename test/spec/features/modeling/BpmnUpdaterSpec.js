@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -26,9 +28,9 @@ describe('features - bpmn-updater', function() {
         // given
         // sequence flow with existing sourceElement and targetElement di information
         var task = elementRegistry.get('Task_1'),
-            sequenceFlowDi = elementRegistry.get('SequenceFlow_1').businessObject.di,
-            startEventDi = elementRegistry.get('StartEvent_1').businessObject.di,
-            endEventDi = elementRegistry.get('EndEvent_1').businessObject.di;
+            sequenceFlowDi = getDi(elementRegistry.get('SequenceFlow_1')),
+            startEventDi = getDi(elementRegistry.get('StartEvent_1')),
+            endEventDi = getDi(elementRegistry.get('EndEvent_1'));
 
         // when
         modeling.removeElements([ task ]);
@@ -46,7 +48,8 @@ describe('features - bpmn-updater', function() {
         // given
         // sequence flow with existing sourceElement and targetElement di information
         var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
-            startEventDi = elementRegistry.get('StartEvent_2').businessObject.di;
+            startEventDi = getDi(elementRegistry.get('StartEvent_2')),
+            sequenceFlowDi = getDi(sequenceFlow);
 
         var intermediateThrowEvent = elementFactory.createShape({
           type: 'bpmn:IntermediateThrowEvent'
@@ -58,8 +61,8 @@ describe('features - bpmn-updater', function() {
         var event = modeling.createShape(intermediateThrowEvent, dropPosition, sequenceFlow);
 
         // then
-        expect(sequenceFlow.businessObject.di.sourceElement).to.equal(startEventDi);
-        expect(sequenceFlow.businessObject.di.targetElement).to.equal(event.businessObject.di);
+        expect(sequenceFlowDi.sourceElement).to.equal(startEventDi);
+        expect(sequenceFlowDi.targetElement).to.equal(getDi(event));
       }
     ));
 
@@ -69,7 +72,8 @@ describe('features - bpmn-updater', function() {
 
         // given
         // sequence flow without any sourceElement and targetElement di information
-        var sequenceFlow = elementRegistry.get('SequenceFlow_4');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_4'),
+            sequenceFlowDi = getDi(sequenceFlow);
 
         var intermediateThrowEvent = elementFactory.createShape({
           type: 'bpmn:IntermediateThrowEvent'
@@ -81,8 +85,8 @@ describe('features - bpmn-updater', function() {
         modeling.createShape(intermediateThrowEvent, dropPosition, sequenceFlow);
 
         // then
-        expect(sequenceFlow.businessObject.di.sourceElement).not.to.exist;
-        expect(sequenceFlow.businessObject.di.targetElement).not.to.exist;
+        expect(sequenceFlowDi.sourceElement).not.to.exist;
+        expect(sequenceFlowDi.targetElement).not.to.exist;
       }
     ));
 
@@ -163,7 +167,7 @@ describe('features - bpmn-updater', function() {
         // given
         var event = elementRegistry.get('StartEvent'),
             label = event.label,
-            di = event.businessObject.di;
+            di = getDi(event);
 
         // when
         modeling.moveElements([ label ], { x: 20, y: 20 });
@@ -187,7 +191,7 @@ describe('features - bpmn-updater', function() {
         // given
         var event = elementRegistry.get('StartEvent_2'),
             label = event.label,
-            di = event.businessObject.di;
+            di = getDi(event);
 
         // when
         modeling.moveElements([ label ], { x: 20, y: 20 });

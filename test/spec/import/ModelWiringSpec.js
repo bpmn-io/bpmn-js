@@ -3,7 +3,10 @@ import {
   inject
 } from 'test/TestHelper';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  is,
+  getDi
+} from 'lib/util/ModelUtil';
 
 
 describe('import - model wiring', function() {
@@ -82,7 +85,7 @@ describe('import - model wiring', function() {
       var subProcessShape = elementRegistry.get('SubProcess_1');
 
       var subProcess = subProcessShape.businessObject;
-      var subProcessDi = subProcess.di;
+      var subProcessDi = getDi(subProcessShape);
 
       // then
       expect(subProcessDi).to.exist;
@@ -96,7 +99,7 @@ describe('import - model wiring', function() {
       var sequenceFlowElement = elementRegistry.get('SequenceFlow_1');
 
       var sequenceFlow = sequenceFlowElement.businessObject;
-      var sequenceFlowDi = sequenceFlow.di;
+      var sequenceFlowDi = getDi(sequenceFlowElement);
 
       // then
       expect(sequenceFlowDi).to.exist;

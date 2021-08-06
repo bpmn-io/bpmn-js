@@ -7,7 +7,8 @@ import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 
 import {
-  is
+  is,
+  getDi
 } from 'lib/util/ModelUtil';
 
 
@@ -68,5 +69,29 @@ describe('util/ModelUtil', function() {
     // then
     expect(is(foo, 'FOO')).to.be.false;
   }));
+
+
+  describe('#getDi', function() {
+
+    it('return a di', inject(function() {
+
+      // given
+      var element = { di: 'foo' };
+
+      // then
+      expect(getDi(element)).to.equal('foo');
+    }));
+
+
+    it('should ignore element without di', inject(function() {
+
+      // given
+      var element = { };
+
+      // then
+      expect(getDi(element)).to.be.undefined;
+    }));
+
+  });
 
 });

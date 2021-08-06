@@ -6,7 +6,10 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  is,
+  getDi
+} from 'lib/util/ModelUtil';
 
 var testModules = [
   modelingModule,
@@ -44,10 +47,9 @@ describe('features/modeling - collapse and expand elements', function() {
             isExpanded: true
           }
         );
-        var businessObject = expandedSubProcess.businessObject;
 
         // then +-marker is removed
-        expect(businessObject.di.isExpanded).to.eql(true);
+        expect(getDi(expandedSubProcess).isExpanded).to.eql(true);
       })
     );
 
@@ -242,10 +244,9 @@ describe('features/modeling - collapse and expand elements', function() {
 
           // when
           commandStack.undo();
-          var businessObject = expandedSubProcess.businessObject;
 
           // then +-marker is placed
-          expect(businessObject.di.isExpanded).to.eql(false);
+          expect(getDi(expandedSubProcess).isExpanded).to.eql(false);
         })
       );
 
@@ -331,10 +332,9 @@ describe('features/modeling - collapse and expand elements', function() {
             isExpanded: false
           }
         );
-        var businessObject = collapsedSubProcess.businessObject;
 
         // then +-marker is set
-        expect(businessObject.di.isExpanded).to.eql(false);
+        expect(getDi(collapsedSubProcess).isExpanded).to.eql(false);
       })
     );
 
@@ -439,10 +439,9 @@ describe('features/modeling - collapse and expand elements', function() {
 
           // when
           commandStack.undo();
-          var businessObject = collapsedSubProcess.businessObject;
 
           // then +-marker is placed
-          expect(businessObject.di.isExpanded).to.eql(true);
+          expect(getDi(collapsedSubProcess).isExpanded).to.eql(true);
         })
       );
 

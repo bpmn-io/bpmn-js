@@ -17,7 +17,8 @@ import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {
-  is
+  is,
+  getDi
 } from 'lib/util/ModelUtil';
 
 import {
@@ -1640,14 +1641,14 @@ describe('features/replace - bpmn replace', function() {
       var newElement = bpmnReplace.replaceElement(task, newElementData);
 
       // then
-      var businessObject = newElement.businessObject;
+      var di = getDi(newElement);
 
-      expect(businessObject.di.get('background-color')).to.equal(fill);
-      expect(businessObject.di.get('border-color')).to.equal(stroke);
+      expect(di.get('background-color')).to.equal(fill);
+      expect(di.get('border-color')).to.equal(stroke);
 
       // TODO @barmac: remove when we drop bpmn.io properties
-      expect(businessObject.di.fill).to.equal(fill);
-      expect(businessObject.di.stroke).to.equal(stroke);
+      expect(di.fill).to.equal(fill);
+      expect(di.stroke).to.equal(stroke);
     }));
 
   });

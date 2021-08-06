@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -41,7 +43,7 @@ describe('features/modeling - layout connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
 
       var expectedWaypoints = sequenceFlowConnection.waypoints;
 
@@ -58,7 +60,7 @@ describe('features/modeling - layout connection', function() {
       // expect cropped waypoints in di
       var diWaypoints = bpmnFactory.createDiWaypoints(expectedWaypoints);
 
-      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(diWaypoints);
     }));
 
 
@@ -66,10 +68,10 @@ describe('features/modeling - layout connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
 
       var oldWaypoints = sequenceFlowConnection.waypoints,
-          oldDiWaypoints = sequenceFlow.di.waypoint;
+          oldDiWaypoints = sequenceFlowDi.waypoint;
 
       modeling.layoutConnection(sequenceFlowConnection);
 
@@ -78,7 +80,7 @@ describe('features/modeling - layout connection', function() {
 
       // then
       expect(sequenceFlowConnection.waypoints).eql(oldWaypoints);
-      expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(oldDiWaypoints);
     }));
 
 
@@ -86,12 +88,13 @@ describe('features/modeling - layout connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
+
 
       modeling.layoutConnection(sequenceFlowConnection);
 
       var newWaypoints = sequenceFlowConnection.waypoints,
-          newDiWaypoints = sequenceFlow.di.waypoint;
+          newDiWaypoints = sequenceFlowDi.waypoint;
 
       // when
       commandStack.undo();
@@ -99,7 +102,7 @@ describe('features/modeling - layout connection', function() {
 
       // then
       expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
-      expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(newDiWaypoints);
     }));
 
   });

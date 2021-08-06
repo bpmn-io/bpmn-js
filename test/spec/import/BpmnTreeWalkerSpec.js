@@ -109,7 +109,7 @@ describe('import - BpmnTreeWalker', function() {
       var element = findElementWithId(definitions, 'SubProcess_1');
 
       // will error
-      element.di = 'DI';
+      definitions.diagrams[0].plane.planeElement.push({ bpmnElement: element });
 
       // when
       walker.handleDefinitions(definitions);
