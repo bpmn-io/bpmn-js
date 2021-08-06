@@ -12,6 +12,8 @@ import {
   getExternalLabelMid
 } from 'lib/util/LabelUtil';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import {
   assign,
   map,
@@ -287,12 +289,12 @@ describe('behavior - LabelBehavior', function() {
                 type: 'bpmn:EndEvent',
                 businessObject: businessObject
               }),
-              target = targetShape.businessObject;
+              targetDi = getDi(targetShape);
 
           // then
-          expect(target.di.label).to.exist;
+          expect(targetDi.label).to.exist;
 
-          expect(target.di.label).to.have.bounds(targetShape.label);
+          expect(targetDi.label).to.have.bounds(targetShape.label);
         }
       ));
 
@@ -313,12 +315,12 @@ describe('behavior - LabelBehavior', function() {
               type: 'bpmn:EndEvent',
               businessObject: businessObject
             }),
-            target = targetShape.businessObject;
+            targetDi = getDi(targetShape);
 
         // then
-        expect(target.di.label).to.exist;
+        expect(targetDi.label).to.exist;
 
-        expect(target.di.label).to.have.bounds(targetShape.label);
+        expect(targetDi.label).to.have.bounds(targetShape.label);
       }
     ));
 
@@ -354,7 +356,7 @@ describe('behavior - LabelBehavior', function() {
 
       // given
       var startEventShape = elementRegistry.get('StartEvent_1'),
-          startEvent = startEventShape.businessObject,
+          startEventDi = getDi(startEventShape),
           labelShape = startEventShape.label;
 
       // when
@@ -363,8 +365,8 @@ describe('behavior - LabelBehavior', function() {
       // then
       expect(labelShape.x).to.be.within(193, 194);
       expect(labelShape.y).to.equal(128);
-      expect(startEvent.di.label.bounds.x).to.be.within(193, 194);
-      expect(startEvent.di.label.bounds.y).to.equal(128);
+      expect(startEventDi.label.bounds.x).to.be.within(193, 194);
+      expect(startEventDi.label.bounds.y).to.equal(128);
     }));
 
 

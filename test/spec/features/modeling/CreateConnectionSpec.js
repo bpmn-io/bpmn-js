@@ -3,6 +3,10 @@ import {
   inject
 } from 'test/TestHelper';
 
+import {
+  getDi
+} from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -21,6 +25,7 @@ describe('features/modeling - create connection', function() {
     // given
     var taskShape = elementRegistry.get('Task_1'),
         task = taskShape.businessObject,
+        taskDi = getDi(taskShape),
         gatewayShape = elementRegistry.get('Gateway_1'),
         gateway = gatewayShape.businessObject;
 
@@ -29,7 +34,8 @@ describe('features/modeling - create connection', function() {
       type: 'bpmn:SequenceFlow'
     }, taskShape.parent);
 
-    var sequenceFlow = sequenceFlowConnection.businessObject;
+    var sequenceFlow = sequenceFlowConnection.businessObject,
+        sequenceFlowDi = getDi(sequenceFlowConnection);
 
     // then
     expect(sequenceFlowConnection).to.exist;
@@ -41,8 +47,8 @@ describe('features/modeling - create connection', function() {
     expect(task.outgoing).to.include(sequenceFlow);
     expect(gateway.incoming).to.include(sequenceFlow);
 
-    expect(sequenceFlow.di.$parent).to.eql(task.di.$parent);
-    expect(sequenceFlow.di.$parent.planeElement).to.include(sequenceFlow.di);
+    expect(sequenceFlowDi.$parent).to.eql(taskDi.$parent);
+    expect(sequenceFlowDi.$parent.planeElement).to.include(sequenceFlowDi);
 
     // expect cropped connection
     expect(sequenceFlowConnection.waypoints).eql([
@@ -60,7 +66,7 @@ describe('features/modeling - create connection', function() {
     ]);
 
     // expect cropped waypoints in di
-    expect(sequenceFlow.di.waypoint).eql(diWaypoints);
+    expect(sequenceFlowDi.waypoint).eql(diWaypoints);
   }));
 
 
@@ -132,6 +138,7 @@ describe('features/modeling - create connection', function() {
     // given
     var taskShape = elementRegistry.get('Task_1'),
         task = taskShape.businessObject,
+        taskDi = getDi(taskShape),
         gatewayShape = elementRegistry.get('Gateway_1'),
         gateway = gatewayShape.businessObject;
 
@@ -140,10 +147,11 @@ describe('features/modeling - create connection', function() {
       type: 'bpmn:SequenceFlow'
     }, taskShape.parent);
 
-    var sequenceFlow = sequenceFlowConnection.businessObject;
+    var sequenceFlow = sequenceFlowConnection.businessObject,
+        sequenceFlowDi = getDi(sequenceFlowConnection);
 
     var newWaypoints = sequenceFlowConnection.waypoints,
-        newDiWaypoints = sequenceFlow.di.waypoint;
+        newDiWaypoints = sequenceFlowDi.waypoint;
 
     // when
     commandStack.undo();
@@ -156,14 +164,14 @@ describe('features/modeling - create connection', function() {
     expect(task.outgoing).to.include(sequenceFlow);
     expect(gateway.incoming).to.include(sequenceFlow);
 
-    expect(sequenceFlow.di.$parent).to.eql(task.di.$parent);
-    expect(sequenceFlow.di.$parent.planeElement).to.include(sequenceFlow.di);
+    expect(sequenceFlowDi.$parent).to.eql(taskDi.$parent);
+    expect(sequenceFlowDi.$parent.planeElement).to.include(sequenceFlowDi);
 
     // expect cropped connection
     expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
 
     // expect cropped waypoints in di
-    expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
+    expect(sequenceFlowDi.waypoint).eql(newDiWaypoints);
   }));
 
 });

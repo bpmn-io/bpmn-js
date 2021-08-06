@@ -6,7 +6,7 @@ import {
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
-import { getBusinessObject } from 'lib/util/ModelUtil';
+import { getDi } from 'lib/util/ModelUtil';
 
 
 describe('features/modeling/behavior - IsHorizontalFix', function() {
@@ -37,7 +37,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         var participant = modeling.createShape(participantShape, { x: 350, y: 200 }, processShape);
 
         // then
-        var isHorizontal = getBusinessObject(participant).di.get('isHorizontal');
+        var isHorizontal = getDi(participant).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -56,7 +56,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         var lane = modeling.addLane(participant, 'bottom');
 
         // then
-        var isHorizontal = getBusinessObject(lane).di.get('isHorizontal');
+        var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -87,7 +87,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         modeling.moveElements([ participant ], { x: 0, y: 0 });
 
         // then
-        var isHorizontal = getBusinessObject(participant).di.get('isHorizontal');
+        var isHorizontal = getDi(participant).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -104,7 +104,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         modeling.moveElements([ lane ], { x: 0, y: 0 });
 
         // then
-        var isHorizontal = getBusinessObject(lane).di.get('isHorizontal');
+        var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -121,7 +121,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         modeling.resizeShape(participant, { x: 0, y: 0, width: 10, height: 10 });
 
         // then
-        var isHorizontal = getBusinessObject(participant).di.get('isHorizontal');
+        var isHorizontal = getDi(participant).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -138,7 +138,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         modeling.resizeLane(lane, { x: 0, y: 0, width: 10, height: 10 });
 
         // then
-        var isHorizontal = getBusinessObject(lane).di.get('isHorizontal');
+        var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -171,7 +171,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         commandStack.undo();
 
         // then
-        var isHorizontal = getBusinessObject(participant).di.get('isHorizontal');
+        var isHorizontal = getDi(participant).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -190,7 +190,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         commandStack.undo();
 
         // then
-        var isHorizontal = getBusinessObject(lane).di.get('isHorizontal');
+        var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -209,7 +209,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         commandStack.undo();
 
         // then
-        var isHorizontal = getBusinessObject(participant).di.get('isHorizontal');
+        var isHorizontal = getDi(participant).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })
@@ -228,7 +228,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         commandStack.undo();
 
         // then
-        var isHorizontal = getBusinessObject(lane).di.get('isHorizontal');
+        var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
       })

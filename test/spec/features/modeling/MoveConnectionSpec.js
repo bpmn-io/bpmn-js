@@ -5,6 +5,7 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import { getDi } from 'lib/util/ModelUtil';
 
 
 describe('features/modeling - move connection', function() {
@@ -25,7 +26,7 @@ describe('features/modeling - move connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
 
       // when
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
@@ -45,7 +46,7 @@ describe('features/modeling - move connection', function() {
       // expect cropped waypoints in di
       var diWaypoints = bpmnFactory.createDiWaypoints(expectedWaypoints);
 
-      expect(sequenceFlow.di.waypoint).eql(diWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(diWaypoints);
     }));
 
 
@@ -53,10 +54,10 @@ describe('features/modeling - move connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
 
       var oldWaypoints = sequenceFlowConnection.waypoints,
-          oldDiWaypoints = sequenceFlow.di.waypoint;
+          oldDiWaypoints = sequenceFlowDi.waypoint;
 
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
 
@@ -65,7 +66,7 @@ describe('features/modeling - move connection', function() {
 
       // then
       expect(sequenceFlowConnection.waypoints).eql(oldWaypoints);
-      expect(sequenceFlow.di.waypoint).eql(oldDiWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(oldDiWaypoints);
     }));
 
 
@@ -73,12 +74,12 @@ describe('features/modeling - move connection', function() {
 
       // given
       var sequenceFlowConnection = elementRegistry.get('SequenceFlow_1'),
-          sequenceFlow = sequenceFlowConnection.businessObject;
+          sequenceFlowDi = getDi(sequenceFlowConnection);
 
       modeling.moveConnection(sequenceFlowConnection, { x: 20, y: 10 });
 
       var newWaypoints = sequenceFlowConnection.waypoints,
-          newDiWaypoints = sequenceFlow.di.waypoint;
+          newDiWaypoints = sequenceFlowDi.waypoint;
 
       // when
       commandStack.undo();
@@ -86,7 +87,7 @@ describe('features/modeling - move connection', function() {
 
       // then
       expect(sequenceFlowConnection.waypoints).eql(newWaypoints);
-      expect(sequenceFlow.di.waypoint).eql(newDiWaypoints);
+      expect(sequenceFlowDi.waypoint).eql(newDiWaypoints);
     }));
 
   });

@@ -3,7 +3,7 @@ import {
 } from 'min-dash';
 
 import {
-  getBusinessObject
+  getDi
 } from 'lib/util/ModelUtil';
 
 var POSITION_ATTRS = [ 'x', 'y' ];
@@ -61,13 +61,13 @@ export default function(chai, utils) {
   Assertion.addMethod('diWaypoints', function(exp) {
     var obj = this._obj;
 
-    var bo = getBusinessObject(obj);
+    var di = getDi(obj);
 
-    expect(bo).to.have.property('di');
+    expect(di).to.exist;
 
-    expect(bo.di).to.have.property('waypoint');
+    expect(di).to.have.property('waypoint');
 
-    assertWaypoints(this, obj.id + '#di#waypoint', getPoints(bo.di.waypoint), getPoints(exp));
+    assertWaypoints(this, di + '#waypoint', getPoints(di.waypoint), getPoints(exp));
   });
 
 

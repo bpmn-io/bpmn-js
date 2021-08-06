@@ -3,6 +3,8 @@ import {
   inject
 } from 'test/TestHelper';
 
+import { getDi } from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -26,27 +28,29 @@ describe('features/modeling - set color', function() {
     it('setting fill color', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_1');
+      var taskShape = elementRegistry.get('Task_1'),
+          taskDi = getDi(taskShape);
 
       // when
       modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
       // then
-      expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+      expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
     }));
 
 
     it('unsetting fill color', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_1');
+      var taskShape = elementRegistry.get('Task_1'),
+          taskDi = getDi(taskShape);
       modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
       // when
       modeling.setColor(taskShape);
 
       // then
-      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+      expect(taskDi.get('background-color')).not.to.exist;
     }));
 
 
@@ -54,15 +58,16 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { fill: 'FUCHSIA', stroke: 'YELLOW' });
 
         // when
         modeling.setColor(taskShape, { fill: 'YELLOW' });
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(YELLOW_HEX);
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(YELLOW_HEX);
+        expect(taskDi.get('background-color')).to.equal(YELLOW_HEX);
+        expect(taskDi.get('border-color')).to.equal(YELLOW_HEX);
       }
     ));
 
@@ -71,15 +76,16 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { fill: 'FUCHSIA', stroke: 'YELLOW' });
 
         // when
         modeling.setColor(taskShape, { fill: undefined });
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(YELLOW_HEX);
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(taskDi.get('border-color')).to.equal(YELLOW_HEX);
       }
     ));
 
@@ -88,15 +94,16 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
         // when
         modeling.setColor(taskShape);
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -104,29 +111,31 @@ describe('features/modeling - set color', function() {
     it('setting stroke color', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_1');
+      var taskShape = elementRegistry.get('Task_1'),
+          taskDi = getDi(taskShape);
 
       // when
       modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
       // then
-      expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
-      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+      expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
+      expect(taskDi.get('background-color')).not.to.exist;
     }));
 
 
     it('unsetting stroke color', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_1');
+      var taskShape = elementRegistry.get('Task_1'),
+          taskDi = getDi(taskShape);
       modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
       // when
       modeling.setColor(taskShape);
 
       // then
-      expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
-      expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+      expect(taskDi.get('border-color')).not.to.exist;
+      expect(taskDi.get('background-color')).not.to.exist;
     }));
 
 
@@ -134,17 +143,19 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('border-color')).not.to.exist;
+        expect(startEventDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -153,16 +164,18 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
         modeling.setColor([ taskShape, startEventShape ]);
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(startEventDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -171,8 +184,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([
@@ -181,10 +196,10 @@ describe('features/modeling - set color', function() {
         ], { stroke: 'FUCHSIA' });
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(startEventDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -193,8 +208,11 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
+
         modeling.setColor([
           taskShape,
           startEventShape
@@ -204,8 +222,8 @@ describe('features/modeling - set color', function() {
         modeling.setColor([ taskShape, startEventShape ]);
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
+        expect(startEventDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -213,13 +231,14 @@ describe('features/modeling - set color', function() {
     it('should not set background-color on BPMNEdge', inject(function(elementRegistry, modeling) {
 
       // given
-      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+          sequenceFlowDi = getDi(sequenceFlow);
 
       // when
       modeling.setColor(sequenceFlow, { fill: 'FUCHSIA' });
 
       // then
-      expect(sequenceFlow.businessObject.di.get('background-color')).not.to.exist;
+      expect(sequenceFlowDi.get('background-color')).not.to.exist;
     }));
 
 
@@ -260,14 +279,15 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
 
         // when
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -276,7 +296,9 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
         // when
@@ -284,7 +306,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -293,14 +315,15 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
 
         // when
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -309,7 +332,8 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
         // when
@@ -317,7 +341,7 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -326,16 +350,18 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(startEventDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -344,8 +370,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
@@ -353,8 +381,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -363,8 +391,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([
@@ -374,8 +404,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
+        expect(startEventDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -384,8 +414,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
         modeling.setColor([ taskShape, startEventShape ], { stroke: 'FUCHSIA' });
 
         // when
@@ -393,8 +425,8 @@ describe('features/modeling - set color', function() {
         commandStack.undo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -407,7 +439,8 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
 
         // when
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
@@ -415,7 +448,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -424,7 +457,8 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
         // when
@@ -433,7 +467,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -442,7 +476,8 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
 
         // when
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
@@ -450,7 +485,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -459,7 +494,8 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
         // when
@@ -468,7 +504,7 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -477,8 +513,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
@@ -486,8 +524,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('background-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('background-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -496,8 +534,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
@@ -506,8 +546,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('background-color')).not.to.exist;
+        expect(taskDi.get('background-color')).not.to.exist;
+        expect(startEventDi.get('background-color')).not.to.exist;
       }
     ));
 
@@ -516,8 +556,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { stroke: 'FUCHSIA' });
@@ -525,8 +567,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
-        expect(startEventShape.businessObject.di.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(taskDi.get('border-color')).to.equal(FUCHSIA_HEX);
+        expect(startEventDi.get('border-color')).to.equal(FUCHSIA_HEX);
       }
     ));
 
@@ -535,8 +577,10 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, commandStack, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
-        var startEventShape = elementRegistry.get('StartEvent_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(startEventShape);
         modeling.setColor([
           taskShape,
           startEventShape
@@ -548,8 +592,8 @@ describe('features/modeling - set color', function() {
         commandStack.redo();
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
-        expect(startEventShape.businessObject.di.get('border-color')).not.to.exist;
+        expect(taskDi.get('border-color')).not.to.exist;
+        expect(startEventDi.get('border-color')).not.to.exist;
       }
     ));
 
@@ -563,16 +607,17 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var taskShape = elementRegistry.get('Task_1');
+        var taskShape = elementRegistry.get('Task_1'),
+            taskDi = getDi(taskShape);
 
         // when
         modeling.setColor(taskShape, { stroke: '#abcdef', fill: '#fedcba' });
 
         // then
-        expect(taskShape.businessObject.di.get('border-color')).to.eql('#abcdef');
-        expect(taskShape.businessObject.di.get('stroke')).to.eql('#abcdef');
-        expect(taskShape.businessObject.di.get('background-color')).to.eql('#fedcba');
-        expect(taskShape.businessObject.di.get('fill')).to.eql('#fedcba');
+        expect(taskDi.get('border-color')).to.eql('#abcdef');
+        expect(taskDi.get('stroke')).to.eql('#abcdef');
+        expect(taskDi.get('background-color')).to.eql('#fedcba');
+        expect(taskDi.get('fill')).to.eql('#fedcba');
       }
     ));
 
@@ -581,14 +626,15 @@ describe('features/modeling - set color', function() {
       function(elementRegistry, modeling) {
 
         // given
-        var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            sequenceFlowDi = getDi(sequenceFlow);
 
         // when
         modeling.setColor(sequenceFlow, { stroke: '#abcdef' });
 
         // then
-        expect(sequenceFlow.businessObject.di.get('border-color')).to.eql('#abcdef');
-        expect(sequenceFlow.businessObject.di.get('stroke')).to.eql('#abcdef');
+        expect(sequenceFlowDi.get('border-color')).to.eql('#abcdef');
+        expect(sequenceFlowDi.get('stroke')).to.eql('#abcdef');
       }
     ));
   });

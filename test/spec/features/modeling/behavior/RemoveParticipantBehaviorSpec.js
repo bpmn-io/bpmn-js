@@ -3,7 +3,10 @@ import {
   inject
 } from 'test/TestHelper';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  getDi,
+  is
+} from 'lib/util/ModelUtil';
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
@@ -56,11 +59,11 @@ describe('features/modeling - remove participant behavior', function() {
         // given
         var participantShape = elementRegistry.get('_Participant_2'),
             participant = participantShape.businessObject,
-            participantDi = participant.di,
+            participantDi = getDi(participantShape),
             process = participant.processRef,
             collaborationElement = participantShape.parent,
             collaboration = collaborationElement.businessObject,
-            diPlane = collaboration.di,
+            diPlane = getDi(collaborationElement),
             bpmnDefinitions = collaboration.$parent;
 
         // when
@@ -76,14 +79,14 @@ describe('features/modeling - remove participant behavior', function() {
 
         // collaboration DI is unwired
         expect(participantDi.$parent).not.to.be.ok;
-        expect(collaboration.di).not.to.be.ok;
+        expect(getDi(collaborationElement)).not.to.be.ok;
 
         expect(bpmnDefinitions.rootElements).not.to.include(process);
         expect(bpmnDefinitions.rootElements).not.to.include(collaboration);
 
         // process DI is wired
         expect(diPlane.bpmnElement).to.eql(newRootBusinessObject);
-        expect(newRootBusinessObject.di).to.eql(diPlane);
+        expect(getDi(newRootShape)).to.eql(diPlane);
 
         expect(bpmnDefinitions.rootElements).to.include(newRootBusinessObject);
       }));
@@ -96,8 +99,9 @@ describe('features/modeling - remove participant behavior', function() {
             participant = participantShape.businessObject,
             originalRootElement = participantShape.parent,
             originalRootElementBo = originalRootElement.businessObject,
+            originalRootElementDi = getDi(originalRootElement),
             bpmnDefinitions = originalRootElementBo.$parent,
-            participantDi = participant.di,
+            participantDi = getDi(participantShape),
             diPlane = participantDi.$parent;
 
         modeling.removeShape(participantShape);
@@ -112,7 +116,7 @@ describe('features/modeling - remove participant behavior', function() {
         expect(canvas.getRootElement()).to.eql(originalRootElement);
 
         // di is unwired
-        expect(participantDi.$parent).to.eql(originalRootElementBo.di);
+        expect(participantDi.$parent).to.eql(originalRootElementDi);
 
         // new di is wired
         expect(diPlane.bpmnElement).to.eql(originalRootElementBo);
