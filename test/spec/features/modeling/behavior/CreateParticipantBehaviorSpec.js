@@ -335,7 +335,6 @@ describe('features/modeling - create participant', function() {
       beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
       var participant,
-          participantBo,
           process,
           processGfx;
 
@@ -346,7 +345,6 @@ describe('features/modeling - create participant', function() {
         processGfx = canvas.getGraphics(process);
 
         participant = elementFactory.createParticipantShape();
-        participantBo = participant.businessObject;
 
         create.start(canvasEvent({ x: 100, y: 100 }), participant);
 
@@ -357,7 +355,7 @@ describe('features/modeling - create participant', function() {
       it('should fit participant', inject(function(elementFactory) {
 
         // then
-        var defaultSize = elementFactory._getDefaultSize(participantBo);
+        var defaultSize = elementFactory.getDefaultSize(participant);
 
         expect(participant.width).to.equal(defaultSize.width);
         expect(participant.height).to.equal(defaultSize.height);
@@ -423,7 +421,6 @@ describe('features/modeling - create participant', function() {
           var process = canvas.getRootElement(),
               processGfx = canvas.getGraphics(process),
               participant = elementFactory.createParticipantShape(),
-              participantBo = participant.businessObject,
               groupElement = elementFactory.createShape({ type: 'bpmn:Group' });
 
           modeling.createShape(groupElement, { x: 100, y: 100 }, process);
@@ -433,7 +430,7 @@ describe('features/modeling - create participant', function() {
           dragging.hover({ element: process, gfx: processGfx });
 
           // then
-          var defaultSize = elementFactory._getDefaultSize(participantBo);
+          var defaultSize = elementFactory.getDefaultSize(participant);
 
           expect(participant.width).to.equal(defaultSize.width);
           expect(participant.height).to.equal(defaultSize.height);
