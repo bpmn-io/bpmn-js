@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.7.2
+
+* `CHORE`: improve error recovery in ordering provider
+* `DEPS`: update build dependencies
+
 ## 8.7.1
 
 * `FIX`: allow connecting `bpmn:MessageFlow` to `bpmn:CallActivity` ([#1467](https://github.com/bpmn-io/bpmn-js/issues/1467)) 
