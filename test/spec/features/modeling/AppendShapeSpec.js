@@ -141,7 +141,7 @@ describe('features/modeling - append shape', function() {
       var connection = find(subProcess.get('flowElements'), function(e) {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
-          connectionDi = getDi(connection);
+          connectionDi = getDi(elementRegistry.get(connection.id));
 
 
       // when
@@ -174,7 +174,7 @@ describe('features/modeling - append shape', function() {
       var connection = find(subProcess.get('flowElements'), function(e) {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
-          connectionDi = getDi(connection);
+          connectionDi = getDi(elementRegistry.get(connection.id));
 
       // when
       commandStack.undo();
@@ -209,7 +209,7 @@ describe('features/modeling - append shape', function() {
       var connection = find(subProcess.get('flowElements'), function(e) {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
-          connectionDi = getDi(connection);
+          connectionDi = getDi(elementRegistry.get(connection.id));
 
       // when
       commandStack.undo();
@@ -270,7 +270,7 @@ describe('features/modeling - append shape', function() {
       var connection = find(subProcess.get('flowElements'), function(e) {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
-          connectionDi = getDi(connection);
+          connectionDi = getDi(elementRegistry.get(connection.id));
 
       // when
       commandStack.undo();

@@ -468,6 +468,27 @@ describe('Modeler', function() {
   });
 
 
+  it('should error when accessing <di> from businessObject', function() {
+
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    var modeler = new Modeler({ container: container });
+
+    return modeler.importXML(xml).then(function() {
+
+      // given
+      var elementRegistry = modeler.get('elementRegistry'),
+          shape = elementRegistry.get('Task_1');
+
+      // then
+      expect(shape.di).to.exist;
+      expect(function() {
+        shape.businessObject.di;
+      }).to.throw(/The di is available through the diagram element only./);
+    });
+  });
+
+
   it('should create new diagram', function() {
     var modeler = new Modeler({ container: container });
     return modeler.createDiagram();
