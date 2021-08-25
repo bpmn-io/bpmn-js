@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### Breaking Changes
+
+* Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
+
 ## 8.7.3
 
 * `FIX`: convert file to `ES6` module ([#1478](https://github.com/bpmn-io/bpmn-js/pull/1478))
