@@ -287,6 +287,27 @@ describe('Viewer', function() {
       });
     });
 
+
+    it('should error when accessing <di> from businessObject', function() {
+
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      return createViewer(container, Viewer, xml).then(function(result) {
+
+        // given
+        var viewer = result.viewer,
+            elementRegistry = viewer.get('elementRegistry'),
+            shape = elementRegistry.get('Task_1');
+
+        // then
+        expect(shape.di).to.exist;
+
+        expect(function() {
+          shape.businessObject.di;
+        }).to.throw(/The di is available through the diagram element only./);
+      });
+    });
+
   });
 
 
