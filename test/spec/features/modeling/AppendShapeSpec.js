@@ -143,6 +143,8 @@ describe('features/modeling - append shape', function() {
           }),
           connectionDi = getDi(elementRegistry.get(connection.id));
 
+      // assume
+      expect(connectionDi).to.exist;
 
       // when
       commandStack.undo();
@@ -175,6 +177,9 @@ describe('features/modeling - append shape', function() {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
           connectionDi = getDi(elementRegistry.get(connection.id));
+
+      // assume
+      expect(connectionDi).to.exist;
 
       // when
       commandStack.undo();
@@ -210,6 +215,9 @@ describe('features/modeling - append shape', function() {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
           connectionDi = getDi(elementRegistry.get(connection.id));
+
+      // assume
+      expect(connectionDi).to.exist;
 
       // when
       commandStack.undo();
@@ -271,6 +279,9 @@ describe('features/modeling - append shape', function() {
             return e.sourceRef === startEvent && e.targetRef === target;
           }),
           connectionDi = getDi(elementRegistry.get(connection.id));
+
+      // assume
+      expect(connectionDi).to.exist;
 
       // when
       commandStack.undo();
