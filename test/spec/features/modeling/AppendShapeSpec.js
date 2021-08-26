@@ -262,7 +262,7 @@ describe('features/modeling - append shape', function() {
     }));
 
 
-    it('should redo add connection', inject(function(elementRegistry, modeling, commandStack) {
+    it.only('should redo add connection', inject(function(elementRegistry, modeling, commandStack) {
 
       // given
       var startEventShape = elementRegistry.get('StartEvent_1');
