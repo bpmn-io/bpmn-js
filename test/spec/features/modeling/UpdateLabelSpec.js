@@ -24,12 +24,13 @@ describe('features/modeling - update label', function() {
 
       // given
       var startEvent_1 = elementRegistry.get('StartEvent_1');
+      var businessObject = startEvent_1.businessObject;
 
       // when
       modeling.updateLabel(startEvent_1, 'bar');
 
       // then
-      expect(startEvent_1.businessObject.name).to.equal('bar');
+      expect(businessObject.name).to.equal('bar');
     }
   ));
 
@@ -39,13 +40,20 @@ describe('features/modeling - update label', function() {
 
       // given
       var startEvent_2 = elementRegistry.get('StartEvent_2');
+      var businessObject = startEvent_2.businessObject;
 
       // when
       modeling.updateLabel(startEvent_2, 'bar');
 
       // then
-      expect(startEvent_2.businessObject.name).to.equal('bar');
-      expect(startEvent_2.label).to.exist;
+      var label = startEvent_2.label;
+      var di = startEvent_2.di;
+
+      expect(businessObject.name).to.equal('bar');
+
+      expect(label).to.exist;
+      expect(label.businessObject).to.equal(businessObject);
+      expect(label.di).to.equal(di);
     }
   ));
 

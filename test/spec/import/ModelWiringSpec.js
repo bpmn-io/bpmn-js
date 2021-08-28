@@ -106,6 +106,29 @@ describe('import - model wiring', function() {
       expect(sequenceFlowDi.bpmnElement).to.eql(sequenceFlow);
     }));
 
+
+    it('should wire label di', inject(function(elementRegistry) {
+
+      // when
+      var eventShape = elementRegistry.get('StartEvent_2');
+      var eventLabel = elementRegistry.get('StartEvent_2_label');
+
+      // assume
+      expect(eventShape).to.exist;
+      expect(eventLabel).to.exist;
+
+      // label relationship wired
+      expect(eventShape.label).to.eql(eventLabel);
+      expect(eventLabel.labelTarget).to.eql(eventShape);
+
+      // moddle relationships wired
+      expect(eventShape.di).to.exist;
+      expect(eventShape.businessObject).to.exist;
+
+      expect(eventShape.di).to.eql(eventLabel.di);
+      expect(eventShape.businessObject).to.eql(eventLabel.businessObject);
+    }));
+
   });
 
 
