@@ -389,6 +389,47 @@ describe('features/copy-paste', function() {
       );
 
 
+      it('should copy label', inject(
+        function(canvas, copyPaste, elementRegistry, modeling) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_1'),
+              rootElement = canvas.getRootElement();
+
+          copyPaste.copy(startEvent);
+
+          // when
+          var elements = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 50,
+              y: 50
+            }
+          });
+
+          // then
+          expect(elements).to.have.length(2);
+
+          var startEventCopy = find(elements, function(element) {
+            return is(element, 'bpmn:StartEvent');
+          });
+
+          var startEventCopyBo = getBusinessObject(startEventCopy);
+          var startEventCopyDi = getDi(startEventCopy);
+          var startEventCopyLabel = startEventCopy.label;
+
+          expect(startEventCopyBo).to.exist;
+          expect(startEventCopyBo.name).to.equal('hello');
+
+          expect(startEventCopyDi).to.exist;
+          expect(startEventCopyLabel).to.exist;
+
+          expect(startEventCopyLabel.di).to.equal(startEventCopyDi);
+          expect(startEventCopyLabel.businessObject).to.equal(startEventCopyBo);
+        }
+      ));
+
+
       it('should copy name property', inject(
         function(canvas, copyPaste, elementRegistry, modeling) {
 
