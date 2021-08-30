@@ -5,6 +5,7 @@ import BpmnModdle from 'bpmn-moddle';
 import { find } from 'min-dash';
 
 import simpleXML from 'test/fixtures/bpmn/simple.bpmn';
+import collaboration from 'test/fixtures/bpmn/collaboration.bpmn';
 
 
 describe('import - BpmnTreeWalker', function() {
@@ -44,8 +45,37 @@ describe('import - BpmnTreeWalker', function() {
 
       // then
       expect(elementSpy.callCount).to.equal(8);
-      expect(rootSpy.calledOnce).to.be.true;
-      expect(errorSpy.notCalled).to.be.true;
+      expect(rootSpy).to.be.calledOnce;
+      expect(errorSpy).not.to.be.called;
+    });
+  });
+
+
+  it('should always call element visitor with parent', function() {
+
+    // given
+    var elementSpy = sinon.spy(),
+        errorSpy = sinon.spy();
+
+
+    var walker = createWalker({
+      element: elementSpy,
+      root: function() {
+        return 'root';
+      },
+      error: errorSpy
+    });
+
+    return createModdle(collaboration).then(function(result) {
+
+      var definitions = result.rootElement;
+
+      // when
+      walker.handleDefinitions(definitions);
+
+      // then
+      expect(elementSpy).to.not.be.calledWith(sinon.match.any, sinon.match.typeOf('undefined'));
+      expect(errorSpy).to.not.be.called;
     });
   });
 
@@ -82,8 +112,8 @@ describe('import - BpmnTreeWalker', function() {
 
       // then
       expect(elementSpy.callCount).to.equal(3);
-      expect(rootSpy.notCalled).to.be.true;
-      expect(errorSpy.notCalled).to.be.true;
+      expect(rootSpy).to.not.be.called;
+      expect(errorSpy).to.not.be.called;
 
     });
   });
@@ -138,13 +168,13 @@ function createWalker(listeners) {
 
   var visitor = {
     element: function(element, parent) {
-      listeners.element && listeners.element(element, parent);
+      return listeners.element && listeners.element(element, parent);
     },
     root: function(root) {
-      listeners.root && listeners.root(root);
+      return listeners.root && listeners.root(root);
     },
     error: function(message, context) {
-      listeners.error && listeners.error(message, context);
+      return listeners.error && listeners.error(message, context);
     }
   };
 
