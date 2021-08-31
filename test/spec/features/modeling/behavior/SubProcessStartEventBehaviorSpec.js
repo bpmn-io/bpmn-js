@@ -7,7 +7,7 @@ import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 import replaceModule from 'lib/features/replace';
 
-import { is } from 'lib/util/ModelUtil';
+import { is, getDi } from 'lib/util/ModelUtil';
 
 describe('features/modeling/behavior - subprocess start event', function() {
 
@@ -44,6 +44,30 @@ describe('features/modeling/behavior - subprocess start event', function() {
           startEvents = getChildStartEvents(expandedSubProcess);
 
           expect(startEvents).to.have.length(1);
+        }
+      ));
+
+
+      it('should wire startEvent di correctly', inject(
+        function(elementRegistry, bpmnReplace) {
+
+          // given
+          var task = elementRegistry.get('Task_1'),
+              expandedSubProcess,
+              startEvent,
+              startEventDi;
+
+          // when
+          expandedSubProcess = bpmnReplace.replaceElement(task, {
+            type: 'bpmn:SubProcess',
+            isExpanded: true
+          });
+
+          // then
+          startEvent = getChildStartEvents(expandedSubProcess)[0];
+          startEventDi = getDi(startEvent);
+
+          expect(startEventDi.$parent).to.exist;
         }
       ));
 
