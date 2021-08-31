@@ -71,6 +71,24 @@ describe('features/replace - bpmn replace', function() {
     }));
 
 
+    it('Task with new DI', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var taskDi = getDi(taskDi);
+      var newElementData = {
+        type: 'bpmn:UserTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      expect(newElement).to.exist;
+
+    }));
+
+
     it('gateway', inject(function(elementRegistry, bpmnReplace) {
 
       // given
@@ -1624,6 +1642,24 @@ describe('features/replace - bpmn replace', function() {
     var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+    it('should have new di', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var di = getDi(task);
+      var newElementData = {
+        type: 'bpmn:UserTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var newDi = getDi(newElement);
+
+      expect(newDi).to.not.equal(di);
+    }));
 
     it('should maintain colors', inject(function(elementRegistry, bpmnReplace, modeling) {
 

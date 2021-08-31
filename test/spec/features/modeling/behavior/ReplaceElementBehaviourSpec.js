@@ -535,7 +535,7 @@ describe('features/modeling - replace element behavior', function() {
         // then
         var createdEvent = elementRegistry.get(id);
 
-        expect(createdEvent).to.eql(startEvent);
+        expect(createdEvent).to.exist;
         expect(createdEvent.businessObject.eventDefinitions).not.to.exist;
         expect(createdEvent.businessObject.get('isInterrupting')).to.be.true;
       })
