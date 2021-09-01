@@ -895,7 +895,7 @@ function integrationTest(elementIds) {
     getBpmnJS().invoke(function(canvas, commandStack, copyPaste, elementRegistry, modeling) {
 
       // given
-      var allElements = elementRegistry.getAll();
+      var allElements = elementRegistry.filter(isImplicit);
 
       var initialContext = {
             length: allElements.length,
@@ -934,7 +934,7 @@ function integrationTest(elementIds) {
       commandStack.undo();
       commandStack.undo();
 
-      elements = elementRegistry.getAll();
+      elements = elementRegistry.filter(isImplicit);
 
       currentContext = {
         length: elements.length,
@@ -951,7 +951,7 @@ function integrationTest(elementIds) {
       commandStack.redo();
       commandStack.redo();
 
-      elements = elementRegistry.getAll();
+      elements = elementRegistry.filter(isImplicit);
 
       currentContext = {
         length: elements.length,
@@ -970,6 +970,10 @@ function integrationTest(elementIds) {
 
 function isRoot(element) {
   return !!element.parent;
+}
+
+function isImplicit(element) {
+  return !element.isImplicit;
 }
 
 function getPropertyForElements(elements, property) {

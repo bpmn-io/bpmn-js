@@ -569,7 +569,7 @@ describe('draw - bpmn renderer', function() {
         var rootElement = canvas.getRootElement();
 
         elementRegistry.forEach(function(element) {
-          if (element === rootElement) {
+          if (element === rootElement || element.isImplicit) {
             return;
           }
 
