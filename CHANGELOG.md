@@ -9,6 +9,7 @@ ___Note:__ Yet to be released changes appear here._
 ### Breaking Changes
 
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
+* Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 
 ## 8.7.3
 
