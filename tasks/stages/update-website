@@ -9,7 +9,7 @@ CLONE_DIR="$WORKDIR/bpmn.io"
 # create work dir
 mkdir -p "$WORKDIR"
 
-git clone --depth=1 "https://$GH_AUTH@github.com/bpmn-io/bpmn.io.git" "$CLONE_DIR"
+git clone --depth=1 "https://$BPMN_IO_TOKEN@github.com/bpmn-io/bpmn.io.git" "$CLONE_DIR"
 
 cd "$CLONE_DIR"
 
