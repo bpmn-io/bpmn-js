@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -eo pipefail
+shopt -s inherit_errexit nullglob
+
 # update bpmn-js version in the <bpmn-js-examples> project
 
 PWD="$(pwd)"
