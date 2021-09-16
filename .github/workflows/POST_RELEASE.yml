@@ -42,14 +42,14 @@ jobs:
         fi
     - name: Update integration test
       env:
-        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: bash tasks/stages/update-integration-test
     - name: Update demo
       if: ${{ env.STABLE_RELEASE == 'true' }}
       env:
-        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
         BPMN_IO_DEMO_ENDPOINT: ${{ secrets.BPMN_IO_DEMO_ENDPOINT }}
@@ -57,14 +57,14 @@ jobs:
     - name: Update examples
       if: ${{ env.STABLE_RELEASE == 'true' }}
       env:
-        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: bash tasks/stages/update-examples
     - name: Update website
       if: ${{ env.STABLE_RELEASE == 'true' }}
       env:
-        GH_AUTH: ${{ secrets.GH_AUTH }}
+        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: bash tasks/stages/update-website
