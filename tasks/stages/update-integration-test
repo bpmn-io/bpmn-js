@@ -9,7 +9,7 @@ IT_DIR="$WORKDIR/bpmn-js-integration"
 # create work dir
 mkdir -p "$WORKDIR"
 
-git clone --depth=1 "https://$GH_AUTH@github.com/bpmn-io/bpmn-js-integration.git" "$IT_DIR"
+git clone --depth=1 "https://$BPMN_IO_TOKEN@github.com/bpmn-io/bpmn-js-integration.git" "$IT_DIR"
 
 cd "$IT_DIR"
 
