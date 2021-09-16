@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/bin/bash
+
 
 # bumps bpmn-js and diagram-js dependencies in bpmn-io-demo
 
@@ -15,14 +16,19 @@ cd "$CLONE_DIR"
 
 npm install --save bpmn-js@latest diagram-js@latest
 
-git config user.email "$BPMN_IO_EMAIL"
-git config user.name "$BPMN_IO_USERNAME"
-git config push.default simple
+if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
-git add -A
-git commit -m "deps: bump bpmn-js to $TAG"
-git tag "bpmn-js-$TAG"
-git push -q &2>/dev/null
-git push --tags -q &2>/dev/null
+  git config user.email "$BPMN_IO_EMAIL"
+  git config user.name "$BPMN_IO_USERNAME"
+  git config push.default simple
+
+  git add -A
+  git commit -m "deps: bump to bpmn-js@$TAG"
+  git tag "bpmn-js-$TAG"
+  git push -q &2>/dev/null
+  git push --tags -q &2>/dev/null
+else
+  echo "Skipping commit (SKIP_COMMIT=$SKIP_COMMIT)"
+fi
 
 cd "$PWD"
