@@ -276,6 +276,29 @@ describe('import - Importer', function() {
       });
     });
 
+
+    it('should import DataAssociations in root', function() {
+
+      // given
+      var xml = require('./data-association.bpmn');
+
+      // given
+      var elementRegistry = diagram.get('elementRegistry');
+
+
+      // when
+      return runImport(diagram, xml).then(function() {
+
+        // then
+        var process = elementRegistry.get('Collaboration'),
+            association = elementRegistry.get('DataAssociation'),
+            dataStore = elementRegistry.get('DataStore');
+
+        expect(association.parent).to.eql(process);
+        expect(dataStore.parent).to.eql(process);
+      });
+    });
+
   });
 
 
