@@ -11,6 +11,12 @@ ___Note:__ Yet to be released changes appear here._
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 * Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 
+## 8.8.0
+
+* `FEAT`: give `keyboard` fine-grained control over which events to handle ([#1493](https://github.com/bpmn-io/bpmn-js/issues/1493))
+* `FIX`: correct keyboard shortcuts not working in direct editing mode ([#1493](https://github.com/bpmn-io/bpmn-js/issues/1493))
+* `DEPS`: update to `diagram-js@7.15`
+
 ## 8.7.3
 
 * `FIX`: convert file to `ES6` module ([#1478](https://github.com/bpmn-io/bpmn-js/pull/1478))
