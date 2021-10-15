@@ -98,18 +98,36 @@ describe('features/copy-paste/ModdleCopy', function() {
     ));
 
 
-    it('should NOT copy IDs', inject(function(moddle, moddleCopy) {
+    it('should NOT copy IDs if taken', inject(function(moddle, moddleCopy, canvas, modeling) {
 
       // given
-      var task = moddle.create('bpmn:Task', {
-        id: 'foo'
-      });
+      var task = modeling.createShape({ type: 'bpmn:Task' },
+        { x: 0, y: 0 }, canvas.getRootElement());
+      var taskId = task.id;
 
       // when
-      var userTask = moddleCopy.copyElement(task, moddle.create('bpmn:UserTask'));
+      var userTask = moddleCopy.copyElement(task.businessObject, moddle.create('bpmn:UserTask'));
 
       // then
-      expect(userTask.id).not.to.equal('foo');
+      expect(userTask.id).not.to.equal(taskId);
+
+      expectNoAttrs(userTask);
+    }));
+
+
+    it('should copy IDs if free', inject(function(moddle, moddleCopy, canvas, modeling) {
+
+      // given
+      var task = modeling.createShape({ type: 'bpmn:Task' },
+        { x: 0, y: 0 }, canvas.getRootElement());
+      var taskId = task.id;
+
+      // when
+      modeling.removeShape(task);
+      var userTask = moddleCopy.copyElement(task.businessObject, moddle.create('bpmn:UserTask'));
+
+      // then
+      expect(userTask.id).to.equal(taskId);
 
       expectNoAttrs(userTask);
     }));
