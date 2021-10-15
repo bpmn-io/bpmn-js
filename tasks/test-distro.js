@@ -1,4 +1,4 @@
-var execSync = require('execa').sync;
+var exec = require('execa').sync;
 
 var failures = 0;
 
@@ -13,7 +13,9 @@ function runTest(variant, env) {
   console.log(`[EXEC] VARIANT=${variant} NODE_ENV=${env} karma start test/config/karma.distro.js`);
 
   try {
-    execSync('karma', [ 'start', 'test/config/karma.distro.js' ]);
+    exec('karma', [ 'start', 'test/config/karma.distro.js' ], {
+      stdio: 'inherit'
+    });
   } catch (e) {
     console.error('[TEST] FAILURE ' + variant + '@' + env);
     console.error(e);
