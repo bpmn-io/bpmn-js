@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.8.1
+
+* `FIX`: re-use ID of a copied element if available ([#1503](https://github.com/bpmn-io/bpmn-js/pull/1503))
+* `CHORE`: unbuild circular dependency with `ResizeUtil` ([#1500](https://github.com/bpmn-io/bpmn-js/pull/1500))
+
 ## 8.8.0
 
 * `FEAT`: give `keyboard` fine-grained control over which events to handle ([#1493](https://github.com/bpmn-io/bpmn-js/issues/1493))
@@ -23,7 +28,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 8.7.1
 
-* `FIX`: allow connecting `bpmn:MessageFlow` to `bpmn:CallActivity` ([#1467](https://github.com/bpmn-io/bpmn-js/issues/1467)) 
+* `FIX`: allow connecting `bpmn:MessageFlow` to `bpmn:CallActivity` ([#1467](https://github.com/bpmn-io/bpmn-js/issues/1467))
 * `DEPS`: update to `bpmn-moddle@7.1.2`
 
 ## 8.7.0
