@@ -1,0 +1,51 @@
+.bjs-container {
+  --bjs-font-family: Arial, sans-serif;
+}
+
+.bjs-breadcrumbs {
+  position: absolute;
+  top: 10px;
+  left: 100px;
+  font-family: var(--bjs-font-family);
+}
+
+.bjs-breadcrumbs li {
+  display: inline-block;
+  color: var(--blue-base-65);
+  cursor: pointer;
+}
+
+.bjs-breadcrumbs li:last-of-type {
+  color: inherit;
+  cursor: default;
+}
+
+.bjs-breadcrumbs li:not(:first-child)::before {
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /><path d="M0 0h24v24H0z" fill="none" /></svg>');
+  padding: 0 8px;
+  color: black;
+}
+
+.bjs-breadcrumbs .bpmnjs-crumb {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bjs-drilldown {
+  width: 20px;
+  height: 20px;
+
+  padding: 0px;
+  margin-left: -20px;
+
+  cursor: pointer;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+
+  fill: white;
+  background-color: var(--blue-base-65);
+}

@@ -7,7 +7,7 @@ import {
   importBpmnDiagram
 } from 'lib/import/Importer';
 
-import Viewer from 'lib/Viewer';
+import CoreModule from 'lib/core';
 
 import {
   matches as domMatches
@@ -36,7 +36,7 @@ describe('import - Importer', function() {
   var diagram;
 
   beforeEach(function() {
-    diagram = createDiagram(TestContainer.get(this), Viewer.prototype._modules);
+    diagram = createDiagram(TestContainer.get(this), [CoreModule]);
   });
 
 
