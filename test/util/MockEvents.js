@@ -13,7 +13,7 @@ import {
  * specified canvas local coordinates.
  *
  * @param {Point} point of the event local the canvas (closure)
- * @param {Object} data
+ * @param {Object} [data]
  *
  * @return {Event} event, scoped to the given canvas
  */
@@ -34,7 +34,15 @@ export function createCanvasEvent(position, data) {
   });
 }
 
-
+/**
+ * Create an Event
+ *
+ * @param  {Element} target
+ * @param  { { x: number, y: number } } position
+ * @param  {any} [data]
+ *
+ * @return {Event}
+ */
 export function createEvent(target, position, data) {
 
   return getBpmnJS().invoke(function(eventBus) {
