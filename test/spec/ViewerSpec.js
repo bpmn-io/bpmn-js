@@ -366,6 +366,34 @@ describe('Viewer', function() {
         expect(viewer.get('eventBus')).to.equal(eventBus);
       });
     });
+
+  });
+
+
+  describe('drill down', function() {
+
+    it('should allow drill down into collapsed sub-process', function() {
+
+      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+
+      return createViewer(container, Viewer, xml).then(function() {
+        var drilldown = container.querySelector('.bjs-drilldown');
+        var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
+
+        // assume
+        expect(drilldown).to.exist;
+        expect(breadcrumbs).to.exist;
+        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+
+        // when
+        drilldown.click();
+
+        // then
+        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+      });
+
+    });
+
   });
 
 
