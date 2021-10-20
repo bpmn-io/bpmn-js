@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.8.2
+
+* `FIX`: properly re-use ID of a copied element if available ([#1503](https://github.com/bpmn-io/bpmn-js/pull/1509))
+
 ## 8.8.1
 
 * `FIX`: re-use ID of a copied element if available ([#1503](https://github.com/bpmn-io/bpmn-js/pull/1503))
