@@ -708,6 +708,32 @@ describe('Modeler', function() {
   });
 
 
+  describe('drill down', function() {
+
+    it('should allow drill down into collapsed sub-process', function() {
+      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+
+      return createModeler(xml).then(function() {
+        var drilldown = container.querySelector('.bjs-drilldown');
+        var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
+
+        // assume
+        expect(drilldown).to.exist;
+        expect(breadcrumbs).to.exist;
+        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+
+        // when
+        drilldown.click();
+
+        // then
+        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+      });
+
+    });
+
+  });
+
+
   it('should expose Viewer and NavigatedViewer', function() {
     expect(Modeler.Viewer).to.equal(Viewer);
     expect(Modeler.NavigatedViewer).to.equal(NavigatedViewer);
