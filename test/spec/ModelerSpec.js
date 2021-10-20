@@ -2,10 +2,12 @@ import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
 
+import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard';
+
 import TestContainer from 'mocha-test-container-support';
 
 import {
-  createEvent
+  createCanvasEvent
 } from '../util/MockEvents';
 
 import {
@@ -304,19 +306,18 @@ describe('Modeler', function() {
         // given
         var bendpointMove = modeler.get('bendpointMove'),
             dragging = modeler.get('dragging'),
-            elementRegistry = modeler.get('elementRegistry'),
-            canvas = modeler.get('canvas');
+            elementRegistry = modeler.get('elementRegistry');
 
         // assume
         expect(bendpointMove).to.exist;
 
         // when
         bendpointMove.start(
-          createEvent(canvas, { x: 0, y: 0 }),
+          createCanvasEvent({ x: 0, y: 0 }),
           elementRegistry.get('SequenceFlow_1'),
           1
         );
-        dragging.move(createEvent(canvas, { x: 200, y: 200 }));
+        dragging.move(createCanvasEvent({ x: 200, y: 200 }));
       });
 
     });
@@ -544,6 +545,7 @@ describe('Modeler', function() {
 
     });
 
+
     it('should inject mandatory modules', function() {
 
       // given
@@ -581,6 +583,101 @@ describe('Modeler', function() {
         expect(modeler.get('paletteProvider')).to.exist;
         expect(modeler.get('resize')).to.exist;
         expect(modeler.get('snapping')).to.exist;
+      });
+
+    });
+
+  });
+
+
+  describe('copy and paste', function() {
+
+    var m1, m2;
+
+    afterEach(function() {
+      if (m1) {
+        m1.destroy();
+      }
+
+      if (m2) {
+        m2.destroy();
+      }
+    });
+
+    function isNamedA(element) {
+      return element.type !== 'label' && element.businessObject.name === 'A';
+    }
+
+
+    it('should share Clipboard', function() {
+
+      var aXML = require('./Modeler.copy-paste.a.bpmn');
+      var bXML = require('./Modeler.copy-paste.b.bpmn');
+
+      var clipboardModule = {
+        'clipboard': [ 'value', new Clipboard() ]
+      };
+
+      m2 = new Modeler({
+        container: container,
+        additionalModules: [
+          clipboardModule
+        ]
+      });
+
+      m1 = new Modeler({
+        container: container,
+        additionalModules: [
+          clipboardModule
+        ]
+      });
+
+      return Promise.all([
+        m1.importXML(aXML),
+        m2.importXML(bXML)
+      ]).then(function() {
+
+        // given
+        // copy element <A> from m1
+        m1.invoke(function(selection, elementRegistry, editorActions) {
+          selection.select(elementRegistry.get('A'));
+
+          editorActions.trigger('copy');
+        });
+
+        // TODO(nikku): needed for our canvas utilities to work
+        setBpmnJS(m2);
+
+        m2.invoke(function(dragging, editorActions, elementRegistry) {
+
+          var processElement = elementRegistry.get('Process_1');
+
+          // when
+          // paste element <A> to m2, first try
+          editorActions.trigger('paste');
+          dragging.move(createCanvasEvent({ x: 150, y: 150 }));
+          dragging.move(createCanvasEvent({ x: 170, y: 150 }));
+          dragging.hover({ element: processElement });
+
+          dragging.end();
+
+          // then
+          expect(elementRegistry.get('A')).to.exist;
+          expect(elementRegistry.filter(isNamedA)).to.have.lengthOf(1);
+
+          // but when
+          // paste element <A> to m2, second try
+          editorActions.trigger('paste');
+          dragging.move(createCanvasEvent({ x: 150, y: 150 }));
+          dragging.move(createCanvasEvent({ x: 300, y: 150 }));
+          dragging.hover({ element: processElement });
+
+          dragging.end();
+
+          // then
+          expect(elementRegistry.filter(isNamedA)).to.have.lengthOf(2);
+        });
+
       });
 
     });
