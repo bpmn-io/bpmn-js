@@ -18,8 +18,8 @@ jobs:
         fetch-depth: 0
     - name: Merge master to develop and push
       run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
+        git config user.name '${{ secrets.BPMN_IO_USERNAME }}'
+        git config user.email '${{ secrets.BPMN_IO_EMAIL }}'
         git merge -m 'Merge master to develop' --no-edit origin/master
         git push
 
