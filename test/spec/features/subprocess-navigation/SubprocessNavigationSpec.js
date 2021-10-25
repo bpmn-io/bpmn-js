@@ -201,6 +201,119 @@ describe('features - subprocess-navigation', function() {
 
   });
 
+
+  describe('Secondary Elements', function() {
+
+    it('should render a secondary element', inject(function(elementRegistry) {
+
+      // given
+      var processShape = elementRegistry.get('collapsedProcess_secondary');
+
+      // expect
+      expect(processShape).to.exist;
+    }));
+
+
+    it('should link to primary element', inject(function(elementRegistry) {
+
+      // given
+      var processShape = elementRegistry.get('collapsedProcess_secondary');
+
+      // expect
+      expect(processShape.primaryShape).to.exist;
+    }));
+
+
+    it('should have padding', inject(function(elementRegistry) {
+
+      // given
+      var processShape = elementRegistry.get('single-task-process_secondary');
+
+      // expect
+      // default task is 100x80, expect 50px padding to every side
+      expect(processShape.width).to.eql(200);
+      expect(processShape.height).to.eql(180);
+
+    }));
+
+
+    it('should render flows with muted stroke color', inject(function(eventBus, elementRegistry, canvas) {
+
+      // given
+      var spy = sinon.spy();
+      var primaryElement = elementRegistry.get('root_startEvent');
+
+      var secondaryElement = {
+        id:'secondary',
+        type: 'bpmn:StartEvent',
+        x: 0,
+        y: 0,
+        width: 32,
+        height: 32,
+        isSecondary: true,
+        primaryShape: primaryElement,
+        businessObject: primaryElement.businessObject,
+        di: primaryElement.di
+      };
+
+      eventBus.on('render.connection', 2000, spy);
+
+      // when
+      canvas.addShape(secondaryElement);
+
+      // then
+      expect(spy).to.have.been.called;
+
+      var attrs = spy.firstCall.args[1].attrs;
+      expect(attrs.stroke).to.equal('#dddddd');
+
+    }));
+
+
+    describe('boundary events', function() {
+
+      it('should render secondary element', inject(function(elementRegistry) {
+
+        // given
+        var boundary_secondary = elementRegistry.get('boundaryError_secondary');
+
+        // expect
+        expect(boundary_secondary).to.exist;
+      }));
+
+
+      it('should position it relatively to original element', inject(function(elementRegistry) {
+
+        // given
+        var process_secondary = elementRegistry.get('errorSubProcess_secondary');
+        var process_primary = process_secondary.primaryShape;
+        var boundary_secondary = process_secondary.attachers[0];
+        var boundary_primary = process_primary.attachers[0];
+
+        // assume
+        expect(boundary_primary).to.exist;
+        expect(boundary_secondary).to.exist;
+
+        // (middle - element process offset) / total border length
+        var relativePositionPrimary = {
+          x: (boundary_primary.x + boundary_primary.width/2 - process_primary.x) / process_primary.width,
+          y: (boundary_primary.y + boundary_primary.width/2 - process_primary.y) / process_primary.height
+        };
+
+        var relativePositionSecondary = {
+          x: (boundary_secondary.x + boundary_secondary.width/2 - process_secondary.x) / process_secondary.width,
+          y: (boundary_secondary.y + boundary_secondary.width/2 - process_secondary.y) / process_secondary.height
+        };
+
+        // then
+        expect(relativePositionPrimary).to.be.eql(relativePositionSecondary);
+      }));
+
+    });
+
+
+  });
+
 });
 
 
