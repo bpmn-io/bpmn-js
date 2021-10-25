@@ -3,16 +3,22 @@
 }
 
 .bjs-breadcrumbs {
-  position: absolute;
-  top: 10px;
-  left: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
   font-family: var(--bjs-font-family);
+  font-size: 16px;
 }
 
 .bjs-breadcrumbs li {
-  display: inline-block;
+  display: inline-flex;
   color: var(--blue-base-65);
   cursor: pointer;
+}
+
+.bjs-breadcrumbs .bjs-drilldown {
+  margin-right: 5px;
 }
 
 .bjs-breadcrumbs li:last-of-type {
@@ -20,13 +26,14 @@
   cursor: default;
 }
 
-.bjs-breadcrumbs li:not(:first-child)::before {
+.bjs-breadcrumbs li:not(:first-of-type)::before {
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /><path d="M0 0h24v24H0z" fill="none" /></svg>');
+  height: 16px;
   padding: 0 8px;
   color: black;
 }
 
-.bjs-breadcrumbs .bpmnjs-crumb {
+.bjs-breadcrumbs .bjs-crumb {
   display: inline-block;
   max-width: 200px;
   overflow: hidden;

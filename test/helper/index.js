@@ -256,7 +256,12 @@ export function createViewer(container, viewerInstance, xml, diagramId) {
 
   clearBpmnJS();
 
-  var viewer = new viewerInstance({ container: container });
+  var viewer = new viewerInstance({
+    container: container,
+    canvas: {
+      deferUpdate: false
+    }
+  });
 
   setBpmnJS(viewer);
 

@@ -64,64 +64,69 @@ describe('features - subprocess-navigation', function() {
     it('should not show breadcrumbs in root view', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
+      var breadcrumbs = getBreadcrumbs(canvas);
 
       // then
-      expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+      expect(breadcrumbs).to.not.exist;
     }));
 
 
     it('should show breadcrumbs in subprocess view', inject(function(canvas) {
 
-      // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
-
       // when
       canvas.setActivePlane('collapsedProcess');
 
       // then
-      expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+      expect(getBreadcrumbs(canvas)).to.exist;
     }));
 
 
     it('should show execution tree', inject(function(canvas) {
 
-      // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
-
       // when
       canvas.setActivePlane('collapsedProcess_2');
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process', 'Expanded Process', 'Collapsed Process 2']);
+      expectBreadcrumbs(getBreadcrumbs(canvas), ['Root', 'Collapsed Process', 'Expanded Process', 'Collapsed Process 2']);
     }));
 
 
     it('should switch to process plane on click', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
       canvas.setActivePlane('collapsedProcess_2');
 
       // when
-      breadcrumbs.children[1].click();
+      getBreadcrumbs(canvas).children[2].click();
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process']);
+      expectBreadcrumbs(getBreadcrumbs(canvas), ['Root', 'Collapsed Process']);
     }));
 
 
     it('should switch to containing process plane on embedded click', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
       canvas.setActivePlane('collapsedProcess_2');
 
       // when
-      breadcrumbs.children[2].click();
+      getBreadcrumbs(canvas).children[3].click();
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process']);
+      expectBreadcrumbs(getBreadcrumbs(canvas), ['Root', 'Collapsed Process']);
+    }));
+
+
+    it('should switch to containing process plane on drillup icon', inject(function(canvas) {
+
+      // given
+      canvas.setActivePlane('collapsedProcess_2');
+
+      // when
+      getBreadcrumbs(canvas).querySelector('.bjs-drilldown').click();
+
+      // then
+      expectBreadcrumbs(getBreadcrumbs(canvas), ['Root', 'Collapsed Process']);
     }));
 
   });
@@ -201,10 +206,19 @@ describe('features - subprocess-navigation', function() {
 
 // helpers
 
+function getBreadcrumbs(canvas) {
+  return canvas.getContainer().querySelector('.djs-overlay:not([style*="display: none"]) .bjs-breadcrumbs');
+}
+
 function expectBreadcrumbs(breadcrumbs, expected) {
-  var crumbs = Array.from(breadcrumbs.children).map(function(element) {
-    return element.innerText;
-  });
+  var crumbs = Array.from(breadcrumbs.children)
+    .filter(function(child) {
+      return !!child.querySelector('.bjs-crumb');
+    })
+    .map(function(element) {
+      return element.innerText;
+    });
 
   expect(crumbs).to.eql(expected);
 }
+

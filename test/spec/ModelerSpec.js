@@ -40,6 +40,9 @@ describe('Modeler', function() {
       container: container,
       keyboard: {
         bindTo: document
+      },
+      canvas: {
+        deferUpdate: false
       }
     });
 
@@ -715,18 +718,18 @@ describe('Modeler', function() {
 
       return createModeler(xml).then(function() {
         var drilldown = container.querySelector('.bjs-drilldown');
-        var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
+        var visibleBreadcrumbs = container.querySelector('.djs-overlay:not([style*="display: none"]) .bjs-breadcrumbs');
 
         // assume
         expect(drilldown).to.exist;
-        expect(breadcrumbs).to.exist;
-        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+        expect(visibleBreadcrumbs).to.not.exist;
 
         // when
         drilldown.click();
 
         // then
-        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+        visibleBreadcrumbs = container.querySelector('.djs-overlay:not([style*="display: none"]) .bjs-breadcrumbs');
+        expect(visibleBreadcrumbs).to.exist;
       });
 
     });

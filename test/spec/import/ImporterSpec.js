@@ -724,7 +724,7 @@ describe('import - Importer', function() {
         expect(warnings).to.have.length(0);
 
         expect(diagram.get('elementRegistry').get('Subprocess')).to.exist;
-        expect(diagram.get('elementRegistry').get('Subprocess_plane')).to.exist;
+        expect(diagram.get('elementRegistry').get('Subprocess_secondary')).to.exist;
       });
     });
 
