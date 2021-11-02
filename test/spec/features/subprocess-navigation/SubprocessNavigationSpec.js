@@ -187,18 +187,6 @@ describe('features - subprocess-navigation', function() {
       expect(inlineProcess2).to.exist;
     }));
 
-
-    it('should move inlined elements to sensible position', inject(function(elementRegistry) {
-
-      // when
-      var startEvent = elementRegistry.get('subprocess_startEvent');
-
-      // then
-      expect(startEvent).to.exist;
-      expect(startEvent.x).to.equal(180);
-      expect(startEvent.y).to.equal(160);
-    }));
-
   });
 
 
