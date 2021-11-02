@@ -3,14 +3,14 @@ import {
 } from 'test/TestHelper';
 
 import coreModule from 'lib/core';
-import subprocessNavigationModule from 'lib/features/subprocess-navigation';
+import DrilldownModule from 'lib/features/drilldown';
 import { bootstrapViewer } from '../../../helper';
 
-describe('features - subprocess-navigation', function() {
+describe('features - drilldown', function() {
 
   var testModules = [
     coreModule,
-    subprocessNavigationModule
+    DrilldownModule
   ];
 
   var multiLayerXML = require('./nested-subprocesses.bpmn');
@@ -185,6 +185,16 @@ describe('features - subprocess-navigation', function() {
       // then
       expect(inlineProcess1).to.exist;
       expect(inlineProcess2).to.exist;
+    }));
+
+
+    it('should have expanded shape', inject(function(elementRegistry) {
+
+      // given
+      var processShape = elementRegistry.get('inlineSubprocess_secondary');
+
+      // expect
+      expect(processShape).to.exist;
     }));
 
   });
