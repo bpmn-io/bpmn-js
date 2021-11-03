@@ -3,14 +3,14 @@ import {
 } from 'test/TestHelper';
 
 import coreModule from 'lib/core';
-import subprocessNavigationModule from 'lib/features/subprocess-navigation';
+import DrilldownModule from 'lib/features/drilldown';
 import { bootstrapViewer } from '../../../helper';
 
-describe('features - subprocess-navigation', function() {
+describe('features - drilldown', function() {
 
   var testModules = [
     coreModule,
-    subprocessNavigationModule
+    DrilldownModule
   ];
 
   var multiLayerXML = require('./nested-subprocesses.bpmn');
