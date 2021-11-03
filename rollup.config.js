@@ -45,7 +45,7 @@ const configs = distros.reduce(function(configs, distro) {
       },
       plugins: pgl([
         banner(output)
-      ])
+      ], 'development')
     },
     {
       input: `./lib/${input}.js`,
@@ -61,7 +61,7 @@ const configs = distros.reduce(function(configs, distro) {
             comments: /license|@preserve/
           }
         })
-      ])
+      ], 'production')
     }
   ];
 }, []);
@@ -92,10 +92,10 @@ function banner(bundleName, minified) {
   });
 }
 
-function pgl(plugins=[]) {
+function pgl(plugins=[], env='production') {
   return [
     replace({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify(env)
     }),
     nodeResolve({
       mainFields: [
