@@ -710,8 +710,7 @@ describe('Modeler', function() {
 
   describe('drill down', function() {
 
-    it('should allow drill down into collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+    function verifyDrilldown(xml) {
 
       return createModeler(xml).then(function() {
         var drilldown = container.querySelector('.bjs-drilldown');
@@ -730,6 +729,19 @@ describe('Modeler', function() {
         expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.true;
       });
 
+    }
+
+    it('should allow drill down into collapsed sub-process', function() {
+      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+
+      return verifyDrilldown(xml);
+    });
+
+
+    it('should allow drill down into legacy collapsed sub-process', function() {
+      var xml = require('../fixtures/bpmn/collapsed-sub-process-legacy.bpmn');
+
+      return verifyDrilldown(xml);
     });
 
   });
