@@ -33,23 +33,14 @@ cp('./assets/bpmn-js.css', dest + '/assets');
 
 console.log('building pre-packaged distributions');
 
-var NODE_ENV = process.env.NODE_ENV;
+try {
+  exec('rollup', [ '-c' ], {
+    stdio: 'inherit'
+  });
+} catch (e) {
+  console.error('failed to build pre-package distributions', e);
 
-[ 'production', 'development' ].forEach(function(env) {
-
-  try {
-    process.env.NODE_ENV = env;
-
-    exec('rollup', [ '-c' ], {
-      stdio: 'inherit'
-    });
-  } catch (e) {
-    console.error('failed to build pre-package distributions', e);
-
-    process.exit(1);
-  }
-
-  process.env.NODE_ENV = NODE_ENV;
-});
+  process.exit(1);
+}
 
 console.log('done.');
