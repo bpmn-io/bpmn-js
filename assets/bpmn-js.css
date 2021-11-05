@@ -5,6 +5,7 @@
 .bjs-breadcrumbs {
   position: absolute;
   display: flex;
+  flex-wrap: wrap;
   top: 10px;
   left: 100px;
   font-family: var(--bjs-font-family);
@@ -16,6 +17,7 @@
   display: inline-flex;
   color: var(--blue-base-65);
   cursor: pointer;
+  padding-bottom: 5px;
 }
 
 .bjs-breadcrumbs li:last-of-type {
