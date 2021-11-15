@@ -13,21 +13,25 @@
   position: absolute;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   top: 10px;
   left: 100px;
   font-family: var(--bjs-font-family);
   font-size: 16px;
-  align-items: center;
+  line-height: normal;
 }
 
 .bjs-breadcrumbs li {
   display: inline-flex;
-  color: var(--breadcrumbs-item-color);
-  cursor: pointer;
   padding-bottom: 5px;
 }
 
-.bjs-breadcrumbs li:last-of-type {
+.bjs-breadcrumbs li a {
+  cursor: pointer;
+  color: var(--breadcrumbs-item-color);
+}
+
+.bjs-breadcrumbs li:last-of-type a {
   color: inherit;
   cursor: default;
 }
@@ -36,7 +40,7 @@
   content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" /><path d="M0 0h24v24H0z" fill="none" /></svg>');
   padding: 0 8px;
   color: var(--breadcrumbs-arrow-color);
-  height: 16px;
+  height: 1em;
 }
 
 .bjs-breadcrumbs .bpmnjs-crumb {
