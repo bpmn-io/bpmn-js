@@ -5,6 +5,7 @@ import {
 import coreModule from 'lib/core';
 import DrilldownModule from 'lib/features/drilldown';
 import { bootstrapViewer } from '../../../helper';
+import { classes } from 'min-dom';
 
 describe('features - drilldown', function() {
 
@@ -64,23 +65,23 @@ describe('features - drilldown', function() {
     it('should not show breadcrumbs in root view', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
+      var container = canvas.getContainer();
 
       // then
-      expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+      expect(classes(container).contains('bjs-breadcrumbs-shown')).to.be.false;
     }));
 
 
     it('should show breadcrumbs in subprocess view', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
+      var container = canvas.getContainer();
 
       // when
       canvas.setActivePlane('collapsedProcess');
 
       // then
-      expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+      expect(classes(container).contains('bjs-breadcrumbs-shown')).to.be.true;
     }));
 
 

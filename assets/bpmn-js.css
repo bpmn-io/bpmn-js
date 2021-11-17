@@ -11,14 +11,25 @@
 
 .bjs-breadcrumbs {
   position: absolute;
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: center;
   top: 10px;
-  left: 100px;
   font-family: var(--bjs-font-family);
   font-size: 16px;
   line-height: normal;
+}
+
+.bjs-breadcrumbs-shown .bjs-breadcrumbs {
+  display: flex;
+}
+
+.djs-palette-shown .bjs-breadcrumbs {
+  left: 50px;
+}
+
+.djs-palette-shown.djs-palette-two-column .bjs-breadcrumbs {
+  left: 100px;
 }
 
 .bjs-breadcrumbs li {
