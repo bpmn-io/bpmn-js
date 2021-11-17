@@ -716,17 +716,18 @@ describe('Modeler', function() {
       return createModeler(xml).then(function() {
         var drilldown = container.querySelector('.bjs-drilldown');
         var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
+        var djsContainer = container.querySelector('.djs-container');
 
         // assume
         expect(drilldown).to.exist;
         expect(breadcrumbs).to.exist;
-        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.true;
+        expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.false;
 
         // when
         drilldown.click();
 
         // then
-        expect(breadcrumbs.classList.contains('djs-element-hidden')).to.be.false;
+        expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.true;
       });
 
     });
