@@ -781,6 +781,40 @@ describe('features/copy-paste/ModdleCopy', function() {
 
   });
 
+
+  describe('custom', function() {
+
+    var customPackage = require('../../../fixtures/json/model/custom.json');
+
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: testModules,
+      moddleExtensions: {
+        custom: customPackage
+      }
+    }));
+
+
+    it('should copy arrays of strings', inject(function(moddle, moddleCopy) {
+
+      // given
+      var paths = [ 'A', 'B', 'C' ];
+
+      var customElement = moddle.create('custom:CustomSendElement', {
+        paths: paths
+      });
+
+      // when
+      var newElement = moddleCopy.copyElement(customElement, moddle.create('custom:CustomSendElement'));
+
+      // then
+      expect(newElement.paths).to.have.length(3);
+      expect(newElement.paths).to.eql(paths);
+
+      expectNoAttrs(newElement);
+    }));
+
+  });
+
 });
 
 
