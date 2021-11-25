@@ -311,6 +311,81 @@ describe('features/replace - bpmn replace', function() {
   });
 
 
+  describe('should replace in sub-process (collapsed)', function() {
+
+    var diagramXML = require('./BpmnReplace.collapsedSubProcess.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    beforeEach(inject(function(canvas) {
+      canvas.setActivePlane('SubProcess_Collapsed');
+    }));
+
+
+    it('task', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('UserTask');
+      var newElementData = {
+        type: 'bpmn:ServiceTask'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(newElement).to.exist;
+      expect(is(businessObject, 'bpmn:ServiceTask')).to.be.true;
+    }));
+
+
+    it('task with collapsed sub-process', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('UserTask');
+      var newElementData = {
+        type: 'bpmn:SubProcess'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(newElement).to.exist;
+      expect(is(businessObject, 'bpmn:SubProcess')).to.be.true;
+    }));
+
+
+    it('collapsed sub-process with task', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var task = elementRegistry.get('NestedCollapsed_SubProcess');
+      var newElementData = {
+        type: 'bpmn:Task'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(newElement).to.exist;
+      expect(is(businessObject, 'bpmn:Task')).to.be.true;
+    }));
+  });
+
+
   describe('should replace in collaboration', function() {
 
     var diagramXML = require('./BpmnReplace.collaboration.bpmn');
