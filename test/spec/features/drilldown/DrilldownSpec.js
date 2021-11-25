@@ -195,6 +195,16 @@ describe('features - drilldown', function() {
       expect(startEvent.y).to.equal(160);
     }));
 
+
+    it('should create new planes for empty processes', inject(function(canvas) {
+
+      // when
+      var emptyPlane = canvas.getPlane('emptyProcess');
+
+      // then
+      expect(emptyPlane).to.exist;
+    }));
+
   });
 
 });
