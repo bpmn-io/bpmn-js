@@ -109,6 +109,33 @@ describe('features/modeling - di ordering', function() {
         task1.id,
       ]);
     });
+
+    it('should order subprocess planes', function() {
+
+      // given
+      var canvas = getBpmnJS().get('canvas'),
+          root;
+
+      // when
+      var subProcess = add(
+        { type: 'bpmn:SubProcess', isExpanded: false, width: 300, height: 200 }, { x: 300, y: 200 }
+      );
+
+      var participant = add({ type: 'bpmn:Participant', width: 500, height: 300 }, { x: 300, y: 200 }),
+          task1 = add({ type: 'bpmn:Task' }, { x: 250, y: 200 }, subProcess.id + '_plane');
+
+      root = canvas.getRootElement();
+
+      // then
+      // subProcess id exists twice: once as collapsed shape and once as plane element
+      return expectDiOrder([
+        root.id,
+        participant.id,
+        subProcess.id,
+        subProcess.id,
+        task1.id,
+      ]);
+    });
   });
 
 
