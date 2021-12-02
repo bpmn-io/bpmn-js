@@ -65,11 +65,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = newShape.outgoing[0];
 
           // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming).to.have.length(1);
           expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -115,11 +115,11 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming).to.have.length(1);
           expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
           // no outgoing edges
-          expect(newShape.outgoing.length).to.equal(0);
+          expect(newShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -153,10 +153,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(newShape.incoming.length).to.equal(0);
+          expect(newShape.incoming).to.have.length(0);
 
           // no outgoing edges
-          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing).to.have.length(1);
           expect(newShape.outgoing[0]).to.eql(sequenceFlow);
 
           // split target at insertion point
@@ -244,11 +244,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = newShape.outgoing[0];
 
           // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming).to.have.length(1);
           expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -313,11 +313,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = intermediateThrowEvent.outgoing[0];
 
           // new incoming connection
-          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming).to.have.length(1);
           expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(intermediateThrowEvent.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -373,11 +373,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = intermediateThrowEvent.outgoing[0];
 
           // new incoming connection
-          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming).to.have.length(1);
           expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(intermediateThrowEvent.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -527,11 +527,11 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // new incoming connection
-          expect(endEventShape.incoming.length).to.equal(1);
+          expect(endEventShape.incoming).to.have.length(1);
           expect(endEventShape.incoming[0]).to.eql(sequenceFlow);
 
           // no outgoing edges
-          expect(endEventShape.outgoing.length).to.equal(0);
+          expect(endEventShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -568,10 +568,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(startEventShape.incoming.length).to.equal(0);
+          expect(startEventShape.incoming).to.have.length(0);
 
           // 1 outgoing connection
-          expect(startEventShape.outgoing.length).to.equal(1);
+          expect(startEventShape.outgoing).to.have.length(1);
           expect(startEventShape.outgoing[0]).to.eql(sequenceFlow);
 
           // split target at insertion point
@@ -612,10 +612,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(startEventShape.incoming.length).to.equal(0);
+          expect(startEventShape.incoming).to.have.length(0);
 
           // no outgoing edges
-          expect(startEventShape.outgoing.length).to.equal(0);
+          expect(startEventShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([ originalWaypoints ]));
