@@ -9,9 +9,10 @@ import coreModule from 'lib/core';
 var FUCHSIA_HEX = '#ff00ff',
     YELLOW_HEX = '#ffff00';
 
+
 describe('features/modeling - set color', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+  var diagramXML = require('./SetColor.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
@@ -127,6 +128,46 @@ describe('features/modeling - set color', function() {
       // then
       expect(taskShape.businessObject.di.get('border-color')).not.to.exist;
       expect(taskShape.businessObject.di.get('background-color')).not.to.exist;
+    }));
+
+
+
+    it('setting stroke + fill color on external label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowShape = elementRegistry.get('SequenceFlow_3'),
+          flowLabel = flowShape.label,
+          flowDi = getDi(flowShape);
+
+      // when
+      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+
+      // then
+      expect(flowDi.get('border-color')).not.to.exist;
+      expect(flowDi.get('background-color')).not.to.exist;
+
+      expect(flowDi.label.get('color')).to.eql(FUCHSIA_HEX);
+    }));
+
+
+    it('unsetting stroke + fill color on external label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowShape = elementRegistry.get('SequenceFlow_3'),
+          flowLabel = flowShape.label,
+          flowDi = getDi(flowShape);
+
+      // assume
+      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+
+      // when
+      modeling.setColor(flowLabel, { stroke: undefined, fill: undefined });
+
+      // then
+      expect(flowDi.get('border-color')).not.to.exist;
+      expect(flowDi.get('background-color')).not.to.exist;
+
+      expect(flowDi.label.get('color')).not.to.exist;
     }));
 
 
@@ -591,5 +632,14 @@ describe('features/modeling - set color', function() {
         expect(sequenceFlow.businessObject.di.get('stroke')).to.eql('#abcdef');
       }
     ));
+
   });
+
 });
+
+
+// helpers //////////
+
+function getDi(element) {
+  return element.businessObject.di;
+}
