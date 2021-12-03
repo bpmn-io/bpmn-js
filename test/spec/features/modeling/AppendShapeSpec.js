@@ -7,6 +7,11 @@ import {
   find
 } from 'min-dash';
 
+import {
+  is,
+  getBusinessObject
+} from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -72,26 +77,35 @@ describe('features/modeling - append shape', function() {
     }));
 
 
-    it('should add connection', inject(function(elementRegistry, modeling) {
+    it('should add connection + DI', inject(function(elementRegistry, modeling) {
 
       // given
       var startEventShape = elementRegistry.get('StartEvent_1');
       var subProcessShape = elementRegistry.get('SubProcess_1');
 
-      var startEvent = startEventShape.businessObject,
-          subProcess = subProcessShape.businessObject;
+      var startEventBo = startEventShape.businessObject,
+          subProcessBo = subProcessShape.businessObject;
 
       // when
       var targetShape = modeling.appendShape(startEventShape, { type: 'bpmn:Task' }),
-          target = targetShape.businessObject;
+          targetBo = targetShape.businessObject;
 
-      var connection = find(subProcess.get('flowElements'), function(e) {
-        return e.sourceRef === startEvent && e.targetRef === target;
-      });
+      var connection = targetShape.incoming[0],
+          connectionDi = getDi(connection),
+          connectionBo = getBusinessObject(connection);
 
       // then
       expect(connection).to.exist;
-      expect(connection.$instanceOf('bpmn:SequenceFlow')).to.be.true;
+      expect(is(connection, 'bpmn:SequenceFlow')).to.be.true;
+
+      expect(connectionBo.sourceRef).to.eql(startEventBo);
+      expect(connectionBo.targetRef).to.eql(targetBo);
+      expect(connectionBo.$parent).to.equal(subProcessBo);
+
+      // https://github.com/bpmn-io/bpmn-js/issues/1544
+      expect(connectionDi.waypoints).not.to.exist;
+
+      expect(connectionDi.waypoint).to.have.length(2);
     }));
 
   });
@@ -333,3 +347,10 @@ describe('features/modeling - append shape', function() {
   });
 
 });
+
+
+// helper ////////////////
+
+function getDi(element) {
+  return getBusinessObject(element).di;
+}
