@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.8.3
+
+* `FIX`: correct resize handles hidden behind element ([#1520](https://github.com/bpmn-io/bpmn-js/issues/1520))
+* `FIX`: handle close to source or target drop on flow ([#1541](https://github.com/bpmn-io/bpmn-js/issues/1541))
+* `CHORE`: bump to `diagram-js@7.6.3`
+
 ## 8.8.2
 
 * `FIX`: properly re-use ID of a copied element if available ([#1503](https://github.com/bpmn-io/bpmn-js/pull/1509))
