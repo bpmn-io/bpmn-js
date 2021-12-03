@@ -38,60 +38,182 @@ describe('modeling/behavior - drop on connection', function() {
 
     describe('create', function() {
 
-      it('should connect start -> target -> end', inject(
-        function(modeling, elementRegistry, elementFactory) {
+      describe('should connect start -> target -> end', function() {
 
-          // given
-          var intermediateThrowEvent = elementFactory.createShape({
-            type: 'bpmn:IntermediateThrowEvent'
-          });
+        it('connection middle', inject(
+          function(modeling, elementRegistry, elementFactory) {
 
-          var startEvent = elementRegistry.get('StartEvent'),
-              sequenceFlow = elementRegistry.get('SequenceFlow_1'),
-              task = elementRegistry.get('Task_1');
+            // given
+            var intermediateThrowEvent = elementFactory.createShape({
+              type: 'bpmn:IntermediateThrowEvent'
+            });
 
-          var originalWaypoints = sequenceFlow.waypoints;
+            var startEvent = elementRegistry.get('StartEvent'),
+                sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+                task = elementRegistry.get('Task_1');
 
-          var dropPosition = { x: 340, y: 120 }; // first bendpoint
+            var originalWaypoints = sequenceFlow.waypoints;
 
-          // when
-          var newShape = modeling.createShape(
-            intermediateThrowEvent,
-            dropPosition,
-            sequenceFlow
-          );
+            var dropPosition = { x: 340, y: 120 }; // first bendpoint
 
-          // then
-          var targetConnection = newShape.outgoing[0];
+            // when
+            var newShape = modeling.createShape(
+              intermediateThrowEvent,
+              dropPosition,
+              sequenceFlow
+            );
 
-          // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
-          expect(newShape.incoming[0]).to.eql(sequenceFlow);
+            // then
+            var targetConnection = newShape.outgoing[0];
 
-          // new outgoing connection
-          expect(newShape.outgoing.length).to.equal(1);
-          expect(targetConnection).to.exist;
-          expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+            // new incoming connection
+            expect(newShape.incoming).to.have.length(1);
+            expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
-          expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
-          expect(task.incoming[1]).to.equal(newShape.outgoing[0]);
+            // new outgoing connection
+            expect(newShape.outgoing).to.have.length(1);
+            expect(targetConnection).to.exist;
+            expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
-          // split target at insertion point
-          expect(sequenceFlow).to.have.waypoints(flatten([
-            originalWaypoints.slice(0, 1),
-            { x: 322, y: 120 }
-          ]));
+            expect(startEvent.outgoing[0]).to.equal(newShape.incoming[0]);
+            expect(task.incoming[1]).to.equal(newShape.outgoing[0]);
 
-          expect(sequenceFlow).to.have.endDocking(dropPosition);
+            // split target at insertion point
+            expect(sequenceFlow).to.have.waypoints(flatten([
+              originalWaypoints.slice(0, 1),
+              { x: 322, y: 120 }
+            ]));
 
-          expect(targetConnection).to.have.waypoints(flatten([
-            { x: 340, y: 138 },
-            originalWaypoints.slice(2)
-          ]));
+            expect(sequenceFlow).to.have.endDocking(dropPosition);
 
-          expect(targetConnection).to.have.startDocking(dropPosition);
-        }
-      ));
+            expect(targetConnection).to.have.waypoints(flatten([
+              { x: 340, y: 138 },
+              originalWaypoints.slice(2)
+            ]));
+
+            expect(targetConnection).to.have.startDocking(dropPosition);
+          }
+        ));
+
+
+        it('close to source', inject(
+          function(modeling, elementRegistry, elementFactory) {
+
+            // given
+            var dropElement = elementFactory.createShape({
+              type: 'bpmn:IntermediateThrowEvent'
+            });
+
+            var start = elementRegistry.get('Gateway_C'),
+                flow = elementRegistry.get('SequenceFlow_F'),
+                end = elementRegistry.get('Task_B');
+
+            var originalWaypoints = flow.waypoints.slice();
+
+            var dropPosition = { x: 495, y: 540 }; // overlapping source
+
+            // when
+            var newShape = modeling.createShape(
+              dropElement,
+              dropPosition,
+              flow
+            );
+
+            // then
+            var targetConnection = newShape.outgoing[0];
+
+            // new incoming connection
+            expect(newShape.incoming).to.have.length(1);
+            expect(newShape.incoming[0]).to.equal(flow);
+
+            // new outgoing connection
+            expect(newShape.outgoing).to.have.length(1);
+            expect(targetConnection).to.exist;
+            expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+
+            expect(start.outgoing[0]).to.equal(newShape.incoming[0]);
+            expect(end.incoming[0]).to.equal(newShape.outgoing[0]);
+
+            // split target at insertion point
+            expect(flow).to.have.waypoints(flatten([
+              originalWaypoints.slice(0, 1),
+              [
+                { x: 477, y: 540 }
+              ]
+            ]));
+
+            expect(flow).to.have.endDocking(dropPosition);
+
+            expect(targetConnection).to.have.waypoints(flatten([
+              { x: 513, y: 540 },
+              originalWaypoints.slice(1)
+            ]));
+
+            expect(targetConnection).to.have.startDocking(dropPosition);
+          }
+        ));
+
+
+        it('close to target', inject(
+          function(modeling, elementRegistry, elementFactory) {
+
+            // given
+            var dropElement = elementFactory.createShape({
+              type: 'bpmn:IntermediateThrowEvent'
+            });
+
+            var start = elementRegistry.get('Gateway_C'),
+                flow = elementRegistry.get('SequenceFlow_F'),
+                end = elementRegistry.get('Task_B');
+
+            var originalWaypoints = flow.waypoints.slice();
+
+            var dropPosition = { x: 625, y: 540 }; // overlapping target
+
+            // when
+            var newShape = modeling.createShape(
+              dropElement,
+              dropPosition,
+              flow
+            );
+
+            // then
+            var targetConnection = newShape.outgoing[0];
+
+            // new incoming connection
+            expect(newShape.incoming).to.have.length(1);
+            expect(newShape.incoming[0]).to.equal(flow);
+
+            // new outgoing connection
+            expect(newShape.outgoing).to.have.length(1);
+            expect(targetConnection).to.exist;
+            expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
+
+            expect(start.outgoing[0]).to.equal(newShape.incoming[0]);
+            expect(end.incoming[0]).to.equal(newShape.outgoing[0]);
+
+            // split target at insertion point
+            expect(flow).to.have.waypoints(flatten([
+              originalWaypoints.slice(0, 1),
+              [
+                { x: 607, y: 540 }
+              ]
+            ]));
+
+            expect(flow).to.have.endDocking(dropPosition);
+
+            expect(targetConnection).to.have.waypoints(flatten([
+              { x: 643, y: 540 },
+              originalWaypoints.slice(1)
+            ]));
+
+            expect(targetConnection).to.have.startDocking(dropPosition);
+          }
+        ));
+
+      });
+
+
 
 
       it('should connect start -> target', inject(
@@ -115,11 +237,11 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming).to.have.length(1);
           expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
           // no outgoing edges
-          expect(newShape.outgoing.length).to.equal(0);
+          expect(newShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -153,10 +275,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(newShape.incoming.length).to.equal(0);
+          expect(newShape.incoming).to.have.length(0);
 
           // no outgoing edges
-          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing).to.have.length(1);
           expect(newShape.outgoing[0]).to.eql(sequenceFlow);
 
           // split target at insertion point
@@ -244,11 +366,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = newShape.outgoing[0];
 
           // new incoming connection
-          expect(newShape.incoming.length).to.equal(1);
+          expect(newShape.incoming).to.have.length(1);
           expect(newShape.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(newShape.outgoing.length).to.equal(1);
+          expect(newShape.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -313,11 +435,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = intermediateThrowEvent.outgoing[0];
 
           // new incoming connection
-          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming).to.have.length(1);
           expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(intermediateThrowEvent.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -373,11 +495,11 @@ describe('modeling/behavior - drop on connection', function() {
           var targetConnection = intermediateThrowEvent.outgoing[0];
 
           // new incoming connection
-          expect(intermediateThrowEvent.incoming.length).to.equal(1);
+          expect(intermediateThrowEvent.incoming).to.have.length(1);
           expect(intermediateThrowEvent.incoming[0]).to.eql(sequenceFlow);
 
           // new outgoing connection
-          expect(intermediateThrowEvent.outgoing.length).to.equal(1);
+          expect(intermediateThrowEvent.outgoing).to.have.length(1);
           expect(targetConnection).to.exist;
           expect(targetConnection.type).to.equal('bpmn:SequenceFlow');
 
@@ -527,11 +649,11 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // new incoming connection
-          expect(endEventShape.incoming.length).to.equal(1);
+          expect(endEventShape.incoming).to.have.length(1);
           expect(endEventShape.incoming[0]).to.eql(sequenceFlow);
 
           // no outgoing edges
-          expect(endEventShape.outgoing.length).to.equal(0);
+          expect(endEventShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([
@@ -568,10 +690,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(startEventShape.incoming.length).to.equal(0);
+          expect(startEventShape.incoming).to.have.length(0);
 
           // 1 outgoing connection
-          expect(startEventShape.outgoing.length).to.equal(1);
+          expect(startEventShape.outgoing).to.have.length(1);
           expect(startEventShape.outgoing[0]).to.eql(sequenceFlow);
 
           // split target at insertion point
@@ -612,10 +734,10 @@ describe('modeling/behavior - drop on connection', function() {
           // then
 
           // no incoming connection
-          expect(startEventShape.incoming.length).to.equal(0);
+          expect(startEventShape.incoming).to.have.length(0);
 
           // no outgoing edges
-          expect(startEventShape.outgoing.length).to.equal(0);
+          expect(startEventShape.outgoing).to.have.length(0);
 
           // split target at insertion point
           expect(sequenceFlow).to.have.waypoints(flatten([ originalWaypoints ]));
