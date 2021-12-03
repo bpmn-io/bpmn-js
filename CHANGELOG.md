@@ -11,6 +11,10 @@ ___Note:__ Yet to be released changes appear here._
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 * Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 
+## 8.8.4
+
+* `FIX`: set label color on `bpmndi:BPMNLabel#color` ([#1543](https://github.com/bpmn-io/bpmn-js/pull/1543))
+
 ## 8.8.3
 
 * `FIX`: correct resize handles hidden behind element ([#1520](https://github.com/bpmn-io/bpmn-js/issues/1520))

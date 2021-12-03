@@ -13,7 +13,7 @@ var FUCHSIA_HEX = '#ff00ff',
 
 describe('features/modeling - set color', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+  var diagramXML = require('./SetColor.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
@@ -44,6 +44,7 @@ describe('features/modeling - set color', function() {
       // given
       var taskShape = elementRegistry.get('Task_1'),
           taskDi = getDi(taskShape);
+
       modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
       // when
@@ -60,6 +61,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { fill: 'FUCHSIA', stroke: 'YELLOW' });
 
         // when
@@ -78,6 +80,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { fill: 'FUCHSIA', stroke: 'YELLOW' });
 
         // when
@@ -96,6 +99,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
         // when
@@ -128,6 +132,7 @@ describe('features/modeling - set color', function() {
       // given
       var taskShape = elementRegistry.get('Task_1'),
           taskDi = getDi(taskShape);
+
       modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
       // when
@@ -139,13 +144,52 @@ describe('features/modeling - set color', function() {
     }));
 
 
+    it('setting stroke + fill color on external label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowShape = elementRegistry.get('SequenceFlow_3'),
+          flowLabel = flowShape.label,
+          flowDi = getDi(flowShape);
+
+      // when
+      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+
+      // then
+      expect(flowDi.get('border-color')).not.to.exist;
+      expect(flowDi.get('background-color')).not.to.exist;
+
+      expect(flowDi.label.get('color')).to.eql(FUCHSIA_HEX);
+    }));
+
+
+    it('unsetting stroke + fill color on external label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var flowShape = elementRegistry.get('SequenceFlow_3'),
+          flowLabel = flowShape.label,
+          flowDi = getDi(flowShape);
+
+      // assume
+      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+
+      // when
+      modeling.setColor(flowLabel, { stroke: undefined, fill: undefined });
+
+      // then
+      expect(flowDi.get('border-color')).not.to.exist;
+      expect(flowDi.get('background-color')).not.to.exist;
+
+      expect(flowDi.label.get('color')).not.to.exist;
+    }));
+
+
     it('setting fill color (multiple elements)', inject(
       function(elementRegistry, modeling) {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
             startEventDi = getDi(startEventShape);
 
         // when
@@ -165,9 +209,10 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
             startEventDi = getDi(startEventShape);
+
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
@@ -185,8 +230,8 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
             startEventDi = getDi(startEventShape);
 
         // when
@@ -209,8 +254,8 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
             startEventDi = getDi(startEventShape);
 
         modeling.setColor([
@@ -334,6 +379,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
         // when
@@ -351,9 +397,9 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
@@ -371,9 +417,10 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
+
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
@@ -392,9 +439,9 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
 
         // when
         modeling.setColor([
@@ -415,9 +462,10 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
+
         modeling.setColor([ taskShape, startEventShape ], { stroke: 'FUCHSIA' });
 
         // when
@@ -459,6 +507,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { fill: 'FUCHSIA' });
 
         // when
@@ -496,6 +545,7 @@ describe('features/modeling - set color', function() {
         // given
         var taskShape = elementRegistry.get('Task_1'),
             taskDi = getDi(taskShape);
+
         modeling.setColor(taskShape, { stroke: 'FUCHSIA' });
 
         // when
@@ -514,9 +564,9 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
@@ -535,9 +585,10 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
+
         modeling.setColor([ taskShape, startEventShape ], { fill: 'FUCHSIA' });
 
         // when
@@ -557,9 +608,9 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
 
         // when
         modeling.setColor([ taskShape, startEventShape ], { stroke: 'FUCHSIA' });
@@ -578,9 +629,10 @@ describe('features/modeling - set color', function() {
 
         // given
         var taskShape = elementRegistry.get('Task_1'),
-            taskDi = getDi(taskShape);
-        var startEventShape = elementRegistry.get('StartEvent_1'),
-            startEventDi = getDi(startEventShape);
+            taskDi = getDi(taskShape),
+            startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventDi = getDi(taskShape);
+
         modeling.setColor([
           taskShape,
           startEventShape
@@ -637,5 +689,7 @@ describe('features/modeling - set color', function() {
         expect(sequenceFlowDi.get('stroke')).to.eql('#abcdef');
       }
     ));
+
   });
+
 });
