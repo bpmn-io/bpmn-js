@@ -65,7 +65,7 @@ describe('features/palette', function() {
     }));
 
 
-    it('should select start event', inject(function(canvas, dragging, selection) {
+    it('should select sub-process', inject(function(canvas, dragging, selection) {
 
       // given
       var rootElement = canvas.getRootElement(),
@@ -82,8 +82,10 @@ describe('features/palette', function() {
       dragging.end();
 
       // then
-      expect(selection.get()).to.have.length(1);
-      expect(is(selection.get()[0], 'bpmn:StartEvent')).to.be.true;
+      var selected = selection.get();
+
+      expect(selected).to.have.length(1);
+      expect(is(selected[0], 'bpmn:SubProcess')).to.be.true;
     }));
 
   });
