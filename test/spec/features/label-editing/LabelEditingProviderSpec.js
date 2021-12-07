@@ -492,6 +492,7 @@ describe('features - label-editing', function() {
       canvas: { deferUpdate: false }
     }));
 
+
     it('should initialize categoryValue for empty group', inject(
       function(elementRegistry, directEditing) {
 
