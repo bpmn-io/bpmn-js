@@ -85,6 +85,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
         isExpanded: false
       });
       modeling.createShape(subProcess, { x: 300, y: 300 }, canvas.getRootElement());
+      var plane = canvas.getPlane(subProcess.id);
 
       // when
       commandStack.undo();
@@ -94,6 +95,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       var diagrams = bpmnjs.getDefinitions().diagrams;
       expect(diagrams.length).to.equal(2);
       expect(canvas.getPlane(subProcess.id)).to.exist;
+      expect(canvas.getPlane(subProcess.id)).to.equal(plane);
     }));
 
   });
