@@ -4,8 +4,9 @@ import {
 
 import coreModule from 'lib/core';
 import DrilldownModule from 'lib/features/drilldown';
-import { bootstrapViewer } from '../../../helper';
+import { bootstrapViewer, getBpmnJS } from '../../../helper';
 import { classes } from 'min-dom';
+
 
 describe('features - drilldown', function() {
 
@@ -53,8 +54,9 @@ describe('features - drilldown', function() {
       overlay.html.click();
 
       // then
-      var plane = canvas.getActivePlane();
-      expect(plane.name).to.eql('collapsedProcess');
+      var collapsedRoot = canvas.getRootElement();
+
+      expect(collapsedRoot.businessObject).to.equal(collapsedProcess.businessObject);
     }));
 
   });
@@ -78,7 +80,7 @@ describe('features - drilldown', function() {
       var container = canvas.getContainer();
 
       // when
-      canvas.setActivePlane('collapsedProcess');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
 
       // then
       expect(classes(container).contains('bjs-breadcrumbs-shown')).to.be.true;
@@ -87,42 +89,48 @@ describe('features - drilldown', function() {
 
     it('should show execution tree', inject(function(canvas) {
 
-      // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
-
       // when
-      canvas.setActivePlane('collapsedProcess_2');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process', 'Expanded Process', 'Collapsed Process 2']);
+      expectBreadcrumbs([
+        'Root',
+        'Collapsed Process',
+        'Expanded Process',
+        'Collapsed Process 2'
+      ]);
     }));
 
 
     it('should switch to process plane on click', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
-      canvas.setActivePlane('collapsedProcess_2');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
 
       // when
-      breadcrumbs.children[1].click();
+      clickBreadcrumb(1);
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process']);
+      expectBreadcrumbs([
+        'Root',
+        'Collapsed Process'
+      ]);
     }));
 
 
     it('should switch to containing process plane on embedded click', inject(function(canvas) {
 
       // given
-      var breadcrumbs = canvas.getContainer().querySelector('.bjs-breadcrumbs');
-      canvas.setActivePlane('collapsedProcess_2');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
 
       // when
-      breadcrumbs.children[2].click();
+      clickBreadcrumb(2);
 
       // then
-      expectBreadcrumbs(breadcrumbs, ['Root', 'Collapsed Process']);
+      expectBreadcrumbs([
+        'Root',
+        'Collapsed Process'
+      ]);
     }));
 
   });
@@ -137,7 +145,7 @@ describe('features - drilldown', function() {
       canvas.zoom(0.5);
 
       // when
-      canvas.setActivePlane('collapsedProcess');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
 
       // then
       var viewbox = canvas.viewbox();
@@ -155,8 +163,8 @@ describe('features - drilldown', function() {
       var zoomedAndScrolledViewbox = canvas.viewbox();
 
       // when
-      canvas.setActivePlane('collapsedProcess');
-      canvas.setActivePlane('rootProcess');
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
+      canvas.setRootElement(canvas.findRoot('rootProcess'));
 
       // then
       var newViewbox = canvas.viewbox();
@@ -175,8 +183,8 @@ describe('features - drilldown', function() {
     it('should import collapsed subprocess', inject(function(canvas) {
 
       // when
-      var inlineProcess1 = canvas.getPlane('inlineSubprocess');
-      var inlineProcess2 = canvas.getPlane('inlineSubprocess_2');
+      var inlineProcess1 = canvas.findRoot('inlineSubprocess_plane');
+      var inlineProcess2 = canvas.findRoot('inlineSubprocess_2_plane');
 
       // then
       expect(inlineProcess1).to.exist;
@@ -202,10 +210,22 @@ describe('features - drilldown', function() {
 
 // helpers
 
-function expectBreadcrumbs(breadcrumbs, expected) {
+function getBreadcrumbs() {
+  return getBpmnJS().invoke(function(canvas) {
+    return canvas.getContainer().querySelector('.bjs-breadcrumbs');
+  });
+}
+
+function expectBreadcrumbs(expected) {
+  var breadcrumbs = getBreadcrumbs();
+
   var crumbs = Array.from(breadcrumbs.children).map(function(element) {
     return element.innerText;
   });
 
   expect(crumbs).to.eql(expected);
+}
+
+function clickBreadcrumb(index) {
+  getBreadcrumbs().children[index].click();
 }

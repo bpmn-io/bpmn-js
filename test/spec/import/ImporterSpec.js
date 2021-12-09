@@ -742,13 +742,13 @@ describe('import - Importer', function() {
             taskA = elementRegistry.get('Task_A'),
             taskB = elementRegistry.get('Task_B');
 
-        var activePlane = canvas.getActivePlane(),
-            planeA = canvas.findPlane(taskA),
-            planeB = canvas.findPlane(taskB);
+        var activeRoot = canvas.getRootElement(),
+            rootA = canvas.findRoot(taskA),
+            rootB = canvas.findRoot(taskB);
 
         // then
-        expect(activePlane).to.eql(planeA);
-        expect(planeA).to.not.eql(planeB);
+        expect(activeRoot).to.equal(rootA);
+        expect(rootA).not.to.equal(rootB);
       });
     });
 
