@@ -151,6 +151,12 @@ describe('import - Importer', function() {
           { type: 'add', semantic: 'SequenceFlow_2', di: 'BPMNEdge_SequenceFlow_2', diagramElement: 'SequenceFlow_2' },
           { type: 'add', semantic: 'SequenceFlow_3', di: 'BPMNEdge_SequenceFlow_3', diagramElement: 'SequenceFlow_3' }
         ]);
+
+        expect(
+          diagram.get('canvas').getRootElement()
+        ).to.equal(
+          diagram.get('elementRegistry').get('Process_1')
+        );
       });
     });
 
@@ -186,6 +192,12 @@ describe('import - Importer', function() {
           { type: 'add', semantic: 'Lane_2', di: '_BPMNShape_Lane_3', diagramElement: 'Lane_2' },
           { type: 'add', semantic: 'Lane_3', di: '_BPMNShape_Lane_4', diagramElement: 'Lane_3' }
         ]);
+
+        expect(
+          diagram.get('canvas').getRootElement()
+        ).to.equal(
+          diagram.get('elementRegistry').get('_Collaboration_2')
+        );
       });
 
     });
@@ -445,6 +457,11 @@ describe('import - Importer', function() {
           { type: 'add', semantic: 'SequenceFlow_5', di: 'BPMNEdge_SequenceFlow_5', diagramElement: 'SequenceFlow_5' }
         ]);
 
+        expect(
+          diagram.get('canvas').getRootElement()
+        ).to.equal(
+          diagram.get('elementRegistry').get('Process_2')
+        );
       });
     });
 
@@ -689,7 +706,7 @@ describe('import - Importer', function() {
   });
 
 
-  describe('Multiple Planes', function() {
+  describe('multiple-diagrams', function() {
 
     it('should import multiple diagrams', function() {
 
@@ -704,8 +721,13 @@ describe('import - Importer', function() {
         // then
         expect(warnings).to.have.length(0);
 
-        expect(diagram.get('elementRegistry').get('Task_A')).to.exist;
-        expect(diagram.get('elementRegistry').get('Task_B')).to.exist;
+        diagram.invoke(function(elementRegistry, canvas) {
+
+          expect(elementRegistry.get('Task_A')).to.exist;
+          expect(elementRegistry.get('Task_B')).to.exist;
+
+          expect(canvas.getRootElement()).to.equal(elementRegistry.get('Process_1'));
+        });
       });
     });
 
@@ -723,9 +745,24 @@ describe('import - Importer', function() {
         // then
         expect(warnings).to.have.length(0);
 
-        expect(diagram.get('elementRegistry').get('Subprocess')).to.exist;
-        expect(diagram.get('elementRegistry').get('Subprocess_plane')).to.exist;
+        diagram.invoke(function(elementRegistry, canvas) {
+
+          var subProcessRoot = elementRegistry.get('Subprocess_plane');
+          var processRoot = elementRegistry.get('Process_1rjrv55');
+          var subProcessElement = elementRegistry.get('Subprocess');
+          var taskInSubProcessElement = elementRegistry.get('Task_B');
+
+          expect(subProcessRoot).to.exist;
+          expect(subProcessElement).to.exist;
+          expect(taskInSubProcessElement).to.exist;
+
+          expect(canvas.getRootElement()).to.equal(processRoot);
+          expect(subProcessElement.parent).to.equal(processRoot);
+          expect(taskInSubProcessElement.parent).to.equal(subProcessRoot);
+        });
+
       });
+
     });
 
 
@@ -739,16 +776,17 @@ describe('import - Importer', function() {
 
         var elementRegistry = diagram.get('elementRegistry'),
             canvas = diagram.get('canvas'),
+            rootA = elementRegistry.get('Process_1'),
+            rootB = elementRegistry.get('Process_2'),
             taskA = elementRegistry.get('Task_A'),
             taskB = elementRegistry.get('Task_B');
 
-        var activeRoot = canvas.getRootElement(),
-            rootA = canvas.findRoot(taskA),
-            rootB = canvas.findRoot(taskB);
+        var activeRoot = canvas.getRootElement();
 
         // then
+        expect(canvas.findRoot(taskA)).to.equal(rootA);
+        expect(canvas.findRoot(taskB)).to.equal(rootB);
         expect(activeRoot).to.equal(rootA);
-        expect(rootA).not.to.equal(rootB);
       });
     });
 
