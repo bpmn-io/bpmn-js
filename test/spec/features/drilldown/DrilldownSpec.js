@@ -20,6 +20,7 @@ describe('features - drilldown', function() {
 
   beforeEach(bootstrapViewer(multiLayerXML, { modules: testModules }));
 
+
   describe('Overlays', function() {
 
     it('should show overlay on Subprocess with content', inject(function(elementRegistry, overlays) {
@@ -208,6 +209,50 @@ describe('features - drilldown', function() {
       expect(newViewbox.y).to.eql(zoomedAndScrolledViewbox.y);
       expect(newViewbox.scale).to.eql(zoomedAndScrolledViewbox.scale);
     }));
+
+
+    it('should remember scroll and zoom', inject(function(canvas) {
+
+      // given
+      var rootRoot = canvas.getRootElement();
+      var planeRoot = canvas.findRoot('collapsedProcess_plane');
+
+      canvas.scroll({ dx: 500, dy: 500 });
+      canvas.zoom(0.5);
+
+      var rootViewbox = canvas.viewbox();
+
+      canvas.setRootElement(planeRoot);
+      canvas.scroll({ dx: 100, dy: 100 });
+
+      var planeViewbox = canvas.viewbox();
+
+      // when
+      canvas.setRootElement(rootRoot);
+
+      // then
+      expectViewbox(rootViewbox);
+
+      // but when
+      canvas.setRootElement(planeRoot);
+
+      // then
+      expectViewbox(planeViewbox);
+    }));
+
+
+    // helpers //////////
+
+    function expectViewbox(expectedViewbox) {
+      return getBpmnJS().invoke(function(canvas) {
+
+        var viewbox = canvas.viewbox();
+
+        expect(viewbox.x).to.eql(expectedViewbox.x);
+        expect(viewbox.y).to.eql(expectedViewbox.y);
+        expect(viewbox.scale).to.eql(expectedViewbox.scale);
+      });
+    }
 
   });
 
