@@ -105,7 +105,10 @@ describe('features - drilldown', function() {
     it('should switch to process plane on click', inject(function(canvas) {
 
       // given
-      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+      var subRoot = canvas.findRoot('collapsedProcess_plane');
+      var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+      canvas.setRootElement(nestedRoot);
 
       // when
       clickBreadcrumb(1);
@@ -115,13 +118,42 @@ describe('features - drilldown', function() {
         'Root',
         'Collapsed Process'
       ]);
+
+      expect(
+        canvas.getRootElement()
+      ).to.equal(subRoot);
+    }));
+
+
+    it('should switch to root', inject(function(canvas) {
+
+      // given
+      var processRoot = canvas.findRoot('rootProcess');
+      var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+      canvas.setRootElement(nestedRoot);
+
+      // when
+      clickBreadcrumb(0);
+
+      // then
+      expectBreadcrumbs([
+        'Root'
+      ]);
+
+      expect(
+        canvas.getRootElement()
+      ).to.equal(processRoot);
     }));
 
 
     it('should switch to containing process plane on embedded click', inject(function(canvas) {
 
       // given
-      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+      var subRoot = canvas.findRoot('collapsedProcess_plane');
+      var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+      canvas.setRootElement(nestedRoot);
 
       // when
       clickBreadcrumb(2);
@@ -131,6 +163,10 @@ describe('features - drilldown', function() {
         'Root',
         'Collapsed Process'
       ]);
+
+      expect(
+        canvas.getRootElement()
+      ).to.equal(subRoot);
     }));
 
   });
