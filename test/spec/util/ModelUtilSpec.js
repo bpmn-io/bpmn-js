@@ -8,6 +8,7 @@ import modelingModule from 'lib/features/modeling';
 
 import {
   is,
+  isAny,
   getDi
 } from 'lib/util/ModelUtil';
 
@@ -70,6 +71,36 @@ describe('util/ModelUtil', function() {
 
       // then
       expect(is(foo, 'FOO')).to.be.false;
+    }));
+
+  });
+
+
+  describe('isAny', function() {
+
+    it('should work on shape', inject(function(bpmnFactory, elementFactory) {
+
+      // given
+      var element = elementFactory.createShape({ type: 'bpmn:Gateway' });
+
+      // then
+      expect(isAny(element, [ 'bpmn:Gateway' ])).to.be.true;
+      expect(isAny(element, [ 'bpmn:SequenceFlow', 'bpmn:Gateway' ])).to.be.true;
+      expect(isAny(element, [ 'bpmn:BaseElement' ])).to.be.true;
+      expect(isAny(element, [ 'bpmn:SequenceFlow' ])).to.be.false;
+    }));
+
+
+    it('should work on businessObject', inject(function(bpmnFactory, elementFactory) {
+
+      // given
+      var businessObject = bpmnFactory.create('bpmn:Gateway');
+
+      // then
+      expect(isAny(businessObject, [ 'bpmn:Gateway' ])).to.be.true;
+      expect(isAny(businessObject, [ 'bpmn:SequenceFlow', 'bpmn:Gateway' ])).to.be.true;
+      expect(isAny(businessObject, [ 'bpmn:BaseElement' ])).to.be.true;
+      expect(isAny(businessObject, [ 'bpmn:SequenceFlow' ])).to.be.false;
     }));
 
   });
