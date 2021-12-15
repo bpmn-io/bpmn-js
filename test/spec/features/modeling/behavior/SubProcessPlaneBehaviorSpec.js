@@ -197,6 +197,71 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   });
 
+
+  describe('remove', function() {
+
+    var multipleDiagramXML = require('./SubProcessBehavior.multiple-planes.bpmn');
+
+    beforeEach(bootstrapModeler(multipleDiagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        replaceModule
+      ]
+    }));
+
+    it('should recursively remove diagrams', inject(function(elementRegistry, modeling, bpmnjs) {
+
+      // given
+      var subProcess = elementRegistry.get('SubProcess_2');
+
+      // when
+      modeling.removeShape(subProcess);
+
+      // then
+      var nestedTask = elementRegistry.get('nested_task');
+      var diagrams = bpmnjs.getDefinitions().diagrams;
+      expect(diagrams.length).to.equal(1);
+      expect(nestedTask).to.not.exist;
+    }));
+
+
+    it('should undo', inject(function(elementRegistry, modeling, bpmnjs, commandStack) {
+
+      // given
+      var subProcess = elementRegistry.get('SubProcess_2');
+      modeling.removeShape(subProcess);
+
+      // when
+      commandStack.undo();
+
+      // then
+      var nestedTask = elementRegistry.get('nested_task');
+      var diagrams = bpmnjs.getDefinitions().diagrams;
+      expect(diagrams.length).to.equal(3);
+      expect(nestedTask).to.exist;
+    }));
+
+
+    it('should undo', inject(function(elementRegistry, modeling, bpmnjs, commandStack) {
+
+      // given
+      var subProcess = elementRegistry.get('SubProcess_2');
+      modeling.removeShape(subProcess);
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      var nestedTask = elementRegistry.get('nested_task');
+      var diagrams = bpmnjs.getDefinitions().diagrams;
+      expect(diagrams.length).to.equal(1);
+      expect(nestedTask).to.not.exist;
+    }));
+
+  });
+
 });
 
 
