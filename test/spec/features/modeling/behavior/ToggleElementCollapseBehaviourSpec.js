@@ -229,7 +229,6 @@ describe('features/modeling - collapse and expand elements', function() {
 
     describe('undo', function() {
 
-
       it('collapsed-marker is placed',
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
@@ -335,32 +334,6 @@ describe('features/modeling - collapse and expand elements', function() {
 
         // then +-marker is set
         expect(getDi(collapsedSubProcess).isExpanded).to.eql(false);
-      })
-    );
-
-
-    it('hide all children',
-      inject(function(elementRegistry, bpmnReplace) {
-
-        // given
-        var expandedSubProcess = elementRegistry.get('SubProcess_2');
-        var originalChildren = expandedSubProcess.children.slice();
-
-        // when
-        var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
-          {
-            type: 'bpmn:SubProcess',
-            isExpanded: false
-          }
-        );
-
-        // then keep children
-        originalChildren.forEach(function(c) {
-          expect(collapsedSubProcess.children).to.include(c);
-        });
-
-        // and hide them
-        expect(collapsedSubProcess.children).to.satisfy(allHidden());
       })
     );
 
@@ -640,7 +613,7 @@ function childrenHidden(hidden) {
         return child.hidden;
       }
       else {
-        return child.hidden == hidden;
+        return !!child.hidden == hidden;
       }
     });
   };
