@@ -103,3 +103,11 @@
   fill: var(--drilldown-fill-color);
   background-color: var(--drilldown-background-color);
 }
+
+.bjs-drilldown-empty {
+  display: none;
+}
+
+.selected .bjs-drilldown-empty {
+  display: inherit;
+}
