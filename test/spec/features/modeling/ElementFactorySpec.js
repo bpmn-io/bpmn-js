@@ -116,6 +116,19 @@ describe('features - element factory', function() {
     }));
 
 
+    it('should add collapsed attribute to subprocess', inject(function(elementFactory) {
+
+      // when
+      var subprocess = elementFactory.createShape({
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      });
+
+      // then
+      expect(subprocess.collapsed).to.be.true;
+    }));
+
+
     describe('integration', function() {
 
       it('should create event definition with ID', inject(function(elementFactory) {

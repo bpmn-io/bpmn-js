@@ -1027,6 +1027,30 @@ describe('features/replace - bpmn replace', function() {
     );
 
 
+    it('should allow expanding newly created subprocess',
+      inject(function(bpmnReplace, elementFactory) {
+
+        // given
+        var collapsedProcess = elementFactory.createShape({
+          type: 'bpmn:SubProcess',
+          isExpanded: false
+        });
+
+        var newElementData = {
+          type: 'bpmn:SubProcess',
+          isExpanded: true
+        };
+
+        // when
+        var newElement = bpmnReplace.replaceElement(collapsedProcess, newElementData);
+
+        // then
+        expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+        expect(isExpanded(newElement)).to.be.true;
+      })
+    );
+
+
     it('should keep size when morphing ad hoc',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
