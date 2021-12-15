@@ -324,7 +324,7 @@ describe('features/replace - bpmn replace', function() {
 
 
     beforeEach(inject(function(canvas) {
-      canvas.setActivePlane('SubProcess_Collapsed');
+      canvas.setRootElement(canvas.findRoot('SubProcess_Collapsed_plane'));
     }));
 
 

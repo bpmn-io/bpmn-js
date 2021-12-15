@@ -343,7 +343,7 @@ describe('features/grid-snapping', function() {
 
         // then
         expect(expandedSubProcess).to.include({
-          x: 140,
+          x: 150,
           y: 120,
           width: 360,
           height: 210
