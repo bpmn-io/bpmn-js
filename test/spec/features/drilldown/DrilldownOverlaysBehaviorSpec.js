@@ -388,4 +388,19 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   });
 
+
+  it('should only show one overlay', inject(function(elementRegistry, overlays, modeling) {
+
+    // given
+    var filledSubProcess = elementRegistry.get('Subprocess_with_content');
+    var emptySubProcessPlane = elementRegistry.get('Subprocess_empty_plane');
+
+    // when
+    modeling.moveShape(filledSubProcess, { x: 0, y: 0 }, emptySubProcessPlane);
+
+    // then
+    var elementOverlays = overlays.get({ element: filledSubProcess });
+    expect(elementOverlays).to.have.lengthOf(1);
+  }));
+
 });
