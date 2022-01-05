@@ -30,6 +30,7 @@ describe('features/popup-menu - replace menu provider', function() {
   var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
       diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn'),
       diagramXMLDataElements = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn'),
+      diagramXMLDataStoresPositionedAgainstParticipant = require('../../../fixtures/bpmn/features/replace/data-stores-positioned-against-participant.bpmn'),
       diagramXMLParticipants = require('../../../fixtures/bpmn/features/replace/participants.bpmn');
 
   var testModules = [
@@ -1425,6 +1426,41 @@ describe('features/popup-menu - replace menu provider', function() {
         expect(queryEntry('toggle-is-collection')).to.be.null;
         expect(queryEntry('replace-with-data-store-reference')).to.be.null;
         expect(queryEntry('replace-with-data-object-reference')).to.exist;
+      }));
+
+    });
+
+
+    describe('data store positioned against participant', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLDataStoresPositionedAgainstParticipant, { modules: testModules }));
+
+
+      it('should only contain data object reference', inject(function(elementRegistry) {
+
+        // given
+        var dataStoreReferenceWithinParticipant = elementRegistry.get('DataStoreReference_0');
+
+        // when
+        openPopup(dataStoreReferenceWithinParticipant);
+
+        // then
+        expect(queryEntries()).to.have.length(1);
+        expect(queryEntry('replace-with-data-object-reference')).to.exist;
+      }));
+
+
+      it('should contain no reference', inject(function(elementRegistry) {
+
+        // given
+        var dataStoreReferenceOutsideParticipant = elementRegistry.get('DataStoreReference_1');
+
+        // when
+        openPopup(dataStoreReferenceOutsideParticipant);
+
+        // then
+        expect(queryEntries()).to.have.length(0);
+        expect(queryEntry('replace-with-data-object-reference')).to.be.null;
       }));
 
     });
