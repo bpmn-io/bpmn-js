@@ -17,7 +17,12 @@ echo "Attempting to install diagram-js@$FEATURE_BRANCH";
 npm install "diagram-js@bpmn-io/diagram-js#$FEATURE_BRANCH";
 
 if [ $? -ne 0 ]; then
-  echo "Falling back to diagram-js@develop";
+   
+  # Skipping the fallback due to incompatible master branch
+  # https://github.com/bpmn-io/bpmn-js/issues/1558
+  exit 0;
 
-  npm install "diagram-js@bpmn-io/diagram-js#develop";
+  #echo "Falling back to diagram-js@develop";
+
+  #npm install "diagram-js@bpmn-io/diagram-js#develop";
 fi
