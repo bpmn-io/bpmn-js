@@ -36,7 +36,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
       // then
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(2);
+      expect(diagrams).to.have.length(2);
       expect(canvas.findRoot(planeId(subProcess))).to.exist;
     }));
 
@@ -54,7 +54,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
       // then
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(1);
+      expect(diagrams).to.have.length(1);
       expect(canvas.findRoot(planeId(subProcess))).to.not.exist;
     }));
 
@@ -73,7 +73,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
       // then
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(1);
+      expect(diagrams).to.have.length(1);
       expect(canvas.findRoot(planeId(subProcess))).to.not.exist;
     }));
 
@@ -94,7 +94,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
       // then
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(2);
+      expect(diagrams).to.have.length(2);
       expect(canvas.findRoot(planeId(subProcess))).to.exist;
       expect(canvas.findRoot(planeId(subProcess))).to.equal(plane);
     }));
@@ -121,7 +121,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
           // then
           var diagrams = bpmnjs.getDefinitions().diagrams;
-          expect(diagrams.length).to.equal(2);
+          expect(diagrams).to.have.length(2);
           expect(canvas.findRoot(planeId(collapsedSubProcess))).to.exist;
         }
       ));
@@ -143,7 +143,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
           // then
           var diagrams = bpmnjs.getDefinitions().diagrams;
-          expect(diagrams.length).to.equal(1);
+          expect(diagrams).to.have.length(1);
           expect(canvas.findRoot(planeId(collapsedSubProcess))).to.not.exist;
         }
       ));
@@ -165,7 +165,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
           // then
           var diagrams = bpmnjs.getDefinitions().diagrams;
-          expect(diagrams.length).to.equal(2);
+          expect(diagrams).to.have.length(2);
           expect(canvas.findRoot(planeId(collapsedSubProcess))).to.exist;
         }
       ));
@@ -188,7 +188,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
           // then
           var diagrams = bpmnjs.getDefinitions().diagrams;
-          expect(diagrams.length).to.equal(1);
+          expect(diagrams).to.have.length(1);
           expect(canvas.findRoot(planeId(collapsedSubProcess))).to.not.exist;
         }
       ));
@@ -221,7 +221,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       // then
       var nestedTask = elementRegistry.get('nested_task');
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(1);
+      expect(diagrams).to.have.length(1);
       expect(nestedTask).to.not.exist;
     }));
 
@@ -238,7 +238,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       // then
       var nestedTask = elementRegistry.get('nested_task');
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(3);
+      expect(diagrams).to.have.length(3);
       expect(nestedTask).to.exist;
     }));
 
@@ -256,7 +256,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       // then
       var nestedTask = elementRegistry.get('nested_task');
       var diagrams = bpmnjs.getDefinitions().diagrams;
-      expect(diagrams.length).to.equal(1);
+      expect(diagrams).to.have.length(1);
       expect(nestedTask).to.not.exist;
     }));
 
