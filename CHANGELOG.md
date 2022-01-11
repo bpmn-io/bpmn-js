@@ -2,10 +2,15 @@
 
 All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documented here. We use [semantic versioning](http://semver.org/) for releases.
 
+
 ## Unreleased
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.0-alpha.0
+
+* `FEAT`: support drilldown into collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443)) 
+* `CHORE`: bump to `diagram-js@8.0.1`
 ### Breaking Changes
 
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
