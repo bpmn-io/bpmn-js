@@ -15,6 +15,7 @@ describe('features - drilldown', function() {
     DrilldownModule
   ];
 
+  var collaborationXML = require('./collaboration-subprocesses.bpmn');
   var multiLayerXML = require('./nested-subprocesses.bpmn');
   var legacyXML = require('./legacy-subprocesses.bpmn');
 
@@ -253,6 +254,148 @@ describe('features - drilldown', function() {
         expect(viewbox.scale).to.eql(expectedViewbox.scale);
       });
     }
+
+  });
+
+
+  describe('Collaboration', function() {
+
+    beforeEach(bootstrapViewer(collaborationXML, { modules: testModules }));
+
+    describe('Overlays', function() {
+
+      it('should show overlay', inject(function(elementRegistry, overlays) {
+
+        // given
+        var collapsedProcess = elementRegistry.get('collapsedProcess');
+        var overlay = overlays.get({ element: collapsedProcess });
+
+        // then
+        expect(overlay).to.exist;
+      }));
+
+
+      it('should switch plane on click', inject(function(elementRegistry, overlays, canvas) {
+
+        // given
+        var collapsedProcess = elementRegistry.get('collapsedProcess');
+        var overlay = overlays.get({ element: collapsedProcess })[0];
+
+        // when
+        overlay.html.click();
+
+        // then
+        var collapsedRoot = canvas.getRootElement();
+
+        expect(collapsedRoot.businessObject).to.equal(collapsedProcess.businessObject);
+      }));
+
+    });
+
+
+    describe('Breadcrumbs', function() {
+
+      it('should not show breadcrumbs in root view', inject(function(canvas) {
+
+        // given
+        var container = canvas.getContainer();
+
+        // then
+        expect(classes(container).contains('bjs-breadcrumbs-shown')).to.be.false;
+      }));
+
+
+      it('should show breadcrumbs in subprocess view', inject(function(canvas) {
+
+        // given
+        var container = canvas.getContainer();
+
+        // when
+        canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
+
+        // then
+        expect(classes(container).contains('bjs-breadcrumbs-shown')).to.be.true;
+      }));
+
+
+      it('should show execution tree', inject(function(canvas) {
+
+        // when
+        canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+
+        // then
+        expectBreadcrumbs([
+          'Root',
+          'Collapsed Process',
+          'Expanded Process',
+          'Collapsed Process 2'
+        ]);
+      }));
+
+
+      it('should switch to process plane on click', inject(function(canvas) {
+
+        // given
+        var subRoot = canvas.findRoot('collapsedProcess_plane');
+        var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+        canvas.setRootElement(nestedRoot);
+
+        // when
+        clickBreadcrumb(1);
+
+        // then
+        expectBreadcrumbs([
+          'Root',
+          'Collapsed Process'
+        ]);
+
+        expect(
+          canvas.getRootElement()
+        ).to.equal(subRoot);
+      }));
+
+
+      it('should switch to root', inject(function(canvas) {
+
+        // given
+        var collaboration = canvas.findRoot('Collaboration_0wnumpk');
+        var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+        canvas.setRootElement(nestedRoot);
+
+        // when
+        clickBreadcrumb(0);
+
+        expect(
+          canvas.getRootElement()
+        ).to.equal(collaboration);
+      }));
+
+
+      it('should switch to containing process plane on embedded click', inject(function(canvas) {
+
+        // given
+        var subRoot = canvas.findRoot('collapsedProcess_plane');
+        var nestedRoot = canvas.findRoot('collapsedProcess_2_plane');
+
+        canvas.setRootElement(nestedRoot);
+
+        // when
+        clickBreadcrumb(2);
+
+        // then
+        expectBreadcrumbs([
+          'Root',
+          'Collapsed Process'
+        ]);
+
+        expect(
+          canvas.getRootElement()
+        ).to.equal(subRoot);
+      }));
+
+    });
 
   });
 
