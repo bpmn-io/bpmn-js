@@ -6,9 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## 8.8.4
+## 8.9.0
 
+* `FEAT`: select newly created sub-process ([`6214772b`](https://github.com/bpmn-io/bpmn-js/commit/6214772b8519cb82f61c4867b16c112bc6344922))
+* `FEAT`: select newly created group for immediate resizing ([`56eb34cc`](https://github.com/bpmn-io/bpmn-js/commit/56eb34cc826ca0dc8ee788575a504d5fda301292))
+* `FEAT`: simplify color scheme
 * `FIX`: set label color on `bpmndi:BPMNLabel#color` ([#1543](https://github.com/bpmn-io/bpmn-js/pull/1543))
+* `FIX`: don't create illegal `bpmndi:BPMNEdge#waypoints` property ([#1544](https://github.com/bpmn-io/bpmn-js/issues/1544))
+* `DEPS`: update to diagram-js@7.8.2
 
 ## 8.8.3
 
