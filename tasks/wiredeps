@@ -4,10 +4,18 @@ FEATURE_BRANCH=
 
 # https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
 
-# skip default branch and tags
-if [[ $GITHUB_REF =~ ^refs/heads/master$ ]] || [[ $GITHUB_REF =~ ^refs/tags/ ]]; then
+# skip master / backport branches and tags
+if [[ "$GITHUB_REF" =~ ^refs/heads/(master|[0-9]+\.x)$ ]] || [[ "$GITHUB_REF" =~ ^refs/tags/ ]]; then
+  echo "Skip wiredeps: master/backport branch";
   exit 0;
 fi
+
+# skip branches targeting master or backport branches
+if [[ "$GITHUB_HEAD_REF" =~ ^refs/heads/(master|[0-9]+\.x)$ ]]; then
+  echo "Skip wiredeps: targets master/backport branch";
+  exit 0;
+fi
+
 
 # GITHUB_HEAD_REF is set for pull request
 FEATURE_BRANCH=$([ $GITHUB_HEAD_REF != "" ] && echo $GITHUB_HEAD_REF || echo "$GITHUB_REF" | cut -d"/" -f3)
