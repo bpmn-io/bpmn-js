@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="3.3.1">
+  <process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_1">
+      <task id="Task_1A" name="A" />
+      <task id="Task_1B" name="B" />
+    </bpmn:subProcess>
+  </process>
+  <process id="Process_2" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_2">
+      <task id="Task_2A" name="A" />
+      <task id="Task_2B" name="B" />
+    </bpmn:subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1">
+        <dc:Bounds x="220" y="50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="SubProcessDiagram_1">
+    <bpmndi:BPMNPlane id="SubProcessPlane_1" bpmnElement="SubProcess_1">
+      <bpmndi:BPMNShape id="Task_1A_di" bpmnElement="Task_1A">
+        <dc:Bounds x="220" y="50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1B_di" bpmnElement="Task_1B">
+        <dc:Bounds x="350" y="50" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_2">
+    <bpmndi:BPMNPlane id="BpmnPlane_2" bpmnElement="Process_2">
+      <bpmndi:BPMNShape id="SubProcess_2_di" bpmnElement="SubProcess_2">
+        <omgdc:Bounds x="256" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="SubProcess_2_diagram_A">
+    <bpmndi:BPMNPlane id="SubProcessPlane_2_A" bpmnElement="SubProcess_2">
+      <bpmndi:BPMNShape id="Task_2A_di" bpmnElement="Task_2A">
+        <omgdc:Bounds x="256" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="SubProcess_2_diagram_B">
+    <bpmndi:BPMNPlane id="SubProcessPlane_2_B" bpmnElement="SubProcess_2">
+      <bpmndi:BPMNShape id="Task_2B_di" bpmnElement="Task_2B">
+        <omgdc:Bounds x="256" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
