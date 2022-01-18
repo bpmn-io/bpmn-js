@@ -131,20 +131,6 @@ describe('features/modeling - update label', function() {
   ));
 
 
-  it('should change name of task', inject(function(modeling, elementRegistry) {
-
-    // given
-    var task_1 = elementRegistry.get('Task_1');
-
-    // when
-    modeling.updateLabel(task_1, 'foo');
-
-    // then
-    expect(task_1.businessObject.name).to.equal('foo');
-    expect(task_1.label).to.be.undefined;
-  }));
-
-
   it('should change text annotation text and bounds', inject(
     function(modeling, elementRegistry) {
 
@@ -233,5 +219,37 @@ describe('features/modeling - update label', function() {
     // then
     expect(element).to.have.bounds(newBounds);
   }));
+
+
+  describe('embedded labels', function() {
+
+    it('should change name of task', inject(function(modeling, elementRegistry) {
+
+      // given
+      var task_1 = elementRegistry.get('Task_1');
+
+      // when
+      modeling.updateLabel(task_1, 'foo');
+
+      // then
+      expect(task_1.businessObject.name).to.equal('foo');
+      expect(task_1.di.label).to.exist;
+    }));
+
+
+    it('should delete label of task', inject(function(modeling, elementRegistry) {
+
+      // given
+      var task_2 = elementRegistry.get('Task_2');
+
+      // when
+      modeling.updateLabel(task_2, '');
+
+      // then
+      expect(task_2.businessObject.name).to.equal('');
+      expect(task_2.di.label).not.to.exist;
+    }));
+
+  });
 
 });
