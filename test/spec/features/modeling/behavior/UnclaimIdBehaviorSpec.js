@@ -82,4 +82,21 @@ describe('features/modeling - unclaim id', function() {
     expect(moddle.ids.assigned('Collaboration_1')).to.be.false;
   }));
 
+
+  describe('morphing', function() {
+    var simpleXML = require('../../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(simpleXML, { modules: testModules }));
+
+    it('should keep ID of root', inject(function(moddle, modeling) {
+
+      // when
+      modeling.makeCollaboration();
+
+      // then
+      expect(moddle.ids.assigned('Process_1')).to.exist;
+    }));
+
+  });
+
 });

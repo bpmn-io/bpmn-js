@@ -463,6 +463,35 @@ describe('features/copy-paste', function() {
         }
       ));
 
+
+      it('should wire DIs correctly', inject(
+        function(canvas, copyPaste, elementRegistry) {
+
+          // given
+          var subprcoess = elementRegistry.get('SubProcess_1'),
+              rootElement = canvas.getRootElement();
+
+          copyPaste.copy(subprcoess);
+
+          // when
+          var elements = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 300,
+              y: 300
+            }
+          });
+
+          // then
+          var subprocess = elements[0];
+          var di = subprocess.di;
+
+          expect(di).to.exist;
+          expect(di.bpmnElement).to.exist;
+          expect(di.bpmnElement).to.equal(subprocess.businessObject);
+        }
+      ));
+
     });
 
 

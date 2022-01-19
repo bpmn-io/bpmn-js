@@ -116,6 +116,16 @@ describe('features - bpmn-factory', function() {
         })
       );
     });
+
+
+    it('should claim provided id', inject(function(bpmnFactory, moddle) {
+      var task = bpmnFactory.create('bpmn:Task', { id: 'foo' });
+
+      expect(task).to.exist;
+      expect(task.id).to.eql('foo');
+      expect(moddle.ids.assigned('foo')).to.exist;
+    }));
+
   });
 
 
