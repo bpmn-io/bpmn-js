@@ -29,7 +29,7 @@ describe('features/modeling - create participant', function() {
 
   describe('process', function() {
 
-    describe('should turn process into collaboration', function() {
+    describe('turning process into collaboration', function() {
 
       var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
 
@@ -89,6 +89,7 @@ describe('features/modeling - create participant', function() {
           // then
           expect(participantBo.$parent).to.equal(collaborationBo);
           expect(participantBo.processRef).to.equal(processBo);
+          expect(participantBo.processRef.id).to.equal(processBo.id);
 
           expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
           expect(collaborationBo.$parent).to.equal(processBo.$parent);
@@ -112,6 +113,26 @@ describe('features/modeling - create participant', function() {
           expect(collaborationBo.participants).not.to.include(participantBo);
 
           expect(processDi.$parent).to.equal(diRoot);
+        }));
+
+
+        it('redo', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(participantBo.$parent).to.equal(collaborationBo);
+          expect(participantBo.processRef).to.equal(processBo);
+          expect(participantBo.processRef.id).to.equal(processBo.id);
+
+          expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
+          expect(collaborationBo.$parent).to.equal(processBo.$parent);
+          expect(collaborationBo.participants).to.include(participantBo);
+
+          expect(participantDi.$parent).to.equal(collaborationDi);
+          expect(collaborationDi.$parent).to.equal(diRoot);
         }));
 
       });
@@ -168,12 +189,35 @@ describe('features/modeling - create participant', function() {
           expect(processDi.$parent).to.equal(diRoot);
         }));
 
+
+        it('redo', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(participantBo.$parent).to.equal(collaborationBo);
+          expect(participantBo.processRef).to.equal(processBo);
+
+          expect(participant2Bo.$parent).to.equal(collaborationBo);
+          expect(participant2Bo.processRef).not.to.equal(processBo);
+
+          expect(collaborationBo.$instanceOf('bpmn:Collaboration')).to.be.true;
+          expect(collaborationBo.$parent).to.equal(processBo.$parent);
+          expect(collaborationBo.participants).to.include(participantBo);
+
+          expect(participantDi.$parent).to.equal(collaborationDi);
+          expect(participant2Di.$parent).to.equal(collaborationDi);
+          expect(collaborationDi.$parent).to.equal(diRoot);
+        }));
+
       });
 
     });
 
 
-    describe('should move existing elements', function() {
+    describe('moving process children', function() {
 
       var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process.bpmn');
 
