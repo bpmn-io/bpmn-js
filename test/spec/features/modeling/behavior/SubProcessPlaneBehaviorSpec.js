@@ -262,6 +262,53 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   });
 
+
+  describe('update', function() {
+
+    var multipleDiagramXML = require('./SubProcessBehavior.multiple-planes.bpmn');
+
+    beforeEach(bootstrapModeler(multipleDiagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        replaceModule
+      ]
+    }));
+
+
+    it('should update plane id when primary shape is changed',
+      inject(function(modeling, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_2'),
+            plane = elementRegistry.get('SubProcess_2_plane');
+
+        // when
+        modeling.updateProperties(subProcess, { id: 'new_name' });
+
+        // then
+        expect(subProcess.id).to.equal('new_name');
+        expect(plane.id).to.equal('new_name_plane');
+      }));
+
+
+    it('should update primary shape id when plane is changed',
+      inject(function(modeling, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_2'),
+            plane = elementRegistry.get('SubProcess_2_plane');
+
+        // when
+        modeling.updateProperties(plane, { id: 'new_name' });
+
+        // then
+        expect(subProcess.id).to.equal('new_name');
+        expect(plane.id).to.equal('new_name_plane');
+      }));
+
+  });
+
 });
 
 
