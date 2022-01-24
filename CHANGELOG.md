@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.9.1
+
+* `FIX`: re-use process for redo of first participant ([#1439](https://github.com/bpmn-io/bpmn-js/issues/1439))
+* `FIX`: ensure IDs are claimed when used ([#1555](https://github.com/bpmn-io/bpmn-js/issues/1555))
+* `FIX`: prevent morphing data stores outside participants ([#1508](https://github.com/bpmn-io/bpmn-js/issues/1508))
+
 ## 8.9.0
 
 * `FEAT`: select newly created sub-process ([`6214772b`](https://github.com/bpmn-io/bpmn-js/commit/6214772b8519cb82f61c4867b16c112bc6344922))
