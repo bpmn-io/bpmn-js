@@ -671,8 +671,13 @@ describe('draw - bpmn renderer', function() {
     it('should expose helpers', inject(function(bpmnRenderer) {
 
       // then
-      expect(bpmnRenderer._drawPath).to.be.a('function');
 
+      // unsafe to use render APIs
+      expect(bpmnRenderer._drawPath).to.be.a('function');
+      expect(bpmnRenderer._renderer).to.be.a('function');
+
+      // very unsafe to use internal state
+      expect(bpmnRenderer.handlers).to.exist;
     }));
 
   });
