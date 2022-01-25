@@ -6,7 +6,11 @@ import {
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 import replaceModule from 'lib/features/replace';
+import bpmnCopyPasteModule from 'lib/features/copy-paste';
+import copyPasteModule from 'diagram-js/lib/features/copy-paste';
+
 import { is } from 'lib/util/ModelUtil';
+import { keys } from 'min-dash';
 
 describe('features/modeling/behavior - subprocess planes', function() {
 
@@ -56,6 +60,31 @@ describe('features/modeling/behavior - subprocess planes', function() {
       var diagrams = bpmnjs.getDefinitions().diagrams;
       expect(diagrams).to.have.length(1);
       expect(canvas.findRoot(planeId(subProcess))).to.not.exist;
+    }));
+
+
+    it('should move children to plane for collapsed subprocess', inject(function(elementFactory, modeling, canvas, bpmnjs) {
+
+      // given
+      var subProcess = elementFactory.createShape({
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      });
+
+      var child = elementFactory.createShape({
+        type: 'bpmn:Task',
+        parent: subProcess
+      });
+
+      // when
+      modeling.createElements([subProcess, child], { x: 300, y: 300 }, canvas.getRootElement());
+
+      // then
+      var diagrams = bpmnjs.getDefinitions().diagrams;
+      var newPlane = canvas.findRoot(planeId(subProcess));
+      expect(diagrams.length).to.equal(2);
+      expect(newPlane).to.exist;
+      expect(child.parent).to.equal(newPlane);
     }));
 
 
@@ -306,6 +335,69 @@ describe('features/modeling/behavior - subprocess planes', function() {
         expect(subProcess.id).to.equal('new_name');
         expect(plane.id).to.equal('new_name_plane');
       }));
+
+  });
+
+
+  describe('copy/paste', function() {
+
+    var copyXML = require('./SubProcessBehavior.copy-paste.bpmn');
+
+    beforeEach(bootstrapModeler(copyXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        bpmnCopyPasteModule,
+        copyPasteModule
+      ]
+    }));
+
+
+    it('should copy collapsed sub process', inject(function(copyPaste, elementRegistry) {
+
+      var subprcoess = elementRegistry.get('SubProcess_3');
+
+
+      // when
+      var tree = copyPaste.copy([subprcoess]);
+
+      // then
+      expect(keys(tree)).to.have.length(3);
+
+
+      expect(tree[0]).to.have.length(1);
+      expect(tree[1]).to.have.length(3);
+      expect(tree[2]).to.have.length(12);
+    }));
+
+
+    it('should paste subprocess plane', inject(
+      function(canvas, copyPaste, elementRegistry) {
+
+        // given
+        var subprcoess = elementRegistry.get('SubProcess_3'),
+            rootElement = canvas.getRootElement();
+
+        copyPaste.copy(subprcoess);
+
+        // when
+        var elements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 300,
+            y: 300
+          }
+        });
+
+
+        // then
+        var subprocess = elements[0];
+        var newRoot = canvas.findRoot(planeId(subprocess));
+
+        expect(newRoot).to.exist;
+        expect(newRoot.children).to.have.length(6);
+      }
+    ));
 
   });
 
