@@ -5,10 +5,12 @@ import {
 
 import { getDi } from 'lib/util/ModelUtil';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import { pick } from 'min-dash';
 
-var testModules = [ modelingModule, coreModule ];
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
+
+var testModules = [ coreModule, modelingModule ];
 
 
 describe('features - bpmn-updater', function() {
@@ -204,6 +206,79 @@ describe('features - bpmn-updater', function() {
         expect(diLabel.bounds).to.exist;
       }
     ));
+
+  });
+
+
+  describe('update embedded label bounds', function() {
+
+    var diagramXML = require('./BpmnUpdater.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var bounds,
+        di;
+
+    beforeEach(inject(function(elementRegistry, modeling) {
+
+      // given
+      var task = elementRegistry.get('Task_3');
+
+      di = getDi(task);
+
+      bounds = pick(di.get('label').get('bounds'), [ 'x', 'y', 'width', 'height' ]);
+
+      // when
+      modeling.moveShape(task, {
+        x: 100,
+        y: 100
+      });
+    }));
+
+
+    it('<do>', function() {
+
+      // then
+      expect(di.get('label').get('bounds')).to.include({
+        x: bounds.x + 100,
+        y: bounds.y + 100,
+        width: bounds.width,
+        height: bounds.height
+      });
+    });
+
+
+    it('<undo>', inject(function(commandStack) {
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(di.get('label').get('bounds')).to.include({
+        x: bounds.x,
+        y: bounds.y,
+        width: bounds.width,
+        height: bounds.height
+      });
+    }));
+
+
+    it('<redo>', inject(function(commandStack) {
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(di.get('label').get('bounds')).to.include({
+        x: bounds.x + 100,
+        y: bounds.y + 100,
+        width: bounds.width,
+        height: bounds.height
+      });
+    }));
 
   });
 
