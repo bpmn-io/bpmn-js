@@ -77,7 +77,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       });
 
       // when
-      modeling.createElements([subProcess, child], { x: 300, y: 300 }, canvas.getRootElement());
+      modeling.createElements([ subProcess, child ], { x: 300, y: 300 }, canvas.getRootElement());
 
       // then
       var diagrams = bpmnjs.getDefinitions().diagrams;
@@ -359,15 +359,15 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
 
       // when
-      var tree = copyPaste.copy([subprcoess]);
+      var tree = copyPaste.copy([ subprcoess ]);
 
       // then
       expect(keys(tree)).to.have.length(3);
 
 
-      expect(tree[0]).to.have.length(1);
-      expect(tree[1]).to.have.length(3);
-      expect(tree[2]).to.have.length(12);
+      expect(tree[ 0 ]).to.have.length(1);
+      expect(tree[ 1 ]).to.have.length(3);
+      expect(tree[ 2 ]).to.have.length(12);
     }));
 
 
