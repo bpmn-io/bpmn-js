@@ -20,7 +20,7 @@ describe('features - drilldown', function() {
 
   beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
-  describe('Navigation - Collaboration', function() {
+  describe('navigation - collaboration', function() {
 
     var process, participant;
 
@@ -85,7 +85,7 @@ describe('features - drilldown', function() {
     );
 
 
-    it('should remember scroll and zoom after morph', inject(function(canvas, modeling) {
+    it('should remember scroll and zoom after switching planes', inject(function(canvas, modeling) {
 
       // given
       canvas.scroll({ dx: 500, dy: 500 });
@@ -109,7 +109,7 @@ describe('features - drilldown', function() {
   });
 
 
-  describe('Breadcrumbs - Name changes', function() {
+  describe('breadcrumbs - name changes', function() {
 
     it('should update on plane name change',
       inject(function(canvas, modeling) {
