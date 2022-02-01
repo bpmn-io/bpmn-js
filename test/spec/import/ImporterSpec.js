@@ -788,7 +788,7 @@ describe('import - Importer', function() {
       it('should import collapsed sub process', function() {
 
         // given
-        var xml = require('./multiple-nestes-processes.bpmn');
+        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
 
         var selectedDiagram = 'BpmnDiagram_1';
 
@@ -817,7 +817,7 @@ describe('import - Importer', function() {
       it('should import and show collapsed sub process', function() {
 
         // given
-        var xml = require('./multiple-nestes-processes.bpmn');
+        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
 
         var selectedDiagram = 'SubProcessDiagram_1';
 
@@ -846,7 +846,7 @@ describe('import - Importer', function() {
       it('should import first bpmndi:BPMNDiagram when importing collapsed sub process', function() {
 
         // given
-        var xml = require('./multiple-nestes-processes.bpmn');
+        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
 
         var selectedDiagram = 'BpmnDiagram_2';
 
@@ -875,7 +875,7 @@ describe('import - Importer', function() {
       it('should import specified bpmndi:BPMNDiagram when importing collapsed sub process', function() {
 
         // given
-        var xml = require('./multiple-nestes-processes.bpmn');
+        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
 
         var selectedDiagram = 'SubProcess_2_diagram_B';
 

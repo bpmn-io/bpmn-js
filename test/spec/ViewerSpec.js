@@ -406,6 +406,13 @@ describe('Viewer', function() {
       return verifyDrilldown(xml);
     });
 
+
+    it('should allow drill down into multi-di collapsed sub-process', function() {
+      var xml = require('../fixtures/bpmn/multiple-nested-processes.bpmn');
+
+      return verifyDrilldown(xml);
+    });
+
   });
 
 
