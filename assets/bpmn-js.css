@@ -80,7 +80,7 @@
   height: 1em;
 }
 
-.bjs-breadcrumbs .bpmnjs-crumb {
+.bjs-breadcrumbs .bjs-crumb {
   display: inline-block;
   max-width: 200px;
   overflow: hidden;
