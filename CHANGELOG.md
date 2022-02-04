@@ -7,6 +7,16 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.0-alpha.1
+
+* `FEAT`: support modeling of collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
+* `FIX`: create di for embedded labels ([#1579](https://github.com/bpmn-io/bpmn-js/pull/1579))
+* `CHORE`: bump to `diagram-js@8.1.1`
+
+### Breaking Changes
+
+* Reworked `viewer.open` behavior for single planes. ([#1576](https://github.com/bpmn-io/bpmn-js/pull/1576))
+
 ## 9.0.0-alpha.0
 
 * `FEAT`: support drilldown into collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
@@ -15,6 +25,12 @@ ___Note:__ Yet to be released changes appear here._
 
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 * Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
+* Added `bpmn-js.css`, which is required to display drilldown overlays correctly.
+
+## 8.9.1
+* `FIX`: re-use process for redo of first participant ([#1439](https://github.com/bpmn-io/bpmn-js/issues/1439))
+* `FIX`: ensure IDs are claimed when used ([#1555](https://github.com/bpmn-io/bpmn-js/issues/1555))
+* `FIX`: prevent morphing data stores outside participants ([#1508](https://github.com/bpmn-io/bpmn-js/issues/1508))
 
 ## 8.9.0
 
