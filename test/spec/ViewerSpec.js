@@ -1432,6 +1432,9 @@ describe('Viewer', function() {
       expect(svg.indexOf('<svg width="100%" height="100%">')).to.equal(-1);
       expect(svg.indexOf('<g class="viewport"')).to.equal(-1);
 
+      // expect svg to not be empty
+      expect(svg.indexOf('<g')).not.to.equal(-1);
+
       var parser = new DOMParser();
       var svgNode = parser.parseFromString(svg, 'image/svg+xml');
 
