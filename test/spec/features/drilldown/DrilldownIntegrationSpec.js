@@ -151,6 +151,27 @@ describe('features - drilldown', function() {
       })
     );
 
+
+    it('should update on process name change',
+      inject(function(canvas, elementRegistry, modeling) {
+
+        // given
+        canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+        var shape = elementRegistry.get('rootProcess');
+
+        // when
+        modeling.updateProperties(shape, { name: 'new name' });
+
+        // then
+        expectBreadcrumbs([
+          'new name',
+          'Collapsed Process',
+          'Expanded Process',
+          'Collapsed Process 2'
+        ]);
+      })
+    );
+
   });
 
 });
