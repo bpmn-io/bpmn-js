@@ -336,6 +336,27 @@ describe('features/modeling/behavior - subprocess planes', function() {
         expect(plane.id).to.equal('new_name_plane');
       }));
 
+
+    it('should rerender primary shape name when plane is changed',
+      inject(function(modeling, elementRegistry, eventBus) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_2'),
+            plane = elementRegistry.get('SubProcess_2_plane');
+
+        var changedSpy = sinon.spy();
+
+        eventBus.on('element.changed', 5000, changedSpy);
+
+        // when
+        modeling.updateProperties(plane, { name: 'new name' });
+
+        // then
+        expect(changedSpy).to.have.been.calledTwice;
+        expect(changedSpy.secondCall.args[0].element).to.eql(subProcess);
+      })
+    );
+
   });
 
 
