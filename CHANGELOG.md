@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.0-alpha.2
+
+* `FIX`: use active plane for svg export ([#1592](https://github.com/bpmn-io/bpmn-js/issues/1592))
+* `FIX`: prevent infinite loop on root property change ([#1593](https://github.com/bpmn-io/bpmn-js/pull/1593))
 ## 9.0.0-alpha.1
 
 * `FEAT`: support modeling of collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
