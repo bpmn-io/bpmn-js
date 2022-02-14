@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-0fcc2144-457b-4505-9e44-ff673663e3bc" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="3.0.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="my group" />
+  </category>
+  <collaboration id="Collaboration_1">
+    <participant id="Participant" processRef="Process_1" />
+  </collaboration>
+  <process id="Process_1" processType="None" isExecutable="false">
+    <subProcess id="Activity_0cijtmw">
+      <subProcess id="SubProcess" />
+      <task id="Task" />
+      <startEvent id="StartEvent" />
+      <group id="Group" categoryValueRef="CategoryValue_1" />
+    </subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant" isHorizontal="true">
+        <omgdc:Bounds x="156" y="118" width="304" height="172" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cijtmw_di" bpmnElement="Activity_0cijtmw" isExpanded="false">
+        <omgdc:Bounds x="270" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_144105t">
+    <bpmndi:BPMNPlane id="BPMNPlane_0njyhgb" bpmnElement="Activity_0cijtmw">
+      <bpmndi:BPMNShape id="SubProcess_02cid6e_di" bpmnElement="SubProcess" isExpanded="true">
+        <omgdc:Bounds x="428" y="160" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0nb7h9d_di" bpmnElement="Task">
+        <omgdc:Bounds x="288" y="279" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0yve8vf_di" bpmnElement="StartEvent">
+        <omgdc:Bounds x="180" y="301" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1di" bpmnElement="Group">
+        <omgdc:Bounds x="425" y="106" width="270" height="387" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="491" y="108" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

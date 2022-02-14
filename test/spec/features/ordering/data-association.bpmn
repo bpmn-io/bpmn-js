@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-0fcc2144-457b-4505-9e44-ff673663e3bc" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="3.0.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <collaboration id="Collaboration_1">
+    <participant id="Participant" processRef="Process_1" />
+  </collaboration>
+  <process id="Process_1" processType="None" isExecutable="false">
+    <subProcess id="collapsedSubProcess">
+      <task id="Task_2" />
+      <dataObjectReference id="DataReference_2" dataObjectRef="DataObject_0pqzs5u" />
+      <dataObject id="DataObject_0pqzs5u" />
+    </subProcess>
+    <dataStoreReference id="DataStore" />
+    <subProcess id="SubProcess_1">
+      <dataObjectReference id="DataReference_1" dataObjectRef="DataObject_0ltvnwb" />
+      <dataObject id="DataObject_0ltvnwb" />
+      <task id="Task_1" />
+    </subProcess>
+    <subProcess id="SubProcess_2" />
+  </process>
+  <category id="Category_1" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Participant" isHorizontal="true">
+        <omgdc:Bounds x="220" y="50" width="640" height="240" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="collapsedSubProcess_di" bpmnElement="collapsedSubProcess" isExpanded="false">
+        <omgdc:Bounds x="270" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <omgdc:Bounds x="400" y="70" width="290" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataReference_1_di" bpmnElement="DataReference_1">
+        <omgdc:Bounds x="612" y="195" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <omgdc:Bounds x="480" y="110" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_2_di" bpmnElement="SubProcess_2" isExpanded="true">
+        <omgdc:Bounds x="700" y="70" width="140" height="140" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStore_di" bpmnElement="DataStore">
+        <omgdc:Bounds x="410" y="345" width="50" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_144105t">
+    <bpmndi:BPMNPlane id="BPMNPlane_0njyhgb" bpmnElement="collapsedSubProcess">
+      <bpmndi:BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <omgdc:Bounds x="200" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataReference_2_di" bpmnElement="DataReference_2">
+        <omgdc:Bounds x="332" y="265" width="36" height="50" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
