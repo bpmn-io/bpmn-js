@@ -305,36 +305,118 @@ describe('features/modeling/behavior - subprocess planes', function() {
     }));
 
 
-    it('should update plane id when primary shape is changed',
-      inject(function(modeling, elementRegistry) {
+    describe('do', function() {
 
-        // given
-        var subProcess = elementRegistry.get('SubProcess_2'),
-            plane = elementRegistry.get('SubProcess_2_plane');
+      it('should update plane id when primary shape is changed',
+        inject(function(modeling, elementRegistry) {
 
-        // when
-        modeling.updateProperties(subProcess, { id: 'new_name' });
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
 
-        // then
-        expect(subProcess.id).to.equal('new_name');
-        expect(plane.id).to.equal('new_name_plane');
-      }));
+          // when
+          modeling.updateProperties(subProcess, { id: 'new_name' });
+
+          // then
+          expect(subProcess.id).to.equal('new_name');
+          expect(plane.id).to.equal('new_name_plane');
+        }));
 
 
-    it('should update primary shape id when plane is changed',
-      inject(function(modeling, elementRegistry) {
+      it('should update primary shape id when plane is changed',
+        inject(function(modeling, elementRegistry) {
 
-        // given
-        var subProcess = elementRegistry.get('SubProcess_2'),
-            plane = elementRegistry.get('SubProcess_2_plane');
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
 
-        // when
-        modeling.updateProperties(plane, { id: 'new_name' });
+          // when
+          modeling.updateProperties(plane, { id: 'new_name' });
 
-        // then
-        expect(subProcess.id).to.equal('new_name');
-        expect(plane.id).to.equal('new_name_plane');
-      }));
+          // then
+          expect(subProcess.id).to.equal('new_name');
+          expect(plane.id).to.equal('new_name_plane');
+        }));
+
+    });
+
+
+    describe('undo', function() {
+
+      it('should update plane id when primary shape is changed',
+        inject(function(modeling, elementRegistry, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
+
+          // when
+          modeling.updateProperties(subProcess, { id: 'new_name' });
+          commandStack.undo();
+
+          // then
+          expect(subProcess.id).to.equal('SubProcess_2');
+          expect(plane.id).to.equal('SubProcess_2_plane');
+        }));
+
+
+      it('should update primary shape id when plane is changed',
+        inject(function(modeling, elementRegistry, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
+
+          // when
+          modeling.updateProperties(plane, { id: 'new_name' });
+          commandStack.undo();
+
+          // then
+          expect(subProcess.id).to.equal('SubProcess_2');
+          expect(plane.id).to.equal('SubProcess_2_plane');
+        }));
+
+    });
+
+
+    describe('redo', function() {
+
+      it('should update plane id when primary shape is changed',
+        inject(function(modeling, elementRegistry, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
+
+          // when
+          modeling.updateProperties(subProcess, { id: 'new_name' });
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(subProcess.id).to.equal('new_name');
+          expect(plane.id).to.equal('new_name_plane');
+        }));
+
+
+      it('should update primary shape id when plane is changed',
+        inject(function(modeling, elementRegistry, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_2'),
+              plane = elementRegistry.get('SubProcess_2_plane');
+
+          // when
+          modeling.updateProperties(plane, { id: 'new_name' });
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(subProcess.id).to.equal('new_name');
+          expect(plane.id).to.equal('new_name_plane');
+        }));
+
+    });
 
 
     it('should rerender primary shape name when plane is changed',
