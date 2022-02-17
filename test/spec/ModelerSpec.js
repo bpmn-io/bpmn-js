@@ -744,6 +744,31 @@ describe('Modeler', function() {
       return verifyDrilldown(xml);
     });
 
+
+    it('should allow creation of groups in collapsed subprocesses', function() {
+      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+
+      return createModeler(xml).then(function() {
+
+        // given
+        var elementRegistry = modeler.get('elementRegistry'),
+            elementFactory = modeler.get('elementFactory'),
+            modeling = modeler.get('modeling');
+
+        var collapsedProcessPlane = elementRegistry.get('collapsedProcess_plane'),
+            groupElement = elementFactory.createShape({ type: 'bpmn:Group' });
+
+        // when
+        var group = modeling.createShape(groupElement, { x: 100, y: 100 }, collapsedProcessPlane);
+
+        // then
+        expect(group).to.exist;
+        expect(group.parent).to.equal(collapsedProcessPlane);
+
+      });
+
+    });
+
   });
 
 
