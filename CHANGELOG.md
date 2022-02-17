@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 8.10.0
+
+* `CHORE`: provide `ModelUtil#isAny` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+* `CHORE`: provide `ModelUtil#getDi` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+
 ## 8.9.1
 
 * `FIX`: re-use process for redo of first participant ([#1439](https://github.com/bpmn-io/bpmn-js/issues/1439))
