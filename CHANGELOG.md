@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FIX`: use active plane for svg export ([#1592](https://github.com/bpmn-io/bpmn-js/issues/1592))
 * `FIX`: prevent infinite loop on root property change ([#1593](https://github.com/bpmn-io/bpmn-js/pull/1593))
+
 ## 9.0.0-alpha.1
 
 * `FEAT`: support modeling of collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
@@ -25,13 +26,20 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: support drilldown into collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
 * `CHORE`: bump to `diagram-js@8.0.1`
+
 ### Breaking Changes
 
 * Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 * Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
 * Added `bpmn-js.css`, which is required to display drilldown overlays correctly.
 
+## 8.10.0
+
+* `CHORE`: provide `ModelUtil#isAny` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+* `CHORE`: provide `ModelUtil#getDi` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+
 ## 8.9.1
+
 * `FIX`: re-use process for redo of first participant ([#1439](https://github.com/bpmn-io/bpmn-js/issues/1439))
 * `FIX`: ensure IDs are claimed when used ([#1555](https://github.com/bpmn-io/bpmn-js/issues/1555))
 * `FIX`: prevent morphing data stores outside participants ([#1508](https://github.com/bpmn-io/bpmn-js/issues/1508))
