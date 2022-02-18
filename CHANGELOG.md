@@ -7,6 +7,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.0
+
+* `FEAT`: update umbedded label bounds when shape is moved ([#1586](https://github.com/bpmn-io/bpmn-js/pull/1586))
+* `FIX`: ensure plane ID change is undoable ([#1600](https://github.com/bpmn-io/bpmn-js/pull/1600))
+* `FIX`: allow groups and associations to be created in subprocesses ([#1599](https://github.com/bpmn-io/bpmn-js/pull/1599))
+* `CHORE`: expose `BpmnRenderer` extension points ([#1585](https://github.com/bpmn-io/bpmn-js/pull/1585))
+
 ## 9.0.0-alpha.2
 
 * `FIX`: use active plane for svg export ([#1592](https://github.com/bpmn-io/bpmn-js/issues/1592))
