@@ -23,20 +23,19 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: support DIs without associated business object ([#1605](https://github.com/bpmn-io/bpmn-js/pull/1605))
 * `DEPS`: bump to `diagram-js@8.1.2` ([bdf9cf3](https://github.com/bpmn-io/bpmn-js/commit/bdf9cf3e752254a4c8172031d8a493955a9fca9c))
 
-
 ## 9.0.0
 
 * `FEAT`: support drilldown and modeling of collapsed subprocesses ([#1443](https://github.com/bpmn-io/bpmn-js/issues/1443))
 * `FEAT`: update embedded label bounds when shape is moved ([#1586](https://github.com/bpmn-io/bpmn-js/pull/1586))
 * `FIX`: create di for embedded labels ([#1579](https://github.com/bpmn-io/bpmn-js/pull/1579))
 * `CHORE`: expose `BpmnRenderer` extension points ([#1585](https://github.com/bpmn-io/bpmn-js/pull/1585))
-* `CHORE`: bump to `diagram-js@8.1.1`
+* `DEPS`: bump to `diagram-js@8.1.1`
 
 ### Breaking Changes
 
-* Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject`. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
-* Reworked `viewer.open` behavior for single planes. ([#1576](https://github.com/bpmn-io/bpmn-js/pull/1576))
-* Reworked import and `BpmnFactory` APIs. [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472)
+* Reworked the link of elements to bpmn DIs. You must access the `di` directly from the diagram element instead of the `businessObject` [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472).
+* Reworked `viewer.open` behavior for single planes ([#1576](https://github.com/bpmn-io/bpmn-js/pull/1576)).
+* Reworked import and `BpmnFactory` APIs [#1472](https://github.com/bpmn-io/bpmn-js/issues/1472).
 * Added `bpmn-js.css`, which is required to display drilldown overlays correctly.
 
 ## 8.10.0
