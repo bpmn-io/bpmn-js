@@ -8,6 +8,7 @@
     <categoryValue id="CategoryValue_3" value="Value 3" />
   </category>
   <process id="Process_1" isExecutable="false">
+    <subProcess id="Subprocess_1" />
     <group id="Group_1" categoryValueRef="CategoryValue_1" />
     <group id="Group_2" categoryValueRef="CategoryValue_1" />
     <group id="Group_3" categoryValueRef="CategoryValue_2" />
@@ -15,6 +16,9 @@
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Activity_0zvwgk9_di" bpmnElement="Subprocess_1">
+        <omgdc:Bounds x="160" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
         <omgdc:Bounds x="162" y="75" width="200" height="200" />
         <bpmndi:BPMNLabel>
@@ -31,5 +35,8 @@
         <omgdc:Bounds x="836" y="75" width="200" height="200" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1g3s90h">
+    <bpmndi:BPMNPlane id="BPMNPlane_1ezo7xu" bpmnElement="Subprocess_1" />
   </bpmndi:BPMNDiagram>
 </definitions>
