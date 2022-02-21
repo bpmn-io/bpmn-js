@@ -220,6 +220,47 @@ describe('features/modeling/behavior - groups', function() {
 
     });
 
+
+    it('should always create new Category in definitions',
+      inject(function(canvas, elementFactory, modeling, bpmnjs) {
+
+        // given
+        var group = elementFactory.createShape({ type: 'bpmn:Group' }),
+            root = canvas.findRoot('Subprocess_1_plane'),
+            rootParent = getBusinessObject(root).$parent,
+            definitions = bpmnjs._definitions;
+
+        canvas.setRootElement(root);
+
+        // when
+        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
+            categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
+            category = categoryValueRef.$parent;
+
+        // then
+        expect(categoryValueRef).to.exist;
+        expect(category).to.exist;
+
+        expectIncludedOrNot(
+          category.get('categoryValue'),
+          categoryValueRef,
+          true
+        );
+
+        expectIncludedOrNot(
+          definitions.get('rootElements'),
+          category,
+          true
+        );
+
+        expectIncludedOrNot(
+          rootParent.get('rootElements'),
+          category,
+          false
+        );
+
+      }));
+
   });
 
 
