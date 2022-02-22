@@ -40,7 +40,10 @@
   display: none;
   flex-wrap: wrap;
   align-items: center;
-  top: 10px;
+  top: 30px;
+  left: 30px;
+  padding: 0px;
+  margin: 0px;
   font-family: var(--breadcrumbs-font-family);
   font-size: 16px;
   line-height: normal;
@@ -51,11 +54,11 @@
 }
 
 .djs-palette-shown .bjs-breadcrumbs {
-  left: 50px;
+  left: 90px;
 }
 
 .djs-palette-shown.djs-palette-two-column .bjs-breadcrumbs {
-  left: 100px;
+  left: 140px;
 }
 
 .bjs-breadcrumbs li {
