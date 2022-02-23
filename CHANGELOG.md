@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.2
+
+* `FIX`: support modeling of groups in collapsed subporcesses ([#1606](https://github.com/bpmn-io/bpmn-js/issues/1606))
+* `FIX`: override default padding of breadcrumb element ([#1608](https://github.com/bpmn-io/bpmn-js/pull/1608))
 
 ## 9.0.1
 
