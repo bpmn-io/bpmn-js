@@ -14,11 +14,12 @@
         <bpmn:flowNodeRef>SubProcess_1</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="FOO BAR">
-        <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_08jn2xd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1fo1fvh</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_1</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SubProcess_2</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:ioSpecification>
@@ -66,6 +67,7 @@
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject_1rq8hb8" />
     <bpmn:dataObject id="DataObject_1rq8hb8" />
     <bpmn:dataStoreReference id="DataStoreReference_1" />
+    <bpmn:subProcess id="SubProcess_2" />
     <bpmn:association id="Association_0ckvfj2" sourceRef="SubProcess_1" targetRef="TextAnnotation_1" />
     <bpmn:group id="Group_1" categoryValueRef="CategoryValue_1" />
     <bpmn:group id="Group_2" />
@@ -83,6 +85,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1qi2aws_di" bpmnElement="Lane_1">
         <dc:Bounds x="190" y="372" width="570" height="227" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_194zznr_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="311" y="147" width="350" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_194zznr_di" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds x="311" y="147" width="350" height="200" />
@@ -210,5 +215,8 @@
         <dc:Bounds x="555" y="390" width="85" height="200" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_17fa1v0">
+    <bpmndi:BPMNPlane id="BPMNPlane_1yas56k" bpmnElement="SubProcess_2" />
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
