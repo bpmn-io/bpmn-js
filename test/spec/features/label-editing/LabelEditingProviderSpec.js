@@ -155,6 +155,34 @@ describe('features - label-editing', function() {
       }
     ));
 
+
+    it('should submit on root element changed', inject(
+      function(elementRegistry, directEditing, canvas, eventBus) {
+
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject,
+            newRoot = elementRegistry.get('SubProcess_2_plane');
+
+        // activate
+        eventBus.fire('element.dblclick', { element: shape });
+
+        var newName = 'new value';
+
+        // a <textarea /> element
+        var content = directEditing._textbox.content;
+
+        content.innerText = newName;
+
+        // when
+        canvas.setRootElement(newRoot);
+
+        // then
+        expect(directEditing.isActive()).to.be.false;
+        expect(task.name).to.equal(newName);
+      }
+    ));
+
   });
 
 
