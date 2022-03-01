@@ -26,6 +26,8 @@ echo setup bpmn-moddle
 cd $base/bpmn-moddle
 npm install
 
+npm run build
+
 
 echo setup bpmn-js
 
