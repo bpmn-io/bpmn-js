@@ -7,6 +7,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.0.3
+
+* `FIX`: submit direct editing result on drilldown ([#1609](https://github.com/bpmn-io/bpmn-js/issues/1609))
+* `DEPS`: bump to `diagram-js@8.2.0` ([2bac149](https://github.com/bpmn-io/bpmn-js/commit/2bac1495058601fec203c134b41efe5600e5fc97))
+
 ## 9.0.2
 
 * `FIX`: support modeling of groups in collapsed subporcesses ([#1606](https://github.com/bpmn-io/bpmn-js/issues/1606))
