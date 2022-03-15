@@ -60,15 +60,15 @@
       <bpmn2:startEvent id="StartEvent_3">
         <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
       </bpmn2:startEvent>
-      <bpmn2:task id="Task_2">
+      <bpmn2:task id="Task_2" name="internal label">
         <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
       </bpmn2:task>
-      <bpmn2:endEvent id="EndEvent_4">
+      <bpmn2:endEvent id="EndEvent_4" name="external label">
         <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="SequenceFlow_10" sourceRef="StartEvent_3" targetRef="Task_2" />
-      <bpmn2:sequenceFlow id="SequenceFlow_11" sourceRef="Task_2" targetRef="EndEvent_4" />
+      <bpmn2:sequenceFlow id="SequenceFlow_11" name="connection label" sourceRef="Task_2" targetRef="EndEvent_4" />
     </bpmn2:adHocSubProcess>
     <bpmn2:subProcess id="SubProcess_5">
       <bpmn2:startEvent id="StartEvent_6" />
@@ -150,7 +150,7 @@
         <di:waypoint x="625" y="437" />
         <di:waypoint x="683" y="437" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="609" y="412" width="90" height="20" />
+          <dc:Bounds x="614" y="419" width="80" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0gkhyqw_di" bpmnElement="SequenceFlow_10">
@@ -170,11 +170,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1y93al0_di" bpmnElement="Task_2">
         <dc:Bounds x="525" y="397" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1bmhzoz_di" bpmnElement="EndEvent_4">
         <dc:Bounds x="683" y="419" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="656" y="455" width="90" height="20" />
+          <dc:Bounds x="668" y="462" width="66" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_0qs6p1k_di" bpmnElement="SubProcess_5" isExpanded="false">

@@ -360,6 +360,30 @@ describe('features/modeling - collapse and expand elements', function() {
     );
 
 
+    it('moves all children to plane',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var expandedSubProcess = elementRegistry.get('SubProcess_2');
+        var originalChildren = expandedSubProcess.children.slice();
+
+        // when
+        bpmnReplace.replaceElement(expandedSubProcess,
+          {
+            type: 'bpmn:SubProcess',
+            isExpanded: false
+          }
+        );
+
+        // then
+        var plane = elementRegistry.get('SubProcess_2_plane');
+        originalChildren.forEach(function(c) {
+          expect(plane.children).to.include(c);
+        });
+      })
+    );
+
+
     describe('resize', function() {
 
       it('is centered and has default bounds',
