@@ -416,6 +416,18 @@ describe('features - drilldown', function() {
     }));
 
 
+    it('should import data associations on subprocess', inject(function(elementRegistry) {
+
+      // when
+      var dataInputAssociation = elementRegistry.get('DataInputAssociation_1');
+      var dataOutputAssociation = elementRegistry.get('DataOutputAssociation_1');
+
+      // then
+      expect(dataInputAssociation).to.exist;
+      expect(dataOutputAssociation).to.exist;
+    }));
+
+
     it('should move inlined elements to sensible position', inject(function(elementRegistry) {
 
       // when
