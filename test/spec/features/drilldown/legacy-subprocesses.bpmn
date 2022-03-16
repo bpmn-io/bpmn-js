@@ -3,6 +3,14 @@
   <bpmn:process id="Process_0vkcvif" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1" />
     <bpmn:subProcess id="inlineSubprocess">
+      <bpmn:property id="Property_0baelcu" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn:sourceRef>DataObjectReference_0kmm4fv</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0baelcu</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn:targetRef>DataObjectReference_0kmm4fv</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
       <bpmn:startEvent id="Event_0lrpy3a">
         <bpmn:outgoing>Flow_0obnxbt</bpmn:outgoing>
       </bpmn:startEvent>
@@ -18,15 +26,28 @@
       <bpmn:sequenceFlow id="Flow_1d6ajf7" sourceRef="inlineSubprocess_2" targetRef="Event_1ic2bhx" />
     </bpmn:subProcess>
     <bpmn:subProcess id="emptyProcess" />
+    <bpmn:dataObjectReference id="DataObjectReference_0kmm4fv" dataObjectRef="DataObject_0zfveu8" />
+    <bpmn:dataObject id="DataObject_0zfveu8" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0vkcvif">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="179" y="159" width="36" height="36" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_0kmm4fv_di" bpmnElement="DataObjectReference_0kmm4fv">
+        <dc:Bounds x="572" y="515" width="36" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="inlineSubprocess_di" bpmnElement="inlineSubprocess">
         <dc:Bounds x="220" y="50" width="720" height="380" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataInputAssociation_1_di" bpmnElement="DataInputAssociation_1">
+        <di:waypoint x="608" y="526" />
+        <di:waypoint x="730" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1_di" bpmnElement="DataOutputAssociation_1">
+        <di:waypoint x="425" y="430" />
+        <di:waypoint x="572" y="527" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1d6ajf7_di" bpmnElement="Flow_1d6ajf7">
         <di:waypoint x="740" y="240" />
         <di:waypoint x="782" y="240" />
