@@ -36,7 +36,7 @@ describe('Modeler', function() {
 
     clearBpmnJS();
 
-    modeler = new Modeler({
+    window.modeler = modeler = new Modeler({
       container: container,
       keyboard: {
         bindTo: document
@@ -54,7 +54,7 @@ describe('Modeler', function() {
 
 
   (singleStart ? it.only : it)('should import simple process', function() {
-    var xml = require('../fixtures/bpmn/simple.bpmn');
+    var xml = require('./SUPPORT-9786.bpmn');
     return createModeler(xml).then(function(result) {
 
       expect(result.error).not.to.exist;
