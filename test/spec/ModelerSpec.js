@@ -710,38 +710,44 @@ describe('Modeler', function() {
 
   describe('drill down', function() {
 
-    function verifyDrilldown(xml) {
+    function verifyDrilldown() {
 
-      return createModeler(xml).then(function() {
-        var drilldown = container.querySelector('.bjs-drilldown');
-        var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
-        var djsContainer = container.querySelector('.djs-container');
+      var drilldown = container.querySelector('.bjs-drilldown');
+      var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
+      var djsContainer = container.querySelector('.djs-container');
 
-        // assume
-        expect(drilldown).to.exist;
-        expect(breadcrumbs).to.exist;
-        expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.false;
+      // assume
+      expect(drilldown).to.exist;
+      expect(breadcrumbs).to.exist;
+      expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.false;
 
-        // when
-        drilldown.click();
+      // when
+      drilldown.click();
 
-        // then
-        expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.true;
-      });
-
+      // then
+      expect(djsContainer.classList.contains('bjs-breadcrumbs-shown')).to.be.true;
     }
 
     it('should allow drill down into collapsed sub-process', function() {
       var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+      return createModeler(xml).then(verifyDrilldown);
+    });
 
-      return verifyDrilldown(xml);
+
+    it('should allow drill down into collapsed sub-process after viewer.open', function() {
+      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
+      return createModeler(xml)
+        .then(function() {
+          return modeler.open('rootProcess_diagram');
+        })
+        .then(verifyDrilldown);
     });
 
 
     it('should allow drill down into legacy collapsed sub-process', function() {
       var xml = require('../fixtures/bpmn/collapsed-sub-process-legacy.bpmn');
 
-      return verifyDrilldown(xml);
+      return createModeler(xml).then(verifyDrilldown);
     });
 
 
