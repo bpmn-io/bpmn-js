@@ -160,7 +160,7 @@
     <sequenceFlow id="sid-3FAE72F2-4037-4CBA-8B89-01D7FC7FF3E3" sourceRef="parallelGateway_withoutContent" targetRef="sid-DA90DE99-58B0-4371-B71D-87A718ACB64D">
     </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="sid-cbeafa41-c891-415c-ab0d-3eb4a233f9ed">
+  <bpmndi:BPMNDiagram id="rootProcess_diagram">
     <bpmndi:BPMNPlane id="sid-5fb4720f-4b99-4727-8770-dd4166bcd5e4" bpmnElement="rootProcess">
       <bpmndi:BPMNEdge id="sid-3FAE72F2-4037-4CBA-8B89-01D7FC7FF3E3_gui" bpmnElement="sid-3FAE72F2-4037-4CBA-8B89-01D7FC7FF3E3">
         <omgdi:waypoint x="675" y="215" />
