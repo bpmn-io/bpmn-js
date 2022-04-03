@@ -16,9 +16,15 @@ git clone --depth=1 "https://$BPMN_IO_TOKEN@github.com/bpmn-io/bpmn.io.git" "$CL
 
 cd "$CLONE_DIR"
 
-echo "Updating toolkit version to $TAG on bpmn.io"
+PUBLISHED=`date +"%F %H:%M"`
 
-cat src/data/site.yml | tr "\r?\n" "\r" | sed -e "s#bpmnjs:\r  version: [^\r]*\r#bpmnjs:\r  version: $TAG\r#" | tr "\r" "\n" > src/data/site.yml_new
+echo "Updating toolkit version to version=$TAG, published=$PUBLISHED on bpmn.io"
+
+cat src/data/site.yml | \
+  tr "\r?\n" "\r" | \
+  sed -e "s#bpmnjs:\r  version: [^\r]*\r  published: [^\r]*\r#bpmnjs:\r  version: $TAG\r  published: $PUBLISHED\r#" | \
+  tr "\r" "\n" > src/data/site.yml_new
+
 mv -f src/data/site.yml_new src/data/site.yml
 
 if [[ "x$SKIP_COMMIT" = "x" ]]; then
