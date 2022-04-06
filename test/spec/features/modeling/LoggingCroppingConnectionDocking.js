@@ -4,7 +4,7 @@ import {
   getOrientation
 } from 'diagram-js/lib/layout/LayoutUtil';
 
-import inherits from 'inherits';
+import inherits from 'inherits-browser';
 
 
 export default function LoggingCroppingConnectionDocking(injector) {

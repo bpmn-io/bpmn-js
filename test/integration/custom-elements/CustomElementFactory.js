@@ -2,7 +2,7 @@ import {
   assign
 } from 'min-dash';
 
-import inherits from 'inherits';
+import inherits from 'inherits-browser';
 
 import BpmnElementFactory from 'lib/features/modeling/ElementFactory';
 

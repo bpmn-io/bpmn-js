@@ -83,7 +83,6 @@ module.exports = function(karma) {
       resolve: {
         mainFields: [
           'dev:module',
-          'browser',
           'module',
           'main'
         ],

@@ -97,13 +97,7 @@ function pgl(plugins=[], env='production') {
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)
     }),
-    nodeResolve({
-      mainFields: [
-        'browser',
-        'module',
-        'main'
-      ]
-    }),
+    nodeResolve(),
     commonjs(),
     json(),
     ...plugins
