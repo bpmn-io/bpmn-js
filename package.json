@@ -103,7 +103,7 @@
     "diagram-js": "^8.3.0",
     "diagram-js-direct-editing": "^1.6.3",
     "ids": "^1.0.0",
-    "inherits": "^2.0.4",
+    "inherits-browser": "0.0.1",
     "min-dash": "^3.5.2",
     "min-dom": "^3.2.0",
     "object-refs": "^0.3.0",

@@ -1,6 +1,6 @@
 import { forEach } from 'min-dash';
 
-import inherits from 'inherits';
+import inherits from 'inherits-browser';
 
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
