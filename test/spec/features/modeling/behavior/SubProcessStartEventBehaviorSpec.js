@@ -99,6 +99,56 @@ describe('features/modeling/behavior - subprocess start event', function() {
 
     });
 
+
+    describe('call activity -> expanded subprocess', function() {
+
+      it('should add start event child to subprocess', inject(
+        function(elementRegistry, bpmnReplace) {
+
+          // given
+          var callActivity = elementRegistry.get('CallActivity_1'),
+              expandedSubProcess,
+              startEvents;
+
+          // when
+          expandedSubProcess = bpmnReplace.replaceElement(callActivity, {
+            type: 'bpmn:SubProcess',
+            isExpanded: true
+          });
+
+          // then
+          startEvents = getChildStartEvents(expandedSubProcess);
+
+          expect(startEvents).to.have.length(1);
+        }
+      ));
+
+
+      it('should wire startEvent di correctly', inject(
+        function(elementRegistry, bpmnReplace) {
+
+          // given
+          var callActivity = elementRegistry.get('CallActivity_1'),
+              expandedSubProcess,
+              startEvent,
+              startEventDi;
+
+          // when
+          expandedSubProcess = bpmnReplace.replaceElement(callActivity, {
+            type: 'bpmn:SubProcess',
+            isExpanded: true
+          });
+
+          // then
+          startEvent = getChildStartEvents(expandedSubProcess)[0];
+          startEventDi = getDi(startEvent);
+
+          expect(startEventDi.$parent).to.exist;
+        }
+      ));
+
+    });
+
   });
 
 });
