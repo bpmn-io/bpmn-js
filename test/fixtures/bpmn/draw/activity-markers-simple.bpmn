@@ -2,10 +2,16 @@
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_opd4cBZiEeWgh4rX9Ivzlg" targetNamespace="http://activiti.org/bpmn" exporter="Camunda Modeler" exporterVersion="1.0.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="Process_1" isExecutable="false">
     <bpmn2:task id="ParallelTask" name="ParallelTask">
-      <bpmn2:multiInstanceLoopCharacteristics />
+      <bpmn2:multiInstanceLoopCharacteristics camunda:collection="foo" camunda:elementVariable="bar">
+        <bpmn2:loopCardinality xsi:type="bpmn2:tFormalExpression">foo</bpmn2:loopCardinality>
+        <bpmn2:completionCondition xsi:type="bpmn2:tFormalExpression">bar</bpmn2:completionCondition>
+      </bpmn2:multiInstanceLoopCharacteristics>
     </bpmn2:task>
     <bpmn2:task id="SequentialTask" name="SequentialTask">
-      <bpmn2:multiInstanceLoopCharacteristics isSequential="true" />
+      <bpmn2:multiInstanceLoopCharacteristics isSequential="true" camunda:collection="doo" camunda:elementVariable="bar">
+        <bpmn2:loopCardinality xsi:type="bpmn2:tFormalExpression">foo</bpmn2:loopCardinality>
+        <bpmn2:completionCondition xsi:type="bpmn2:tFormalExpression">bar</bpmn2:completionCondition>
+      </bpmn2:multiInstanceLoopCharacteristics>
     </bpmn2:task>
     <bpmn2:task id="LoopTask" name="LoopTask">
       <bpmn2:standardLoopCharacteristics />
