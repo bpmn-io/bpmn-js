@@ -247,7 +247,7 @@ describe('features/modeling - update label', function() {
 
       // then
       expect(task_2.businessObject.name).to.equal('');
-      expect(task_2.di.label).not.to.exist;
+      expect(task_2.di).not.to.have.property('label');
     }));
 
   });
