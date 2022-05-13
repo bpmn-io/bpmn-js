@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "9.0.3",
+  "version": "9.0.4",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "index.js",
   "files": [
