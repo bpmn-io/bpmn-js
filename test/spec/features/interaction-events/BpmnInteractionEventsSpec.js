@@ -25,6 +25,7 @@ var testModules = [
 
 var HIT_ALL_CLS = 'djs-hit-all';
 var HIT_CLICK_STROKE_CLS = 'djs-hit-click-stroke';
+var HIT_NO_MOVE_CLS = 'djs-hit-no-move';
 
 
 describe('features/interaction-events', function() {
@@ -42,7 +43,7 @@ describe('features/interaction-events', function() {
     }));
 
 
-    it('should create two hit zones per participant', inject(function(elementRegistry) {
+    it('should create THREE hit zones per participant', inject(function(elementRegistry) {
 
       // given
       var participant = elementRegistry.get('Participant_1');
@@ -50,10 +51,11 @@ describe('features/interaction-events', function() {
       // then
       expectToHaveChildren(HIT_ALL_CLS, 1, participant);
       expectToHaveChildren(HIT_CLICK_STROKE_CLS, 1, participant);
+      expectToHaveChildren(HIT_NO_MOVE_CLS, 1, participant);
     }));
 
 
-    it('should create two hit zones per lane', inject(function(elementRegistry) {
+    it('should create THREE hit zones per lane', inject(function(elementRegistry) {
 
       // given
       var lane = elementRegistry.get('Lane_1');
@@ -61,6 +63,7 @@ describe('features/interaction-events', function() {
       // then
       expectToHaveChildren(HIT_ALL_CLS, 1, lane);
       expectToHaveChildren(HIT_CLICK_STROKE_CLS, 1, lane);
+      expectToHaveChildren(HIT_NO_MOVE_CLS, 1, lane);
     }));
 
 
@@ -98,7 +101,7 @@ describe('features/interaction-events', function() {
     }));
 
 
-    it('should create two hit zones per sub process', inject(function(elementRegistry) {
+    it('should create THREE hit zones per sub process', inject(function(elementRegistry) {
 
       // given
       var subProcess = elementRegistry.get('SubProcess_1');
@@ -106,6 +109,7 @@ describe('features/interaction-events', function() {
       // then
       expectToHaveChildren(HIT_ALL_CLS, 1, subProcess);
       expectToHaveChildren(HIT_CLICK_STROKE_CLS, 1, subProcess);
+      expectToHaveChildren(HIT_NO_MOVE_CLS, 1, subProcess);
     }));
 
 
