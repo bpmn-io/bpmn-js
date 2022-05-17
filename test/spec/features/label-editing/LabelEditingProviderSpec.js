@@ -127,7 +127,7 @@ describe('features - label-editing', function() {
     ));
 
 
-    it('should submit on root element click', inject(
+    it('should complete on root element click', inject(
       function(elementRegistry, directEditing, canvas, eventBus) {
 
         // given
@@ -156,7 +156,7 @@ describe('features - label-editing', function() {
     ));
 
 
-    it('should submit on root element changed', inject(
+    it('should complete on root element changed', inject(
       function(elementRegistry, directEditing, canvas, eventBus) {
 
         // given
@@ -180,6 +180,26 @@ describe('features - label-editing', function() {
         // then
         expect(directEditing.isActive()).to.be.false;
         expect(task.name).to.equal(newName);
+      }
+    ));
+
+
+    it('should complete on selection changed', inject(
+      function(elementRegistry, directEditing, selection) {
+
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
+
+        directEditing.activate(shape);
+
+        directEditing._textbox.content.textContent = 'FOO BAR';
+
+        // when
+        selection.select();
+
+        // then
+        expect(task.name).to.equal('FOO BAR');
       }
     ));
 
