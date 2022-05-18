@@ -109,8 +109,9 @@
   },
   "dependencies": {
     "bpmn-moddle": "^8.0.0",
-    "diagram-js": "^12.2.0",
+    "css.escape": "^1.5.1",
     "diagram-js-direct-editing": "^2.0.0",
+    "diagram-js": "https://github.com/atlas-engine/diagram-js.git",
     "ids": "^1.0.3",
     "inherits-browser": "^0.1.0",
     "min-dash": "^4.0.0",
