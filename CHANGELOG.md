@@ -7,6 +7,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.1.0
+
+* `FEAT`: allow to select participant and subprocess via click on body ([#1646](https://github.com/bpmn-io/bpmn-js/pull/1646))
+* `FIX`: comply with strict style-src CSP ([#1625](https://github.com/bpmn-io/bpmn-js/issues/1625))
+* `FIX`: complete direct editing when selection changes ([#1648](https://github.com/bpmn-io/bpmn-js/pull/1648))
+* `DEPS`: update to `diagram-js@8.3.0`
+* `DEPS`: update to `min-dom@3.2.0`
+
 ## 9.0.4
 
 * `FIX`: remove `label` property on empty label ([#1637](https://github.com/bpmn-io/bpmn-js/issues/1637))
