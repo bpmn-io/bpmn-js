@@ -302,6 +302,17 @@ describe('features - context-pad', function() {
       ]);
     }));
 
+
+    it('should provide SequenceFlow entries', inject(function() {
+
+      expectContextPadEntries('SequenceFlow_1', [
+        'append.text-annotation',
+        'delete',
+        'replace',
+        '!connect'
+      ]);
+    }));
+
   });
 
 
