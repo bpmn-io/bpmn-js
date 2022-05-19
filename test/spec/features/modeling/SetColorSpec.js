@@ -152,13 +152,13 @@ describe('features/modeling - set color', function() {
           flowDi = getDi(flowShape);
 
       // when
-      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+      modeling.setColor(flowLabel, { stroke: 'YELLOW', fill: 'FUCHSIA' });
 
       // then
       expect(flowDi.get('border-color')).not.to.exist;
       expect(flowDi.get('background-color')).not.to.exist;
 
-      expect(flowDi.label.get('color')).to.eql(FUCHSIA_HEX);
+      expect(flowDi.label.get('color')).to.eql(YELLOW_HEX);
     }));
 
 
