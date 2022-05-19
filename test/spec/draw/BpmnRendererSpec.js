@@ -333,7 +333,7 @@ describe('draw - bpmn renderer', function() {
         var svg = canvas._svg;
         var markers = svg.querySelectorAll('marker');
 
-        expect(markers[0].id).to.match(/^sequenceflow-end-white-black-[A-Za-z0-9]+$/);
+        expect(markers[0].id).to.match(/^sequenceflow-end-white-hsl_225_10_15_-[A-Za-z0-9]+$/);
       })();
     });
   });
