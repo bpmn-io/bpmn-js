@@ -207,7 +207,8 @@ describe('features - context-pad', function() {
         'append.gateway',
         'append.append-task',
         'append.intermediate-event',
-        'append.text-annotation'
+        'append.text-annotation',
+        'set-color'
       ]);
     }));
 
@@ -223,7 +224,8 @@ describe('features - context-pad', function() {
         'append.condition-intermediate-event',
         'append.signal-intermediate-event',
         'append.text-annotation',
-        '!append.task'
+        '!append.task',
+        'set-color'
       ]);
     }));
 
@@ -233,7 +235,8 @@ describe('features - context-pad', function() {
       expectContextPadEntries('EndEvent_1', [
         'connect',
         'replace',
-        '!append.task'
+        '!append.task',
+        'set-color'
       ]);
     }));
 
@@ -244,7 +247,8 @@ describe('features - context-pad', function() {
         'connect',
         'replace',
         '!append.end-event',
-        'append.text-annotation'
+        'append.text-annotation',
+        'set-color'
       ]);
     }));
 
@@ -255,7 +259,8 @@ describe('features - context-pad', function() {
         'connect',
         'replace',
         'append.compensation-activity',
-        '!append.end-event'
+        '!append.end-event',
+        'set-color'
       ]);
     }));
 
@@ -266,7 +271,8 @@ describe('features - context-pad', function() {
         'connect',
         'append.text-annotation',
         'replace',
-        '!append.end-event'
+        '!append.end-event',
+        'set-color'
       ]);
     }));
 
@@ -277,7 +283,8 @@ describe('features - context-pad', function() {
         'connect',
         'append.text-annotation',
         'replace',
-        '!append.end-event'
+        '!append.end-event',
+        'set-color'
       ]);
     }));
 
@@ -287,7 +294,8 @@ describe('features - context-pad', function() {
       expectContextPadEntries('Group_1', [
         'append.text-annotation',
         'delete',
-        '!replace'
+        '!replace',
+        'set-color'
       ]);
     }));
 
@@ -298,7 +306,8 @@ describe('features - context-pad', function() {
         'connect',
         'delete',
         '!replace',
-        '!append.text-annotation'
+        '!append.text-annotation',
+        'set-color'
       ]);
     }));
 
@@ -616,6 +625,45 @@ describe('features - context-pad', function() {
 
       // then
       expect(dragging.context()).to.exist;
+    }));
+
+  });
+
+
+  describe('set-color', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var container;
+
+    beforeEach(function() {
+      container = TestContainer.get(this);
+    });
+
+
+    it('should show popup menu in the correct position', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('StartEvent_1'),
+          padding = 5,
+          padMenuRect,
+          colorMenuRect;
+
+      contextPad.open(element);
+
+      // when
+      contextPad.trigger('click', padEvent('set-color'));
+
+      padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
+      colorMenuRect = domQuery('.bjs-color-picker', container).getBoundingClientRect();
+
+      // then
+      expect(colorMenuRect.left).to.be.at.most(padMenuRect.left);
+      expect(colorMenuRect.top).to.be.at.most(padMenuRect.bottom + padding);
     }));
 
   });

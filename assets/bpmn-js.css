@@ -8,7 +8,7 @@
   --color-grey-225-10-80: hsl(225, 10%, 80%);
   --color-grey-225-10-85: hsl(225, 10%, 85%);
   --color-grey-225-10-90: hsl(225, 10%, 90%);
-  --color-grey-225-10-95: hsl(225, 10%, 95%); 
+  --color-grey-225-10-95: hsl(225, 10%, 95%);
   --color-grey-225-10-97: hsl(225, 10%, 97%);
 
   --color-blue-205-100-45: hsl(205, 100%, 45%);
@@ -24,8 +24,8 @@
   --color-red-360-100-97: hsl(360, 100%, 97%);
 
   --color-white: hsl(0, 0%, 100%);
-  --color-black: hsl(0, 0%, 0%); 
-  --color-black-opacity-05: hsla(0, 0%, 0%, 5%); 
+  --color-black: hsl(0, 0%, 0%);
+  --color-black-opacity-05: hsla(0, 0%, 0%, 5%);
   --color-black-opacity-10: hsla(0, 0%, 0%, 10%);
 
   --breadcrumbs-font-family: var(--bjs-font-family);
@@ -113,4 +113,61 @@
 
 .selected .bjs-drilldown-empty {
   display: inherit;
+}
+
+/* COLOR PICKER */
+
+.bjs-color-picker .djs-popup-header {
+  display: flex;
+  width: 64px;
+  flex-wrap: wrap;
+  padding: 1px;
+}
+
+/* override popup menu to have color grid */
+[class^="bjs-color-icon-"],
+[class*=" bjs-color-icon-"] {
+  padding: 0 !important; 
+  margin: 1px !important;
+}
+
+[class^="bjs-color-icon-"]:before,
+[class*=" bjs-color-icon-"]:before {
+  display: flex;
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 0.1em;
+  border: 0.03em solid black;
+  padding: 0;
+}
+
+.bjs-color-icon-default:before {
+  background-color: white;
+  border-color: black;
+}
+
+.bjs-color-icon-blue:before {
+  background-color: rgb(187, 222, 251);
+  border-color: rgb(30, 136, 229);
+}
+
+.bjs-color-icon-orange:before {
+  background-color: rgb(255, 224, 178);
+  border-color: rgb(251, 140, 0);
+}
+
+.bjs-color-icon-green:before {
+  background-color: rgb(200, 230, 201);
+  border-color: rgb(67, 160, 71);
+}
+
+.bjs-color-icon-red:before {
+  background-color: rgb(255, 205, 210);
+  border-color: rgb(229, 57, 53);
+}
+
+.bjs-color-icon-purple:before {
+  background-color: rgb(225, 190, 231);
+  border-color: rgb(142, 36, 170);
 }
