@@ -73,6 +73,29 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
+    it('should reconnect on waypoint update', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+      var association = elementRegistry.get('Association_1');
+
+      // when
+      var newWaypoints = [
+        sequenceFlow.waypoints[0],
+        { x: sequenceFlow.waypoints[0].x, y: 300 },
+        { x: sequenceFlow.waypoints[1].x, y: 300 },
+        sequenceFlow.waypoints[1],
+      ];
+
+      modeling.updateWaypoints(sequenceFlow, newWaypoints);
+
+      // then
+      expectWaypoints(association, [
+        { x: 525, y: 110 },
+        { x: 460, y: 300 }
+      ]);
+    }));
+
   });
 
 
@@ -123,6 +146,30 @@ describe('behavior - LayoutConnectionBehavior', function() {
         { x: 525, y: 110 }
       ]);
 
+    }));
+
+
+    it('should reconnect on waypoint update', inject(function(elementRegistry, modeling) {
+
+      // given
+      var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+      var association = elementRegistry.get('Association_2');
+
+      // when
+      var newWaypoints = [
+        sequenceFlow.waypoints[0],
+        { x: sequenceFlow.waypoints[0].x, y: 300 },
+        { x: sequenceFlow.waypoints[1].x, y: 300 },
+        sequenceFlow.waypoints[1],
+      ];
+
+      modeling.updateWaypoints(sequenceFlow, newWaypoints);
+
+      // then
+      expectWaypoints(association, [
+        { x: 460, y: 300 },
+        { x: 525, y: 110 }
+      ]);
     }));
 
   });
