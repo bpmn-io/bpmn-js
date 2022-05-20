@@ -48,7 +48,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.updateWaypoints(sequenceFlow, newWaypoints, hints);
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 525, y: 110 },
         { x: 355, y: 229 },
       ]);
@@ -66,7 +66,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.moveElements([ startEvent, endEvent ], { x: 0, y: 200 });
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 525, y: 110 },
         { x: 460, y: 350 },
       ]);
@@ -90,7 +90,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.updateWaypoints(sequenceFlow, newWaypoints);
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 525, y: 110 },
         { x: 460, y: 300 }
       ]);
@@ -123,7 +123,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.updateWaypoints(sequenceFlow, newWaypoints, hints);
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 355, y: 229 },
         { x: 525, y: 110 }
       ]);
@@ -141,7 +141,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.moveElements([ startEvent, endEvent ], { x: 0, y: 200 });
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 460, y: 350 },
         { x: 525, y: 110 }
       ]);
@@ -166,7 +166,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       modeling.updateWaypoints(sequenceFlow, newWaypoints);
 
       // then
-      expectWaypoints(association, [
+      expectApproximateWaypoints(association, [
         { x: 460, y: 300 },
         { x: 525, y: 110 }
       ]);
@@ -196,7 +196,7 @@ function copyWaypoints(connection) {
   });
 }
 
-function expectWaypoints(connection, expectedWaypoints) {
+function expectApproximateWaypoints(connection, expectedWaypoints) {
 
   var actualWaypoints = connection.waypoints;
 
@@ -206,7 +206,7 @@ function expectWaypoints(connection, expectedWaypoints) {
   expect(connection.waypoints.length).to.eql(expectedWaypoints.length);
 
   for (var i in actualWaypoints) {
-    expect(actualWaypoints[i].x).to.eql(expectedWaypoints[i].x);
-    expect(actualWaypoints[i].y).to.eql(expectedWaypoints[i].y);
+    expect(actualWaypoints[i].x).to.be.closeTo(expectedWaypoints[i].x, 1);
+    expect(actualWaypoints[i].y).to.be.closeTo(expectedWaypoints[i].y, 1);
   }
 }

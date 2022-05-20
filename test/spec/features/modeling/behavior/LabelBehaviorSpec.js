@@ -405,10 +405,8 @@ describe('behavior - LabelBehavior', function() {
           ]);
 
           // then
-          expect({
-            x: sequenceFlowConnection.label.x,
-            y: sequenceFlowConnection.label.y
-          }).to.eql({ x: 273, y: 178 });
+          expect(sequenceFlowConnection.label.x).to.be.closeTo(273, 1);
+          expect(sequenceFlowConnection.label.y).to.be.closeTo(178, 1);
         }
       ));
 
