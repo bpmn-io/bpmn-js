@@ -394,4 +394,40 @@ describe('features/snapping - BpmnConnectSnapping', function() {
 
   });
 
+
+  describe('association', function() {
+
+    describe('sequence flow', function() {
+
+      it('should snap target', inject(function(connect, dragging, elementRegistry) {
+
+        // given
+        var textAnnotation = elementRegistry.get('TextAnnotation_1'),
+            sequenceFlow = elementRegistry.get('Flow_1'),
+            sequenceFlowGfx = elementRegistry.getGraphics(sequenceFlow);
+
+        // when
+        connect.start(canvasEvent({ x: 470, y: 1340 }), textAnnotation);
+
+        dragging.hover({ element: sequenceFlow, gfx: sequenceFlowGfx });
+
+        dragging.move(canvasEvent({ x: 400, y: 1455 }));
+
+        dragging.end();
+
+        // then
+        var waypoints = textAnnotation.outgoing[0].waypoints;
+
+        expect(waypoints).to.have.length(2);
+
+        expect(waypoints[ 1 ].original).to.eql({
+          x: 400,
+          y: 1450
+        });
+      }));
+
+    });
+
+  });
+
 });

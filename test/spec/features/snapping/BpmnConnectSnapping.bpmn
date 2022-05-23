@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.4">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1xakeh4" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0-rc.0">
   <bpmn:collaboration id="Collaboration_1">
     <bpmn:participant id="Participant_1" processRef="Process_1" />
     <bpmn:participant id="Participant_2" processRef="Process_2" />
     <bpmn:participant id="Participant_3" processRef="Process_3" />
+    <bpmn:participant id="Participant_4" processRef="Process_4" />
   </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="true">
     <bpmn:subProcess id="SubProcess" />
-    <bpmn:boundaryEvent id="BoundaryEvent_Right" attachedToRef="SubProcess" />
-    <bpmn:boundaryEvent id="BoundaryEvent_Bottom" attachedToRef="SubProcess" />
     <bpmn:startEvent id="StartEvent_1" />
     <bpmn:exclusiveGateway id="Gateway_1" />
     <bpmn:endEvent id="EndEvent_1" />
     <bpmn:task id="Task_1" />
     <bpmn:dataObjectReference id="DataObjectReference_1" dataObjectRef="DataObject_16xfc7e" />
     <bpmn:dataObject id="DataObject_16xfc7e" />
+    <bpmn:boundaryEvent id="BoundaryEvent_Bottom" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_Right" attachedToRef="SubProcess" />
   </bpmn:process>
   <bpmn:process id="Process_2" isExecutable="false">
     <bpmn:intermediateThrowEvent id="IntermediateThrowEvent_1">
@@ -30,6 +31,16 @@
     <bpmn:startEvent id="StartEvent_3" />
     <bpmn:task id="Task_3" />
     <bpmn:subProcess id="SubProcess_1" />
+  </bpmn:process>
+  <bpmn:process id="Process_4" isExecutable="false">
+    <bpmn:task id="Activity_1bf41ei">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_11m91ps">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Activity_1bf41ei" targetRef="Activity_11m91ps" />
+    <bpmn:textAnnotation id="TextAnnotation_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
@@ -86,6 +97,22 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEventRight_di" bpmnElement="BoundaryEvent_Right">
         <dc:Bounds x="742" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0l43vkd_di" bpmnElement="Participant_4" isHorizontal="true">
+        <dc:Bounds x="160" y="1280" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0vlfpno_di" bpmnElement="TextAnnotation_1">
+        <dc:Bounds x="420" y="1330" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1i5o9ky_di" bpmnElement="Flow_1">
+        <di:waypoint x="350" y="1450" />
+        <di:waypoint x="540" y="1450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1bf41ei_di" bpmnElement="Activity_1bf41ei">
+        <dc:Bounds x="250" y="1410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11m91ps_di" bpmnElement="Activity_11m91ps">
+        <dc:Bounds x="540" y="1410" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
