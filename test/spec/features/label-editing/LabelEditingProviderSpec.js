@@ -205,12 +205,33 @@ describe('features - label-editing', function() {
 
 
     it('should cancel on element deletion', inject(
+      function(elementRegistry, directEditing, modeling) {
+
+        // given
+        var shape = elementRegistry.get('Task_1'),
+            task = shape.businessObject;
+
+        directEditing.activate(shape);
+
+        directEditing._textbox.content.textContent = 'FOO BAR';
+
+        // when
+        modeling.removeElements([ shape ]);
+
+        // then
+        expect(task.name).not.to.equal('FOO BAR');
+      }
+    ));
+
+
+    it('should cancel on selected element deletion', inject(
       function(elementRegistry, directEditing, selection, modeling) {
 
         // given
         var shape = elementRegistry.get('Task_1'),
             task = shape.businessObject;
 
+        selection.select(shape);
         directEditing.activate(shape);
 
         directEditing._textbox.content.textContent = 'FOO BAR';
