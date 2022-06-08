@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.2.1
+
+* `FIX`: cancel direct editing before shape deletion ([#1677](https://github.com/bpmn-io/bpmn-js/issues/1677))
+
 ## 9.2.0
 
 * `FEAT`: rework select and hover interaction on the diagram ([#1616](https://github.com/bpmn-io/bpmn-js/issues/1616), [#640](https://github.com/bpmn-io/diagram-js/pull/640), [#643](https://github.com/bpmn-io/diagram-js/pull/643))
