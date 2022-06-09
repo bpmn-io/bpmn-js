@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.2.2
+
+* `FIX`: correctly toggle loop characteristics ([#1673](https://github.com/bpmn-io/bpmn-js/issues/1673))
+
 ## 9.2.1
 
 * `FIX`: cancel direct editing before shape deletion ([#1677](https://github.com/bpmn-io/bpmn-js/issues/1677))
