@@ -83,8 +83,8 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 8.10.0
 
-* `CHORE`: provide `ModelUtil#isAny` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
-* `CHORE`: provide `ModelUtil#getDi` utility ([#https://github.com/bpmn-io/bpmn-js/pull/1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+* `CHORE`: provide `ModelUtil#isAny` utility ([#1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
+* `CHORE`: provide `ModelUtil#getDi` utility ([#1604](https://github.com/bpmn-io/bpmn-js/pull/1604))
 
 ## 8.9.1
 
