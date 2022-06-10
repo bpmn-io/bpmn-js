@@ -3,7 +3,7 @@ import {
   inject
 } from 'test/TestHelper';
 
-import alignElementsModule from 'diagram-js/lib/features/align-elements';
+import alignElementsModule from 'lib/features/align-elements';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
@@ -31,10 +31,10 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'left');
 
       // then
-      expect(taskBoundEvt.x).to.equal(136);
-      expect(task.x).to.equal(136);
-      expect(subProcess.x).to.equal(136);
-      expect(endEvent.x).to.equal(136);
+      expect(taskBoundEvt.x).to.equal(276);
+      expect(task.x).to.equal(276);
+      expect(subProcess.x).to.equal(276);
+      expect(endEvent.x).to.equal(276);
     }));
 
 
@@ -51,10 +51,10 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'right');
 
       // then
-      expect(task.x).to.equal(720);
-      expect(taskHello.x).to.equal(720);
-      expect(subProcess.x).to.equal(470);
-      expect(endEvent.x).to.equal(784);
+      expect(task.x).to.equal(860);
+      expect(taskHello.x).to.equal(860);
+      expect(subProcess.x).to.equal(610);
+      expect(endEvent.x).to.equal(924);
     }));
 
 
@@ -71,10 +71,10 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'center');
 
       // then
-      expect(task.x).to.equal(428);
-      expect(taskHello.x).to.equal(428);
-      expect(subProcess.x).to.equal(303);
-      expect(endEvent.x).to.equal(460);
+      expect(task.x).to.equal(568);
+      expect(taskHello.x).to.equal(568);
+      expect(subProcess.x).to.equal(443);
+      expect(endEvent.x).to.equal(600);
     }));
 
 
@@ -90,9 +90,9 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'top');
 
       // then
-      expect(task.y).to.equal(375);
-      expect(subProcess.y).to.equal(375);
-      expect(endEvent.y).to.equal(375);
+      expect(task.y).to.equal(445);
+      expect(subProcess.y).to.equal(445);
+      expect(endEvent.y).to.equal(445);
     }));
 
 
@@ -108,9 +108,9 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'bottom');
 
       // then
-      expect(task.y).to.equal(761);
-      expect(subProcess.y).to.equal(641);
-      expect(endEvent.y).to.equal(805);
+      expect(task.y).to.equal(831);
+      expect(subProcess.y).to.equal(711);
+      expect(endEvent.y).to.equal(875);
     }));
 
 
@@ -126,11 +126,59 @@ describe('features/align-elements', function() {
       alignElements.trigger(elements, 'middle');
 
       // then
-      expect(task.y).to.equal(568);
-      expect(subProcess.y).to.equal(508);
-      expect(endEvent.y).to.equal(590);
+      expect(task.y).to.equal(638);
+      expect(subProcess.y).to.equal(578);
+      expect(endEvent.y).to.equal(660);
     }));
 
+  });
+
+
+  describe('rules', function() {
+
+    it('should not align boundary event', inject(function(alignElements, elementRegistry) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_1'),
+          host = elementRegistry.get('Task_boundary_evt');
+      var elements = [
+        host,
+        elementRegistry.get('Task_hello'),
+        boundaryEvent
+      ];
+      var initialRelativePosition = {
+        x: boundaryEvent.x - host.x,
+        y: boundaryEvent.y - host.y
+      };
+
+      // when
+      alignElements.trigger(elements, 'middle');
+
+      // then
+      expect(boundaryEvent.x).to.equal(initialRelativePosition.x + host.x);
+      expect(boundaryEvent.y).to.equal(initialRelativePosition.y + host.y);
+    }));
+
+
+    it('should not align container children', inject(
+      function(alignElements, elementRegistry) {
+
+        // given
+        var elements = elementRegistry.getAll('SubProcessChild').slice(1),
+            child = elementRegistry.get('Task_hello');
+        var initialRelativePosition = {
+          x: child.x - child.parent.x,
+          y: child.y - child.parent.y
+        };
+
+        // when
+        alignElements.trigger(elements, 'middle');
+
+        // then
+        expect(child.x).to.equal(initialRelativePosition.x + child.parent.x);
+        expect(child.y).to.equal(initialRelativePosition.y + child.parent.y);
+      })
+    );
   });
 
 });
