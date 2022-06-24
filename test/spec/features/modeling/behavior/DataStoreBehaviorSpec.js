@@ -7,7 +7,7 @@ import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
 
-describe('features/modeling/behavior - data store', function() {
+describe.only('features/modeling/behavior - data store', function() {
 
   var testModules = [ coreModule, modelingModule ];
 
@@ -373,7 +373,7 @@ describe('features/modeling/behavior - data store', function() {
   });
 
 
-  describe('collaboration', function() {
+  describe.only('collaboration', function() {
 
     describe('update parent on participant removed', function() {
       var processDiagramXML = require('./DataStoreBehavior.remove-participant.bpmn');
@@ -430,19 +430,87 @@ describe('features/modeling/behavior - data store', function() {
     });
 
 
-    describe('collaboration -> process', function() {
+    describe('should remove when clearing collaboration diagram', function() {
 
       var processDiagramXML = require('./DataStoreBehavior.collaboration.bpmn');
 
-      var dataStoreShape,
-          participant;
+      var participant,
+          dataStore,
+          collaboration;
+
+      beforeEach(bootstrapModeler(processDiagramXML, {
+        modules: testModules
+      }));
+
+      beforeEach(inject(function(canvas, elementRegistry, modeling) {
+
+        // given
+        participant = elementRegistry.get('Participant');
+        dataStore = elementRegistry.get('DataStoreReference');
+        collaboration = canvas.getRootElement();
+
+        // assume
+        expect(dataStore.parent).to.equal(collaboration);
+
+        // when
+        modeling.removeElements([
+          participant,
+          dataStore
+        ]);
+      }));
+
+
+      it('should do', inject(function() {
+
+        // then
+        expect(participant.parent).not.to.exist;
+        expect(dataStore.parent).not.to.exist;
+      }));
+
+
+      it('should undo', inject(function(commandStack) {
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(participant.parent).to.equal(collaboration);
+        expect(dataStore.parent).to.equal(collaboration);
+      }));
+
+
+      it('should redo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(participant.parent).not.to.exist;
+        expect(dataStore.parent).not.to.exist;
+      }));
+
+    });
+
+
+    describe('should remove with last participant', function() {
+
+      var processDiagramXML = require('./DataStoreBehavior.collaboration.bpmn');
+
+      var dataStore,
+          participant,
+          collaboration;
 
       beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
-      beforeEach(inject(function(elementRegistry, modeling) {
-        dataStoreShape = elementRegistry.get('DataStoreReference');
+      beforeEach(inject(function(elementRegistry, modeling, canvas) {
 
+        dataStore = elementRegistry.get('DataStoreReference');
         participant = elementRegistry.get('Participant');
+        collaboration = canvas.getRootElement();
+
+        // assume
+        expect(dataStore.parent).to.equal(collaboration);
 
         // when
         modeling.removeShape(participant);
@@ -450,32 +518,33 @@ describe('features/modeling/behavior - data store', function() {
 
 
       it('should do', inject(function(canvas) {
-        var rootElement = canvas.getRootElement();
 
         // then
-        expect(dataStoreShape.businessObject.$parent).to.eql(rootElement.businessObject);
+        expect(dataStore.businessObject.$parent).not.to.exist;
+        expect(dataStore.parent).not.to.exist;
       }));
 
 
-      it('should undo', inject(function(canvas, commandStack) {
+      it.only('should undo', inject(function(canvas, commandStack) {
 
         // when
         commandStack.undo();
 
         // then
-        expect(dataStoreShape.businessObject.$parent).to.eql(participant.businessObject.processRef);
+        expect(dataStore.businessObject.$parent).to.eql(participant.businessObject.processRef);
+        expect(dataStore.parent).to.equal(collaboration);
       }));
 
 
       it('should redo', inject(function(canvas, commandStack) {
-        var rootElement = canvas.getRootElement();
 
         // when
         commandStack.undo();
         commandStack.redo();
 
         // then
-        expect(dataStoreShape.businessObject.$parent).to.eql(rootElement.businessObject);
+        expect(dataStore.businessObject.$parent).not.to.exist;
+        expect(dataStore.parent).not.to.exist;
       }));
 
     });
