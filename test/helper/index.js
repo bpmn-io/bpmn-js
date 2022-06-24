@@ -267,6 +267,31 @@ export function createViewer(container, viewerInstance, xml, diagramId) {
   });
 }
 
+function logConfigured(type, force) {
+  var url = new URL(window.location.href);
+
+  var log = ('searchParams' in url) && url.searchParams.get('log') || '';
+
+  return force || log.includes('save-xml');
+}
+
+/**
+ * Enable logging on a modeler instance.
+ *
+ * @param  {import('bpmn-js')} modeler
+ * @param  {boolean} [force=false]
+ */
+export function enableLogging(modeler, force) {
+
+  var saveXML = logConfigured('save-xml', force);
+
+  saveXML && modeler.on('commandStack.changed', function() {
+    modeler.saveXML({ format: true }).then(function(result) {
+      console.log(result.xml);
+    });
+  });
+}
+
 export function setBpmnJS(instance) {
   BPMN_JS = instance;
 }

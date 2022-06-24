@@ -13,7 +13,8 @@ import {
 import {
   setBpmnJS,
   clearBpmnJS,
-  collectTranslations
+  collectTranslations,
+  enableLogging
 } from 'test/TestHelper';
 
 import { getDi } from 'lib/util/ModelUtil';
@@ -43,13 +44,9 @@ describe('Modeler', function() {
       }
     });
 
-    singleStart && modeler.on('commandStack.changed', function() {
-      modeler.saveXML({ format: true }).then(function(result) {
-        console.log(result.xml);
-      });
-    });
-
     setBpmnJS(modeler);
+
+    enableLogging(modeler, singleStart);
 
     return modeler.importXML(xml).then(function(result) {
       return { error: null, warnings: result.warnings, modeler: modeler };
