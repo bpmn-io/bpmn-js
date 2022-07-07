@@ -78,6 +78,34 @@ describe('features/align-elements - popup menu', function() {
       expect(popupMenu.isOpen()).to.be.false;
     })
   );
+
+
+  it('should properly size icons even with border-box', inject(function(elementRegistry, popupMenu, canvas) {
+
+    // given
+    var container = canvas.getContainer();
+    var elements = [
+      elementRegistry.get('EndEvent_lane'),
+      elementRegistry.get('Task_lane'),
+      elementRegistry.get('SubProcess_lane')
+    ];
+
+    // when
+    container.style['box-sizing'] = 'border-box';
+    popupMenu.open(elements, 'align-elements', {
+      x: 0,
+      y: 0
+    });
+
+    // then
+    var entry = getEntry('align-elements-left'),
+        icon = domQuery('img', entry);
+
+    var bbox = icon.getBoundingClientRect();
+
+    expect(bbox.width).to.eql(20);
+    expect(bbox.height).to.eql(20);
+  }));
 });
 
 
