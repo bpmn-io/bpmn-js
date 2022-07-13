@@ -7,6 +7,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.3.2
+
+* `FIX`: prevent unnecessary scrollbar ([#1692](https://github.com/bpmn-io/bpmn-js/issues/1692))
+* `DEPS`: update to diagram-js@8.7.1
+
 ## 9.3.1
 
 * `FIX`: properly size icons for distribute/align menu ([#1694](https://github.com/bpmn-io/bpmn-js/pull/1694))
