@@ -12,7 +12,11 @@ import {
 } from 'diagram-js/lib/util/Elements';
 
 import { asTRBL } from 'diagram-js/lib/layout/LayoutUtil';
-import { getDi } from 'lib/util/ModelUtil';
+import {
+  getBusinessObject,
+  getDi,
+  is
+} from 'lib/util/ModelUtil';
 
 import {
   createCanvasEvent as canvasEvent
@@ -532,6 +536,42 @@ describe('features/modeling - create participant', function() {
 
       expect(participantBo.$parent).not.to.exist;
       expect(collaborationBo.participants).not.to.include(participantBo);
+    }));
+
+  });
+
+
+  describe('copy and paste', function() {
+
+    var collaborationDiagramXML =
+      require('../../../../fixtures/bpmn/collaboration/collaboration-participant.bpmn');
+
+    beforeEach(bootstrapModeler(collaborationDiagramXML, { modules: testModules }));
+
+
+    it('should copy process ref', inject(function(canvas, copyPaste, elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('_Participant_2'),
+          rootElement = canvas.getRootElement();
+
+      copyPaste.copy(participant);
+
+      // when
+      var newElements = copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 1000,
+          y: 1000
+        }
+      });
+
+      // then
+      var newParticipant = newElements[ 0 ];
+
+      expect(is(newParticipant, 'bpmn:Participant')).to.be.true;
+
+      expect(getBusinessObject(newParticipant).get('processRef')).not.to.equal(getBusinessObject(participant).get('processRef'));
     }));
 
   });
