@@ -15,9 +15,9 @@
     </bpmn:task>
     <bpmn:dataStoreReference id="DataStoreReference_1" />
   </bpmn:process>
-  <bpmn:process id="Process_Input" isExecutable="true">
+  <bpmn:process id="Process_Input" isExecutable="false">
     <bpmn:extensionElements>
-      <camunda:executionListener class="Foo" event="start" />
+      <camunda:executionListener class="Bar" event="start" />
     </bpmn:extensionElements>
     <bpmn:dataStoreReference id="DataStoreReference_2" />
     <bpmn:task id="Task_2">
