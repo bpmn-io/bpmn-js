@@ -1191,7 +1191,7 @@ describe('features/replace - bpmn replace', function() {
         })[0];
 
         // then
-        expect(startEventAfter.businessObject.eventDefinitions).to.be.undefined;
+        expect(startEventAfter.businessObject.eventDefinitions).not.to.exist;
       })
     );
 
