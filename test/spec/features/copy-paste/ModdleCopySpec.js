@@ -727,6 +727,33 @@ describe('features/copy-paste/ModdleCopy', function() {
         expect(endEvent.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
       }));
 
+
+      it('should clone', inject(function(moddleCopy, eventBus, moddle) {
+
+        // given
+        var task = moddle.create('bpmn:Task', {
+          name: 'foo'
+        });
+
+        eventBus.once('moddleCopy.canCopyProperty', HIGH_PRIORITY, function(context) {
+          var propertyName = context.propertyName;
+
+          var clone = context.clone;
+
+          expect(clone).to.be.true;
+
+          if (propertyName === 'name') {
+            return 'bar';
+          }
+        });
+
+        // when
+        var userTask = moddleCopy.copyElement(task, moddle.create('bpmn:UserTask'), null, true);
+
+        // then
+        expect(userTask.id).to.eql(task.id);
+      }));
+
     });
 
 
@@ -804,7 +831,10 @@ describe('features/copy-paste/ModdleCopy', function() {
       });
 
       // when
-      var newElement = moddleCopy.copyElement(customElement, moddle.create('custom:CustomSendElement'));
+      var newElement = moddleCopy.copyElement(
+        customElement,
+        moddle.create('custom:CustomSendElement')
+      );
 
       // then
       expect(newElement.paths).to.have.length(3);
