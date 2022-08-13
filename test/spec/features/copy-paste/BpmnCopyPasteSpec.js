@@ -215,6 +215,7 @@ describe('features/copy-paste', function() {
       });
 
       expect(subProcesses[0].id).not.to.equal(subProcesses[1].id);
+      expect(subProcesses[0].businessObject).not.to.equal(subProcesses[1].businessObject);
     }));
 
 
