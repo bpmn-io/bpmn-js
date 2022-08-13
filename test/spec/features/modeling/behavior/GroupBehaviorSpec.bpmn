@@ -13,6 +13,7 @@
     <group id="Group_2" categoryValueRef="CategoryValue_1" />
     <group id="Group_3" categoryValueRef="CategoryValue_2" />
     <group id="Group_4" categoryValueRef="CategoryValue_3" />
+    <group id="Group_NO_CATEGORY_VALUE" />
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane bpmnElement="Process_1">
@@ -33,6 +34,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_4_di" bpmnElement="Group_4">
         <omgdc:Bounds x="836" y="75" width="200" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_NO_CATEGORY_VALUE_di" bpmnElement="Group_NO_CATEGORY_VALUE">
+        <omgdc:Bounds x="610" y="320" width="199" height="200" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
