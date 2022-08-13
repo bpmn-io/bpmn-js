@@ -45,7 +45,8 @@ describe('features/copy-paste', function() {
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
       collaborationAssociationsXML = require('./data-associations.bpmn'),
-      eventBasedGatewayXML = require('./event-based-gateway.bpmn');
+      eventBasedGatewayXML = require('./event-based-gateway.bpmn'),
+      collapsedSubprocessXML = require('./collapsed-subprocess.bpmn');
 
 
   describe('basic diagram', function() {
@@ -860,6 +861,57 @@ describe('features/copy-paste', function() {
       'EventBasedGateway_1',
       'IntermediateCatchEvent_1'
     ]));
+  });
+
+
+  describe('collapsed sub-process', function() {
+
+    beforeEach(bootstrapModeler(collapsedSubprocessXML, {
+      modules: testModules
+    }));
+
+
+    it('should paste with children', inject(
+      function(copyPaste, elementRegistry, modeling, bpmnjs) {
+
+        // given
+        var subProcess = elementRegistry.get('SUB_PROCESS'),
+            root = elementRegistry.get('PROCESS'),
+            definitions = bpmnjs.getDefinitions();
+
+        // when
+        copyPaste.copy(subProcess);
+
+        modeling.removeElements([ subProcess ]);
+
+        var pastedElements = copyPaste.paste({
+          element: root,
+          point: {
+            x: 500,
+            y: 50
+          }
+        });
+
+        // then
+        // elements pasted with original IDs
+        forEach([ 'SUB_PROCESS', 'SUB_TASK', 'SUB_BOUNDARY'], function(id) {
+
+          var el = find(pastedElements, function(el) {
+            return el.id === id;
+          });
+
+          expect(el, 'element <' + id + '>').to.exist;
+        });
+
+        // referenced root element exists only once
+        var escalations = definitions.get('rootElements').filter(function(el) {
+          return el.$type === 'bpmn:Escalation';
+        });
+
+        expect(escalations).to.have.length(1);
+      }
+    ));
+
   });
 
 
