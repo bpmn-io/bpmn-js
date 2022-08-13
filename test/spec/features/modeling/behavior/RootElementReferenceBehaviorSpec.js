@@ -101,6 +101,9 @@ describe('features/modeling - root element reference behavior', function() {
             // then
             expect(hasRootElement(rootElement)).to.be.false;
             expect(hasRootElement(pastedRootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
           });
 
 
@@ -126,6 +129,9 @@ describe('features/modeling - root element reference behavior', function() {
             // then
             expect(hasRootElement(rootElement)).to.be.false;
             expect(hasRootElement(pastedRootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
           }));
 
         });
