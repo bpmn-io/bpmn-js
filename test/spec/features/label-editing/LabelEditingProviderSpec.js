@@ -582,7 +582,7 @@ describe('features - label-editing', function() {
     }));
 
 
-    it('should initialize categoryValue for empty group', inject(
+    it('should set label on group (no category value)', inject(
       function(elementRegistry, directEditing) {
 
         // given
