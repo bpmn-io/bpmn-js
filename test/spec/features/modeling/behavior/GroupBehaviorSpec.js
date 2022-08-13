@@ -25,7 +25,6 @@ describe('features/modeling/behavior - groups', function() {
     modelingModule
   ];
 
-
   var processDiagramXML = require('./GroupBehaviorSpec.bpmn');
 
   beforeEach(bootstrapModeler(processDiagramXML, {
@@ -330,6 +329,57 @@ describe('features/modeling/behavior - groups', function() {
         // then
         expect(category.get('categoryValue')).not.to.include(categoryValue);
         expect(definitions.get('rootElements')).not.to.include(category);
+      }));
+
+    });
+
+
+    describe('should handle non-existing CategoryValue gracefully', function() {
+
+      it('execute', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // assume
+        expect(groupBo.categoryValueRef).not.to.exist;
+
+        // then
+        modeling.removeShape(groupShape);
+      }));
+
+
+      it('undo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // when
+        modeling.removeShape(groupShape);
+
+        commandStack.undo();
+
+        // then
+        expect(groupBo.categoryValueRef).not.to.exist;
+      }));
+
+
+      it('redo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // when
+        modeling.removeShape(groupShape);
+
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(groupBo.categoryValueRef).not.to.exist;
       }));
 
     });
