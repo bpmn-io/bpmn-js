@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.2.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <bpmn:process id="PROCESS" name="PROCESS" isExecutable="true">
+    <bpmn:subProcess id="SUB_PROCESS" name="SUB_PROCESS">
+      <bpmn:task id="SUB_TASK" name="SUB_TASK" />
+      <bpmn:boundaryEvent id="SUB_BOUNDARY" name="SUB_BOUNDARY" cancelActivity="false" attachedToRef="SUB_TASK">
+        <bpmn:escalationEventDefinition id="EscalationEventDefinition_1" escalationRef="ESCALATION" />
+      </bpmn:boundaryEvent>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmn:escalation id="ESCALATION" name="ESCALATION" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PROCESS">
+      <bpmndi:BPMNShape id="SUB_PROCESS_di" bpmnElement="SUB_PROCESS">
+        <dc:Bounds x="170" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_2">
+    <bpmndi:BPMNPlane id="BPMNPlane_SUB_PROCESS" bpmnElement="SUB_PROCESS">
+      <bpmndi:BPMNShape id="SUB_TASK_di" bpmnElement="SUB_TASK">
+        <dc:Bounds x="190" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SUB_BOUNDARY_di" bpmnElement="SUB_BOUNDARY">
+        <dc:Bounds x="232" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="208" y="185" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
