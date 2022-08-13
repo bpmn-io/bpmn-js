@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ykgsoo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.2.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.17.0">
+  <bpmn:error id="Error_1" name="SomeError" errorCode="100" />
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="P1" name="P1" processRef="Process_1" />
+    <bpmn:participant id="P2" name="P2" processRef="Process_2" />
+    <bpmn:messageFlow id="MessageFlow" name="MessageFlow" sourceRef="Activity_1" targetRef="Start" />
+    <bpmn:group id="Group_With_Name" categoryValueRef="CategoryValue_1" />
+    <bpmn:group id="Group_No_Name" />
+    <bpmn:textAnnotation id="Text_Annotation">
+      <bpmn:text>Text_Annotation</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association" sourceRef="P1" targetRef="Text_Annotation" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" name="Process_1" isExecutable="true">
+    <bpmn:startEvent id="Start" name="Start" camunda:initiator="walt">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Say_Hello" name="Say_Hello">
+      <bpmn:extensionElements>
+        <camunda:executionListener expression="foo()" event="start" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="name">${ foobar }</camunda:inputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn:targetRef>DataStoreReference</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:endEvent id="End" name="End">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start" targetRef="Say_Hello" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Say_Hello" targetRef="End" />
+    <bpmn:dataStoreReference id="DataStoreReference" name="DataStoreReference" />
+    <bpmn:boundaryEvent id="Say_Hello_Error" name="Say_Hello_Error" attachedToRef="Say_Hello">
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0hmbmox" errorRef="Error_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="Say_Hello_Escalation" name="Say_Hello_Escalation" cancelActivity="false" attachedToRef="Say_Hello">
+      <bpmn:escalationEventDefinition id="EscalationEventDefinition_1" escalationRef="Escalation_1" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:process id="Process_2" name="Process_2" isExecutable="false">
+    <bpmn:task id="Activity_1">
+      <bpmn:dataOutputAssociation id="DataOutputAssociation">
+        <bpmn:targetRef>DataObjectReference</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:task>
+    <bpmn:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject" />
+    <bpmn:dataObject id="DataObject" />
+    <bpmn:subProcess id="Collapsed_Sub" name="Collapsed_Sub">
+      <bpmn:subProcess id="Sub_Process_Expanded_Nested" name="Sub_Process_Expanded_Nested" default="FlowDefault">
+        <bpmn:incoming>Flow_3</bpmn:incoming>
+        <bpmn:outgoing>FlowDefault</bpmn:outgoing>
+        <bpmn:outgoing>FlowConditional</bpmn:outgoing>
+        <bpmn:startEvent id="Event_4">
+          <bpmn:outgoing>Flow_7</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:task id="Activity_4">
+          <bpmn:incoming>Flow_7</bpmn:incoming>
+          <bpmn:outgoing>Flow_8</bpmn:outgoing>
+        </bpmn:task>
+        <bpmn:sequenceFlow id="Flow_7" sourceRef="Event_4" targetRef="Activity_4" />
+        <bpmn:endEvent id="Event_5">
+          <bpmn:incoming>Flow_8</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="Flow_8" sourceRef="Activity_4" targetRef="Event_5" />
+      </bpmn:subProcess>
+      <bpmn:startEvent id="Event_2">
+        <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_3" sourceRef="Event_2" targetRef="Sub_Process_Expanded_Nested" />
+      <bpmn:exclusiveGateway id="Gateway_1">
+        <bpmn:incoming>FlowDefault</bpmn:incoming>
+        <bpmn:outgoing>Flow_4</bpmn:outgoing>
+        <bpmn:outgoing>Flow_6</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="FlowDefault" name="FlowDefault" sourceRef="Sub_Process_Expanded_Nested" targetRef="Gateway_1" />
+      <bpmn:task id="Activity_5">
+        <bpmn:incoming>Flow_4</bpmn:incoming>
+        <bpmn:outgoing>Flow_5</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_4" sourceRef="Gateway_1" targetRef="Activity_5">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">foo()</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:endEvent id="Event_3">
+        <bpmn:incoming>Flow_5</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_5" sourceRef="Activity_5" targetRef="Event_3" />
+      <bpmn:task id="Activity_2">
+        <bpmn:incoming>Flow_6</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_6" sourceRef="Gateway_1" targetRef="Activity_2">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">bar()</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:task id="Activity_6">
+        <bpmn:incoming>FlowConditional</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="FlowConditional" name="FlowConditional" sourceRef="Sub_Process_Expanded_Nested" targetRef="Activity_6">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">waat()</bpmn:conditionExpression>
+      </bpmn:sequenceFlow>
+      <bpmn:textAnnotation id="TextAnnotation_2">
+        <bpmn:text>Conditions, Default Flow and friends</bpmn:text>
+      </bpmn:textAnnotation>
+    </bpmn:subProcess>
+    <bpmn:boundaryEvent id="Boundary_No_Message" name="Boundary_No_Message" cancelActivity="false" attachedToRef="Activity_1">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0n2euac" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmn:category id="Category_1">
+    <bpmn:categoryValue id="CategoryValue_1" value="Group_With_Name" />
+  </bpmn:category>
+  <bpmn:escalation id="Escalation_1" name="Escalation" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="P1_di" bpmnElement="P1" isHorizontal="true">
+        <dc:Bounds x="160" y="170" width="530" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="500" y="307" />
+        <di:waypoint x="562" y="307" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="345" y="307" />
+        <di:waypoint x="400" y="307" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Start_di" bpmnElement="Start">
+        <dc:Bounds x="309" y="289" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="315" y="265" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Say_Hello_di" bpmnElement="Say_Hello">
+        <dc:Bounds x="400" y="267" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_di" bpmnElement="End">
+        <dc:Bounds x="562" y="289" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="570" y="332" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="555" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="540" y="242" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0r07nr0_di" bpmnElement="Say_Hello_Error">
+        <dc:Bounds x="442" y="329" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420" y="372" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Say_Hello_Escalation_di" bpmnElement="Say_Hello_Escalation">
+        <dc:Bounds x="422" y="249" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="395" y="219" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="P2_di" bpmnElement="P2" isHorizontal="true">
+        <dc:Bounds x="160" y="570" width="530" height="190" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1_di" bpmnElement="Activity_1">
+        <dc:Bounds x="290" y="610" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="482" y="665" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Collapsed_Sub_di" bpmnElement="Collapsed_Sub">
+        <dc:Bounds x="560" y="610" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Boundary_No_Message_di" bpmnElement="Boundary_No_Message">
+        <dc:Bounds x="332" y="672" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="306" y="715" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_With_Name_di" bpmnElement="Group_With_Name">
+        <dc:Bounds x="270" y="520" width="270" height="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="367" y="527" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_No_Name_di" bpmnElement="Group_No_Name">
+        <dc:Bounds x="720" y="210" width="230" height="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="792" y="217" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Text_Annotation_di" bpmnElement="Text_Annotation">
+        <dc:Bounds x="680" y="80" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1_di" bpmnElement="DataOutputAssociation_1">
+        <di:waypoint x="499" y="272" />
+        <di:waypoint x="555" y="233" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_di" bpmnElement="DataOutputAssociation">
+        <di:waypoint x="390" y="663" />
+        <di:waypoint x="482" y="686" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
+        <di:waypoint x="616" y="170" />
+        <di:waypoint x="707" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_di" bpmnElement="MessageFlow">
+        <di:waypoint x="327" y="610" />
+        <di:waypoint x="327" y="325" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="309" y="465" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_0xhesl2">
+    <bpmndi:BPMNPlane id="BPMNPlane_Collapsed_Sub" bpmnElement="Collapsed_Sub">
+      <bpmndi:BPMNEdge id="FlowConditional_di" bpmnElement="FlowConditional">
+        <di:waypoint x="670" y="250" />
+        <di:waypoint x="730" y="250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="661" y="232" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="475" y="445" />
+        <di:waypoint x="475" y="530" />
+        <di:waypoint x="550" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="650" y="420" />
+        <di:waypoint x="702" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="500" y="420" />
+        <di:waypoint x="550" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="FlowDefault_di" bpmnElement="FlowDefault">
+        <di:waypoint x="475" y="350" />
+        <di:waypoint x="475" y="395" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="461" y="370" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="198" y="250" />
+        <di:waypoint x="300" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Sub_Process_Expanded_Nested_di" bpmnElement="Sub_Process_Expanded_Nested" isExpanded="true">
+        <dc:Bounds x="300" y="150" width="370" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="530" y="250" />
+        <di:waypoint x="592" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="376" y="250" />
+        <di:waypoint x="430" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_4_di" bpmnElement="Event_4">
+        <dc:Bounds x="340" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_4_di" bpmnElement="Activity_4">
+        <dc:Bounds x="430" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_5_di" bpmnElement="Event_5">
+        <dc:Bounds x="592" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_2_di" bpmnElement="Event_2">
+        <dc:Bounds x="162" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1_di" bpmnElement="Gateway_1" isMarkerVisible="true">
+        <dc:Bounds x="450" y="395" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_5_di" bpmnElement="Activity_5">
+        <dc:Bounds x="550" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_3_di" bpmnElement="Event_3">
+        <dc:Bounds x="702" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_2_di" bpmnElement="Activity_2">
+        <dc:Bounds x="550" y="490" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_6_di" bpmnElement="Activity_6">
+        <dc:Bounds x="730" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_2_di" bpmnElement="TextAnnotation_2">
+        <dc:Bounds x="590" y="50" width="100.00000762939453" height="55.000003814697266" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
