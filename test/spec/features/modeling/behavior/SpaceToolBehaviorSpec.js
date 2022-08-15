@@ -161,7 +161,7 @@ describe('features/modeling - space tool behavior', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('should ensure subprocess minimum dimensions', inject(
+      it('should ensure group minimum dimensions', inject(
         function(dragging, elementRegistry, spaceTool) {
 
           // given
