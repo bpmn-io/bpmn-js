@@ -45,10 +45,7 @@ describe('Modeler', function() {
     clearBpmnJS();
 
     modeler = new Modeler({
-      container: container,
-      keyboard: {
-        bindTo: document
-      }
+      container: container
     });
 
     setBpmnJS(modeler);
