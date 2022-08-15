@@ -7,6 +7,17 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 10.0.0
+
+* `FEAT`: allow clipboard to be serialized ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FEAT`: allow cloning of elements ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FEAT`: copy groups in a safe manner ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FIX`: make clipboard contents immutable ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FIX`: do not alter inputs passed to `ElementFactory#create` ([#1711](https://github.com/bpmn-io/bpmn-js/pull/1711))
+* `FIX`: prevent bogus meta-data to be attached on paste ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FIX`: only claim existing IDs ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FIX`: prevent double paste on label creation ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+
 ## 9.3.2
 
 * `FIX`: prevent unnecessary scrollbar ([#1692](https://github.com/bpmn-io/bpmn-js/issues/1692))
