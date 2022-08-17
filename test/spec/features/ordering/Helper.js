@@ -139,7 +139,7 @@ function compareZOrder(a, b) {
     function getElement(id) {
 
       var element = elementRegistry.get(id);
-      expect(element).to.exist;
+      expect(element, 'element <' + id + '>').to.exist;
 
       return element;
     }
@@ -206,7 +206,7 @@ export function expectZOrder() {
 
     if (next && compareZOrder(e, next) !== -1) {
       throw new Error(
-        'expected <element#' + next + '> to be in front of <element#' + e + '>'
+        'expected <element#' + (next.id || next) + '> to be in front of <element#' + (e.id || e) + '>'
       );
     }
   });
