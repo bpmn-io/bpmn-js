@@ -86,7 +86,7 @@
     "npm-run-all": "^4.1.2",
     "phantomjs-prebuilt": "^2.1.12",
     "promise-polyfill": "^8.2.0",
-    "puppeteer": "^10.0.0",
+    "puppeteer": "^16.1.1",
     "raw-loader": "^1.0.0",
     "rollup": "^2.52.2",
     "rollup-plugin-json": "^4.0.0",
