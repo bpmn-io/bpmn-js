@@ -11,7 +11,7 @@ import coreModule from 'lib/core';
 import moveModule from 'diagram-js/lib/features/move';
 import modelingModule from 'lib/features/modeling';
 
-var noTouchInteractionModule = { touchInteractionEvents: ['value', null ] };
+var noTouchInteractionModule = { touchInteractionEvents: [ 'value', null ] };
 
 import {
   createCanvasEvent as canvasEvent

@@ -92,7 +92,7 @@ function banner(bundleName, minified) {
   });
 }
 
-function pgl(plugins=[], env='production') {
+function pgl(plugins = [], env = 'production') {
   return [
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)

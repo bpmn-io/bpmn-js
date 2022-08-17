@@ -36,7 +36,7 @@ describe('import - Importer', function() {
   var diagram;
 
   beforeEach(function() {
-    diagram = createDiagram(TestContainer.get(this), [CoreModule]);
+    diagram = createDiagram(TestContainer.get(this), [ CoreModule ]);
   });
 
 

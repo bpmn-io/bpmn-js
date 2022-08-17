@@ -50,7 +50,7 @@ export function move(shape, delta) {
   // assume
   expect(shapeElement).to.exist;
 
-  modeling.moveElements([shapeElement], delta);
+  modeling.moveElements([ shapeElement ], delta);
 
   return shapeElement;
 }

@@ -2491,7 +2491,7 @@ function triggerAction(id) {
   var entry = queryEntry(id);
 
   if (!entry) {
-    throw new Error('entry "'+ id +'" not found in replace menu');
+    throw new Error('entry "' + id + '" not found in replace menu');
   }
 
   var popupMenu = getBpmnJS().get('popupMenu');

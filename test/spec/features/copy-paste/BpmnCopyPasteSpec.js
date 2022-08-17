@@ -895,7 +895,7 @@ describe('features/copy-paste', function() {
 
         // then
         // elements pasted with original IDs
-        forEach([ 'SUB_PROCESS', 'SUB_TASK', 'SUB_BOUNDARY'], function(id) {
+        forEach([ 'SUB_PROCESS', 'SUB_TASK', 'SUB_BOUNDARY' ], function(id) {
 
           var el = find(pastedElements, function(el) {
             return el.id === id;

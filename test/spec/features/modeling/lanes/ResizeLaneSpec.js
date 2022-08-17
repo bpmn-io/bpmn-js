@@ -15,7 +15,7 @@ import {
 } from 'min-dash';
 
 function getBounds(element) {
-  return pick(element, [ 'x', 'y', 'width', 'height']);
+  return pick(element, [ 'x', 'y', 'width', 'height' ]);
 }
 
 

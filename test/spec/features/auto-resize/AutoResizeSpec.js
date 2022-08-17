@@ -547,7 +547,7 @@ describe('features/auto-resize', function() {
 
       var originalBounds = getBounds(subProcessShape_2);
 
-      modeling.moveElements([taskShape], { x: 100, y: 0 }, subProcessShape_3);
+      modeling.moveElements([ taskShape ], { x: 100, y: 0 }, subProcessShape_3);
 
       var expectedBounds = assign(originalBounds, { width: 755 });
 
