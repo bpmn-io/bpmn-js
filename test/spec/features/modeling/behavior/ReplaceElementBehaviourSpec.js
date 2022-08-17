@@ -51,7 +51,7 @@ describe('features/modeling - replace element behavior', function() {
       beforeEach(inject(function(move, dragging, elementRegistry) {
 
         moveShape = function(shape, target, position) {
-          var startPosition = { x: shape.x + 10 + shape.width / 2, y: shape.y + 30 + shape.height/2 };
+          var startPosition = { x: shape.x + 10 + shape.width / 2, y: shape.y + 30 + shape.height / 2 };
 
           move.start(canvasEvent(startPosition), shape);
 

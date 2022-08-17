@@ -16,7 +16,7 @@ import emptyProcessXML from 'test/fixtures/bpmn/collaboration/process-empty.bpmn
 
 
 describe('features/modeling - di ordering', function() {
-  var testModules = [coreModule, modelingModule];
+  var testModules = [ coreModule, modelingModule ];
 
   describe('boundary events', function() {
 

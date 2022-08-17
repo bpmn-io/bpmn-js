@@ -120,7 +120,7 @@ describe('features/modeling/rules - BpmnRules', function() {
           task2 = elementFactory.createShape({ type: 'bpmn:Task' });
 
       // then
-      expectCanCreate([task1, task2], 'SequenceFlow', false);
+      expectCanCreate([ task1, task2 ], 'SequenceFlow', false);
     }));
 
 

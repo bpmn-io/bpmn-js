@@ -96,7 +96,7 @@ module.exports = function(karma) {
   };
 
   if (collectTranslations) {
-    config.plugins = [].concat(config.plugins || ['karma-*'], require('./translation-reporter'));
+    config.plugins = [].concat(config.plugins || [ 'karma-*' ], require('./translation-reporter'));
     config.reporters = [].concat(config.reporters || [], 'translation-reporter');
     config.envPreprocessor = [].concat(config.envPreprocessor || [], 'COLLECT_TRANSLATIONS');
   }

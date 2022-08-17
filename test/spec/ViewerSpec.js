@@ -1593,7 +1593,7 @@ describe('Viewer', function() {
         // then
         expect(events).to.eql([
           [ 'saveSVG.start', [ ] ],
-          [ 'saveSVG.done', ['error', 'svg' ] ]
+          [ 'saveSVG.done', [ 'error', 'svg' ] ]
         ]);
       });
     });
@@ -1832,7 +1832,7 @@ describe('Viewer', function() {
           // then
           expect(events).to.eql([
             [ 'import.parse.start', [ 'xml' ] ],
-            [ 'import.parse.complete', ['error', 'definitions', 'elementsById', 'references', 'warnings', 'context' ] ],
+            [ 'import.parse.complete', [ 'error', 'definitions', 'elementsById', 'references', 'warnings', 'context' ] ],
             [ 'import.render.start', [ 'definitions' ] ],
             [ 'import.render.complete', [ 'error', 'warnings' ] ],
             [ 'import.done', [ 'error', 'warnings' ] ]
@@ -2500,7 +2500,7 @@ describe('Viewer', function() {
             // then
             expect(events).to.eql([
               [ 'saveSVG.start', [ ] ],
-              [ 'saveSVG.done', ['error', 'svg' ] ]
+              [ 'saveSVG.done', [ 'error', 'svg' ] ]
             ]);
 
             done(err);

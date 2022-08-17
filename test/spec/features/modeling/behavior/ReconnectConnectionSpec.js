@@ -32,7 +32,7 @@ describe('features/modeling - reconnect connection', function() {
   describe('reconnect DataOutputAssociations', function() {
 
     beforeEach(function() {
-      newWaypoints = [{ x: task2Shape.x, y: task2Shape.y+30 }, dataOutputAssociation.waypoints[1]];
+      newWaypoints = [ { x: task2Shape.x, y: task2Shape.y + 30 }, dataOutputAssociation.waypoints[1] ];
     });
 
     it('should execute', inject(function(modeling) {
@@ -77,7 +77,7 @@ describe('features/modeling - reconnect connection', function() {
   describe('reconnect DataInputAssociations', function() {
 
     beforeEach(function() {
-      newWaypoints = [dataInputAssociation.waypoints[0], { x: task1Shape.x, y: task1Shape.y-30 }];
+      newWaypoints = [ dataInputAssociation.waypoints[0], { x: task1Shape.x, y: task1Shape.y - 30 } ];
     });
 
     it('should execute', inject(function(modeling) {
