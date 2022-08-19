@@ -7,7 +7,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## 10.0.0
+## 9.4.0
 
 * `FEAT`: allow clipboard to be serialized ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
 * `FEAT`: allow cloning of elements ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
@@ -17,12 +17,16 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: prevent bogus meta-data to be attached on paste ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
 * `FIX`: only claim existing IDs ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
 * `FIX`: prevent double paste on label creation ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
+* `FIX`: move labels when collapsing sub-process ([#1695](https://github.com/bpmn-io/bpmn-js/issues/1695))
+* `FIX`: assign default size when expanding element ([#1687](https://github.com/bpmn-io/bpmn-js/issues/1687))
+* `FIX`: render sequence flows always on top ([#1716](https://github.com/bpmn-io/bpmn-js/issues/1716))
+* `DEPS`: update to `diagram-js@8.9.0`
 
 ## 9.3.2
 
 * `FIX`: prevent unnecessary scrollbar ([#1692](https://github.com/bpmn-io/bpmn-js/issues/1692))
 * `FIX`: check for replacement using actual target ([#1699](https://github.com/bpmn-io/bpmn-js/pull/1699))
-* `DEPS`: update to diagram-js@8.7.1
+* `DEPS`: update to `diagram-js@8.7.1`
 
 ## 9.3.1
 
@@ -126,7 +130,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: set label color on `bpmndi:BPMNLabel#color` ([#1543](https://github.com/bpmn-io/bpmn-js/pull/1543))
 * `FIX`: don't create illegal `bpmndi:BPMNEdge#waypoints` property ([#1544](https://github.com/bpmn-io/bpmn-js/issues/1544))
 * `FIX`: correct direct editing on touch devices
-* `DEPS`: update to diagram-js@7.8.2
+* `DEPS`: update to `diagram-js@7.8.2`
 
 ## 8.8.3
 
