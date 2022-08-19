@@ -39,6 +39,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       env:
         TEST_BROWSERS: ChromeHeadless
+      run: npm run all
     - name: Build
       if: matrix.os == 'macos-latest'
       env:
