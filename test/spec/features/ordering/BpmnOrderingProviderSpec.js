@@ -388,7 +388,7 @@ describe('features/modeling - ordering', function() {
   });
 
 
-  describe('connections', function() {
+  describe('sequence flows', function() {
 
     var diagramXML = require('./ordering.bpmn');
 
@@ -397,11 +397,14 @@ describe('features/modeling - ordering', function() {
 
     it('should render sequence flows behind tasks', inject(function() {
 
+      // assume
+      expectZOrder('Task', 'BoundaryEvent', 'SequenceFlow');
+
       // when
       var connection = connect('BoundaryEvent', 'Task');
 
       // then
-      expectZOrder(connection, 'Task', 'BoundaryEvent', connection.label);
+      expectZOrder('Task', 'BoundaryEvent', connection, connection.label);
     }));
 
   });
