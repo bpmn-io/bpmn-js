@@ -97,7 +97,7 @@
   "dependencies": {
     "bpmn-moddle": "^7.1.2",
     "css.escape": "^1.5.1",
-    "diagram-js": "^8.8.0",
+    "diagram-js": "^8.9.0",
     "diagram-js-direct-editing": "^1.7.0",
     "ids": "^1.0.0",
     "inherits-browser": "0.0.1",
