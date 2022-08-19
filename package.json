@@ -84,7 +84,6 @@
     "npm-run-all": "^4.1.2",
     "promise-polyfill": "^8.2.0",
     "puppeteer": "^16.1.1",
-    "raw-loader": "^1.0.0",
     "rollup": "^2.78.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-license": "^2.8.1",
@@ -92,7 +91,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "sinon": "^7.5.0",
     "sinon-chai": "^3.7.0",
-    "webpack": "^4.46.0"
+    "webpack": "^5.74.0"
   },
   "dependencies": {
     "bpmn-moddle": "^7.1.2",
