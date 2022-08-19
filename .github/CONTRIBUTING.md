@@ -64,7 +64,13 @@ npm start
 Spin up the development environment, re-run tests with every file change:
 
 ```sh
-TEST_BROWSERS=(Chrome|Firefox|IE) npm run dev
+npm run dev
+```
+
+You may also run against different browsers:
+
+```sh
+TEST_BROWSERS=Firefox,Safari npm run dev
 ```
 
 Build, lint, and test the project, just as the CI does.
