@@ -33,7 +33,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       env:
         COVERAGE: 1
-        TEST_BROWSERS: Firefox,PhantomJS,ChromeHeadless
+        TEST_BROWSERS: Firefox,ChromeHeadless
       run: xvfb-run npm run all
     - name: Build
       if: matrix.os != 'ubuntu-latest'
