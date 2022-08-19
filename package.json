@@ -104,6 +104,6 @@
     "min-dash": "^3.5.2",
     "min-dom": "^3.2.0",
     "object-refs": "^0.3.0",
-    "tiny-svg": "^2.2.2"
+    "tiny-svg": "^2.2.4"
   }
 }
