@@ -54,8 +54,11 @@
     "*.css"
   ],
   "devDependencies": {
+    "@babel/core": "^7.18.10",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-istanbul": "^6.1.1",
     "bpmn-font": "^0.10.0",
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "4.1.2",
@@ -67,7 +70,6 @@
     "eslint-plugin-bpmn-io": "^0.14.1",
     "eslint-plugin-import": "^2.26.0",
     "execa": "^5.1.1",
-    "istanbul-instrumenter-loader": "^3.0.1",
     "karma": "^6.4.0",
     "karma-chrome-launcher": "^3.1.1",
     "karma-coverage": "^2.2.0",
