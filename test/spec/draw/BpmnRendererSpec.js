@@ -484,42 +484,12 @@ describe('draw - bpmn renderer', function() {
         }
       }));
 
-      // TODO(philippfromme): remove once we drop PhantomJS
-      /**
-       * Ensure alpha channel of RGB (rgba) color has one decimal point.
-       *
-       * @param {string} color
-       *
-       * @return {string}
-       */
-      function fixRgba(color) {
-        if (color.indexOf('rgba') !== -1) {
-          return [
-            'rgba(',
-            color
-              .replace(/rgba\(|\)/g, '')
-              .split(',')
-              .map(function(string) {
-                if (string.indexOf('.') !== -1) {
-                  return parseFloat(string).toFixed(1);
-                }
-
-                return parseInt(string);
-              })
-              .join(', '),
-            ')'
-          ].join('');
-        }
-
-        return color;
-      }
-
       function expectFillColor(element, color) {
-        expect(expectedColors(color)).to.include(fixRgba(element.style.fill));
+        expect(expectedColors(color)).to.include(element.style.fill);
       }
 
       function expectStrokeColor(element, color) {
-        expect(expectedColors(color)).to.include(fixRgba(element.style.stroke));
+        expect(expectedColors(color)).to.include(element.style.stroke);
       }
 
       /**
