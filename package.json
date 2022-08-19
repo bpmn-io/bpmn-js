@@ -74,7 +74,6 @@
     "karma-debug-launcher": "0.0.4",
     "karma-env-preprocessor": "^0.1.1",
     "karma-firefox-launcher": "^2.1.2",
-    "karma-ie-launcher": "^1.0.0",
     "karma-mocha": "^2.0.1",
     "karma-safari-launcher": "^1.0.0",
     "karma-sinon-chai": "^2.0.2",
