@@ -66,7 +66,7 @@ module.exports = function(karma) {
           },
           {
             test: /\.css|\.bpmn$/,
-            use: 'raw-loader'
+            type: 'asset/source'
           }
         ].concat(coverage ?
           {
