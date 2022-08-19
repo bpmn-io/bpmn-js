@@ -918,9 +918,6 @@ describe('features/copy-paste', function() {
 
   describe('complex', function() {
 
-    // TODO(nikku): drop once legacy PhantomJS is dropped
-    this.timeout(6000);
-
     beforeEach(bootstrapModeler(complexXML, {
       modules: testModules,
       moddleExtensions: {
