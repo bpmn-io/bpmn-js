@@ -28,6 +28,8 @@ import {
   hasErrorEventDefinition
 } from 'lib/util/DiUtil';
 
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
 
 describe('features/replace - bpmn replace', function() {
 
@@ -574,6 +576,32 @@ describe('features/replace - bpmn replace', function() {
       expect(newElement.label.x).to.equal(label.x);
       expect(newElement.label.y).to.equal(label.y);
     }));
+
+
+    it('should assign default size when replacing task with expanded sub process', inject(
+      function(elementRegistry, bpmnReplace) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        var mid = getMid(task);
+
+        var newElementData = {
+          type: 'bpmn:SubProcess',
+          isExpanded: true
+        };
+
+        // when
+        var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+        // then
+        expect(newElement).to.exist;
+        expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+        expect(getMid(newElement)).to.eql(mid);
+        expect(newElement.width).to.equal(350);
+        expect(newElement.height).to.equal(200);
+      }
+    ));
 
   });
 
@@ -1176,6 +1204,7 @@ describe('features/replace - bpmn replace', function() {
         expect(is(newElement, 'bpmn:CallActivity')).to.be.true;
       }));
 
+
     it('should drop event type from start event after moving it into sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
@@ -1194,6 +1223,7 @@ describe('features/replace - bpmn replace', function() {
         expect(startEventAfter.businessObject.eventDefinitions).to.be.undefined;
       })
     );
+
 
     it('should not drop event type from start event after moving it into event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
