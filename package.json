@@ -97,13 +97,13 @@
   "dependencies": {
     "bpmn-moddle": "^7.1.2",
     "css.escape": "^1.5.1",
-    "diagram-js": "^8.8.0",
+    "diagram-js": "^8.9.0",
     "diagram-js-direct-editing": "^1.7.0",
     "ids": "^1.0.0",
     "inherits-browser": "0.0.1",
     "min-dash": "^3.5.2",
-    "min-dom": "^3.2.0",
+    "min-dom": "^3.2.1",
     "object-refs": "^0.3.0",
-    "tiny-svg": "^2.2.2"
+    "tiny-svg": "^2.2.4"
   }
 }
