@@ -21,6 +21,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: assign default size when expanding element ([#1687](https://github.com/bpmn-io/bpmn-js/issues/1687))
 * `FIX`: render sequence flows always on top ([#1716](https://github.com/bpmn-io/bpmn-js/issues/1716))
 * `DEPS`: update to `diagram-js@8.9.0`
+* `DEPS`: update to `bpmn-moddle@7.1.3`
 
 ## 9.3.2
 
