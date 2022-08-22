@@ -113,7 +113,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
         });
 
         // then
-        const plane = elementRegistry.get('SubProcess_2_plane');
+        var plane = elementRegistry.get('SubProcess_2_plane');
 
         expect(sequenceFlow.parent).to.equal(plane);
         expect(startEvent.parent).to.equal(plane);
