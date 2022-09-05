@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 9.4.1
+
+* `FIX`: ignore elements which cannot be colored ([#1734](https://github.com/bpmn-io/bpmn-js/pull/1734))
+
 ## 9.4.0
 
 * `FEAT`: allow clipboard to be serialized ([#1707](https://github.com/bpmn-io/bpmn-js/pull/1707))
