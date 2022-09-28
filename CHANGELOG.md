@@ -10,6 +10,7 @@ ___Note:__ Yet to be released changes appear here._
 ## 10.0.0
 
 * `FEAT`: use ES2018 syntax ([#1737](https://github.com/bpmn-io/bpmn-js/pull/1737))
+* `DEPS`: update to `diagram-js@9.0.0`
 
 ### Breaking Changes
 
