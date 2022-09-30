@@ -59,7 +59,7 @@
     "babel-loader": "^8.2.5",
     "babel-plugin-istanbul": "^6.1.1",
     "bpmn-font": "^0.10.0",
-    "camunda-bpmn-moddle": "^4.0.1",
+    "camunda-bpmn-moddle": "^7.0.0",
     "chai": "4.1.2",
     "chai-match": "^1.1.1",
     "cpx": "^1.5.0",
