@@ -718,6 +718,8 @@ describe('Modeler', function() {
 
     it('should copy + paste via serialized tree', function() {
 
+      this.timeout(3000);
+
       var aXML = require('./Modeler.copy-paste.complex.bpmn');
       var bXML = require('./Modeler.copy-paste.empty.bpmn');
 
