@@ -17,6 +17,8 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 10.0.0
 
+_Updates the library target to ES2018._
+
 * `FEAT`: use ES2018 syntax ([#1737](https://github.com/bpmn-io/bpmn-js/pull/1737))
 
 ### Breaking Changes
