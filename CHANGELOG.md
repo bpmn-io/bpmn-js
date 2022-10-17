@@ -7,6 +7,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 10.2.1
+
+* `FIX`: correct preserving of outgoing connections on event-based gateway morph ([#1738](https://github.com/bpmn-io/bpmn-js/issues/1738))
+
 ## 10.2.0
 
 * `DEPS`: update to `bpmn-moddle@8`
