@@ -8,10 +8,6 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
-import {
-  indexOf as collectionIndexOf
-} from 'diagram-js/lib/util/Collections';
-
 import bpmnCopyPasteModule from 'lib/features/copy-paste';
 import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import modelingModule from 'lib/features/modeling';
@@ -26,18 +22,15 @@ describe('features/modeling/behavior - groups', function() {
     coreModule,
     copyPasteModule,
     bpmnCopyPasteModule,
-    modelingModule ];
-
+    modelingModule
+  ];
 
   var processDiagramXML = require('./GroupBehaviorSpec.bpmn');
 
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules.concat(modelingModule) }));
+  beforeEach(bootstrapModeler(processDiagramXML, {
+    modules: testModules.concat(modelingModule)
+  }));
 
-  function expectIncludedOrNot(collection, object, expected) {
-    var isIncluded = collectionIndexOf(collection, object) >= 0;
-
-    expect(isIncluded).to.equal(expected);
-  }
 
   describe('creation', function() {
 
@@ -61,102 +54,67 @@ describe('features/modeling/behavior - groups', function() {
 
         // then
         expect(categoryValueRef).to.eql(categoryValue);
-        expect(originalSize).to.equal(definitions.get('rootElements').length);
 
+        expect(definitions.get('rootElements')).to.have.length(originalSize);
       }
     ));
 
 
-    describe('should create new Category for every new Group', function() {
+    describe('should NOT create Category for new Group', function() {
 
       it('execute', inject(function(canvas, elementFactory, modeling) {
 
         // given
-        var group = elementFactory.createShape({ type: 'bpmn:Group' }),
-            root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent;
+        var root = canvas.getRootElement();
 
         // when
-        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
-            categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
+        var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
+            groupBo = getBusinessObject(group),
+            categoryValue = groupBo.categoryValueRef;
 
         // then
-        expect(categoryValueRef).to.exist;
-        expect(category).to.exist;
-
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          true
-        );
-
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          true
-        );
-
+        expect(categoryValue).not.to.exist;
       }));
 
 
       it('undo', inject(function(canvas, elementFactory, modeling, commandStack) {
 
         // given
-        var group = elementFactory.createShape({ type: 'bpmn:Group' }),
-            root = canvas.getRootElement();
+        var root = canvas.getRootElement();
 
         // when
-        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root);
+        var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
+            groupBo = getBusinessObject(group);
 
         commandStack.undo();
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef;
+        var categoryValue = groupBo.categoryValueRef;
 
         // then
-        expect(categoryValueRef).not.to.exist;
-
+        expect(categoryValue).not.to.exist;
       }));
 
 
       it('redo', inject(function(canvas, elementFactory, modeling, commandStack) {
 
         // given
-        var group = elementFactory.createShape({ type: 'bpmn:Group' }),
-            root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent;
+        var root = canvas.getRootElement();
 
         // when
-        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root);
+        var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
+            groupBo = getBusinessObject(group);
 
         commandStack.undo();
         commandStack.redo();
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
-
         // then
-        expect(categoryValueRef).to.exist;
-        expect(categoryValueRef.$parent).to.exist;
-
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          true
-        );
-
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          true
-        );
-
+        expect(groupBo.categoryValueRef).not.to.exist;
       }));
 
     });
 
 
-    describe('integration', function() {
+    describe('should paste with Category', function() {
 
       var groupBo, rootElements;
 
@@ -208,140 +166,124 @@ describe('features/modeling/behavior - groups', function() {
       }));
 
 
-      it('<redo>', function() {
+      it('<redo>', inject(function(commandStack) {
+
+        // given
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
 
         // then
-        expect(groupBo.categoryValueRef).to.exist;
-        expect(groupBo.categoryValueRef.$parent).to.exist;
-        expect(groupBo.categoryValueRef.value).to.equal('Value 1');
+        expect(groupBo.categoryValueRef).to.equal(categoryValue);
+        expect(groupBo.categoryValueRef.$parent).to.equal(category);
 
         expect(rootElements).to.have.length(4);
-      });
+      }));
 
     });
 
 
-    it('should always create new Category in definitions',
-      inject(function(canvas, elementFactory, modeling, bpmnjs) {
+    it('should create new Category in definitions', inject(
+      function(canvas, elementFactory, modeling, bpmnjs) {
 
         // given
-        var group = elementFactory.createShape({ type: 'bpmn:Group' }),
-            root = canvas.findRoot('Subprocess_1_plane'),
-            rootParent = getBusinessObject(root).$parent,
-            definitions = bpmnjs._definitions;
+        var root = canvas.findRoot('Subprocess_1_plane'),
+            definitions = bpmnjs.getDefinitions();
 
+        // operate on sub-process plane
         canvas.setRootElement(root);
 
         // when
-        var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
-            categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
+        var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
+            groupBo = getBusinessObject(group);
+
+        // create label
+        modeling.updateLabel(group, 'FOO BAR');
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // then
-        expect(categoryValueRef).to.exist;
+        expect(categoryValue).to.exist;
         expect(category).to.exist;
 
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          true
-        );
-
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          true
-        );
-
-        expectIncludedOrNot(
-          rootParent.get('rootElements'),
-          category,
-          false
-        );
-
-      }));
+        expect(category.get('categoryValue')).to.include(categoryValue);
+        expect(definitions.get('rootElements')).to.include(category);
+      }
+    ));
 
   });
 
 
   describe('deletion', function() {
 
-    it('should NOT remove CategoryValue if it is still referenced somewhere', inject(
+    it('should NOT remove CategoryValue if still referenced', inject(
       function(elementRegistry, modeling) {
 
         // given
-        var groupShape = elementRegistry.get('Group_1');
+        var groupShape = elementRegistry.get('Group_1'),
+            groupBo = getBusinessObject(groupShape);
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // when
         modeling.removeShape(groupShape);
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
-
         // then
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          true
-        );
+        expect(groupBo.categoryValueRef).not.to.exist;
 
+        expect(category.get('categoryValue')).to.contain(categoryValue);
       }
     ));
 
 
-    it('should NOT remove Category if it still has CategoryValues', inject(
+    it('should NOT remove Category if still referenced', inject(
       function(canvas, elementRegistry, modeling) {
 
         // given
         var groupShape = elementRegistry.get('Group_3'),
+            groupBo = getBusinessObject(groupShape),
             root = canvas.getRootElement(),
             definitions = getBusinessObject(root).$parent;
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // when
         modeling.removeShape(groupShape);
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef;
-
         // then
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          categoryValueRef.$parent,
-          true
-        );
+        expect(groupBo.categoryValueRef).not.to.exist;
 
+        expect(definitions.get('rootElements')).to.contain(category);
       }
     ));
 
 
-    describe('should remove referenced Category + Value when Group was deleted', function() {
+    describe('should remove Category + CategoryValue on deletion', function() {
 
       it('execute', inject(function(canvas, elementRegistry, modeling) {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
+            groupBo = getBusinessObject(groupShape),
             root = canvas.getRootElement(),
             definitions = getBusinessObject(root).$parent;
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // when
         modeling.removeShape(groupShape);
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
-
-
         // then
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          false
-        );
+        expect(category.get('categoryValue')).not.to.contain(categoryValue);
 
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          false
-        );
-
+        expect(definitions.get('rootElements')).not.to.contain(category);
       }));
 
 
@@ -349,30 +291,21 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
+            groupBo = getBusinessObject(groupShape),
             root = canvas.getRootElement(),
             definitions = getBusinessObject(root).$parent;
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // when
         modeling.removeShape(groupShape);
 
         commandStack.undo();
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
-
         // then
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          true
-        );
-
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          true
-        );
-
+        expect(category.get('categoryValue')).to.include(categoryValue);
+        expect(definitions.get('rootElements')).to.include(category);
       }));
 
 
@@ -380,8 +313,12 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
+            groupBo = getBusinessObject(groupShape),
             root = canvas.getRootElement(),
             definitions = getBusinessObject(root).$parent;
+
+        var categoryValue = groupBo.categoryValueRef,
+            category = categoryValue.$parent;
 
         // when
         modeling.removeShape(groupShape);
@@ -389,23 +326,130 @@ describe('features/modeling/behavior - groups', function() {
         commandStack.undo();
         commandStack.redo();
 
-        var categoryValueRef = getBusinessObject(groupShape).categoryValueRef,
-            category = categoryValueRef.$parent;
+        // then
+        expect(category.get('categoryValue')).not.to.include(categoryValue);
+        expect(definitions.get('rootElements')).not.to.include(category);
+      }));
 
+    });
+
+
+    describe('should handle non-existing CategoryValue gracefully', function() {
+
+      it('execute', inject(function(elementRegistry, modeling) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // assume
+        expect(groupBo.categoryValueRef).not.to.exist;
 
         // then
-        expectIncludedOrNot(
-          category.get('categoryValue'),
-          categoryValueRef,
-          false
-        );
+        modeling.removeShape(groupShape);
+      }));
 
-        expectIncludedOrNot(
-          definitions.get('rootElements'),
-          category,
-          false
-        );
 
+      it('undo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // when
+        modeling.removeShape(groupShape);
+
+        commandStack.undo();
+
+        // then
+        expect(groupBo.categoryValueRef).not.to.exist;
+      }));
+
+
+      it('redo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var groupShape = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(groupShape);
+
+        // when
+        modeling.removeShape(groupShape);
+
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(groupBo.categoryValueRef).not.to.exist;
+      }));
+
+    });
+
+  });
+
+
+  describe('label editing', function() {
+
+    describe('should create Category before setting label', function() {
+
+      it('execute', inject(function(elementRegistry, modeling) {
+
+        // given
+        var group = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(group);
+
+        // assume
+        expect(groupBo.categoryValueRef).not.to.exist;
+
+        // when
+        modeling.updateLabel(group, 'Foo bar');
+
+        // then
+        expect(groupBo.categoryValueRef).to.exist;
+        expect(groupBo.categoryValueRef.value).to.eql('Foo bar');
+
+        expect(groupBo.categoryValueRef.$parent).to.exist;
+      }));
+
+
+      it('undo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var group = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(group);
+
+        // assume
+        expect(groupBo.categoryValueRef).not.to.exist;
+
+        // when
+        modeling.updateLabel(group, 'Foo bar');
+
+        commandStack.undo();
+
+        // then
+        expect(groupBo.categoryValueRef).not.to.exist;
+      }));
+
+
+      it('redo', inject(function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var group = elementRegistry.get('Group_NO_CATEGORY_VALUE'),
+            groupBo = getBusinessObject(group);
+
+        // assume
+        expect(groupBo.categoryValueRef).not.to.exist;
+
+        // when
+        modeling.updateLabel(group, 'Foo bar');
+
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(groupBo.categoryValueRef).to.exist;
+        expect(groupBo.categoryValueRef.value).to.eql('Foo bar');
+
+        expect(groupBo.categoryValueRef.$parent).to.exist;
       }));
 
     });

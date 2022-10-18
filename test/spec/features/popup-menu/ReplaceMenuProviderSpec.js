@@ -511,6 +511,25 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
+      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('LoopTask'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-parallel-mi');
+
+        // then
+        var newLoopCharacteristics = businessObject.loopCharacteristics;
+
+        expect(is(newLoopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(newLoopCharacteristics.isSequential).to.be.false;
+      }));
+
+
       it('should keep sequential properties', inject(function(elementRegistry) {
 
         // given
@@ -617,6 +636,25 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
+      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('LoopTask'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-sequential-mi');
+
+        // then
+        var newLoopCharacteristics = businessObject.loopCharacteristics;
+
+        expect(is(newLoopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(newLoopCharacteristics.isSequential).to.be.true;
+      }));
+
+
       it('should keep parallel properties', inject(function(elementRegistry) {
 
         // given
@@ -719,6 +757,25 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(domClasses(parallelEntry).has('active')).to.be.false;
+      }));
+
+
+      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('SequentialTask'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-loop');
+
+        // then
+        var newLoopCharacteristics = businessObject.loopCharacteristics;
+
+        expect(is(newLoopCharacteristics, 'bpmn:StandardLoopCharacteristics')).to.be.true;
+        expect(newLoopCharacteristics.isSequential).to.be.undefined;
       }));
     });
 
@@ -2434,7 +2491,7 @@ function triggerAction(id) {
   var entry = queryEntry(id);
 
   if (!entry) {
-    throw new Error('entry "'+ id +'" not found in replace menu');
+    throw new Error('entry "' + id + '" not found in replace menu');
   }
 
   var popupMenu = getBpmnJS().get('popupMenu');

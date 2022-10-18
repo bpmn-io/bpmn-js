@@ -28,6 +28,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="352.0" y="242.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="345" y="285" width="55" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_2" bpmnElement="Task_1">
         <dc:Bounds height="80.0" width="100.0" x="420.0" y="220.0"/>
@@ -38,6 +41,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="650.0" y="212.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="645" y="255" width="51" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_SubProcess_2" targetElement="_BPMNShape_EndEvent_2">
         <di:waypoint xsi:type="dc:Point" x="600.0" y="230.0"/>

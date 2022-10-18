@@ -51,8 +51,8 @@ describe('features - context-pad', function() {
 
     beforeEach(inject(function(contextPad) {
 
-      deleteAction = function(element) {
-        return padEntry(contextPad.getPad(element).html, 'delete');
+      deleteAction = function(target) {
+        return padEntry(contextPad.getPad(target).html, 'delete');
       };
     }));
 
@@ -164,6 +164,65 @@ describe('features - context-pad', function() {
         expect(deleteAction(element)).not.to.exist;
       })
     );
+
+
+    describe('multi-element', function() {
+
+      it('should add delete action by default', inject(
+        function(elementRegistry, contextPad) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_1'),
+              task = elementRegistry.get('Task_1');
+
+          // when
+          contextPad.open([ event, task ]);
+
+          // then
+          expect(deleteAction([ event, task ])).to.exist;
+        }
+      ));
+
+
+      it('should NOT add delete action when rule returns false', inject(
+        function(elementRegistry, contextPad, customRules) {
+
+          // given
+          customRules.addRule('elements.delete', 1500, function() {
+            return false;
+          });
+
+          var event = elementRegistry.get('StartEvent_1'),
+              task = elementRegistry.get('Task_1');
+
+          // when
+          contextPad.open([ event, task ]);
+
+          // then
+          expect(deleteAction([ event, task ])).not.to.exist;
+        }
+      ));
+
+
+      it('should trigger batch delete', inject(
+        function(elementRegistry, contextPad, customRules) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_1'),
+              task = elementRegistry.get('Task_1');
+
+          contextPad.open([ event, task ]);
+
+          // when
+          contextPad.trigger('click', padEvent('delete'));
+
+          // then
+          expect(elementRegistry.get('StartEvent_1')).not.to.exist;
+          expect(elementRegistry.get('Task_1')).not.to.exist;
+        }
+      ));
+
+    });
 
   });
 
@@ -299,6 +358,17 @@ describe('features - context-pad', function() {
         'delete',
         '!replace',
         '!append.text-annotation'
+      ]);
+    }));
+
+
+    it('should provide SequenceFlow entries', inject(function() {
+
+      expectContextPadEntries('SequenceFlow_1', [
+        'append.text-annotation',
+        'delete',
+        'replace',
+        '!connect'
       ]);
     }));
 

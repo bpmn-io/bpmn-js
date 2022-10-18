@@ -152,13 +152,13 @@ describe('features/modeling - set color', function() {
           flowDi = getDi(flowShape);
 
       // when
-      modeling.setColor(flowLabel, { stroke: 'FUCHSIA', fill: 'FUCHSIA' });
+      modeling.setColor(flowLabel, { stroke: 'YELLOW', fill: 'FUCHSIA' });
 
       // then
       expect(flowDi.get('border-color')).not.to.exist;
       expect(flowDi.get('background-color')).not.to.exist;
 
-      expect(flowDi.label.get('color')).to.eql(FUCHSIA_HEX);
+      expect(flowDi.label.get('color')).to.eql(YELLOW_HEX);
     }));
 
 
@@ -314,6 +314,35 @@ describe('features/modeling - set color', function() {
 
       // then
       expect(setColor).to.throw(/^invalid color value/);
+    }));
+
+
+    it('should ignore BPMNPlane (Process)', inject(function(elementRegistry, modeling) {
+
+      // given
+      var processElement = elementRegistry.get('Process_1'),
+          processDi = getDi(processElement);
+
+      // when
+      modeling.setColor(processElement, { fill: '#abcdef' });
+
+      // then
+      expect(processDi.get('background-color')).not.to.exist;
+    }));
+
+
+    it('should ignore BPMNPlane (SubProcess)', inject(function(canvas, elementRegistry, modeling) {
+
+      // given
+      canvas.setRootElement(canvas.findRoot('Collapsed_plane'));
+      var subprocess = canvas.getRootElement(),
+          subprocessDi = getDi(subprocess);
+
+      // when
+      modeling.setColor(subprocess, { fill: '#abcdef' });
+
+      // then
+      expect(subprocessDi.get('background-color')).not.to.exist;
     }));
   });
 

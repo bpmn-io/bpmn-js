@@ -16,7 +16,7 @@ import emptyProcessXML from 'test/fixtures/bpmn/collaboration/process-empty.bpmn
 
 
 describe('features/modeling - di ordering', function() {
-  var testModules = [coreModule, modelingModule];
+  var testModules = [ coreModule, modelingModule ];
 
   describe('boundary events', function() {
 
@@ -69,9 +69,9 @@ describe('features/modeling - di ordering', function() {
       return expectDiOrder([
         root.id,
         participant1.id,
-        sequenceFlow.id,
         task1.id,
         task2.id,
+        sequenceFlow.id,
         participant2.id,
         messageFlow1.id,
         messageFlow2.id
@@ -109,6 +109,7 @@ describe('features/modeling - di ordering', function() {
         task1.id,
       ]);
     });
+
 
     it('should order subprocess planes', function() {
 
@@ -150,22 +151,7 @@ describe('features/modeling - di ordering', function() {
       return expectDiOrder(
         [
           'Page1Process',
-          'SequenceFlow_13g7fzw',
-          'SequenceFlow_1c22uay',
-          'SequenceFlow_1fp5smb',
-          'SequenceFlow_1kwx6kg',
-          'SequenceFlow_1sv6jqd',
-          'SequenceFlow_1ysz115',
-          'SequenceFlow_0qen1he',
-          'SequenceFlow_0nqtgik',
-          'SequenceFlow_0zafwi9',
           'MakeBookingSubProcess',
-          'SequenceFlow_3',
-          'SequenceFlow_2',
-          'SequenceFlow_1',
-          'SequenceFlow',
-          'SequenceFlow_1244t37',
-          'SequenceFlow_0e0tkzl',
           'StartEvent_1',
           'ExclusiveGateway_1l6x19l',
           'BookFlightTask',
@@ -175,20 +161,26 @@ describe('features/modeling - di ordering', function() {
           'TravelBookedEndEvent',
           'CancelHotelTask',
           'HandleCompensationSubProcess',
-          'SequenceFlow_0e6xitm',
-          'SequenceFlow_0zpw5ma',
-          'SequenceFlow_03663sw',
-          'SequenceFlow_0i33vwg',
-          'SequenceFlow_09qgqyw',
-          'SequenceFlow_0cip1mz',
           'BookingStartEvent',
           'ParallelGateway_0vh9j6n',
           'FlightEvent',
           'HotelEvent',
           'ParallelGateway_1ycdyix',
           'EndEvent_0nr3cro',
+          'SequenceFlow_0cip1mz',
+          'SequenceFlow_09qgqyw',
+          'SequenceFlow_0i33vwg',
+          'SequenceFlow_03663sw',
+          'SequenceFlow_0zpw5ma',
+          'SequenceFlow_0e6xitm',
           'FlightBoundaryEvent',
           'HotelBoundaryEvent',
+          'SequenceFlow_0e0tkzl',
+          'SequenceFlow_1244t37',
+          'SequenceFlow',
+          'SequenceFlow_1',
+          'SequenceFlow_2',
+          'SequenceFlow_3',
           'Association_0qea76h',
           'Association_1',
           'CancelRequestEndEvent',
@@ -202,14 +194,27 @@ describe('features/modeling - di ordering', function() {
           'RequestCreditCardInformationTask',
           'NotifyCustomerOfferExpiredTask',
           'UpdateCustomerRecordTask',
-          'ReceiveTravelRequestStartEvent'
+          'ReceiveTravelRequestStartEvent',
+          'SequenceFlow_0zafwi9',
+          'SequenceFlow_0nqtgik',
+          'SequenceFlow_0qen1he',
+          'SequenceFlow_1ysz115',
+          'SequenceFlow_1sv6jqd',
+          'SequenceFlow_1kwx6kg',
+          'SequenceFlow_1fp5smb',
+          'SequenceFlow_1c22uay',
+          'SequenceFlow_13g7fzw'
         ]
       );
     });
+
   });
+
 });
 
-// helper
+
+// helpers ////////////
+
 function expectDiOrder(expectedOrder) {
   return getBpmnJS().saveXML({ format: true }).then(function(result) {
 

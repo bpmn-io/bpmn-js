@@ -7,7 +7,7 @@ var singleStart = process.env.SINGLE_START;
 var coverage = process.env.COVERAGE;
 
 // configures browsers to run test against
-// any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'IE', 'PhantomJS' ]
+// any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'Safari' ]
 var browsers = (process.env.TEST_BROWSERS || 'ChromeHeadless').split(',');
 
 // use puppeteer provided Chrome for testing
@@ -33,7 +33,6 @@ module.exports = function(karma) {
     ],
 
     files: [
-      'node_modules/promise-polyfill/dist/polyfill.js',
       suite
     ],
 
@@ -66,17 +65,24 @@ module.exports = function(karma) {
           },
           {
             test: /\.css|\.bpmn$/,
-            use: 'raw-loader'
+            type: 'asset/source'
           }
-        ].concat(coverage ?
-          {
+        ].concat(
+          coverage ? {
             test: /\.js$/,
+            exclude: /node_modules/,
             use: {
-              loader: 'istanbul-instrumenter-loader',
-              options: { esModules: true }
-            },
-            include: /lib\.*/,
-            exclude: /node_modules/
+              loader: 'babel-loader',
+              options: {
+                plugins: [
+                  [ 'istanbul', {
+                    include: [
+                      'lib/**'
+                    ]
+                  } ]
+                ],
+              }
+            }
           } : []
         )
       },
@@ -96,7 +102,7 @@ module.exports = function(karma) {
   };
 
   if (collectTranslations) {
-    config.plugins = [].concat(config.plugins || ['karma-*'], require('./translation-reporter'));
+    config.plugins = [].concat(config.plugins || [ 'karma-*' ], require('./translation-reporter'));
     config.reporters = [].concat(config.reporters || [], 'translation-reporter');
     config.envPreprocessor = [].concat(config.envPreprocessor || [], 'COLLECT_TRANSLATIONS');
   }

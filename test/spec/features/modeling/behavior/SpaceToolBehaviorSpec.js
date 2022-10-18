@@ -14,6 +14,7 @@ import {
 } from '../../../../util/MockEvents';
 
 import {
+  GROUP_MIN_DIMENSIONS,
   LANE_MIN_DIMENSIONS,
   PARTICIPANT_MIN_DIMENSIONS,
   SUB_PROCESS_MIN_DIMENSIONS
@@ -60,6 +61,7 @@ describe('features/modeling - space tool behavior', function() {
     });
 
   });
+
 
   describe('participant', function() {
 
@@ -142,6 +144,38 @@ describe('features/modeling - space tool behavior', function() {
 
           // then
           expect(lane.height).to.equal(LANE_MIN_DIMENSIONS.height);
+        })
+      );
+
+    });
+
+  });
+
+
+  describe('group', function() {
+
+    describe('minimum dimensions', function() {
+
+      var diagramXML = require('./SpaceToolBehaviorSpec.group.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should ensure group minimum dimensions', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var group = elementRegistry.get('Group_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 450, y: 0 }));
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(group.width).to.equal(GROUP_MIN_DIMENSIONS.width);
         })
       );
 

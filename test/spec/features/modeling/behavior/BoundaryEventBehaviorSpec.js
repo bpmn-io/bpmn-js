@@ -18,7 +18,7 @@ describe('features/modeling/behavior - boundary event', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-  describe('implicitly removing boundary events', function() {
+  describe('should implicitly remove boundary events', function() {
 
     it('after connecting to event-based gateway',
       inject(function(modeling, elementRegistry) {
@@ -64,11 +64,11 @@ describe('features/modeling/behavior - boundary event', function() {
   });
 
 
-  describe('copy reference on replace', function() {
+  describe('should keep root element reference on replace', function() {
 
     it('interrupting to non-interrupting', function() {
 
-      it('should copy message reference', inject(function(bpmnReplace, elementRegistry) {
+      it('message reference', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_2'),
@@ -89,7 +89,7 @@ describe('features/modeling/behavior - boundary event', function() {
       }));
 
 
-      it('should copy escalation reference', inject(function(bpmnReplace, elementRegistry) {
+      it('escalation reference', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_3'),
@@ -110,7 +110,7 @@ describe('features/modeling/behavior - boundary event', function() {
       }));
 
 
-      it('should copy error reference', inject(function(bpmnReplace, elementRegistry) {
+      it('error reference', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_4'),
@@ -131,7 +131,7 @@ describe('features/modeling/behavior - boundary event', function() {
       }));
 
 
-      it('should copy signal reference', inject(function(bpmnReplace, elementRegistry) {
+      it('signal reference', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_5'),
@@ -156,7 +156,7 @@ describe('features/modeling/behavior - boundary event', function() {
 
     it('non-interrupting to interrupting', function() {
 
-      it('should copy message reference', inject(function(bpmnReplace, elementRegistry) {
+      it('message reference', inject(function(bpmnReplace, elementRegistry) {
 
         // given
         var interruptingBoundaryEvent = elementRegistry.get('BoundaryEvent_6'),
@@ -181,6 +181,7 @@ describe('features/modeling/behavior - boundary event', function() {
   });
 
 });
+
 
 // helpers //////////
 
