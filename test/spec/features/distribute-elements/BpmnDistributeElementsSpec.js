@@ -1,3 +1,5 @@
+import { forEach } from 'min-dash';
+
 import {
   bootstrapModeler,
   inject
@@ -6,6 +8,8 @@ import {
 import bpmnDistributeElements from 'lib/features/distribute-elements';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+
+import { is } from 'lib/util/ModelUtil';
 
 function last(arr) {
   return arr[arr.length - 1];
@@ -27,7 +31,7 @@ describe('features/distribute-elements', function() {
 
     beforeEach(inject(function(elementRegistry, canvas) {
       elements = elementRegistry.filter(function(element) {
-        return element.parent;
+        return element.parent && !is(element, 'bpmn:Participant');
       });
     }));
 
@@ -79,34 +83,96 @@ describe('features/distribute-elements', function() {
 
   describe('filtering elements', function() {
 
-    var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.bpmn');
+    describe('process', function() {
 
-    beforeEach(bootstrapModeler(xml, { modules: testModules }));
+      var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.bpmn'),
+          elements;
 
-    var elements;
-
-    beforeEach(inject(function(elementRegistry, canvas) {
-      elements = elementRegistry.filter(function(element) {
-        return element.parent;
-      });
-    }));
+      beforeEach(bootstrapModeler(xml, { modules: testModules }));
 
 
-    it('should not distribute boundary events', inject(function(distributeElements, elementRegistry) {
+      beforeEach(inject(function(elementRegistry) {
+        elements = elementRegistry.filter(function(element) {
+          return element.parent;
+        });
+      }));
 
-      // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-      // when
-      var rangeGroups = distributeElements.trigger(elements, 'horizontal');
+      it('should not distribute boundary events', inject(function(distributeElements, elementRegistry) {
 
-      // then
-      expect(rangeGroups).to.have.length(3);
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
 
-      expect(rangeGroups[1].elements).not.to.include(boundaryEvent);
+        // when
+        var rangeGroups = distributeElements.trigger(elements, 'horizontal');
 
-    }));
+        // then
+        expect(rangeGroups).to.have.length(3);
 
+        forEach(rangeGroups, function(rangeGroup) {
+          expect(rangeGroup.elements).not.to.include(boundaryEvent);
+        });
+      }));
+
+
+      it('should not distribute sub process children', inject(
+        function(distributeElements, elementRegistry) {
+
+          // given
+          var childElement = elementRegistry.get('SubProcessChild');
+
+          // when
+          var rangeGroups = distributeElements.trigger(elements, 'horizontal');
+
+          // then
+          expect(rangeGroups).to.have.length(3);
+
+          forEach(rangeGroups, function(rangeGroup) {
+            expect(rangeGroup.elements).not.to.include(childElement);
+          });
+        })
+      );
+    });
+
+
+    describe('collaboration', function() {
+
+      var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.collaboration.bpmn'),
+          elements;
+
+      beforeEach(bootstrapModeler(xml, { modules: testModules }));
+
+
+      beforeEach(inject(function(elementRegistry) {
+        elements = elementRegistry.filter(function(element) {
+          return element.parent;
+        });
+      }));
+
+
+      it('should distribute participants', inject(function(distributeElements, elementRegistry) {
+
+        // given
+        var participants = elementRegistry.filter(function(element) {
+          return is(element, 'bpmn:Participant');
+        });
+
+        // when
+        var rangeGroups = distributeElements.trigger(elements, 'vertical');
+
+        // then
+        expect(rangeGroups).to.have.length(3);
+
+        var distributedElements = [];
+
+        forEach(rangeGroups, function(rangeGroup) {
+          distributedElements = distributedElements.concat(rangeGroup.elements);
+        });
+
+        expect(distributedElements).to.have.length(3);
+        expect(distributedElements).to.have.members(participants);
+      }));
+    });
   });
 
 });

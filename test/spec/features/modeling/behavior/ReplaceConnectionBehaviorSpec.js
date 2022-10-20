@@ -123,7 +123,7 @@ describe('features/modeling - replace connection', function() {
         var task4Shape = element('Task_4');
         var connection = element('SequenceFlow_1');
 
-        var newWaypoints = [ connection.waypoints[0], { x: task4Shape.x + 30, y: task4Shape.y }];
+        var newWaypoints = [ connection.waypoints[0], { x: task4Shape.x + 30, y: task4Shape.y } ];
 
         // when
         modeling.reconnectEnd(connection, task4Shape, newWaypoints);
@@ -155,7 +155,7 @@ describe('features/modeling - replace connection', function() {
         var participant2 = element('Participant_2');
         var connection = element('SequenceFlow_1');
 
-        var newWaypoints = [ connection.waypoints[0], { x: participant2.x, y: participant2.y }];
+        var newWaypoints = [ connection.waypoints[0], { x: participant2.x, y: participant2.y } ];
 
         // when
         modeling.reconnectEnd(connection, participant2, newWaypoints);

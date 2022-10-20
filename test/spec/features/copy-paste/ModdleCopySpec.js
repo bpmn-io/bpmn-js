@@ -133,19 +133,36 @@ describe('features/copy-paste/ModdleCopy', function() {
     }));
 
 
-    it('should NOT copy references', inject(function(moddle, moddleCopy) {
+    it('should NOT copy <processRef>', inject(function(moddle, moddleCopy) {
 
       // given
-      var processRef = moddle.create('bpmn:Process'),
+      var processElement = moddle.create('bpmn:Process'),
           participant = moddle.create('bpmn:Participant');
 
-      participant.processRef = processRef;
+      participant.processRef = processElement;
 
       // when
-      participant = moddleCopy.copyElement(participant, moddle.create('bpmn:Participant'));
+      var copiedParticipant = moddleCopy.copyElement(participant, moddle.create('bpmn:Participant'));
 
       // then
-      expect(participant.processRef).not.to.equal(processRef);
+      expect(copiedParticipant).not.to.equal(participant);
+      expect(copiedParticipant.processRef).not.to.exist;
+    }));
+
+
+    it('should NOT copy misc references', inject(function(moddle, moddleCopy) {
+
+      // given
+      var label = moddle.create('bpmndi:BPMNLabel'),
+          labelStyle = moddle.create('bpmndi:BPMNLabelStyle');
+
+      label.labelStyle = labelStyle;
+
+      // when
+      var copiedLabel = moddleCopy.copyElement(label, moddle.create('bpmndi:BPMNLabel'));
+
+      // then
+      expect(copiedLabel.labelStyle).not.to.exist;
     }));
 
 
@@ -727,6 +744,33 @@ describe('features/copy-paste/ModdleCopy', function() {
         expect(endEvent.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
       }));
 
+
+      it('should clone', inject(function(moddleCopy, eventBus, moddle) {
+
+        // given
+        var task = moddle.create('bpmn:Task', {
+          name: 'foo'
+        });
+
+        eventBus.once('moddleCopy.canCopyProperty', HIGH_PRIORITY, function(context) {
+          var propertyName = context.propertyName;
+
+          var clone = context.clone;
+
+          expect(clone).to.be.true;
+
+          if (propertyName === 'name') {
+            return 'bar';
+          }
+        });
+
+        // when
+        var userTask = moddleCopy.copyElement(task, moddle.create('bpmn:UserTask'), null, true);
+
+        // then
+        expect(userTask.id).to.eql(task.id);
+      }));
+
     });
 
 
@@ -777,6 +821,43 @@ describe('features/copy-paste/ModdleCopy', function() {
       expect(newGroup.categoryValueRef).to.exist;
       expect(newGroup.categoryValueRef).not.to.equal(categoryValue);
       expect(newGroup.categoryValueRef.$parent).to.equal(newCategory);
+    }));
+
+  });
+
+
+  describe('custom', function() {
+
+    var customPackage = require('../../../fixtures/json/model/custom.json');
+
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: testModules,
+      moddleExtensions: {
+        custom: customPackage
+      }
+    }));
+
+
+    it('should copy arrays of strings', inject(function(moddle, moddleCopy) {
+
+      // given
+      var paths = [ 'A', 'B', 'C' ];
+
+      var customElement = moddle.create('custom:CustomSendElement', {
+        paths: paths
+      });
+
+      // when
+      var newElement = moddleCopy.copyElement(
+        customElement,
+        moddle.create('custom:CustomSendElement')
+      );
+
+      // then
+      expect(newElement.paths).to.have.length(3);
+      expect(newElement.paths).to.eql(paths);
+
+      expectNoAttrs(newElement);
     }));
 
   });

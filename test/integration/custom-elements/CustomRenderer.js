@@ -36,7 +36,7 @@ export default function CustomRenderer(eventBus, styles) {
     var halfSide = side / 2,
         points;
 
-    points = [{ x: halfSide, y: 0 }, { x: side, y: side }, { x: 0, y: side }];
+    points = [ { x: halfSide, y: 0 }, { x: side, y: side }, { x: 0, y: side } ];
 
     var pointsString = points.map(function(point) {
       return point.x + ',' + point.y;
@@ -64,10 +64,10 @@ export default function CustomRenderer(eventBus, styles) {
         height = element.height;
 
     var trianglePath = [
-      ['M', x + width / 2, y],
-      ['l', width / 2, height],
-      ['l', -width, 0 ],
-      ['z']
+      [ 'M', x + width / 2, y ],
+      [ 'l', width / 2, height ],
+      [ 'l', -width, 0 ],
+      [ 'z' ]
     ];
 
     return componentsToPath(trianglePath);
@@ -102,11 +102,11 @@ export default function CustomRenderer(eventBus, styles) {
         radius = shape.width / 2;
 
     var circlePath = [
-      ['M', cx, cy],
-      ['m', 0, -radius],
-      ['a', radius, radius, 0, 1, 1, 0, 2 * radius],
-      ['a', radius, radius, 0, 1, 1, 0, -2 * radius],
-      ['z']
+      [ 'M', cx, cy ],
+      [ 'm', 0, -radius ],
+      [ 'a', radius, radius, 0, 1, 1, 0, 2 * radius ],
+      [ 'a', radius, radius, 0, 1, 1, 0, -2 * radius ],
+      [ 'z' ]
     ];
 
     return componentsToPath(circlePath);

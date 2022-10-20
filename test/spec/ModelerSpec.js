@@ -2,6 +2,8 @@ import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
 
+import { isAny } from 'lib/util/ModelUtil';
+
 import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard';
 
 import TestContainer from 'mocha-test-container-support';
@@ -13,8 +15,14 @@ import {
 import {
   setBpmnJS,
   clearBpmnJS,
-  collectTranslations
+  collectTranslations,
+  enableLogging
 } from 'test/TestHelper';
+
+import {
+  pick,
+  find
+} from 'min-dash';
 
 import { getDi } from 'lib/util/ModelUtil';
 
@@ -44,6 +52,8 @@ describe('Modeler', function() {
     });
 
     setBpmnJS(modeler);
+
+    enableLogging(modeler, singleStart);
 
     return modeler.importXML(xml).then(function(result) {
       return { error: null, warnings: result.warnings, modeler: modeler };
@@ -705,6 +715,135 @@ describe('Modeler', function() {
 
     });
 
+
+    it('should copy + paste via serialized tree', function() {
+
+      this.timeout(3000);
+
+      var aXML = require('./Modeler.copy-paste.complex.bpmn');
+      var bXML = require('./Modeler.copy-paste.empty.bpmn');
+
+      m2 = new Modeler({
+        container: container
+      });
+
+      m1 = new Modeler({
+        container: container
+      });
+
+      return Promise.all([
+        m1.importXML(aXML),
+        m2.importXML(bXML)
+      ]).then(function() {
+
+        // given
+        // copy all from m1
+        var serializedTree = m1.invoke(function(clipboard, editorActions) {
+          editorActions.trigger('selectElements');
+
+          editorActions.trigger('copy');
+
+          return JSON.stringify(clipboard.get());
+        });
+
+        // assume
+        expect(serializedTree).to.exist;
+
+        // TODO(nikku): needed for our canvas utilities to work
+        setBpmnJS(m2);
+
+        m2.invoke(function(
+            moddle, clipboard, dragging,
+            editorActions, elementRegistry,
+            bpmnjs) {
+
+          var definitions = bpmnjs.getDefinitions();
+          var processElement = elementRegistry.get('Process_1');
+
+          // when
+          // deserialize tree
+          var tree = JSON.parse(serializedTree, createReviver(moddle));
+
+          // set to clipboard
+          clipboard.set(tree);
+
+          // paste all to m2
+          editorActions.trigger('paste');
+          dragging.move(createCanvasEvent({ x: 150, y: 150 }));
+          dragging.move(createCanvasEvent({ x: 170, y: 150 }));
+          dragging.hover({ element: processElement });
+
+          dragging.end();
+
+          // then
+          // elements exist with original IDs
+          var expectedIds = [
+            'P1',
+            'P2',
+            'DataStoreReference',
+            'DataObjectReference',
+            'DataOutputAssociation',
+            'Say_Hello_Error',
+            'Group_No_Name',
+            'Group_With_Name',
+            'Collapsed_Sub',
+            'Sub_Process_Expanded_Nested',
+            'FlowDefault',
+            'FlowConditional',
+            'Text_Annotation',
+            'Association'
+          ];
+
+          expectedIds.forEach(function(id) {
+            expect(elementRegistry.get(id), 'element <' + id + '>').to.exist;
+          });
+
+          // global elements exist
+          var expectedGlobals = [
+            [ 'Error_1', { name: 'SomeError', errorCode: '100' } ],
+            [ 'Escalation_1', { name: 'Escalation' } ],
+            [ 'Category_1', { } ]
+          ];
+
+          var globals = [
+            'bpmn:Error',
+            'bpmn:Category',
+            'bpmn:Escalation',
+            'bpmn:Signal',
+            'bpmn:Message'
+          ];
+
+          var globalElements = definitions.get('rootElements').filter(function(element) {
+            return isAny(element, globals);
+          });
+
+          // expect <expectedGlobals>
+          expect(globalElements).to.have.length(expectedGlobals.length);
+
+          expectedGlobals.forEach(function(expected) {
+            var id = expected[0];
+            var attrs = expected[1];
+
+            var actualGlobal = find(globalElements, function(el) {
+              return el.id === id;
+            });
+
+            expect(actualGlobal, 'global <' + id + '>').to.exist;
+
+            var actualAttrs = pick(actualGlobal, Object.keys(attrs));
+
+            expect(actualAttrs, 'global <' + id + '> attrs').to.eql(attrs);
+          });
+
+        });
+
+      });
+
+    });
+
+
+    it.skip('should copy + delete + paste');
+
   });
 
 
@@ -784,3 +923,59 @@ describe('Modeler', function() {
   });
 
 });
+
+
+// helpers //////////////
+
+
+/**
+ * A factory function that returns a reviver to be
+ * used with JSON#parse to reinstantiate moddle instances.
+ *
+ * @param { Moddle } moddle
+ *
+ * @return { (key: string, object: any) => any|null }
+ */
+function createReviver(moddle) {
+
+  var elCache = {};
+
+  /**
+   * The actual reviewer that creates model instances
+   * for elements with a $type attribute.
+   *
+   * Elements with ids will be re-used, if already
+   * created.
+   *
+   * @param {string} key
+   * @param {any} object
+   *
+   * @return {any|null} actual element
+   */
+  return function(key, object) {
+
+    if (typeof object === 'object' && typeof object.$type === 'string') {
+
+      var objectId = object.id;
+
+      if (objectId && elCache[objectId]) {
+        return elCache[objectId];
+      }
+
+      var type = object.$type;
+      var attrs = Object.assign({}, object);
+
+      delete attrs.$type;
+
+      var newEl = moddle.create(type, attrs);
+
+      if (objectId) {
+        elCache[objectId] = newEl;
+      }
+
+      return newEl;
+    }
+
+    return object;
+  };
+}

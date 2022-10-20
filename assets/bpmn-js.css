@@ -8,7 +8,7 @@
   --color-grey-225-10-80: hsl(225, 10%, 80%);
   --color-grey-225-10-85: hsl(225, 10%, 85%);
   --color-grey-225-10-90: hsl(225, 10%, 90%);
-  --color-grey-225-10-95: hsl(225, 10%, 95%); 
+  --color-grey-225-10-95: hsl(225, 10%, 95%);
   --color-grey-225-10-97: hsl(225, 10%, 97%);
 
   --color-blue-205-100-45: hsl(205, 100%, 45%);
@@ -24,8 +24,8 @@
   --color-red-360-100-97: hsl(360, 100%, 97%);
 
   --color-white: hsl(0, 0%, 100%);
-  --color-black: hsl(0, 0%, 0%); 
-  --color-black-opacity-05: hsla(0, 0%, 0%, 5%); 
+  --color-black: hsl(0, 0%, 0%);
+  --color-black-opacity-05: hsla(0, 0%, 0%, 5%);
   --color-black-opacity-10: hsla(0, 0%, 0%, 10%);
 
   --breadcrumbs-font-family: var(--bjs-font-family);
@@ -113,4 +113,32 @@
 
 .selected .bjs-drilldown-empty {
   display: inherit;
+}
+
+[data-popup="align-elements"] .djs-popup-body {
+  display: flex;
+}
+
+[data-popup="align-elements"] .djs-popup-body [data-group] + [data-group] {
+  border-left: 1px solid var(--popup-border-color);
+}
+
+[data-popup="align-elements"] [data-group="align"] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+[data-popup="align-elements"] .djs-popup-body .entry {
+  padding: 6px 8px;
+}
+
+[data-popup="align-elements"] .djs-popup-body .entry img {
+  display: block;
+
+  height: 20px;
+  width: 20px;
+}
+
+[data-popup="align-elements"] .bjs-align-elements-menu-entry {
+  display: inline-block;
 }

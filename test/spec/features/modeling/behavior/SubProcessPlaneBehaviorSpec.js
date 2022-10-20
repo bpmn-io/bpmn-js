@@ -88,6 +88,41 @@ describe('features/modeling/behavior - subprocess planes', function() {
     }));
 
 
+    it('should move labels to plane for collapsed subprocess', inject(
+      function(canvas, bpmnReplace, elementRegistry, modeling) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            startEvent = elementRegistry.get('StartEvent_1'),
+            subProcess = elementRegistry.get('SubProcess_2'),
+            task = elementRegistry.get('Task_2');
+
+        // moving label will set its parent to root element
+        modeling.moveShape(startEvent.label, { x: 0, y: 100 }, subProcess);
+
+        // assume
+        expect(sequenceFlow.parent).to.equal(subProcess);
+        expect(startEvent.parent).to.equal(subProcess);
+        expect(startEvent.label.parent).to.equal(canvas.getRootElement());
+        expect(task.parent).to.equal(subProcess);
+
+        // when
+        bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          isExpanded: false
+        });
+
+        // then
+        var plane = elementRegistry.get('SubProcess_2_plane');
+
+        expect(sequenceFlow.parent).to.equal(plane);
+        expect(startEvent.parent).to.equal(plane);
+        expect(startEvent.label.parent).to.equal(plane);
+        expect(task.parent).to.equal(plane);
+      }
+    ));
+
+
     it('should undo', inject(function(elementFactory, modeling, commandStack, canvas, bpmnjs) {
 
       // given

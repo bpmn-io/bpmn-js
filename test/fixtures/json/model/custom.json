@@ -22,6 +22,11 @@
           "name": "value",
           "isAttr": true,
           "type": "String"
+        },
+        {
+          "name": "paths",
+          "type": "String",
+          "isMany": true
         }
       ]
     },

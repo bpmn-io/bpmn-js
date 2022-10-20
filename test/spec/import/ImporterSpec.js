@@ -36,7 +36,7 @@ describe('import - Importer', function() {
   var diagram;
 
   beforeEach(function() {
-    diagram = createDiagram(TestContainer.get(this), [CoreModule]);
+    diagram = createDiagram(TestContainer.get(this), [ CoreModule ]);
   });
 
 
@@ -258,7 +258,7 @@ describe('import - Importer', function() {
 
   describe('order', function() {
 
-    it('should import sequence flows and lanes behind other flow nodes', function() {
+    it('should import lanes behind other flow nodes', function() {
 
       var xml = require('./sequenceFlow-ordering.bpmn');
 
@@ -274,17 +274,45 @@ describe('import - Importer', function() {
         var children = processShape.children;
 
         // lanes
-        // connections
         // other elements
         var correctlyOrdered = [].concat(
-          children.filter(function(c) { return is(c, 'bpmn:Lane'); }),
-          children.filter(function(c) { return c.waypoints; }),
-          children.filter(function(c) { return !is(c, 'bpmn:Lane') && !c.waypoints; })
+          children.filter(function(e) { return is(e, 'bpmn:Lane'); }),
+          children.filter(function(e) { return !is(e, 'bpmn:Lane'); })
         );
 
         // then
         expectChildren(diagram, processShape, correctlyOrdered);
+      });
+    });
 
+
+    it('should import sequence flows in front of other flow nodes', function() {
+
+      var xml = require('./sequenceFlow-ordering.bpmn');
+
+      // given
+      var elementRegistry = diagram.get('elementRegistry');
+
+
+      return runImport(diagram, xml).then(function() {
+
+        // when
+        var processShape = elementRegistry.get('Participant_1jxpy8o');
+
+        var children = processShape.children;
+
+        // lanes
+        // other elements
+        // connections
+        // labels
+        var correctlyOrdered = [].concat(
+          children.filter(function(e) { return !e.waypoints && !e.labelTarget; }),
+          children.filter(function(e) { return e.waypoints; }),
+          children.filter(function(e) { return e.labelTarget; })
+        );
+
+        // then
+        expectChildren(diagram, processShape, correctlyOrdered);
       });
     });
 

@@ -71,7 +71,7 @@ describe('features/keyboard', function() {
     }));
 
 
-    forEach(['c', 'C'], function(key) {
+    forEach([ 'c', 'C' ], function(key) {
 
       it('should global connect tool for key ' + key, inject(function(keyboard, globalConnect) {
 
@@ -90,7 +90,7 @@ describe('features/keyboard', function() {
     });
 
 
-    forEach(['l', 'L'], function(key) {
+    forEach([ 'l', 'L' ], function(key) {
 
       it('should trigger lasso tool for key ' + key, inject(function(keyboard, lassoTool) {
 
@@ -109,7 +109,7 @@ describe('features/keyboard', function() {
     });
 
 
-    forEach(['s', 'S'], function(key) {
+    forEach([ 's', 'S' ], function(key) {
 
       it('should trigger space tool', inject(function(keyboard, spaceTool) {
 
@@ -128,7 +128,7 @@ describe('features/keyboard', function() {
     });
 
 
-    forEach(['e', 'E'], function(key) {
+    forEach([ 'e', 'E' ], function(key) {
 
       it('should trigger direct editing', inject(function(keyboard, selection, elementRegistry, directEditing) {
 
@@ -151,7 +151,7 @@ describe('features/keyboard', function() {
     });
 
 
-    forEach(['a', 'A'], function(key) {
+    forEach([ 'a', 'A' ], function(key) {
 
       it('should select all elements',
         inject(function(canvas, keyboard, selection, elementRegistry) {
@@ -176,7 +176,7 @@ describe('features/keyboard', function() {
     });
 
 
-    forEach(['f', 'F'], function(key) {
+    forEach([ 'f', 'F' ], function(key) {
 
       it('should trigger search for labels', inject(function(keyboard, searchPad) {
 

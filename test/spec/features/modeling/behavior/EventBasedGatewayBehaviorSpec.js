@@ -11,98 +11,136 @@ describe('features/modeling/behavior - event-based gateway', function() {
 
   var diagramXML = require('./EventBasedGatewayBehavior.bpmn');
 
-  describe('when connecting from event-based gateway', function() {
-
-    beforeEach(bootstrapModeler(
-      diagramXML, {
-        modules: [
-          coreModule,
-          modelingModule
-        ]
-      }
-    ));
+  var testModules = [
+    coreModule,
+    modelingModule,
+    replaceModule
+  ];
 
 
-    it('should remove single existing sequence flow', inject(
+  describe('create connection', function() {
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('event-based gateway to receive task', inject(
       function(elementRegistry, modeling) {
 
         // given
-        var eventBasedGateway = elementRegistry.get('EventBasedGateway_A'),
-            intermediateEvent = elementRegistry.get('IntermediateCatchEvent'),
-            existingConnection = elementRegistry.get('SequenceFlow_Existing'),
-            newConnection;
+        var eventBasedGateway = elementRegistry.get('EventBasedGateway_1'),
+            receiveTask = elementRegistry.get('ReceiveTask_1');
+
+        // assume
+        expect(receiveTask.incoming).to.have.length(1);
 
         // when
-        newConnection = modeling.connect(eventBasedGateway, intermediateEvent, {
+        var connection = modeling.connect(eventBasedGateway, receiveTask, {
           type: 'bpmn:SequenceFlow'
         });
 
         // then
-        expect(elementRegistry.get(existingConnection.id)).not.to.exist;
-        expect(elementRegistry.get(newConnection.id)).to.exist;
+        expect(receiveTask.incoming).to.have.length(1);
+        expect(receiveTask.incoming[ 0 ]).to.equal(connection);
       }
     ));
 
 
-    it('should remove multiple existing sequence flows', inject(
+    it('event-based gateway to receive task (duplicate connection)', inject(
       function(elementRegistry, modeling) {
 
         // given
-        var eventBasedGateway = elementRegistry.get('EventBasedGateway_C'),
-            receiveTask = elementRegistry.get('ReceiveTask_A'),
-            existingSequenceFlowA = elementRegistry.get('SequenceFlow_ExistingA'),
-            existingSequenceFlowB = elementRegistry.get('SequenceFlow_ExistingB'),
-            existingMessageFlow = elementRegistry.get('MessageFlow_Existing'),
-            newSequenceFlow;
+        var eventBasedGateway = elementRegistry.get('EventBasedGateway_1'),
+            receiveTask = elementRegistry.get('ReceiveTask_2');
+
+        // assume
+        expect(receiveTask.incoming).to.have.length(1);
 
         // when
-        newSequenceFlow = modeling.connect(eventBasedGateway, receiveTask, {
+        var connection = modeling.connect(eventBasedGateway, receiveTask, {
           type: 'bpmn:SequenceFlow'
         });
 
         // then
-        expect(elementRegistry.get(existingSequenceFlowA.id)).to.not.exist;
-        expect(elementRegistry.get(existingSequenceFlowB.id)).to.not.exist;
-        expect(elementRegistry.get(existingMessageFlow.id)).to.exist;
-        expect(elementRegistry.get(newSequenceFlow.id)).to.exist;
+        expect(receiveTask.incoming).to.have.length(1);
+        expect(receiveTask.incoming[ 0 ]).to.equal(connection);
+      }
+    ));
+
+
+    it('exclusive gateway to receive task', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var eventBasedGateway = elementRegistry.get('ExclusiveGateway_1'),
+            receiveTask = elementRegistry.get('ReceiveTask_2');
+
+        // assume
+        expect(receiveTask.incoming).to.have.length(1);
+
+        // when
+        var connection = modeling.connect(eventBasedGateway, receiveTask, {
+          type: 'bpmn:SequenceFlow'
+        });
+
+        // then
+        expect(receiveTask.incoming).to.have.length(1);
+        expect(receiveTask.incoming[ 0 ]).to.equal(connection);
       }
     ));
 
   });
 
 
-  describe('when replacing with event-based gateway', function() {
+  describe('replace shape', function() {
 
-    beforeEach(bootstrapModeler(
-      diagramXML, {
-        modules: [
-          coreModule,
-          modelingModule,
-          replaceModule
-        ]
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('exclusive gateway with event-based gateway', inject(
+      function(bpmnReplace, elementRegistry) {
+
+        // given
+        var exclusiveGateway = elementRegistry.get('ExclusiveGateway_3'),
+            receiveTask = elementRegistry.get('ReceiveTask_3');
+
+        // assume
+        expect(exclusiveGateway.outgoing).to.have.length(2);
+        expect(receiveTask.incoming).to.have.length(3);
+
+        // when
+        var eventBasedGateway = bpmnReplace.replaceElement(exclusiveGateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // then
+        expect(eventBasedGateway.outgoing).to.have.length(1);
+        expect(receiveTask.incoming).to.have.length(1);
       }
     ));
 
 
-    it('should remove non-event-based incoming sequence flows of event-based targets',
-      inject(function(elementRegistry, bpmnReplace) {
+    it('event-based gateway with exclusive gateway', inject(
+      function(bpmnReplace, elementRegistry) {
 
         // given
-        var gatewayA = elementRegistry.get('ExclusiveGateway_B'),
-            receiveTaskA = elementRegistry.get('ReceiveTask_B'),
-            receiveTaskB = elementRegistry.get('ReceiveTask_C');
+        var eventBasedGateway = elementRegistry.get('EventBasedGateway_1');
+
+        // assume
+        expect(eventBasedGateway.outgoing).to.have.length(1);
 
         // when
-        bpmnReplace.replaceElement(gatewayA, { type: 'bpmn:EventBasedGateway' });
+        var exclusiveGateway = bpmnReplace.replaceElement(eventBasedGateway, {
+          type: 'bpmn:ExclusiveGateway'
+        });
 
         // then
-        expect(elementRegistry.get('SequenceFlow_A')).to.exist;
-        expect(receiveTaskA.incoming.length).to.equal(1);
-
-        expect(elementRegistry.get('SequenceFlow_B')).to.exist;
-        expect(receiveTaskB.incoming.length).to.equal(1);
-      })
-    );
+        expect(exclusiveGateway.outgoing).to.have.length(1);
+      }
+    ));
 
   });
 

@@ -372,7 +372,7 @@ describe('behavior - LabelBehavior', function() {
 
     describe('connection labels', function() {
 
-      it('should NOT center position visible', inject(
+      it('should center position visible', inject(
         function(bpmnFactory, elementRegistry, modeling) {
 
           // given
@@ -387,10 +387,6 @@ describe('behavior - LabelBehavior', function() {
             businessObject: businessObject
           }, startEventShape.parent);
 
-          var oldLabelPosition = {
-            x: sequenceFlowConnection.label.x,
-            y: sequenceFlowConnection.label.y
-          };
 
           // when
           sequenceFlowConnection.label.hidden = false;
@@ -409,10 +405,8 @@ describe('behavior - LabelBehavior', function() {
           ]);
 
           // then
-          expect({
-            x: sequenceFlowConnection.label.x,
-            y: sequenceFlowConnection.label.y
-          }).to.eql(oldLabelPosition);
+          expect(sequenceFlowConnection.label.x).to.be.closeTo(273, 1);
+          expect(sequenceFlowConnection.label.y).to.be.closeTo(178, 1);
         }
       ));
 

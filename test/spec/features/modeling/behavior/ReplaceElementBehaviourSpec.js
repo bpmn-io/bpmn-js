@@ -7,8 +7,12 @@ import replacePreviewModule from 'lib/features/replace-preview';
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import coreModule from 'lib/core';
+import copyPasteModule from 'lib/features/copy-paste';
 
-import { is } from 'lib/util/ModelUtil';
+import {
+  getBusinessObject,
+  is
+} from 'lib/util/ModelUtil';
 
 import {
   createCanvasEvent as canvasEvent
@@ -29,7 +33,8 @@ describe('features/modeling - replace element behavior', function() {
       replacePreviewModule,
       modelingModule,
       coreModule,
-      moveModule
+      moveModule,
+      copyPasteModule
     ];
 
 
@@ -46,7 +51,7 @@ describe('features/modeling - replace element behavior', function() {
       beforeEach(inject(function(move, dragging, elementRegistry) {
 
         moveShape = function(shape, target, position) {
-          var startPosition = { x: shape.x + 10 + shape.width / 2, y: shape.y + 30 + shape.height/2 };
+          var startPosition = { x: shape.x + 10 + shape.width / 2, y: shape.y + 30 + shape.height / 2 };
 
           move.start(canvasEvent(startPosition), shape);
 
@@ -107,6 +112,38 @@ describe('features/modeling - replace element behavior', function() {
           expect(selection.get()).to.include(replacements[1]);
           expect(selection.get()).to.include(replacements[2]);
 
+        })
+      );
+
+
+      it('should not replace non-interrupting start event after copy paste',
+        inject(function(canvas, copyPaste, elementRegistry) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_1'),
+              rootElement = canvas.getRootElement();
+
+          // when
+          copyPaste.copy(subProcess);
+
+          var elements = copyPaste.paste({
+            element: rootElement,
+            point: {
+              x: 100,
+              y: 100
+            }
+          });
+
+          // then
+          var startEvents = elements.filter(function(element) {
+            if (is(element, 'bpmn:StartEvent') && getBusinessObject(element).get('eventDefinitions').length) {
+              return true;
+            }
+          });
+
+          startEvents.forEach(function(startEvent) {
+            expect(getBusinessObject(startEvent).get('isInterrupting')).to.be.false;
+          });
         })
       );
 

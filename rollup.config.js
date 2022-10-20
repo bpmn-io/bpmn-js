@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import { terser } from 'rollup-plugin-terser';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -92,7 +94,7 @@ function banner(bundleName, minified) {
   });
 }
 
-function pgl(plugins=[], env='production') {
+function pgl(plugins = [], env = 'production') {
   return [
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)

@@ -11,16 +11,16 @@
     <bpmn:sequenceFlow id="SequenceFlow_16tlpj7" sourceRef="StartEvent_1" targetRef="TASK_0" />
     <bpmn:task id="TASK_1" name="TASK_1">
       <bpmn:incoming>SequenceFlow_0s1mty3</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0b5s2a7</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
     </bpmn:task>
     <bpmn:startEvent id="StartEvent_0f2fdfi">
       <bpmn:outgoing>SequenceFlow_0s1mty3</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="SequenceFlow_0s1mty3" sourceRef="StartEvent_0f2fdfi" targetRef="TASK_1" />
     <bpmn:task id="TASK_2" name="TASK_2">
-      <bpmn:incoming>SequenceFlow_0b5s2a7</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1</bpmn:incoming>
     </bpmn:task>
-    <bpmn:sequenceFlow id="SequenceFlow_0b5s2a7" sourceRef="TASK_1" targetRef="TASK_2" />
+    <bpmn:sequenceFlow id="SequenceFlow_1" sourceRef="TASK_1" targetRef="TASK_2" />
     <bpmn:task id="TASK_3" name="TASK_3">
       <bpmn:outgoing>SequenceFlow_18dnq8n</bpmn:outgoing>
       <bpmn:dataOutputAssociation id="DataOutputAssociation_16lcc1g">
@@ -95,7 +95,7 @@
       <bpmndi:BPMNShape id="TASK_2_di" bpmnElement="TASK_2">
         <dc:Bounds x="279" y="183" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0b5s2a7_di" bpmnElement="SequenceFlow_0b5s2a7">
+      <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
         <di:waypoint xsi:type="dc:Point" x="221" y="223" />
         <di:waypoint xsi:type="dc:Point" x="279" y="223" />
         <bpmndi:BPMNLabel>

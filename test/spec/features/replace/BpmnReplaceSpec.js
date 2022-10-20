@@ -28,6 +28,8 @@ import {
   hasErrorEventDefinition
 } from 'lib/util/DiUtil';
 
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
 
 describe('features/replace - bpmn replace', function() {
 
@@ -574,6 +576,32 @@ describe('features/replace - bpmn replace', function() {
       expect(newElement.label.x).to.equal(label.x);
       expect(newElement.label.y).to.equal(label.y);
     }));
+
+
+    it('should assign default size when replacing task with expanded sub process', inject(
+      function(elementRegistry, bpmnReplace) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        var mid = getMid(task);
+
+        var newElementData = {
+          type: 'bpmn:SubProcess',
+          isExpanded: true
+        };
+
+        // when
+        var newElement = bpmnReplace.replaceElement(task, newElementData);
+
+        // then
+        expect(newElement).to.exist;
+        expect(is(newElement, 'bpmn:SubProcess')).to.be.true;
+        expect(getMid(newElement)).to.eql(mid);
+        expect(newElement.width).to.equal(350);
+        expect(newElement.height).to.equal(200);
+      }
+    ));
 
   });
 
@@ -1176,6 +1204,7 @@ describe('features/replace - bpmn replace', function() {
         expect(is(newElement, 'bpmn:CallActivity')).to.be.true;
       }));
 
+
     it('should drop event type from start event after moving it into sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
@@ -1184,16 +1213,17 @@ describe('features/replace - bpmn replace', function() {
             subProcess = elementRegistry.get('SubProcess_2');
 
         // when
-        modeling.moveElements([startEvent], { x: 100, y: 0 }, subProcess);
+        modeling.moveElements([ startEvent ], { x: 100, y: 0 }, subProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
         })[0];
 
         // then
-        expect(startEventAfter.businessObject.eventDefinitions).to.be.undefined;
+        expect(startEventAfter.businessObject.eventDefinitions).not.to.exist;
       })
     );
+
 
     it('should not drop event type from start event after moving it into event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
@@ -1203,7 +1233,7 @@ describe('features/replace - bpmn replace', function() {
             subProcess = elementRegistry.get('EventSubProcess_2');
 
         // when
-        modeling.moveElements([startEvent], { x: -100, y: 0 }, subProcess);
+        modeling.moveElements([ startEvent ], { x: -100, y: 0 }, subProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
@@ -1346,7 +1376,7 @@ describe('features/replace - bpmn replace', function() {
             root = elementRegistry.get('Process_1');
 
         // when
-        modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
+        modeling.moveElements([ startEvent ], { x: 0, y: 200 }, root);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === root;
@@ -1368,7 +1398,7 @@ describe('features/replace - bpmn replace', function() {
             subProcess = elementRegistry.get('SubProcess_1');
 
         // when
-        modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
+        modeling.moveElements([ startEvent ], { x: 260, y: 60 }, subProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
@@ -1396,7 +1426,7 @@ describe('features/replace - bpmn replace', function() {
         });
 
         // when
-        modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
+        modeling.moveElements([ startEvent ], { x: 260, y: 60 }, eventSubProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
@@ -1420,7 +1450,7 @@ describe('features/replace - bpmn replace', function() {
         var interruptingStartEvent = bpmnReplace.replaceElement(startEvent, { type: 'bpmn:StartEvent' });
 
         // when
-        modeling.moveElements([interruptingStartEvent], { x: 0, y: 200 }, root);
+        modeling.moveElements([ interruptingStartEvent ], { x: 0, y: 200 }, root);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent')
@@ -1464,7 +1494,7 @@ describe('features/replace - bpmn replace', function() {
             startEvent = elementRegistry.get('StartEvent_2');
 
         // when
-        modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
+        modeling.moveElements([ eventSubProcess ], { x: 20, y: 30 });
 
         // start event after moving parent
         var startEventAfter = elementRegistry.filter(function(element) {
@@ -1485,7 +1515,7 @@ describe('features/replace - bpmn replace', function() {
             root = elementRegistry.get('Process_1');
 
         // when
-        modeling.moveElements([startEvent], { x: 0, y: 200 }, root);
+        modeling.moveElements([ startEvent ], { x: 0, y: 200 }, root);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === root;
@@ -1505,7 +1535,7 @@ describe('features/replace - bpmn replace', function() {
             subProcess = elementRegistry.get('SubProcess_1');
 
         // when
-        modeling.moveElements([startEvent], { x: 260, y: 60 }, subProcess);
+        modeling.moveElements([ startEvent ], { x: 260, y: 60 }, subProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === subProcess;
@@ -1532,7 +1562,7 @@ describe('features/replace - bpmn replace', function() {
         });
 
         // when
-        modeling.moveElements([startEvent], { x: 260, y: 60 }, eventSubProcess);
+        modeling.moveElements([ startEvent ], { x: 260, y: 60 }, eventSubProcess);
 
         var startEventAfter = elementRegistry.filter(function(element) {
           return is(element, 'bpmn:StartEvent') && element.parent === eventSubProcess && element.type !== 'label';
@@ -1573,7 +1603,7 @@ describe('features/replace - bpmn replace', function() {
             startEvent = elementRegistry.get('StartEvent_3');
 
         // when
-        modeling.moveElements([eventSubProcess], { x: 20, y: 30 });
+        modeling.moveElements([ eventSubProcess ], { x: 20, y: 30 });
 
         // start event after moving parent
         var startEventAfter = elementRegistry.filter(function(element) {

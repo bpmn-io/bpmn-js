@@ -107,6 +107,24 @@ describe('features/auto-place', function() {
         expectedBounds: { x: 696, y: -4, width: 100, height: 30 }
       }));
 
+
+      describe('on connection', function() {
+
+        it('top right', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'SequenceFlow_1',
+          expectedBounds: { x: 300, y: 158, width: 100, height: 30 }
+        }));
+
+
+        it('above existing', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'SequenceFlow_1',
+          expectedBounds: { x: 300, y: 98, width: 100, height: 30 }
+        }));
+
+      });
+
     });
 
   });
