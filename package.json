@@ -53,10 +53,10 @@
     "*.css"
   ],
   "devDependencies": {
-    "@babel/core": "^7.18.10",
+    "@babel/core": "^7.20.2",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "babel-loader": "^9.0.0",
+    "babel-loader": "^9.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "bpmn-font": "^0.10.0",
     "camunda-bpmn-moddle": "^4.0.1",
