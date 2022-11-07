@@ -33,5 +33,7 @@ jobs:
         TEST_BROWSERS: ChromeHeadless
       run: npm run all
     - name: Upload Coverage
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v3
       if: matrix.os == 'ubuntu-20.04'
+      with:
+        fail_ci_if_error: true
