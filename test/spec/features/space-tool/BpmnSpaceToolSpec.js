@@ -23,6 +23,12 @@ var invertModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
 describe('features/space-tool - BpmnSpaceTool', function() {
 
+  // adopt conservative retry strategy
+  // in an attempt to improve the stability
+  // of our test suite
+  this.retries(2);
+
+
   var testModules = [
     coreModule,
     modelingModule,

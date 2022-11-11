@@ -25,6 +25,11 @@ import {
 
 describe('features/replace-preview', function() {
 
+  // adopt conservative retry strategy
+  // in an attempt to improve the stability
+  // of our test suite
+  this.retries(2);
+
   var diagramXML = require('./BpmnReplacePreview.bpmn');
 
   var startEvent1,
