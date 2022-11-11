@@ -7,6 +7,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 10.3.0
+
+* `FEAT`: add BPMN specific space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: do not resize `bpmn:TextAnnotation` when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: correct attachers left hanging when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: stick labels to label targets when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344), [#1302](https://github.com/bpmn-io/bpmn-js/issues/1302))
+* `DEPS`: update to `diagram-js@10`
+
 ## 10.2.1
 
 * `FIX`: correct preserving of outgoing connections on event-based gateway morph ([#1738](https://github.com/bpmn-io/bpmn-js/issues/1738))
