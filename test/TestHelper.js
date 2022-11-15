@@ -7,9 +7,9 @@ import {
   getBpmnJS
 } from './helper';
 
-insertCSS('bpmn-js.css', require('../assets/bpmn-js.css'));
-
 insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
+
+insertCSS('bpmn-js.css', require('../assets/bpmn-js.css'));
 
 insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
 
