@@ -438,13 +438,6 @@ describe('features - context-pad', function() {
       modules: testModules
     }));
 
-    var container;
-
-    beforeEach(function() {
-      container = TestContainer.get(this);
-    });
-
-
     it('should show popup menu in the correct position', inject(function(elementRegistry, contextPad) {
 
       // given
@@ -459,7 +452,7 @@ describe('features - context-pad', function() {
       contextPad.trigger('click', padEvent('replace'));
 
       padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
-      replaceMenuRect = domQuery('.bpmn-replace', container).getBoundingClientRect();
+      replaceMenuRect = domQuery('.bpmn-replace', getMenuContainer()).getBoundingClientRect();
 
       // then
       expect(replaceMenuRect.left).to.be.at.most(padMenuRect.left);
@@ -530,7 +523,7 @@ describe('features - context-pad', function() {
 
           dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
-          replaceMenu = domQuery('.bpmn-replace', container);
+          replaceMenu = domQuery('.bpmn-replace', getMenuContainer());
 
           // then
           expect(replaceMenu).to.exist;
@@ -558,7 +551,7 @@ describe('features - context-pad', function() {
           dragging.end(canvasEvent({ x: 50, y: 65 }, { ctrlKey: true, metaKey: true }));
 
           // then
-          var replaceMenu = domQueryAll('[data-id$="-boundary"]', popupMenu._current.container);
+          var replaceMenu = domQueryAll('[data-id$="-boundary"]', getMenuContainer());
           expect(replaceMenu).to.exist;
           expect(replaceMenu.length).to.eql(12);
         }
@@ -582,7 +575,7 @@ describe('features - context-pad', function() {
 
           dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
-          replaceMenu = domQuery('.bpmn-replace', container);
+          replaceMenu = domQuery('.bpmn-replace', getMenuContainer());
 
           // then
           expect(replaceMenu).not.to.exist;
@@ -608,7 +601,7 @@ describe('features - context-pad', function() {
           dragging.end(canvasEvent({ x: 75, y: 75 }, { ctrlKey: true, metaKey: true }));
 
           // then
-          var replaceMenu = domQuery('.bpmn-replace', container);
+          var replaceMenu = domQuery('.bpmn-replace', getMenuContainer());
 
           expect(replaceMenu).not.to.exist;
         }
@@ -711,4 +704,10 @@ function padEvent(entry) {
       clientY: 100
     };
   });
+}
+
+
+function getMenuContainer() {
+  const popup = getBpmnJS().get('popupMenu');
+  return popup._current.container;
 }
