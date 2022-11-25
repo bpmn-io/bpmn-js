@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.0.1
+
+* `DEPS`: update to `diagram-js@11.1.1`
+
 ## 11.0.0
 
 * `FEAT`: integrate new popup menu UI ([#1776](https://github.com/bpmn-io/bpmn-js/pull/1776))
