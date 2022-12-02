@@ -283,7 +283,8 @@ describe('Modeler', function() {
         'setColor',
         'directEditing',
         'find',
-        'moveToOrigin'
+        'moveToOrigin',
+        'replaceElement'
       ];
 
       var modeler = new Modeler();
