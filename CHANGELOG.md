@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.0.3
+
+_Re-release of `v11.0.2`._
+
 ## 11.0.2
 
 * `FIX`: correct test for replace options ([#1787](https://github.com/bpmn-io/bpmn-js/pull/1787))
