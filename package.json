@@ -23,7 +23,8 @@
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
     "test:distro": "node tasks/test-distro.js",
     "postversion": "run-s distro test:distro",
-    "prepare": "run-s distro"
+    "prepare": "run-s distro",
+    "types": "tsc"
   },
   "repository": {
     "type": "git",
@@ -103,6 +104,7 @@
     "min-dash": "^4.0.0",
     "min-dom": "^4.0.2",
     "object-refs": "^0.3.0",
-    "tiny-svg": "^3.0.0"
+    "tiny-svg": "^3.0.0",
+    "typescript": "^4.9.3"
   }
 }
