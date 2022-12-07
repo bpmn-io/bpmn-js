@@ -1477,7 +1477,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(emptyPoolLabel).to.exist;
-        expect(emptyPoolLabel.innerHTML).to.eql('Empty Pool (removes content)');
+        expect(emptyPoolLabel.textContent).to.eql('Empty Pool (removes content)');
       }));
 
 
@@ -1493,7 +1493,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
         // then
         expect(emptyPoolLabel).to.exist;
-        expect(emptyPoolLabel.innerHTML).to.eql('Empty Pool');
+        expect(emptyPoolLabel.textContent).to.eql('Empty Pool');
       }));
 
     });
