@@ -25,11 +25,6 @@ import {
 
 describe('features/replace-preview', function() {
 
-  // adopt conservative retry strategy
-  // in an attempt to improve the stability
-  // of our test suite
-  this.retries(2);
-
   var diagramXML = require('./BpmnReplacePreview.bpmn');
 
   var startEvent1,
@@ -106,7 +101,7 @@ describe('features/replace-preview', function() {
   }));
 
 
-  it('should add dragger to context.visualReplacements once', inject(function(dragging) {
+  skipCI('Mac OS') && it('should add dragger to context.visualReplacements once', inject(function(dragging) {
 
     // when
     moveShape(startEvent1, rootElement, { x: 275, y: 120 });
@@ -118,7 +113,6 @@ describe('features/replace-preview', function() {
 
     expect(visualReplacements[startEvent1.id]).to.exist;
     expect(Object.keys(visualReplacements).length).to.equal(1);
-
   }));
 
 
@@ -328,3 +322,20 @@ describe('features/replace-preview', function() {
   );
 
 });
+
+
+// helpers /////////////
+
+function skipCI(userAgent) {
+  const ci = window.__env__ && window.__env__.CI;
+
+  if (!ci) {
+    return false;
+  }
+
+  if (userAgent) {
+    return window.navigator.userAgent.includes(userAgent);
+  }
+
+  return true;
+}
