@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.1.0
+
+* `FEAT`: add replace element keyboard binding ([#1785](https://github.com/bpmn-io/bpmn-js/pull/1785))
+* `FEAT`: add `replaceElement` editor action ([#1785](https://github.com/bpmn-io/bpmn-js/pull/1785))
+* `DEPS`: update to `diagram-js@11.4.1`
+
 ## 11.0.5
 
 * `DEPS`: update to `diagram-js@11.3.0`
