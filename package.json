@@ -54,8 +54,8 @@
   ],
   "devDependencies": {
     "@babel/core": "^7.20.2",
-    "@rollup/plugin-commonjs": "^23.0.2",
-    "@rollup/plugin-json": "^5.0.1",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^5.0.1",
     "@rollup/plugin-terser": "^0.1.0",
@@ -88,8 +88,8 @@
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",
     "puppeteer": "^19.4.1",
-    "rollup": "^2.79.1",
-    "rollup-plugin-license": "^2.9.1",
+    "rollup": "^3.0.0",
+    "rollup-plugin-license": "^3.0.0",
     "sinon": "^15.0.0",
     "sinon-chai": "^3.7.0",
     "webpack": "^5.74.0"
