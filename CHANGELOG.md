@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.1.1
+
+* `FIX`: correct popup menu display in fullscreen ([#1795](https://github.com/bpmn-io/bpmn-js/issues/1795))
+* `DEPS`: update to `diagram-js@11.4.3`
+
 ## 11.1.0
 
 * `FEAT`: add replace element keyboard binding ([#1785](https://github.com/bpmn-io/bpmn-js/pull/1785))
