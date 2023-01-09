@@ -47,7 +47,6 @@ _Re-release of `v11.0.2`._
 * New popup menu UI introduced with `diagram-js@11`. See [`diagram-js` breaking changes and migration guide](https://github.com/bpmn-io/diagram-js/blob/develop/CHANGELOG.md#breaking-changes).
 * Keyboard-related features no longer use `KeyboardEvent#keyCode`. Use a polyfill (e.g. [keyboardevent-key-polyfill](https://www.npmjs.com/package/keyboardevent-key-polyfill)) if you need to support old browsers.
 
-
 ## 10.3.0
 
 * `FEAT`: add BPMN specific space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
