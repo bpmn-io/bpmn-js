@@ -14,6 +14,8 @@
   "scripts": {
     "all": "run-s lint test distro test:distro",
     "lint": "eslint .",
+    "format": "run-s format:markdown 'lint -- --fix'",
+    "format:markdown": "remark . -qo",
     "start": "cross-env SINGLE_START=modeler npm run dev",
     "start:viewer": "cross-env SINGLE_START=viewer npm run dev",
     "start:navigated-viewer": "cross-env SINGLE_START=navigated-viewer npm run dev",
@@ -88,6 +90,8 @@
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",
     "puppeteer": "^19.4.1",
+    "remark-cli": "^11.0.0",
+    "remark-preset-bpmn-io": "^0.2.1",
     "rollup": "^2.79.1",
     "rollup-plugin-license": "^2.9.1",
     "sinon": "^15.0.0",
@@ -105,5 +109,14 @@
     "min-dom": "^4.0.3",
     "object-refs": "^0.3.0",
     "tiny-svg": "^3.0.0"
+  },
+  "remarkConfig": {
+    "plugins": [
+      "preset-bpmn-io",
+      [
+        "lint-no-html",
+        false
+      ]
+    ]
   }
 }
