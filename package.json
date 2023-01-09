@@ -69,7 +69,7 @@
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "eslint": "^8.22.0",
-    "eslint-plugin-bpmn-io": "^0.16.0",
+    "eslint-plugin-bpmn-io": "^1.0.0",
     "eslint-plugin-import": "^2.26.0",
     "execa": "^5.1.1",
     "file-drops": "^0.4.0",
