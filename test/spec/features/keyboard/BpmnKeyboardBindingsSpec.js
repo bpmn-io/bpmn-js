@@ -68,7 +68,8 @@ describe('features/keyboard', function() {
         'directEditing',
         'find',
         'moveToOrigin',
-        'replaceElement'
+        'replaceElement',
+        'appendElement'
       ];
 
       // then
@@ -177,6 +178,26 @@ describe('features/keyboard', function() {
           expect(selectedElements).not.to.contain(rootElement);
         })
       );
+
+
+      it('should trigger append menu',
+        inject(function(keyboard, popupMenu, elementRegistry, selection) {
+
+          sinon.spy(popupMenu, 'open');
+
+          // given
+          var task = elementRegistry.get('Task_1');
+
+          selection.select(task);
+
+          var e = createKeyEvent(key);
+
+          // when
+          keyboard._keyHandler(e);
+
+          // then
+          expect(popupMenu.open).to.have.been.calledOnce;
+        }));
 
     });
 
