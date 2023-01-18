@@ -244,7 +244,7 @@ describe('features/editor-actions', function() {
     }));
 
 
-    it('should not open replace element if no selection', inject(function(elementRegistry, selection, editorActions, eventBus) {
+    it('should not open replace element if no selection', inject(function(editorActions, eventBus) {
 
       // given
       var changedSpy = sinon.spy();
@@ -259,7 +259,7 @@ describe('features/editor-actions', function() {
     }));
 
 
-    it('should not open replace element if multple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
+    it('should not open replace element if multiple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
 
       // given
       var elementIds = [ 'StartEvent_1', 'UserTask_1' ];
@@ -274,6 +274,75 @@ describe('features/editor-actions', function() {
       eventBus.once('popupMenu.open', changedSpy);
 
       editorActions.trigger('replaceElement', {});
+
+      // then
+      expect(changedSpy).to.not.have.been.called;
+    }));
+
+  });
+
+
+  describe('#appendElement', function() {
+
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: [
+        selectionModule,
+        bpmnEditorActionsModule,
+        modelingModule,
+        coreModule,
+        contextPad
+      ]
+    }));
+
+
+    it('should open append element', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      const element = elementRegistry.get('StartEvent_1');
+
+      selection.select(element);
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('appendElement', {});
+
+      // then
+      expect(changedSpy).to.have.been.called;
+    }));
+
+
+    it('should not open append element if no selection', inject(function(editorActions, eventBus) {
+
+      // given
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('appendElement', {});
+
+      // then
+      expect(changedSpy).to.not.have.been.called;
+    }));
+
+
+    it('should not open append element if multiple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      var elementIds = [ 'StartEvent_1', 'UserTask_1' ];
+      var elements = elementIds.map(function(id) {
+        return elementRegistry.get(id);
+      });
+
+      selection.select(elements);
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('appendElement', {});
 
       // then
       expect(changedSpy).to.not.have.been.called;

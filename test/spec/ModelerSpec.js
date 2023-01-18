@@ -284,7 +284,8 @@ describe('Modeler', function() {
         'directEditing',
         'find',
         'moveToOrigin',
-        'replaceElement'
+        'replaceElement',
+        'appendElement'
       ];
 
       var modeler = new Modeler();
