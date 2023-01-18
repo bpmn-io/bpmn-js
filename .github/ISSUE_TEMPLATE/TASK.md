@@ -4,11 +4,11 @@ about: Describe a generic activity we should carry out.
 ---
 
 
-__What should we do?__
+### What should we do?
 
 <!-- Clearly describe the activity we should carry out. -->
 
 
-__Why should we do it?__
+### Why should we do it?
 
 <!-- Argue why doing it is a healthy investment of our time. -->
