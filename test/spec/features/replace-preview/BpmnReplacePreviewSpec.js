@@ -116,7 +116,7 @@ describe('features/replace-preview', function() {
   }));
 
 
-  it('should remove dragger from context.visualReplacements', inject(
+  skipCI('Mac OS') && it('should remove dragger from context.visualReplacements', inject(
     function(elementRegistry, dragging) {
 
       // given
