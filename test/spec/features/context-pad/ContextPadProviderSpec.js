@@ -268,8 +268,7 @@ describe('features - context-pad', function() {
         'append.gateway',
         'append.append-task',
         'append.intermediate-event',
-        'append.text-annotation',
-        'append'
+        'append.text-annotation'
       ]);
     }));
 
@@ -285,8 +284,7 @@ describe('features - context-pad', function() {
         'append.condition-intermediate-event',
         'append.signal-intermediate-event',
         'append.text-annotation',
-        '!append.task',
-        'append'
+        '!append.task'
       ]);
     }));
 
@@ -296,8 +294,7 @@ describe('features - context-pad', function() {
       expectContextPadEntries('EndEvent_1', [
         'connect',
         'replace',
-        '!append.task',
-        '!append'
+        '!append.task'
       ]);
     }));
 
@@ -308,8 +305,7 @@ describe('features - context-pad', function() {
         'connect',
         'replace',
         '!append.end-event',
-        'append.text-annotation',
-        'append'
+        'append.text-annotation'
       ]);
     }));
 
@@ -320,8 +316,7 @@ describe('features - context-pad', function() {
         'connect',
         'replace',
         'append.compensation-activity',
-        '!append.end-event',
-        'append'
+        '!append.end-event'
       ]);
     }));
 
@@ -332,8 +327,7 @@ describe('features - context-pad', function() {
         'connect',
         'append.text-annotation',
         'replace',
-        '!append.end-event',
-        '!ppend'
+        '!append.end-event'
       ]);
     }));
 
@@ -344,8 +338,7 @@ describe('features - context-pad', function() {
         'connect',
         'append.text-annotation',
         'replace',
-        '!append.end-event',
-        '!append'
+        '!append.end-event'
       ]);
     }));
 
@@ -355,8 +348,7 @@ describe('features - context-pad', function() {
       expectContextPadEntries('Group_1', [
         'append.text-annotation',
         'delete',
-        '!replace',
-        '!append'
+        '!replace'
       ]);
     }));
 
@@ -367,8 +359,7 @@ describe('features - context-pad', function() {
         'connect',
         'delete',
         '!replace',
-        '!append.text-annotation',
-        '!append'
+        '!append.text-annotation'
       ]);
     }));
 
@@ -379,8 +370,7 @@ describe('features - context-pad', function() {
         'append.text-annotation',
         'delete',
         'replace',
-        '!connect',
-        '!append'
+        '!connect'
       ]);
     }));
 
@@ -616,83 +606,6 @@ describe('features - context-pad', function() {
       ));
 
     });
-
-  });
-
-
-  describe('append', function() {
-
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
-    }));
-
-
-    it('should show append menu in the correct position', inject(function(elementRegistry, contextPad) {
-
-      // given
-      var element = elementRegistry.get('StartEvent_1'),
-          padding = { y: 1, x: 5 },
-          padMenuRect,
-          replaceMenuRect;
-
-      contextPad.open(element);
-
-      // when
-      contextPad.trigger('click', padEvent('append'));
-
-      padMenuRect = contextPad.getPad(element).html.getBoundingClientRect();
-      replaceMenuRect = getPopupMenu().getBoundingClientRect();
-
-      // then
-      expect(replaceMenuRect.left).to.be.at.most(padMenuRect.right + padding.x);
-      expect(replaceMenuRect.top).to.be.at.most(padMenuRect.top + padding.y);
-    }));
-
-
-    it('should hide wrench if replacement is disallowed', inject(
-      function(elementRegistry, contextPad, customRules) {
-
-        // given
-        var element = elementRegistry.get('StartEvent_1');
-
-        // disallow replacement
-        customRules.addRule('shape.append', function(context) {
-          return !is(context.element, 'bpmn:StartEvent');
-        });
-
-        // when
-        contextPad.open(element);
-
-        var padNode = contextPad.getPad(element).html;
-
-        // then
-        expect(padEntry(padNode, 'append')).not.to.exist;
-      }
-    ));
-
-
-    it('should show wrench if replacement is allowed', inject(
-      function(elementRegistry, contextPad, customRules) {
-
-        // given
-        var element = elementRegistry.get('Task_1');
-
-        // disallow replacement
-        customRules.addRule('shape.append', function(context) {
-          return !is(context.element, 'bpmn:StartEvent');
-        });
-
-        // when
-        contextPad.open(element);
-
-        var padNode = contextPad.getPad(element).html;
-
-        // then
-        expect(padEntry(padNode, 'append')).to.exist;
-      }
-    ));
 
   });
 
