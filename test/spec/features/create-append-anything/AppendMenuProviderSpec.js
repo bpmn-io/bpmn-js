@@ -11,7 +11,7 @@ import {
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 import autoPlace from 'lib/features/auto-place';
-import appendMenuProvider from 'lib/features/popup-menu';
+import createAppendAything from 'lib/features/create-append-anything';
 import customRulesModule from '../../../util/custom-rules';
 
 import {
@@ -22,7 +22,7 @@ import {
 import { getBusinessObject } from 'lib/util/ModelUtil';
 
 
-describe('features/popup-menu - append menu provider', function() {
+describe('features/create-append-anything - append menu provider', function() {
 
   var diagramXML = require('./AppendMenuProvider.bpmn');
 
@@ -30,7 +30,7 @@ describe('features/popup-menu - append menu provider', function() {
     coreModule,
     modelingModule,
     autoPlace,
-    appendMenuProvider,
+    createAppendAything,
     customRulesModule
   ];
 
