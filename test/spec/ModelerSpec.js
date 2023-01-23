@@ -264,6 +264,7 @@ describe('Modeler', function() {
 
       // given
       var expectedActions = [
+        'appendElement',
         'undo',
         'redo',
         'copy',
@@ -284,8 +285,7 @@ describe('Modeler', function() {
         'directEditing',
         'find',
         'moveToOrigin',
-        'replaceElement',
-        'appendElement'
+        'replaceElement'
       ];
 
       var modeler = new Modeler();
