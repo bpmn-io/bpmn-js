@@ -82,4 +82,33 @@ describe('features/create-append-anything - editor actions', function() {
 
   });
 
+
+  describe('#createElement', function() {
+
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: [
+        selectionModule,
+        modelingModule,
+        coreModule,
+        editorActionsModule,
+        createAppendAnything
+      ]
+    }));
+
+
+    it('should open create element', inject(function(editorActions, eventBus) {
+
+      // given
+      var changedSpy = sinon.spy();
+      eventBus.once('popupMenu.open', changedSpy);
+
+      // when
+      editorActions.trigger('createElement', {});
+
+      // then
+      expect(changedSpy).to.have.been.called;
+    }));
+
+  });
+
 });
