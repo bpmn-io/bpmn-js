@@ -265,6 +265,7 @@ describe('Modeler', function() {
       // given
       var expectedActions = [
         'appendElement',
+        'createElement',
         'undo',
         'redo',
         'copy',

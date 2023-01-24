@@ -1,6 +1,7 @@
 import {
   bootstrapViewer,
-  inject
+  inject,
+  getBpmnJS
 } from 'test/TestHelper';
 
 import { forEach } from 'min-dash';
@@ -14,6 +15,10 @@ import editorActions from 'diagram-js/lib/features/editor-actions';
 import {
   createKeyEvent
 } from 'test/util/KeyEvents';
+
+import {
+  query as domQuery
+} from 'min-dom';
 
 
 describe('features/create-append-anything - keyboard bindings', function() {
@@ -37,7 +42,8 @@ describe('features/create-append-anything - keyboard bindings', function() {
 
       // given
       var expectedActions = [
-        'appendElement'
+        'appendElement',
+        'createElement'
       ];
       var actualActions = editorActions.getActions();
 
@@ -67,6 +73,77 @@ describe('features/create-append-anything - keyboard bindings', function() {
 
           // then
           expect(popupMenu.open).to.have.been.calledOnce;
+          expect(isMenu('bpmn-append')).to.be.true;
+        }));
+
+
+      it('should trigger create menu',
+        inject(function(keyboard, popupMenu) {
+
+          sinon.spy(popupMenu, 'open');
+
+          // given
+          var e = createKeyEvent(key);
+
+          // when
+          keyboard._keyHandler(e);
+
+          // then
+          expect(popupMenu.open).to.have.been.calledOnce;
+          expect(isMenu('bpmn-create')).to.be.true;
+        }));
+
+
+      it('should not trigger create or append menus',
+        inject(function(keyboard, popupMenu) {
+
+          sinon.spy(popupMenu, 'open');
+
+          // given
+          var e = createKeyEvent(key, { ctrlKey: true });
+
+          // when
+          keyboard._keyHandler(e);
+
+          // then
+          expect(popupMenu.open).to.not.have.been.called;
+        }));
+
+    });
+
+
+    forEach([ 'n', 'N' ], function(key) {
+
+      it('should trigger create menu',
+        inject(function(keyboard, popupMenu) {
+
+          sinon.spy(popupMenu, 'open');
+
+          // given
+          var e = createKeyEvent(key);
+
+          // when
+          keyboard._keyHandler(e);
+
+          // then
+          expect(popupMenu.open).to.have.been.calledOnce;
+          expect(isMenu('bpmn-create')).to.be.true;
+        }));
+
+
+      it('should not trigger create menu',
+        inject(function(keyboard, popupMenu) {
+
+          sinon.spy(popupMenu, 'open');
+
+          // given
+          var e = createKeyEvent(key, { ctrlKey: true });
+
+          // when
+          keyboard._keyHandler(e);
+
+          // then
+          expect(popupMenu.open).to.not.have.been.called;
         }));
 
     });
@@ -74,3 +151,12 @@ describe('features/create-append-anything - keyboard bindings', function() {
   });
 
 });
+
+
+// helpers //////////////////////
+function isMenu(menuId) {
+  const popup = getBpmnJS().get('popupMenu');
+  const popupElement = popup._current && domQuery('.djs-popup', popup._current.container);
+
+  return popupElement.classList.contains(menuId);
+}
