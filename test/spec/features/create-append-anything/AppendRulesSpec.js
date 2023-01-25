@@ -13,7 +13,7 @@ describe('features/create-append-anything - rules', function() {
 
   var testModules = [ modelingModule, coreModule, rulesModule, createAppendAnything ];
 
-  var testXML = require('./AppendMenuProvider.bpmn');
+  var testXML = require('./AppendRules.bpmn');
 
   beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
@@ -27,7 +27,6 @@ describe('features/create-append-anything - rules', function() {
         'bpmn:EndEvent',
         'bpmn:Group',
         'bpmn:TextAnnotation',
-        'bpmn:SequenceFlow',
         'bpmn:Lane',
         'bpmn:Participant',
         'bpmn:DataStoreReference',
@@ -77,6 +76,48 @@ describe('features/create-append-anything - rules', function() {
       expect(result).to.be.false;
     }));
 
+
+    describe('connections', function() {
+
+      it('should not allow for sequence flows', inject(function(elementRegistry, rules) {
+
+        // given
+        var element = elementRegistry.get('SequenceFlow');
+
+        // when
+        const allowed = rules.allowed('shape.append', { element });
+
+        // then
+        expect(allowed).to.be.false;
+      }));
+
+
+      it('should not allow for associations', inject(function(elementRegistry, rules) {
+
+        // given
+        var element = elementRegistry.get('Association');
+
+        // when
+        const allowed = rules.allowed('shape.append', { element });
+
+        // then
+        expect(allowed).to.be.false;
+      }));
+
+
+      it('should not allow for message flows', inject(function(elementRegistry, rules) {
+
+        // given
+        var element = elementRegistry.get('MessageFlow');
+
+        // when
+        const allowed = rules.allowed('shape.append', { element });
+
+        // then
+        expect(allowed).to.be.false;
+      }));
+
+    });
   });
 
 });
