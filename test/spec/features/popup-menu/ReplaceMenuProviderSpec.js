@@ -1518,6 +1518,20 @@ describe('features/popup-menu - replace menu provider', function() {
         expect(queryEntry('replace-with-data-store-reference')).to.exist;
         expect(queryEntry('replace-with-data-object-reference')).to.be.null;
       }));
+
+
+      it('should handle missing dataObjectRef', inject(function(elementRegistry) {
+
+        // given
+        var dataObjectReference = elementRegistry.get('DataObjectReference_NO_DataObject');
+
+        // when
+        openPopup(dataObjectReference);
+
+        // then
+        expect(queryEntry('toggle-is-collection')).not.to.exist;
+      }));
+
     });
 
 
@@ -1539,6 +1553,19 @@ describe('features/popup-menu - replace menu provider', function() {
         expect(queryEntry('toggle-is-collection')).to.be.null;
         expect(queryEntry('replace-with-data-store-reference')).to.be.null;
         expect(queryEntry('replace-with-data-object-reference')).to.exist;
+      }));
+
+
+      it('should handle missing dataStoreRef', inject(function(elementRegistry) {
+
+        // given
+        var dataStoreReference = elementRegistry.get('DataStoreReference_NO_DataStore');
+
+        // when
+        openPopup(dataStoreReference);
+
+        // then
+        expect(queryEntry('toggle-is-collection')).to.be.null;
       }));
 
     });
