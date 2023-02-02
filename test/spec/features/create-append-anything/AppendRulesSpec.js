@@ -34,7 +34,6 @@ describe('features/create-append-anything - rules', function() {
       ];
 
       // when
-
       var results = types.map(function(type) {
         var element = elementFactory.createShape({ type: type });
         return rules.allowed('shape.append', { element });
@@ -44,6 +43,19 @@ describe('features/create-append-anything - rules', function() {
       results.forEach(function(result) {
         expect(result).to.be.false;
       });
+    }));
+
+
+    it('should not allow for labels', inject(function(elementRegistry, rules) {
+
+      // given
+      var element = elementRegistry.get('START_EVENT').label;
+
+      // when
+      var allowed = rules.allowed('shape.append', { element });
+
+      // then
+      expect(allowed).to.be.false;
     }));
 
 
