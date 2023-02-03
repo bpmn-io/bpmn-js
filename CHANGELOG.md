@@ -6,6 +6,18 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.2.0
+
+* `FEAT`: append menu available via context pad ([#1802](https://github.com/bpmn-io/bpmn-js/pull/1802), [#1809](https://github.com/bpmn-io/bpmn-js/pull/1809), [#1815](https://github.com/bpmn-io/bpmn-js/pull/1815), [#1818](https://github.com/bpmn-io/bpmn-js/pull/1818), [#1831](https://github.com/bpmn-io/bpmn-js/pull/1831))
+* `FEAT`: create menu available via palette ([#1811](https://github.com/bpmn-io/bpmn-js/pull/1811), [#1809](https://github.com/bpmn-io/bpmn-js/pull/1809), [#1817](https://github.com/bpmn-io/bpmn-js/pull/1817))
+* `FEAT`: simplify connection-multi icon ([#1822](https://github.com/bpmn-io/bpmn-js/pull/1822))
+* `FEAT`: join paths `round` by default ([1827](https://github.com/bpmn-io/bpmn-js/pull/1827))
+* `FEAT`: improved BPMN symbol rendering ([#1830](https://github.com/bpmn-io/bpmn-js/pull/1830))
+* `FEAT`: round connection corners ([#1828](https://github.com/bpmn-io/bpmn-js/pull/1828))
+* `FIX`: missing special attributes in `bpmnElementFactory` ([#1807](https://github.com/bpmn-io/bpmn-js/pull/1807))
+* `FIX`: handle `bpmn:DataObjectReference` without data object in replace menu ([#1823](https://github.com/bpmn-io/bpmn-js/pull/1823))
+* `DEPS`: update to `diagram-js@11.8.0`
+
 ## 11.1.1
 
 * `FIX`: correct popup menu display in fullscreen ([#1795](https://github.com/bpmn-io/bpmn-js/issues/1795))
