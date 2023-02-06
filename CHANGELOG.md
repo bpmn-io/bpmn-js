@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.3.0
+
+* `FEAT`: feature `service` and `user` tasks more prominently in replace menu ([#1836](https://github.com/bpmn-io/bpmn-js/pull/1836))
+* `FEAT`: hide rare items initially from create/append menus ([#1836](https://github.com/bpmn-io/bpmn-js/pull/1836))
+* `FEAT`: retrieve instantiation modules with context ([#1835](https://github.com/bpmn-io/bpmn-js/pull/1835))
+* `DEPS`: update to `diagram-js@11.9.0`
+
 ## 11.2.0
 
 _Adds create/append anything._
