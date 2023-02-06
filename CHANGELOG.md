@@ -16,6 +16,7 @@ _Adds create/append anything._
 * `FEAT`: join paths `round` by default ([1827](https://github.com/bpmn-io/bpmn-js/pull/1827))
 * `FEAT`: improved BPMN symbol rendering ([#1830](https://github.com/bpmn-io/bpmn-js/pull/1830))
 * `FEAT`: round connection corners ([#1828](https://github.com/bpmn-io/bpmn-js/pull/1828))
+* `FEAT`: improve visibility of popup menu ([#1812](https://github.com/bpmn-io/bpmn-js/issues/1812))
 * `FIX`: missing special attributes in `bpmnElementFactory` ([#1807](https://github.com/bpmn-io/bpmn-js/pull/1807))
 * `FIX`: handle `bpmn:DataObjectReference` without data object in replace menu ([#1823](https://github.com/bpmn-io/bpmn-js/pull/1823))
 * `DEPS`: update to `diagram-js@11.8.0`
