@@ -53,6 +53,8 @@ _Re-release of `v11.0.2`._
 
 ## 11.0.0
 
+_Reworks popup menu UI._
+
 * `FEAT`: integrate new popup menu UI ([#1776](https://github.com/bpmn-io/bpmn-js/pull/1776))
 * `DEPS`: update to `diagram-js@11.1.0` ([#1776](https://github.com/bpmn-io/bpmn-js/pull/1776))
 
