@@ -160,6 +160,28 @@ describe('features/create-append-anything - append menu provider', function() {
       }));
 
 
+      it('should append via dragstart', inject(function(elementRegistry, eventBus, dragging) {
+
+        // given
+        const startEvent = elementRegistry.get('StartEvent');
+        const outgoingFlows = getBusinessObject(startEvent).outgoing;
+        const createSpy = sinon.spy();
+        const endSpy = sinon.spy();
+
+        eventBus.on('create.start', createSpy);
+        eventBus.on('create.end', endSpy);
+
+        // when
+        openPopup(startEvent);
+        placeDragElement(startEvent, 'append-task');
+
+        // then
+        expect(createSpy).to.have.been.called;
+        expect(endSpy).to.have.been.called;
+        expect(outgoingFlows).to.have.length(2);
+      }));
+
+
       it('should undo', inject(function(elementRegistry, commandStack) {
 
         // given
@@ -220,6 +242,28 @@ describe('features/create-append-anything - append menu provider', function() {
         triggerAction('append-expanded-subprocess');
 
         // then
+        expect(outgoingFlows).to.have.length(2);
+      }));
+
+
+      it('should append via dragstart', inject(function(elementRegistry, eventBus, dragging) {
+
+        // given
+        const startEvent = elementRegistry.get('StartEvent');
+        const outgoingFlows = getBusinessObject(startEvent).outgoing;
+        const createSpy = sinon.spy();
+        const endSpy = sinon.spy();
+
+        eventBus.on('create.start', createSpy);
+        eventBus.on('create.end', endSpy);
+
+        // when
+        openPopup(startEvent);
+        placeDragElement(startEvent, 'append-expanded-subprocess');
+
+        // then
+        expect(createSpy).to.have.been.called;
+        expect(endSpy).to.have.been.called;
         expect(outgoingFlows).to.have.length(2);
       }));
 
@@ -308,6 +352,28 @@ describe('features/create-append-anything - append menu provider', function() {
         triggerAction('append-none-end-event');
 
         // then
+        expect(outgoingFlows).to.have.length(2);
+      }));
+
+
+      it('should append via dragstart', inject(function(elementRegistry, eventBus, dragging) {
+
+        // given
+        const startEvent = elementRegistry.get('StartEvent');
+        const outgoingFlows = getBusinessObject(startEvent).outgoing;
+        const createSpy = sinon.spy();
+        const endSpy = sinon.spy();
+
+        eventBus.on('create.start', createSpy);
+        eventBus.on('create.end', endSpy);
+
+        // when
+        openPopup(startEvent);
+        placeDragElement(startEvent, 'append-none-end-event');
+
+        // then
+        expect(createSpy).to.have.been.called;
+        expect(endSpy).to.have.been.called;
         expect(outgoingFlows).to.have.length(2);
       }));
 
@@ -419,6 +485,28 @@ describe('features/create-append-anything - append menu provider', function() {
       }));
 
 
+      it('should append via dragstart', inject(function(elementRegistry, eventBus, dragging) {
+
+        // given
+        const startEvent = elementRegistry.get('StartEvent');
+        const outgoingFlows = getBusinessObject(startEvent).outgoing;
+        const createSpy = sinon.spy();
+        const endSpy = sinon.spy();
+
+        eventBus.on('create.start', createSpy);
+        eventBus.on('create.end', endSpy);
+
+        // when
+        openPopup(startEvent);
+        placeDragElement(startEvent, 'append-exclusive-gateway');
+
+        // then
+        expect(createSpy).to.have.been.called;
+        expect(endSpy).to.have.been.called;
+        expect(outgoingFlows).to.have.length(2);
+      }));
+
+
       it('should undo', inject(function(elementRegistry, commandStack) {
 
         // given
@@ -479,6 +567,28 @@ describe('features/create-append-anything - append menu provider', function() {
 
         // then
         expect(dataOutputAssociations).to.have.length(1);
+      }));
+
+
+      it('should append via dragstart', inject(function(elementRegistry, eventBus, dragging) {
+
+        // given
+        const startEvent = elementRegistry.get('StartEvent');
+        const outgoingFlows = getBusinessObject(startEvent).outgoing;
+        const createSpy = sinon.spy();
+        const endSpy = sinon.spy();
+
+        eventBus.on('create.start', createSpy);
+        eventBus.on('create.end', endSpy);
+
+        // when
+        openPopup(startEvent);
+        placeDragElement(startEvent, 'append-data-store-reference');
+
+        // then
+        expect(createSpy).to.have.been.called;
+        expect(endSpy).to.have.been.called;
+        expect(outgoingFlows).to.have.length(1);
       }));
 
 
@@ -560,7 +670,7 @@ function getMenuContainer() {
   return popup._current.container;
 }
 
-function triggerAction(id) {
+function triggerAction(id, action = 'click') {
   var entry = queryEntry(id);
 
   if (!entry) {
@@ -568,6 +678,17 @@ function triggerAction(id) {
   }
 
   var popupMenu = getBpmnJS().get('popupMenu');
+  return popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }), null, action);
+}
 
-  return popupMenu.trigger(globalEvent(entry, { x: 0, y: 0 }));
+function placeDragElement(element, action) {
+  var dragging = getBpmnJS().get('dragging');
+  var elementRegistry = getBpmnJS().get('elementRegistry');
+
+  let processElement = elementRegistry.get('Process_07k5b99');
+
+  triggerAction(action, 'dragstart');
+
+  dragging.hover({ element: processElement });
+  dragging.end();
 }
