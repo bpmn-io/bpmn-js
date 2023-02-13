@@ -1,7 +1,12 @@
 import {
   bootstrapModeler,
-  inject
+  inject,
+  getBpmnJS
 } from 'test/TestHelper';
+
+import {
+  query as domQuery
+} from 'min-dom';
 
 import selectionModule from 'diagram-js/lib/features/selection';
 import modelingModule from 'lib/features/modeling';
@@ -42,25 +47,11 @@ describe('features/create-append-anything - editor actions', function() {
 
       // then
       expect(changedSpy).to.have.been.called;
+      expect(isMenu('bpmn-append')).to.be.true;
     }));
 
 
-    it('should not open append element if no selection', inject(function(editorActions, eventBus) {
-
-      // given
-      var changedSpy = sinon.spy();
-
-      // when
-      eventBus.once('popupMenu.open', changedSpy);
-
-      editorActions.trigger('appendElement', {});
-
-      // then
-      expect(changedSpy).to.not.have.been.called;
-    }));
-
-
-    it('should not open append element if multiple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
+    it('should open create element if multiple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
 
       // given
       var elementIds = [ 'StartEvent_1', 'UserTask_1' ];
@@ -77,7 +68,43 @@ describe('features/create-append-anything - editor actions', function() {
       editorActions.trigger('appendElement', {});
 
       // then
-      expect(changedSpy).to.not.have.been.called;
+      expect(changedSpy).to.have.been.called;
+      expect(isMenu('bpmn-create')).to.be.true;
+    }));
+
+
+    it('should open create element if no selection', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('appendElement', {});
+
+      // then
+      expect(changedSpy).to.have.been.called;
+      expect(isMenu('bpmn-create')).to.be.true;
+    }));
+
+
+    it('should open create element if append not allowed', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      const element = elementRegistry.get('EndEvent_1');
+
+      selection.select(element);
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('appendElement', {});
+
+      // then
+      expect(changedSpy).to.have.been.called;
+      expect(isMenu('bpmn-create')).to.be.true;
     }));
 
   });
@@ -112,3 +139,12 @@ describe('features/create-append-anything - editor actions', function() {
   });
 
 });
+
+
+// helpers //////////////////////
+function isMenu(menuId) {
+  const popup = getBpmnJS().get('popupMenu');
+  const popupElement = popup._current && domQuery('.djs-popup', popup._current.container);
+
+  return popupElement.classList.contains(menuId);
+}
