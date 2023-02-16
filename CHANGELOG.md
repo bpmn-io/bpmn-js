@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.4.0
+
+* `FEAT`: translate append menu entry labels and groups ([#1810](https://github.com/bpmn-io/bpmn-js/pull/1810))
+* `FEAT`: activate direct editing on participant creation ([#1845](https://github.com/bpmn-io/bpmn-js/pull/1845))
+* `FIX`: dragging append menu entries creates element connection ([#1843](https://github.com/bpmn-io/bpmn-js/pull/1843))
+* `FIX`: append shortcut triggers create menu if append not allowed ([#1840](https://github.com/bpmn-io/bpmn-js/issues/1840))
+
 ## 11.3.1
 
 _Republish of `v11.3.0`._
