@@ -12,6 +12,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: activate direct editing on participant creation ([#1845](https://github.com/bpmn-io/bpmn-js/pull/1845))
 * `FIX`: dragging append menu entries creates element connection ([#1843](https://github.com/bpmn-io/bpmn-js/pull/1843))
 * `FIX`: append shortcut triggers create menu if append not allowed ([#1840](https://github.com/bpmn-io/bpmn-js/issues/1840))
+* `FIX`: restore marker rendering workaround ([`9c6e475`](https://github.com/bpmn-io/bpmn-js/commit/9c6e475681dd6b6a418b2fbc1dac19a9df360953))
 
 ## 11.3.1
 
