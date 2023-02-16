@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 11.4.1
+
+* `FIX`: correct redo triggering on international keyboard layouts ([#1842](https://github.com/bpmn-io/bpmn-js/issues/1842))
+
 ## 11.4.0
 
 * `FEAT`: translate append menu entry labels and groups ([#1810](https://github.com/bpmn-io/bpmn-js/pull/1810))
