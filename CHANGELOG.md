@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add root elements to definitions when provided via `modeling#update(Moddle)Properties`
+
 ## 11.4.1
 
 * `FIX`: correct redo triggering on international keyboard layouts ([#1842](https://github.com/bpmn-io/bpmn-js/issues/1842))
