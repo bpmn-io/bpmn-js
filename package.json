@@ -9,10 +9,11 @@
     "test/util",
     "test/helper",
     "test/matchers",
-    "!.eslintrc"
+    "!.eslintrc",
+    "!lib/**/*.spec.ts"
   ],
   "scripts": {
-    "all": "run-s lint test distro test:distro",
+    "all": "run-s lint test test:types distro test:distro",
     "lint": "eslint .",
     "format": "run-s format:markdown 'lint -- --fix'",
     "format:markdown": "remark . -qo",
@@ -24,6 +25,7 @@
     "distro": "node tasks/build-distro.js",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
     "test:distro": "node tasks/test-distro.js",
+    "test:types": "tsc",
     "postversion": "run-s distro test:distro",
     "prepare": "run-s distro"
   },
@@ -96,6 +98,7 @@
     "rollup-plugin-license": "^2.9.1",
     "sinon": "^15.0.0",
     "sinon-chai": "^3.7.0",
+    "typescript": "^4.9.5",
     "webpack": "^5.74.0"
   },
   "dependencies": {
