@@ -1,0 +1,8 @@
+{
+  "include": [
+    "./lib/**/*.spec.ts"
+  ],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
