@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `CHORE`: use `diagram-js@11.11.0` built-in selection after replace feature ([#1857](https://github.com/bpmn-io/bpmn-js/pull/1857))
+
 ## 11.5.0
 
 * `FEAT`: add root elements to definitions when provided via `modeling#update(Moddle)Properties`
