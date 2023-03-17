@@ -11,7 +11,9 @@ import {
   readFileSync
 } from 'fs';
 
-import pkg from './package.json';
+import path from 'path';
+
+const pkg = importPkg();
 
 const outputDir = 'dist';
 
@@ -81,6 +83,7 @@ function banner(bundleName, minified) {
       : 'banner'
   );
 
+  const __dirname = path.resolve();
   const bannerTemplate = readFileSync(`${__dirname}/resources/${bannerName}.txt`, 'utf8');
 
   const banner = processTemplate(bannerTemplate, {
@@ -136,4 +139,8 @@ function processTemplate(str, args) {
 
     return replacement;
   });
+}
+
+function importPkg() {
+  return JSON.parse(readFileSync('./package.json', { encoding:'utf8' }));
 }
