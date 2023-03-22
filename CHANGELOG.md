@@ -6,12 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: move `create-append-anything` to [external module](https://github.com/bpmn-io/bpmn-js-create-append-anything) ([#1873](https://github.com/bpmn-io/bpmn-js/pull/1873), [#1862](https://github.com/bpmn-io/bpmn-js/issues/1862))
 * `CHORE`: use `diagram-js@11.11.0` built-in selection after replace feature ([#1857](https://github.com/bpmn-io/bpmn-js/pull/1857))
-* `FEAT`: remove `create-append-anything` module
 
 ### Breaking Changes
 
-* The create/append anything features are not shipped with `bpmn-js` anymore. To keep using these features, please use the [bpmn-js-create-append-anything](https://github.com/bpmn-io/bpmn-js-create-append-anything) extension.
+* The create/append anything features moved to an [external module](https://github.com/bpmn-io/bpmn-js-create-append-anything). Include it to restore the `v11` create/append behavior.
 
 ## 11.5.0
 
