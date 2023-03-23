@@ -13,7 +13,7 @@ import {
 
 import path from 'path';
 
-const pkg = importPkg();
+import pkg from './package.json';
 
 const outputDir = 'dist';
 
@@ -139,8 +139,4 @@ function processTemplate(str, args) {
 
     return replacement;
   });
-}
-
-function importPkg() {
-  return JSON.parse(readFileSync('./package.json', { encoding:'utf8' }));
 }
