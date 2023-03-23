@@ -34,7 +34,7 @@ cp('./assets/bpmn-js.css', dest + '/assets');
 console.log('building pre-packaged distributions');
 
 try {
-  exec('rollup', [ '-c' ], {
+  exec('rollup', [ '-c', '--bundleConfigAsCjs' ], {
     stdio: 'inherit'
   });
 } catch (e) {
