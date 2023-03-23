@@ -11,8 +11,6 @@ import {
   readFileSync
 } from 'fs';
 
-import path from 'path';
-
 import pkg from './package.json';
 
 const outputDir = 'dist';
@@ -83,7 +81,6 @@ function banner(bundleName, minified) {
       : 'banner'
   );
 
-  const __dirname = path.resolve();
   const bannerTemplate = readFileSync(`${__dirname}/resources/${bannerName}.txt`, 'utf8');
 
   const banner = processTemplate(bannerTemplate, {
