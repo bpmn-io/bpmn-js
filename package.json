@@ -13,7 +13,7 @@
     "!lib/**/*.spec.ts"
   ],
   "scripts": {
-    "all": "run-s lint test test:types distro test:distro",
+    "all": "run-s lint test generate-types test:types distro test:distro",
     "lint": "eslint .",
     "format": "run-s format:markdown 'lint -- --fix'",
     "format:markdown": "remark . -qo",
@@ -24,6 +24,7 @@
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
+    "generate-types": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r lib",
     "test:distro": "node tasks/test-distro.js",
     "test:types": "tsc",
     "postversion": "run-s distro test:distro",
@@ -72,6 +73,7 @@
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
+    "del-cli": "^5.0.0",
     "eslint": "^8.22.0",
     "eslint-plugin-bpmn-io": "^1.0.0",
     "eslint-plugin-import": "^2.26.0",
