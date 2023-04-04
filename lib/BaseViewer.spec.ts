@@ -2,7 +2,13 @@ import CommandStack from 'diagram-js/lib/command/CommandStack';
 
 import { Event } from 'diagram-js/lib/core/EventBus';
 
-import BaseViewer, { Events } from './BaseViewer';
+import BaseViewer, {
+  ImportDoneEvent,
+  ImportParseCompleteEvent,
+  ImportParseStartEvent,
+  SaveXMLDoneEvent,
+  SaveXMLStartEvent
+} from './BaseViewer';
 
 import OverlaysModule from 'diagram-js/lib/features/overlays';
 
@@ -119,11 +125,11 @@ export function testViewer(viewer: BaseViewer) {
 
   viewer.detach();
 
-  viewer.on<Events.ImportParseStart>('import.parse.start', ({ xml }) => {
+  viewer.on<ImportParseStartEvent>('import.parse.start', ({ xml }) => {
     console.log(xml);
   });
 
-  viewer.on<Events.ImportParseComplete>('import.parse.complete', ({
+  viewer.on<ImportParseCompleteEvent>('import.parse.complete', ({
     error,
     definitions,
     elementsById,
@@ -141,7 +147,7 @@ export function testViewer(viewer: BaseViewer) {
     console.log(definitions, elementsById, references);
   });
 
-  viewer.on<Events.ImportDone>('import.done', ({ error, warnings }) => {
+  viewer.on<ImportDoneEvent>('import.done', ({ error, warnings }) => {
     if (error) {
       console.error(error);
     }
@@ -151,11 +157,11 @@ export function testViewer(viewer: BaseViewer) {
     }
   });
 
-  viewer.on<Events.SaveXMLStart>('saveXML.start', ({ definitions }) => {
+  viewer.on<SaveXMLStartEvent>('saveXML.start', ({ definitions }) => {
     console.log(definitions);
   });
 
-  viewer.on<Events.SaveXMLDone>('saveXML.done', ({ error, xml }) => {
+  viewer.on<SaveXMLDoneEvent>('saveXML.done', ({ error, xml }) => {
     if (error) {
       console.error(error);
     } else {
