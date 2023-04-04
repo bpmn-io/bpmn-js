@@ -20,7 +20,7 @@ export type BaseViewerOptions = {
   container?: string|HTMLElement;
   moddleExtensions?: ModdleExtensions;
   additionalModules?: ModuleDeclaration[];
-};
+} & Record<string, any>;
 
 export type ModdleElement = Object;
 

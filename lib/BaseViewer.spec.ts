@@ -6,9 +6,9 @@ import BaseViewer, { Events } from './BaseViewer';
 
 import OverlaysModule from 'diagram-js/lib/features/overlays';
 
-let viewer = new BaseViewer();
+const viewer = new BaseViewer();
 
-viewer = new BaseViewer({
+const configuredViewer = new BaseViewer({
   width: 100,
   height: 100,
   position: 'absolute',
@@ -22,6 +22,14 @@ viewer = new BaseViewer({
 });
 
 testViewer(viewer);
+
+const extendedViewer = new BaseViewer({
+  container: 'container',
+  alignToOrigin: false,
+  propertiesPanel: {
+    attachTo: '#properties-panel'
+  }
+});
 
 export function testViewer(viewer: BaseViewer) {
   viewer.importXML('<?xml version="1.0" encoding="UTF-8"?>', 'BPMNDiagram_1');

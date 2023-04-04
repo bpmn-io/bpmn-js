@@ -9,3 +9,16 @@ const modeler = new Modeler({
 testViewer(modeler);
 
 modeler.createDiagram();
+
+
+const otherModeler = new Modeler({
+  container: 'container'
+});
+
+const extendedModeler = new Modeler({
+  container: 'container',
+  alignToOrigin: false,
+  propertiesPanel: {
+    attachTo: '#properties-panel'
+  }
+});

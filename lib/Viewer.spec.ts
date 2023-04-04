@@ -7,3 +7,11 @@ const viewer = new Viewer({
 });
 
 testViewer(viewer);
+
+const extendedViewer = new Viewer({
+  container: 'container',
+  alignToOrigin: false,
+  propertiesPanel: {
+    attachTo: '#properties-panel'
+  }
+});
