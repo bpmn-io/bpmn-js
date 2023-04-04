@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 12.1.0
+
+* `FIX`: correct `Viewer#saveXML` type definition ([#1885](https://github.com/bpmn-io/bpmn-js/pull/1885))
+* `FIX`: correct `Viewer` constructor type definition ([#1882](https://github.com/bpmn-io/bpmn-js/issues/1882))
+
 ## 12.0.0
 
 * `FEAT`: move `create-append-anything` to [external module](https://github.com/bpmn-io/bpmn-js-create-append-anything) ([#1873](https://github.com/bpmn-io/bpmn-js/pull/1873), [#1862](https://github.com/bpmn-io/bpmn-js/issues/1862))
