@@ -7,3 +7,11 @@ const viewer = new NavigatedViewer({
 });
 
 testViewer(viewer);
+
+const extendedViewer = new NavigatedViewer({
+  container: 'container',
+  alignToOrigin: false,
+  propertiesPanel: {
+    attachTo: '#properties-panel'
+  }
+});

@@ -7,3 +7,16 @@ const modeler = new BaseModeler({
 });
 
 testViewer(modeler);
+
+
+const otherModeler = new BaseModeler({
+  container: 'container'
+});
+
+const extendedModeler = new BaseModeler({
+  container: 'container',
+  alignToOrigin: false,
+  propertiesPanel: {
+    attachTo: '#properties-panel'
+  }
+});
