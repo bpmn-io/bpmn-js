@@ -24,7 +24,7 @@
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
-    "generate-types": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r lib",
+    "generate-types": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r index.js lib",
     "test:distro": "node tasks/test-distro.js",
     "test:types": "tsc",
     "postversion": "run-s distro test:distro",
