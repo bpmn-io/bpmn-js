@@ -82,7 +82,7 @@ declare namespace Events {
    * A `import.parse.start` event.
    */
   export type ImportParseStart = {
-  
+
     /**
      * The XML that is to be parsed.
      */
@@ -93,7 +93,7 @@ declare namespace Events {
    * A `import.parse.complete` event.
    */
   export type ImportParseComplete = {
-  
+
     /**
      * An error thrown when parsing the XML.
      */
@@ -151,7 +151,7 @@ declare namespace Events {
    * A `saveXML.done` event.
    */
   export type SaveXMLDone = SaveXMLResult & Event;
-  
+
   /**
    * A `saveSVG.done` event.
    */
@@ -268,11 +268,11 @@ export default class BaseViewer extends Diagram {
    *
    * @throws An error thrown during export.
    *
-   * @param options The options.
+   * @param [options] The options.
    *
    * @return A promise resolving with the XML.
    */
-  saveXML(options: SaveXMLOptions): Promise<SaveXMLResult>;
+  saveXML(options?: SaveXMLOptions): Promise<SaveXMLResult>;
 
   /**
    * Export the currently displayed BPMN 2.0 diagram as
