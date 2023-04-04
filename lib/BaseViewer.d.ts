@@ -272,7 +272,7 @@ export default class BaseViewer extends Diagram {
    *
    * @return A promise resolving with the XML.
    */
-  saveXML(options: SaveXMLOptions): Promise<SaveXMLResult>;
+  saveXML(options?: SaveXMLOptions): Promise<SaveXMLResult>;
 
   /**
    * Export the currently displayed BPMN 2.0 diagram as

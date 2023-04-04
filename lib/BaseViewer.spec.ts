@@ -81,6 +81,10 @@ export function testViewer(viewer: BaseViewer) {
       console.log(error);
     });
 
+  viewer.saveXML();
+
+  viewer.saveSVG();
+
   viewer.getModules();
 
   viewer.clear();
