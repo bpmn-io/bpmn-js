@@ -13,7 +13,7 @@
     "!lib/**/*.spec.ts"
   ],
   "scripts": {
-    "all": "run-s lint test generate-types test:types distro test:distro",
+    "all": "run-s lint test generate-types distro test:distro",
     "lint": "eslint .",
     "format": "run-s format:markdown 'lint -- --fix'",
     "format:markdown": "remark . -qo",
@@ -24,11 +24,13 @@
     "test": "karma start test/config/karma.unit.js",
     "distro": "node tasks/build-distro.js",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
-    "generate-types": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r index.js lib",
+    "generate-types": "run-s generate-types:*",
+    "generate-types:generate": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r lib",
+    "generate-types:test": "tsc --noEmit",
     "test:distro": "node tasks/test-distro.js",
-    "test:types": "tsc",
     "postversion": "run-s distro test:distro",
-    "prepare": "run-s distro"
+    "prepare": "run-s distro",
+    "prepublishOnly": "run-s generate-types"
   },
   "repository": {
     "type": "git",
