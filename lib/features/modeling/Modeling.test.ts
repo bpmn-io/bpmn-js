@@ -1,39 +1,55 @@
+import { expectType } from 'ts-expect';
+
 import Modeler from '../../Modeler';
+
+import {
+  BpmnConnection,
+  BpmnElement,
+  BpmnLabel,
+  BpmnShape
+} from '../../model/Types';
 
 import ElementFactory from './ElementFactory';
 import Modeling from './Modeling';
+
+import { getBusinessObject } from '../../util/ModelUtil';
 
 const modeler = new Modeler();
 
 const elementFactory = modeler.get<ElementFactory>('elementFactory');
 
-const connection = elementFactory.create('connection', { type: 'bpmn:SequenceFlow' }),
-      root = elementFactory.create('root', { type: 'bpmn:Process' }),
-      shape = elementFactory.create('shape', { type: 'bpmn:Task' });
+const sequenceFlow = elementFactory.create('connection', { type: 'bpmn:SequenceFlow' }),
+      process = elementFactory.create('root', { type: 'bpmn:Process' }),
+      subProcess = elementFactory.create('shape', { type: 'bpmn:SubProcess' }),
+      task = elementFactory.create('shape', { type: 'bpmn:Task' });
 
 const modeling = modeler.get<Modeling>('modeling');
 
-modeling.updateLabel(shape, 'foo');
+modeling.updateLabel(task, 'foo');
 
-modeling.updateLabel(shape, 'foo', {
+modeling.updateLabel(task, 'foo', {
   x: 100,
   y: 100,
   width: 100,
   height: 100
 });
 
-modeling.updateLabel(shape, 'foo', {
+modeling.updateLabel(task, 'foo', {
   x: 100,
   y: 100,
   width: 100,
   height: 100
 }, { removeShape: true });
 
-modeling.updateModdleProperties(shape, { type: 'bpmn:ExtensionElements' }, {
+modeling.connect(subProcess, task, sequenceFlow);
+
+modeling.connect(subProcess, task, sequenceFlow, { foo: 'bar' });
+
+modeling.updateModdleProperties(task, { type: 'bpmn:ExtensionElements' }, {
   values: []
 });
 
-modeling.updateProperties(shape, {
+modeling.updateProperties(task, {
   name: 'foo'
 });
 
@@ -64,14 +80,38 @@ modeling.makeCollaboration();
 
 modeling.makeProcess();
 
-modeling.updateLaneRefs([ shape ], [ lane ]);
+modeling.updateLaneRefs([ task ], [ lane ]);
 
-modeling.claimId('foo', shape.businessObject);
+modeling.claimId('foo', task.businessObject);
 
-modeling.unclaimId('foo', shape.businessObject);
+modeling.unclaimId('foo', task.businessObject);
 
-modeling.setColor([ shape ], { fill: 'red', stroke: 'green' });
+modeling.setColor([ task ], { fill: 'red', stroke: 'green' });
 
-modeling.setColor([ shape ], { fill: 'red' });
+modeling.setColor([ task ], { fill: 'red' });
 
-modeling.setColor([ shape ], { stroke: 'green' });
+modeling.setColor([ task ], { stroke: 'green' });
+
+/**
+ * Integration
+ */
+
+expectType<BpmnConnection>(modeling.createConnection(subProcess, task, sequenceFlow, process));
+
+expectType<BpmnLabel>(modeling.createLabel(task, { x: 100, y: 100 }, {
+  businessObject: getBusinessObject(task)
+}));
+
+expectType<BpmnShape>(modeling.createShape(task, { x: 100, y: 100 }, process));
+
+expectType<BpmnElement[]>(modeling.createElements([
+  subProcess,
+  task,
+  sequenceFlow
+], { x: 100, y: 100 }, process));
+
+modeling.moveShape(task, { x: 100, y: 100 });
+
+modeling.moveConnection(sequenceFlow, { x: 100, y: 100 });
+
+modeling.moveElements([ subProcess, task ], { x: 100, y: 100 });

@@ -1,5 +1,6 @@
 import {
   Connection,
+  Element,
   Label,
   Root,
   Shape
@@ -26,7 +27,7 @@ export type BpmnElement = {
   businessObject: any;
   di: any;
   type: string;
-};
+} & Element;
 
 export type BpmnConnection = Connection & BpmnElement;
 
