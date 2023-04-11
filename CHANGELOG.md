@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 12.1.1
+
+* `DEPS`: update to `diagram-js@11.13.0`
+
 ## 12.1.0
 
 * `FIX`: correct `Viewer#saveXML` type definition ([#1885](https://github.com/bpmn-io/bpmn-js/pull/1885))
