@@ -58,6 +58,32 @@ elementFactory.create('label', {
   type: 'bpmn:Task'
 });
 
+elementFactory.create('connection', {
+  type: 'bpmn:Association',
+  associationDirection: 'One'
+});
+
+elementFactory.create('shape', {
+  type: 'bpmn:BoundaryEvent',
+  cancelActivity: true,
+  eventDefinitionType: 'bpmn:ErrorEventDefinition'
+});
+
+elementFactory.create('shape', {
+  type: 'bpmn:Task',
+  isForCompensation: false
+});
+
+elementFactory.create('shape', {
+  type: 'bpmn:Participant',
+  processRef: {}
+});
+
+elementFactory.create('shape', {
+  type: 'bpmn:SubProcess',
+  triggeredByEvent: true
+});
+
 elementFactory.createBpmnElement('connection', {
   type: 'bpmn:SequenceFlow'
 });
