@@ -22,7 +22,7 @@ export default function CustomElementFactory(injector) {
         size;
 
     if (elementType === 'label') {
-      return self.baseCreate(elementType, assign({ type: 'label' }, DEFAULT_LABEL_SIZE, attrs));
+      return self._baseCreate(elementType, assign({ type: 'label' }, DEFAULT_LABEL_SIZE, attrs));
     }
 
     if (/^custom:/.test(type)) {
@@ -32,7 +32,7 @@ export default function CustomElementFactory(injector) {
 
       size = self._getCustomElementSize(type);
 
-      return self.baseCreate(elementType,
+      return self._baseCreate(elementType,
         assign({ type: elementType, businessObject: businessObject }, attrs, size));
     }
 
