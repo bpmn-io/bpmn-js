@@ -1,9 +1,9 @@
 import {
-  Connection,
-  Element,
-  Label,
-  Root,
-  Shape
+  Connection as BaseConnection,
+  Element as BaseElement,
+  Label as BaseLabel,
+  Root as BaseRoot,
+  Shape as BaseShape
 } from "diagram-js/lib/model";
 
 export type Moddle = any;
@@ -23,18 +23,18 @@ export type BpmnAttributes = {
   triggeredByEvent: boolean;
 };
 
-export type BpmnElement = {
+export type Element = {
   businessObject: any;
   di: any;
   type: string;
-} & Element;
+} & BaseElement;
 
-export type BpmnConnection = Connection & BpmnElement;
+export type Connection = BaseConnection & Element;
 
-export type BpmnLabel = Label & BpmnElement;
+export type Label = BaseLabel & Element;
 
-export type BpmnRoot = Root & BpmnElement;
+export type Root = BaseRoot & Element;
 
-export type BpmnShape = Shape & BpmnElement;
+export type Shape = BaseShape & Element;
 
-export type BpmnParent = BpmnRoot | BpmnShape;
+export type Parent = Root | Shape;

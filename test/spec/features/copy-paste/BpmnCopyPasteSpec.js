@@ -29,7 +29,7 @@ import {
 } from 'lib/util/ModelUtil';
 
 /**
- * @typedef {import('../../../../lib/model/Types').BpmnElement} BpmnElement
+ * @typedef {import('../../../../lib/model/Types').Element} Element
  */
 
 
@@ -1138,7 +1138,7 @@ function _findDescriptorsInTree(elements, tree, depth) {
 /**
  * Copy elements.
  *
- * @param {(string|BpmnElement)[]} elements
+ * @param {(string|Element)[]} elements
  *
  * @return {Object}
  */

@@ -3,10 +3,10 @@ import Modeler from '../../Modeler';
 import ElementFactory from './ElementFactory';
 
 import {
-  BpmnConnection,
-  BpmnLabel,
-  BpmnRoot,
-  BpmnShape
+  Connection,
+  Label,
+  Root,
+  Shape
 } from '../../model/Types';
 
 const modeler = new Modeler();
@@ -91,15 +91,15 @@ elementFactory.create('shape', {
   triggeredByEvent: true
 });
 
-elementFactory.createBpmnElement('connection', {
+elementFactory.createElement('connection', {
   type: 'bpmn:SequenceFlow'
 });
 
-elementFactory.createBpmnElement('root', {
+elementFactory.createElement('root', {
   type: 'bpmn:Process'
 });
 
-elementFactory.createBpmnElement('shape', {
+elementFactory.createElement('shape', {
   type: 'bpmn:Task'
 });
 
@@ -122,9 +122,9 @@ elementFactory.createParticipantShape({
 
 type CustomShape = {
   foo: string;
-} & BpmnShape;
+} & Shape;
 
-export class CustomElementFactory extends ElementFactory<BpmnConnection, BpmnLabel, BpmnRoot, CustomShape> {};
+export class CustomElementFactory extends ElementFactory<Connection, Label, Root, CustomShape> {};
 
 const customElementFactory = modeler.get<CustomElementFactory>('elementFactory');
 

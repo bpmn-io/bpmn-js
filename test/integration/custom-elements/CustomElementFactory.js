@@ -4,7 +4,7 @@ import {
 
 import inherits from 'inherits-browser';
 
-import BpmnElementFactory from 'lib/features/modeling/ElementFactory';
+import ElementFactory from 'lib/features/modeling/ElementFactory';
 
 import {
   DEFAULT_LABEL_SIZE
@@ -12,7 +12,7 @@ import {
 
 
 export default function CustomElementFactory(injector) {
-  injector.invoke(BpmnElementFactory, this);
+  injector.invoke(ElementFactory, this);
 
   var self = this;
 
@@ -36,11 +36,11 @@ export default function CustomElementFactory(injector) {
         assign({ type: elementType, businessObject: businessObject }, attrs, size));
     }
 
-    return self.createBpmnElement(elementType, attrs);
+    return self.createElement(elementType, attrs);
   };
 }
 
-inherits(CustomElementFactory, BpmnElementFactory);
+inherits(CustomElementFactory, ElementFactory);
 
 CustomElementFactory.$inject = [ 'injector' ];
 
