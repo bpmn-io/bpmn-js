@@ -1140,7 +1140,7 @@ function _findDescriptorsInTree(elements, tree, depth) {
  *
  * @param {(string|BpmnElement)[]} elements
  *
- * @returns {Object}
+ * @return {Object}
  */
 function copy(elements) {
   if (!isArray(elements)) {
