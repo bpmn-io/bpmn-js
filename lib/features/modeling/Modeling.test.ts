@@ -3,11 +3,11 @@ import { expectType } from 'ts-expect';
 import Modeler from '../../Modeler';
 
 import {
-  BpmnConnection,
-  BpmnElement,
-  BpmnLabel,
-  BpmnParent,
-  BpmnShape
+  Connection,
+  Element,
+  Label,
+  Parent,
+  Shape
 } from '../../model/Types';
 
 import ElementFactory from './ElementFactory';
@@ -99,15 +99,15 @@ modeling.setColor([ task ], { stroke: 'green' });
  * Integration
  */
 
-expectType<BpmnConnection>(modeling.createConnection(subProcess, task, sequenceFlow, process));
+expectType<Connection>(modeling.createConnection(subProcess, task, sequenceFlow, process));
 
-expectType<BpmnLabel>(modeling.createLabel(task, { x: 100, y: 100 }, {
+expectType<Label>(modeling.createLabel(task, { x: 100, y: 100 }, {
   businessObject: getBusinessObject(task)
 }));
 
-expectType<BpmnShape>(modeling.createShape(task, { x: 100, y: 100 }, process));
+expectType<Shape>(modeling.createShape(task, { x: 100, y: 100 }, process));
 
-expectType<BpmnElement[]>(modeling.createElements([
+expectType<Element[]>(modeling.createElements([
   subProcess,
   task,
   sequenceFlow
@@ -125,13 +125,13 @@ modeling.moveElements([ subProcess, task ], { x: 100, y: 100 });
 
 type CustomElement = {
   foo: string;
-} & BpmnElement;
+} & Element;
 
 type CustomShape = {
   bar: string;
-} & BpmnShape & CustomElement;
+} & Shape & CustomElement;
 
-class CustomModeling extends Modeling<BpmnConnection, CustomElement, BpmnLabel, BpmnParent, CustomShape> {};
+class CustomModeling extends Modeling<Connection, CustomElement, Label, Parent, CustomShape> {};
 
 const customModeling = modeler.get<CustomModeling>('modeling');
 

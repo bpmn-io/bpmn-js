@@ -23,7 +23,7 @@ import {
 } from 'lib/draw/BpmnRenderUtil';
 
 /**
- * @typedef {import('../../../lib/model/Types').BpmnElement} BpmnElement
+ * @typedef {import('../../../lib/model/Types').Element} Element
  */
 
 function checkErrors(err, warnings) {
@@ -499,7 +499,7 @@ describe('draw - bpmn renderer', function() {
       /**
        * Expect colors depending on element type.
        *
-       * @param {BpmnElement} element - Element.
+       * @param {Element} element - Element.
        * @param {SVGElement} gfx - Graphics of element.
        * @param {string} fillColor - Fill color to expect.
        * @param {string} strokeColor - Stroke color to expect.
