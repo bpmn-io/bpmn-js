@@ -376,7 +376,7 @@ function recordEvents(eventBus, eventTypes) {
  *
  * @param {Object|string} event - Event or orientation <top|right|bottom|left>
  *
- * @returns {Object}
+ * @return {Object}
  */
 function position(event) {
   var orientation;
