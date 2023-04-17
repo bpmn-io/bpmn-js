@@ -6,6 +6,7 @@ import {
   BpmnConnection,
   BpmnElement,
   BpmnLabel,
+  BpmnParent,
   BpmnShape
 } from '../../model/Types';
 
@@ -13,6 +14,8 @@ import ElementFactory from './ElementFactory';
 import Modeling from './Modeling';
 
 import { getBusinessObject } from '../../util/ModelUtil';
+
+import { CustomElementFactory } from './ElementFactory.test';
 
 const modeler = new Modeler();
 
@@ -115,3 +118,31 @@ modeling.moveShape(task, { x: 100, y: 100 });
 modeling.moveConnection(sequenceFlow, { x: 100, y: 100 });
 
 modeling.moveElements([ subProcess, task ], { x: 100, y: 100 });
+
+/**
+ * Customization
+ */
+
+type CustomElement = {
+  foo: string;
+} & BpmnElement;
+
+type CustomShape = {
+  bar: string;
+} & BpmnShape & CustomElement;
+
+class CustomModeling extends Modeling<BpmnConnection, CustomElement, BpmnLabel, BpmnParent, CustomShape> {};
+
+const customModeling = modeler.get<CustomModeling>('modeling');
+
+const customShape = customModeling.createShape({ bar: 'bar' }, { x: 100, y: 100 }, modeler.get<CustomElementFactory>('elementFactory').create('root'));
+
+customModeling.distributeElements([
+  {
+    elements: [ customShape ],
+    range: {
+      min: 100,
+      max: 200
+    }
+  }
+], 'x', 'width');
