@@ -2,6 +2,13 @@ import Modeler from '../../Modeler';
 
 import ElementFactory from './ElementFactory';
 
+import {
+  BpmnConnection,
+  BpmnLabel,
+  BpmnRoot,
+  BpmnShape
+} from '../../model/Types';
+
 const modeler = new Modeler();
 
 const elementFactory = modeler.get<ElementFactory>('elementFactory');
@@ -108,3 +115,19 @@ elementFactory.createParticipantShape({
   type: 'bpmn:Participant',
   isExpanded: true
 });
+
+/**
+ * Customization
+ */
+
+type CustomShape = {
+  foo: string;
+} & BpmnShape;
+
+class CustomElementFactory extends ElementFactory<BpmnConnection, BpmnLabel, BpmnRoot, CustomShape> {};
+
+const customElementFactory = modeler.get<CustomElementFactory>('elementFactory');
+
+const customShape = customElementFactory.createShape({ foo: 'bar' });
+
+console.log(customShape.foo);
