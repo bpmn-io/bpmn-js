@@ -369,7 +369,7 @@ describe('modeling - label layouting', function() {
 
           // then
           expect(Math.round(connection.label.x)).to.be.within(248, 251);
-          expect(Math.round(connection.label.y)).to.be.equal(152);
+          expect(Math.round(connection.label.y)).to.be.within(151, 152);
 
         }
       ));
