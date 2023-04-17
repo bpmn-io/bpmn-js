@@ -28,6 +28,10 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
+/**
+ * @typedef {import('../../../../lib/model/Types').BpmnElement} BpmnElement
+ */
+
 
 describe('features/copy-paste', function() {
 
@@ -968,7 +972,7 @@ describe('features/copy-paste', function() {
 /**
  * Integration test involving copying, pasting, moving, undoing and redoing.
  *
- * @param {string|Array<string>} elementIds
+ * @param {string|string[]} elementIds
  */
 function integrationTest(elementIds) {
   if (!isArray(elementIds)) {
@@ -1134,7 +1138,7 @@ function _findDescriptorsInTree(elements, tree, depth) {
 /**
  * Copy elements.
  *
- * @param {Array<string|djs.model.Base} elements
+ * @param {(string|BpmnElement)[]} elements
  *
  * @returns {Object}
  */

@@ -22,6 +22,10 @@ import {
   getDi
 } from 'lib/draw/BpmnRenderUtil';
 
+/**
+ * @typedef {import('../../../lib/model/Types').BpmnElement} BpmnElement
+ */
+
 function checkErrors(err, warnings) {
   expect(warnings).to.be.empty;
   expect(err).not.to.exist;
@@ -495,8 +499,8 @@ describe('draw - bpmn renderer', function() {
       /**
        * Expect colors depending on element type.
        *
-       * @param {djs.model.base} element - Element.
-       * @param {SVG} gfx - Graphics of element.
+       * @param {BpmnElement} element - Element.
+       * @param {SVGElement} gfx - Graphics of element.
        * @param {string} fillColor - Fill color to expect.
        * @param {string} strokeColor - Stroke color to expect.
        */

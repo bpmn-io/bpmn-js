@@ -56,7 +56,7 @@ export default function(chai, utils) {
    *
    * expect(connection).to.have.diWaypoints([ { x: 100, y: 100 }, { x: 0, y: 0 } ]);
    *
-   * @param {Connection|Array<Point>} exp
+   * @param {Connection|Point[]} exp
    */
   Assertion.addMethod('diWaypoints', function(exp) {
     var obj = this._obj;
