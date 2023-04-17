@@ -124,7 +124,7 @@ type CustomShape = {
   foo: string;
 } & BpmnShape;
 
-class CustomElementFactory extends ElementFactory<BpmnConnection, BpmnLabel, BpmnRoot, CustomShape> {};
+export class CustomElementFactory extends ElementFactory<BpmnConnection, BpmnLabel, BpmnRoot, CustomShape> {};
 
 const customElementFactory = modeler.get<CustomElementFactory>('elementFactory');
 
