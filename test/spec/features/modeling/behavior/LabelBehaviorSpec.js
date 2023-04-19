@@ -12,7 +12,10 @@ import {
   getExternalLabelMid
 } from 'lib/util/LabelUtil';
 
-import { getDi } from 'lib/util/ModelUtil';
+import {
+  getBusinessObject,
+  getDi
+} from 'lib/util/ModelUtil';
 
 import {
   assign,
@@ -78,6 +81,107 @@ describe('behavior - LabelBehavior', function() {
       expect(startEvent.businessObject.name).to.equal('foo');
       expect(spy).to.have.been.called;
     }));
+
+
+    it('should remove label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var event = elementRegistry.get('StartEvent_1');
+
+      // when
+      modeling.updateProperties(event, {
+        name: undefined
+      });
+
+      // then
+      var labelShape = event.label;
+
+      expect(labelShape).not.to.exist;
+      expect(getBusinessObject(event).get('name')).not.to.exist;
+    }));
+
+
+  });
+
+
+  describe('updating name property via `modeling.updateModdleProperties`', function() {
+
+    it('should create label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var gateway = elementRegistry.get('ExclusiveGateway_1'),
+          bo = getBusinessObject(gateway);
+
+      // when
+      modeling.updateModdleProperties(gateway, bo, {
+        name: 'foo'
+      });
+
+      // then
+      var labelShape = gateway.label;
+
+      expect(labelShape).to.exist;
+      expect(gateway.businessObject.name).to.equal('foo');
+    }));
+
+
+    it('should remove label', inject(function(elementRegistry, modeling) {
+
+      // given
+      var event = elementRegistry.get('StartEvent_1'),
+          bo = getBusinessObject(event);
+
+      // when
+      modeling.updateModdleProperties(event, bo, {
+        name: undefined
+      });
+
+      // then
+      var labelShape = event.label;
+
+      expect(labelShape).not.to.exist;
+      expect(getBusinessObject(event).get('name')).not.to.exist;
+    }));
+
+
+    it('should NOT create label when message name is added', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var messageEvent = elementRegistry.get('IntermediateCatchEvent_1'),
+            bo = getBusinessObject(messageEvent);
+
+        // when
+        modeling.updateModdleProperties(messageEvent, bo.eventDefinitions[0].messageRef, {
+          name: 'foo'
+        });
+
+        // then
+        var labelShape = messageEvent.label;
+
+        expect(labelShape).not.to.exist;
+      })
+    );
+
+
+    it('should NOT remove label when message name is removed', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var messageEvent = elementRegistry.get('IntermediateCatchEvent_2'),
+            bo = getBusinessObject(messageEvent);
+
+        // when
+        modeling.updateModdleProperties(messageEvent, bo.eventDefinitions[0].messageRef, {
+          name: undefined
+        });
+
+        // then
+        var labelShape = messageEvent.label;
+
+        expect(labelShape).to.exist;
+      })
+    );
 
   });
 
