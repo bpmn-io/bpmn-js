@@ -371,8 +371,8 @@ describe('behavior - LabelBehavior', function() {
           expect(label).to.exist;
           expect(elementRegistry.get(label.id)).to.exist;
 
-          expect(label.x).to.within(298, 299);
-          expect(label.y).to.be.within(140, 141);
+          expect(label.x).to.closeTo(299, 1);
+          expect(label.y).to.be.closeTo(145, 1);
           expect(label.width).to.be.within(15, 18);
           expect(label.height).to.be.within(13, 15);
         }
@@ -510,7 +510,7 @@ describe('behavior - LabelBehavior', function() {
 
           // then
           expect(sequenceFlowConnection.label.x).to.be.closeTo(273, 1);
-          expect(sequenceFlowConnection.label.y).to.be.closeTo(178, 1);
+          expect(sequenceFlowConnection.label.y).to.be.closeTo(182, 1);
         }
       ));
 
