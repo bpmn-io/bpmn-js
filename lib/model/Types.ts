@@ -1,4 +1,4 @@
-import {
+import type {
   Connection as BaseConnection,
   Element as BaseElement,
   Label as BaseLabel,
