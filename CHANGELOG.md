@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.0.1
+
+* `FIX`: correct some type definitions ([#1896](https://github.com/bpmn-io/bpmn-js/pull/1896))
+
 ## 13.0.0
 
 * `FEAT`: rework and complete type definitions ([#1886](https://github.com/bpmn-io/bpmn-js/pull/1886))
