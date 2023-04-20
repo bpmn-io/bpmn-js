@@ -11,7 +11,7 @@ import autoPlaceModule from 'lib/features/auto-place';
 
 import {
   getLabel
-} from 'lib/features/label-editing/LabelUtil';
+} from 'lib/util/LabelUtil';
 
 import {
   createCanvasEvent as canvasEvent
