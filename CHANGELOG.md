@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.0.3
+
+* `FIX`: update label on `modeling.updateModdleProperties` ([#1872](https://github.com/bpmn-io/bpmn-js/issues/1872))
+
 ## 13.0.2
 
 * `FIX`: export types as `type` ([#1897](https://github.com/bpmn-io/bpmn-js/pull/1897))
