@@ -8,6 +8,10 @@ import {
   map
 } from 'min-dash';
 
+/**
+ * @typedef {import('../../../../lib/model/Types').Parent} Parent
+ * @typedef {import('../../../../lib/model/Types').Shape} Shape
+ */
 
 export function expectCanConnect(source, target, rules) {
 
@@ -49,6 +53,11 @@ export function expectCanDrop(element, target, expectedResult) {
 }
 
 
+/**
+ * @param {Shape|Element[]} shape Shape or array of elements to create.
+ * @param {Parent} target
+ * @param {any} expectedResult
+ */
 export function expectCanCreate(shape, target, expectedResult) {
 
   var result = getBpmnJS().invoke(function(rules) {
