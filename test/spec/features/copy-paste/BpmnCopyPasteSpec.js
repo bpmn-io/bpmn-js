@@ -28,6 +28,8 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
+import { isRoot } from 'diagram-js/lib/util/ModelUtil';
+
 /**
  * @typedef {import('../../../../lib/model/Types').Element} Element
  */
@@ -1015,7 +1017,7 @@ function integrationTest(elementIds) {
       });
 
       // (4) move all elements except root
-      modeling.moveElements(elementRegistry.filter(isRoot), { x: 50, y: -50 });
+      modeling.moveElements(elementRegistry.filter(element => !isRoot(element)), { x: 50, y: -50 });
 
       // when
       // (5) undo moving, pasting and removing
@@ -1055,10 +1057,6 @@ function integrationTest(elementIds) {
     });
 
   };
-}
-
-function isRoot(element) {
-  return !!element.parent;
 }
 
 function getPropertyForElements(elements, property) {
