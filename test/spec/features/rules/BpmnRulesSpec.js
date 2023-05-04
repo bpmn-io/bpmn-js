@@ -220,6 +220,32 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanCopy(boundaryEvent, [ boundaryEvent ], true);
     }));
 
+
+    it('copy message flow with parent participants of source and target', inject(function(elementFactory) {
+
+      // given
+      var sourceParticipant = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          targetParticipant = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          source = elementFactory.createShape({ type: 'bpmn:Task', parent: sourceParticipant }),
+          target = elementFactory.createShape({ type: 'bpmn:Task', parent: targetParticipant }),
+          messageFlow = elementFactory.createConnection({ type: 'bpmn:MessageFlow', source: source, target: target, waypoints: [] });
+
+      // then
+      expectCanCopy(messageFlow, [ sourceParticipant, targetParticipant, source, target, messageFlow ], true);
+    }));
+
+
+    it('copy message flow without parent participants of source and target', inject(function(elementFactory) {
+
+      // given
+      var source = elementFactory.createShape({ type: 'bpmn:Task' }),
+          target = elementFactory.createShape({ type: 'bpmn:Task' }),
+          messageFlow = elementFactory.createConnection({ type: 'bpmn:MessageFlow', source: source, target: target, waypoints: [] });
+
+      // then
+      expectCanCopy(messageFlow, [ source, target, messageFlow ], false);
+    }));
+
   });
 
 
