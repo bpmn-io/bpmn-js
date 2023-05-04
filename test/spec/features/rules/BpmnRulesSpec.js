@@ -58,7 +58,8 @@ describe('features/modeling/rules - BpmnRules', function() {
           sequenceFlow = elementFactory.createConnection({
             type: 'bpmn:SequenceFlow',
             source: task1,
-            target: task2
+            target: task2,
+            waypoints: []
           });
 
       // then
@@ -74,7 +75,8 @@ describe('features/modeling/rules - BpmnRules', function() {
           sequenceFlow = elementFactory.createConnection({
             type: 'bpmn:MessageFlow',
             source: task1,
-            target: task2
+            target: task2,
+            waypoints: []
           });
 
       // then
