@@ -6,6 +6,18 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.0.9
+
+* `CHORE`: update translations infra
+
+## 13.0.8
+
+_Republish of v13.0.7._
+
+## 13.0.7
+
+_Republish of v13.0.6._
+
 ## 13.0.6
 
 * `DOCS`: update translations
