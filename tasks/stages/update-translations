@@ -16,11 +16,12 @@ if [[ "x$SKIP_COMMIT" = "x" ]]; then
   git config user.email "$BPMN_IO_EMAIL"
   git config user.name "$BPMN_IO_USERNAME"
   git config push.default simple
-  git switch -c "update-translations-$(date +%Y%m%d%H%M%S)"
+  BRANCH="update-translations-$(date +%Y%m%d%H%M%S)"
+  git switch -c $BRANCH
 
   git add -A
   git commit -m "docs: update translations for $TAG"
-  git push -q
+  git push -q --set-upstream origin $BRANCH
   gh pr create --fill \
                --label "i18n" \
                --title "docs: update translations for $TAG" \
