@@ -22,8 +22,7 @@ if [[ "x$SKIP_COMMIT" = "x" ]]; then
   git add -A
   git commit -m "docs: update translations for $TAG"
   git push -q --set-upstream origin $BRANCH
-  gh pr create --label "i18n" \
-               --title "docs: update translations for $TAG" \
+  gh pr create --title "docs: update translations for $TAG" \
                --body "This PR updates translations for $TAG" \
                --reviewer "$REVIEWERS"
 else
