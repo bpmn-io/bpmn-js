@@ -1,8 +1,6 @@
 name: POST_RELEASE
 on:
   push:
-    tags:
-      - 'v[0-9]+.*'
 jobs:
   post-release:
 
@@ -20,11 +18,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set TAG
-      run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-    - name: Wait for published
-      env:
-        PKG: 'bpmn-js@${{ env.TAG }}'
-      run: tasks/stages/await-published
+      run: echo "TAG=v1.0.0" >> $GITHUB_ENV
     - name: Use Node.js
       uses: actions/setup-node@v3
       with:
@@ -35,39 +29,10 @@ jobs:
         if [[ ${{ env.TAG }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
         then echo "STABLE_RELEASE=true" >> $GITHUB_ENV
         fi
-    - name: Update integration test
-      env:
-        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
-        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
-        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
-      run: tasks/stages/update-integration-test
-    - name: Update demo
-      if: ${{ env.STABLE_RELEASE == 'true' }}
-      env:
-        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
-        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
-        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
-        BPMN_IO_DEMO_ENDPOINT: ${{ secrets.BPMN_IO_DEMO_ENDPOINT }}
-      run: tasks/stages/update-demo
-    - name: Update examples
-      if: ${{ env.STABLE_RELEASE == 'true' }}
-      env:
-        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
-        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
-        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
-      run: tasks/stages/update-examples
-    - name: Update website
-      if: ${{ env.STABLE_RELEASE == 'true' }}
-      env:
-        BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
-        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
-        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
-      run: tasks/stages/update-website
     - name: Update translations
-      if: ${{ env.STABLE_RELEASE == 'true' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
-        REVIEWERS: 'bpmn-io/modeling-dev'
+        REVIEWERS: 'barmac'
       run: tasks/stages/update-translations
