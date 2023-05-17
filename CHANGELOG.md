@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.0.6
+
+* `DOCS`: update translations
+
 ## 13.0.5
 
 * `DEPS`: update to `diagram-js@12.1.0`
