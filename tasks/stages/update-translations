@@ -19,7 +19,7 @@ if [[ "x$SKIP_COMMIT" = "x" ]]; then
   BRANCH="update-translations-$(date +%Y%m%d%H%M%S)"
   git switch -c $BRANCH
 
-  git add -A
+  git add docs/translations.json
   git commit -m "docs: update translations for $TAG"
   git push -q --set-upstream origin $BRANCH
   gh pr create --title "docs: update translations for $TAG" \
