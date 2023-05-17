@@ -12,6 +12,9 @@ jobs:
         node-version: [ 16 ]
 
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
     - name: Checkout
@@ -60,3 +63,11 @@ jobs:
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: tasks/stages/update-website
+    - name: Update translations
+      if: ${{ env.STABLE_RELEASE == 'true' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+        REVIEWERS: 'bpmn-io/modeling-dev'
+      run: tasks/stages/update-translations
