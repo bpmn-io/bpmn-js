@@ -22,6 +22,9 @@ import {
   getDi
 } from 'lib/draw/BpmnRenderUtil';
 
+import customRendererModule from './custom-renderer';
+
+
 /**
  * @typedef {import('../../../lib/model/Types').Element} Element
  */
@@ -652,6 +655,43 @@ describe('draw - bpmn renderer', function() {
 
       // very unsafe to use internal state
       expect(bpmnRenderer.handlers).to.exist;
+    }));
+
+  });
+
+});
+
+
+
+describe('draw - bpmn renderer - integration', function() {
+
+  describe('custom icons', function() {
+
+    var xml = require('./BpmnRenderer.no-event-icons.bpmn');
+
+    beforeEach(bootstrapViewer(xml, {
+      additionalModules: [ customRendererModule ]
+    }));
+
+
+    it('should render blank', inject(function(elementRegistry) {
+
+      // given
+      var events = [
+        'START_EVENT',
+        'THROW_EVENT',
+        'CATCH_EVENT',
+        'END_EVENT',
+        'BOUNDARY_EVENT'
+      ];
+
+      for (var elementId of events) {
+
+        var gfx = elementRegistry.getGraphics(elementId);
+        var iconGfx = domQuery('path', gfx);
+
+        expect(iconGfx, `icon on element <#${ elementId }>`).not.to.exist;
+      }
     }));
 
   });

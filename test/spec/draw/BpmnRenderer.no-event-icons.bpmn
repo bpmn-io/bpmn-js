@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="12.0.0">
+  <process id="Process_1" isExecutable="false">
+    <sequenceFlow id="Flow_1nt6baa" sourceRef="START_EVENT" targetRef="CATCH_EVENT" />
+    <task id="ACTVITIY">
+      <incoming>Flow_1qympxx</incoming>
+      <outgoing>Flow_1635gbq</outgoing>
+    </task>
+    <sequenceFlow id="Flow_1qympxx" sourceRef="CATCH_EVENT" targetRef="ACTVITIY" />
+    <sequenceFlow id="Flow_1635gbq" sourceRef="ACTVITIY" targetRef="END_EVENT" />
+    <intermediateCatchEvent id="CATCH_EVENT" name="CATCH_EVENT" >
+      <incoming>Flow_1nt6baa</incoming>
+      <outgoing>Flow_1qympxx</outgoing>
+      <messageEventDefinition id="MessageEventDefinition_155nigy" />
+    </intermediateCatchEvent>
+    <startEvent id="START_EVENT" name="START_EVENT">
+      <outgoing>Flow_1nt6baa</outgoing>
+      <timerEventDefinition id="TimerEventDefinition_1ot9ndh" />
+    </startEvent>
+    <boundaryEvent id="BOUNDARY_EVENT" name="BOUNDARY_EVENT" attachedToRef="ACTVITIY">
+      <errorEventDefinition id="ErrorEventDefinition_1t8kpuj" />
+    </boundaryEvent>
+    <endEvent id="END_EVENT" name="END_EVENT">
+      <incoming>Flow_1635gbq</incoming>
+      <errorEventDefinition id="ErrorEventDefinition_15xc39q" />
+    </endEvent>
+    <intermediateThrowEvent id="THROW_EVENT" name="THROW">
+      <messageEventDefinition id="MessageEventDefinition_155nagy" />
+    </intermediateThrowEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="ACTVITIY_di" bpmnElement="ACTVITIY">
+        <omgdc:Bounds x="340" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ssuqaa_di" bpmnElement="CATCH_EVENT">
+        <omgdc:Bounds x="242" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g813my_di" bpmnElement="START_EVENT">
+        <omgdc:Bounds x="152" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="134" y="145" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_05fteh0_di" bpmnElement="END_EVENT">
+        <omgdc:Bounds x="502" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pb3v1z_di" bpmnElement="BOUNDARY_EVENT">
+        <omgdc:Bounds x="382" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="THROW_EVENT_di" bpmnElement="THROW_EVENT">
+        <omgdc:Bounds x="682" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1nt6baa_di" bpmnElement="Flow_1nt6baa">
+        <omgdi:waypoint x="188" y="120" />
+        <omgdi:waypoint x="242" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qympxx_di" bpmnElement="Flow_1qympxx">
+        <omgdi:waypoint x="278" y="120" />
+        <omgdi:waypoint x="340" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1635gbq_di" bpmnElement="Flow_1635gbq">
+        <omgdi:waypoint x="440" y="120" />
+        <omgdi:waypoint x="502" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
