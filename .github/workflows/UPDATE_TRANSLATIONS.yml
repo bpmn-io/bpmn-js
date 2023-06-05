@@ -4,7 +4,7 @@ on:
 - workflow_dispatch
 
 jobs:
-  post-release:
+  update-translations:
 
     strategy:
       matrix:
