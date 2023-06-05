@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.2.0
+
+* `CHORE`: provide align and distribute context pad and popup menu icons as html ([#1920](https://github.com/bpmn-io/bpmn-js/pull/1920))
+* `DEPS`: update to `diagram-js@12.2.0`
+
 ## 13.1.0
 
 * `FEAT`: allow event rendering without icons ([#1917](https://github.com/bpmn-io/bpmn-js/pull/1917))
