@@ -1,0 +1,30 @@
+name: POST_RELEASE
+on:
+- workflow_call
+- workflow_dispatch
+
+jobs:
+  post-release:
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        node-version: [ 16 ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Update translations
+      env:
+        GITHUB_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
+        BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
+        BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
+        REVIEWERS: 'bpmn-io/modeling-dev'
+      run: tasks/stages/update-translations

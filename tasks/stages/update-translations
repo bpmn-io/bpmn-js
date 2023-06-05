@@ -9,7 +9,7 @@ npm ci
 npm run collect-translations
 
 # exit if no changes
-if [[ "x$(git status --porcelain)" = "x" ]]; then echo "No changes; exiting" && exit 0; fi
+if [[ "x$(git status --porcelain docs/translations.json)" = "x" ]]; then echo "No changes; exiting" && exit 0; fi
 
 if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
