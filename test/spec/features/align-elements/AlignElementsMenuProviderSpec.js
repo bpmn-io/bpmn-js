@@ -99,7 +99,7 @@ describe('features/align-elements - popup menu', function() {
 
     // then
     var entry = getEntry('align-elements-left'),
-        icon = domQuery('img', entry);
+        icon = domQuery('svg', entry);
 
     var bbox = icon.getBoundingClientRect();
 
