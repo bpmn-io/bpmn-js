@@ -1,4 +1,4 @@
-name: POST_RELEASE
+name: UPDATE_TRANSLATIONS
 on:
 - workflow_call
 - workflow_dispatch
