@@ -1051,6 +1051,22 @@ describe('features/popup-menu - replace menu provider', function() {
         })
       );
 
+
+      it('should show corresponding "non-interrupting" event',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('StartEvent_6');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-message-start')).to.be.null;
+          expect(queryEntry('replace-with-non-interrupting-message-start')).exist;
+        })
+      );
+
     });
 
 
