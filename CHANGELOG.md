@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.2.1
+
+* `FIX`: improve regular expression ([#1927](https://github.com/bpmn-io/bpmn-js/pull/1927))
+* `FIX`: improve display of non-interrupting event version in replace menu ([#1924](https://github.com/bpmn-io/bpmn-js/pull/1924))
+
 ## 13.2.0
 
 * `CHORE`: provide align and distribute context pad and popup menu icons as html ([#1920](https://github.com/bpmn-io/bpmn-js/pull/1920))
