@@ -142,3 +142,7 @@
   height: 20px;
   width: 20px;
 }
+
+.layer-copilot {
+  opacity: 0.5;
+}

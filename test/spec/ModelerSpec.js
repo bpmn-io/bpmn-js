@@ -53,7 +53,7 @@ describe('Modeler', function() {
 
     setBpmnJS(modeler);
 
-    enableLogging(modeler, singleStart);
+    // enableLogging(modeler, singleStart);
 
     return modeler.importXML(xml).then(function(result) {
       return { error: null, warnings: result.warnings, modeler: modeler };

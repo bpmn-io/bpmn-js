@@ -19,6 +19,7 @@ var absoluteBasePath = path.resolve(path.join(__dirname, basePath));
 
 var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 
+const Dotenv = require('dotenv-webpack');
 
 module.exports = function(karma) {
 
@@ -99,9 +100,21 @@ module.exports = function(karma) {
         modules: [
           'node_modules',
           absoluteBasePath
-        ]
+        ],
+        fallback: {
+          'crypto': false,
+          'fs': false,
+          'http': false,
+          'https': false,
+          'path': false,
+          'stream': false,
+          'url': false
+        }
       },
-      devtool: 'eval-source-map'
+      devtool: 'eval-source-map',
+      plugins: [
+        new Dotenv()
+      ]
     }
   };
 
