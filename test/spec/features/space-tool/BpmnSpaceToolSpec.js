@@ -458,6 +458,101 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   });
 
+
+  describe('participants', function() {
+
+    var diagramXML = require('./BpmnSpaceTool.participants.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should resize an expanded pool horizontally', inject(function(elementRegistry) {
+
+      // given
+      var participant1 = elementRegistry.get('Participant_1');
+
+      var participant1Bounds = getBounds(participant1);
+
+      // when
+      makeSpace({ x: 200, y: 90 }, { dx: -100 }, true);
+
+      // then
+      expect(participant1).to.have.bounds({
+        x: participant1Bounds.x - 100,
+        y: participant1Bounds.y,
+        width: participant1Bounds.width + 100,
+        height: participant1Bounds.height
+      });
+    }));
+
+
+    it('should resize an expanded pool vertically', inject(function(elementRegistry) {
+
+      // given
+      var participant1 = elementRegistry.get('Participant_1');
+
+      var participant1Bounds = getBounds(participant1);
+
+      // when
+      makeSpace({ x: 200, y: 90 }, { dy: -100 }, true);
+
+      // then
+      expect(participant1).to.have.bounds({
+        x: participant1Bounds.x,
+        y: participant1Bounds.y - 100,
+        width: participant1Bounds.width,
+        height: participant1Bounds.height + 100
+      });
+    }));
+
+
+    it('should resize an empty pool horizontally', inject(function(elementRegistry) {
+
+      // given
+      var participant2 = elementRegistry.get('Participant_2');
+
+      var participant2Bounds = getBounds(participant2);
+
+      // when
+      makeSpace({ x: 200, y: 180 }, { dx: -100 }, true);
+
+      // then
+      expect(participant2).to.have.bounds({
+        x: participant2Bounds.x - 100,
+        y: participant2Bounds.y,
+        width: participant2Bounds.width + 100,
+        height: participant2Bounds.height
+      });
+    }));
+
+
+    it('should not resize an empty pool vertically', inject(function(elementRegistry) {
+
+      // given
+      var participant2 = elementRegistry.get('Participant_2');
+
+      var participant2Bounds = getBounds(participant2);
+
+      // when
+      makeSpace({ x: 200, y: 180 }, { dy: -100 }, true);
+
+      // then
+      expect(participant2).to.have.bounds({
+        x: participant2Bounds.x,
+        y: participant2Bounds.y,
+        width: participant2Bounds.width,
+        height: participant2Bounds.height
+      });
+    }));
+
+  });
+
 });
 
 
