@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 13.2.2
+
+* `FIX`: do not vertically resize empty pools using the space tool ([#1769](https://github.com/bpmn-io/bpmn-js/issues/1769))
+
 ## 13.2.1
 
 * `FIX`: improve regular expression ([#1927](https://github.com/bpmn-io/bpmn-js/pull/1927))
