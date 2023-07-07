@@ -96,7 +96,7 @@
     "mocha": "^10.1.0",
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",
-    "puppeteer": "^20.0.0",
+    "puppeteer": "^20.8.0",
     "remark-cli": "^11.0.0",
     "remark-preset-bpmn-io": "^0.2.1",
     "rollup": "^3.19.1",
