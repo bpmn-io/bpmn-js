@@ -111,7 +111,7 @@
     "bpmn-moddle": "^8.0.0",
     "diagram-js": "^12.2.0",
     "diagram-js-direct-editing": "^2.0.0",
-    "ids": "^1.0.3",
+    "ids": "^2.0.0",
     "inherits-browser": "^0.1.0",
     "min-dash": "^4.0.0",
     "min-dom": "^4.0.3",
