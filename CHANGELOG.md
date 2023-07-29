@@ -4,7 +4,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ## Unreleased
 
-___Note:__ Yet to be released changes appear here._
+* `FEAT`: opportunity to fully translate "Append TextAnnotation" phrase ([bpmn-js-i18n #22]https://github.com/bpmn-io/bpmn-js-i18n/issues/22)
 
 ## 13.2.2
 
