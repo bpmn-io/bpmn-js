@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: translate _Append TextAnnotation_ context pad action ([#1932](https://github.com/bpmn-io/bpmn-js/pull/1932))
+
 ## 13.2.2
 
 * `FIX`: do not vertically resize empty pools using the space tool ([#1769](https://github.com/bpmn-io/bpmn-js/issues/1769))
