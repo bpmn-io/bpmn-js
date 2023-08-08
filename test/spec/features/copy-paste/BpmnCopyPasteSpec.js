@@ -264,11 +264,12 @@ describe('features/copy-paste', function() {
 
           expect(conditionalFlow).to.exist;
           expect(defaultFlow).to.exist;
+          expect(Object.prototype.propertyIsEnumerable.call(taskBo,'default')).to.be.false;
         })
       );
 
 
-      it('should copy attacher properties', inject(function(canvas, copyPaste, elementRegistry) {
+      it('should copy attached properties', inject(function(canvas, copyPaste, elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task_1'),
@@ -300,7 +301,7 @@ describe('features/copy-paste', function() {
       }));
 
 
-      it('should copy loop characteristics porperties',
+      it('should copy loop characteristics properties',
         inject(function(canvas, copyPaste, elementRegistry, modeling) {
 
           // given
@@ -375,7 +376,7 @@ describe('features/copy-paste', function() {
 
 
       it('should copy label', inject(
-        function(canvas, copyPaste, elementRegistry, modeling) {
+        function(canvas, copyPaste, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1'),
