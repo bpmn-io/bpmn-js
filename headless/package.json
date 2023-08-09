@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "bundle": "rollup -c rollup.config.js --bundleConfigAsCjs",
+    "test": "node test/test.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^22.1.0"
+  }
+}
