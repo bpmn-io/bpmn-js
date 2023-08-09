@@ -2,21 +2,23 @@
 
 import fs from 'fs/promises';
 
-import vm from 'vm';
-
-import { JSDOM } from 'jsdom';
+import BpmnModeler from '../dist/HeadlessModeler.mjs';
 
 async function run() {
 
   const diagramXML = await fs.readFile('./test/diagram.bpmn', 'utf8');
 
-  const scriptSrc = await fs.readFile('./dist/headless-test.js', 'utf8');
+  const modeler = new BpmnModeler();
 
-  const dom = new JSDOM('<body></body>');
+  console.log('importing...');
 
-  const script = new vm.Script(scriptSrc);
+  const { warnings } = await modeler.importXML(diagramXML);
 
-  script.runInNewContext(Object.assign(dom.window, { console, diagramXML }));
+  console.log('imported with warnings', { warnings });
+
+  const result = await modeler.saveXML({ format: true });
+
+  console.log(result);
 }
 
 run().catch(err => {

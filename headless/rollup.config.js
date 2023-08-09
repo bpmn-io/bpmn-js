@@ -5,9 +5,10 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 
 export default {
-  input: './headless-test.js',
+  input: './HeadlessModeler.js',
   output: {
-    file: './dist/headless-test.js',
+    file: './dist/HeadlessModeler.mjs',
+    format: 'esm'
   },
   plugins: pgl()
 };
