@@ -544,18 +544,6 @@ describe('Modeler', function() {
   });
 
 
-  it('should create new diagram - Legacy', function(done) {
-    var modeler = new Modeler({ container: container });
-    modeler.createDiagram(function(err, warnings) {
-
-      expect(warnings).to.exist;
-      expect(warnings).to.have.length(0);
-
-      done(err);
-    });
-  });
-
-
   describe('dependency injection', function() {
 
     it('should provide self as <bpmnjs>', function() {
