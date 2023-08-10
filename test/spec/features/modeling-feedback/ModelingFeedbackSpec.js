@@ -10,6 +10,7 @@ import {
 
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
+import modelingFeedbackModule from 'lib/features/modeling-feedback';
 
 
 describe('features/modeling - ModelingFeedback', function() {
@@ -19,7 +20,8 @@ describe('features/modeling - ModelingFeedback', function() {
   beforeEach(bootstrapModeler(collaborationDiagramXML, {
     modules: [
       coreModule,
-      modelingModule
+      modelingModule,
+      modelingFeedbackModule
     ]
   }));
 
