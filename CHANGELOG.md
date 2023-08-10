@@ -7,11 +7,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: translate _Append TextAnnotation_ context pad action ([#1932](https://github.com/bpmn-io/bpmn-js/pull/1932))
-* `CHORE`: drop callback support from public API
+* `CHORE`: drop deprecated callback support from public API
+* `CHORE`: drop deprecated `import.parse.complete` event member `context`
 
 ### Breaking Changes
 
-* Callback style API removed. Migrate to promise-based APIs, released with `v7.0.0`.
+* Deprecated callback style API removed. Migrate to promise-based APIs, released with `v7.0.0`.
+* Deprecated `import.parse.complete` event member `context` removed. Access the same information via the event itself, as released with `v7.0.0`.
 
 ## 13.2.2
 
