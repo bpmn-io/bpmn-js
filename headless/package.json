@@ -1,9 +1,11 @@
 {
   "scripts": {
     "bundle": "rollup -c rollup.config.js --bundleConfigAsCjs",
-    "test": "node test/test.mjs"
+    "test": "node dist/test.mjs"
   },
   "devDependencies": {
-    "jsdom": "^22.1.0"
+    "bpmn-js-element-templates": "^1.3.0",
+    "jsdom": "^22.1.0",
+    "zeebe-bpmn-moddle": "^0.19.0"
   }
 }

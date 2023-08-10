@@ -1,0 +1,200 @@
+{
+  "$schema": "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
+  "name": "Condition",
+  "id": "example.com.condition",
+  "description": "A conditional template.",
+  "appliesTo": ["bpmn:Task"],
+  "properties": [
+    {
+      "id": "nameProp",
+      "label": "name",
+      "type": "String",
+      "binding": {
+        "type": "property",
+        "name": "name"
+      }
+    },
+    {
+      "id": "otherProperty",
+      "label": "property",
+      "type": "String",
+      "value": "nameProp=foo",
+      "binding": {
+        "type": "property",
+        "name": "customProperty"
+      },
+      "condition": {
+        "equals": "foo",
+        "property": "nameProp"
+      }
+    },
+    {
+      "id": "otherProperty2",
+      "label": "property",
+      "type": "String",
+      "value": "nameProp=bar",
+      "binding": {
+        "type": "property",
+        "name": "customProperty"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "bar"
+      }
+    },
+    {
+      "id": "noDefaultProperty",
+      "label": "property",
+      "type": "Hidden",
+      "binding": {
+        "type": "property",
+        "name": "noDefaultProperty"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "name",
+      "type": "String",
+      "value": "nameProp=foo",
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "name",
+      "type": "String",
+      "value": "nameProp=foobar",
+      "binding": {
+        "type": "zeebe:taskDefinition:type"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foobar"
+      }
+    },
+    {
+      "label": "zeebe:input",
+      "value": "nameProp=foo",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:input",
+        "name": "body"
+      },
+      "condition": {
+        "property": "nameProp",
+        "oneOf": ["foo", "bar"]
+      }
+    },
+    {
+      "label": "zeebe:output",
+      "value": "nameProp=foo",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:output",
+        "source": "= body"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "zeebe:output2",
+      "value": "nameProp=foobar",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:output",
+        "source": "= body"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foobar"
+      }
+    },
+    {
+      "label": "zeebe:taskHeader",
+      "value": "nameProp=foo",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "someOtherKey"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "zeebe:taskHeader2",
+      "value": "nameProp=foobar",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "someOtherKey"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foobar"
+      }
+    },
+    {
+      "label": "invalid condition",
+      "value": "1",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:taskHeader",
+        "key": "someOtherKey"
+      },
+      "condition": {
+        "property": "invalid",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "zeebe:property",
+      "value": "",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:property",
+        "name": "someName"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foo"
+      }
+    },
+    {
+      "label": "zeebe:property2",
+      "value": "nameProp=foobar",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:property",
+        "name": "someName"
+      },
+      "condition": {
+        "property": "nameProp",
+        "equals": "foobar"
+      }
+    },
+    {
+      "label": "invalid condition",
+      "value": "",
+      "type": "String",
+      "binding": {
+        "type": "zeebe:property",
+        "name": "someOtherName"
+      },
+      "condition": {
+        "property": "invalid",
+        "equals": "foo"
+      }
+    }
+  ]
+}
