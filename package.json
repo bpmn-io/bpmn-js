@@ -109,7 +109,7 @@
   },
   "dependencies": {
     "bpmn-moddle": "^8.0.0",
-    "diagram-js": "https://github.com/atlas-engine/diagram-js.git#feature/PCE-347-update_diagram_js",
+    "diagram-js": "https://github.com/atlas-engine/diagram-js.git#7f8933b68d0b470aa0ca2898089cf00d701e2a11",
     "diagram-js-direct-editing": "^2.0.0",
     "ids": "^1.0.3",
     "inherits-browser": "^0.1.0",
