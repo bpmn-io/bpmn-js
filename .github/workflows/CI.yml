@@ -30,8 +30,3 @@ jobs:
       env:
         TEST_BROWSERS: ChromeHeadless
       run: npm run all
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v3
-      if: runner.os == 'Linux'
-      with:
-        fail_ci_if_error: true
