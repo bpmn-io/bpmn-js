@@ -4,8 +4,12 @@ import {
 } from 'test/TestHelper';
 
 import coreModule from 'lib/core';
+import createModule from 'diagram-js/lib/features/create';
 import modelingModule from 'lib/features/modeling';
 import replaceModule from 'lib/features/replace';
+
+import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
+
 
 describe('features/modeling/behavior - event-based gateway', function() {
 
@@ -143,5 +147,67 @@ describe('features/modeling/behavior - event-based gateway', function() {
     ));
 
   });
+
+});
+
+
+describe('features/modeling/behavior - event-based gateway - integration', function() {
+
+  var diagramXML = require('./EventBasedGatewayBehavior.bpmn');
+
+  var testModules = [
+    coreModule,
+    createModule,
+    modelingModule,
+    replaceModule
+  ];
+
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: testModules
+  }));
+
+
+  it('should create with target', inject(
+    function(create, elementRegistry, elementFactory, dragging) {
+
+      // given
+      const gateway = elementFactory.createShape({
+        type: 'bpmn:EventBasedGateway',
+        x: 0,
+        y: 0
+      });
+
+      const event = elementFactory.createShape({
+        type: 'bpmn:IntermediateCatchEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition',
+        x: 120,
+        y: 120
+      });
+
+      const waypoints = [
+        { x: gateway.x, y: gateway.y },
+        { x: event.x, y: event.y }
+      ];
+
+      const connection = elementFactory.createConnection({
+        type: 'bpmn:SequenceFlow',
+        source: gateway,
+        target: event,
+        waypoints
+      });
+
+      const rootElement = elementRegistry.get('Process_1');
+      const rootGfx = elementRegistry.getGraphics('Process_1');
+
+      // when
+      create.start(canvasEvent({ x: 0, y: 0 }), [ gateway, event, connection ]);
+      dragging.hover({ element: rootElement, gfx: rootGfx });
+      dragging.move(canvasEvent({ x: 100, y: 200 }));
+      dragging.end();
+
+      // then
+      expect(elementRegistry.get(connection.id)).to.exist;
+    }
+  ));
 
 });
