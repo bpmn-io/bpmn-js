@@ -92,7 +92,6 @@
     "karma-safari-launcher": "^1.0.0",
     "karma-sinon-chai": "^2.0.2",
     "karma-webpack": "^5.0.0",
-    "mkdirp": "^2.0.0",
     "mocha": "^10.1.0",
     "mocha-test-container-support": "0.2.0",
     "npm-run-all": "^4.1.2",

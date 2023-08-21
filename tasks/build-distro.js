@@ -3,7 +3,7 @@
 var path = require('path');
 
 var exec = require('execa').sync,
-    mkdirp = require('mkdirp').sync,
+    fs = require('fs'),
     cp = require('cpx').copySync,
     del = require('del').sync;
 
@@ -20,7 +20,7 @@ console.log('clean ' + dest);
 del(dest);
 
 console.log('mkdir -p ' + dest);
-mkdirp(dest);
+fs.mkdirSync(dest, { recursive: true });
 
 console.log('copy bpmn-font to ' + dest + '/bpmn-font');
 cp(resolve('bpmn-font', '/dist/{font,css}/**'), dest + '/assets/bpmn-font');
