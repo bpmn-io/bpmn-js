@@ -176,6 +176,37 @@ describe('features - element factory', function() {
     }));
 
 
+    it('should create subprocess as event subprocess', inject(function(elementFactory) {
+
+      // when
+      var subprocess = elementFactory.createShape({
+        type: 'bpmn:SubProcess',
+        triggeredByEvent: true
+      });
+
+      var businessObject = getBusinessObject(subprocess);
+
+      // then
+      expect(businessObject.triggeredByEvent).to.be.true;
+    }));
+
+
+    it('should create boundary event as non-interrupting', inject(function(elementFactory) {
+
+      // when
+      var event = elementFactory.createShape({
+        type: 'bpmn:BoundaryEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition',
+        cancelActivity: false
+      });
+
+      var businessObject = getBusinessObject(event);
+
+      // then
+      expect(businessObject.cancelActivity).to.be.false;
+    }));
+
+
     describe('integration', function() {
 
       it('should create event definition with ID', inject(function(elementFactory) {

@@ -11,7 +11,7 @@ import autoPlaceModule from 'lib/features/auto-place';
 
 import {
   getLabel
-} from 'lib/features/label-editing/LabelUtil';
+} from 'lib/util/LabelUtil';
 
 import {
   createCanvasEvent as canvasEvent
@@ -518,36 +518,59 @@ describe('features - label-editing', function() {
     });
 
 
-    describe('after elements create', function() {
+    describe('on element creation', function() {
 
-      var createTaskElement;
+      function createTaskElement(context) {
+        var shape = elementFactory.create('shape', { type: 'bpmn:Task' }),
+            parent = elementRegistry.get('SubProcess_1'),
+            parentGfx = elementRegistry.getGraphics(parent);
 
-      beforeEach(function() {
+        create.start(canvasEvent({ x: 0, y: 0 }), [ shape ], context);
+        dragging.hover({
+          element: parent,
+          gfx: parentGfx
+        });
+        dragging.move(canvasEvent({ x: 400, y: 250 }));
+        dragging.end();
+      }
 
-        createTaskElement = function(context) {
+      function createParticipant() {
 
-          var shape = elementFactory.create('shape', { type: 'bpmn:Task' }),
-              parent = elementRegistry.get('SubProcess_1'),
-              parentGfx = elementRegistry.getGraphics(parent);
+        var collaboration = elementRegistry.get('Collaboration_1o0amh9'),
+            collaborationGfx = elementRegistry.getGraphics(collaboration);
 
-          create.start(canvasEvent({ x: 0, y: 0 }), [ shape ], context);
-          dragging.hover({
-            element: parent,
-            gfx: parentGfx
-          });
-          dragging.move(canvasEvent({ x: 400, y: 250 }));
-          dragging.end();
-        };
-
-      });
-
-      it('should activate', function() {
+        var participant = elementFactory.createParticipantShape();
 
         // when
-        createTaskElement();
+        create.start(canvasEvent({ x: 400, y: 300 }), participant);
 
-        // then
-        expect(directEditing.isActive()).to.be.true;
+        dragging.hover({ element: collaboration, gfx: collaborationGfx });
+        dragging.move(canvasEvent({ x: 400, y: 300 }));
+
+        dragging.end();
+      }
+
+
+      describe('should activate', function() {
+
+        it('on Task creation', function() {
+
+          // when
+          createTaskElement();
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on Participant creation', function() {
+
+          // when
+          createParticipant();
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
 
       });
 

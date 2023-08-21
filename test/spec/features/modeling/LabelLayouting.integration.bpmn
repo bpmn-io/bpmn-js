@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" id="sid-d5a68e61-ca67-438f-971d-6843c39b383e" targetNamespace="http://www.signavio.com/bpmn20" exporter="Camunda Modeler" exporterVersion="4.5.0-rc.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <dataStore id="sid-1f3b3b35-28a1-4fff-8835-ae271ef486d5" name="HR-Tool" capacity="0" isUnlimited="false" />
+  <process id="Process_1" isExecutable="false">
+    <startEvent id="Event_1">
+      <outgoing>Flow_1</outgoing>
+    </startEvent>
+    <endEvent id="Event_2">
+      <incoming>Flow_1</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1" name="foo" sourceRef="Event_1" targetRef="Event_2" />
+  </process>
+  <bpmndi:BPMNDiagram id="sid-780f0a66-41b5-4f10-a81d-35e00c8c284d">
+    <bpmndi:BPMNPlane id="sid-1780a274-6bf1-44a0-9a08-01bd7c9ad080" bpmnElement="Process_1">
+      <bpmndi:BPMNEdge id="Flow_1r6amrg_di" bpmnElement="Flow_1">
+        <di:waypoint x="118" y="100" />
+        <di:waypoint x="382" y="101.5" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="242" y="83" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1j8xw70_di" bpmnElement="Event_1">
+        <omgdc:Bounds x="82" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_080mc73_di" bpmnElement="Event_2">
+        <omgdc:Bounds x="382" y="82.5" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

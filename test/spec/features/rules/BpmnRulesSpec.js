@@ -71,14 +71,14 @@ describe('features/modeling/rules - BpmnRules', function() {
       // given
       var task1 = elementFactory.createShape({ type: 'bpmn:Task' }),
           task2 = elementFactory.createShape({ type: 'bpmn:Task' }),
-          sequenceFlow = elementFactory.createConnection({
+          messageFlow = elementFactory.createConnection({
             type: 'bpmn:MessageFlow',
             source: task1,
             target: task2
           });
 
       // then
-      expectCanCreate([ task1, task2, sequenceFlow ], 'Process', false);
+      expectCanCreate([ task1, task2, messageFlow ], 'Process', false);
     }));
 
 
@@ -2157,7 +2157,7 @@ describe('features/modeling/rules - BpmnRules', function() {
     it('should ignore label elements', inject(function(elementFactory, rules) {
 
       // given
-      var label = elementFactory.createShape({ type: 'bpmn:FlowNode', labelTarget: {} });
+      var label = elementFactory.createLabel({});
 
       // when
       var result = rules.allowed('connection.start', { source: label });

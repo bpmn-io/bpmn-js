@@ -174,6 +174,43 @@ describe('Modeler', function() {
   });
 
 
+  collectTranslations && describe('translate support', function() {
+
+    var xml = require('../fixtures/bpmn/simple.bpmn');
+
+    it('should translate special terms', () => {
+
+      return createModeler(xml).then(function(result) {
+
+        var modeler = result.modeler;
+        var err = result.error;
+
+        if (err) {
+          throw err;
+        }
+
+        // given
+        var translate = modeler.get('translate');
+
+        var specialTerms = [
+          'element {element} referenced by {referenced}#{property} not yet drawn',
+          'failed to import {element}',
+          'missing {semantic}#attachedToRef',
+          'multiple DI elements defined for {element}'
+        ];
+
+        // assume
+        expect(translate).to.exist;
+
+        // then
+        specialTerms.forEach(translate);
+      });
+
+    });
+
+  });
+
+
   !collectTranslations && describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -283,7 +320,8 @@ describe('Modeler', function() {
         'setColor',
         'directEditing',
         'find',
-        'moveToOrigin'
+        'moveToOrigin',
+        'replaceElement'
       ];
 
       var modeler = new Modeler();
@@ -503,18 +541,6 @@ describe('Modeler', function() {
   it('should create new diagram', function() {
     var modeler = new Modeler({ container: container });
     return modeler.createDiagram();
-  });
-
-
-  it('should create new diagram - Legacy', function(done) {
-    var modeler = new Modeler({ container: container });
-    modeler.createDiagram(function(err, warnings) {
-
-      expect(warnings).to.exist;
-      expect(warnings).to.have.length(0);
-
-      done(err);
-    });
   });
 
 

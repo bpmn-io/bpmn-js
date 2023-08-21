@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -eo pipefail
+shopt -s inherit_errexit nullglob
+
+# updates translations and creates pull request
+
+npm ci
+npm run collect-translations
+
+# exit if no changes
+if [[ "x$(git status --porcelain docs/translations.json)" = "x" ]]; then echo "No changes; exiting" && exit 0; fi
+
+if [[ "x$SKIP_COMMIT" = "x" ]]; then
+
+  git config user.email "$BPMN_IO_EMAIL"
+  git config user.name "$BPMN_IO_USERNAME"
+  git config push.default simple
+  BRANCH="update-translations-$(date +%Y%m%d%H%M%S)"
+  git switch -c $BRANCH
+
+  git add docs/translations.json
+  git commit -m "docs: update translations for $TAG"
+  git push -q --set-upstream origin $BRANCH
+  gh pr create --title "docs: update translations for $TAG" \
+               --body "This PR updates translations for $TAG" \
+               --reviewer "$REVIEWERS"
+else
+  echo "Skipping commit (SKIP_COMMIT=$SKIP_COMMIT)"
+fi

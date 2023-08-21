@@ -23,13 +23,13 @@ describe('bpmn-modeler', function() {
   });
 
 
-  it('should import initial diagram', function(done) {
+  it('should import initial diagram', function() {
 
     var BpmnJS = window.BpmnJS;
 
     // then
     /* global testImport */
-    testImport(BpmnJS, done);
+    return testImport(BpmnJS);
   });
 
 });

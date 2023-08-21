@@ -285,7 +285,6 @@ describe('modeling - label layouting', function() {
 
     describe('on bendpoint add/delete/moving', function() {
 
-
       it('move, label on segment', inject(function(elementRegistry, bendpointMove, dragging) {
 
         // given
@@ -370,7 +369,7 @@ describe('modeling - label layouting', function() {
 
           // then
           expect(Math.round(connection.label.x)).to.be.within(248, 251);
-          expect(Math.round(connection.label.y)).to.be.equal(152);
+          expect(Math.round(connection.label.y)).to.be.within(151, 152);
 
         }
       ));
@@ -521,7 +520,7 @@ describe('modeling - label layouting', function() {
 
     describe('space tool', function() {
 
-      var diagramXML = require('./LabelLayouting.special.bpmn');
+      var diagramXML = require('./LabelLayouting.integration.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, {
         modules: testModules
@@ -532,20 +531,17 @@ describe('modeling - label layouting', function() {
       }));
 
 
-      it('should NOT adjust / move with a skewed line', inject(function(elementRegistry, spaceTool, dragging) {
+      it('should not throw on waypoints including float', inject(function(spaceTool, dragging) {
 
         // given
-        var connection = elementRegistry.get('SequenceFlow_1'),
-            labelPosition = getLabelPosition(connection);
-
         // when
-        spaceTool.activateMakeSpace(canvasEvent({ x: 500, y: 225 }));
-
-        dragging.move(canvasEvent({ x: 550, y: 225 }));
-        dragging.end();
-
         // then
-        expectLabelMoved(connection, labelPosition, { x: 0, y: 0 });
+        expect(function() {
+          spaceTool.activateMakeSpace(canvasEvent({ x: 200, y: 0 }));
+
+          dragging.move(canvasEvent({ x: 300, y: 0 }));
+          dragging.end();
+        }).not.to.throw();
       }));
 
     });

@@ -5,33 +5,33 @@ jobs:
 
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        os: [ macos-latest, ubuntu-20.04, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Use Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
-    - name: Wire dependencies
-      run: ./tasks/wiredeps
     - name: Build
-      if: matrix.os == 'ubuntu-latest'
+      if: runner.os == 'Linux'
       env:
         COVERAGE: 1
         TEST_BROWSERS: Firefox,ChromeHeadless
       run: xvfb-run npm run all
     - name: Build
-      if: matrix.os != 'ubuntu-latest'
+      if: runner.os != 'Linux'
       env:
         TEST_BROWSERS: ChromeHeadless
       run: npm run all
     - name: Upload Coverage
-      uses: codecov/codecov-action@v2
-      if: matrix.os == 'ubuntu-latest'
+      uses: codecov/codecov-action@v3
+      if: runner.os == 'Linux'
+      with:
+        fail_ci_if_error: true

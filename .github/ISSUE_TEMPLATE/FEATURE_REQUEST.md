@@ -5,20 +5,20 @@ labels: "enhancement"
 ---
 
 
-__Is your feature request related to a problem? Please describe.__
+### Is your feature request related to a problem? Please describe.
 
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
 
-__Describe the solution you'd like__
+### Describe the solution you'd like
 
 A clear and concise description of what you want to happen.
 
-__Describe alternatives you've considered__
+### Describe alternatives you've considered
 
 A clear and concise description of any alternative solutions or features you've considered.
 
 
-__Additional context__
+### Additional context
 
 Add any other context or screenshots about the feature request here.
