@@ -76,9 +76,9 @@ export function add(attrs, position, target, isAttach) {
     if (!target) {
       target = canvas.getRootElement();
     } else
-    if (typeof target === 'string') {
-      target = getElement(target);
-    }
+      if (typeof target === 'string') {
+        target = getElement(target);
+      }
 
     return modeling.createShape(attrs, position, target, { attach: isAttach });
   });
