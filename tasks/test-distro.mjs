@@ -1,4 +1,4 @@
-var exec = require('execa').sync;
+import { execaSync as exec } from 'execa';
 
 var failures = 0;
 
