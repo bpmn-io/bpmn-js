@@ -1,16 +1,16 @@
-'use strict';
+import path from 'node:path';
+import fs from 'node:fs';
 
-var path = require('path');
+import { copySync as cp } from 'cpx';
+import { sync as del } from 'del';
+import { execaSync as exec } from 'execa';
 
-var exec = require('execa').sync,
-    fs = require('fs'),
-    cp = require('cpx').copySync,
-    del = require('del').sync;
+import { createRequire } from 'node:module';
 
 var dest = process.env.DISTRO_DIST || 'dist';
 
-
 function resolve(module, sub) {
+  var require = createRequire(import.meta.url);
   var pkg = require.resolve(module + '/package.json');
 
   return path.dirname(pkg) + sub;
