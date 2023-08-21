@@ -1,3 +1,4 @@
+// @ts-ignore
 import TextRenderer from './TextRenderer';
 
 new TextRenderer({

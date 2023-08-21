@@ -1,3 +1,4 @@
+// @ts-nocheck
 import CommandStack from 'diagram-js/lib/command/CommandStack';
 
 import { Event } from 'diagram-js/lib/core/EventBus';

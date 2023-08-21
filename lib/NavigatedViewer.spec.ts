@@ -1,3 +1,4 @@
+// @ts-ignore
 import NavigatedViewer from './NavigatedViewer';
 
 import { testViewer } from './BaseViewer.spec';

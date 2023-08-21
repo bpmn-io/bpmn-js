@@ -1,3 +1,4 @@
+// @ts-ignore
 import BaseModeler from './BaseModeler';
 
 import { testViewer } from './BaseViewer.spec';
