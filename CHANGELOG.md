@@ -2,10 +2,190 @@
 
 All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documented here. We use [semantic versioning](http://semver.org/) for releases.
 
-
 ## Unreleased
 
 ___Note:__ Yet to be released changes appear here._
+
+* `FEAT`: translate _Append TextAnnotation_ context pad action ([#1932](https://github.com/bpmn-io/bpmn-js/pull/1932))
+* `CHORE`: drop deprecated callback support from public API
+* `CHORE`: drop deprecated `import.parse.complete` event member `context`
+
+### Breaking Changes
+
+* Deprecated callback style API removed. Migrate to promise-based APIs, released with `v7.0.0`.
+* Deprecated `import.parse.complete` event member `context` removed. Access the same information via the event itself, as released with `v7.0.0`.
+
+## 13.2.2
+
+* `FIX`: do not vertically resize empty pools using the space tool ([#1769](https://github.com/bpmn-io/bpmn-js/issues/1769))
+
+## 13.2.1
+
+* `FIX`: improve regular expression ([#1927](https://github.com/bpmn-io/bpmn-js/pull/1927))
+* `FIX`: show non-interrupting event version in replace menu ([#1924](https://github.com/bpmn-io/bpmn-js/pull/1924))
+
+## 13.2.0
+
+* `CHORE`: provide align and distribute context pad and popup menu icons as html ([#1920](https://github.com/bpmn-io/bpmn-js/pull/1920))
+* `DEPS`: update to `diagram-js@12.2.0`
+
+## 13.1.0
+
+* `FEAT`: allow event rendering without icons ([#1917](https://github.com/bpmn-io/bpmn-js/pull/1917))
+
+## 13.0.9
+
+* `CHORE`: update translations infra
+
+## 13.0.8
+
+_Republish of v13.0.7._
+
+## 13.0.7
+
+_Republish of v13.0.6._
+
+## 13.0.6
+
+* `DOCS`: update translations
+
+## 13.0.5
+
+* `DEPS`: update to `diagram-js@12.1.0`
+
+## 13.0.4
+
+* `DEPS`: bump to `diagram-js@12.0.2`
+
+## 13.0.3
+
+* `FIX`: update label on `modeling.updateModdleProperties` ([#1872](https://github.com/bpmn-io/bpmn-js/issues/1872))
+
+## 13.0.2
+
+* `FIX`: export types as `type` ([#1897](https://github.com/bpmn-io/bpmn-js/pull/1897))
+* `DEPS`: bump to `diagram-js@12.0.1`
+
+## 13.0.1
+
+* `FIX`: correct some type definitions ([#1896](https://github.com/bpmn-io/bpmn-js/pull/1896))
+
+## 13.0.0
+
+* `FEAT`: rework and complete type definitions ([#1886](https://github.com/bpmn-io/bpmn-js/pull/1886))
+* `DEPS`: update to `diagram-js@12.0.0`
+
+## 12.1.1
+
+* `DEPS`: update to `diagram-js@11.13.0`
+
+## 12.1.0
+
+* `FIX`: correct `Viewer#saveXML` type definition ([#1885](https://github.com/bpmn-io/bpmn-js/pull/1885))
+* `FIX`: correct `Viewer` constructor type definition ([#1882](https://github.com/bpmn-io/bpmn-js/issues/1882))
+
+## 12.0.0
+
+* `FEAT`: move `create-append-anything` to [external module](https://github.com/bpmn-io/bpmn-js-create-append-anything) ([#1873](https://github.com/bpmn-io/bpmn-js/pull/1873), [#1862](https://github.com/bpmn-io/bpmn-js/issues/1862))
+* `CHORE`: use `diagram-js@11.11.0` built-in selection after replace feature ([#1857](https://github.com/bpmn-io/bpmn-js/pull/1857))
+* `DEPS`: update to `diagram-js@11.12.0`
+
+### Breaking Changes
+
+* The create/append anything features moved to an [external module](https://github.com/bpmn-io/bpmn-js-create-append-anything). Include it to restore the `v11` create/append behavior.
+
+## 11.5.0
+
+* `FEAT`: add root elements to definitions when provided via `modeling#update(Moddle)Properties`
+
+## 11.4.1
+
+* `FIX`: correct redo triggering on international keyboard layouts ([#1842](https://github.com/bpmn-io/bpmn-js/issues/1842))
+
+## 11.4.0
+
+* `FEAT`: translate append menu entry labels and groups ([#1810](https://github.com/bpmn-io/bpmn-js/pull/1810))
+* `FEAT`: activate direct editing on participant creation ([#1845](https://github.com/bpmn-io/bpmn-js/pull/1845))
+* `FIX`: dragging append menu entries creates element connection ([#1843](https://github.com/bpmn-io/bpmn-js/pull/1843))
+* `FIX`: append shortcut triggers create menu if append not allowed ([#1840](https://github.com/bpmn-io/bpmn-js/issues/1840))
+* `FIX`: restore marker rendering workaround ([`9c6e475`](https://github.com/bpmn-io/bpmn-js/commit/9c6e475681dd6b6a418b2fbc1dac19a9df360953))
+
+## 11.3.1
+
+_Republish of `v11.3.0`._
+
+## 11.3.0
+
+* `FEAT`: feature `service` and `user` tasks more prominently in replace menu ([#1836](https://github.com/bpmn-io/bpmn-js/pull/1836))
+* `FEAT`: hide rare items initially from create/append menus ([#1836](https://github.com/bpmn-io/bpmn-js/pull/1836))
+* `FEAT`: retrieve instantiation modules with context ([#1835](https://github.com/bpmn-io/bpmn-js/pull/1835))
+* `DEPS`: update to `diagram-js@11.9.0`
+
+## 11.2.0
+
+_Adds create/append anything._
+
+* `FEAT`: append menu available via context pad ([#1802](https://github.com/bpmn-io/bpmn-js/pull/1802), [#1809](https://github.com/bpmn-io/bpmn-js/pull/1809), [#1815](https://github.com/bpmn-io/bpmn-js/pull/1815), [#1818](https://github.com/bpmn-io/bpmn-js/pull/1818), [#1831](https://github.com/bpmn-io/bpmn-js/pull/1831))
+* `FEAT`: create menu available via palette ([#1811](https://github.com/bpmn-io/bpmn-js/pull/1811), [#1809](https://github.com/bpmn-io/bpmn-js/pull/1809), [#1817](https://github.com/bpmn-io/bpmn-js/pull/1817))
+* `FEAT`: simplify connection-multi icon ([#1822](https://github.com/bpmn-io/bpmn-js/pull/1822))
+* `FEAT`: join paths `round` by default ([1827](https://github.com/bpmn-io/bpmn-js/pull/1827))
+* `FEAT`: improved BPMN symbol rendering ([#1830](https://github.com/bpmn-io/bpmn-js/pull/1830))
+* `FEAT`: round connection corners ([#1828](https://github.com/bpmn-io/bpmn-js/pull/1828))
+* `FEAT`: improve visibility of popup menu ([#1812](https://github.com/bpmn-io/bpmn-js/issues/1812))
+* `FIX`: missing special attributes in `bpmnElementFactory` ([#1807](https://github.com/bpmn-io/bpmn-js/pull/1807))
+* `FIX`: handle `bpmn:DataObjectReference` without data object in replace menu ([#1823](https://github.com/bpmn-io/bpmn-js/pull/1823))
+* `DEPS`: update to `diagram-js@11.8.0`
+
+## 11.1.1
+
+* `FIX`: correct popup menu display in fullscreen ([#1795](https://github.com/bpmn-io/bpmn-js/issues/1795))
+* `DEPS`: update to `diagram-js@11.4.3`
+
+## 11.1.0
+
+* `FEAT`: add replace element keyboard binding ([#1785](https://github.com/bpmn-io/bpmn-js/pull/1785))
+* `FEAT`: add `replaceElement` editor action ([#1785](https://github.com/bpmn-io/bpmn-js/pull/1785))
+* `DEPS`: update to `diagram-js@11.4.1`
+
+## 11.0.5
+
+* `DEPS`: update to `diagram-js@11.3.0`
+
+## 11.0.4
+
+* `DEPS`: update to `diagram-js@11.2.0`
+
+## 11.0.3
+
+_Re-release of `v11.0.2`._
+
+## 11.0.2
+
+* `FIX`: correct test for replace options ([#1787](https://github.com/bpmn-io/bpmn-js/pull/1787))
+
+## 11.0.1
+
+* `DEPS`: update to `diagram-js@11.1.1`
+
+## 11.0.0
+
+_Reworks popup menu UI._
+
+* `FEAT`: integrate new popup menu UI ([#1776](https://github.com/bpmn-io/bpmn-js/pull/1776))
+* `DEPS`: update to `diagram-js@11.1.0` ([#1776](https://github.com/bpmn-io/bpmn-js/pull/1776))
+
+### Breaking Changes
+
+* New popup menu UI introduced with `diagram-js@11`. See [`diagram-js` breaking changes and migration guide](https://github.com/bpmn-io/diagram-js/blob/develop/CHANGELOG.md#breaking-changes).
+* Keyboard-related features no longer use `KeyboardEvent#keyCode`. Use a polyfill (e.g. [keyboardevent-key-polyfill](https://www.npmjs.com/package/keyboardevent-key-polyfill)) if you need to support old browsers.
+
+## 10.3.0
+
+* `FEAT`: add BPMN specific space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: do not resize `bpmn:TextAnnotation` when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: correct attachers left hanging when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344))
+* `FIX`: stick labels to label targets when using space tool ([#1344](https://github.com/bpmn-io/bpmn-js/pull/1344), [#1302](https://github.com/bpmn-io/bpmn-js/issues/1302))
+* `DEPS`: update to `diagram-js@10`
 
 ## 10.2.1
 

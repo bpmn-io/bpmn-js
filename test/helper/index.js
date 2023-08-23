@@ -23,10 +23,8 @@
  *   insertCSS
  * } from 'bpmn-js/test/helper';
  *
- * var fs = require('fs');
- *
  * // insert diagram.css
- * insertCSS('diagram.css', fs.readFileSync('some-css.css', 'utf8'));
+ * insertCSS('diagram.css', require('./some-css.css'));
  * ```
  */
 

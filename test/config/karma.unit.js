@@ -48,6 +48,10 @@ module.exports = function(karma) {
       ]
     },
 
+    envPreProcessor: [
+      'CI'
+    ],
+
     browsers,
 
     browserNoActivityTimeout: 30000,

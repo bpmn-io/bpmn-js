@@ -189,6 +189,204 @@ describe('features/modeling - root element reference behavior', function() {
 
       });
 
+      describe(`${type} (modeling#updateProperties)`, function() {
+
+        var boundaryEvent,
+            rootElement;
+
+        describe('should add root element if not added to diagram', function() {
+
+          beforeEach(inject(function(bpmnFactory, elementRegistry, modeling) {
+
+            // given
+            boundaryEvent = elementRegistry.get('BoundaryEvent');
+            rootElement = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}`);
+            var eventDefinition = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}EventDefinition`, {
+              [`${type}Ref`]: rootElement
+            });
+
+            // when
+            modeling.updateProperties(boundaryEvent, {
+              eventDefinitions: [
+                eventDefinition
+              ]
+            });
+          }));
+
+
+          it('<do>', function() {
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          });
+
+
+          it('<undo>', inject(function(commandStack) {
+
+            // when
+            commandStack.undo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.false;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          }));
+
+
+          it('<redo>', inject(function(commandStack) {
+
+            // given
+            commandStack.undo();
+
+            // when
+            commandStack.redo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          }));
+
+        });
+
+
+        it('should NOT add root element to root elements if already present', inject(function(
+            bpmnFactory, bpmnjs, elementRegistry, modeling) {
+
+          // given
+          var rootElements = bpmnjs.getDefinitions().get('rootElements');
+          boundaryEvent = elementRegistry.get('BoundaryEvent');
+          rootElement = rootElements.find(matchPattern({ id: `${capitalizeFirstChar(type)}_1` }));
+
+          var rootElementsOfTypeCount = filter(
+            rootElements, matchPattern({ $type: rootElement.$type })
+          ).length;
+
+          var eventDefinition = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}EventDefinition`, {
+            [`${type}Ref`]: rootElement
+          });
+
+
+          // when
+          modeling.updateProperties(boundaryEvent, {
+            eventDefinitions: [
+              eventDefinition
+            ]
+          });
+
+          // then
+          var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
+
+          expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
+        }));
+
+      });
+
+      describe(`${type} (modeling#updateModdleProperties)`, function() {
+
+        var boundaryEvent,
+            rootElement;
+
+        describe('should add root element if not added to diagram', function() {
+
+          beforeEach(inject(function(bpmnFactory, elementRegistry, modeling) {
+
+            // given
+            boundaryEvent = elementRegistry.get('BoundaryEvent');
+            rootElement = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}`);
+            var bo = getBusinessObject(boundaryEvent);
+            var eventDefinition = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}EventDefinition`, {
+              [`${type}Ref`]: rootElement
+            });
+
+            // when
+            modeling.updateModdleProperties(boundaryEvent, bo, {
+              eventDefinitions: [
+                eventDefinition
+              ]
+            });
+          }));
+
+
+          it('<do>', function() {
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          });
+
+
+          it('<undo>', inject(function(commandStack) {
+
+            // when
+            commandStack.undo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.false;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          }));
+
+
+          it('<redo>', inject(function(commandStack) {
+
+            // given
+            commandStack.undo();
+
+            // when
+            commandStack.redo();
+
+            // then
+            expect(hasRootElement(rootElement)).to.be.true;
+
+            // no garbage attached to element
+            expect(boundaryEvent.referencedRootElements).not.to.exist;
+          }));
+
+        });
+
+
+        it('should NOT add root element to root elements if already present', inject(function(
+            bpmnFactory, bpmnjs, elementRegistry, modeling) {
+
+          // given
+          var rootElements = bpmnjs.getDefinitions().get('rootElements');
+          boundaryEvent = elementRegistry.get('BoundaryEvent');
+          rootElement = rootElements.find(matchPattern({ id: `${capitalizeFirstChar(type)}_1` }));
+
+          var rootElementsOfTypeCount = filter(
+            rootElements, matchPattern({ $type: rootElement.$type })
+          ).length;
+
+          var bo = getBusinessObject(boundaryEvent);
+          var eventDefinition = bpmnFactory.create(`bpmn:${capitalizeFirstChar(type)}EventDefinition`, {
+            [`${type}Ref`]: rootElement
+          });
+
+
+          // when
+          modeling.updateProperties(boundaryEvent, bo, {
+            eventDefinitions: [
+              eventDefinition
+            ]
+          });
+
+          // then
+          var rootElementsOfType = filter(rootElements, matchPattern({ $type: rootElement.$type }));
+
+          expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
+        }));
+
+      });
+
     });
 
 
@@ -315,6 +513,184 @@ describe('features/modeling - root element reference behavior', function() {
 
           expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
         }));
+      });
+
+
+      describe('modeling#updateProperties', function() {
+        forEach([
+          'ReceiveTask_noRef',
+          'SendTask_noRef'
+        ], function(type) {
+
+          var id = type;
+
+          var task,
+              rootElement;
+
+          describe('should add on modeling#updateProperties', function() {
+
+
+            beforeEach(inject(function(bpmnFactory, elementRegistry, modeling) {
+
+              // given
+              task = elementRegistry.get(id);
+
+              rootElement = bpmnFactory.create('bpmn:Message', { id: 'NewMessage' });
+
+              // when
+              modeling.updateProperties(task, {
+                messageRef: rootElement,
+              });
+            }));
+
+
+            it('<do>', function() {
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.true;
+            });
+
+
+            it('<undo>', inject(function(commandStack) {
+
+              // when
+              commandStack.undo();
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.false;
+            }));
+
+
+            it('<redo>', inject(function(commandStack) {
+
+              // given
+              commandStack.undo();
+
+              // when
+              commandStack.redo();
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.true;
+            }));
+          });
+
+
+          it('should NOT add message to root elements if already present', inject(function(
+              bpmnjs, elementRegistry, modeling
+          ) {
+
+            // given
+            task = elementRegistry.get(id);
+            var bo = getBusinessObject(task);
+
+            var rootElements = bpmnjs.getDefinitions().get('rootElements');
+            var message = rootElements.find(matchPattern({ id: 'Message_2' }));
+
+            var rootElementsOfTypeCount = filter(
+              rootElements, matchPattern({ $type: 'bpmn:Message' })
+            ).length;
+
+            // when
+            modeling.updateProperties(task, {
+              messageRef: message,
+            });
+
+            // then
+            var rootElementsOfType = filter(rootElements, matchPattern({ $type: 'bpmn:Message' }));
+            expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
+            expect(bo.get('messageRef')).to.eq(message);
+          }));
+        });
+      });
+
+
+      describe('modeling#updateModdleProperties', function() {
+        forEach([
+          'ReceiveTask_noRef',
+          'SendTask_noRef'
+        ], function(type) {
+
+          var id = type;
+
+          var task,
+              rootElement;
+
+
+          describe('should add message to root elements', function() {
+
+
+            beforeEach(inject(function(bpmnFactory, elementRegistry, modeling) {
+
+              // given
+              task = elementRegistry.get(id);
+              var bo = getBusinessObject(task);
+
+              rootElement = bpmnFactory.create('bpmn:Message', { id: 'NewMessage' });
+
+              // when
+              modeling.updateModdleProperties(task, bo, {
+                messageRef: rootElement,
+              });
+            }));
+
+
+            it('<do>', function() {
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.true;
+            });
+
+
+            it('<undo>', inject(function(commandStack) {
+
+              // when
+              commandStack.undo();
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.false;
+            }));
+
+
+            it('<redo>', inject(function(commandStack) {
+
+              // given
+              commandStack.undo();
+
+              // when
+              commandStack.redo();
+
+              // then
+              expect(hasRootElement(rootElement)).to.be.true;
+            }));
+          });
+
+
+          it('should NOT add message to root elements if already present', inject(function(
+              bpmnjs, elementRegistry, modeling
+          ) {
+
+            // given
+            task = elementRegistry.get(id);
+            var bo = getBusinessObject(task);
+
+            var rootElements = bpmnjs.getDefinitions().get('rootElements');
+            var message = rootElements.find(matchPattern({ id: 'Message_2' }));
+
+            var rootElementsOfTypeCount = filter(
+              rootElements, matchPattern({ $type: 'bpmn:Message' })
+            ).length;
+
+            // when
+            modeling.updateModdleProperties(task, bo, {
+              messageRef: message,
+            });
+
+            // then
+            var rootElementsOfType = filter(rootElements, matchPattern({ $type: 'bpmn:Message' }));
+            expect(rootElementsOfType).to.have.lengthOf(rootElementsOfTypeCount);
+            expect(bo.get('messageRef')).to.eq(message);
+          }));
+        });
       });
     });
 

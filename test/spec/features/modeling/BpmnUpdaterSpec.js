@@ -282,4 +282,40 @@ describe('features - bpmn-updater', function() {
 
   });
 
+
+  describe('BPMNLabel', function() {
+
+    describe('embedded', function() {
+
+      it('should set BPMNLabel on task', inject(function(modeling, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        // when
+        modeling.updateLabel(task, 'foo');
+
+        // then
+        expect(task.businessObject.name).to.equal('foo');
+        expect(getDi(task).label).to.exist;
+      }));
+
+
+      it('should unset BPMNLabel on task', inject(function(modeling, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_3');
+
+        // when
+        modeling.updateLabel(task, '');
+
+        // then
+        expect(task.businessObject.name).to.equal('');
+        expect(getDi(task)).not.to.have.property('label');
+      }));
+    });
+
+
+  });
+
 });

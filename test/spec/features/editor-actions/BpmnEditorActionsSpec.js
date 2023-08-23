@@ -16,6 +16,7 @@ import alignElementsModule from 'diagram-js/lib/features/align-elements';
 import distributeElementsModule from 'diagram-js/lib/features/distribute-elements';
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import contextPad from 'lib/features/context-pad';
 
 var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn');
 var collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');
@@ -208,6 +209,75 @@ describe('features/editor-actions', function() {
         expect(changedSpy).not.to.have.been.called;
       }
     ));
+
+  });
+
+
+  describe('#replaceElement', function() {
+
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: [
+        selectionModule,
+        bpmnEditorActionsModule,
+        modelingModule,
+        coreModule,
+        contextPad
+      ]
+    }));
+
+
+    it('should open replace element', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      const element = elementRegistry.get('StartEvent_1');
+
+      selection.select(element);
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('replaceElement', {});
+
+      // then
+      expect(changedSpy).to.have.been.called;
+    }));
+
+
+    it('should not open replace element if no selection', inject(function(editorActions, eventBus) {
+
+      // given
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('replaceElement', {});
+
+      // then
+      expect(changedSpy).to.not.have.been.called;
+    }));
+
+
+    it('should not open replace element if multiple elements selected', inject(function(elementRegistry, selection, editorActions, eventBus) {
+
+      // given
+      var elementIds = [ 'StartEvent_1', 'UserTask_1' ];
+      var elements = elementIds.map(function(id) {
+        return elementRegistry.get(id);
+      });
+
+      selection.select(elements);
+      var changedSpy = sinon.spy();
+
+      // when
+      eventBus.once('popupMenu.open', changedSpy);
+
+      editorActions.trigger('replaceElement', {});
+
+      // then
+      expect(changedSpy).to.not.have.been.called;
+    }));
 
   });
 

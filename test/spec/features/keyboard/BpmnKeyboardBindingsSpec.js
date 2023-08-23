@@ -16,6 +16,8 @@ import lassoToolModule from 'diagram-js/lib/features/lasso-tool';
 import modelingModule from 'lib/features/modeling';
 import searchModule from 'lib/features/search';
 import spaceToolModule from 'diagram-js/lib/features/space-tool';
+import popupMenu from 'diagram-js/lib/features/popup-menu';
+import contextPad from 'lib/features/context-pad';
 
 import {
   createKeyEvent
@@ -37,7 +39,9 @@ describe('features/keyboard', function() {
     lassoToolModule,
     modelingModule,
     searchModule,
-    spaceToolModule
+    spaceToolModule,
+    popupMenu,
+    contextPad
   ];
 
   beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
@@ -63,7 +67,8 @@ describe('features/keyboard', function() {
         'setColor',
         'directEditing',
         'find',
-        'moveToOrigin'
+        'moveToOrigin',
+        'replaceElement'
       ];
 
       // then
@@ -193,6 +198,30 @@ describe('features/keyboard', function() {
       }));
 
     });
+
+
+    forEach([ 'r', 'R' ], function(key) {
+
+      it('should trigger replace menu', inject(function(keyboard, popupMenu, elementRegistry, selection) {
+
+        sinon.spy(popupMenu, 'open');
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        selection.select(task);
+
+        var e = createKeyEvent(key);
+
+        // when
+        keyboard._keyHandler(e);
+
+        // then
+        expect(popupMenu.open).to.have.been.calledOnce;
+      }));
+
+    });
+
 
   });
 

@@ -101,7 +101,7 @@ describe('features/replace-preview', function() {
   }));
 
 
-  it('should add dragger to context.visualReplacements once', inject(function(dragging) {
+  skipCI('Mac OS') && it('should add dragger to context.visualReplacements once', inject(function(dragging) {
 
     // when
     moveShape(startEvent1, rootElement, { x: 275, y: 120 });
@@ -113,11 +113,10 @@ describe('features/replace-preview', function() {
 
     expect(visualReplacements[startEvent1.id]).to.exist;
     expect(Object.keys(visualReplacements).length).to.equal(1);
-
   }));
 
 
-  it('should remove dragger from context.visualReplacements', inject(
+  skipCI('Mac OS') && it('should remove dragger from context.visualReplacements', inject(
     function(elementRegistry, dragging) {
 
       // given
@@ -323,3 +322,20 @@ describe('features/replace-preview', function() {
   );
 
 });
+
+
+// helpers /////////////
+
+function skipCI(userAgent) {
+  const ci = window.__env__ && window.__env__.CI;
+
+  if (!ci) {
+    return false;
+  }
+
+  if (userAgent) {
+    return window.navigator.userAgent.includes(userAgent);
+  }
+
+  return true;
+}

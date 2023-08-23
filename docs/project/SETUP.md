@@ -2,16 +2,13 @@
 
 This document describes the necessary steps to setup a `bpmn-js` development environment.
 
-
 ## TLDR;
 
-On Linux, OS X or Windows? [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html) ready? Check out the [setup script section](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md#setup-via-script) below.
-
+On Linux, OS X or Windows? [git](http://git-scm.com), [NodeJS](https://nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html) ready? Check out the [setup script section](#setup-via-script) below.
 
 ## Manual Steps
 
-Make sure you have [git](http://git-scm.com/), [NodeJS](nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html)  installed before you continue.
-
+Make sure you have [git](http://git-scm.com), [NodeJS](https://nodejs.org) and [npm](https://www.npmjs.org/doc/cli/npm.html)  installed before you continue.
 
 ### Get Project + Dependencies
 
@@ -23,7 +20,7 @@ The following projects from the [bpmn-io](https://github.com/bpmn-io) project on
 
 and clone them into a common directory via
 
-```
+```sh
 git clone git@github.com:bpmn-io/bpmn-js.git
 git clone git@github.com:bpmn-io/diagram-js.git
 git clone git@github.com:bpmn-io/bpmn-moddle.git
@@ -33,7 +30,7 @@ git clone git@github.com:bpmn-io/bpmn-moddle.git
 
 [Link dependent projects](https://docs.npmjs.com/cli/link) between each other to pick up changes immediately.
 
-```
+```plain
 .
 ├─bpmn-js
 │   └─node_modules
@@ -55,11 +52,9 @@ Use `mklink /d <link> <target>` [(docs)](http://technet.microsoft.com/en-us/libr
 
 Execute `npm install` on each of the projects to grab their dependencies.
 
-
 ### Verify Things are O.K.
 
 Execute `npm run all` on each project. Things should be fine.
-
 
 ### Setup via Script
 
