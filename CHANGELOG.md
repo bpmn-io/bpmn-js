@@ -6,9 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: do not hide overlays on canvas move per default ([diagram-js#798](https://github.com/bpmn-io/diagram-js/issues/798))
 * `FEAT`: translate _Append TextAnnotation_ context pad action ([#1932](https://github.com/bpmn-io/bpmn-js/pull/1932))
 * `CHORE`: drop deprecated callback support from public API
 * `CHORE`: drop deprecated `import.parse.complete` event member `context`
+* `DEPS`: update to `diagram-js@12.3.0`
 
 ### Breaking Changes
 
