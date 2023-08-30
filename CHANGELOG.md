@@ -6,12 +6,19 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.0.0
+
 * `FEAT`: do not hide overlays on canvas move per default ([diagram-js#798](https://github.com/bpmn-io/diagram-js/issues/798))
 * `FEAT`: translate _Append TextAnnotation_ context pad action ([#1932](https://github.com/bpmn-io/bpmn-js/pull/1932))
+* `FIX`: allow to create connection + event-based gateway ([#1490](https://github.com/bpmn-io/bpmn-js/issues/1490))
+* `FIX`: make breadcrumb styling more robust ([#1945](https://github.com/bpmn-io/bpmn-js/pull/1945))
+* `FIX`: correct copy of default sequence flow elements ([#1935](https://github.com/bpmn-io/bpmn-js/issues/1935))
+* `CHORE`: extract `modeling-feedback` into dedicated module ([#1940](https://github.com/bpmn-io/bpmn-js/pull/1940))
 * `CHORE`: drop deprecated callback support from public API
 * `CHORE`: drop deprecated `import.parse.complete` event member `context`
 * `DEPS`: update to `diagram-js@12.3.0`
 * `DEPS`: update to `bpmn-moddle@8.0.1`
+* `DEPS`: update to `ids@1.0.3`
 
 ### Breaking Changes
 
