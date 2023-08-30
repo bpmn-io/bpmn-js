@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 * `CHORE`: drop deprecated callback support from public API
 * `CHORE`: drop deprecated `import.parse.complete` event member `context`
 * `DEPS`: update to `diagram-js@12.3.0`
+* `DEPS`: update to `bpmn-moddle@8.0.1`
 
 ### Breaking Changes
 
