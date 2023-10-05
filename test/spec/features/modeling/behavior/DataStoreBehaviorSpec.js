@@ -157,7 +157,7 @@ describe('features/modeling/behavior - data store', function() {
     }));
 
 
-    it('should move DataStoreReference from partipant to Collaboration keeping parent particpant', inject(
+    it('should move DataStoreReference from partipant to Collaboration keeping parent participant', inject(
       function(elementRegistry, modeling) {
 
         // give
@@ -177,7 +177,7 @@ describe('features/modeling/behavior - data store', function() {
     );
 
 
-    it('should move DataStoreReference from subprocess to Collaboration keeping parent particpant', inject(
+    it('should move DataStoreReference from subprocess to Collaboration keeping parent participant', inject(
       function(elementRegistry, modeling) {
 
         // give
