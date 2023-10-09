@@ -1,8 +1,8 @@
 name: POST_RELEASE
 on:
-  push:
-    tags:
-      - 'v[0-9]+.*'
+  - workflow_call
+  - workflow_dispatch
+
 jobs:
   post-release:
 
