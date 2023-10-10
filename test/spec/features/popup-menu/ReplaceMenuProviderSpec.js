@@ -779,6 +779,72 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
     });
 
+
+    describe('integration', function() {
+
+      it('should toggle sequential -> undo to parallel', inject(function(elementRegistry, commandStack) {
+
+        // given
+        var task = elementRegistry.get('ParallelTask');
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-sequential-mi');
+
+        commandStack.undo();
+
+        // then
+        const bo = getBusinessObject(task),
+              loopCharacteristics = bo.get('loopCharacteristics');
+
+        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(loopCharacteristics.isSequential).to.be.false;
+      }));
+
+
+      it('should toggle parallel -> undo to parallel', inject(function(elementRegistry, commandStack) {
+
+        // given
+        var task = elementRegistry.get('ParallelTask');
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-parallel-mi');
+
+        commandStack.undo();
+
+        // then
+        const bo = getBusinessObject(task),
+              loopCharacteristics = bo.get('loopCharacteristics');
+
+        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(loopCharacteristics.isSequential).to.be.false;
+      }));
+
+
+      it('should toggle loop -> undo to parallel', inject(function(elementRegistry, commandStack) {
+
+        // given
+        var task = elementRegistry.get('ParallelTask');
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-loop');
+
+        commandStack.undo();
+
+        // then
+        const bo = getBusinessObject(task),
+              loopCharacteristics = bo.get('loopCharacteristics');
+
+        expect(is(loopCharacteristics, 'bpmn:MultiInstanceLoopCharacteristics')).to.be.true;
+        expect(loopCharacteristics.isSequential).to.be.false;
+      }));
+    });
+
   });
 
 
