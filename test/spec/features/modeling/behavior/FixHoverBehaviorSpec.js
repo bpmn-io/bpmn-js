@@ -613,4 +613,46 @@ describe('features/modeling/behavior - fix hover', function() {
 
   });
 
+
+  describe('space tool', function() {
+
+    var diagramXML = require('./FixHoverBehavior.participant.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should <spaceTool.move> participant', inject(
+      function(dragging, elementRegistry, spaceTool) {
+
+        // given
+        var lane = elementRegistry.get('Lane_1'),
+            participant = elementRegistry.get('Participant_1');
+
+        spaceTool.activateMakeSpace(canvasEvent({ x: 150, y: 0 }));
+
+        expect(participant.width).to.equal(600);
+
+        // when
+        dragging.hover({ element: lane });
+
+        dragging.move(canvasEvent({ x: 250, y: 0 }, {
+          button: 0,
+          shiftKey: true
+        }));
+
+        dragging.end();
+
+        // then
+        expect(participant.width).to.equal(700);
+      }
+    ));
+
+  });
+
 });
