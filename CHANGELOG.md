@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.1.0
+
+* `FEAT`: ensure lanes aren't resized when using space tool in https://github.com/bpmn-io/bpmn-js/pull/1972
+* `DOCS`: update translations for v14.0.0 by @bpmn-io-bot in https://github.com/bpmn-io/bpmn-js/pull/1948
+
 ## 14.0.0
 
 * `FEAT`: do not hide overlays on canvas move per default ([diagram-js#798](https://github.com/bpmn-io/diagram-js/issues/798))
