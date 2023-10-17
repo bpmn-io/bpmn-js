@@ -26,7 +26,8 @@ async function run() {
   fs.mkdirSync(dest, { recursive: true });
 
   console.log('copy bpmn-font to ' + dest + '/bpmn-font');
-  await cp(resolve('bpmn-font', '/dist/{font,css}/**'), dest + '/assets/bpmn-font');
+  await cp(resolve('bpmn-font', '/dist/css/**'), dest + '/assets/bpmn-font/css');
+  await cp(resolve('bpmn-font', '/dist/font/**'), dest + '/assets/bpmn-font/font');
 
   console.log('copy diagram-js.css to ' + dest);
   await cp(resolve('diagram-js', '/assets/**'), dest + '/assets');
