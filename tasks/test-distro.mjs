@@ -1,5 +1,8 @@
 import { execaSync as exec } from 'execa';
 
+import assert from 'node:assert';
+import fs from 'node:fs';
+
 var failures = 0;
 
 function runTest(variant, env) {
@@ -26,6 +29,27 @@ function runTest(variant, env) {
   }
 }
 
+function verifyAssets() {
+
+  const assets = [
+    'bpmn-font/css/bpmn-embedded.css',
+    'bpmn-font/font/bpmn.woff',
+    'bpmn-js.css',
+    'diagram-js.css'
+  ];
+
+  for (const asset of assets) {
+    try {
+      assert.ok(fs.existsSync('dist/assets/' + asset), `${asset} missing`);
+    } catch (e) {
+      console.error('[TEST] ASSET ' + asset);
+      console.error(e);
+
+      failures++;
+    }
+  }
+}
+
 function test() {
 
   runTest('bpmn-modeler', 'development');
@@ -36,6 +60,8 @@ function test() {
 
   runTest('bpmn-viewer', 'development');
   runTest('bpmn-viewer', 'production');
+
+  verifyAssets();
 
   if (failures) {
     process.exit(1);
