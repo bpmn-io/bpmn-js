@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.1.1 (2023-10-18)
+
+## What's Changed
+* Fix asset path by @nikku in https://github.com/bpmn-io/bpmn-js/pull/1977
+
+
+**Full Changelog**: https://github.com/bpmn-io/bpmn-js/compare/v14.1.0...v14.1.1
+
 ## 14.1.0
 
 * `FEAT`: ensure lanes aren't resized when using space tool in https://github.com/bpmn-io/bpmn-js/pull/1972
