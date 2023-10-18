@@ -51,3 +51,5 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}
     secrets: inherit
     uses: ./.github/workflows/POST_RELEASE.yml
+    with:
+      tag: ${{ needs.release-please.outputs.release_created.tag_name }}
