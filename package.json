@@ -32,6 +32,9 @@
     "prepare": "run-s distro",
     "prepublishOnly": "run-s generate-types"
   },
+  "engines": {
+    "node": "*"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/bpmn-js"
