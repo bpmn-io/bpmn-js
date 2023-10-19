@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.2.0
+
+* `FEAT`: make spacetool local per default ([bpmn-io/diagram-js#811](https://github.com/bpmn-io/diagram-js/pull/811), [#1975](https://github.com/bpmn-io/bpmn-js/issues/1975))
+* `FEAT`: add complex preview feature ([bpmn-io/diagram-js#807](https://github.com/bpmn-io/diagram-js/pull/807))
+* `CHORE`: mark connection as dragging when moving bendpoint ([bpmn-io/diagram-js#807](https://github.com/bpmn-io/diagram-js/pull/807))
+* `DEPS`: update to `diagram-js@12.5.0`
+
 ## 14.1.3
 
 * `CHORE`: correctly output tag in https://github.com/bpmn-io/bpmn-js/pull/1982
