@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.1.4 (2023-10-19)
+
+**Full Changelog**: https://github.com/bpmn-io/bpmn-js/compare/v14.1.3...v14.1.4
+
 ## 14.1.3
 
 * `CHORE`: correctly output tag in https://github.com/bpmn-io/bpmn-js/pull/1982
