@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.1.2
+
+* `CHORE`: fix POST_RELEASE job in https://github.com/bpmn-io/bpmn-js/pull/1980
+
 ## 14.1.1
 
 * `FIX`: asset path by @nikku in https://github.com/bpmn-io/bpmn-js/pull/1977
