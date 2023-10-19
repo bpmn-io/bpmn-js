@@ -8,6 +8,7 @@ jobs:
   release-please:
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      tag: ${{ steps.release.outputs.tag_name }}
     permissions:
       contents: write # to create release commit (google-github-actions/release-please-action)
       pull-requests: write # to create release PR (google-github-actions/release-please-action)
@@ -52,4 +53,4 @@ jobs:
     secrets: inherit
     uses: ./.github/workflows/POST_RELEASE.yml
     with:
-      tag: ${{ needs.release-please.outputs.release_created.tag_name }}
+      tag: ${{ needs.release-please.outputs.tag }}
