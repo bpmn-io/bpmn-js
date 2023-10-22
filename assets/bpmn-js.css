@@ -143,3 +143,19 @@
   height: 20px;
   width: 20px;
 }
+
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.mouse-move-effect {
+  width: 50px;
+  height: 50px;
+  background-color: #3498db;
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none; /* Ensures the element doesn't interfere with other elements */
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease;
+}

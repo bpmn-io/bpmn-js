@@ -112,6 +112,16 @@ describe('features/keyboard', function() {
       }));
 
     });
+    const mouseMoveEffect = document.querySelector('.mouse-move-effect');
+
+    document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // Update the position of the element to follow the mouse cursor.
+    mouseMoveEffect.style.transform = `translate(${x}px, ${y}px)`;
+});
+
 
 
     forEach([ 's', 'S' ], function(key) {
