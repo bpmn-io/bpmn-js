@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 14.1.4 (2023-10-24)
+
+**Full Changelog**: https://github.com/bpmn-io/bpmn-js/compare/v14.1.3...v14.1.4
+
 ## 14.2.0
 
 * `FEAT`: make spacetool local per default ([bpmn-io/diagram-js#811](https://github.com/bpmn-io/diagram-js/pull/811), [#1975](https://github.com/bpmn-io/bpmn-js/issues/1975))
