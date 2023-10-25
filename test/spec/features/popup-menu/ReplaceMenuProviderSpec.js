@@ -304,7 +304,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('active attribute', function() {
 
-      it('should be true for parallel marker', inject(function(bpmnReplace, elementRegistry) {
+      it('should be true for parallel marker', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask'),
@@ -324,7 +324,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for sequential marker', inject(function(bpmnReplace, elementRegistry) {
+      it('should be true for sequential marker', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask'),
@@ -342,7 +342,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for loop marker', inject(function(bpmnReplace, elementRegistry) {
+      it('should be true for loop marker', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask'),
@@ -360,7 +360,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should be true for ad hoc marker', inject(function(bpmnReplace, elementRegistry) {
+      it('should be true for ad hoc marker', inject(function(elementRegistry) {
 
         // given
         var AdHocSubProcess = elementRegistry.get('AdHocSubProcess');
@@ -377,7 +377,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('exclusive toggle buttons', function() {
 
-      it('should not toggle non exclusive buttons off', inject(function(bpmnReplace, elementRegistry) {
+      it('should not toggle non exclusive buttons off', inject(function(elementRegistry) {
         var subProcess = elementRegistry.get('AdHocSubProcess');
 
         openPopup(subProcess);
@@ -397,7 +397,7 @@ describe('features/popup-menu - replace menu provider', function() {
     describe('non exclusive toggle buttons', function() {
 
       it('should not toggle exclusive buttons off',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var subProcess = elementRegistry.get('SubProcess');
@@ -431,7 +431,7 @@ describe('features/popup-menu - replace menu provider', function() {
     describe('parallel toggle button', function() {
 
       it('should toggle parallel marker off',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var task = elementRegistry.get('ParallelTask');
@@ -452,7 +452,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
 
-      it('should toggle parallel marker on', inject(function(bpmnReplace, elementRegistry) {
+      it('should toggle parallel marker on', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
@@ -473,7 +473,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set sequential button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set sequential button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
@@ -492,7 +492,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set loop button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
@@ -511,7 +511,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+      it('should set loop characteristics type', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask'),
@@ -557,7 +557,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('sequential toggle button', function() {
 
-      it('should toggle sequential marker off', inject(function(bpmnReplace, elementRegistry) {
+      it('should toggle sequential marker off', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
@@ -577,7 +577,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should toggle sequential marker on', inject(function(bpmnReplace, elementRegistry) {
+      it('should toggle sequential marker on', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
@@ -598,7 +598,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set loop button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
@@ -617,7 +617,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set parallel button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set parallel button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask');
@@ -636,7 +636,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+      it('should set loop characteristics type', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask'),
@@ -682,7 +682,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('loop toggle button', function() {
 
-      it('should toggle loop marker off', inject(function(bpmnReplace, elementRegistry) {
+      it('should toggle loop marker off', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('LoopTask');
@@ -702,7 +702,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should toggle loop marker on', inject(function(bpmnReplace, elementRegistry) {
+      it('should toggle loop marker on', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('Task');
@@ -722,7 +722,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set sequential button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set sequential button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
@@ -741,7 +741,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set parallel button inactive', inject(function(bpmnReplace, elementRegistry) {
+      it('should set parallel button inactive', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('ParallelTask');
@@ -760,7 +760,7 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
-      it('should set loop characteristics type', inject(function(bpmnReplace, elementRegistry) {
+      it('should set loop characteristics type', inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask'),
@@ -852,7 +852,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
 
-    it('should retain the loop characteristics', inject(function(bpmnReplace, elementRegistry) {
+    it('should retain the loop characteristics', inject(function(elementRegistry) {
 
       // given
       var task = elementRegistry.get('SequentialTask');
@@ -871,7 +871,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the loop characteristics for call activites',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var task = elementRegistry.get('SequentialTask');
@@ -891,7 +891,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain expanded status for sub processes',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var subProcess = elementRegistry.get('SubProcess');
@@ -909,7 +909,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should replace sub processes -> event sub process',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var subProcess = elementRegistry.get('SubProcess');
@@ -927,7 +927,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should replace event sub processes -> sub process',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var eventSubProcess = elementRegistry.get('EventSubProcess');
@@ -945,7 +945,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the loop characteristics and the expanded status for transactions',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
@@ -963,12 +963,16 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should not retain the loop characteristics morphing to an event sub process',
-      inject(function(bpmnReplace, elementRegistry, modeling) {
+      inject(function(bpmnFactory, elementRegistry, modeling) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
 
-        modeling.updateProperties(transaction, { loopCharacteristics: { isparallel: true } });
+        modeling.updateProperties(transaction, {
+          loopCharacteristics: bpmnFactory.create('bpmn:MultiInstanceLoopCharacteristics', {
+            isParallel: true
+          })
+        });
 
         openPopup(transaction);
 
@@ -983,7 +987,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     it('should retain the expanded property morphing to an event sub processes',
-      inject(function(bpmnReplace, elementRegistry) {
+      inject(function(elementRegistry) {
 
         // given
         var transaction = elementRegistry.get('Transaction');
@@ -1009,7 +1013,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
       it('should contain all except the current one',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_1');
@@ -1025,7 +1029,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all start events inside event sub process except the current one',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_3');
@@ -1066,7 +1070,7 @@ describe('features/popup-menu - replace menu provider', function() {
       );
 
       it('should contain only start event, end event and intermediate throw event inside sub process except the current one',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_2');
@@ -1085,7 +1089,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all intermediate events except the current one',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var intermediateEvent = elementRegistry.get('IntermediateThrowEvent_1');
@@ -1102,7 +1106,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all end events except the current one',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var endEvent = elementRegistry.get('EndEvent_1');
@@ -1259,7 +1263,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
 
       it('should contain all boundary events (except for cancel and currently active) for an interrupting boundary event',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
@@ -1276,7 +1280,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain all boundary events (except for cancel and currently active) for a non interrupting boundary event',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
@@ -1293,7 +1297,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       it('should contain compensation boundary event',
-        inject(function(bpmnReplace, elementRegistry) {
+        inject(function(elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_1');

@@ -181,7 +181,7 @@ describe('features/replace - bpmn replace', function() {
                 eventDefinitionType: 'bpmn:TimerEventDefinition'
               };
 
-          var eventDefinitions = boundaryBo.eventDefinitions.slice();
+          var eventDefinitions = boundaryBo.get('eventDefinitions').slice();
 
           // when
           var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
@@ -192,7 +192,7 @@ describe('features/replace - bpmn replace', function() {
 
           expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
 
-          expect(newBo.eventDefinitions).to.jsonEqual(eventDefinitions, skipId);
+          expect(newBo.get('eventDefinitions')).to.jsonEqual(eventDefinitions, skipId);
 
           expect(newBo.cancelActivity).to.be.true;
         })
@@ -211,7 +211,7 @@ describe('features/replace - bpmn replace', function() {
                 cancelActivity: false
               };
 
-          var eventDefinitions = boundaryBo.eventDefinitions.slice();
+          var eventDefinitions = boundaryBo.get('eventDefinitions').slice();
 
           // when
           var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
@@ -222,7 +222,7 @@ describe('features/replace - bpmn replace', function() {
 
           expect(is(newBo, 'bpmn:BoundaryEvent')).to.be.true;
 
-          expect(newBo.eventDefinitions).to.jsonEqual(eventDefinitions, skipId);
+          expect(newBo.get('eventDefinitions')).to.jsonEqual(eventDefinitions, skipId);
 
           expect(newBo.cancelActivity).to.be.false;
         })
@@ -244,7 +244,7 @@ describe('features/replace - bpmn replace', function() {
           var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
 
           var newBo = newElement.businessObject;
-          var newEventDefinitions = newBo.eventDefinitions;
+          var newEventDefinitions = newBo.get('eventDefinitions');
           var newEventDefinition = newEventDefinitions[0];
 
           // then
@@ -273,7 +273,7 @@ describe('features/replace - bpmn replace', function() {
           var newElement = bpmnReplace.replaceElement(boundaryEvent, newElementData);
 
           var newBo = newElement.businessObject;
-          var newEventDefinitions = newBo.eventDefinitions;
+          var newEventDefinitions = newBo.get('eventDefinitions');
           var newEventDefinition = newEventDefinitions[0];
 
           // then
@@ -1220,7 +1220,7 @@ describe('features/replace - bpmn replace', function() {
         })[0];
 
         // then
-        expect(startEventAfter.businessObject.eventDefinitions).not.to.exist;
+        expect(startEventAfter.businessObject.get('eventDefinitions')).is.empty;
       })
     );
 
@@ -1240,7 +1240,7 @@ describe('features/replace - bpmn replace', function() {
         })[0];
 
         // then
-        expect(startEventAfter.businessObject.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
+        expect(startEventAfter.businessObject.get('eventDefinitions')[0].$type).to.equal('bpmn:MessageEventDefinition');
       })
     );
 
@@ -1642,7 +1642,7 @@ describe('features/replace - bpmn replace', function() {
           eventDefinitionType: 'bpmn:MessageEventDefinition'
         });
 
-        var parent = messageEvent.businessObject.eventDefinitions[0].$parent;
+        var parent = messageEvent.businessObject.get('eventDefinitions')[0].$parent;
 
         expect(parent).to.exist;
         expect(parent).to.equal(messageEvent.businessObject);
@@ -1662,7 +1662,7 @@ describe('features/replace - bpmn replace', function() {
           eventDefinitionType: 'bpmn:ConditionalEventDefinition'
         });
 
-        var definition = messageEvent.businessObject.eventDefinitions[0];
+        var definition = messageEvent.businessObject.get('eventDefinitions')[0];
 
         // then
         expect(definition.condition).to.exist;
