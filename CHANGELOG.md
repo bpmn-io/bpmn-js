@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: preview append on hover ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
+* `FEAT`: allow overriding `fill`, `stroke`, `width` and `height` when rendering elements ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
+* `FIX`: renderer only renders actual flow elements ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
+
+### Breaking Changes
+
+* `BpmnRenderer` only renders actual flow elements (e.g. `bpmn:IntermediateCatchEvent` but not `bpmn:MessageEventDefinition`)
+
 ## 14.2.0
 
 * `FEAT`: make spacetool local per default ([bpmn-io/diagram-js#811](https://github.com/bpmn-io/diagram-js/pull/811), [#1975](https://github.com/bpmn-io/bpmn-js/issues/1975))
