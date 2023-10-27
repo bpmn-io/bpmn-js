@@ -681,6 +681,36 @@ describe('features - context-pad', function() {
 
   });
 
+
+  describe('preview', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat(autoPlaceModule)
+    }));
+
+
+    it('should preview append', inject(function(canvas, elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = padEvent('append.gateway');
+
+      // when
+      contextPad.trigger('hover', event);
+
+      // then
+      expect(canvas.getLayer('complex-preview')).to.exist;
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
+    }));
+
+  });
+
 });
 
 
