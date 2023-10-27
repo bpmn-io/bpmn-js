@@ -806,11 +806,6 @@ describe('draw - bpmn renderer', function() {
 
   });
 
-});
-
-
-
-describe('draw - bpmn renderer - integration', function() {
 
   describe('custom icons', function() {
 
