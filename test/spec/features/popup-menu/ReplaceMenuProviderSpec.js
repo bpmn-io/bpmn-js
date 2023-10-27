@@ -1943,7 +1943,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       [
-        'bpmn:Activity',
+        'bpmn:Task',
         'bpmn:EndEvent',
         'bpmn:IntermediateThrowEvent',
         'bpmn:IntermediateCatchEvent'
@@ -2242,7 +2242,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
       [
-        'bpmn:Activity',
+        'bpmn:Task',
         'bpmn:EndEvent',
         'bpmn:IntermediateThrowEvent',
         'bpmn:IntermediateCatchEvent'
