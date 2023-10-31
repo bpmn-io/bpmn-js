@@ -6,9 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.0.0
+
+* `FEAT`: align selection outline with element's shape ([#1996](https://github.com/bpmn-io/bpmn-js/issues/1996))
 * `FEAT`: preview append on hover ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
 * `FEAT`: allow overriding `fill`, `stroke`, `width` and `height` when rendering elements ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
 * `FIX`: renderer only renders actual flow elements ([#1985](https://github.com/bpmn-io/bpmn-js/pull/1985))
+* `DEPS`: update to `diagram-js@12.6.0`
 
 ### Breaking Changes
 
