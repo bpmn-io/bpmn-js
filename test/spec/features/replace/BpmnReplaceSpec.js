@@ -178,7 +178,8 @@ describe('features/replace - bpmn replace', function() {
               boundaryBo = boundaryEvent.businessObject,
               newElementData = {
                 type: 'bpmn:BoundaryEvent',
-                eventDefinitionType: 'bpmn:TimerEventDefinition'
+                eventDefinitionType: 'bpmn:TimerEventDefinition',
+                cancelActivity: true
               };
 
           var eventDefinitions = boundaryBo.get('eventDefinitions').slice();
