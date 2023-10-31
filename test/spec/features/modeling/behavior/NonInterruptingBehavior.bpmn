@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0y57lde" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.16.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.3.0">
+  <bpmn:process id="Process_0jdll32" isExecutable="true">
+    <bpmn:subProcess id="Activity_1szoedm" triggeredByEvent="true">
+      <bpmn:startEvent id="StartEvent_interrupting">
+        <bpmn:messageEventDefinition id="MessageEventDefinition_1hnz3qy" />
+      </bpmn:startEvent>
+      <bpmn:startEvent id="StartEvent_nonInterrupting" isInterrupting="false">
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0ba7a8k" />
+      </bpmn:startEvent>
+    </bpmn:subProcess>
+    <bpmn:task id="Task_1" />
+    <bpmn:boundaryEvent id="BoundaryEvent_interrupting" attachedToRef="Task_1">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fe1m2n" />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="BoundaryEvent_nonInterrupting" cancelActivity="false" attachedToRef="Task_1">
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1f5jywk" />
+    </bpmn:boundaryEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0jdll32">
+      <bpmndi:BPMNShape id="Activity_1nblmk5_di" bpmnElement="Task_1">
+        <dc:Bounds x="160" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ptz4rb_di" bpmnElement="Activity_1szoedm" isExpanded="true">
+        <dc:Bounds x="160" y="200" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19plmrz_di" bpmnElement="StartEvent_interrupting">
+        <dc:Bounds x="200" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0tnq080_di" bpmnElement="StartEvent_nonInterrupting">
+        <dc:Bounds x="262" y="282" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_18h0ja5_di" bpmnElement="BoundaryEvent_interrupting">
+        <dc:Bounds x="172" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0xogxo6_di" bpmnElement="BoundaryEvent_nonInterrupting">
+        <dc:Bounds x="212" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
