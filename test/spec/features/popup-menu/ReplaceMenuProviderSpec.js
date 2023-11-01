@@ -780,6 +780,104 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
+    describe('non-interrupting toggle', function() {
+      beforeEach(bootstrapModeler(diagramXMLReplace,{
+        modules: Object.assign(testModules, camundaModdleModule),
+        moddleExtensions: {
+          camunda: camundaPackage
+        }
+      }));
+
+      describe('start events', function() {
+
+        it('should toggle non-interrupting marker off', inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_3');
+
+          openPopup(event);
+
+          // when
+          triggerAction('toggle-non-interrupting');
+
+          openPopup(event);
+
+          var nonInterruptingEntry = queryEntry('toggle-non-interrupting');
+
+          // then
+          expect(event.businessObject.isInterrupting).to.be.true;
+          expect(domClasses(nonInterruptingEntry).has('active')).to.be.false;
+        }));
+
+
+        it('should toggle non-interrupting marker on', inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_6');
+
+          openPopup(event);
+
+          // when
+          triggerAction('toggle-non-interrupting');
+
+          openPopup(event);
+
+          var nonInterruptingEntry = queryEntry('toggle-non-interrupting');
+
+          // then
+          expect(event.businessObject.isInterrupting).to.be.false;
+          expect(domClasses(nonInterruptingEntry).has('active')).to.be.true;
+        }));
+
+      });
+
+
+      describe('boundary events', function() {
+
+        it('should toggle non-interrupting marker off', inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var event = elementRegistry.get('BoundaryEvent_1');
+
+          openPopup(event);
+
+          // when
+          triggerAction('toggle-non-interrupting');
+
+          openPopup(event);
+
+          var nonInterruptingEntry = queryEntry('toggle-non-interrupting');
+
+          // then
+          expect(event.businessObject.cancelActivity).to.be.true;
+          expect(domClasses(nonInterruptingEntry).has('active')).to.be.false;
+        }));
+
+
+        it('should toggle non-interrupting marker on', inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var event = elementRegistry.get('BoundaryEvent_2');
+
+          openPopup(event);
+
+          // when
+          triggerAction('toggle-non-interrupting');
+
+          openPopup(event);
+
+          var nonInterruptingEntry = queryEntry('toggle-non-interrupting');
+
+          // then
+          expect(event.businessObject.cancelActivity).to.be.false;
+          expect(domClasses(nonInterruptingEntry).has('active')).to.be.true;
+        }));
+
+      });
+
+    });
+
+
     describe('integration', function() {
 
       it('should toggle sequential -> undo to parallel', inject(function(elementRegistry, commandStack) {
@@ -1023,7 +1121,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
           // then
           expect(queryEntry('replace-with-none-start')).to.be.null;
-          expect(queryEntries()).to.have.length(6);
+          expect(queryBodyEntries()).to.have.length(6);
         })
       );
 
@@ -1041,7 +1139,7 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(queryEntry('replace-with-non-interrupting-message-start')).to.be.null;
           expect(queryEntry('replace-with-message-start')).to.exist;
 
-          expect(queryEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(11);
         })
       );
 
@@ -1065,9 +1163,59 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(queryEntry('replace-with-conditional-start')).to.exist;
           expect(queryEntry('replace-with-non-interrupting-conditional-start')).to.be.null;
 
-          expect(queryEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(11);
         })
       );
+
+
+      it('should include non-interrupting toggle for non interrupting start event',
+        inject(function(elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_3');
+
+          // when
+          openPopup(startEvent);
+
+          // then
+          expect(queryEntry('toggle-non-interrupting')).to.exist;
+        })
+      );
+
+
+      it('should include non-interrupting toggle for interrupting start event',
+        inject(function(elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_6');
+
+          // when
+          openPopup(startEvent);
+
+          // then
+          expect(queryEntry('toggle-non-interrupting')).to.exist;
+        })
+      );
+
+
+      it('should NOT include non-interrupting toggle for start events that must be interrupting',
+        inject(function(bpmnReplace, elementRegistry) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent_3');
+
+          var newElement = bpmnReplace.replaceElement(startEvent, {
+            type: 'bpmn:StartEvent'
+          });
+
+          // when
+          openPopup(newElement);
+
+          // then
+          expect(queryEntry('toggle-non-interrupting')).not.to.exist;
+        })
+      );
+
 
       it('should contain only start event, end event and intermediate throw event inside sub process except the current one',
         inject(function(elementRegistry) {
@@ -1083,7 +1231,7 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(queryEntry('replace-with-none-end')).to.exist;
           expect(queryEntry('replace-with-none-intermediate-throwing')).to.exist;
 
-          expect(queryEntries()).to.have.length(2);
+          expect(queryBodyEntries()).to.have.length(2);
         })
       );
 
@@ -1100,7 +1248,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // then
           expect(queryEntry('replace-with-none-intermediate-throw')).to.be.null;
 
-          expect(queryEntries()).to.have.length(12);
+          expect(queryBodyEntries()).to.have.length(12);
         })
       );
 
@@ -1117,7 +1265,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // then
           expect(queryEntry('replace-with-none-end')).to.be.null;
 
-          expect(queryEntries()).to.have.length(8);
+          expect(queryBodyEntries()).to.have.length(8);
         })
       );
 
@@ -1159,7 +1307,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(endEvent);
 
             // then
-            expect(queryEntries()).to.have.length(9);
+            expect(queryBodyEntries()).to.have.length(9);
 
             expect(queryEntry('replace-with-cancel-end')).to.exist;
           })
@@ -1176,7 +1324,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(endEvent);
 
             // then
-            expect(queryEntries()).to.have.length(9);
+            expect(queryBodyEntries()).to.have.length(9);
             expect(queryEntry('replace-with-cancel-end')).to.be.null;
           })
         );
@@ -1192,7 +1340,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(endEvent);
 
             // then
-            expect(queryEntries()).to.have.length(8);
+            expect(queryBodyEntries()).to.have.length(8);
 
             expect(queryEntry('replace-with-cancel-end')).to.be.null;
           })
@@ -1213,7 +1361,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(boundaryEvent);
 
             // then
-            expect(queryEntries()).to.have.length(13);
+            expect(queryBodyEntries()).to.have.length(13);
 
             expect(queryEntry('replace-with-cancel-boundary')).to.exist;
           })
@@ -1230,7 +1378,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(boundaryEvent);
 
             // then
-            expect(queryEntries()).to.have.length(12);
+            expect(queryBodyEntries()).to.have.length(12);
 
             expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
           })
@@ -1247,7 +1395,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(boundaryEvent);
 
             // then
-            expect(queryEntries()).to.have.length(12);
+            expect(queryBodyEntries()).to.have.length(12);
 
             expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
           })
@@ -1274,7 +1422,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // then
           expect(queryEntry('replace-with-conditional-intermediate-catch')).to.be.null;
           expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
-          expect(queryEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(11);
         })
       );
 
@@ -1291,7 +1439,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // then
           expect(queryEntry('replace-with-non-interrupting-message-intermediate-catch')).to.be.null;
           expect(queryEntry('replace-with-cancel-boundary')).to.be.null;
-          expect(queryEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(11);
         })
       );
 
@@ -1331,7 +1479,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(sequenceFlow);
 
         // then
-        expect(queryEntries()).to.have.length(1);
+        expect(queryBodyEntries()).to.have.length(1);
       }));
 
 
@@ -1344,7 +1492,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(sequenceFlow);
 
         // then
-        expect(queryEntries()).to.have.length(2);
+        expect(queryBodyEntries()).to.have.length(2);
       }));
 
 
@@ -1357,7 +1505,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(sequenceFlow);
 
         // then
-        expect(queryEntries()).to.have.length(0);
+        expect(queryBodyEntries()).to.have.length(0);
       }));
 
     });
@@ -1475,7 +1623,7 @@ describe('features/popup-menu - replace menu provider', function() {
         // then
         expect(conditionalFlowEntry).to.exist;
 
-        expect(queryEntries()).to.have.length(2);
+        expect(queryBodyEntries()).to.have.length(2);
       }));
 
 
@@ -1488,7 +1636,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(sequenceFlow);
 
         // then
-        expect(queryEntries()).to.have.length(0);
+        expect(queryBodyEntries()).to.have.length(0);
       }));
 
     });
@@ -1599,7 +1747,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(dataObjectReference);
 
         // then
-        expect(queryEntries()).to.have.length(2);
+        expect(queryBodyEntries()).to.have.length(1);
         expect(queryEntry('toggle-is-collection')).to.exist;
         expect(queryEntry('replace-with-data-store-reference')).to.exist;
         expect(queryEntry('replace-with-data-object-reference')).to.be.null;
@@ -1635,7 +1783,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(dataStoreReference);
 
         // then
-        expect(queryEntries()).to.have.length(1);
+        expect(queryBodyEntries()).to.have.length(1);
         expect(queryEntry('toggle-is-collection')).to.be.null;
         expect(queryEntry('replace-with-data-store-reference')).to.be.null;
         expect(queryEntry('replace-with-data-object-reference')).to.exist;
@@ -1671,7 +1819,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(dataStoreReferenceWithinParticipant);
 
         // then
-        expect(queryEntries()).to.have.length(1);
+        expect(queryBodyEntries()).to.have.length(1);
         expect(queryEntry('replace-with-data-object-reference')).to.exist;
       }));
 
@@ -1685,7 +1833,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(dataStoreReferenceOutsideParticipant);
 
         // then
-        expect(queryEntries()).to.have.length(0);
+        expect(queryBodyEntries()).to.have.length(0);
         expect(queryEntry('replace-with-data-object-reference')).to.be.null;
       }));
 
@@ -2485,7 +2633,7 @@ describe('features/popup-menu - replace menu provider', function() {
       openPopup(startEvent);
 
       // then
-      expect(queryEntries()).to.have.length.above(0);
+      expect(queryBodyEntries()).to.have.length.above(0);
     }));
 
 
@@ -2503,7 +2651,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(startEvent);
 
         // then
-        expect(queryEntries()).to.have.length.above(0);
+        expect(queryBodyEntries()).to.have.length.above(0);
       })
     );
 
@@ -2522,7 +2670,7 @@ describe('features/popup-menu - replace menu provider', function() {
         openPopup(startEvent);
 
         // then
-        expect(queryEntries()).to.have.length(0);
+        expect(queryBodyEntries()).to.have.length(0);
       })
     );
 
@@ -2588,10 +2736,10 @@ function queryEntry(id) {
   return domQuery('.djs-popup [data-id="' + id + '"]', container);
 }
 
-function queryEntries() {
+function queryBodyEntries() {
   var container = getMenuContainer();
 
-  return domQueryAll('.djs-popup .entry', container);
+  return domQueryAll('.djs-popup .djs-popup-body .entry', container);
 }
 
 function queryEntryLabel(id) {
