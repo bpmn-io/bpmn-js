@@ -14,6 +14,9 @@ import {
   DATA_STORE_REFERENCE_OUTLINE_PATH
 } from 'lib/features/outline/OutlineUtil';
 
+import {
+  query as domQuery
+} from 'min-dom';
 
 describe('features/outline - outline provider', function() {
   var testModules = [
@@ -118,16 +121,43 @@ describe('features/outline - outline provider', function() {
 
   describe('update', function() {
 
+    describe('should update label', function() {
+
+      var DELTA = 3;
+
+      it('should update label according to label dimentions', inject(function(elementRegistry, selection, modeling) {
+
+        // given
+        var event = elementRegistry.get('Event');
+        var externalLabel = event.label;
+
+        selection.select(externalLabel);
+        var outlineShape = domQuery('.selected .djs-outline', outlineShape);
+
+        // then
+        let bounds = outlineShape.getBoundingClientRect();
+        expect(bounds.width).to.be.closeTo(34, DELTA);
+        expect(bounds.height).to.be.closeTo(24, DELTA);
+
+        // when
+        modeling.updateLabel(externalLabel, 'fooooooooooooooo');
+
+        // then
+        bounds = outlineShape.getBoundingClientRect();
+        expect(bounds.width).to.be.closeTo(93, DELTA);
+        expect(bounds.height).to.be.closeTo(37, DELTA);
+      }));
+
+    });
+
 
     describe('should update dimensions on resize', function() {
 
-      it('sub process', inject(function(elementRegistry, outline, selection, modeling) {
+      it('sub process', inject(function(elementRegistry, outline, modeling) {
 
         // given
         var subProcess = elementRegistry.get('SubProcess');
         var outlineShape = outline.getOutline(subProcess);
-
-        selection.select(subProcess);
 
         // when
         modeling.resizeShape(subProcess, { x: 339, y: 142, width: 250, height: 250 });
@@ -139,13 +169,11 @@ describe('features/outline - outline provider', function() {
       }));
 
 
-      it('group', inject(function(elementRegistry, outline, selection, modeling) {
+      it('group', inject(function(elementRegistry, outline, modeling) {
 
         // given
         var group = elementRegistry.get('Group');
         var outlineShape = outline.getOutline(group);
-
-        selection.select(group);
 
         // when
         modeling.resizeShape(group, { x: 339, y: 142, width: 250, height: 250 });
