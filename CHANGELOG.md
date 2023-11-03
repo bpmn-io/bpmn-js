@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.1.0
+
+* `FEAT`: add toggle for non-interrupting events ([#2000](https://github.com/bpmn-io/bpmn-js/pull/2000))
+* `FEAT`: keep events non-interrupting when using `bpmnReplace` by default ([#2000](https://github.com/bpmn-io/bpmn-js/pull/2000))
+* `DEPS`: update to `diagram-js@12.7.0`
+
 ## 15.0.0
 
 * `FEAT`: align selection outline with element's shape ([#1996](https://github.com/bpmn-io/bpmn-js/issues/1996))
