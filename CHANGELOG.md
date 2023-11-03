@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.1.0 (2023-11-03)
+
+## What's Changed
+* feat(modeling): keep interrupting config when replacing elements by @marstamm in https://github.com/bpmn-io/bpmn-js/pull/2000
+
+
+**Full Changelog**: https://github.com/bpmn-io/bpmn-js/compare/v15.0.0...v15.1.0
+
 ## 15.1.0
 
 * `FEAT`: add toggle for non-interrupting events ([#2000](https://github.com/bpmn-io/bpmn-js/pull/2000))
