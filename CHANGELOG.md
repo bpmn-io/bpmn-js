@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.1.1
+
+* `FIX`: adjust selection outline to external label ([#2001](https://github.com/bpmn-io/bpmn-js/issues/2001))
+
 ## 15.1.0
 
 * `FEAT`: add toggle for non-interrupting events ([#2000](https://github.com/bpmn-io/bpmn-js/pull/2000))
