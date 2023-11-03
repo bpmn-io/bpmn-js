@@ -118,6 +118,7 @@
   "Timer Intermediate Catch Event",
   "Timer Start Event",
   "Timer Start Event (non-interrupting)",
+  "Toggle Non-Interrupting",
   "Transaction",
   "User Task",
   "correcting missing bpmnElement on {plane} to {rootElement}",
