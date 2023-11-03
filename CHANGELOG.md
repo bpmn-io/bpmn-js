@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.1.2 
+
+* `FIX`: revert selection outline removal for connections ([#2011](https://github.com/bpmn-io/bpmn-js/pull/2011))
+* `DEPS`: update to `diagram-js@12.7.1`
+
 ## 15.1.1
 
 * `FIX`: adjust selection outline to external label ([#2001](https://github.com/bpmn-io/bpmn-js/issues/2001))
