@@ -76,7 +76,7 @@
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "4.1.2",
     "chai-match": "^1.1.1",
-    "cpy": "^10.1.0",
+    "cpy": "^11.0.0",
     "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "del-cli": "^5.0.0",
