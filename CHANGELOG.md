@@ -6,7 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## 15.1.2 
+## 15.1.3
+
+* `FIX`: revert `djs-dragging` CSS class changes ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
+* `FIX`: clear context pad hover timeout on close ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
+* `DEPS`: update to `diagram-js@12.7.2`
+
+## 15.1.2
 
 * `FIX`: revert selection outline removal for connections ([#2011](https://github.com/bpmn-io/bpmn-js/pull/2011))
 * `DEPS`: update to `diagram-js@12.7.1`
