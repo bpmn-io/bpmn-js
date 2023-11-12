@@ -214,6 +214,15 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render vertical pools', function() {
+    var xml = require('../../fixtures/bpmn/draw/vertical-pools.bpmn');
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      checkErrors(result.error, result.warnings);
+    });
+  });
+
+
   it('should render pool collection marker', function() {
     var xml = require('../../fixtures/bpmn/draw/pools-with-collection-marker.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
