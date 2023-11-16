@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.1.4 (2023-11-16)
+
+## What's Changed
+* fix(outline): end event by @smbea in https://github.com/bpmn-io/bpmn-js/pull/2026
+
+
+**Full Changelog**: https://github.com/bpmn-io/bpmn-js/compare/v15.1.3...v15.1.4
+
 ## 15.1.3
 
 * `FIX`: revert `djs-dragging` CSS class changes ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
