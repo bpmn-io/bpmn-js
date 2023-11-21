@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+# 15.1.4
+
+* `FIX`: correct selection outline size for end event ([#2026](https://github.com/bpmn-io/bpmn-js/pull/2026))
+* `DEPS`: update to `diagram-js@13.8.0`
+
 ## 15.1.3
 
 * `FIX`: revert `djs-dragging` CSS class changes ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
