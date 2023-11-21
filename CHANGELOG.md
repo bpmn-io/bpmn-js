@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.2.0 
+
+* `FEAT`: remove selection outline from connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
+* `FEAT`: position context pad according to last waypoint for connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
+* `FIX`: prevent access of non-existing connection bounds ([diagram-js#824](https://github.com/bpmn-io/diagram-js/pull/824))
+* `FIX`: correct selection outline size for end event ([#2026](https://github.com/bpmn-io/bpmn-js/pull/2026))
+* `DEPS`: update to `diagram-js@13.8.0`
+
 ## 15.1.3
 
 * `FIX`: revert `djs-dragging` CSS class changes ([#2016](https://github.com/bpmn-io/bpmn-js/pull/2016))
