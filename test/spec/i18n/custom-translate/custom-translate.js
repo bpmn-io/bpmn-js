@@ -2,11 +2,11 @@ import translate from 'diagram-js/lib/i18n/translate/translate';
 
 export default function customTranslate(template, replacements) {
   if (template === 'Remove') {
-    template = 'Eliminar';
+    template = 'Entfernen';
   }
 
-  if (template === 'Activate the hand tool') {
-    template = 'Activar herramienta mano';
+  if (template === 'Activate hand tool') {
+    template = 'Hand-Tool aktivieren';
   }
 
   return translate(template, replacements);

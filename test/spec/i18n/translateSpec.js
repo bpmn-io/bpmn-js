@@ -36,7 +36,7 @@ collectTranslations ? describe.skip : describe('i18n - translate', function() {
     var handToolEntry = palette.getEntries()['hand-tool'];
 
     // then
-    expect(handToolEntry.title).to.equal('Activar herramienta mano');
+    expect(handToolEntry.title).to.equal('Hand-Tool aktivieren');
   }));
 
 
@@ -49,7 +49,7 @@ collectTranslations ? describe.skip : describe('i18n - translate', function() {
     var deleteEntry = contextPad._current.entries.delete;
 
     // then
-    expect(deleteEntry.title).to.equal('Eliminar');
+    expect(deleteEntry.title).to.equal('Entfernen');
   }));
 
 });
