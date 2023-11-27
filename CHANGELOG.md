@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.2.2
+
+* `FIX`: use correct types in BpmnRenderUtil ([#2036](https://github.com/bpmn-io/bpmn-js/pull/2036))
+
 ## 15.2.1
 
 * `DEPS`: update to `diagram-js@13.8.1`
