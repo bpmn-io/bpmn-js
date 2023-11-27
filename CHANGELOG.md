@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 15.2.1
+
+* `DEPS`: update to `diagram-js@13.8.1`
+
 ## 15.2.0 
 
 * `FEAT`: remove selection outline from connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
