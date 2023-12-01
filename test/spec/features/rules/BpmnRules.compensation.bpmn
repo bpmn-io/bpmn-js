@@ -17,16 +17,16 @@
     <bpmn2:endEvent id="EndEvent_1">
       <bpmn2:compensateEventDefinition id="_CompensateEventDefinition_5" waitForCompletion="false"/>
     </bpmn2:endEvent>
-    <bpmn2:exclusiveGateway id="Gateway"/>
-    <bpmn2:intermediateThrowEvent id="IntermediateEvent"/>
+    <bpmn2:exclusiveGateway id="Gateway" />
+    <bpmn2:intermediateThrowEvent id="IntermediateEvent" />
+    <bpmn2:subProcess id="SubProcess_2">
+      <bpmn2:startEvent id="Event_0ih2uit" />
+    </bpmn2:subProcess>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_TaskForCompensation" bpmnElement="Task">
-        <dc:Bounds height="80.0" width="100.0" x="43.0" y="99.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="CompensationBoundary">
-        <dc:Bounds height="36.0" width="36.0" x="87.0" y="161.0"/>
+        <dc:Bounds x="453" y="99" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Task_3" bpmnElement="TaskForCompensation">
         <dc:Bounds height="80.0" width="100.0" x="142.0" y="240.0"/>
@@ -60,6 +60,15 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="450.0" y="303.0"/>
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11kmncl_di" bpmnElement="SubProcess_2" isExpanded="true">
+        <dc:Bounds x="160" y="344" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ih2uit_di" bpmnElement="Event_0ih2uit">
+        <dc:Bounds x="200" y="426" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="CompensationBoundary">
+        <dc:Bounds x="497" y="161" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

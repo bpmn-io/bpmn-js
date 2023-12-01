@@ -735,6 +735,28 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'Task', {
         sequenceFlow: false,
         messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect CompensationBoundary -> SubProcess', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'SubProcess_2', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
+    it('connect CompensationBoundary -> Event SubProcess', inject(function() {
+
+      expectCanConnect('CompensationBoundary', 'SubProcess_1', {
+        sequenceFlow: false,
+        messageFlow: false,
         association: false,
         dataAssociation: false
       });

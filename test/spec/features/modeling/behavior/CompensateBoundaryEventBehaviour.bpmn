@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="5.17.0-rc.0">
+  <process id="Process_1" isExecutable="false">
+    <task id="Task_BoundaryEvent" />
+    <boundaryEvent id="Attached_Event" attachedToRef="Task_BoundaryEvent">
+      <compensateEventDefinition id="CompensateEventDefinition_1v5ffnt" />
+    </boundaryEvent>
+    <task id="Task" />
+    <task id="Task_BoundaryEvent2" />
+    <boundaryEvent id="Attached_Event2" attachedToRef="Task_BoundaryEvent2">
+      <compensateEventDefinition id="CompensateEventDefinition_0o69h2g" />
+    </boundaryEvent>
+    <task id="Task_Compensation" isForCompensation="true" />
+    <association id="Association" associationDirection="One" sourceRef="Attached_Event2" targetRef="Task_Compensation" />
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Activity_0ne36hy_di" bpmnElement="Task_BoundaryEvent">
+        <omgdc:Bounds x="200" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l16eqc_di" bpmnElement="Task">
+        <omgdc:Bounds x="360" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14r8htx" bpmnElement="Task_BoundaryEvent2">
+        <omgdc:Bounds x="210" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0asoxmo_di" bpmnElement="Task_Compensation">
+        <omgdc:Bounds x="320" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
+        <di:waypoint x="250" y="368" />
+        <di:waypoint x="250" y="430" />
+        <di:waypoint x="320" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_12wgrmv_di" bpmnElement="Attached_Event">
+        <omgdc:Bounds x="222" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0lrjsju" bpmnElement="Attached_Event2">
+        <omgdc:Bounds x="232" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
