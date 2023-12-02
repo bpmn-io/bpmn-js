@@ -1,20 +1,18 @@
 var fs = require('fs');
 var path = require('path');
 
-var {
-  uniqueBy,
-  sortBy
-} = require('min-dash');
-
+var translationsPath = path.join(__dirname, '../../docs/translations.json');
 
 function TranslationReporter() {
-  var translationsFile = path.join(__dirname, '../../docs/translations.json');
-
   var translations = [];
 
+  if (fs.existsSync(translationsPath)) {
+    var file = fs.readFileSync(translationsPath, 'utf8');
+
+    translations = JSON.parse(file);
+  }
 
   this.onBrowserLog = function(browser, log, type) {
-
     if (log === undefined || typeof log !== 'string') {
       return;
     }
@@ -24,22 +22,21 @@ function TranslationReporter() {
     }
 
     try {
-      var obj = JSON.parse(log);
+      log = JSON.parse(log);
 
-      if (obj.type === 'translations') {
-        translations.push(obj.msg);
+      if (log.type === 'translations' && !translations.includes(log.template)) {
+        translations = [
+          ...translations,
+          log.template
+        ];
       }
     } catch (e) {
       return;
     }
   };
 
-
   this.onRunComplete = function() {
-    translations = uniqueBy(function(e) { return e; }, translations);
-    translations = sortBy(translations, function(e) { return e; });
-
-    fs.writeFileSync(translationsFile, JSON.stringify(translations, null, 2));
+    fs.writeFileSync(translationsPath, JSON.stringify(translations, null, 2));
   };
 }
 

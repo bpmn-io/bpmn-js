@@ -15,7 +15,6 @@ import {
 import {
   setBpmnJS,
   clearBpmnJS,
-  collectTranslations,
   enableLogging
 } from 'test/TestHelper';
 
@@ -174,60 +173,7 @@ describe('Modeler', function() {
   });
 
 
-  collectTranslations && describe('translate support', function() {
-
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-
-    it('should translate errors', () => {
-
-      return createModeler(xml).then(function(result) {
-
-        var modeler = result.modeler;
-        var err = result.error;
-
-        if (err) {
-          throw err;
-        }
-
-        // given
-        var translate = modeler.get('translate');
-
-        var errors = [
-          'already rendered {element}',
-          'correcting missing bpmnElement on {plane} to {rootElement}',
-          'diagram not part of bpmn:Definitions',
-          'element {element} referenced by {referenced}#{property} not yet drawn',
-          'element required',
-          'failed to import {element}',
-          'missing {semantic}#attachedToRef',
-          'more than {count} child lanes',
-          'multiple DI elements defined for {element}',
-          'no bpmnElement referenced in {element}',
-          'no diagram to display',
-          'no parent for {element} in {parent}',
-          'no plane for {element}',
-          'no process or collaboration to display',
-          'no shape type specified',
-          'out of bounds release',
-          'unknown di {di} for element {semantic}',
-          'unrecognized flowElement {element} in context {context}',
-          'unsupported bpmnElement for {plane}: {rootElement}',
-          '{semantic}#{side} Ref not specified'
-        ];
-
-        // assume
-        expect(translate).to.exist;
-
-        // then
-        errors.forEach(translate);
-      });
-
-    });
-
-  });
-
-
-  !collectTranslations && describe('translate support', function() {
+  describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
@@ -249,10 +195,10 @@ describe('Modeler', function() {
         expect(translate).to.exist;
 
         // when
-        var interpolatedString = translate('HELLO {you}!', { you: 'WALT' });
+        var interpolatedString = translate('failed to import {element}', { element: '<bpmn:Task />' });
 
         // then
-        expect(interpolatedString).to.eql('HELLO WALT!');
+        expect(interpolatedString).to.eql('failed to import <bpmn:Task />');
       });
 
     });

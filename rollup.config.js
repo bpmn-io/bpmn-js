@@ -13,6 +13,8 @@ import {
 
 import pkg from './package.json';
 
+import translations from './rollup-plugin-translations';
+
 const outputDir = 'dist';
 
 const distros = [
@@ -57,6 +59,7 @@ const configs = distros.reduce(function(configs, distro) {
         format: 'umd'
       },
       plugins: pgl([
+        translations(),
         banner(output, true),
         terser({
           output: {
