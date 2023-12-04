@@ -6,6 +6,32 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [16.0.0](https://github.com/bpmn-io/bpmn-js/compare/v15.2.2...v16.0.0) (2023-12-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to diagram-js@13.0.0
+* 
+
+### deps
+
+* update to diagram-js@13.0.0 ([afb05ea](https://github.com/bpmn-io/bpmn-js/commit/afb05ea0037fb67b16ece019e514b68e0d017e63))
+
+
+### Features
+
+* **bpmn-renderer:** render vertical pools and lanes ([c93b2cf](https://github.com/bpmn-io/bpmn-js/commit/c93b2cfa1020e5d939cbacb592361083a4c19438))
+* **context-pad:** sentence case titles ([1c49a1e](https://github.com/bpmn-io/bpmn-js/commit/1c49a1e8d397013537f43ce9772b2890f0f2e13d))
+* edit vertical pool/lane labels ([29baeb1](https://github.com/bpmn-io/bpmn-js/commit/29baeb19dd31c4662d5aa788a420a6a9ee29ca0d))
+* **popup-menu:** sentence case titles and labels ([6b9ab1b](https://github.com/bpmn-io/bpmn-js/commit/6b9ab1b75b350e0fd1faf74b6b2fca751d5318e9)), closes [#2023](https://github.com/bpmn-io/bpmn-js/issues/2023)
+* update translations ([c5aea1f](https://github.com/bpmn-io/bpmn-js/commit/c5aea1f604197f3737bf7d82ea91387a209a95b4))
+
+
+### Bug Fixes
+
+* ensure all error translations are collected ([72fcec9](https://github.com/bpmn-io/bpmn-js/commit/72fcec91dc519ce8b4b3c564f239fae372fc7ec0))
+
 ## 15.2.2
 
 * `FIX`: use correct types in BpmnRenderUtil ([#2036](https://github.com/bpmn-io/bpmn-js/pull/2036))
