@@ -19,11 +19,8 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          target-branch: master
           release-type: node
-          default-branch: master
-          pull-request-title-pattern: 'chore: release v${version}'
-          changelog-types: '[{"type":"feat","section":"Features","hidden":false},{"type":"fix","section":"Bug Fixes","hidden":false},{"type":"deps","section":"Dependency Updates","hidden":false}]'
-          changelog-notes-type: github
 
   publish:
     needs: release-please
