@@ -6,6 +6,18 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.0.0
+
+* `FEAT`: render vertical pools and lanes ([#2024](https://github.com/bpmn-io/bpmn-js/pull/2024))
+* `FEAT`: sentence case titles and labels ([#2023](https://github.com/bpmn-io/bpmn-js/issues/2023))
+* `FIX`: ensure all error translations are collected ([#2040](https://github.com/bpmn-io/bpmn-js/pull/2040))
+* `DEPS` update to diagram-js@13.0.0
+
+### Breaking Changes
+
+* Major updates to [diagram-js@13](https://github.com/bpmn-io/diagram-js/blob/develop/CHANGELOG.md#1300) and [didi@10](https://github.com/nikku/didi/blob/main/CHANGELOG.md#1000). Make sure to check out the linked changelog updates.
+* Multiple translation labels has been updated to sentence case. If you rely on the old casing, you need to update your translations.
+
 ## 15.2.2
 
 * `FIX`: use correct types in BpmnRenderUtil ([#2036](https://github.com/bpmn-io/bpmn-js/pull/2036))
@@ -14,7 +26,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `DEPS`: update to `diagram-js@13.8.1`
 
-## 15.2.0 
+## 15.2.0
 
 * `FEAT`: remove selection outline from connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
 * `FEAT`: position context pad according to last waypoint for connections ([diagram-js#826](https://github.com/bpmn-io/diagram-js/pull/826))
