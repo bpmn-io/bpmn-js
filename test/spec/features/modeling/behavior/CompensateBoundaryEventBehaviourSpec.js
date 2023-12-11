@@ -7,6 +7,7 @@ import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
 
 import diagramXML from './CompensateBoundaryEventBehaviour.bpmn';
+import { is } from '../../../../../lib/util/ModelUtil';
 
 
 describe('features/modeling/behavior - compensation boundary event', function() {
@@ -57,6 +58,24 @@ describe('features/modeling/behavior - compensation boundary event', function() 
 
       // then
       expect(taskShape.businessObject.isForCompensation).to.be.true;
+    }));
+
+
+    it('on replace', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var event = elementRegistry.get('NoneEvent');
+      var task = elementRegistry.get('NoneActivity');
+
+      // when
+      bpmnReplace.replaceElement(event, {
+        type: 'bpmn:BoundaryEvent' ,
+        eventDefinitionType: 'bpmn:CompensateEventDefinition'
+      });
+
+      // then
+      expect(task.businessObject.isForCompensation).to.be.true;
+      expect(is(task.incoming[0], 'bpmn:Association')).to.be.true;
     }));
   });
 
@@ -111,5 +130,40 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(oldShape.businessObject.isForCompensation).to.be.false;
     }));
 
+
+    it('on replace', inject(function(bpmnReplace, elementRegistry) {
+
+      // given
+      var event = elementRegistry.get('Attached_Event2');
+      var task = elementRegistry.get('Task_Compensation');
+
+      // when
+      bpmnReplace.replaceElement(event, { type: 'bpmn:BoundaryEvent', eventDefinitionType: 'bpmn:MessageEventDefinition' });
+
+      // then
+      expect(task.businessObject.isForCompensation).to.be.false;
+      expect(is(task.incoming[0], 'bpmn:SequenceFlow')).to.be.true;
+    }));
+
   });
+
+
+  it('should remove illegal connections', inject(function(modeling, elementRegistry) {
+
+    // given
+    var task = elementRegistry.get('IllegalConnections');
+    var event = elementRegistry.get('Attached_Event');
+
+    expect(task.incoming).to.have.length(1);
+    expect(task.outgoing).to.have.length(1);
+
+    // when
+    modeling.connect(event, task);
+
+    // then
+    expect(task.incoming).to.have.length(1);
+    expect(task.outgoing).to.have.length(0);
+
+  }));
+
 });
