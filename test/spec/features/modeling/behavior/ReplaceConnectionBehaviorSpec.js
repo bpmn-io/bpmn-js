@@ -32,8 +32,15 @@ function getConnection(source, target, connectionOrType) {
   });
 }
 
-function expectConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).to.exist;
+function expectConnected(source, target, connectionOrType, attrs) {
+  var connection = getConnection(source, target, connectionOrType);
+  expect(connection).to.exist;
+
+  if (attrs) {
+    Object.keys(attrs).forEach(function(key) {
+      expect(connection.businessObject[key]).to.eql(attrs[key]);
+    });
+  }
 }
 
 function expectNotConnected(source, target, connectionOrType) {
@@ -299,6 +306,38 @@ describe('features/modeling - replace connection', function() {
       }));
 
     });
+
+  });
+
+
+  describe('should replace SequenceFlow <> Association', function() {
+
+    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, {
+      modules: testModules
+    }));
+
+    var element;
+
+    beforeEach(inject(function(elementRegistry) {
+      element = function(id) {
+        return elementRegistry.get(id);
+      };
+    }));
+
+
+    it('after replacing', inject(function(bpmnReplace) {
+
+      // given
+      var boundary = element('BoundaryEvent');
+
+      // when
+      bpmnReplace.replaceElement(boundary, { type: 'bpmn:BoundaryEvent', eventDefinitionType: 'bpmn:CompensateEventDefinition' });
+
+      // then
+      expectConnected(element('BoundaryEvent'), element('Task_5'), 'bpmn:Association', { associationDirection: 'One' });
+    }));
 
   });
 
