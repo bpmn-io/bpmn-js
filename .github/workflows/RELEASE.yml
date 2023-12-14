@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - master
+      - main
       - develop
 name: release
 jobs:
@@ -19,7 +19,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-branch: master
+          target-branch: main
           release-type: node
 
   publish:
