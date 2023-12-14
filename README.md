@@ -88,10 +88,6 @@ bpmn-js builds on top of a few powerful tools:
 * [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
 * [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
 
-## Code of Conduct
-
-By participating to this project, please uphold to our [Code of Conduct](.github/CODE_OF_CONDUCT.md).
-
 ## License
 
 Use under the terms of the [bpmn.io license](http://bpmn.io/license).
