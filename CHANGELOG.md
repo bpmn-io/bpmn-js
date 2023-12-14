@@ -857,7 +857,7 @@ Copy and paste as well as create is completely reworked:
 
 ### Breaking Changes
 
-* `CHORE`: bump to [`diagram-js@4.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#400)
+* `CHORE`: bump to [`diagram-js@4.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#400)
 
 ## 3.5.0
 
@@ -893,7 +893,7 @@ _Republish of `v3.4.0` without `.git` folder._
 * `FEAT`: consistently layout connection on reconnect start and end ([#971](https://github.com/bpmn-io/bpmn-js/pull/971))
 * `FEAT`: layout connection on element removal ([#989](https://github.com/bpmn-io/bpmn-js/issues/989))
 * `FIX`: properly crop sequence flow ends on undo/redo ([#940](https://github.com/bpmn-io/bpmn-js/issues/940))
-* `CHORE`: bump to [`diagram-js@3.3.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#330)
+* `CHORE`: bump to [`diagram-js@3.3.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#330)
 
 ## 3.3.1
 
@@ -955,7 +955,7 @@ _Republish of `v3.4.0` without `.git` folder._
 * `FEAT`: require `Ctrl/Cmd` to be pressed as a modifier key to move the canvas via keyboard errors
 * `FEAT`: auto-expand elements when children resize ([#786](https://github.com/bpmn-io/bpmn-js/issues/786))
 * `CHORE`: bind editor actions and keyboard shortcuts for explicitly added features only ([#887](https://github.com/bpmn-io/bpmn-js/pull/887))
-* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#300)
+* `CHORE`: update to [`diagram-js@3.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#300)
 * `FIX`: disallow attaching of `BoundaryEvent` to a `ReceiveTask` following an `EventBasedGateway` ([#874](https://github.com/bpmn-io/bpmn-js/issues/874))
 * `FIX`: fix date in license ([#882](https://github.com/bpmn-io/bpmn-js/pull/882))
 
@@ -1029,7 +1029,7 @@ _Republish of `v2.0.0` due to registry error._
 ## 2.0.0
 
 * `FEAT`: allow data store to be modeled between participants ([#483](https://github.com/bpmn-io/bpmn-js/issues/483))
-* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/master/CHANGELOG.md#200)
+* `CHORE`: update to [`diagram-js@2.0.0`](https://github.com/bpmn-io/diagram-js/blob/main/CHANGELOG.md#200)
 * `FIX`: correctly handle missing `bpmndi:Label` bounds during model updating ([#794](https://github.com/bpmn-io/bpmn-js/issues/794))
 
 ### Breaking Changes
@@ -1038,7 +1038,7 @@ _Republish of `v2.0.0` due to registry error._
 
 ## 1.3.3
 
-* `CHORE`: update to [`bpmn-moddle@5.1.5`](https://github.com/bpmn-io/bpmn-moddle/blob/master/CHANGELOG.md#515)
+* `CHORE`: update to [`bpmn-moddle@5.1.5`](https://github.com/bpmn-io/bpmn-moddle/blob/main/CHANGELOG.md#515)
 
 ## 1.3.2
 
