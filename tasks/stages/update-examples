@@ -22,6 +22,9 @@ echo "Updating toolkit version to $TOOLKIT_VERSION"
 sed -i -E "s#(\"bpmn-js\": )\"[^\"]+\"#\1\"^$TOOLKIT_VERSION\"#" **/package.json
 sed -i -E "s#/bpmn-js@[^/]+/#/bpmn-js@$TOOLKIT_VERSION/#" **/*.{html,md}
 
+# install dependencies (fixes up lock file)
+npm install
+
 if [[ "x$SKIP_COMMIT" = "x" ]]; then
 
   git config user.email "$BPMN_IO_EMAIL"
