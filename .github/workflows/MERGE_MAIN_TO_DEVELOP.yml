@@ -2,10 +2,10 @@ name: MERGE_MASTER_TO_DEVELOP
 on:
   push:
     branches:
-    - "master"
+    - "main"
 
 jobs:
-  Merge_master_to_develop:
+  Merge_main_to_develop:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -16,11 +16,11 @@ jobs:
       with:
         ref: develop
         fetch-depth: 0
-    - name: Merge master to develop and push
+    - name: Merge main to develop and push
       run: |
         git config user.name '${{ secrets.BPMN_IO_USERNAME }}'
         git config user.email '${{ secrets.BPMN_IO_EMAIL }}'
-        git merge -m 'Merge master to develop' --no-edit origin/master
+        git merge -m 'Merge main to develop' --no-edit origin/main
         git push
 
     - name: Notify failure on Slack
