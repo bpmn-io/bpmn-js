@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.1.0
+
+* `DEPS`: update to `diagram-js@13.4.0`
+* `DEPS`: update to `diagram-js-direct-editing@2.1.1`
+* `DEPS`: drop unused `object-refs` dependency
+
 ## 16.0.0
 
 * `FEAT`: render vertical pools and lanes ([#2024](https://github.com/bpmn-io/bpmn-js/pull/2024))
