@@ -12,7 +12,7 @@ import { is } from '../../../../../lib/util/ModelUtil';
 
 describe('features/modeling/behavior - compensation boundary event', function() {
 
-  var testModules = [ coreModule, modelingModule ];
+  const testModules = [ coreModule, modelingModule ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -22,11 +22,11 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on append', inject(function(elementFactory, modeling, elementRegistry) {
 
       // given
-      var boundaryEventShape = elementRegistry.get('Attached_Event');
-      var taskShape = elementFactory.createShape({ type: 'bpmn:Task' });
+      const boundaryEventShape = elementRegistry.get('Attached_Event');
+      const taskShape = elementFactory.createShape({ type: 'bpmn:Task' });
 
       // when
-      var task = modeling.appendShape(boundaryEventShape, taskShape, { x: 100, y: 100 });
+      const task = modeling.appendShape(boundaryEventShape, taskShape, { x: 100, y: 100 });
 
       // then
       expect(task.businessObject.isForCompensation).to.be.true;
@@ -36,8 +36,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on connect', inject(function(modeling, elementRegistry) {
 
       // given
-      var boundaryEventShape = elementRegistry.get('Attached_Event');
-      var taskShape = elementRegistry.get('Task');
+      const boundaryEventShape = elementRegistry.get('Attached_Event');
+      const taskShape = elementRegistry.get('Task');
 
       // when
       modeling.connect(boundaryEventShape, taskShape);
@@ -50,8 +50,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on reconnect', inject(function(modeling, elementRegistry) {
 
       // given
-      var taskShape = elementRegistry.get('Task');
-      var connection = elementRegistry.get('Association');
+      const taskShape = elementRegistry.get('Task');
+      const connection = elementRegistry.get('Association');
 
       // when
       modeling.reconnectEnd(connection, taskShape, { x: 100, y: 100 });
@@ -64,8 +64,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on replace', inject(function(bpmnReplace, elementRegistry) {
 
       // given
-      var event = elementRegistry.get('NoneEvent');
-      var task = elementRegistry.get('NoneActivity');
+      const event = elementRegistry.get('NoneEvent');
+      const task = elementRegistry.get('NoneActivity');
 
       // when
       bpmnReplace.replaceElement(event, {
@@ -85,8 +85,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on remove element', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_Compensation');
-      var boundaryEventShape = elementRegistry.get('Attached_Event2');
+      const taskShape = elementRegistry.get('Task_Compensation');
+      const boundaryEventShape = elementRegistry.get('Attached_Event2');
 
       // then
       expect(taskShape.businessObject.isForCompensation).to.be.true;
@@ -102,8 +102,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on delete connection', inject(function(elementRegistry, modeling) {
 
       // given
-      var taskShape = elementRegistry.get('Task_Compensation');
-      var connection = elementRegistry.get('Association');
+      const taskShape = elementRegistry.get('Task_Compensation');
+      const connection = elementRegistry.get('Association');
 
       // then
       expect(taskShape.businessObject.isForCompensation).to.be.true;
@@ -119,9 +119,9 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on reconnect', inject(function(modeling, elementRegistry) {
 
       // given
-      var oldShape = elementRegistry.get('Task_Compensation');
-      var taskShape = elementRegistry.get('Task');
-      var connection = elementRegistry.get('Association');
+      const oldShape = elementRegistry.get('Task_Compensation');
+      const taskShape = elementRegistry.get('Task');
+      const connection = elementRegistry.get('Association');
 
       // when
       modeling.reconnectEnd(connection, taskShape, { x: 100, y: 100 });
@@ -134,8 +134,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on replace', inject(function(bpmnReplace, elementRegistry) {
 
       // given
-      var event = elementRegistry.get('Attached_Event2');
-      var task = elementRegistry.get('Task_Compensation');
+      const event = elementRegistry.get('Attached_Event2');
+      const task = elementRegistry.get('Task_Compensation');
 
       // when
       bpmnReplace.replaceElement(event, { type: 'bpmn:BoundaryEvent', eventDefinitionType: 'bpmn:MessageEventDefinition' });
@@ -151,8 +151,8 @@ describe('features/modeling/behavior - compensation boundary event', function() 
   it('should remove illegal connections', inject(function(modeling, elementRegistry) {
 
     // given
-    var task = elementRegistry.get('IllegalConnections');
-    var event = elementRegistry.get('Attached_Event');
+    const task = elementRegistry.get('IllegalConnections');
+    const event = elementRegistry.get('Attached_Event');
 
     expect(task.incoming).to.have.length(1);
     expect(task.outgoing).to.have.length(1);
@@ -163,7 +163,6 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     // then
     expect(task.incoming).to.have.length(1);
     expect(task.outgoing).to.have.length(0);
-
   }));
 
 });
