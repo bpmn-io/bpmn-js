@@ -822,6 +822,16 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     }));
 
+
+    it('connect CompensationBoundary -> TaskInSubprocess', function() {
+
+      expectCanConnect('CompensationBoundary', 'TaskInSubprocess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: false,
+        dataAssociation: false
+      });
+    });
   });
 
 
