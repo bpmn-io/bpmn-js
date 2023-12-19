@@ -37,7 +37,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
 
       // given
       const boundaryEventShape = elementRegistry.get('Attached_Event');
-      const taskShape = elementRegistry.get('Task');
+      const taskShape = elementRegistry.get('AnotherTask');
 
       // when
       modeling.connect(boundaryEventShape, taskShape);
@@ -50,7 +50,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     it('on reconnect', inject(function(modeling, elementRegistry) {
 
       // given
-      const taskShape = elementRegistry.get('Task');
+      const taskShape = elementRegistry.get('AnotherTask');
       const connection = elementRegistry.get('Association');
 
       // when

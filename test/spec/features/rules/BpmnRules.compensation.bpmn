@@ -23,6 +23,9 @@
       <bpmn2:startEvent id="Event_0ih2uit" />
       <bpmn2:task id="TaskInSubprocess" />
     </bpmn2:subProcess>
+    <bpmn2:task id="NoneTask" />
+    <bpmn2:task id="TaskWithBoundary" />
+    <bpmn2:boundaryEvent id="Event_0vwtzr3" attachedToRef="TaskWithBoundary" />
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -37,6 +40,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="210" y="162" width="0" height="0" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_04z4f93_di" bpmnElement="TaskWithBoundary">
+        <dc:Bounds x="570" y="369" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_SubProcess_2" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds x="142" y="369" width="200" height="150" />
@@ -71,8 +77,14 @@
       <bpmndi:BPMNShape id="Activity_1h7q4en_di" bpmnElement="TaskInSubprocess">
         <dc:Bounds x="360" y="404" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07nmwoh_di" bpmnElement="NoneTask">
+        <dc:Bounds x="570" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_BoundaryEvent_2" bpmnElement="CompensationBoundary">
         <dc:Bounds x="497" y="161" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iz5azc_di" bpmnElement="Event_0vwtzr3">
+        <dc:Bounds x="602" y="431" width="36" height="36" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

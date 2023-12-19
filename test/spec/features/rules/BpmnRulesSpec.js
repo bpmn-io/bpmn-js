@@ -730,9 +730,9 @@ describe('features/modeling/rules - BpmnRules', function() {
     beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
 
-    it('connect CompensationBoundary -> Task', inject(function() {
+    it('connect CompensationBoundary -> NoneTask', inject(function() {
 
-      expectCanConnect('CompensationBoundary', 'Task', {
+      expectCanConnect('CompensationBoundary', 'NoneTask', {
         sequenceFlow: false,
         messageFlow: false,
         association: true,
@@ -826,6 +826,28 @@ describe('features/modeling/rules - BpmnRules', function() {
     it('connect CompensationBoundary -> TaskInSubprocess', function() {
 
       expectCanConnect('CompensationBoundary', 'TaskInSubprocess', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: false,
+        dataAssociation: false
+      });
+    });
+
+
+    it('connect CompensationBoundary -> Host (Task)', function() {
+
+      expectCanConnect('CompensationBoundary', 'Task', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: false,
+        dataAssociation: false
+      });
+    });
+
+
+    it('connect CompensationBoundary -> TaskWithBoundary', function() {
+
+      expectCanConnect('CompensationBoundary', 'TaskWithBoundary', {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
