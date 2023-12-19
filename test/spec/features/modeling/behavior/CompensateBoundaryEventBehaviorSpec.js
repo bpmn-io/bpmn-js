@@ -5,9 +5,9 @@ import {
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';
+import { is } from 'lib/util/ModelUtil';
 
-import diagramXML from './CompensateBoundaryEventBehaviour.bpmn';
-import { is } from '../../../../../lib/util/ModelUtil';
+import diagramXML from './CompensateBoundaryEventBehavior.bpmn';
 
 
 describe('features/modeling/behavior - compensation boundary event', function() {
@@ -148,25 +148,62 @@ describe('features/modeling/behavior - compensation boundary event', function() 
   });
 
 
-  it('should remove illegal connections', inject(function(modeling, elementRegistry) {
+  describe('remove connections', function() {
 
-    // given
-    const task = elementRegistry.get('IllegalConnections');
-    const event = elementRegistry.get('Attached_Event');
+    it('should remove illegal connections on connect', inject(function(modeling, elementRegistry) {
 
-    expect(task.incoming).to.have.length(1);
-    expect(task.outgoing).to.have.length(1);
+      // given
+      const task = elementRegistry.get('IllegalConnections');
+      const event = elementRegistry.get('Attached_Event');
 
-    // when
-    modeling.connect(event, task);
+      expect(task.incoming).to.have.length(1);
+      expect(task.outgoing).to.have.length(1);
 
-    // then
-    expect(task.incoming).to.have.length(1);
-    expect(task.outgoing).to.have.length(0);
-  }));
+      // when
+      modeling.connect(event, task);
+
+      // then
+      expect(task.incoming).to.have.length(1);
+      expect(task.outgoing).to.have.length(0);
+    }));
 
 
-  it('should NOT add `isForCompensation` when there are more than 1 candidate activities', inject(
+    it('should remove illegal connections on reconnect', inject(function(modeling, elementRegistry) {
+
+      // given
+      const task = elementRegistry.get('IllegalConnections');
+      const connection = elementRegistry.get('Association');
+
+      // when
+      modeling.reconnectEnd(connection, task, { x: 100, y: 100 });
+
+      // then
+      expect(task.incoming).to.have.length(1);
+      expect(task.outgoing).to.have.length(0);
+    }));
+
+
+    it('should remove existing compensation association when new one is created', inject(
+      function(modeling, elementRegistry) {
+
+        // given
+        const task = elementRegistry.get('AnotherTask');
+        const event = elementRegistry.get('Attached_Event2');
+
+        // when
+        modeling.connect(event, task);
+
+        // then
+        expect(task.incoming).to.have.length(1);
+        expect(event.outgoing).to.have.length(1);
+
+        expect(task.incoming[0]).to.eql(event.outgoing[0]);
+      }
+    ));
+  });
+
+
+  it('should add `isForCompensation` to exactly 1 candidate activity on replace', inject(
     function(bpmnReplace, elementRegistry) {
 
       // given
@@ -180,8 +217,14 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       });
 
       // then
-      expect(event.outgoing).to.be.empty;
-      for (const task of tasks) {
+      expect(event.outgoing).to.have.lengthOf(1);
+
+      const target = event.outgoing[0].target;
+      expect(target.businessObject.isForCompensation).to.be.true;
+
+      const otherTasks = tasks.filter(task => task !== target);
+
+      for (const task of otherTasks) {
         expect(task.businessObject.isForCompensation).to.be.false;
       }
     })

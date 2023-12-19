@@ -26,10 +26,10 @@
       <incoming>Flow_0ma72c1</incoming>
     </task>
     <sequenceFlow id="Flow_0ma72c1" sourceRef="IllegalConnections" targetRef="Activity_1rlhhtg" />
-    <task id="Activity_0kxxkvc">
+    <task id="AnotherTask">
       <outgoing>Flow_1czca1o</outgoing>
     </task>
-    <sequenceFlow id="Flow_1czca1o" sourceRef="Activity_0kxxkvc" targetRef="IllegalConnections" />
+    <sequenceFlow id="Flow_1czca1o" sourceRef="AnotherTask" targetRef="IllegalConnections" />
     <task id="Activity_0ibho72" />
     <boundaryEvent id="MultiOutgoing" attachedToRef="Activity_0ibho72">
       <outgoing>Flow_1t3tgme</outgoing>
@@ -68,7 +68,7 @@
       <bpmndi:BPMNShape id="Activity_1rlhhtg_di" bpmnElement="Activity_1rlhhtg">
         <omgdc:Bounds x="510" y="510" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0kxxkvc_di" bpmnElement="Activity_0kxxkvc">
+      <bpmndi:BPMNShape id="Activity_0kxxkvc_di" bpmnElement="AnotherTask">
         <omgdc:Bounds x="220" y="510" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0ibho72_di" bpmnElement="Activity_0ibho72">
@@ -80,6 +80,9 @@
       <bpmndi:BPMNShape id="Activity_149asug_di" bpmnElement="Activity_149asug">
         <omgdc:Bounds x="340" y="880" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0t975p5_di" bpmnElement="MultiOutgoing">
+        <omgdc:Bounds x="252" y="712" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1vbtjp9_di" bpmnElement="NoneEvent">
         <omgdc:Bounds x="382" y="142" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -88,9 +91,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12wgrmv_di" bpmnElement="Attached_Event">
         <omgdc:Bounds x="222" y="142" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0t975p5_di" bpmnElement="MultiOutgoing">
-        <omgdc:Bounds x="252" y="712" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0aguggf_di" bpmnElement="NoneFlow">
         <di:waypoint x="400" y="178" />
@@ -105,11 +105,6 @@
         <di:waypoint x="320" y="550" />
         <di:waypoint x="360" y="550" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
-        <di:waypoint x="250" y="368" />
-        <di:waypoint x="250" y="430" />
-        <di:waypoint x="320" y="430" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1t3tgme_di" bpmnElement="Flow_1t3tgme">
         <di:waypoint x="270" y="748" />
         <di:waypoint x="270" y="810" />
@@ -119,6 +114,11 @@
         <di:waypoint x="270" y="748" />
         <di:waypoint x="270" y="920" />
         <di:waypoint x="340" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
+        <di:waypoint x="250" y="368" />
+        <di:waypoint x="250" y="430" />
+        <di:waypoint x="320" y="430" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
