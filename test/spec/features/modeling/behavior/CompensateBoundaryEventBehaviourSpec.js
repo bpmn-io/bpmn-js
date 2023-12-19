@@ -165,4 +165,25 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     expect(task.outgoing).to.have.length(0);
   }));
 
+
+  it('should NOT add `isForCompensation` when there are more than 1 candidate activities', inject(
+    function(bpmnReplace, elementRegistry) {
+
+      // given
+      let event = elementRegistry.get('MultiOutgoing');
+      const tasks = event.outgoing.map(flow => flow.target);
+
+      // when
+      event = bpmnReplace.replaceElement(event, {
+        type: 'bpmn:BoundaryEvent' ,
+        eventDefinitionType: 'bpmn:CompensateEventDefinition'
+      });
+
+      // then
+      expect(event.outgoing).to.be.empty;
+      for (const task of tasks) {
+        expect(task.businessObject.isForCompensation).to.be.false;
+      }
+    })
+  );
 });
