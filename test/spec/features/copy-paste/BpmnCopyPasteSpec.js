@@ -969,6 +969,31 @@ describe('features/copy-paste', function() {
 
   });
 
+
+  describe('rules', function() {
+
+    beforeEach(bootstrapModeler(collaborationMultipleXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    it('should allow copying message flow with parent participants of source and target', inject(function(elementRegistry) {
+
+      // when
+      var tree = copy([ 'IntermediateThrowEvent_1', 'Task_2', 'MessageFlow_1' ]);
+
+      console.log(tree, keys(tree));
+
+      // then
+      expect(keys(tree)).to.have.length(1);
+      expect(getAllElementsInTree(tree, 0)).to.have.length(2);
+    }));
+
+  });
+
 });
 
 
