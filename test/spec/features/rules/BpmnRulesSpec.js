@@ -850,7 +850,7 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'TaskWithBoundary', {
         sequenceFlow: false,
         messageFlow: false,
-        association: false,
+        association: true,
         dataAssociation: false
       });
     });

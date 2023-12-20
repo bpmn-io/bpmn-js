@@ -124,7 +124,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       const connection = elementRegistry.get('Association');
 
       // when
-      modeling.reconnectEnd(connection, taskShape, { x: 100, y: 100 });
+      modeling.reconnectEnd(connection, taskShape, { x: taskShape.x, y: taskShape.y });
 
       // then
       expect(oldShape.businessObject.isForCompensation).to.be.false;
@@ -200,6 +200,70 @@ describe('features/modeling/behavior - compensation boundary event', function() 
         expect(task.incoming[0]).to.eql(event.outgoing[0]);
       }
     ));
+
+
+    it('should remove association when no longer for compensation', inject(
+      function(bpmnReplace, elementRegistry) {
+
+        // given
+        let event = elementRegistry.get('ReplacedEvent'),
+            compensationActivity = event.outgoing[0].target;
+
+        // when
+        event = bpmnReplace.replaceElement(event, {
+          type: 'bpmn:BoundaryEvent' ,
+          eventDefinitionType: 'bpmn:MessageEventDefinition'
+        });
+
+        // then
+        expect(compensationActivity.incoming).to.have.lengthOf(1);
+        expect(compensationActivity.incoming[0].source).to.eql(event);
+      }
+    ));
+  });
+
+
+  describe('remove attachments', function() {
+
+    it('should remove element\'s attachments', inject(function(elementRegistry, modeling) {
+
+      // given
+      const event = elementRegistry.get('Attached_Event'),
+            task = elementRegistry.get('Task');
+
+      // when
+      modeling.connect(event, task);
+
+      // then
+      expect(task.attachers).to.be.empty;
+      expect(task.businessObject.isForCompensation).to.be.true;
+    }));
+
+
+    it('should NOT remove attachments of non-compensation activity', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      let event = elementRegistry.get('MultiBoundary'),
+          tasks = event.outgoing.map(({ target }) => target);
+
+
+      // when
+      event = bpmnReplace.replaceElement(event, {
+        type: 'bpmn:BoundaryEvent' ,
+        eventDefinitionType: 'bpmn:CompensateEventDefinition'
+      });
+
+      // then
+      expect(event.outgoing).to.have.lengthOf(1);
+
+      const compensationAcivity = event.outgoing[0].target;
+      expect(compensationAcivity.businessObject.isForCompensation).to.be.true;
+
+      for (const task of tasks.filter(task => task !== compensationAcivity)) {
+        expect(task.attachers).to.have.lengthOf(1);
+        expect(task.businessObject.isForCompensation).to.be.false;
+      }
+    }));
   });
 
 
@@ -229,4 +293,44 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       }
     })
   );
+
+
+  it('should NOT break when there are no outgoing connections (to compensation)', inject(
+    function(elementRegistry, bpmnReplace) {
+
+      // given
+      const event = elementRegistry.get('NoneBoundary');
+
+      // when
+      const action = () => {
+        bpmnReplace.replaceElement(event, {
+          type: 'bpmn:BoundaryEvent' ,
+          eventDefinitionType: 'bpmn:CompensateEventDefinition'
+        });
+      };
+
+      // then
+      expect(action).not.to.throw();
+    }
+  ));
+
+
+  it('should NOT break when there are no outgoing connections (from compensation)', inject(
+    function(elementRegistry, bpmnReplace) {
+
+      // given
+      const event = elementRegistry.get('Attached_Event');
+
+      // when
+      const action = () => {
+        bpmnReplace.replaceElement(event, {
+          type: 'bpmn:BoundaryEvent' ,
+          eventDefinitionType: 'bpmn:MessageEventDefinition'
+        });
+      };
+
+      // then
+      expect(action).not.to.throw();
+    }
+  ));
 });

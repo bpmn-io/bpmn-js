@@ -43,7 +43,38 @@
       <incoming>Flow_19nk7s2</incoming>
     </task>
     <sequenceFlow id="Flow_19nk7s2" sourceRef="MultiOutgoing" targetRef="Activity_149asug" />
+    <task id="Activity_0dkj3us">
+      <incoming>Flow_0d1dx68</incoming>
+    </task>
+    <task id="Activity_1q2gv8y">
+      <incoming>Flow_158hpoy</incoming>
+    </task>
+    <boundaryEvent id="NoneBoundary" attachedToRef="Activity_0dkj3us" />
+    <boundaryEvent id="Event_1m90p7s" attachedToRef="Activity_1q2gv8y" />
+    <task id="Activity_1fbtvut" />
+    <boundaryEvent id="MultiBoundary" attachedToRef="Activity_1fbtvut">
+      <outgoing>Flow_0d1dx68</outgoing>
+      <outgoing>Flow_158hpoy</outgoing>
+    </boundaryEvent>
+    <sequenceFlow id="Flow_0d1dx68" sourceRef="MultiBoundary" targetRef="Activity_0dkj3us" />
+    <sequenceFlow id="Flow_158hpoy" sourceRef="MultiBoundary" targetRef="Activity_1q2gv8y" />
+    <task id="Activity_0sbck8k">
+      <outgoing>Flow_1s3u9a0</outgoing>
+    </task>
+    <task id="Activity_1f3e3e6">
+      <incoming>Flow_1s3u9a0</incoming>
+    </task>
+    <sequenceFlow id="Flow_1s3u9a0" sourceRef="Activity_0sbck8k" targetRef="Activity_1f3e3e6" />
+    <task id="Activity_071lyub" isForCompensation="true" />
+    <boundaryEvent id="ReplacedEvent" attachedToRef="Activity_0sbck8k">
+      <compensateEventDefinition id="CompensateEventDefinition_11hjmro" />
+    </boundaryEvent>
+    <boundaryEvent id="Event_1ubalz4" attachedToRef="Activity_1f3e3e6">
+      <compensateEventDefinition id="CompensateEventDefinition_0ghxz8p" />
+    </boundaryEvent>
     <association id="Association" associationDirection="One" sourceRef="Attached_Event2" targetRef="Task_Compensation" />
+    <association id="Association_13lquwg" associationDirection="One" sourceRef="ReplacedEvent" targetRef="Activity_071lyub" />
+    <association id="Association_0czy2jf" associationDirection="One" sourceRef="Event_1ubalz4" targetRef="Activity_071lyub" />
   </process>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
@@ -80,6 +111,43 @@
       <bpmndi:BPMNShape id="Activity_149asug_di" bpmnElement="Activity_149asug">
         <omgdc:Bounds x="340" y="880" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0dkj3us_di" bpmnElement="Activity_0dkj3us">
+        <omgdc:Bounds x="750" y="390" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1q2gv8y_di" bpmnElement="Activity_1q2gv8y">
+        <omgdc:Bounds x="750" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fbtvut_di" bpmnElement="Activity_1fbtvut">
+        <omgdc:Bounds x="680" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0sbck8k_di" bpmnElement="Activity_0sbck8k">
+        <omgdc:Bounds x="580" y="650" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1f3e3e6_di" bpmnElement="Activity_1f3e3e6">
+        <omgdc:Bounds x="730" y="650" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_071lyub_di" bpmnElement="Activity_071lyub">
+        <omgdc:Bounds x="650" y="820" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0czy2jf_di" bpmnElement="Association_0czy2jf">
+        <di:waypoint x="780" y="748" />
+        <di:waypoint x="780" y="860" />
+        <di:waypoint x="750" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_13lquwg_di" bpmnElement="Association_13lquwg">
+        <di:waypoint x="630" y="748" />
+        <di:waypoint x="630" y="860" />
+        <di:waypoint x="650" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_14tuun3_di" bpmnElement="MultiBoundary">
+        <omgdc:Bounds x="712" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rya4gs_di" bpmnElement="Event_1m90p7s">
+        <omgdc:Bounds x="782" y="332" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1be5877_di" bpmnElement="NoneBoundary">
+        <omgdc:Bounds x="782" y="452" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0t975p5_di" bpmnElement="MultiOutgoing">
         <omgdc:Bounds x="252" y="712" width="36" height="36" />
       </bpmndi:BPMNShape>
@@ -91,6 +159,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_12wgrmv_di" bpmnElement="Attached_Event">
         <omgdc:Bounds x="222" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ft2vy5_di" bpmnElement="Event_1ubalz4">
+        <omgdc:Bounds x="762" y="712" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0m2fqbk_di" bpmnElement="ReplacedEvent">
+        <omgdc:Bounds x="612" y="712" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0aguggf_di" bpmnElement="NoneFlow">
         <di:waypoint x="400" y="178" />
@@ -115,10 +189,24 @@
         <di:waypoint x="270" y="920" />
         <di:waypoint x="340" y="920" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0d1dx68_di" bpmnElement="Flow_0d1dx68">
+        <di:waypoint x="730" y="218" />
+        <di:waypoint x="730" y="430" />
+        <di:waypoint x="750" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_158hpoy_di" bpmnElement="Flow_158hpoy">
+        <di:waypoint x="730" y="218" />
+        <di:waypoint x="730" y="310" />
+        <di:waypoint x="750" y="310" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_di" bpmnElement="Association">
         <di:waypoint x="250" y="368" />
         <di:waypoint x="250" y="430" />
         <di:waypoint x="320" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s3u9a0_di" bpmnElement="Flow_1s3u9a0">
+        <di:waypoint x="680" y="690" />
+        <di:waypoint x="730" y="690" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
