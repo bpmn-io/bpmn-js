@@ -735,8 +735,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'NoneTask', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true,
-        dataAssociation: false
+        association: false,
+        dataAssociation: false,
+        compensationAssociation: true
       });
     }));
 
@@ -746,8 +747,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'SubProcess_2', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true,
-        dataAssociation: false
+        association: false,
+        dataAssociation: false,
+        compensationAssociation: true
       });
     }));
 
@@ -758,7 +760,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
     }));
 
@@ -768,8 +771,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'TaskForCompensation', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true,
-        dataAssociation: false
+        association: false,
+        dataAssociation: false,
+        compensationAssociation: true
       });
 
     }));
@@ -781,7 +785,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
 
     }));
@@ -793,7 +798,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
 
     }));
@@ -805,7 +811,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
 
     }));
@@ -817,7 +824,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
 
     }));
@@ -829,7 +837,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
     });
 
@@ -840,7 +849,8 @@ describe('features/modeling/rules - BpmnRules', function() {
         sequenceFlow: false,
         messageFlow: false,
         association: false,
-        dataAssociation: false
+        dataAssociation: false,
+        compensationAssociation: false
       });
     });
 
@@ -850,8 +860,9 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanConnect('CompensationBoundary', 'TaskWithBoundary', {
         sequenceFlow: false,
         messageFlow: false,
-        association: true,
-        dataAssociation: false
+        association: false,
+        dataAssociation: false,
+        compensationAssociation: true
       });
     });
   });
