@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.3.0
+
+* `FEAT`: improve handling of compensation association ([#2038](https://github.com/bpmn-io/bpmn-js/issues/2038))
+
 ## 16.2.0
 
 * `DEPS`: update to `bpmn-moddle@8.1.0`
