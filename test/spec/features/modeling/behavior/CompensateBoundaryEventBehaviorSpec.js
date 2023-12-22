@@ -47,7 +47,31 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('on reconnect', inject(function(modeling, elementRegistry) {
+    it('on reconnect start', inject(function(modeling, elementRegistry) {
+
+      // given
+      const compensateBoundaryEvent = elementRegistry.get('Attached_Event');
+      const sequenceFlow = elementRegistry.get('NoneFlow');
+      const task = sequenceFlow.target;
+
+      // when
+      modeling.reconnectStart(sequenceFlow, compensateBoundaryEvent, {
+        x: compensateBoundaryEvent.x,
+        y: compensateBoundaryEvent.y
+      });
+
+      // then
+      expect(task.businessObject.isForCompensation).to.be.true;
+
+      expect(task.incoming).to.have.length(1);
+      const incomingConnection = task.incoming[0];
+
+      expect(is(incomingConnection, 'bpmn:Association')).to.be.true;
+      expect(incomingConnection.businessObject).to.be.have.property('associationDirection', 'One');
+    }));
+
+
+    it('on reconnect end', inject(function(modeling, elementRegistry) {
 
       // given
       const taskShape = elementRegistry.get('AnotherTask');
@@ -116,7 +140,28 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('on reconnect', inject(function(modeling, elementRegistry) {
+    // TODO(@barmac): implement together with allowing the interaction in the rules
+    it.skip('on reconnect start', inject(function(modeling, elementRegistry) {
+
+      // given
+      const taskShape = elementRegistry.get('Task');
+      const compensationAssociation = elementRegistry.get('Association');
+      const compensationActivity = compensationAssociation.target;
+
+      // when
+      modeling.reconnectStart(compensationAssociation, taskShape, { x: taskShape.x, y: taskShape.y });
+
+      // then
+      expect(compensationActivity.businessObject.isForCompensation).to.be.false;
+
+      expect(compensationActivity.incoming).to.have.length(1);
+      const incomingConnection = compensationActivity.incoming[0];
+
+      expect(is(incomingConnection, 'bpmn:SequenceFlow')).to.be.true;
+    }));
+
+
+    it('on reconnect end', inject(function(modeling, elementRegistry) {
 
       // given
       const oldShape = elementRegistry.get('Task_Compensation');
