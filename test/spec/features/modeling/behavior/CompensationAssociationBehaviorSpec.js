@@ -3,6 +3,11 @@ import {
   inject
 } from 'test/TestHelper';
 
+import {
+  getBusinessObject,
+  is
+} from 'lib/util/ModelUtil';
+
 import modelingModule from 'lib/features/modeling';
 
 
@@ -13,7 +18,7 @@ describe('modeling/behavior - CompensationAssociation', function() {
   beforeEach(bootstrapModeler(diagramXML, { modules: modelingModule }));
 
 
-  it('should manhattan layout', inject(function(modeling, elementRegistry) {
+  it('should use manhattan layout', inject(function(modeling, elementRegistry) {
 
     // given
     var boundaryShape = elementRegistry.get('CompensationBoundary'),
@@ -21,9 +26,7 @@ describe('modeling/behavior - CompensationAssociation', function() {
 
 
     // when
-    var newConnection = modeling.connect(boundaryShape, activityShape, {
-      type: 'bpmn:DataInputAssociation'
-    });
+    var newConnection = modeling.connect(boundaryShape, activityShape);
 
     // then
     expect(waypoints(newConnection)).to.eql([
@@ -31,6 +34,22 @@ describe('modeling/behavior - CompensationAssociation', function() {
       { x: 107, y: 254 },
       { x: 206, y: 254 }
     ]);
+  }));
+
+
+  it('should create directed association', inject(function(modeling, elementRegistry) {
+
+    // given
+    var boundaryShape = elementRegistry.get('CompensationBoundary'),
+        activityShape = elementRegistry.get('CompensationActivity');
+
+
+    // when
+    var newConnection = modeling.connect(boundaryShape, activityShape);
+
+    // then
+    expect(is(newConnection, 'bpmn:Association')).to.be.true;
+    expect(getBusinessObject(newConnection)).to.have.property('associationDirection', 'One');
   }));
 
 });

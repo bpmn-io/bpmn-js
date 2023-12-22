@@ -1617,6 +1617,22 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+
+    it('should remove `isForCompensation` when replacing sub process', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var compensationSubProcess = elementRegistry.get('SubProcess_4');
+
+      // when
+      var subProcess = bpmnReplace.replaceElement(
+        compensationSubProcess,
+        { type: 'bpmn:SubProcess', triggeredByEvent: true }
+      );
+
+      // then
+      expect(subProcess.businessObject.isForCompensation).to.be.false;
+    }));
+
   });
 
 

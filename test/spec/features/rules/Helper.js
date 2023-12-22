@@ -37,6 +37,10 @@ export function expectCanConnect(source, target, rules) {
     if ('dataAssociation' in rules) {
       results.dataAssociation = bpmnRules.canConnectDataAssociation(source, target);
     }
+
+    if ('compensationAssociation' in rules) {
+      results.compensationAssociation = bpmnRules.canConnectCompensationAssociation(source, target);
+    }
   });
 
   expect(results).to.eql(rules);
