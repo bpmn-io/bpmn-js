@@ -17,6 +17,8 @@ import {
   GROUP_MIN_DIMENSIONS,
   LANE_MIN_DIMENSIONS,
   PARTICIPANT_MIN_DIMENSIONS,
+  VERTICAL_LANE_MIN_DIMENSIONS,
+  VERTICAL_PARTICIPANT_MIN_DIMENSIONS,
   SUB_PROCESS_MIN_DIMENSIONS
 } from 'lib/features/modeling/behavior/ResizeBehavior';
 
@@ -144,6 +146,95 @@ describe('features/modeling - space tool behavior', function() {
 
           // then
           expect(lane.height).to.equal(LANE_MIN_DIMENSIONS.height);
+        })
+      );
+
+    });
+
+  });
+
+
+  describe('vertical participant', function() {
+
+    describe('minimum dimensions', function() {
+
+      var diagramXML = require('./SpaceToolBehaviorSpec.participant.vertical.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should ensure participant minimum height', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var participant = elementRegistry.get('Vertical_Participant_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 0, y: 300 }));
+
+          dragging.move(canvasEvent({ x: 0, y: -200 }));
+
+          dragging.end();
+
+          // then
+          expect(participant.height).to.equal(VERTICAL_PARTICIPANT_MIN_DIMENSIONS.height);
+        })
+      );
+
+
+      it('should ensure participant minimum width', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var participant = elementRegistry.get('Vertical_Participant_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 100, y: 0 }));
+
+          dragging.move(canvasEvent({ x: -400, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(participant.width).to.equal(VERTICAL_PARTICIPANT_MIN_DIMENSIONS.width);
+        })
+      );
+
+
+      it('should ensure lane minimum width', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var lane = elementRegistry.get('Vertical_Lane_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 400, y: 0 }));
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.width).to.equal(VERTICAL_LANE_MIN_DIMENSIONS.width);
+        })
+      );
+
+
+      it('should ensure nested lane minimum width', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var lane = elementRegistry.get('V_Lane_6');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 925, y: 0 }));
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.width).to.equal(VERTICAL_LANE_MIN_DIMENSIONS.width);
         })
       );
 
