@@ -3,16 +3,22 @@ import {
   inject
 } from 'test/TestHelper';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
 import { is } from 'lib/util/ModelUtil';
+
+import copyPasteModule from 'lib/features/copy-paste';
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
 import diagramXML from './CompensateBoundaryEventBehavior.bpmn';
 
 
 describe('features/modeling/behavior - compensation boundary event', function() {
 
-  const testModules = [ coreModule, modelingModule ];
+  const testModules = [
+    copyPasteModule,
+    coreModule,
+    modelingModule
+  ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -381,5 +387,34 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(action).not.to.throw();
     }
   ));
+
+
+  describe('copy and paste', function() {
+
+    it('should NOT break on copy and paste', inject(function(canvas, copyPaste, elementRegistry) {
+
+      // given
+      copyPaste.copy([
+        elementRegistry.get('Task_BoundaryEvent2'),
+        elementRegistry.get('Task_Compensation')
+      ]);
+
+      // when
+      var copiedElements = copyPaste.paste({
+        element: canvas.getRootElement(),
+        point: {
+          x: 100,
+          y: 100
+        }
+      });
+
+      // then
+      expect(copiedElements).to.have.lengthOf(4);
+      expect(copiedElements.filter(element => is(element, 'bpmn:Association'))).to.have.length(1);
+      expect(copiedElements.filter(element => is(element, 'bpmn:BoundaryEvent'))).to.have.length(1);
+      expect(copiedElements.filter(element => is(element, 'bpmn:Task'))).to.have.length(2);
+    }));
+
+  });
 
 });
