@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.3.1
+
+* `FIX`: do not remove connection that is being created when pasting compensation boundary event and handler ([#2069](https://github.com/bpmn-io/bpmn-js/pull/2069))
+
 ## 16.3.0
 
 * `FEAT`: improve handling of compensation association ([#2038](https://github.com/bpmn-io/bpmn-js/issues/2038))
