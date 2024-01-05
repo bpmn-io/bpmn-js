@@ -101,6 +101,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(task.businessObject.isForCompensation).to.be.true;
       expect(is(task.incoming[0], 'bpmn:Association')).to.be.true;
     }));
+
   });
 
 
@@ -123,7 +124,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('on delete connection', inject(function(elementRegistry, modeling) {
+    it('on remove connection', inject(function(elementRegistry, modeling) {
 
       // given
       const taskShape = elementRegistry.get('Task_Compensation');
@@ -265,6 +266,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
         expect(compensationActivity.incoming[0].source).to.eql(event);
       }
     ));
+
   });
 
 
@@ -309,6 +311,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
         expect(task.businessObject.isForCompensation).to.be.false;
       }
     }));
+
   });
 
 
@@ -378,4 +381,5 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(action).not.to.throw();
     }
   ));
+
 });
