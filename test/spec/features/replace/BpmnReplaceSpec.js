@@ -108,6 +108,27 @@ describe('features/replace - bpmn replace', function() {
 
       expect(newElement).to.exist;
       expect(is(businessObject, 'bpmn:InclusiveGateway')).to.be.true;
+      expect(newElement.di.isMarkerVisible).to.not.exist;
+    }));
+
+
+    it('gateway and set marker', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var gateway = elementRegistry.get('ComplexGateway_1');
+      var newElementData = {
+        type: 'bpmn:ExclusiveGateway'
+      };
+
+      // when
+      var newElement = bpmnReplace.replaceElement(gateway, newElementData);
+
+      // then
+      var businessObject = newElement.businessObject;
+
+      expect(newElement).to.exist;
+      expect(is(businessObject, 'bpmn:ExclusiveGateway')).to.be.true;
+      expect(newElement.di.isMarkerVisible).to.be.true;
     }));
 
 

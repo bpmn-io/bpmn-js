@@ -72,6 +72,7 @@
     </bpmn:startEvent>
     <bpmn:subProcess id="SubProcess_2" />
     <bpmn:subProcess id="EventSubProcess_2" triggeredByEvent="true" />
+    <bpmn:complexGateway id="ComplexGateway_1" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -95,6 +96,9 @@
         <bpmndi:BPMNLabel>
           <dc:Bounds x="669" y="70" width="90" height="20" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1g9qldn_di" bpmnElement="ComplexGateway_1">
+        <dc:Bounds x="212" y="825" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds x="221" y="208" width="350" height="200" />
