@@ -196,10 +196,10 @@ describe('features/modeling/behavior - compensation boundary event', function() 
 
   describe('remove connections', function() {
 
-    it('should remove illegal connections on connect', inject(function(modeling, elementRegistry) {
+    it('should remove disallowed connections on connect', inject(function(modeling, elementRegistry) {
 
       // given
-      const task = elementRegistry.get('IllegalConnections');
+      const task = elementRegistry.get('Task_DisallowedConnections');
       const event = elementRegistry.get('Attached_Event');
 
       expect(task.incoming).to.have.length(1);
@@ -214,10 +214,10 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('should remove illegal connections on reconnect', inject(function(modeling, elementRegistry) {
+    it('should remove disallowed connections on reconnect', inject(function(modeling, elementRegistry) {
 
       // given
-      const task = elementRegistry.get('IllegalConnections');
+      const task = elementRegistry.get('Task_DisallowedConnections');
       const connection = elementRegistry.get('Association');
 
       // when
@@ -270,9 +270,9 @@ describe('features/modeling/behavior - compensation boundary event', function() 
   });
 
 
-  describe('remove attachments', function() {
+  describe('remove attachers', function() {
 
-    it('should remove element\'s attachments', inject(function(elementRegistry, modeling) {
+    it('should remove attachers of compensation activity', inject(function(elementRegistry, modeling) {
 
       // given
       const event = elementRegistry.get('Attached_Event'),
@@ -287,7 +287,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('should NOT remove attachments of non-compensation activity', inject(function(elementRegistry, bpmnReplace) {
+    it('should NOT remove attachers of non-compensation activity', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       let event = elementRegistry.get('MultiBoundary'),

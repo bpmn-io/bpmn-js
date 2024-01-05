@@ -18,18 +18,18 @@
       <incoming>NoneFlow</incoming>
     </task>
     <sequenceFlow id="NoneFlow" sourceRef="NoneEvent" targetRef="NoneActivity" />
-    <task id="IllegalConnections">
+    <task id="Task_DisallowedConnections">
       <incoming>Flow_1czca1o</incoming>
       <outgoing>Flow_0ma72c1</outgoing>
     </task>
     <task id="Activity_1rlhhtg">
       <incoming>Flow_0ma72c1</incoming>
     </task>
-    <sequenceFlow id="Flow_0ma72c1" sourceRef="IllegalConnections" targetRef="Activity_1rlhhtg" />
+    <sequenceFlow id="Flow_0ma72c1" sourceRef="Task_DisallowedConnections" targetRef="Activity_1rlhhtg" />
     <task id="AnotherTask">
       <outgoing>Flow_1czca1o</outgoing>
     </task>
-    <sequenceFlow id="Flow_1czca1o" sourceRef="AnotherTask" targetRef="IllegalConnections" />
+    <sequenceFlow id="Flow_1czca1o" sourceRef="AnotherTask" targetRef="Task_DisallowedConnections" />
     <task id="Activity_0ibho72" />
     <boundaryEvent id="MultiOutgoing" attachedToRef="Activity_0ibho72">
       <outgoing>Flow_1t3tgme</outgoing>
@@ -93,7 +93,7 @@
       <bpmndi:BPMNShape id="Activity_0g6v5lh_di" bpmnElement="NoneActivity">
         <omgdc:Bounds x="470" y="200" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1h9z7j0_di" bpmnElement="IllegalConnections">
+      <bpmndi:BPMNShape id="Activity_1h9z7j0_di" bpmnElement="Task_DisallowedConnections">
         <omgdc:Bounds x="360" y="510" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1rlhhtg_di" bpmnElement="Activity_1rlhhtg">
