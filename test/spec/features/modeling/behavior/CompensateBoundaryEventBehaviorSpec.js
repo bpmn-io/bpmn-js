@@ -389,6 +389,27 @@ describe('features/modeling/behavior - compensation boundary event', function() 
   ));
 
 
+  it('should NOT crash when core `replace` component is used', inject(
+    function(elementRegistry, replace) {
+
+      // given
+      const task = elementRegistry.get('Task_Compensation');
+
+      // when
+      const action = () => {
+        replace.replaceElement(task,
+          {
+            type: 'bpmn:ManualTask'
+          }
+        );
+      };
+
+      // then
+      expect(action).not.to.throw();
+    }
+  ));
+
+
   describe('copy and paste', function() {
 
     it('should NOT break on copy and paste', inject(function(canvas, copyPaste, elementRegistry) {
