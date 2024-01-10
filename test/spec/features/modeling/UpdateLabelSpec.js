@@ -79,6 +79,22 @@ describe('features/modeling - update label', function() {
   ));
 
 
+  it('should not create label on (sub)process plane', inject(
+    function(modeling, elementRegistry) {
+
+      // given
+      var SubProcess_1 = elementRegistry.get('Subprocess_1_plane');
+
+      // when
+      modeling.updateLabel(SubProcess_1, 'Cool new label');
+
+      // then
+      expect(SubProcess_1.businessObject.name).to.equal('Cool new label');
+      expect(SubProcess_1.di.get('label')).not.to.exist;
+    }
+  ));
+
+
   describe('should delete label', function() {
 
     it('when setting null', inject(
@@ -163,7 +179,7 @@ describe('features/modeling - update label', function() {
   }));
 
 
-  it('should propertly fire events.changed after event name change', inject(
+  it('should properly fire events.changed after event name change', inject(
     function(modeling, elementRegistry, eventBus) {
 
       // given
