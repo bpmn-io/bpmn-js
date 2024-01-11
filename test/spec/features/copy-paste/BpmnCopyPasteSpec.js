@@ -214,7 +214,7 @@ describe('features/copy-paste', function() {
       });
 
       // then
-      expect(rootElement.children).to.have.length(9);
+      expect(rootElement.children).to.have.length(13);
 
       var subProcesses = elements.filter(function(element) {
         return is(element, 'bpmn:SubProcess');
