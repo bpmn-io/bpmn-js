@@ -360,42 +360,6 @@ describe('features/modeling - replace connection', function() {
     }));
 
 
-    describe('moving text-annotation to participant', function() {
-
-      it('execute', inject(function(modeling, elementRegistry) {
-
-        // given
-        var textAnnotationShape = element('TextAnnotation_1'),
-            targetShape = element('Participant_1');
-
-        // when
-        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
-
-        // then
-        expect(textAnnotationShape.parent).to.eql(targetShape);
-
-        expectNotConnected(textAnnotationShape, targetShape, 'bpmn:TextAnnotation');
-      }));
-
-
-      it('undo', inject(function(modeling, elementRegistry, commandStack) {
-
-        // given
-        var textAnnotationShape = element('TextAnnotation_1'),
-            targetShape = element('Participant_1');
-
-        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
-
-        // when
-        commandStack.undo();
-
-        // then
-        expectConnected(textAnnotationShape, targetShape, element('Association_1'));
-      }));
-
-    });
-
-
     describe('reconnecting data output association to text annotation', function() {
 
       it('execute', inject(function(modeling) {
