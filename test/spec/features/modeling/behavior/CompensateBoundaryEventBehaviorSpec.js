@@ -3,16 +3,22 @@ import {
   inject
 } from 'test/TestHelper';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
 import { is } from 'lib/util/ModelUtil';
+
+import copyPasteModule from 'lib/features/copy-paste';
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
 import diagramXML from './CompensateBoundaryEventBehavior.bpmn';
 
 
 describe('features/modeling/behavior - compensation boundary event', function() {
 
-  const testModules = [ coreModule, modelingModule ];
+  const testModules = [
+    copyPasteModule,
+    coreModule,
+    modelingModule
+  ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -101,6 +107,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(task.businessObject.isForCompensation).to.be.true;
       expect(is(task.incoming[0], 'bpmn:Association')).to.be.true;
     }));
+
   });
 
 
@@ -123,7 +130,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('on delete connection', inject(function(elementRegistry, modeling) {
+    it('on remove connection', inject(function(elementRegistry, modeling) {
 
       // given
       const taskShape = elementRegistry.get('Task_Compensation');
@@ -195,10 +202,10 @@ describe('features/modeling/behavior - compensation boundary event', function() 
 
   describe('remove connections', function() {
 
-    it('should remove illegal connections on connect', inject(function(modeling, elementRegistry) {
+    it('should remove disallowed connections on connect', inject(function(modeling, elementRegistry) {
 
       // given
-      const task = elementRegistry.get('IllegalConnections');
+      const task = elementRegistry.get('Task_DisallowedConnections');
       const event = elementRegistry.get('Attached_Event');
 
       expect(task.incoming).to.have.length(1);
@@ -213,10 +220,10 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('should remove illegal connections on reconnect', inject(function(modeling, elementRegistry) {
+    it('should remove disallowed connections on reconnect', inject(function(modeling, elementRegistry) {
 
       // given
-      const task = elementRegistry.get('IllegalConnections');
+      const task = elementRegistry.get('Task_DisallowedConnections');
       const connection = elementRegistry.get('Association');
 
       // when
@@ -265,12 +272,13 @@ describe('features/modeling/behavior - compensation boundary event', function() 
         expect(compensationActivity.incoming[0].source).to.eql(event);
       }
     ));
+
   });
 
 
-  describe('remove attachments', function() {
+  describe('remove attachers', function() {
 
-    it('should remove element\'s attachments', inject(function(elementRegistry, modeling) {
+    it('should remove attachers of compensation activity', inject(function(elementRegistry, modeling) {
 
       // given
       const event = elementRegistry.get('Attached_Event'),
@@ -285,7 +293,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
     }));
 
 
-    it('should NOT remove attachments of non-compensation activity', inject(function(elementRegistry, bpmnReplace) {
+    it('should NOT remove attachers of non-compensation activity', inject(function(elementRegistry, bpmnReplace) {
 
       // given
       let event = elementRegistry.get('MultiBoundary'),
@@ -309,6 +317,7 @@ describe('features/modeling/behavior - compensation boundary event', function() 
         expect(task.businessObject.isForCompensation).to.be.false;
       }
     }));
+
   });
 
 
@@ -378,4 +387,34 @@ describe('features/modeling/behavior - compensation boundary event', function() 
       expect(action).not.to.throw();
     }
   ));
+
+
+  describe('copy and paste', function() {
+
+    it('should NOT break on copy and paste', inject(function(canvas, copyPaste, elementRegistry) {
+
+      // given
+      copyPaste.copy([
+        elementRegistry.get('Task_BoundaryEvent2'),
+        elementRegistry.get('Task_Compensation')
+      ]);
+
+      // when
+      var copiedElements = copyPaste.paste({
+        element: canvas.getRootElement(),
+        point: {
+          x: 100,
+          y: 100
+        }
+      });
+
+      // then
+      expect(copiedElements).to.have.lengthOf(4);
+      expect(copiedElements.filter(element => is(element, 'bpmn:Association'))).to.have.length(1);
+      expect(copiedElements.filter(element => is(element, 'bpmn:BoundaryEvent'))).to.have.length(1);
+      expect(copiedElements.filter(element => is(element, 'bpmn:Task'))).to.have.length(2);
+    }));
+
+  });
+
 });
