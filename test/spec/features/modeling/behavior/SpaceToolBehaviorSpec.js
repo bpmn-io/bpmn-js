@@ -112,6 +112,27 @@ describe('features/modeling - space tool behavior', function() {
       );
 
 
+      it('should ensure lane minimum width', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var participant = elementRegistry.get('Participant_2');
+          var lane = elementRegistry.get('Lane_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 1200, y: 0 }));
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.width).to.equal(LANE_MIN_DIMENSIONS.width);
+          expect(participant.width).to.equal(LANE_MIN_DIMENSIONS.width + 30);
+        })
+      );
+
+
       it('should ensure lane minimum height', inject(
         function(dragging, elementRegistry, spaceTool) {
 
@@ -197,6 +218,27 @@ describe('features/modeling - space tool behavior', function() {
 
           // then
           expect(participant.width).to.equal(VERTICAL_PARTICIPANT_MIN_DIMENSIONS.width);
+        })
+      );
+
+
+      it('should ensure lane minimum height', inject(
+        function(dragging, elementRegistry, spaceTool) {
+
+          // given
+          var participant = elementRegistry.get('Vertical_Participant_2');
+          var lane = elementRegistry.get('Vertical_Lane_1');
+
+          // when
+          spaceTool.activateMakeSpace(canvasEvent({ x: 0, y: 1200 }));
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.height).to.equal(VERTICAL_LANE_MIN_DIMENSIONS.height);
+          expect(participant.height).to.equal(VERTICAL_LANE_MIN_DIMENSIONS.height + 30);
         })
       );
 

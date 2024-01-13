@@ -977,4 +977,108 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
   });
 
+  describe('LaneUtil', function() {
+
+    describe('lane minimum dimensions', function() {
+
+      var diagramXML = require('./ResizeBehavior.utility.lanes.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should hold for top sibling lane', inject(
+        function(dragging, elementRegistry, resize) {
+
+          // given
+          var lane = elementRegistry.get('Nested_Lane_B');
+          var topSiblingLane = elementRegistry.get('Nested_Lane_A');
+
+          // when
+          resize.activate(canvasEvent({ x: 0, y: 0 }), lane, 'n');
+
+          dragging.move(canvasEvent({ x: 0, y: -500 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.height).to.equal(301);
+          expect(topSiblingLane.height).to.equal(60);
+        })
+      );
+
+
+      it('should hold for bottom sibling lane', inject(
+        function(dragging, elementRegistry, resize) {
+
+          // given
+          var lane = elementRegistry.get('Nested_Lane_B');
+          var bottomSiblingLane = elementRegistry.get('Lane_B');
+
+          // when
+          resize.activate(canvasEvent({ x: 0, y: 0 }), lane, 's');
+
+          dragging.move(canvasEvent({ x: 0, y: 500 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.height).to.equal(292);
+          expect(bottomSiblingLane.height).to.equal(60);
+        })
+      );
+
+    });
+
+    describe('vertical lane minimum dimensions', function() {
+
+      var diagramXML = require('./ResizeBehavior.utility.lanes.vertical.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should hold for left sibling lane', inject(
+        function(dragging, elementRegistry, resize) {
+
+          // given
+          var lane = elementRegistry.get('Nested_Vertical_Lane_B');
+          var leftSiblingLane = elementRegistry.get('Nested_Vertical_Lane_A');
+
+          // when
+          resize.activate(canvasEvent({ x: 0, y: 0 }), lane, 'w');
+
+          dragging.move(canvasEvent({ x: -500, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.width).to.equal(301);
+          expect(leftSiblingLane.width).to.equal(60);
+        })
+      );
+
+
+      it('should hold for right sibling lane', inject(
+        function(dragging, elementRegistry, resize) {
+
+          // given
+          var lane = elementRegistry.get('Nested_Vertical_Lane_B');
+          var rightSiblingLane = elementRegistry.get('Vertical_Lane_B');
+
+          // when
+          resize.activate(canvasEvent({ x: 0, y: 0 }), lane, 'e');
+
+          dragging.move(canvasEvent({ x: 500, y: 0 }));
+
+          dragging.end();
+
+          // then
+          expect(lane.width).to.equal(292);
+          expect(rightSiblingLane.width).to.equal(60);
+        })
+      );
+
+    });
+
+  });
+
 });
