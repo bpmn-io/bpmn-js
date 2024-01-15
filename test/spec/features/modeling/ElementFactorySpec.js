@@ -207,6 +207,44 @@ describe('features - element factory', function() {
     }));
 
 
+    it('should create exclusive gateway with x marker', inject(function(elementFactory) {
+
+      // when
+      var shape = elementFactory.createShape({
+        type: 'bpmn:ExclusiveGateway',
+        isMarkerVisible: true
+      });
+
+      // then
+      expect(shape.di.isMarkerVisible).to.be.true;
+    }));
+
+
+    it('should create exclusive gateway without x marker', inject(function(elementFactory) {
+
+      // when
+      var shape = elementFactory.createShape({
+        type: 'bpmn:ExclusiveGateway',
+        isMarkerVisible: false
+      });
+
+      // then
+      expect(shape.di.isMarkerVisible).to.be.false;
+    }));
+
+
+    it('should create exclusive gateway with x marker by default', inject(function(elementFactory) {
+
+      // when
+      var shape = elementFactory.createShape({
+        type: 'bpmn:ExclusiveGateway'
+      });
+
+      // then
+      expect(shape.di.isMarkerVisible).to.be.true;
+    }));
+
+
     describe('integration', function() {
 
       it('should create event definition with ID', inject(function(elementFactory) {

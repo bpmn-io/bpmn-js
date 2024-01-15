@@ -62,6 +62,7 @@ describe('features/palette', function() {
       expect(elements).to.have.length(2);
       expect(is(elements[0], 'bpmn:SubProcess')).to.be.true;
       expect(is(elements[1], 'bpmn:StartEvent')).to.be.true;
+      expect(elements[0].di.isExpanded).to.be.true;
     }));
 
 
@@ -86,6 +87,25 @@ describe('features/palette', function() {
 
       expect(selected).to.have.length(1);
       expect(is(selected[0], 'bpmn:SubProcess')).to.be.true;
+    }));
+
+  });
+
+
+  describe('gateway', function() {
+
+    it('should set gateway marker', inject(function(dragging) {
+
+      // when
+      triggerPaletteEntry('create.exclusive-gateway');
+
+      // then
+      var context = dragging.context(),
+          elements = context.data.elements;
+
+      expect(elements).to.have.length(1);
+      expect(is(elements[0], 'bpmn:ExclusiveGateway')).to.be.true;
+      expect(elements[0].di.isMarkerVisible).to.be.true;
     }));
 
   });
