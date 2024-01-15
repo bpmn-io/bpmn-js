@@ -233,7 +233,7 @@ describe('features - element factory', function() {
     }));
 
 
-    it('should create exclusive gateway without x marker by default', inject(function(elementFactory) {
+    it('should create exclusive gateway with x marker by default', inject(function(elementFactory) {
 
       // when
       var shape = elementFactory.createShape({
@@ -241,7 +241,7 @@ describe('features - element factory', function() {
       });
 
       // then
-      expect(shape.di.isMarkerVisible).to.be.undefined;
+      expect(shape.di.isMarkerVisible).to.be.true;
     }));
 
 
