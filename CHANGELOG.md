@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.4.0
+
+* `FEAT`: handle resizing of vertical lanes ([#2062](https://github.com/bpmn-io/bpmn-js/issues/2062))
+* `FEAT`: allow text annotations to overlap with the borders of subprocesses and pools ([#2049](https://github.com/bpmn-io/bpmn-js/issues/2049))
+* `FEAT`: support modeling of gateway without marker ([#2063](https://github.com/bpmn-io/bpmn-js/issues/2063))
+* `FIX`: correctly remove vertical lanes ([#2081](https://github.com/bpmn-io/bpmn-js/pull/2081))
+* `FIX`: do not set label on planes ([#2033](https://github.com/bpmn-io/bpmn-js/issues/2033))
+
 ## 16.3.2
 
 * `FIX`: support core replace in compensation behavior ([#2073](https://github.com/bpmn-io/bpmn-js/issues/2073))
