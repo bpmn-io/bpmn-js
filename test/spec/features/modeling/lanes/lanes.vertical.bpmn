@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_4bAZoD9WEeWLcNBL4nCk1A" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://camunda.org/schema/1.0/bpmn">
+  <bpmn2:collaboration id="_Collaboration_2">
+    <bpmn2:participant id="Vertical_Participant_Lane" name="Vertical_Participant_Lane" processRef="Process_Vertical_Lane" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_Vertical_Lane" isExecutable="false">
+    <bpmn2:laneSet id="LaneSet_1o2qvt0" name="Lane Set 1">
+      <bpmn2:lane id="Vertical_Lane_B" name="Vertical_Lane_B" />
+      <bpmn2:lane id="Vertical_Lane_A" name="Vertical_Lane_A">
+        <bpmn2:flowNodeRef>V_Task</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>V_Task_Boundary</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>V_Boundary</bpmn2:flowNodeRef>
+        <bpmn2:childLaneSet id="LaneSet_1nz9a4u">
+          <bpmn2:lane id="Nested_Vertical_Lane_C" name="Nested_Vertical_Lane_C" />
+          <bpmn2:lane id="Nested_Vertical_Lane_B" name="Nested_Vertical_Lane_B" />
+          <bpmn2:lane id="Nested_Vertical_Lane_A" name="Nested_Vertical_Lane_A">
+            <bpmn2:flowNodeRef>V_Task</bpmn2:flowNodeRef>
+            <bpmn2:flowNodeRef>V_Task_Boundary</bpmn2:flowNodeRef>
+            <bpmn2:flowNodeRef>V_Boundary</bpmn2:flowNodeRef>
+          </bpmn2:lane>
+        </bpmn2:childLaneSet>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:task id="V_Task" name="V_Task">
+      <bpmn2:incoming>Flow_V</bpmn2:incoming>
+      <bpmn2:incoming>Flow_From_V_Boundary</bpmn2:incoming>
+    </bpmn2:task>
+    <bpmn2:task id="V_Task_Boundary" name="V_Task_Boundary">
+      <bpmn2:outgoing>Flow_V</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:boundaryEvent id="V_Boundary" name="V_Boundary" attachedToRef="V_Task_Boundary">
+      <bpmn2:outgoing>Flow_From_V_Boundary</bpmn2:outgoing>
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="Flow_V" name="" sourceRef="V_Task_Boundary" targetRef="V_Task" />
+    <bpmn2:sequenceFlow id="Flow_From_V_Boundary" name="" sourceRef="V_Boundary" targetRef="V_Task" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
+      <bpmndi:BPMNShape id="BPMNShape_140jwaa" bpmnElement="Vertical_Participant_Lane" isHorizontal="false">
+        <dc:Bounds x="160" y="50" width="604" height="540" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0n0ckvg" bpmnElement="Vertical_Lane_B" isHorizontal="false">
+        <dc:Bounds x="656" y="80" width="108" height="510" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1xhgbhc" bpmnElement="Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="160" y="80" width="496" height="510" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1vq767a" bpmnElement="Nested_Vertical_Lane_C" isHorizontal="false">
+        <dc:Bounds x="503" y="110" width="153" height="480" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0zxz1a9" bpmnElement="Nested_Vertical_Lane_B" isHorizontal="false">
+        <dc:Bounds x="350" y="110" width="153" height="480" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1dq00p8" bpmnElement="Nested_Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="160" y="110" width="190" height="480" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0t1n94f" bpmnElement="V_Task">
+        <dc:Bounds x="190" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0d8jcff" bpmnElement="V_Task_Boundary">
+        <dc:Bounds x="190" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0ft8wdi" bpmnElement="V_Boundary">
+        <dc:Bounds x="272" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="259" y="253" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0tb53a9" bpmnElement="Flow_V">
+        <di:waypoint x="240" y="250" />
+        <di:waypoint x="240" y="330" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="403" y="103" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0yevmra" bpmnElement="Flow_From_V_Boundary">
+        <di:waypoint x="308" y="230" />
+        <di:waypoint x="320" y="230" />
+        <di:waypoint x="320" y="370" />
+        <di:waypoint x="290" y="370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="377" y="188" width="6" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
