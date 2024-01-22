@@ -37,11 +37,11 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
       <bpmndi:BPMNShape id="BPMNShape_140jwaa" bpmnElement="Vertical_Participant_Lane" isHorizontal="false">
-        <dc:Bounds x="160" y="50" width="603" height="540" />
+        <dc:Bounds x="160" y="50" width="604" height="540" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0n0ckvg" bpmnElement="Vertical_Lane_B" isHorizontal="false">
-        <dc:Bounds x="655" y="80" width="108" height="510" />
+        <dc:Bounds x="656" y="80" width="108" height="510" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1xhgbhc" bpmnElement="Vertical_Lane_A" isHorizontal="false">
@@ -49,7 +49,7 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1vq767a" bpmnElement="Nested_Vertical_Lane_C" isHorizontal="false">
-        <dc:Bounds x="502" y="110" width="154" height="480" />
+        <dc:Bounds x="503" y="110" width="153" height="480" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0zxz1a9" bpmnElement="Nested_Vertical_Lane_B" isHorizontal="false">
@@ -57,7 +57,7 @@
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1dq00p8" bpmnElement="Nested_Vertical_Lane_A" isHorizontal="false">
-        <dc:Bounds x="160" y="110" width="191" height="480" />
+        <dc:Bounds x="160" y="110" width="190" height="480" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0t1n94f" bpmnElement="V_Task">
