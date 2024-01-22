@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_4bAZoD9WEeWLcNBL4nCk1A" exporter="camunda modeler" exporterVersion="2.6.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:collaboration id="_Collaboration_2">
+    <bpmn2:participant id="Vertical_Participant_Lane" name="Vertical_Participant_Lane" processRef="Process_Lane"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_Lane" isExecutable="false">
+    <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+      <bpmn2:lane id="Vertical_Lane_A" name="Vertical_Lane_A">
+        <bpmn2:childLaneSet xsi:type="bpmn2:tLaneSet" id="LaneSet_2">
+          <bpmn2:lane id="Nested_Vertical_Lane_A" name="Nested_Vertical_Lane_A"/>
+          <bpmn2:lane id="Nested_Vertical_Lane_B" name="Nested_Vertical_Lane_B"/>
+        </bpmn2:childLaneSet>
+      </bpmn2:lane>
+      <bpmn2:lane id="Vertical_Lane_B" name="Vertical_Lane_B"/>
+    </bpmn2:laneSet>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_2" bpmnElement="Vertical_Participant_Lane" isHorizontal="false">
+        <dc:Bounds x="0.0" y="156.0" width="532.0" height="540.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_3" bpmnElement="Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="0.0" y="186.0" width="361.0" height="510.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_4" bpmnElement="Nested_Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="0.0" y="216.0" width="181.0" height="480.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_5" bpmnElement="Nested_Vertical_Lane_B" isHorizontal="false">
+        <dc:Bounds x="180.0" y="216.0" width="181.0" height="480.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_6" bpmnElement="Vertical_Lane_B" isHorizontal="false">
+        <dc:Bounds x="360.0" y="186.0" width="172.0" height="510.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
