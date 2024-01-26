@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ezavnl" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.4.0">
+  <bpmn:process id="Process_04d9c6l" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_01xwmim">
+      <bpmn:lane id="Vertical_Lane_B" name="Vertical Lane B" />
+      <bpmn:lane id="Vertical_Lane_A" name="Vertical Lane A" />
+    </bpmn:laneSet>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_04d9c6l">
+      <bpmndi:BPMNShape id="Vertical_Lane_B_di" bpmnElement="Vertical_Lane_B" isHorizontal="false">
+        <dc:Bounds x="200" y="100" width="125" height="570" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Vertical_Lane_A_di" bpmnElement="Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="325" y="100" width="125" height="570" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
