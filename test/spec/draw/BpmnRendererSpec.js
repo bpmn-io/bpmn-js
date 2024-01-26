@@ -580,6 +580,34 @@ describe('draw - bpmn renderer', function() {
         });
       }));
 
+
+      describe('events', function() {
+
+        const diagramXML = require('../../fixtures/bpmn/draw/events.bpmn');
+
+        beforeEach(bootstrapModeler(diagramXML, {
+          bpmnRenderer: {
+            defaultFillColor: defaultFillColor,
+            defaultStrokeColor: defaultStrokeColor,
+            defaultLabelColor: defaultLabelColor
+          }
+        }));
+
+        it('should not fill multiple parallel events', inject(function(elementRegistry) {
+
+          // given
+          var parallelMultiple = elementRegistry.get('StartEvent_multiple_parallel_1');
+          var visual = getVisual(elementRegistry.getGraphics(parallelMultiple));
+          var path = domQuery('path', visual);
+
+          // then
+          expectFillColor(path, defaultFillColor);
+          expectStrokeColor(path, defaultStrokeColor);
+
+        }));
+
+      });
+
     });
 
   });
