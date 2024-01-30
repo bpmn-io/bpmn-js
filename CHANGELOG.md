@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 16.5.0
+
+* `FEAT`: handle adding vertical lanes ([#2086](https://github.com/bpmn-io/bpmn-js/issues/2086))
+* `FIX`: don't fill multiple parallel events ([#2085](https://github.com/bpmn-io/bpmn-js/issues/2085))
+
 ## 16.4.0
 
 * `FEAT`: handle resizing of vertical lanes ([#2062](https://github.com/bpmn-io/bpmn-js/issues/2062))
