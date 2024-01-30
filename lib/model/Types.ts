@@ -17,6 +17,7 @@ export type BpmnAttributes = {
   cancelActivity: boolean;
   eventDefinitionType: string;
   isExpanded: boolean;
+  isHorizontal: boolean;
   isForCompensation: boolean;
   isInterrupting: boolean;
   processRef: ModdleElement;
