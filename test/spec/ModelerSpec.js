@@ -90,6 +90,15 @@ describe('Modeler', function() {
   });
 
 
+  it('should import vertical collaboration', function() {
+    var xml = require('../fixtures/bpmn/collaboration-vertical.bpmn');
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
+  });
+
+
   it('should import ioSpecification', function() {
     var xml = require('./features/modeling/input-output/DataInputOutput.bpmn');
     return createModeler(xml).then(function(result) {
