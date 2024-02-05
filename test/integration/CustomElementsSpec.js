@@ -12,9 +12,8 @@ import {
 
 import customElementsModules from './custom-elements';
 
-var noTouchInteractionModule = { touchInteractionEvents: [ 'value', null ] },
-    modelerModules = Modeler.prototype._modules,
-    customModules = [ customElementsModules, noTouchInteractionModule ];
+var modelerModules = Modeler.prototype._modules,
+    customModules = [ customElementsModules ];
 
 var testModules = [].concat(modelerModules, customModules);
 

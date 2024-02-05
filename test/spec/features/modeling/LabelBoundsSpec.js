@@ -321,7 +321,7 @@ describe('label bounds', function() {
     });
 
 
-    it('should not update DI of untouched labels', function() {
+    it('should not update DI of unchanged labels', function() {
 
       var xml = require('./LabelBoundsSpec.simple.bpmn');
 
