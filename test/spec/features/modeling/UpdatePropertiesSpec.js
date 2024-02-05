@@ -96,7 +96,7 @@ describe('features/modeling - update properties', function() {
     }));
 
 
-    it('should keep unchanged default flow untouched', inject(
+    it('should keep unchanged default flow intact', inject(
       function(elementRegistry, modeling) {
 
         // given

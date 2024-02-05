@@ -11,8 +11,6 @@ import coreModule from 'lib/core';
 import moveModule from 'diagram-js/lib/features/move';
 import modelingModule from 'lib/features/modeling';
 
-var noTouchInteractionModule = { touchInteractionEvents: [ 'value', null ] };
-
 import {
   createCanvasEvent as canvasEvent
 } from '../../../../util/MockEvents';
@@ -26,7 +24,6 @@ describe('modeling/behavior - drop on connection', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
-      noTouchInteractionModule,
       moveModule,
       modelingModule,
       coreModule
