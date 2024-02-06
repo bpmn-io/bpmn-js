@@ -6,6 +6,16 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.0.0
+
+* `FEAT`: add to selection through SHIFT ([bpmn-io/diagram-js#796](https://github.com/bpmn-io/diagram-js/pull/851), [#2053](https://github.com/bpmn-io/bpmn-js/issues/2053))
+* `CHORE`: remove broken touch interaction ([bpmn-io/diagram-js#796](https://github.com/bpmn-io/diagram-js/issues/796))
+* `DEPS`: update to `diagram-js@14.0.0`
+
+### Breaking Changes
+
+* Migrated to `diagram-js@14` which removes touch interaction module, and dependency on unsupported `hammerjs` package. If you rely on touch interaction, you need to support touch interaction on your own.
+
 ## 16.5.0
 
 * `FEAT`: handle adding vertical lanes ([#2086](https://github.com/bpmn-io/bpmn-js/issues/2086))
