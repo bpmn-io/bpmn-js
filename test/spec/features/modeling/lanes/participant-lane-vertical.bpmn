@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_DjEdwG27EeW3UIoxwJSm9g" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="_Collaboration_3">
+    <bpmn2:participant id="Vertical_Participant_Lane" name="Vertical_Participant_Lane" processRef="Process_Vertical_Lane" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_Vertical_Lane" isExecutable="false">
+    <bpmn2:laneSet id="LaneSet_0crgcak" name="Lane Set 1">
+      <bpmn2:lane id="Vertical_Lane" name="Vertical_Lane">
+        <bpmn2:flowNodeRef>Task_2</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:task id="Task_2" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPLane" bpmnElement="_Collaboration_3">
+      <bpmndi:BPMNShape id="BPMNShape_0g790jf" bpmnElement="Vertical_Participant_Lane" isHorizontal="false">
+        <dc:Bounds x="180" y="80" width="215" height="540" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14tn4re" bpmnElement="Vertical_Lane" isHorizontal="false">
+        <dc:Bounds x="180" y="110" width="215" height="510" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0thxq0s" bpmnElement="Task_2">
+        <dc:Bounds x="267" y="476" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
