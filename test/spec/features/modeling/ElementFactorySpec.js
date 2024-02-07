@@ -212,7 +212,7 @@ describe('features - element factory', function() {
       // when
       var shape = elementFactory.createShape({
         type: 'bpmn:ExclusiveGateway',
-        isMarkerVisible: true
+        di: { isMarkerVisible: true }
       });
 
       // then
@@ -225,7 +225,7 @@ describe('features - element factory', function() {
       // when
       var shape = elementFactory.createShape({
         type: 'bpmn:ExclusiveGateway',
-        isMarkerVisible: false
+        di: { isMarkerVisible: false }
       });
 
       // then
