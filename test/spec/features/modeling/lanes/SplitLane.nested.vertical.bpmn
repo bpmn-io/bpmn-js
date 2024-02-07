@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0czfmdy" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.19.0">
+  <bpmn:collaboration id="Collaboration_166yin4">
+    <bpmn:participant id="Vertical_Participant" name="Vertical_Participant" processRef="Process_Vertical" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Vertical" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0qcwvbj">
+      <bpmn:lane id="Vertical_Lane" name="Vertical_Lane">
+        <bpmn:flowNodeRef>Event_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_2</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_2" name="Event">
+      <bpmn:outgoing>Flow_0vlrl5f</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_2" name="Task">
+      <bpmn:incoming>Flow_0vlrl5f</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_0vlrl5f" sourceRef="Event_2" targetRef="Activity_2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_166yin4">
+      <bpmndi:BPMNShape id="BPMNShape_189ueu2" bpmnElement="Vertical_Participant" isHorizontal="false">
+        <dc:Bounds x="170" y="90" width="450" height="791" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_17r7sue" bpmnElement="Vertical_Lane" isHorizontal="false">
+        <dc:Bounds x="170" y="120" width="450" height="761" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0pxo6ob" bpmnElement="Event_2">
+        <dc:Bounds x="232" y="243" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="275" y="253" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0gattmp" bpmnElement="Activity_2">
+        <dc:Bounds x="210" y="331" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0wfri6v" bpmnElement="Flow_0vlrl5f">
+        <di:waypoint x="250" y="279" />
+        <di:waypoint x="250" y="331" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
