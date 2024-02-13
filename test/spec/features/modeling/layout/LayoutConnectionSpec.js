@@ -37,7 +37,7 @@ describe('features/modeling - layout connection', function() {
   }));
 
 
-  describe('should not touch already layouted', function() {
+  describe('should not change already layouted', function() {
 
     it('execute', inject(function(elementRegistry, modeling, bpmnFactory) {
 

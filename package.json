@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "16.5.0",
+  "version": "17.0.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "index.js",
   "files": [
@@ -97,8 +97,8 @@
     "karma-webpack": "^5.0.0",
     "mocha": "^10.1.0",
     "mocha-test-container-support": "0.2.0",
-    "npm-run-all2": "^5.0.0",
-    "puppeteer": "^21.3.8",
+    "npm-run-all2": "^6.0.0",
+    "puppeteer": "^22.0.0",
     "remark-cli": "^12.0.0",
     "remark-preset-bpmn-io": "^0.2.1",
     "rollup": "^3.19.1",
