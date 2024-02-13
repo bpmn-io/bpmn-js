@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_0mdr2un" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Vertical_Participant_1" name="Vertical_Participant_1" processRef="Process_1" />
+    <bpmn:participant id="Vertical_Participant_2" name="Vertical_Participant_2" processRef="Process_2" />
+    <bpmn:participant id="Vertical_Participant_3" name="Vertical_Participant_3" processRef="Process_3" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="true" />
+  <bpmn:process id="Process_2" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_17fkurg">
+      <bpmn:lane id="Vertical_Lane_1" name="Vertical_Lane_1" />
+      <bpmn:lane id="Vertical_Lane_2" name="Vertical_Lane_2" />
+    </bpmn:laneSet>
+  </bpmn:process>
+  <bpmn:process id="Process_3" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_04c017w">
+      <bpmn:lane id="Vertical_Lane_3" name="Vertical_Lane_3" />
+      <bpmn:lane id="Vertical_Lane_4" name="Vertical_Lane_4">
+        <bpmn:childLaneSet id="LaneSet_1eow6b9">
+          <bpmn:lane id="V_Lane_5" name="V_Lane_5" />
+          <bpmn:lane id="V_Lane_6" name="V_Lane_6" />
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPVertical_Lane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_06757og_di" bpmnElement="Vertical_Participant_1" isHorizontal="false">
+        <dc:Bounds x="0" y="0" width="250" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0ae1cne_di" bpmnElement="Vertical_Participant_2" isHorizontal="false">
+        <dc:Bounds x="350" y="700" width="250" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_030yoo3_di" bpmnElement="Vertical_Lane_1" isHorizontal="false">
+        <dc:Bounds x="350" y="730" width="130" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Vertical_Lane_1bwlv2s_di" bpmnElement="Vertical_Lane_2" isHorizontal="false">
+        <dc:Bounds x="480" y="730" width="120" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_01wmlzw_di" bpmnElement="Vertical_Participant_3" isHorizontal="false">
+        <dc:Bounds x="700" y="1400" width="250" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0jco8kr_di" bpmnElement="Vertical_Lane_3" isHorizontal="false">
+        <dc:Bounds x="700" y="1430" width="125" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0zojmuw_di" bpmnElement="Vertical_Lane_4" isHorizontal="false">
+        <dc:Bounds x="825" y="1430" width="125" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Vertical_Lane_1xlpjnj_di" bpmnElement="V_Lane_5" isHorizontal="false">
+        <dc:Bounds x="825" y="1460" width="63" height="540" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0k03ea4_di" bpmnElement="V_Lane_6" isHorizontal="false">
+        <dc:Bounds x="888" y="1460" width="62" height="540" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

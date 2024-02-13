@@ -181,12 +181,12 @@ describe('features/modeling/behavior - attach events', function() {
 
           ids.forEach(function(id) {
 
-            it('should copy event definition', inject(function(elementRegistry, modeling) {
+            it('should copy event definition ' + id, inject(function(elementRegistry, modeling) {
 
               // given
               var element = elementRegistry.get(id),
                   elementBo = getBusinessObject(element),
-                  eventDefinitions = elementBo.eventDefinitions,
+                  eventDefinitions = elementBo.get('eventDefinitions'),
                   task = elementRegistry.get('Task_1');
 
               // when

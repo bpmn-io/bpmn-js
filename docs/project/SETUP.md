@@ -58,4 +58,4 @@ Execute `npm run all` on each project. Things should be fine.
 
 ### Setup via Script
 
-The whole setup can be automated through setup scripts for [Linux/OS X](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/setup.sh) and [Windows](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/setup.bat).
+The whole setup can be automated through setup scripts for [Linux/OS X](./setup.sh) and [Windows](./setup.bat).

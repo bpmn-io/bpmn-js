@@ -94,6 +94,40 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
     );
 
 
+    it('should keep isHorizontal=true when participant is moved',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var participant = elementRegistry.get('Horizontal_Participant');
+
+        // when
+        modeling.moveElements([ participant ], { x: 0, y: 0 });
+
+        // then
+        var isHorizontal = getDi(participant).get('isHorizontal');
+
+        expect(isHorizontal).to.be.true;
+      })
+    );
+
+
+    it('should keep isHorizontal=false when participant is moved',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var participant = elementRegistry.get('Vertical_Participant');
+
+        // when
+        modeling.moveElements([ participant ], { x: 0, y: 0 });
+
+        // then
+        var isHorizontal = getDi(participant).get('isHorizontal');
+
+        expect(isHorizontal).to.be.false;
+      })
+    );
+
+
     it('should set isHorizontal=true when lane is moved',
       inject(function(elementRegistry, modeling) {
 
@@ -107,6 +141,40 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
         var isHorizontal = getDi(lane).get('isHorizontal');
 
         expect(isHorizontal).to.be.true;
+      })
+    );
+
+
+    it('should keep isHorizontal=true when lane is moved',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var lane = elementRegistry.get('Horizontal_Lane');
+
+        // when
+        modeling.moveElements([ lane ], { x: 0, y: 0 });
+
+        // then
+        var isHorizontal = getDi(lane).get('isHorizontal');
+
+        expect(isHorizontal).to.be.true;
+      })
+    );
+
+
+    it('should keep isHorizontal=false when lane is moved',
+      inject(function(elementRegistry, modeling) {
+
+        // given
+        var lane = elementRegistry.get('Vertical_Lane');
+
+        // when
+        modeling.moveElements([ lane ], { x: 0, y: 0 });
+
+        // then
+        var isHorizontal = getDi(lane).get('isHorizontal');
+
+        expect(isHorizontal).to.be.false;
       })
     );
 

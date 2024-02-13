@@ -5,6 +5,7 @@ import {
 } from 'test/TestHelper';
 
 import {
+  attr as svgAttr,
   create as svgCreate
 } from 'tiny-svg';
 
@@ -13,13 +14,22 @@ import rendererModule from 'lib/draw';
 import modelingModule from 'lib/features/modeling';
 
 import {
-  query as domQuery
+  query as domQuery,
+  queryAll as domQueryAll
 } from 'min-dom';
+
+import { getVisual } from 'diagram-js/lib/util/GraphicsUtil';
 
 import { isAny } from 'lib/features/modeling/util/ModelingUtil';
 
+import { isExpanded } from 'lib/util/DiUtil';
+
+import { isPlane } from 'lib/util/DrilldownUtil';
+
 import {
-  getDi
+  getDi,
+  black,
+  white
 } from 'lib/draw/BpmnRenderUtil';
 
 import customRendererModule from './custom-renderer';
@@ -197,6 +207,15 @@ describe('draw - bpmn renderer', function() {
 
   it('should render pools', function() {
     var xml = require('../../fixtures/bpmn/draw/pools.bpmn');
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      checkErrors(result.error, result.warnings);
+    });
+  });
+
+
+  it('should render vertical pools', function() {
+    var xml = require('../../fixtures/bpmn/draw/vertical-pools.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
@@ -561,6 +580,34 @@ describe('draw - bpmn renderer', function() {
         });
       }));
 
+
+      describe('events', function() {
+
+        const diagramXML = require('../../fixtures/bpmn/draw/events.bpmn');
+
+        beforeEach(bootstrapModeler(diagramXML, {
+          bpmnRenderer: {
+            defaultFillColor: defaultFillColor,
+            defaultStrokeColor: defaultStrokeColor,
+            defaultLabelColor: defaultLabelColor
+          }
+        }));
+
+        it('should not fill multiple parallel events', inject(function(elementRegistry) {
+
+          // given
+          var parallelMultiple = elementRegistry.get('StartEvent_multiple_parallel_1');
+          var visual = getVisual(elementRegistry.getGraphics(parallelMultiple));
+          var path = domQuery('path', visual);
+
+          // then
+          expectFillColor(path, defaultFillColor);
+          expectStrokeColor(path, defaultStrokeColor);
+
+        }));
+
+      });
+
     });
 
   });
@@ -659,11 +706,143 @@ describe('draw - bpmn renderer', function() {
 
   });
 
-});
+
+  describe('attrs', function() {
+
+    describe('colors', function() {
+
+      const diagramXML = require('../../fixtures/bpmn/kitchen-sink.bpmn');
+
+      class CustomColors {
+        constructor(eventBus) {
+          eventBus.on([ 'render.shape', 'render.connection' ], 100000, (_, context) => {
+            context.attrs = {
+              fill: 'yellow',
+              fillOpacity: 0.1, // should be ignored
+              stroke: 'blue',
+              strokeDasharray: '0, 10', // should be ignored
+              strokeWidth: 10 // should be ignored
+            };
+          });
+        }
+      }
+
+      CustomColors.$inject = [ 'eventBus' ];
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        bpmnRenderer: {
+          defaultFillColor: 'cyan',
+          defaultStrokeColor: 'red'
+        },
+        additionalModules: [
+          {
+            __init__: [ 'customColors' ],
+            customColors: [ 'type', CustomColors ]
+          }
+        ]
+      }));
 
 
+      it('should override colors', inject(function(canvas) {
 
-describe('draw - bpmn renderer - integration', function() {
+        // then
+        var container = canvas.getContainer();
+
+        // expect fill and stroke overridden
+        domQueryAll('.djs-visual *', container).forEach(element => {
+          expect(svgAttr(element, 'fill')).not.to.equal('cyan');
+          expect(svgAttr(element, 'fill')).not.to.equal(white);
+          expect(svgAttr(element, 'stroke')).not.to.equal('red');
+          expect(svgAttr(element, 'stroke')).not.to.equal(black);
+        });
+
+        // expect all others not overridden
+        domQueryAll('.djs-visual *', container).forEach(element => {
+          expect(svgAttr(element, 'stroke-dasharray')).not.to.equal('0, 9000');
+          expect(svgAttr(element, 'stroke-width')).not.to.equal('9000');
+        });
+      }));
+
+    });
+
+
+    describe('bounds', function() {
+
+      const diagramXML = require('../../fixtures/bpmn/kitchen-sink.bpmn');
+
+      class CustomBounds {
+        constructor(eventBus) {
+          eventBus.on('render.shape', 100000, (_, context) => {
+            context.attrs = {
+              width: 200,
+              height: 100,
+              fillOpacity: 0.1, // should be ignored
+              strokeDasharray: '0, 9000', // should be ignored
+              strokeWidth: 9000 // should be ignored
+            };
+          });
+        }
+      }
+
+      CustomBounds.$inject = [ 'eventBus' ];
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        additionalModules: [
+          {
+            __init__: [ 'customBounds' ],
+            customBounds: [ 'type', CustomBounds ]
+          }
+        ]
+      }));
+
+
+      it('should override bounds', inject(function(canvas, elementRegistry) {
+
+        // then
+        var container = canvas.getContainer();
+
+        // expect width and height overridden
+        elementRegistry.filter(element => {
+          return isAny(element, [
+            'bpmn:AdHocSubProcess',
+            'bpmn:Group',
+            'bpmn:Lane',
+            'bpmn:Participant',
+            'bpmn:SubProcess',
+            'bpmn:TextAnnotation',
+            'bpmn:Transaction'
+          ]);
+        }).forEach(element => {
+          if (isPlane(element)) {
+            return;
+          }
+
+          var visual = getVisual(elementRegistry.getGraphics(element));
+
+          var rect = domQuery('rect', visual);
+
+          if (rect) {
+
+            if (isCollapsedSubProcess(element)) {
+              expect(svgAttr(rect, 'width')).to.equal('100');
+              expect(svgAttr(rect, 'height')).to.equal('80');
+            } else {
+              expect(svgAttr(rect, 'width')).to.equal('200');
+              expect(svgAttr(rect, 'height')).to.equal('100');
+            }
+          }
+        });
+
+        // expect all others not overridden
+        domQueryAll('.djs-visual *', container).forEach(element => {
+          expect(svgAttr(element, 'stroke-dasharray')).not.to.equal('0, 9000');
+          expect(svgAttr(element, 'stroke-width')).not.to.equal('9000');
+        });
+      }));
+    });
+
+  });
+
 
   describe('custom icons', function() {
 
@@ -697,3 +876,11 @@ describe('draw - bpmn renderer - integration', function() {
   });
 
 });
+
+function isCollapsedSubProcess(element) {
+  return isAny(element, [
+    'bpmn:SubProcess',
+    'bpmn:AdHocSubProcess',
+    'bpmn:Transaction'
+  ]) && !isExpanded(element);
+}

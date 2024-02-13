@@ -1,38 +1,48 @@
 name: POST_RELEASE
 on:
-  push:
-    tags:
-      - 'v[0-9]+.*'
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        description: 'The released tag'
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        description: 'The released tag'
+        required: true
+
 jobs:
   post-release:
 
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        node-version: [ 16 ]
+        node-version: [ 20 ]
 
     runs-on: ${{ matrix.os }}
     outputs:
       STABLE_RELEASE: ${{ steps.is_stable.outputs.STABLE_RELEASE }}
+    env:
+      TAG: ${{ inputs.tag }}
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-    - name: Set TAG
-      run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+      uses: actions/checkout@v4
     - name: Wait for published
       env:
-        PKG: 'bpmn-js@${{ env.TAG }}'
+        PKG: 'bpmn-js@${{ inputs.tag }}'
       run: tasks/stages/await-published
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Check for stable release
       id: is_stable
       run: |
-        if [[ ${{ env.TAG }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+        if [[ ${{ inputs.tag }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
         then echo "STABLE_RELEASE=true" >> $GITHUB_OUTPUT
         else echo "STABLE_RELEASE=false" >> $GITHUB_OUTPUT
         fi
@@ -64,8 +74,11 @@ jobs:
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: tasks/stages/update-website
+
   update-translations:
     needs: post-release
     secrets: inherit
     if: ${{ needs.post-release.outputs.STABLE_RELEASE == 'true' }}
     uses: ./.github/workflows/UPDATE_TRANSLATIONS.yml
+    with:
+      tag: ${{ inputs.tag }}

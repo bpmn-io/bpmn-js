@@ -64,6 +64,7 @@
 .bjs-breadcrumbs li {
   display: inline-flex;
   padding-bottom: 5px;
+  align-items: center;
 }
 
 .bjs-breadcrumbs li a {

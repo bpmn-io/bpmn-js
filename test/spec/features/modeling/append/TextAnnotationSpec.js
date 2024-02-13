@@ -24,11 +24,11 @@ describe('features/modeling - append text-annotation', function() {
 
     it('in lane');
 
-    it('in participant', inject(function(elementRegistry, modeling) {
+    it('in participant', inject(function(elementRegistry, modeling, canvas) {
 
       // given
       var eventShape = elementRegistry.get('IntermediateCatchEvent_1'),
-          process = elementRegistry.get('Participant_1').businessObject.processRef;
+          collaboration = elementRegistry.get('_Collaboration_2').businessObject;
 
       // when
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
@@ -49,11 +49,11 @@ describe('features/modeling - append text-annotation', function() {
       expect(connecting.targetRef).to.eql(annotation);
 
       // correctly assign artifact parent
-      expect(annotation.$parent).to.eql(process);
-      expect(connecting.$parent).to.eql(process);
+      expect(annotation.$parent).to.eql(collaboration);
+      expect(connecting.$parent).to.eql(collaboration);
 
-      expect(process.artifacts).to.include(annotation);
-      expect(process.artifacts).to.include(connecting);
+      expect(collaboration.artifacts).to.include(annotation);
+      expect(collaboration.artifacts).to.include(connecting);
     }));
 
 
@@ -81,8 +81,8 @@ describe('features/modeling - append text-annotation', function() {
       expect(connecting.targetRef).to.eql(annotation);
 
       // correctly assign artifact parent
-      expect(annotation.$parent.id).to.equal('Transaction_2');
-      expect(connecting.$parent.id).to.equal('Transaction_2');
+      expect(annotation.$parent.id).to.equal('_Collaboration_2');
+      expect(connecting.$parent.id).to.equal('_Collaboration_2');
     }));
 
     it('with right size', inject(function(elementRegistry, elementFactory, modeling) {
@@ -107,7 +107,7 @@ describe('features/modeling - append text-annotation', function() {
 
       // given
       var eventShape = elementRegistry.get('IntermediateCatchEvent_1'),
-          process = elementRegistry.get('Participant_1').businessObject.processRef;
+          collaboration = elementRegistry.get('_Collaboration_2').businessObject;
 
       var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' }),
           annotation = annotationShape.businessObject;
@@ -125,10 +125,10 @@ describe('features/modeling - append text-annotation', function() {
       expect(connecting.sourceRef).to.be.null;
       expect(connecting.targetRef).to.be.null;
       expect(connecting.$parent).to.be.null;
-      expect(process.artifacts).not.to.include(connecting);
+      expect(collaboration.artifacts).not.to.include(connecting);
 
       expect(annotation.$parent).to.be.null;
-      expect(process.artifacts).not.to.include(annotation);
+      expect(collaboration.artifacts).not.to.include(annotation);
     }));
 
   });

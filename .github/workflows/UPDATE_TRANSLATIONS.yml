@@ -1,7 +1,17 @@
 name: UPDATE_TRANSLATIONS
 on:
-- workflow_call
-- workflow_dispatch
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        description: 'The released tag'
+        required: true
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        description: 'The released tag'
+        required: true
 
 jobs:
   update-translations:
@@ -9,15 +19,15 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        node-version: [ 16 ]
+        node-version: [ 20 ]
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Use Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -27,4 +37,5 @@ jobs:
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
         REVIEWERS: 'bpmn-io/modeling-dev'
+        TAG: ${{ inputs.tag }}
       run: tasks/stages/update-translations
