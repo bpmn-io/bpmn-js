@@ -88,6 +88,34 @@ describe('features/interaction-events', function() {
   });
 
 
+  describe('vertical participant hits', function() {
+
+    var diagramXML = require('test/fixtures/bpmn/collaboration-vertical.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it.only('should create hit zones adjusted to vertical participant', inject(function(elementRegistry) {
+
+      // given
+      var participant = elementRegistry.get('Participant_1'),
+          hitZones = getHitZones(participant);
+
+      // then
+      expectSize(hitZones.all[0], { width: participant.width, height: 30 });
+    }));
+
+    // TODO: implement
+    it('should create hit zones adjusted to vertical lane');
+  });
+
+
   describe('sub process hits', function() {
 
     var diagramXML = require('test/fixtures/bpmn/containers.bpmn');
@@ -151,4 +179,30 @@ function expectToHaveChildren(className, expectedCount, element) {
     'expected ' + element.id + ' to have ' + expectedCount +
     ' children mat ' + selector + ' but got ' + realCount
   ).to.eql(expectedCount);
+}
+
+function getHitZones(element) {
+  var elementRegistry = getBpmnJS().get('elementRegistry'),
+      gfx = elementRegistry.getGraphics(element);
+
+  return {
+    all: domQueryAll('.' + HIT_ALL_CLS, gfx),
+    click: domQueryAll('.' + HIT_CLICK_STROKE_CLS, gfx),
+    noMove: domQueryAll('.' + HIT_NO_MOVE_CLS, gfx)
+  };
+}
+
+function expectSize(element, expectedSize) {
+  var size = getSize(element);
+
+  expect(size.width).to.eql(expectedSize.width);
+  expect(size.height).to.eql(expectedSize.height);
+}
+
+function getSize(element) {
+  const bbox = element.getBBox();
+  return {
+    width: bbox.width,
+    height: bbox.height
+  };
 }

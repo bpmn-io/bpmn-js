@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_pHDz0KojEeOJhIBv1RySdg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.20.0-dev" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:collaboration id="_Collaboration_2">
-    <bpmn2:participant id="Participant_0slfi8f" name="Vertical Participant" processRef="Process_1actwad" />
+    <bpmn2:participant id="Participant_1" name="Vertical Participant" processRef="Process_1actwad" />
     <bpmn2:participant id="Participant_0ylmo80" name="Vertical Participant" processRef="Process_0wthq21" />
     <bpmn2:messageFlow id="Flow_10yw2g3" sourceRef="Activity_12bdr6c" targetRef="Activity_1yln18q" />
   </bpmn2:collaboration>
@@ -71,7 +71,7 @@
         <di:waypoint x="250" y="320" />
         <di:waypoint x="250" y="402" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Participant_0slfi8f_di" bpmnElement="Participant_0slfi8f" isHorizontal="false">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="false">
         <dc:Bounds x="570" y="84" width="300" height="400" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
