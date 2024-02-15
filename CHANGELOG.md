@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.0.1
+
+* `FIX`: fix rendering of gateway without marker ([#2102](https://github.com/bpmn-io/bpmn-js/pull/2102))
+
 ## 17.0.0
 
 * `FEAT`: add to selection through SHIFT ([bpmn-io/diagram-js#796](https://github.com/bpmn-io/diagram-js/pull/851), [#2053](https://github.com/bpmn-io/bpmn-js/issues/2053))
