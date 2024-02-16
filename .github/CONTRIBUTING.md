@@ -84,16 +84,6 @@ npm run all
 
 Create a [pull request](#create-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
-
-### Adhere to the Code Style
-
-In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
-
-* Use modules (`import` / `export (default)`)
-* __Do NOT__ use ES language constructs (`class`, `const`, ...) in sources
-
-__Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
-
 ### Adhere to the Unit Test Style
 
 In order to retrieve a sign-off for your contribution, it needs to be sufficiently and well tested. Please structure your unit tests into **given**, **when** and **then** ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L116), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L38)). To increase overall readability and understandability please also leave two empty lines before `describe(...)`, `it(...)` or *setup* blocks on the same indentation level ([ModelerSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/ModelerSpec.js#L49), [ResizeBehaviorSpec example](https://github.com/bpmn-io/bpmn-js/blob/develop/test/spec/features/modeling/behavior/ResizeBehaviorSpec.js#L36)).
