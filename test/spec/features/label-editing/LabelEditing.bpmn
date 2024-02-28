@@ -3,6 +3,8 @@
   <bpmn:collaboration id="Collaboration_1o0amh9">
     <bpmn:participant id="Participant_1" name="FOO BAR" processRef="Process_1" />
     <bpmn:participant id="Participant_2" />
+    <bpmn:participant id="Participant_3" name="VER" processRef="Process_3" />
+    <bpmn:participant id="Participant_4" name="CAL" />
     <bpmn:messageFlow id="MessageFlow_1" name="FOO" sourceRef="Task_1fo1fvh" targetRef="Participant_2" />
     <bpmn:textAnnotation id="TextAnnotation_1">    <bpmn:text>FOO</bpmn:text>
 </bpmn:textAnnotation>
@@ -75,6 +77,12 @@
   <bpmn:category id="Category_1">
     <bpmn:categoryValue id="CategoryValue_1" value="FOO" />
   </bpmn:category>
+  <bpmn:process id="Process_3" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_0qq17vw">
+      <bpmn:lane id="Vertical_Lane_2" name="TI" />
+      <bpmn:lane id="Vertical_Lane_1" />
+    </bpmn:laneSet>
+  </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1o0amh9">
       <bpmndi:BPMNShape id="Participant_15tkgjw_di" bpmnElement="Participant_1">
@@ -192,6 +200,21 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_0kzj58d_di" bpmnElement="Participant_2">
         <dc:Bounds x="161" y="646" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_09pdsq3_di" bpmnElement="Participant_3" isHorizontal="false">
+        <dc:Bounds x="900" y="122" width="250" height="600" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1ja5e3n_di" bpmnElement="Vertical_Lane_2" isHorizontal="false">
+        <dc:Bounds x="1025" y="152" width="125" height="570" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0u3fowr_di" bpmnElement="Vertical_Lane_1" isHorizontal="false">
+        <dc:Bounds x="900" y="152" width="125" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_03y1uz8_di" bpmnElement="Participant_4" isHorizontal="false">
+        <dc:Bounds x="1178" y="122" width="60" height="600" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataOutput_di" bpmnElement="DataOutput">
         <dc:Bounds x="265" y="150" width="34" height="40" />

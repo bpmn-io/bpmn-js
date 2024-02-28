@@ -246,7 +246,7 @@ describe('features/modeling - replace element behavior', function() {
 
             // then
             expect(transaction.children).to.have.length(1);
-            expect(endEventAfter.businessObject.eventDefinitions).to.exist;
+            expect(endEventAfter.businessObject.get('eventDefinitions')).not.to.be.empty;
           })
         );
 
@@ -273,7 +273,7 @@ describe('features/modeling - replace element behavior', function() {
 
             // then
             expect(transaction.children).to.have.length(0);
-            expect(endEventAfter.businessObject.eventDefinitions).not.to.exist;
+            expect(endEventAfter.businessObject.get('eventDefinitions')).to.be.empty;
           })
         );
 
@@ -302,7 +302,7 @@ describe('features/modeling - replace element behavior', function() {
 
             // then
             expect(transaction.children).to.have.length(1);
-            expect(endEventAfter.businessObject.eventDefinitions).to.exist;
+            expect(endEventAfter.businessObject.get('eventDefinitions')).not.to.be.empty;
           })
         );
 
@@ -358,7 +358,7 @@ describe('features/modeling - replace element behavior', function() {
             })[0];
 
             // then
-            expect(afterBoundaryEvent.businessObject.eventDefinitions).exist;
+            expect(afterBoundaryEvent.businessObject.get('eventDefinitions')).not.to.be.empty;
             expect(afterBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
             expect(transaction.attachers).to.have.length(1);
           })
@@ -387,7 +387,7 @@ describe('features/modeling - replace element behavior', function() {
             })[0];
 
             // then
-            expect(movedBoundaryEvent.businessObject.eventDefinitions).not.to.exist;
+            expect(movedBoundaryEvent.businessObject.get('eventDefinitions')).to.be.empty;
             expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(subProcess.businessObject);
             expect(movedBoundaryEvent.parent).to.equal(process);
 
@@ -421,7 +421,7 @@ describe('features/modeling - replace element behavior', function() {
             })[0];
 
             // then
-            expect(movedBoundaryEvent.businessObject.eventDefinitions).to.exist;
+            expect(movedBoundaryEvent.businessObject.get('eventDefinitions')).not.to.be.empty;
             expect(movedBoundaryEvent.businessObject.attachedToRef).to.equal(transaction.businessObject);
 
             expect(movedBoundaryEvent.host).to.equal(transaction);
@@ -524,7 +524,7 @@ describe('features/modeling - replace element behavior', function() {
         var createdEvent = elementRegistry.get(id);
 
         expect(createdEvent).to.exist;
-        expect(createdEvent.businessObject.eventDefinitions).to.not.exist;
+        expect(createdEvent.businessObject.get('eventDefinitions')).to.be.empty;
       })
     );
 
@@ -546,9 +546,9 @@ describe('features/modeling - replace element behavior', function() {
         var createdEvent = elementRegistry.get(id);
 
         expect(createdEvent).to.eql(startEvent);
-        expect(createdEvent.businessObject.eventDefinitions).to.have.lengthOf(1);
+        expect(createdEvent.businessObject.get('eventDefinitions')).to.have.lengthOf(1);
         expect(
-          is(createdEvent.businessObject.eventDefinitions[0], 'bpmn:TimerEventDefinition')
+          is(createdEvent.businessObject.get('eventDefinitions')[0], 'bpmn:TimerEventDefinition')
         ).to.be.true;
       })
     );
@@ -573,7 +573,7 @@ describe('features/modeling - replace element behavior', function() {
         var createdEvent = elementRegistry.get(id);
 
         expect(createdEvent).to.exist;
-        expect(createdEvent.businessObject.eventDefinitions).not.to.exist;
+        expect(createdEvent.businessObject.get('eventDefinitions')).to.be.empty;
         expect(createdEvent.businessObject.get('isInterrupting')).to.be.true;
       })
     );

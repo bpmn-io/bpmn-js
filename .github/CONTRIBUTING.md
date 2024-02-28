@@ -37,20 +37,20 @@ Learn how to set up the project locally, make changes, and contribute bug fixes 
 
 ### Setup the Project
 
-The project development runs on top of the [diagram-js](https://github.com/bpmn-io/diagram-js) master branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
+The project development runs on top of the [diagram-js](https://github.com/bpmn-io/diagram-js) `develop` branch. The following code snippet sets up both libraries linking diagram-js to bpmn-js.
 
 ```sh
 mkdir bpmn.io
 cd bpmn.io
 
-git clone git@github.com:bpmn-io/diagram-js.git
+git clone git@github.com:bpmn-io/diagram-js.git -b develop
 (cd diagram-js && npm i)
 
 git clone git@github.com:bpmn-io/bpmn-js.git
 (cd bpmn-js && npm install && npm link ../diagram-js)
 ```
 
-For details consult our in depth [setup guide](https://github.com/bpmn-io/bpmn-js/blob/master/docs/project/SETUP.md).
+For details consult our in depth [setup guide](../docs/project/SETUP.md).
 
 
 ### Build and Run the Project
@@ -70,7 +70,7 @@ npm run dev
 You may also run against different browsers:
 
 ```sh
-TEST_BROWSERS=Firefox,Safari npm run dev
+TEST_BROWSERS=Firefox npm run dev
 ```
 
 Build, lint, and test the project, just as the CI does.
@@ -82,17 +82,7 @@ npm run all
 
 ### Discuss Code Changes
 
-Create a [pull request](#Create-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
-
-
-### Adhere to the Code Style
-
-In addition to our automatically enforced [lint rules](https://github.com/bpmn-io/eslint-plugin-bpmn-io), please adhere to the following conventions:
-
-* Use modules (`import` / `export (default)`)
-* __Do NOT__ use ES language constructs (`class`, `const`, ...) in sources
-
-__Rationale:__ People should be able to consume parts of the library with an ES module aware bundler such as [Webpack](https://webpack.js.org/) or [Rollup](https://rollupjs.org) without the need to use a transpiler such as [Babel](https://babeljs.io/).
+Create a [pull request](#create-a-pull-request) if you would like to have an in-depth discussion about some piece of code.
 
 ### Adhere to the Unit Test Style
 

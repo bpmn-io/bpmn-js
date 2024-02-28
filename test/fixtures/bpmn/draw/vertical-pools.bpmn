@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Camunda Modeler" exporterVersion="5.16.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <collaboration id="Collaboration_0m9vq4y">
+    <participant id="Participant_00h09d6" name="Collapsed Pool" />
+    <participant id="Participant_1wpkruh" name="Extended Pool" processRef="Process_01t5csh" />
+    <participant id="Participant_1xkqrsy" name="Pool with Lanes" processRef="Process_10fpr09" />
+  </collaboration>
+  <process id="Process_01t5csh" isExecutable="false" />
+  <process id="Process_10fpr09" isExecutable="false">
+    <laneSet id="LaneSet_1cmncwp">
+      <lane id="Lane_07czuri" name="Single Lane" />
+      <lane id="Lane_1tqhum3" name="Lane with Sublane">
+        <childLaneSet id="LaneSet_1xtuknm">
+          <lane id="Lane_0amfnv8" name="Sublane" />
+          <lane id="Lane_0juuif9" name="Sublane 2" />
+        </childLaneSet>
+      </lane>
+    </laneSet>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0m9vq4y">
+      <bpmndi:BPMNShape id="Participant_050dim5_di" bpmnElement="Participant_00h09d6" isHorizontal="false">
+        <omgdc:Bounds y="160" x="57" height="600" width="60" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1wpkruh_di" bpmnElement="Participant_1wpkruh" isHorizontal="false">
+        <omgdc:Bounds y="160" x="165" height="600" width="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1xkqrsy_di" bpmnElement="Participant_1xkqrsy" isHorizontal="false">
+        <omgdc:Bounds y="160" x="460" height="600" width="400" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_07czuri_di" bpmnElement="Lane_07czuri" isHorizontal="false">
+        <omgdc:Bounds y="190" x="460" height="570" width="130" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1tqhum3_di" bpmnElement="Lane_1tqhum3" isHorizontal="false">
+        <omgdc:Bounds y="190" x="590" height="570" width="270" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0amfnv8_di" bpmnElement="Lane_0amfnv8" isHorizontal="false">
+        <omgdc:Bounds y="220" x="590" height="540" width="140" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0juuif9_di" bpmnElement="Lane_0juuif9" isHorizontal="false">
+        <omgdc:Bounds y="220" x="730" height="540" width="130" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -269,6 +269,74 @@ describe('features/modeling/behavior - fix hover', function() {
   });
 
 
+  describe('Annotation', function() {
+
+    var diagramXML = require('./FixHoverBehavior.annotation.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    describe('create', function() {
+
+      it('should <create.hover> root', inject(
+        function(dragging, elementFactory, elementRegistry, create, canvas) {
+
+          // given
+          var task = elementRegistry.get('Task');
+
+          var annotation = elementFactory.createShape({ type: 'bpmn:TextAnnotation' });
+
+          create.start(canvasEvent({ x: 0, y: 0 }), annotation, true);
+
+          // when
+          dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(annotation.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
+
+    describe('move', function() {
+
+      it('should <shape.move.hover> root', inject(
+        function(dragging, elementRegistry, move, canvas) {
+
+          // given
+          var task = elementRegistry.get('Task');
+          var annotation = elementRegistry.get('TextAnnotation_1');
+
+          move.start(canvasEvent({ x: 175, y: 150 }), annotation, true);
+
+          // when
+          dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          dragging.end();
+
+          // then
+          expect(annotation.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
+  });
+
+
   describe('connect lane', function() {
 
     var diagramXML = require('./FixHoverBehavior.lane-connect.bpmn');
@@ -608,6 +676,48 @@ describe('features/modeling/behavior - fix hover', function() {
 
         // then
         expect(moveEndSpy).to.have.been.calledOnce;
+      }
+    ));
+
+  });
+
+
+  describe('space tool', function() {
+
+    var diagramXML = require('./FixHoverBehavior.participant.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    it('should <spaceTool.move> participant', inject(
+      function(dragging, elementRegistry, spaceTool) {
+
+        // given
+        var lane = elementRegistry.get('Lane_1'),
+            participant = elementRegistry.get('Participant_1');
+
+        spaceTool.activateMakeSpace(canvasEvent({ x: 150, y: 0 }));
+
+        expect(participant.width).to.equal(600);
+
+        // when
+        dragging.hover({ element: lane });
+
+        dragging.move(canvasEvent({ x: 250, y: 0 }, {
+          button: 0,
+          shiftKey: true
+        }));
+
+        dragging.end();
+
+        // then
+        expect(participant.width).to.equal(700);
       }
     ));
 

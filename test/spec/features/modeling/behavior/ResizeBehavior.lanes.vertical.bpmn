@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Vertical_Participant" name="Vertical_Participant" processRef="Process" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Vertical_Lane_A" name="Vertical_Lane_A" />
+      <bpmn:lane id="Vertical_Lane_B_0" name="Vertical_Lane_B_0">
+        <bpmn:childLaneSet xsi:type="bpmn:tLaneSet">
+          <bpmn:lane id="Vertical_Lane_B_1" name="Vertical_Lane_B_1" />
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent" />
+    <bpmn:task id="Task" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="Participant_di" bpmnElement="Vertical_Participant" isHorizontal="false">
+        <dc:Bounds x="49" y="123" width="310" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_di" bpmnElement="StartEvent">
+        <dc:Bounds x="96" y="210" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="132" y="183" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_A_di" bpmnElement="Vertical_Lane_A" isHorizontal="false">
+        <dc:Bounds x="49" y="153" width="132" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_B_0_di" bpmnElement="Vertical_Lane_B_0" isHorizontal="false">
+        <dc:Bounds x="181" y="153" width="178" height="570" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="203.42637644046096" y="345.84507042253523" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_B_1_di" bpmnElement="Vertical_Lane_B_1" isHorizontal="false">
+        <dc:Bounds x="181" y="183" width="178" height="540" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

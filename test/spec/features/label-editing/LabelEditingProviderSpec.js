@@ -500,6 +500,10 @@ describe('features - label-editing', function() {
 
       it('pool, collapsed', directEdit('Participant_2'));
 
+      it('vertical pool', directEdit('Participant_3'));
+
+      it('vertical pool, collapsed', directEdit('Participant_4'));
+
 
       it('lane with label', directEdit('Lane_1'));
 
@@ -926,6 +930,182 @@ describe('features - label-editing', function() {
               y: mid.y - (30 * zoom) / 2,
               width: bounds.height,
               height: 30 * zoom
+            });
+          }
+        ));
+
+      });
+
+
+      describe('collapsed pools', function() {
+
+        it('[zoom 1] should have width/height of element', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_2');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: bounds.height
+            });
+          }
+        ));
+
+
+        it('[zoom 1.5] should have width/height of element', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1.5;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_2');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: bounds.height
+            });
+          }
+        ));
+
+      });
+
+
+      describe('vertical pools/lanes', function() {
+
+        it('[zoom 1] should have width of element width, height of 30', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_3');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: 30 * zoom
+            });
+          }
+        ));
+
+
+        it('[zoom 1.5] should have width of element width, height of 30', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1.5;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_3');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: bounds.x,
+              y: bounds.y,
+              width: bounds.width,
+              height: 30 * zoom
+            });
+          }
+        ));
+
+      });
+
+
+      describe('vertical collapsed pools', function() {
+
+        it('[zoom 1] should have width/height of element', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_4');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - bounds.height / 2,
+              y: mid.y - bounds.width / 2,
+              width: bounds.height,
+              height: bounds.width
+            });
+          }
+        ));
+
+
+        it('[zoom 1.5] should have width/height of element', inject(
+          function(canvas, directEditing, elementRegistry) {
+
+            // given
+            var zoom = 1.5;
+
+            canvas.zoom(zoom);
+
+            var pool = elementRegistry.get('Participant_4');
+
+            var bounds = canvas.getAbsoluteBBox(pool);
+            var mid = {
+              x: bounds.x + bounds.width / 2,
+              y: bounds.y + bounds.height / 2
+            };
+
+            // when
+            directEditing.activate(pool);
+
+            // then
+            expectBounds(directEditing._textbox.parent, {
+              x: mid.x - bounds.height / 2,
+              y: mid.y - bounds.width / 2,
+              width: bounds.height,
+              height: bounds.width
             });
           }
         ));

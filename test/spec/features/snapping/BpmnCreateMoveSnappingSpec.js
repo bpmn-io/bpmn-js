@@ -54,7 +54,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
       var diagramXML = require('./BpmnCreateMoveSnapping.process.bpmn');
 
 
-      it('should snap particpant if constrained', function(done) {
+      it('should snap participant if constrained', function(done) {
 
         bootstrapModeler(diagramXML, {
           container: TestContainer.get(this),

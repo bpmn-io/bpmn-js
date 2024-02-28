@@ -123,6 +123,118 @@ describe('features/modeling - delete lane', function() {
 });
 
 
+describe('features/modeling - delete vertical lane', function() {
+
+  var diagramXML = require('./lanes.vertical.bpmn');
+
+  var testModules = [ coreModule, modelingModule ];
+
+  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+  it('should remove first Lane', inject(function(elementRegistry, modeling) {
+
+    // given
+    var laneShape = elementRegistry.get('Vertical_Lane_A'),
+        rightSideLaneShape = elementRegistry.get('Vertical_Lane_B'),
+        rightSideLaneBounds = getBounds(rightSideLaneShape);
+
+    // when
+    modeling.removeShape(laneShape);
+
+    // then
+    expect(rightSideLaneShape).to.have.bounds({
+      x: rightSideLaneBounds.x - laneShape.width,
+      y: rightSideLaneBounds.y,
+      width: rightSideLaneBounds.width + laneShape.width,
+      height: rightSideLaneBounds.height
+    });
+
+  }));
+
+
+  it('should remove last Lane', inject(function(elementRegistry, modeling) {
+
+    // given
+    var laneShape = elementRegistry.get('Vertical_Lane_B'),
+        leftSideLaneShape = elementRegistry.get('Vertical_Lane_A'),
+        leftSideLaneBounds = getBounds(leftSideLaneShape);
+
+    // when
+    modeling.removeShape(laneShape);
+
+    // then
+    expect(leftSideLaneShape).to.have.bounds({
+      x: leftSideLaneBounds.x,
+      y: leftSideLaneBounds.y,
+      width: leftSideLaneBounds.width + laneShape.width,
+      height: leftSideLaneBounds.height
+    });
+
+  }));
+
+
+  describe('three lanes', function() {
+
+    it('should remove middle Lane', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Nested_Vertical_Lane_B'),
+          leftSideLaneShape = elementRegistry.get('Nested_Vertical_Lane_A'),
+          leftSideLaneBounds = getBounds(leftSideLaneShape),
+          rightSideLaneShape = elementRegistry.get('Nested_Vertical_Lane_C'),
+          rightSideLaneBounds = getBounds(rightSideLaneShape);
+
+      // when
+      modeling.removeShape(laneShape);
+
+      // then
+      expect(leftSideLaneShape).to.have.bounds({
+        x: leftSideLaneBounds.x,
+        y: leftSideLaneBounds.y,
+        width: leftSideLaneBounds.width + laneShape.width / 2,
+        height: leftSideLaneBounds.height
+      });
+
+      expect(rightSideLaneShape).to.have.bounds({
+        x: rightSideLaneBounds.x - laneShape.width / 2,
+        y: rightSideLaneBounds.y,
+        width: rightSideLaneBounds.width + laneShape.width / 2,
+        height: rightSideLaneBounds.height
+      });
+
+    }));
+
+
+    it('should remove first Lane', inject(function(elementRegistry, modeling) {
+
+      // given
+      var laneShape = elementRegistry.get('Nested_Vertical_Lane_A'),
+          rightSideLaneShape = elementRegistry.get('Nested_Vertical_Lane_B'),
+          rightSideLaneBounds = getBounds(rightSideLaneShape),
+          lastLaneShape = elementRegistry.get('Nested_Vertical_Lane_C'),
+          lastLaneBounds = getBounds(lastLaneShape);
+
+      // when
+      modeling.removeShape(laneShape);
+
+      // then
+      expect(rightSideLaneShape).to.have.bounds({
+        x: rightSideLaneBounds.x - laneShape.width,
+        y: rightSideLaneBounds.y,
+        width: rightSideLaneBounds.width + laneShape.width,
+        height: rightSideLaneBounds.height
+      });
+
+      expect(lastLaneShape).to.have.bounds(lastLaneBounds);
+
+    }));
+
+  });
+
+});
+
+
 // helpers ///////////////
 
 function getBounds(element) {

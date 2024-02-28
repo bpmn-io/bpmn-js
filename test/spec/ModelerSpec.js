@@ -90,6 +90,15 @@ describe('Modeler', function() {
   });
 
 
+  it('should import vertical collaboration', function() {
+    var xml = require('../fixtures/bpmn/collaboration-vertical.bpmn');
+    return createModeler(xml).then(function(result) {
+
+      expect(result.error).not.to.exist;
+    });
+  });
+
+
   it('should import ioSpecification', function() {
     var xml = require('./features/modeling/input-output/DataInputOutput.bpmn');
     return createModeler(xml).then(function(result) {
@@ -178,7 +187,7 @@ describe('Modeler', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
 
-    it('should translate special terms', () => {
+    it('should translate errors', () => {
 
       return createModeler(xml).then(function(result) {
 
@@ -192,18 +201,34 @@ describe('Modeler', function() {
         // given
         var translate = modeler.get('translate');
 
-        var specialTerms = [
+        var errors = [
+          'already rendered {element}',
+          'correcting missing bpmnElement on {plane} to {rootElement}',
+          'diagram not part of bpmn:Definitions',
           'element {element} referenced by {referenced}#{property} not yet drawn',
+          'element required',
           'failed to import {element}',
           'missing {semantic}#attachedToRef',
-          'multiple DI elements defined for {element}'
+          'more than {count} child lanes',
+          'multiple DI elements defined for {element}',
+          'no bpmnElement referenced in {element}',
+          'no diagram to display',
+          'no parent for {element} in {parent}',
+          'no plane for {element}',
+          'no process or collaboration to display',
+          'no shape type specified',
+          'out of bounds release',
+          'unknown di {di} for element {semantic}',
+          'unrecognized flowElement {element} in context {context}',
+          'unsupported bpmnElement for {plane}: {rootElement}',
+          '{semantic}#{side} Ref not specified'
         ];
 
         // assume
         expect(translate).to.exist;
 
         // then
-        specialTerms.forEach(translate);
+        errors.forEach(translate);
       });
 
     });

@@ -429,6 +429,34 @@ describe('features - context-pad', function() {
       })
     );
 
+
+    it('should append gateway with marker', inject(
+      function(dragging, contextPad, elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task_1');
+
+        // when
+        contextPad.open(task);
+
+        contextPad.trigger('dragstart', padEvent('append.gateway'));
+
+        dragging.move(canvasEvent({ x: task.x, y: task.y }));
+        dragging.hover({ element: task });
+        dragging.move(canvasEvent({ x: task.x + task.width + 30, y: task.y }));
+
+        var context = dragging.context(),
+            elements = context.data.elements;
+
+        dragging.end();
+
+        // then
+        expect(elements).to.have.length(1);
+        expect(is(elements[0], 'bpmn:ExclusiveGateway')).to.be.true;
+        expect(elements[0].di.isMarkerVisible).to.be.true;
+      })
+    );
+
   });
 
 
@@ -677,6 +705,36 @@ describe('features - context-pad', function() {
 
       // then
       expect(dragging.context()).to.exist;
+    }));
+
+  });
+
+
+  describe('preview', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat(autoPlaceModule)
+    }));
+
+
+    it('should preview append', inject(function(canvas, elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = padEvent('append.gateway');
+
+      // when
+      contextPad.trigger('hover', event);
+
+      // then
+      expect(canvas.getLayer('complex-preview')).to.exist;
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
     }));
 
   });

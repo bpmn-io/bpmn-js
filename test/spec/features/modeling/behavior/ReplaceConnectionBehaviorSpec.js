@@ -32,8 +32,15 @@ function getConnection(source, target, connectionOrType) {
   });
 }
 
-function expectConnected(source, target, connectionOrType) {
-  expect(getConnection(source, target, connectionOrType)).to.exist;
+function expectConnected(source, target, connectionOrType, attrs) {
+  var connection = getConnection(source, target, connectionOrType);
+  expect(connection).to.exist;
+
+  if (attrs) {
+    Object.keys(attrs).forEach(function(key) {
+      expect(connection.businessObject[key]).to.eql(attrs[key]);
+    });
+  }
 }
 
 function expectNotConnected(source, target, connectionOrType) {
@@ -303,6 +310,38 @@ describe('features/modeling - replace connection', function() {
   });
 
 
+  describe('should replace SequenceFlow <> Association', function() {
+
+    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+
+    beforeEach(bootstrapModeler(processDiagramXML, {
+      modules: testModules
+    }));
+
+    var element;
+
+    beforeEach(inject(function(elementRegistry) {
+      element = function(id) {
+        return elementRegistry.get(id);
+      };
+    }));
+
+
+    it('after replacing', inject(function(bpmnReplace) {
+
+      // given
+      var boundary = element('BoundaryEvent');
+
+      // when
+      bpmnReplace.replaceElement(boundary, { type: 'bpmn:BoundaryEvent', eventDefinitionType: 'bpmn:CompensateEventDefinition' });
+
+      // then
+      expectConnected(element('BoundaryEvent'), element('Task_5'), 'bpmn:Association', { associationDirection: 'One' });
+    }));
+
+  });
+
+
   describe('text/data association', function() {
 
     var processDiagramXML = require('./ReplaceConnectionBehavior.association.bpmn');
@@ -319,42 +358,6 @@ describe('features/modeling - replace connection', function() {
         return elementRegistry.get(id);
       };
     }));
-
-
-    describe('moving text-annotation to participant', function() {
-
-      it('execute', inject(function(modeling, elementRegistry) {
-
-        // given
-        var textAnnotationShape = element('TextAnnotation_1'),
-            targetShape = element('Participant_1');
-
-        // when
-        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
-
-        // then
-        expect(textAnnotationShape.parent).to.eql(targetShape);
-
-        expectNotConnected(textAnnotationShape, targetShape, 'bpmn:TextAnnotation');
-      }));
-
-
-      it('undo', inject(function(modeling, elementRegistry, commandStack) {
-
-        // given
-        var textAnnotationShape = element('TextAnnotation_1'),
-            targetShape = element('Participant_1');
-
-        modeling.moveElements([ textAnnotationShape ], { x: -200, y: 40 }, targetShape);
-
-        // when
-        commandStack.undo();
-
-        // then
-        expectConnected(textAnnotationShape, targetShape, element('Association_1'));
-      }));
-
-    });
 
 
     describe('reconnecting data output association to text annotation', function() {
