@@ -110,7 +110,7 @@
     "webpack": "^5.74.0"
   },
   "dependencies": {
-    "bpmn-moddle": "^8.1.0",
+    "bpmn-moddle": "^9.0.0",
     "diagram-js": "^14.0.0",
     "diagram-js-direct-editing": "^2.1.1",
     "ids": "^1.0.5",
