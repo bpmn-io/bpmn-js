@@ -129,6 +129,121 @@ describe('features/auto-place', function() {
 
   });
 
+  describe('vertical element placement', function() {
+
+    var diagramXML = require('./BpmnAutoPlace.vertical.bpmn');
+
+    before(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        autoPlaceModule,
+        selectionModule
+      ]
+    }));
+
+
+    describe('should place bpmn:FlowNode', function() {
+
+      it('at default distance after Start Event', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'Start_Event',
+        expectedBounds: { x: 570, y: 1088, width: 100, height: 80 }
+      }));
+
+
+      it('at incoming distance after V_Task_0', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_Task_0',
+        expectedBounds: { x: 260, y: 422, width: 100, height: 80 }
+      }));
+
+
+      it('at incoming distance / quorum after V_Task_5', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_Task_5',
+        expectedBounds: { x: 590, y: 452, width: 100, height: 80 }
+      }));
+
+
+      it('at existing outgoing / right of V_Task_2', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_Task_1',
+        expectedBounds: { x: 530, y: 450, width: 100, height: 80 }
+      }));
+
+
+      it('ignoring existing, far away outgoing of V_Task_3', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_Task_3',
+        expectedBounds: { x: 450, y: 1090, width: 100, height: 80 }
+      }));
+
+
+      it('behind bpmn:SubProcess', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_Sub_Process_1',
+        expectedBounds: { x: 699, y: 930, width: 100, height: 80 }
+      }));
+
+    });
+
+
+    describe('should place bpmn:DataStoreReference', function() {
+
+      it('bottom right of source', autoPlace({
+        element: 'bpmn:DataStoreReference',
+        behind: 'V_Task_2',
+        expectedBounds: { x: 310, y: 520, width: 50, height: 50 }
+      }));
+
+
+      it('next to existing', autoPlace({
+        element: 'bpmn:DataStoreReference',
+        behind: 'V_Task_3',
+        expectedBounds: { x: 230, y: 915, width: 50, height: 50 }
+      }));
+
+    });
+
+
+    describe('should place bpmn:TextAnnotation', function() {
+
+      it('bottom right of source', autoPlace({
+        element: 'bpmn:TextAnnotation',
+        behind: 'V_Task_2',
+        expectedBounds: { x: 550, y: 530, width: 100, height: 30 }
+      }));
+
+
+      it('right of existing', autoPlace({
+        element: 'bpmn:TextAnnotation',
+        behind: 'V_Task_3',
+        expectedBounds: { x: 600, y: 840, width: 100, height: 30 }
+      }));
+
+
+      describe('on connection', function() {
+
+        it('bottom right', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'SequenceFlow_1',
+          expectedBounds: { x: 500, y: 445, width: 100, height: 30 }
+        }));
+
+
+        it('right of existing', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'SequenceFlow_1',
+          expectedBounds: { x: 630, y: 445, width: 100, height: 30 }
+        }));
+
+      });
+
+    });
+
+  });
+
 
   describe('integration', function() {
 
@@ -223,6 +338,41 @@ describe('features/auto-place', function() {
   });
 
 
+  describe('vertical multi connection handling', function() {
+
+    var diagramXML = require('./BpmnAutoPlace.vertical.multi-connection.bpmn');
+
+    before(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        autoPlaceModule,
+        selectionModule,
+        labelEditingModule
+      ]
+    }));
+
+
+    it('should ignore multiple source -> target connections', inject(
+      function(autoPlace, elementRegistry, elementFactory, selection, directEditing) {
+
+        // given
+        var element = elementFactory.createShape({ type: 'bpmn:Task' });
+
+        var source = elementRegistry.get('V_TASK_1');
+        var alignedElement = elementRegistry.get('V_TASK_3');
+
+        // when
+        var newShape = autoPlace.append(source, element);
+
+        // then
+        expect(newShape.y).to.eql(alignedElement.y);
+      }
+    ));
+
+  });
+
+
   describe('boundary event connection handling', function() {
 
     var diagramXML = require('./BpmnAutoPlace.boundary-events.bpmn');
@@ -269,6 +419,57 @@ describe('features/auto-place', function() {
       element: 'bpmn:Task',
       behind: 'BOUNDARY_SUBPROCESS_TOP',
       expectedBounds: { x: 275, y: 194, width: 100, height: 80 }
+    }));
+
+  });
+
+
+  describe('vertical boundary event connection handling', function() {
+
+    var diagramXML = require('./BpmnAutoPlace.vertical.boundary-events.bpmn');
+
+    before(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        autoPlaceModule,
+        selectionModule
+      ]
+    }));
+
+
+    it('should place bottom right of V_BOUNDARY_RIGHT', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'V_BOUNDARY_RIGHT',
+      expectedBounds: { x: 420, y: 268, width: 100, height: 80 }
+    }));
+
+
+    it('should place bottom right of V_BOUNDARY_SUBPROCESS_RIGHT', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'V_BOUNDARY_SUBPROCESS_RIGHT',
+      expectedBounds: { x: 740, y: 278, width: 100, height: 80 }
+    }));
+
+
+    it('should place bottom left of V_BOUNDARY_LEFT', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'V_BOUNDARY_LEFT',
+      expectedBounds: { x: 140, y: 268, width: 100, height: 80 }
+    }));
+
+
+    it('should place bottom left of V_BOUNDARY_BOTTOM_LEFT', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'V_BOUNDARY_BOTTOM_LEFT',
+      expectedBounds: { x: 140, y: 438, width: 100, height: 80 }
+    }));
+
+
+    it('should place bottom left of V_BOUNDARY_SUBPROCESS_LEFT', autoPlace({
+      element: 'bpmn:Task',
+      behind: 'V_BOUNDARY_SUBPROCESS_LEFT',
+      expectedBounds: { x: 420, y: 278, width: 100, height: 80 }
     }));
 
   });

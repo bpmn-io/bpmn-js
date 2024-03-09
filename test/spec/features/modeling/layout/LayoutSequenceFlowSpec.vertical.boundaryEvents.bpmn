@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.20.0">
+  <bpmn:collaboration id="Collaboration_1c6j3sk">
+    <bpmn:participant id="Participant_0gpnzzr" name="Vertical Container" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:task id="Task_Bottom" name="Bottom" />
+    <bpmn:task id="Task_Top" name="Top" />
+    <bpmn:subProcess id="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomCenter" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomLeft" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopRight" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_RightCenter" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomRight1" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_LeftCenter" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopLeft1" attachedToRef="SubProcess" />
+    <bpmn:task id="Task_Right" name="Right" />
+    <bpmn:task id="Task_Left" name="Left" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1c6j3sk">
+      <bpmndi:BPMNShape id="Participant_0gpnzzr_di" bpmnElement="Participant_0gpnzzr" isHorizontal="false">
+        <dc:Bounds x="190" y="50" width="790" height="1000" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0ygk7bh_di" bpmnElement="Task_Right">
+        <dc:Bounds x="860" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_174r9fd_di" bpmnElement="Task_Bottom">
+        <dc:Bounds x="560" y="950" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_0b6k3xo_di" bpmnElement="Task_Top">
+        <dc:Bounds x="560" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1bc634w_di" bpmnElement="Task_Left">
+        <dc:Bounds x="210" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_12qmapm_di" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds x="520" y="390" width="200" height="350" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0s0nl1k_di" bpmnElement="BoundaryEvent_TopLeft1">
+        <dc:Bounds x="540" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_TopCenter_di" bpmnElement="BoundaryEvent_LeftCenter">
+        <dc:Bounds x="502" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0nomac7_di" bpmnElement="BoundaryEvent_BottomRight1">
+        <dc:Bounds x="670" y="722" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_BottomCenter_di" bpmnElement="BoundaryEvent_RightCenter">
+        <dc:Bounds x="702" y="522" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1spolhy_di" bpmnElement="BoundaryEvent_TopRight">
+        <dc:Bounds x="702" y="372" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_13iwzlu_di" bpmnElement="BoundaryEvent_BottomLeft">
+        <dc:Bounds x="502" y="722" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_RightCenter_di" bpmnElement="BoundaryEvent_BottomCenter">
+        <dc:Bounds x="592" y="722" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

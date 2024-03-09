@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_pHDz0KojEeOJhIBv1RySdg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.0-nightly" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="_Collaboration_2">
+    <bpmn2:participant id="Participant_A" name="A" processRef="Process_A" />
+    <bpmn2:participant id="Participant_B" name="B" processRef="Process_B" />
+    <bpmn2:messageFlow id="MessageFlow_1" name="1" sourceRef="Task_B" targetRef="Participant_B" />
+    <bpmn2:messageFlow id="MessageFlow_2" name="2" sourceRef="Participant_B" targetRef="Participant_A" />
+    <bpmn2:messageFlow id="MessageFlow_3" name="3" sourceRef="SubProcess_E" targetRef="SubProcess_G" />
+    <bpmn2:messageFlow id="MessageFlow_4" name="4" sourceRef="Task_A" targetRef="StartEvent_F" />
+    <bpmn2:messageFlow id="MessageFlow_5" name="5" sourceRef="EndEvent_C" targetRef="Participant_B" />
+    <bpmn2:messageFlow id="MessageFlow_6" name="6" sourceRef="Participant_B" targetRef="Task_D" />
+    <bpmn2:messageFlow id="MessageFlow_7" name="7" sourceRef="SubProcess_G" targetRef="Task_D" />
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_A" isExecutable="false">
+    <bpmn2:task id="Task_A" name="A" />
+    <bpmn2:endEvent id="EndEvent_C" name="C">
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_2" />
+    </bpmn2:endEvent>
+    <bpmn2:task id="Task_B" name="B" />
+    <bpmn2:task id="Task_D" name="D" />
+    <bpmn2:subProcess id="SubProcess_E" name="E" />
+  </bpmn2:process>
+  <bpmn2:process id="Process_B" isExecutable="false">
+    <bpmn2:subProcess id="SubProcess_G" name="G" />
+    <bpmn2:startEvent id="StartEvent_F" name="F">
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" />
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
+      <bpmndi:BPMNShape id="Participant_A_di" bpmnElement="Participant_A" isHorizontal="false">
+        <dc:Bounds x="64" y="278" width="237" height="823" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_B_di" bpmnElement="Participant_B" isHorizontal="false">
+        <dc:Bounds x="415" y="222" width="185" height="600" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_F_di" bpmnElement="StartEvent_F">
+        <dc:Bounds x="448" y="300" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="459" y="313" width="90" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_D" bpmnElement="Task_A">
+        <dc:Bounds x="124" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_1" bpmnElement="MessageFlow_1" sourceElement="_BPMNShape_Task_4" targetElement="Participant_B_di">
+        <di:waypoint xsi:type="dc:Point" x="224" y="580" />
+        <di:waypoint xsi:type="dc:Point" x="415" y="580" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="320" y="565" width="90" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_2" bpmnElement="MessageFlow_2" sourceElement="Participant_B_di" targetElement="Participant_A_di">
+        <di:waypoint xsi:type="dc:Point" x="415" y="506" />
+        <di:waypoint xsi:type="dc:Point" x="301" y="506" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="356" y="487" width="90" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_4" bpmnElement="MessageFlow_4" sourceElement="_BPMNShape_Task_D" targetElement="StartEvent_F_di">
+        <di:waypoint xsi:type="dc:Point" x="224" y="390" />
+        <di:waypoint xsi:type="dc:Point" x="387" y="390" />
+        <di:waypoint xsi:type="dc:Point" x="387" y="318" />
+        <di:waypoint xsi:type="dc:Point" x="448" y="318" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="321" y="361" width="90" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_C_di" bpmnElement="EndEvent_C">
+        <dc:Bounds x="178" y="653" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="114" y="666" width="90" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_5" bpmnElement="MessageFlow_5" sourceElement="EndEvent_C_di" targetElement="Participant_B_di">
+        <di:waypoint xsi:type="dc:Point" x="214" y="671" />
+        <di:waypoint xsi:type="dc:Point" x="415" y="671" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="314" y="646" width="90" height="6" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Task_4" bpmnElement="Task_B">
+        <dc:Bounds x="124" y="516" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_D_di" bpmnElement="Task_D">
+        <dc:Bounds x="124" y="723" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_6_di" bpmnElement="MessageFlow_6">
+        <di:waypoint xsi:type="dc:Point" x="415" y="773" />
+        <di:waypoint xsi:type="dc:Point" x="224" y="773" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="289" y="783" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SubProcess_E_di" bpmnElement="SubProcess_E" isExpanded="true">
+        <dc:Bounds x="135" y="855" width="131" height="184" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_G_di" bpmnElement="SubProcess_G" isExpanded="true">
+        <dc:Bounds x="458" y="566" width="122" height="212" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_7_di" bpmnElement="MessageFlow_7">
+        <di:waypoint xsi:type="dc:Point" x="458" y="752" />
+        <di:waypoint xsi:type="dc:Point" x="224" y="752" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="288" y="728" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_3_di" bpmnElement="MessageFlow_3">
+        <di:waypoint xsi:type="dc:Point" x="266" y="902" />
+        <di:waypoint xsi:type="dc:Point" x="362" y="902" />
+        <di:waypoint xsi:type="dc:Point" x="362" y="708" />
+        <di:waypoint xsi:type="dc:Point" x="458" y="708" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="330" y="824" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

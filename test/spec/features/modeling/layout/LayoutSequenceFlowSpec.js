@@ -286,6 +286,274 @@ describe('features/modeling - layout', function() {
   });
 
 
+  describe('vertical boundary events', function() {
+
+    describe('loops', function() {
+
+      var diagramXML = require('./LayoutSequenceFlowSpec.vertical.boundaryEventsLoops.bpmn');
+
+      var testModules = [ coreModule, modelingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      describe('in the corner', function() {
+
+        it('attached top right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopRight', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 628, y: 170 },
+            { x: 648, y: 170 },
+            { x: 648, y: 270 },
+            { x: 610, y: 270 }
+          ]);
+        });
+
+
+        it('attached bottom right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomRight', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 628, y: 338 },
+            { x: 648, y: 338 },
+            { x: 648, y: 270 },
+            { x: 610, y: 270 }
+          ]);
+        });
+
+
+        it('attached bottom left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomLeft', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 242, y: 370 },
+            { x: 222, y: 370 },
+            { x: 222, y: 270 },
+            { x: 260, y: 270 }
+          ]);
+        });
+
+
+        it('attached top left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopLeft', 'SubProcess');
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 242, y: 208 },
+            { x: 222, y: 208 },
+            { x: 222, y: 270 },
+            { x: 260, y: 270 }
+          ]);
+        });
+      });
+
+
+      describe('on the side center', function() {
+
+        var host = 'SubProcess_2';
+
+
+        it('attached top center', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_TopCenter', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 435, y: 412 },
+            { x: 435, y: 392 },
+            { x: 630, y: 392 },
+            { x: 630, y: 530 },
+            { x: 610, y: 530 }
+          ]);
+        });
+
+
+        it('attached center right', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_CenterRight', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 628, y: 530 },
+            { x: 648, y: 530 },
+            { x: 648, y: 410 },
+            { x: 435, y: 410 },
+            { x: 435, y: 430 }
+          ]);
+        });
+
+
+        it('attached bottom center', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_BottomCenter', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 435, y: 648 },
+            { x: 435, y: 668 },
+            { x: 630, y: 668 },
+            { x: 630, y: 530 },
+            { x: 610, y: 530 }
+          ]);
+        });
+
+
+        it('attached center left', function() {
+
+          // when
+          var connection = connect('BoundaryEvent_CenterLeft', host);
+
+          // then
+          expect(connection).to.have.waypoints([
+            { x: 242, y: 530 },
+            { x: 222, y: 530 },
+            { x: 222, y: 410 },
+            { x: 435, y: 410 },
+            { x: 435, y: 430 }
+          ]);
+        });
+      });
+    });
+
+
+    describe('non-loops', function() {
+
+      var diagramXML = require('./LayoutSequenceFlowSpec.vertical.boundaryEvents.bpmn');
+
+      var testModules = [ coreModule, modelingModule ];
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('attached bottom left, orientation left', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomLeft', 'Task_Left');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 502, y: 740 },
+          { x: 260, y: 740 },
+          { x: 260, y: 580 }
+        ]);
+      });
+
+
+      it('attached bottom left, orientation bottom', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomLeft', 'Task_Bottom');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 520, y: 758 },
+          { x: 520, y: 990 },
+          { x: 560, y: 990 }
+        ]);
+      });
+
+
+      it('attached bottom left, orientation right', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomLeft', 'Task_Right');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 502, y: 740 },
+          { x: 482, y: 740 },
+          { x: 482, y: 540 },
+          { x: 860, y: 540 }
+        ]);
+      });
+
+
+      it('attached bottom left, orientation top', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomLeft', 'Task_Top');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 502, y: 740 },
+          { x: 482, y: 740 },
+          { x: 482, y: 140 },
+          { x: 560, y: 140 }
+        ]);
+      });
+
+
+      it('attached right center, orientation right', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_RightCenter', 'Task_Right');
+
+        expect(connection).to.have.waypoints([
+          { x: 738, y: 540 },
+          { x: 860, y: 540 }
+        ]);
+      });
+
+
+      it('attached left center, orientation left', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_LeftCenter', 'Task_Left');
+
+        expect(connection).to.have.waypoints([
+          { x: 502, y: 540 },
+          { x: 310, y: 540 }
+        ]);
+      });
+
+
+      it('attached bottom center, orientation bottom', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomCenter', 'Task_Bottom');
+
+        expect(connection).to.have.waypoints([
+          { x: 610, y: 758 },
+          { x: 610, y: 950 }
+        ]);
+      });
+
+
+      it('attached bottom center, orientation top', function() {
+
+        // when
+        var connection = connect('BoundaryEvent_BottomCenter', 'Task_Top');
+
+        expect(connection).to.have.waypoints([
+          { x: 610, y: 758 },
+          { x: 610, y: 778 },
+          { x: 630, y: 778 },
+          { x: 630, y: 624 },
+          { x: 610, y: 624 },
+          { x: 610, y: 180 }
+        ]);
+      });
+
+    });
+
+  });
+
+
   describe('flow elements', function() {
 
     var diagramXML = require('./LayoutSequenceFlowSpec.flowElements.bpmn');
@@ -553,6 +821,273 @@ describe('features/modeling - layout', function() {
   });
 
 
+  describe('vertical flow elements', function() {
+
+    var diagramXML = require('./LayoutSequenceFlowSpec.vertical.flowElements.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    describe('loops', function() {
+
+      it('should layout loop', function() {
+
+        // when
+        var connection = connect('Task_1', 'Task_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 510, y: 382 },
+          { x: 510, y: 402 },
+          { x: 580, y: 402 },
+          { x: 580, y: 342 },
+          { x: 560, y: 342 }
+        ]);
+      });
+
+
+      it('should NOT relayout loop', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_1'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 531, y: 382 },
+          { x: 531, y: 569 },
+          { x: 510, y: 569 },
+          { x: 510, y: 382 }
+        ]);
+      }));
+
+
+      it('should relayout loop (r:t)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_2'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 560, y: 342 },
+          { x: 580, y: 342 },
+          { x: 580, y: 282 },
+          { x: 510, y: 282 },
+          { x: 510, y: 302 }
+        ]);
+      }));
+
+
+      it('should relayout loop (t:l)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_3'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 510, y: 302 },
+          { x: 510, y: 282 },
+          { x: 440, y: 282 },
+          { x: 440, y: 342 },
+          { x: 460, y: 342 }
+        ]);
+      }));
+
+
+      it('should relayout loop (l:b)', inject(function(elementRegistry) {
+
+        // given
+        var sequenceFlow = elementRegistry.get('SequenceFlow_4'),
+            task = elementRegistry.get('Task_1');
+
+        // when
+        reconnectEnd(sequenceFlow, task, getMid(task));
+
+        // then
+        expect(sequenceFlow).to.have.waypoints([
+          { x: 460, y: 342 },
+          { x: 440, y: 342 },
+          { x: 440, y: 402 },
+          { x: 510, y: 402 },
+          { x: 510, y: 382 }
+        ]);
+      }));
+
+    });
+
+
+    describe('gateway layout', function() {
+
+      it('should layout h:v after Gateway', inject(function() {
+
+        // when
+        var connection = connect('ExclusiveGateway_1', 'BusinessRuleTask_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 577, y: 688 },
+          { x: 530, y: 688 },
+          { x: 530, y: 810 }
+        ]);
+      }));
+
+
+      it('should layout v:h before Gateway', inject(function() {
+
+        // when
+        var connection = connect('BusinessRuleTask_1', 'ParallelGateway_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 530, y: 890 },
+          { x: 530, y: 1015 },
+          { x: 577, y: 1015 }
+        ]);
+      }));
+
+    });
+
+
+    describe('other elements layout', function() {
+
+      it('should layout v:v after StartEvent', inject(function() {
+
+        // when
+        var connection = connect('StartEvent_1', 'Task_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 602, y: 198 },
+          { x: 602, y: 250 },
+          { x: 510, y: 250 },
+          { x: 510, y: 302 }
+        ]);
+      }));
+
+
+      it('should layout v:v after Task', inject(function() {
+
+        // when
+        var connection = connect('ServiceTask_1', 'BusinessRuleTask_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 407, y: 728 },
+          { x: 407, y: 769 },
+          { x: 530, y: 769 },
+          { x: 530, y: 810 }
+        ]);
+      }));
+
+
+      it('should layout v:v after IntermediateEvent', inject(function() {
+
+        // when
+        var connection = connect('IntermediateThrowEvent_1', 'ServiceTask_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 602, y: 524 },
+          { x: 602, y: 586 },
+          { x: 407, y: 586 },
+          { x: 407, y: 648 }
+        ]);
+      }));
+
+
+      it('should layout v:v after IntermediateEvent (bottom to top)', inject(function() {
+
+        // when
+        var connection = connect('IntermediateThrowEvent_1', 'Task_1');
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 602, y: 488 },
+          { x: 602, y: 435 },
+          { x: 510, y: 435 },
+          { x: 510, y: 382 }
+        ]);
+      }));
+
+    });
+
+
+    describe('relayout', function() {
+
+      it('should repair after reconnect end', inject(function() {
+
+        // given
+        var newDocking = { x: 660, y: 300 };
+        var connection = element('SequenceFlow_1');
+
+        // when
+        reconnectEnd(connection, 'ExclusiveGateway_1', newDocking);
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 531, y: 382 },
+          { x: 531, y: 569 },
+          { x: 660, y: 569 },
+          { x: 660, y: 300 }
+        ]);
+      }));
+
+
+      it('should repair after target move', inject(function() {
+
+        // given
+        var delta = { x: 20, y: -30 };
+        var connection = element('SequenceFlow_1');
+
+        // when
+        move('ServiceTask_1', delta);
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 531, y: 382 },
+          { x: 531, y: 569 },
+          { x: 448, y: 569 },
+          { x: 448, y: 618 }
+        ]);
+      }));
+
+
+      it('should repair after source move', inject(function() {
+
+        // given
+        var delta = { x: 20, y: -30 };
+        var connection = element('SequenceFlow_1');
+
+        // when
+        move('Task_1', delta);
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: 551, y: 352 },
+          { x: 551, y: 569 },
+          { x: 428, y: 569 },
+          { x: 428, y: 648 }
+        ]);
+      }));
+
+    });
+
+  });
+
+
   describe('subProcess', function() {
 
     var diagramXML = require('./LayoutSequenceFlowSpec.subProcess.bpmn');
@@ -664,6 +1199,122 @@ describe('features/modeling - layout', function() {
       expect(connection).to.have.waypoints([
         { x: expectedX, y: source.y + source.height },
         { x: expectedX, y: target.y }
+      ]);
+    });
+  });
+
+
+  describe('vertical subProcess', function() {
+
+    var diagramXML = require('./LayoutSequenceFlowSpec.vertical.subProcess.bpmn');
+
+    var testModules = [ coreModule, modelingModule ];
+
+    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+    it('should layout straight between subProcesses (left -> right)', function() {
+
+      // when
+      var connection = connect('SubProcess_Center', 'SubProcess_Right'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedY = getMid(target).y;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: source.x + source.width, y: expectedY },
+        { x: target.x, y: expectedY }
+      ]);
+    });
+
+
+    it('should layout straight between subProcesses (right -> left)', function() {
+
+      // when
+      var connection = connect('SubProcess_Right', 'SubProcess_Center'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedY = getMid(target).y;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: source.x, y: expectedY },
+        { x: target.x + target.width, y: expectedY }
+      ]);
+    });
+
+
+    it('should layout straight between subProcess and task below (subProcess -> task)',
+      function() {
+
+        // when
+        var connection = connect('SubProcess_Center', 'Task_Bottom'),
+            source = connection.source,
+            target = connection.target;
+
+        var expectedX = getMid(target).x;
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: expectedX, y: source.y + source.height },
+          { x: expectedX, y: target.y }
+        ]);
+      }
+    );
+
+
+    it('should layout straight between subProcess and task below (task -> subProcess)',
+      function() {
+
+        // when
+        var connection = connect('Task_Bottom', 'SubProcess_Center'),
+            source = connection.source,
+            target = connection.target;
+
+        var expectedX = getMid(source).x;
+
+        // then
+        expect(connection).to.have.waypoints([
+          { x: expectedX, y: source.y },
+          { x: expectedX, y: target.y + target.height }
+        ]);
+      }
+    );
+
+
+    it('should layout straight between subProcess and task next to it (subProcess -> task)', function() {
+
+      // when
+      var connection = connect('SubProcess_Center', 'Task_Left'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedY = getMid(target).y;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: source.x, y: expectedY },
+        { x: target.x + target.width, y: expectedY }
+      ]);
+    });
+
+
+    it('should layout straight between subProcess and task next to it (task -> subProcess)', function() {
+
+      // when
+      var connection = connect('Task_Left', 'SubProcess_Center'),
+          source = connection.source,
+          target = connection.target;
+
+      var expectedY = getMid(source).y;
+
+      // then
+      expect(connection).to.have.waypoints([
+        { x: source.x + source.width, y: expectedY },
+        { x: target.x, y: expectedY }
       ]);
     });
   });
