@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.1.0
+
+* `FEAT`: handle splitting vertical lanes ([#2101](https://github.com/bpmn-io/bpmn-js/pull/2101))
+
 ## 17.0.2
 
 * `FIX`: create hit boxes for vertical lanes ([#2093](https://github.com/bpmn-io/bpmn-js/issues/2093))
