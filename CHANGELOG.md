@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `diagram-js@10.2.0`
+* `DEPS`: update to `diagram-js-direct-editing@2.1.2`
+
 ## 17.1.0
 
 * `FEAT`: handle splitting vertical lanes ([#2101](https://github.com/bpmn-io/bpmn-js/pull/2101))
