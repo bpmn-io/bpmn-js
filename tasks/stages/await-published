@@ -4,16 +4,21 @@ set -eo pipefail
 shopt -s inherit_errexit nullglob
 
 i=0
+tries=9
 pkg="$PKG"
-until [ $i -gt 10 ]
+until [ $i -gt $tries ]
 do
-  echo "Checking for $pkg in npm registry ($((i+1))/10)"
-  info=$(npm info $pkg)
-  if [[ "$info" != "" ]]; then
+  echo "Checking for $pkg in npm registry ($((i+1))/$((tries+1)))"
+  info=$(npm info $pkg 2> /dev/null || echo "FAILED")
+  if [[ "$info" != "FAILED" ]]; then
     echo "Found."
-    break
+    exit 0
   fi
 
-  i=$((var+1))
-  sleep 15s
+  i=$(($i+1))
+
+  sleep 5s
 done
+
+echo "Not found after $i tries. Giving up."
+exit 1;
