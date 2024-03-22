@@ -13,30 +13,20 @@ jobs:
         node-version: [ 20 ]
 
     runs-on: ${{ matrix.os }}
-    outputs:
-      STABLE_RELEASE: ${{ steps.is_stable.outputs.STABLE_RELEASE }}
-    env:
-      TAG: ${{ inputs.tag }}
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+    - name: Set TAG
+      run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
     - name: Wait for published
       env:
-        PKG: 'bpmn-js@${{ inputs.tag }}'
+        PKG: 'bpmn-js@${{ env.TAG }}'
       run: tasks/stages/await-published
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Check for stable release
-      id: is_stable
-      run: |
-        if [[ ${{ inputs.tag }} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-        then echo "STABLE_RELEASE=true" >> $GITHUB_OUTPUT
-        else echo "STABLE_RELEASE=false" >> $GITHUB_OUTPUT
-        fi
     - name: Update integration test
       env:
         BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
@@ -44,7 +34,6 @@ jobs:
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: tasks/stages/update-integration-test
     - name: Update demo
-      if: ${{ steps.is_stable.outputs.STABLE_RELEASE == 'true' }}
       env:
         BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
@@ -52,24 +41,19 @@ jobs:
         BPMN_IO_DEMO_ENDPOINT: ${{ secrets.BPMN_IO_DEMO_ENDPOINT }}
       run: tasks/stages/update-demo
     - name: Update examples
-      if: ${{ steps.is_stable.outputs.STABLE_RELEASE == 'true' }}
       env:
         BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: tasks/stages/update-examples
     - name: Update website
-      if: ${{ steps.is_stable.outputs.STABLE_RELEASE == 'true' }}
       env:
         BPMN_IO_TOKEN: ${{ secrets.BPMN_IO_TOKEN }}
         BPMN_IO_EMAIL: ${{ secrets.BPMN_IO_EMAIL }}
         BPMN_IO_USERNAME: ${{ secrets.BPMN_IO_USERNAME }}
       run: tasks/stages/update-website
-
-  update-translations:
-    needs: post-release
-    secrets: inherit
-    if: ${{ needs.post-release.outputs.STABLE_RELEASE == 'true' }}
-    uses: ./.github/workflows/UPDATE_TRANSLATIONS.yml
-    with:
-      tag: ${{ inputs.tag }}
+    - name: Update translations
+      secrets: inherit
+      uses: ./.github/workflows/UPDATE_TRANSLATIONS.yml
+      with:
+        tag: ${{ env.TAG }}
