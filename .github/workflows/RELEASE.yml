@@ -41,13 +41,3 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  post-release:
-    needs:
-      - release-please
-      - publish
-    if: ${{ needs.release-please.outputs.release_created }}
-    secrets: inherit
-    uses: ./.github/workflows/POST_RELEASE.yml
-    with:
-      tag: ${{ needs.release-please.outputs.tag }}
