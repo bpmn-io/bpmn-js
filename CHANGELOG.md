@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.2.1](https://github.com/bpmn-io/bpmn-js/compare/v17.2.0...v17.2.1) (2024-03-22)
+
+
+### Bug Fixes
+
+* **popup-menu:** render on top ([06838aa](https://github.com/bpmn-io/bpmn-js/commit/06838aa80cc63364c133e6ce4094f1fd6916f123))
+
 ## 17.2.1
 
 * `FIX`: render popup menu on top
