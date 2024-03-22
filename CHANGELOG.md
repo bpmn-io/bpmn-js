@@ -6,12 +6,17 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.2.1
+
+* `FIX`: render popup menu on top
+* `DEPS`: update to `diagram-js@14.3.1`
+
 ## 17.2.0
 
 * `FEAT`: make popup menu keyboard navigatable
 * `FIX`: address various accessibility issues
 * `FIX`: correct various typing issues
-* `DEPS`: update to `diagram-js@10.3.0`
+* `DEPS`: update to `diagram-js@14.3.0`
 * `DEPS`: update to `diagram-js-direct-editing@2.1.2`
 
 ## 17.1.0
