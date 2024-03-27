@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_00dfyhw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.20.0">
+  <bpmn:collaboration id="Collaboration_0qdgort">
+    <bpmn:participant id="Participant_0ufcvvc" name="Vertical Container" processRef="Process_00i7uqd" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_00i7uqd" isExecutable="true">
+    <bpmn:subProcess id="SubProcess_Right" name="Sub Process Right" />
+    <bpmn:subProcess id="SubProcess_Center" name="Sub Process Top" />
+    <bpmn:task id="Task_Left" name="Left" />
+    <bpmn:task id="Task_Bottom" name="Bottom" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0qdgort">
+      <bpmndi:BPMNShape id="Participant_0ufcvvc_di" bpmnElement="Participant_0ufcvvc" isHorizontal="false">
+        <dc:Bounds x="190" y="80" width="1090" height="830" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16fbgsj_di" bpmnElement="Task_Left">
+        <dc:Bounds x="240" y="260" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fm36cc_di" bpmnElement="Task_Bottom">
+        <dc:Bounds x="410" y="490" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0tbriov_di" bpmnElement="SubProcess_Right" isExpanded="true">
+        <dc:Bounds x="900" y="220" width="350" height="210" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r2w32m_di" bpmnElement="SubProcess_Center" isExpanded="true">
+        <dc:Bounds x="410" y="130" width="350" height="210" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
