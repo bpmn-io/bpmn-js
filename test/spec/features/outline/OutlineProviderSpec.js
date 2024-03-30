@@ -68,8 +68,7 @@ describe('features/outline - outline provider', function() {
 
       // then
       expect(outlineShape).to.exist;
-      expect(outlineShape.tagName).to.eql('rect');
-      expect(outlineShape.style.transform).to.eql('rotate(45deg)');
+      expect(outlineShape.tagName).to.eql('polygon');
     }));
 
 
