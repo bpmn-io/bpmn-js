@@ -1,3 +1,5 @@
+import axe from 'axe-core';
+
 import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';
@@ -1793,6 +1795,25 @@ describe('Viewer', function() {
 
   it('default export', function() {
     expect(ViewerDefaultExport).to.equal(Viewer);
+  });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createViewer(container, Viewer, xml);
+
+      // when
+      const results = await axe.run(container);
+
+      // then
+      expect(results.passes).to.be.not.empty;
+      expect(results.violations).to.be.empty;
+    });
+
   });
 
 });
