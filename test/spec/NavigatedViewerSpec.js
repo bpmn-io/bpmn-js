@@ -1,3 +1,5 @@
+import axe from 'axe-core';
+
 import NavigatedViewer from 'lib/NavigatedViewer';
 
 import EditorActionsModule from 'lib/features/editor-actions';
@@ -99,4 +101,24 @@ describe('NavigatedViewer', function() {
       });
     });
   });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createViewer(container, NavigatedViewer, xml);
+
+      // when
+      const results = await axe.run(container);
+
+      // then
+      expect(results.passes).to.be.not.empty;
+      expect(results.violations).to.be.empty;
+    });
+
+  });
+
 });
