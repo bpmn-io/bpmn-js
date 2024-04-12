@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.2.2
+
+* `FIX`: correct navigated viewer outline ([#2133](https://github.com/bpmn-io/bpmn-js/issues/2133))
+
 ## 17.2.1
 
 * `FIX`: render popup menu on top
