@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.2.2](https://github.com/bpmn-io/bpmn-js/compare/v17.2.1...v17.2.2) (2024-04-12)
+
+
+### Bug Fixes
+
+* add outline module to viewer modules ([0d79ceb](https://github.com/bpmn-io/bpmn-js/commit/0d79ceb6fbb6a2dac884f224532ecc59477a0720)), closes [#2133](https://github.com/bpmn-io/bpmn-js/issues/2133)
+
 ## 17.2.2
 
 * `FIX`: correct navigated viewer outline ([#2133](https://github.com/bpmn-io/bpmn-js/issues/2133))
