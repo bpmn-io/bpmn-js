@@ -68,7 +68,7 @@ module.exports = function(karma) {
             sideEffects: true
           },
           {
-            test: /\.css|\.bpmn$/,
+            test: /\.css|\.bpmn|\.svg$/,
             type: 'asset/source'
           }
         ].concat(
