@@ -29,7 +29,6 @@
     "generate-types:test": "tsc --noEmit --noImplicitAny",
     "test:distro": "node tasks/test-distro.mjs",
     "postversion": "run-s distro test:distro",
-    "prepare": "run-s distro",
     "prepublishOnly": "run-s generate-types"
   },
   "engines": {
