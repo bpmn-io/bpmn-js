@@ -66,7 +66,7 @@ describe('Modeler', function() {
 
 
   (singleStart ? it.only : it)('should import simple process', function() {
-    var xml = require('../fixtures/bpmn/simple.bpmn');
+    var xml = require('../fixtures/bpmn/kitchen-sink.bpmn');
     return createModeler(xml).then(function(result) {
 
       expect(result.error).not.to.exist;
