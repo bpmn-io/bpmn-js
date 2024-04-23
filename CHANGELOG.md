@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: do not hide Task markers while editing labels
+
 ## 17.3.0
 
 * `FEAT`: auto-place elements vertically ([#2110](https://github.com/bpmn-io/bpmn-js/issues/2110))
