@@ -1,6 +1,6 @@
 import CommandStack from 'diagram-js/lib/command/CommandStack';
 
-import { Event } from 'diagram-js/lib/core/EventBus';
+import EventBus, { Event } from 'diagram-js/lib/core/EventBus';
 
 import BaseViewer, {
   ImportDoneEvent,
@@ -11,6 +11,7 @@ import BaseViewer, {
 } from './BaseViewer';
 
 import OverlaysModule from 'diagram-js/lib/features/overlays';
+import Canvas from 'diagram-js/lib/core/Canvas';
 
 const viewer = new BaseViewer();
 
@@ -171,3 +172,36 @@ export function testViewer(viewer: BaseViewer) {
 
   viewer.on<Event>('detach', () => {});
 }
+
+// typed API usage
+
+type FooEvent = {
+  /**
+   * Very cool field!
+   */
+  foo: string;
+};
+
+type EventMap = {
+
+  foo: FooEvent
+};
+
+type TypeMap = {
+  canvas: Canvas,
+  eventBus: EventBus<EventMap>
+};
+
+const typedViewer = new BaseViewer<TypeMap>();
+
+const bus = typedViewer.get('eventBus');
+
+const canvas = typedViewer.get('canvas');
+
+canvas.zoom('fit-viewport');
+
+typedViewer.on('foo', event => {
+  console.log(event.foo);
+});
+
+typedViewer.get('eventBus').on('foo', e => console.log(e.foo));
