@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "17.3.0",
+  "version": "17.4.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "index.js",
   "files": [
@@ -112,7 +112,7 @@
   },
   "dependencies": {
     "bpmn-moddle": "^8.1.0",
-    "diagram-js": "^14.3.1",
+    "diagram-js": "^14.4.1",
     "diagram-js-direct-editing": "^3.0.1",
     "ids": "^1.0.5",
     "inherits-browser": "^0.1.0",
