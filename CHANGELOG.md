@@ -6,7 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-* `FEAT`: do not hide Task markers while editing labels
+## 17.5.0
+
+* `FEAT`: remove direct editing outline for embedded labels ([#2147](https://github.com/bpmn-io/bpmn-js/pull/2147))
+* `FEAT`: do not translate technical errors ([#2145](https://github.com/bpmn-io/bpmn-js/pull/2145))
+* `DEPS`: update to `diagram-js-direct-editing@3.0.1`
 
 ## 17.4.0
 
