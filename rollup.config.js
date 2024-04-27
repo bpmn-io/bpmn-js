@@ -131,7 +131,7 @@ function processTemplate(str, args) {
     var replacement = args[n];
 
     if (!replacement) {
-      throw new Error('unknown template {{ ' + n + '}}');
+      throw new Error(`unknown template {{ ${ n } }}`);
     }
 
     return replacement;
