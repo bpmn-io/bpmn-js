@@ -206,7 +206,7 @@ export function expectZOrder() {
 
     if (next && compareZOrder(e, next) !== -1) {
       throw new Error(
-        'expected <element#' + (next.id || next) + '> to be in front of <element#' + (e.id || e) + '>'
+        `expected <element#${ next.id || next }> to be in front of <element#${ e.id || e }>`
       );
     }
   });
