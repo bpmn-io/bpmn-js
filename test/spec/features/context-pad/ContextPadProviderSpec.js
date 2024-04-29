@@ -737,6 +737,29 @@ describe('features - context-pad', function() {
       expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
     }));
 
+
+    it('should remove append preview on close', inject(function(canvas, elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('Task_1');
+
+      contextPad.open(element);
+
+      // mock event
+      var event = padEvent('append.gateway');
+
+      contextPad.trigger('hover', event);
+
+      expect(canvas.getLayer('complex-preview')).to.exist;
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(2);
+
+      // when
+      contextPad.close();
+
+      // then
+      expect(domQueryAll('.djs-dragger', canvas.getLayer('complex-preview'))).to.have.length(0);
+    }));
+
   });
 
 });
