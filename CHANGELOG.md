@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.5.1](https://github.com/bpmn-io/bpmn-js/compare/v17.5.0...v17.5.1) (2024-04-30)
+
+
+### Bug Fixes
+
+* **context-pad:** remove append preview on context pad close ([407a191](https://github.com/bpmn-io/bpmn-js/commit/407a191f7e76724ef75a472adef732711069be98)), closes [#2150](https://github.com/bpmn-io/bpmn-js/issues/2150)
+
 ## 17.5.0
 
 * `FEAT`: remove direct editing outline for embedded labels ([#2147](https://github.com/bpmn-io/bpmn-js/pull/2147))
