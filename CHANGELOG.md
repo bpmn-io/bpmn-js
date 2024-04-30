@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.6.0
+
+* `FEAT`: add ability to type services and events ([#2121](https://github.com/bpmn-io/bpmn-js/issues/2121), [#2153](https://github.com/bpmn-io/bpmn-js/pull/2153))
+* `FIX`: remove preview on context pad close ([#2150](https://github.com/bpmn-io/bpmn-js/issues/2150))
+* `FIX`: use tagged template in error logging ([#2151](https://github.com/bpmn-io/bpmn-js/pull/2151))
+
 ## 17.5.0
 
 * `FEAT`: remove direct editing outline for embedded labels ([#2147](https://github.com/bpmn-io/bpmn-js/pull/2147))
