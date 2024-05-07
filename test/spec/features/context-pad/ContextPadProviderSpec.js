@@ -772,9 +772,9 @@ function padEntry(element, name) {
 
 function padEvent(entry) {
 
-  return getBpmnJS().invoke(function(overlays) {
+  return getBpmnJS().invoke(function(canvas) {
 
-    var target = padEntry(overlays._overlayRoot, entry);
+    var target = padEntry(canvas.getContainer(), entry);
 
     return {
       target: target,
