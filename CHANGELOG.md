@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.6.1
+
+* `DEPS`: update to `diagram-js@14.5.1` ([#2157](https://github.com/bpmn-io/bpmn-js/pull/2157))
+
 ## 17.6.0
 
 * `FEAT`: add ability to type services and events ([#2121](https://github.com/bpmn-io/bpmn-js/issues/2121), [#2153](https://github.com/bpmn-io/bpmn-js/pull/2153))
