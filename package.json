@@ -84,7 +84,7 @@
     "eslint": "^8.22.0",
     "eslint-plugin-bpmn-io": "^1.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "execa": "^8.0.0",
+    "execa": "^9.0.0",
     "file-drops": "^0.5.0",
     "karma": "^6.4.1",
     "karma-chrome-launcher": "^3.1.1",
