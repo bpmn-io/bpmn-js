@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0runo6g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.15.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0runo6g" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0">
   <bpmn:collaboration id="Collaboration_0zr6kvh">
     <bpmn:participant id="Participant" processRef="Process_0wvtx2g" />
     <bpmn:group id="Group" />
@@ -13,17 +13,25 @@
       <bpmn:task id="Task" />
       <bpmn:exclusiveGateway id="Gateway" />
     </bpmn:subProcess>
+    <bpmn:callActivity id="CallActivity">
+      <bpmn:extensionElements>
+        <zeebe:calledElement propagateAllChildVariables="false" />
+      </bpmn:extensionElements>
+    </bpmn:callActivity>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0zr6kvh">
       <bpmndi:BPMNShape id="Participant_1fsrebj_di" bpmnElement="Participant" isHorizontal="true">
-        <dc:Bounds x="129" y="117" width="681" height="423" />
+        <dc:Bounds x="129" y="117" width="871" height="423" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataObjectReference_0cawmpm_di" bpmnElement="DataObject">
         <dc:Bounds x="252" y="215" width="36" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataStoreReference_0xv2i27_di" bpmnElement="DataStore">
         <dc:Bounds x="245" y="375" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0weis0d_di" bpmnElement="CallActivity">
+        <dc:Bounds x="830" y="300" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1xbvt0p_di" bpmnElement="SubProcess" isExpanded="true">
         <dc:Bounds x="420" y="240" width="330" height="200" />
