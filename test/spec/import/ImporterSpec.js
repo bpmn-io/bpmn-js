@@ -602,6 +602,48 @@ describe('import - Importer', function() {
     });
 
 
+    it('should import with missing BPMNDiagram#plane DI', function() {
+
+      // given
+      var xml = require('./missing-di-plane.bpmn');
+
+      // when
+      return runImport(diagram, xml).then(function(result) {
+
+        var {
+          error,
+          warnings
+        } = result;
+
+        // then
+        expect(warnings).to.be.empty;
+        expect(error).not.to.exist;
+      });
+    });
+
+
+    it('should error import with missing BPMNDiagram#plane DI', function() {
+
+      // given
+      var xml = require('./missing-di-plane-root-element.bpmn');
+
+      // when
+      return runImport(diagram, xml).then(function(result) {
+
+        var {
+          error,
+          warnings
+        } = result;
+
+        // then
+        // warning: no bpmnElement referenced in <bpmndi:BPMNPlane />
+        // warning: correcting missing bpmnElement on <bpmndi:BPMNPlane />
+        expect(warnings).to.have.length(2);
+        expect(error).not.to.exist;
+      });
+    });
+
+
     it('should import sequence flow without waypoints', function() {
 
       // given
