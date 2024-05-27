@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.7.1
+
+* `FIX`: correct call activity outline ([#2167](https://github.com/bpmn-io/bpmn-js/issues/2167))
+* `FIX`: gracefully handle missing `BPMNDiagram#plane` ([#2172](https://github.com/bpmn-io/bpmn-js/pull/2172), [#2171](https://github.com/bpmn-io/bpmn-js/pull/2171))
+
 ## 17.7.0
 
 * `DEPS`: update to `diagram-js@14.6.0`
