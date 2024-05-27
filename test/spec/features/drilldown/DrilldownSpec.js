@@ -400,7 +400,7 @@ describe('features - drilldown', function() {
   });
 
 
-  describe('Legacy Processes', function() {
+  describe('features - drilldown - Legacy Processes', function() {
 
     beforeEach(bootstrapViewer(legacyXML, { modules: testModules }));
 
@@ -448,6 +448,42 @@ describe('features - drilldown', function() {
       // then
       expect(emptyRoot).to.exist;
     }));
+
+  });
+
+});
+
+
+describe('features/drilldown - integration', function() {
+
+  var testModules = [
+    coreModule,
+    DrilldownModule
+  ];
+
+  var missingDiXML = require('./missing-di-bpmndiagram-plane.bpmn');
+
+  var multiLayerXML = require('./nested-subprocesses.bpmn');
+
+  beforeEach(bootstrapViewer(multiLayerXML, { modules: testModules }));
+
+
+  describe('error handling', function() {
+
+    it('should import diagram with missing BPMNDiagram#plane', inject(
+      async function(bpmnjs) {
+
+        let error;
+
+        try {
+          await bpmnjs.importXML(missingDiXML);
+        } catch (_error) {
+          error = _error;
+        }
+
+        expect(error).not.to.exist;
+      }
+    ));
 
   });
 
