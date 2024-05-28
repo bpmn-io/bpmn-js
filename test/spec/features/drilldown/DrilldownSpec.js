@@ -625,6 +625,18 @@ describe('features/drilldown - integration', function() {
       expect(warnings).to.be.empty;
     });
 
+
+    it('no <bpmndi:BPMNDiagram /> for process', async function() {
+
+      const {
+        error,
+        warnings
+      } = await importXML(processMissingBpmnDiagram_XML);
+
+      // then
+      expect(error).not.to.exist;
+      expect(warnings).to.be.empty;
+    });
   });
 
 });
