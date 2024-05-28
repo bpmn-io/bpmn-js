@@ -3,7 +3,7 @@ import {
 } from 'test/TestHelper';
 
 import coreModule from 'lib/core';
-import DrilldownModule from 'lib/features/drilldown';
+import drilldownModule from 'lib/features/drilldown';
 import modelingModule from 'lib/features/modeling';
 import { bootstrapModeler, getBpmnJS } from '../../../helper';
 import { classes } from 'min-dom';
@@ -14,7 +14,7 @@ describe('features - drilldown', function() {
   var testModules = [
     coreModule,
     modelingModule,
-    DrilldownModule
+    drilldownModule
   ];
 
   var collaborationXML = require('./collaboration-subprocesses.bpmn');
@@ -537,32 +537,93 @@ describe('features/drilldown - integration', function() {
 
   var testModules = [
     coreModule,
-    DrilldownModule
+    modelingModule,
+    drilldownModule
   ];
 
-  var missingDiXML = require('./missing-di-bpmndiagram-plane.bpmn');
+  var workingXML = require('./nested-subprocesses.bpmn');
 
-  var multiLayerXML = require('./nested-subprocesses.bpmn');
-
-  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(workingXML, { modules: testModules }));
 
 
-  describe('error handling', function() {
+  describe('error handling - should handle broken DI', function() {
 
-    it('should import diagram with missing BPMNDiagram#plane', inject(
-      async function(bpmnjs) {
+    const subprocessMissingDi_XML = require('./subprocess-missing-di.bpmn');
+    const subprocessMissingBpmnDiagram_XML = require('./subprocess-missing-bpmndiagram.bpmn');
+    const processMissingBpmnDiagram_XML = require('./process-missing-bpmndiagram.bpmn');
 
-        let error;
+    const planeMissingBpmnElement_XML = require('./plane-missing-bpmnelement.bpmn');
+    const diagramMissingPlane_XML = require('./diagram-missing-plane.bpmn');
 
-        try {
-          await bpmnjs.importXML(missingDiXML);
-        } catch (_error) {
-          error = _error;
-        }
 
-        expect(error).not.to.exist;
+    async function importXML(xml) {
+      const bpmnJS = getBpmnJS();
+
+      let result;
+
+      try {
+        result = await bpmnJS.importXML(xml);
+      } catch (error) {
+        result = {
+          error,
+          warnings: error.warnings
+        };
       }
-    ));
+
+      return result;
+    }
+
+
+    it('no <bpmndi:BPMNDiagram#plane />', async function() {
+
+      const {
+        error,
+        warnings
+      } = await importXML(diagramMissingPlane_XML);
+
+      // then
+      expect(error).not.to.exist;
+      expect(warnings).to.be.empty;
+    });
+
+
+    it('no <bpmndi:BPMNPlane#bpmnElement />', async function() {
+
+      const {
+        error,
+        warnings
+      } = await importXML(planeMissingBpmnElement_XML);
+
+      // then
+      expect(error).not.to.exist;
+      expect(warnings).to.be.empty;
+    });
+
+
+    it('no <bpmndi:BPMNShape /> for sub process', async function() {
+
+      const {
+        error,
+        warnings
+      } = await importXML(subprocessMissingDi_XML);
+
+      // then
+      expect(error).not.to.exist;
+      expect(warnings).to.be.empty;
+    });
+
+
+    it('no <bpmndi:BPMNDiagram /> for sub process', async function() {
+
+      const {
+        error,
+        warnings
+      } = await importXML(subprocessMissingBpmnDiagram_XML);
+
+      // then
+      expect(error).not.to.exist;
+      expect(warnings).to.be.empty;
+    });
 
   });
 
