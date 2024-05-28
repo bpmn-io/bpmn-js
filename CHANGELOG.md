@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: allow styling markers with `canvas.addMarker` and css ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
+* `CHORE`: render flow markers as part of `djs-visual` ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
+* `DEPS`: update to `diagram-js@14.7.0`
+
 ## 17.7.1
 
 * `FIX`: correct call activity outline ([#2167](https://github.com/bpmn-io/bpmn-js/issues/2167))
