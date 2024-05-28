@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.8.0
+
+* `FEAT`: keep global elements when deleting last participant ([#2175](https://github.com/bpmn-io/bpmn-js/pull/2175))
+* `FIX`: allow undo after deleting last participants and data store ([#1676](https://github.com/bpmn-io/bpmn-js/issues/1676))
 * `FIX`: allow styling markers with `canvas.addMarker` and css ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
 * `CHORE`: render flow markers as part of `djs-visual` ([#2173](https://github.com/bpmn-io/bpmn-js/pull/2173))
 * `DEPS`: update to `diagram-js@14.7.0`
