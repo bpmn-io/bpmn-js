@@ -6,6 +6,19 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.8.0](https://github.com/bpmn-io/bpmn-js/compare/v17.7.1...v17.8.0) (2024-05-28)
+
+
+### Features
+
+* **modeling:** keep global elements when deleting last participant ([d640a3c](https://github.com/bpmn-io/bpmn-js/commit/d640a3ce54fc30bdff70ccf5ee59ea6a54c1b890)), closes [#1676](https://github.com/bpmn-io/bpmn-js/issues/1676)
+* render markers as part of djs-visual ([3f2ec41](https://github.com/bpmn-io/bpmn-js/commit/3f2ec41204df49bb6063f0a6f465adfd00c64c93))
+
+
+### Bug Fixes
+
+* **drilldown:** do not reset viewport on collaboration removal ([4cdcb6f](https://github.com/bpmn-io/bpmn-js/commit/4cdcb6f7c75489303b2d2ceec44f2bb2971c3c98))
+
 ## 17.8.0
 
 * `FEAT`: keep global elements when deleting last participant ([#2175](https://github.com/bpmn-io/bpmn-js/pull/2175))
