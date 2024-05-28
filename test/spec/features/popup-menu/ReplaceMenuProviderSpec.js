@@ -2612,6 +2612,82 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
     });
 
+
+    describe('search', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLReplace, {
+        modules: testModules
+      }));
+
+
+      expectEntries('Task_1', 'sev', []);
+
+      expectEntries('Task_1', 'sevi', [
+        'Service task'
+      ]);
+
+      expectEntries('Task_1', 'sevice', [
+        'Service task'
+      ]);
+
+      expectEntries('Task_1', 'ser', [
+        'Service task',
+        'User task'
+      ]);
+
+      expectEntries('Task_1', 'serv', [
+        'Service task'
+      ]);
+
+      expectEntries('EndEvent_1', 'sta', [
+        'Start event'
+      ]);
+
+      expectEntries('EndEvent_1', 'sat', [
+        'Compensation end event'
+      ]);
+
+      expectEntries('EndEvent_1', 'startevent', [
+        'Start event'
+      ]);
+
+      expectEntries('EndEvent_1', 'prevent', []);
+
+      expectEntries('EndEvent_1', 'start prevent', [
+        'Start event'
+      ]);
+
+      expectEntries('EndEvent_1', 'smart prevent', [
+        'Start event'
+      ]);
+
+      expectEntries('EndEvent_1', 'smart pretend', []);
+
+      expectEntries('Task_1', 'callact', [
+        'Call activity'
+      ]);
+
+      expectEntries('Task_1', 'subproc', [
+        'Sub-process (collapsed)',
+        'Sub-process (expanded)'
+      ]);
+
+      expectEntries('Task_1', 'taks', []);
+
+      expectEntries('Task_1', 'user taks', [
+        'User task'
+      ]);
+
+      expectEntries('Task_1', 'ussr taks', [
+        'User task'
+      ]);
+
+      expectEntries('Task_1', 'ussr talks', [
+        'User task'
+      ]);
+
+    });
+
   });
 
 
@@ -2724,7 +2800,12 @@ function openPopup(element, offset) {
   getBpmnJS().invoke(function(popupMenu) {
 
     popupMenu.open(element, 'bpmn-replace', {
-      x: element.x + offset, y: element.y + offset
+      x: element.x + offset,
+      y: element.y + offset
+    }, {
+      title: 'Change element',
+      width: 300,
+      search: true
     });
 
   });
@@ -2763,4 +2844,60 @@ function triggerAction(id) {
 function getMenuContainer() {
   const popup = getBpmnJS().get('popupMenu');
   return popup._current.container;
+}
+
+function expectEntries(id, search, expected) {
+  it(`should show entries for <${ search }>`, function(done) {
+
+    getBpmnJS().invoke(async function(elementRegistry) {
+      var element = elementRegistry.get(id);
+
+      openPopup(element);
+
+      const searchInput = domQuery('.djs-popup-search input', getMenuContainer());
+
+      // when
+      searchInput.value = search;
+
+      await trigger(searchInput, keyDown('ArrowUp'));
+      await trigger(searchInput, keyUp('ArrowUp'));
+
+      // then
+      const entries = queryBodyEntries();
+
+      expect(entries).to.have.length(expected.length);
+      expect(Array.from(entries).map(e => e.textContent)).to.eql(expected);
+
+      done();
+    });
+
+  });
+}
+
+/**
+ * @param { string } key
+ *
+ * @return { KeyboardEvent }
+ */
+function keyDown(key) {
+  return new KeyboardEvent('keydown', { key, bubbles: true });
+}
+
+/**
+ * @param { string } key
+ *
+ * @return { KeyboardEvent }
+ */
+function keyUp(key) {
+  return new KeyboardEvent('keyup', { key, bubbles: true });
+}
+
+async function trigger(element, event) {
+  element.dispatchEvent(event);
+
+  return whenStable(500);
+}
+
+function whenStable(timeout = 50) {
+  return new Promise(resolve => setTimeout(resolve, timeout));
 }
