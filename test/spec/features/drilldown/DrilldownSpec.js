@@ -4,7 +4,8 @@ import {
 
 import coreModule from 'lib/core';
 import DrilldownModule from 'lib/features/drilldown';
-import { bootstrapViewer, getBpmnJS } from '../../../helper';
+import modelingModule from 'lib/features/modeling';
+import { bootstrapModeler, getBpmnJS } from '../../../helper';
 import { classes } from 'min-dom';
 
 
@@ -12,6 +13,7 @@ describe('features - drilldown', function() {
 
   var testModules = [
     coreModule,
+    modelingModule,
     DrilldownModule
   ];
 
@@ -19,7 +21,7 @@ describe('features - drilldown', function() {
   var multiLayerXML = require('./nested-subprocesses.bpmn');
   var legacyXML = require('./legacy-subprocesses.bpmn');
 
-  beforeEach(bootstrapViewer(multiLayerXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
 
   describe('Overlays', function() {
@@ -186,29 +188,11 @@ describe('features - drilldown', function() {
       canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
 
       // then
-      var viewbox = canvas.viewbox();
-      expect(viewbox.x).to.eql(0);
-      expect(viewbox.y).to.eql(0);
-      expect(viewbox.scale).to.eql(1);
-    }));
-
-
-    it('should remember scroll and zoom', inject(function(canvas) {
-
-      // given
-      canvas.scroll({ dx: 500, dy: 500 });
-      canvas.zoom(0.5);
-      var zoomedAndScrolledViewbox = canvas.viewbox();
-
-      // when
-      canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
-      canvas.setRootElement(canvas.findRoot('rootProcess'));
-
-      // then
-      var newViewbox = canvas.viewbox();
-      expect(newViewbox.x).to.eql(zoomedAndScrolledViewbox.x);
-      expect(newViewbox.y).to.eql(zoomedAndScrolledViewbox.y);
-      expect(newViewbox.scale).to.eql(zoomedAndScrolledViewbox.scale);
+      expectViewbox({
+        x: 0,
+        y: 0,
+        scale: 1
+      });
     }));
 
 
@@ -242,6 +226,20 @@ describe('features - drilldown', function() {
     }));
 
 
+    it('should not reset viewbox on root change', inject(function(canvas, modeling) {
+
+      // given
+      canvas.scroll({ dx: 500, dy: 500 });
+      canvas.zoom(0.5);
+      var zoomedAndScrolledViewbox = canvas.viewbox();
+
+      // when
+      modeling.makeCollaboration();
+
+      // then
+      expectViewbox(zoomedAndScrolledViewbox);
+    }));
+
     // helpers //////////
 
     function expectViewbox(expectedViewbox) {
@@ -260,7 +258,7 @@ describe('features - drilldown', function() {
 
   describe('Collaboration', function() {
 
-    beforeEach(bootstrapViewer(collaborationXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
     describe('Overlays', function() {
 
@@ -397,12 +395,93 @@ describe('features - drilldown', function() {
 
     });
 
+
+    describe('Navigation', function() {
+
+      it('should reset scroll and zoom', inject(function(canvas) {
+
+        // given
+        canvas.scroll({ dx: 500, dy: 500 });
+        canvas.zoom(0.5);
+
+        // when
+        canvas.setRootElement(canvas.findRoot('collapsedProcess_plane'));
+
+        // then
+        expectViewbox({
+          x: 0,
+          y: 0,
+          scale: 1
+        });
+      }));
+
+
+      it('should remember scroll and zoom', inject(function(canvas) {
+
+        // given
+        var rootRoot = canvas.getRootElement();
+        var planeRoot = canvas.findRoot('collapsedProcess_plane');
+
+        canvas.scroll({ dx: 500, dy: 500 });
+        canvas.zoom(0.5);
+
+        var rootViewbox = canvas.viewbox();
+
+        canvas.setRootElement(planeRoot);
+        canvas.scroll({ dx: 100, dy: 100 });
+
+        var planeViewbox = canvas.viewbox();
+
+        // when
+        canvas.setRootElement(rootRoot);
+
+        // then
+        expectViewbox(rootViewbox);
+
+        // but when
+        canvas.setRootElement(planeRoot);
+
+        // then
+        expectViewbox(planeViewbox);
+      }));
+
+
+      it('should not reset viewbox on root change', inject(function(canvas, modeling) {
+
+        // given
+        canvas.scroll({ dx: 500, dy: 500 });
+        canvas.zoom(0.5);
+        var zoomedAndScrolledViewbox = canvas.viewbox();
+
+        // when
+        modeling.makeProcess();
+
+        // then
+        expectViewbox(zoomedAndScrolledViewbox);
+
+      }));
+
+      // helpers //////////
+
+      function expectViewbox(expectedViewbox) {
+        return getBpmnJS().invoke(function(canvas) {
+
+          var viewbox = canvas.viewbox();
+
+          expect(viewbox.x).to.eql(expectedViewbox.x);
+          expect(viewbox.y).to.eql(expectedViewbox.y);
+          expect(viewbox.scale).to.eql(expectedViewbox.scale);
+        });
+      }
+
+    });
+
   });
 
 
   describe('features - drilldown - Legacy Processes', function() {
 
-    beforeEach(bootstrapViewer(legacyXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(legacyXML, { modules: testModules }));
 
     it('should import collapsed subprocess', inject(function(canvas) {
 
@@ -465,7 +544,7 @@ describe('features/drilldown - integration', function() {
 
   var multiLayerXML = require('./nested-subprocesses.bpmn');
 
-  beforeEach(bootstrapViewer(multiLayerXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
 
   describe('error handling', function() {
