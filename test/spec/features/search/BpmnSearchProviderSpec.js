@@ -17,7 +17,7 @@ describe('features - BPMN search provider', function() {
   ];
 
 
-  describe(' - with collaboration as root - ', function() {
+  describe('collaboration', function() {
     var diagramXML = require('./bpmn-search-collaboration.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
@@ -34,10 +34,12 @@ describe('features - BPMN search provider', function() {
       // then
       expect(elements).to.have.length(0);
     }));
+
   });
 
 
-  describe(' - with process as root - ', function() {
+  describe('process', function() {
+
     var diagramXML = require('./bpmn-search.bpmn');
 
     beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
@@ -161,7 +163,33 @@ describe('features - BPMN search provider', function() {
 
     });
 
+  });
 
+
+  describe('sorting', function() {
+
+    var diagramXML = require('./bpmn-search-sorting.bpmn');
+
+    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+
+
+    it('should sort', inject(function(bpmnSearch) {
+
+      // given
+      var pattern = 'foo';
+
+      // when
+      var elements = bpmnSearch.find(pattern);
+
+      // then
+      expect(elements).length(6);
+      expect(elements[0].element.id).to.eql('foo_2');
+      expect(elements[1].element.id).to.eql('foo_3');
+      expect(elements[2].element.id).to.eql('bar');
+      expect(elements[3].element.id).to.eql('baz');
+      expect(elements[4].element.id).to.eql('foo_0');
+      expect(elements[5].element.id).to.eql('foo_1');
+    }));
 
   });
 
