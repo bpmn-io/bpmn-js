@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.8.2
+
+* `FIX`: do not suggest root elements in search ([#2143](https://github.com/bpmn-io/bpmn-js/issues/2143))
+
 ## 17.8.1
 
 * `FIX`: gracefully handle missing process DI in drilldown ([#2180](https://github.com/bpmn-io/bpmn-js/pull/2180))
