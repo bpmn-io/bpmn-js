@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.8.2](https://github.com/bpmn-io/bpmn-js/compare/v17.8.1...v17.8.2) (2024-06-17)
+
+
+### Bug Fixes
+
+* **search:** do not suggest subprocess planes ([f470cd5](https://github.com/bpmn-io/bpmn-js/commit/f470cd5722f4d30bf56c743d768dcd8863aee341)), closes [#2143](https://github.com/bpmn-io/bpmn-js/issues/2143)
+
 ## 17.8.2
 
 * `FIX`: do not suggest root elements in search ([#2143](https://github.com/bpmn-io/bpmn-js/issues/2143))
