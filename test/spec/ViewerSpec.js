@@ -1,4 +1,4 @@
-import axe from 'axe-core';
+import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import TestContainer from 'mocha-test-container-support';
 
@@ -1806,12 +1806,8 @@ describe('Viewer', function() {
       const xml = require('../fixtures/bpmn/simple.bpmn');
       await createViewer(container, Viewer, xml);
 
-      // when
-      const results = await axe.run(container);
-
       // then
-      expect(results.passes).to.be.not.empty;
-      expect(results.violations).to.be.empty;
+      await expectToBeAccessible(container);
     });
 
   });

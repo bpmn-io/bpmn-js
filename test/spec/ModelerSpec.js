@@ -1,4 +1,4 @@
-import axe from 'axe-core';
+import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
@@ -931,12 +931,8 @@ describe('Modeler', function() {
       const xml = require('../fixtures/bpmn/simple.bpmn');
       await createModeler(xml);
 
-      // when
-      const results = await axe.run(container);
-
       // then
-      expect(results.passes).to.be.not.empty;
-      expect(results.violations).to.be.empty;
+      await expectToBeAccessible(container);
     });
 
   });
