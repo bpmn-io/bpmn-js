@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import {
   inject
 } from 'test/TestHelper';
@@ -530,6 +532,18 @@ describe('features - drilldown', function() {
 
   });
 
+
+  describe('a11y', function() {
+
+    it('should report no violations', inject(async function(canvas) {
+
+      // given
+      const container = canvas.getContainer();
+
+      // then
+      await expectToBeAccessible(container);
+    }));
+  });
 });
 
 
