@@ -1,4 +1,4 @@
-import axe from 'axe-core';
+import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import NavigatedViewer from 'lib/NavigatedViewer';
 
@@ -111,12 +111,8 @@ describe('NavigatedViewer', function() {
       const xml = require('../fixtures/bpmn/simple.bpmn');
       await createViewer(container, NavigatedViewer, xml);
 
-      // when
-      const results = await axe.run(container);
-
       // then
-      expect(results.passes).to.be.not.empty;
-      expect(results.violations).to.be.empty;
+      await expectToBeAccessible(container);
     });
 
   });
