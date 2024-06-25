@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.8.3
+
+* `FIX`: add accessible label to drill down button ([#2194](https://github.com/bpmn-io/bpmn-js/pull/2194))
+
 ## 17.8.2
 
 * `FIX`: do not suggest root elements in search ([#2143](https://github.com/bpmn-io/bpmn-js/issues/2143))
