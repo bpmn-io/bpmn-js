@@ -90,6 +90,7 @@
   "Message intermediate throw event",
   "Message start event",
   "Message start event (non-interrupting)",
+  "Open {element}",
   "Parallel gateway",
   "Parallel multi-instance",
   "Participant multiplicity",
