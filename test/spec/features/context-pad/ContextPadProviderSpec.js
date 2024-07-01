@@ -72,6 +72,20 @@ describe('features - context-pad', function() {
     }));
 
 
+    it('should add delete action to elements label by default', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('StartEvent_1');
+      var label = element.label;
+
+      // when
+      contextPad.open(label);
+
+      // then
+      expect(deleteAction(label)).to.exist;
+    }));
+
+
     it('should include delete action when rule returns true',
       inject(function(elementRegistry, contextPad, customRules) {
 
