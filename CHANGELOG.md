@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [17.9.1](https://github.com/bpmn-io/bpmn-js/compare/v17.9.0...v17.9.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* show delete action for labels ([08b657a](https://github.com/bpmn-io/bpmn-js/commit/08b657a598f191890015bf1d29f96c83f49880ca)), closes [#2163](https://github.com/bpmn-io/bpmn-js/issues/2163)
+
 ## 17.8.3
 
 * `FIX`: add accessible label to drill down button ([#2194](https://github.com/bpmn-io/bpmn-js/pull/2194))
