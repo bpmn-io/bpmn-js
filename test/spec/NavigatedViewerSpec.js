@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import NavigatedViewer from 'lib/NavigatedViewer';
 
 import EditorActionsModule from 'lib/features/editor-actions';
@@ -99,4 +101,20 @@ describe('NavigatedViewer', function() {
       });
     });
   });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createViewer(container, NavigatedViewer, xml);
+
+      // then
+      await expectToBeAccessible(container);
+    });
+
+  });
+
 });

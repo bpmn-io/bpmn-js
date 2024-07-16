@@ -359,7 +359,7 @@ describe('draw - bpmn renderer', function() {
         var svg = canvas._svg;
         var markers = svg.querySelectorAll('marker');
 
-        expect(markers[0].id).to.match(/^sequenceflow-end-white-hsl_225_10_15_-[A-Za-z0-9]+$/);
+        expect(markers[0].id).to.match(/^marker-[A-Za-z0-9]+$/);
       })();
     });
   });
@@ -375,17 +375,26 @@ describe('draw - bpmn renderer', function() {
       expect(err).not.to.exist;
 
       inject(function(canvas) {
-        var svg = canvas._svg,
-            markers = svg.querySelectorAll('marker');
 
-        expect(markers).to.have.length(7);
-        expect(markers[0].id).to.match(/^sequenceflow-end-rgb_255_224_178_-rgb_251_140_0_-[A-Za-z0-9]{25}$/);
-        expect(markers[1].id).to.match(/^sequenceflow-end-yellow-blue-[A-Za-z0-9]{25}$/);
-        expect(markers[2].id).to.match(/^sequenceflow-end-white-_FB8C00-[A-Za-z0-9]{25}$/);
-        expect(markers[3].id).to.match(/^sequenceflow-end-white-rgba_255_0_0_0_9_-[A-Za-z0-9]{25}$/);
-        expect(markers[4].id).to.match(/^association-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
-        expect(markers[5].id).to.match(/^messageflow-end-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
-        expect(markers[6].id).to.match(/^messageflow-start-_FFE0B2-_FB8C00-[A-Za-z0-9]{25}$/);
+        [
+          [ 'SequenceFlow_1jrsqqc' , 'blue' , 'blue' ],
+          [ 'SequenceFlow_0h9s0mp' , 'rgba(255, 0, 0, 0.9)' ],
+          [ 'SequenceFlow_0pqo7zt' , 'rgb(251, 140, 0)' , 'rgb(251, 140, 0)' ],
+          [ 'SequenceFlow_1qt82pt' , 'blue' , 'blue' ],
+          [ 'SequenceFlow_17ohrlh' , 'rgb(251, 140, 0)' , 'rgb(251, 140, 0)' ],
+          [ 'MessageFlow_11bysyp' , 'rgb(251, 140, 0)' , 'rgb(255, 224, 178)' ],
+          [ 'MessageFlow_1qyovto' , 'rgb(251, 140, 0)' , 'rgb(255, 224, 178)' ],
+          [ 'DataInputAssociation_1ncouqr' , 'rgb(251, 140, 0)' , 'none' ],
+          [ 'DataOutputAssociation_1i89wkc' , 'rgb(251, 140, 0)' , 'none' ]
+        ].forEach(([ id, stroke, fill ]) => {
+          var svg = canvas._svg,
+              markerPath = svg.querySelector(`[data-element-id="${id}"] marker path`);
+
+          expect(markerPath).to.exist;
+
+          stroke && expect(markerPath.style.stroke).to.eql(stroke);
+          fill && expect(markerPath.style.fill).to.eql(fill);
+        });
       })();
     });
   });
@@ -401,14 +410,23 @@ describe('draw - bpmn renderer', function() {
       expect(err).not.to.exist;
 
       inject(function(canvas) {
-        var svg = canvas._svg,
-            markers = svg.querySelectorAll('marker');
 
-        expect(markers).to.have.length(4);
-        expect(markers[0].id).to.match(/^association-end-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
-        expect(markers[1].id).to.match(/^association-end-_E1BEE7-_8E24AA-[A-Za-z0-9]{25}$/);
-        expect(markers[2].id).to.match(/^messageflow-end-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
-        expect(markers[3].id).to.match(/^messageflow-start-rgb_23_100_344_-rgb_23_100_344_-[A-Za-z0-9]{25}$/);
+        [
+          [ 'MessageFlow_1facuin', 'rgb(23, 100, 255)', 'rgb(23, 100, 255)' ],
+          [ 'MessageFlow_1vmbq3n', 'rgb(23, 100, 255)', 'rgb(23, 100, 255)' ],
+          [ 'DataInputAssociation', 'rgb(23, 100, 255)', 'none' ],
+          [ 'DataOutputAssociation_0ixhole', 'rgb(142, 36, 170)', 'none' ],
+        ].forEach(([ id, stroke, fill ]) => {
+          var svg = canvas._svg,
+              markerPath = svg.querySelector(`[data-element-id="${id}"] marker path`);
+
+          console.log(id, markerPath);
+          expect(markerPath).to.exist;
+
+          stroke && expect(markerPath.style.stroke).to.eql(stroke);
+          fill && expect(markerPath.style.fill).to.eql(fill);
+
+        });
       })();
     });
   });

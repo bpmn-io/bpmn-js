@@ -58,6 +58,20 @@ describe('features/outline - outline provider', function() {
     }));
 
 
+    it('call activity', inject(function(elementRegistry, outline) {
+
+      // given
+      var callActivity = elementRegistry.get('CallActivity');
+
+      // when
+      var outlineShape = outline.getOutline(callActivity);
+
+      // then
+      expect(outlineShape).to.exist;
+      expect(outlineShape.tagName).to.eql('rect');
+    }));
+
+
     it('gateway', inject(function(elementRegistry, outline) {
 
       // given

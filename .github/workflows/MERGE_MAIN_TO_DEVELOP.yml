@@ -20,7 +20,7 @@ jobs:
       run: |
         git config user.name '${{ secrets.BPMN_IO_USERNAME }}'
         git config user.email '${{ secrets.BPMN_IO_EMAIL }}'
-        git merge -m 'Merge main to develop' --no-edit origin/main
+        git merge -m 'chore: merge main to develop' --no-edit origin/main
         git push
 
     - name: Notify failure on Slack

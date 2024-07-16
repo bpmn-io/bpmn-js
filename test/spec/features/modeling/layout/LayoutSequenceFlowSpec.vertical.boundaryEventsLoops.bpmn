@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.20.0">
+  <bpmn:collaboration id="Collaboration_0ffsons">
+    <bpmn:participant id="Participant_1n4j215" name="Vertical Container" processRef="Process_1" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess" name="SubProcess" />
+    <bpmn:subProcess id="SubProcess_2" name="SubProcess_2" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopLeft" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomRight" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomLeft" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopRight" attachedToRef="SubProcess" />
+    <bpmn:boundaryEvent id="BoundaryEvent_CenterRight" attachedToRef="SubProcess_2" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomCenter" attachedToRef="SubProcess_2" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopCenter" attachedToRef="SubProcess_2" />
+    <bpmn:boundaryEvent id="BoundaryEvent_CenterLeft" attachedToRef="SubProcess_2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0ffsons">
+      <bpmndi:BPMNShape id="Participant_1n4j215_di" bpmnElement="Participant_1n4j215" isHorizontal="false">
+        <dc:Bounds x="160" y="80" width="540" height="630" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_12qmapm_di" bpmnElement="SubProcess" isExpanded="true">
+        <dc:Bounds x="260" y="170" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_2_di" bpmnElement="SubProcess_2" isExpanded="true">
+        <dc:Bounds x="260" y="430" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0s0nl1k_di" bpmnElement="BoundaryEvent_TopLeft">
+        <dc:Bounds x="242" y="190" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_0nomac7_di" bpmnElement="BoundaryEvent_BottomRight">
+        <dc:Bounds x="592" y="320" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_1spolhy_di" bpmnElement="BoundaryEvent_BottomLeft">
+        <dc:Bounds x="242" y="352" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_13iwzlu_di" bpmnElement="BoundaryEvent_TopRight">
+        <dc:Bounds x="592" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_CenterRight_di" bpmnElement="BoundaryEvent_CenterRight">
+        <dc:Bounds x="592" y="512" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_BottomCenter_di" bpmnElement="BoundaryEvent_BottomCenter">
+        <dc:Bounds x="417" y="612" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_TopCenter_di" bpmnElement="BoundaryEvent_TopCenter">
+        <dc:Bounds x="417" y="412" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_CenterLeft_di" bpmnElement="BoundaryEvent_CenterLeft">
+        <dc:Bounds x="242" y="512" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
