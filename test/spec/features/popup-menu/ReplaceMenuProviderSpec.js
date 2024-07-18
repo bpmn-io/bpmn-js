@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import {
   bootstrapModeler,
   getBpmnJS,
@@ -1839,6 +1841,26 @@ describe('features/popup-menu - replace menu provider', function() {
 
     });
 
+  });
+
+
+  describe('a11y', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+
+
+    it('should report no violations', inject(async function(elementRegistry) {
+
+      // given
+      const startEvent = elementRegistry.get('StartEvent_1');
+
+      // when
+      openPopup(startEvent);
+
+      // then
+      const container = getMenuContainer();
+      await expectToBeAccessible(container);
+    }));
   });
 
 

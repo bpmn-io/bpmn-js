@@ -1,3 +1,5 @@
+import { expectToBeAccessible } from '@bpmn-io/a11y';
+
 import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
@@ -180,59 +182,6 @@ describe('Modeler', function() {
       // then
       expect(warnings).to.be.empty;
     });
-  });
-
-
-  collectTranslations && describe('translate support', function() {
-
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-
-    it('should translate errors', () => {
-
-      return createModeler(xml).then(function(result) {
-
-        var modeler = result.modeler;
-        var err = result.error;
-
-        if (err) {
-          throw err;
-        }
-
-        // given
-        var translate = modeler.get('translate');
-
-        var errors = [
-          'already rendered {element}',
-          'correcting missing bpmnElement on {plane} to {rootElement}',
-          'diagram not part of bpmn:Definitions',
-          'element {element} referenced by {referenced}#{property} not yet drawn',
-          'element required',
-          'failed to import {element}',
-          'missing {semantic}#attachedToRef',
-          'more than {count} child lanes',
-          'multiple DI elements defined for {element}',
-          'no bpmnElement referenced in {element}',
-          'no diagram to display',
-          'no parent for {element} in {parent}',
-          'no plane for {element}',
-          'no process or collaboration to display',
-          'no shape type specified',
-          'out of bounds release',
-          'unknown di {di} for element {semantic}',
-          'unrecognized flowElement {element} in context {context}',
-          'unsupported bpmnElement for {plane}: {rootElement}',
-          '{semantic}#{side} Ref not specified'
-        ];
-
-        // assume
-        expect(translate).to.exist;
-
-        // then
-        errors.forEach(translate);
-      });
-
-    });
-
   });
 
 
@@ -971,6 +920,21 @@ describe('Modeler', function() {
   it('should expose Viewer and NavigatedViewer', function() {
     expect(Modeler.Viewer).to.equal(Viewer);
     expect(Modeler.NavigatedViewer).to.equal(NavigatedViewer);
+  });
+
+
+  describe('accessibility', function() {
+
+    it('should report no issues', async function() {
+
+      // given
+      const xml = require('../fixtures/bpmn/simple.bpmn');
+      await createModeler(xml);
+
+      // then
+      await expectToBeAccessible(container);
+    });
+
   });
 
 });

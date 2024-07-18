@@ -1,4 +1,6 @@
-// @ts-ignore
+import Canvas from 'diagram-js/lib/core/Canvas';
+import EventBus from 'diagram-js/lib/core/EventBus';
+
 import BaseModeler from './BaseModeler';
 
 import { testViewer } from './BaseViewer.spec';
@@ -21,3 +23,37 @@ const extendedModeler = new BaseModeler({
     attachTo: '#properties-panel'
   }
 });
+
+
+// typed API usage
+
+type FooEvent = {
+  /**
+   * Very cool field!
+   */
+  foo: string;
+};
+
+type EventMap = {
+
+  foo: FooEvent
+};
+
+type TypeMap = {
+  canvas: Canvas,
+  eventBus: EventBus<EventMap>
+};
+
+const typedModeler = new BaseModeler<TypeMap>();
+
+const bus = typedModeler.get('eventBus');
+
+const canvas = typedModeler.get('canvas');
+
+canvas.zoom('fit-viewport');
+
+typedModeler.on('foo', event => {
+  console.log(event.foo);
+});
+
+typedModeler.get('eventBus').on('foo', e => console.log(e.foo));

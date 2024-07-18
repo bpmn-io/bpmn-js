@@ -34,6 +34,7 @@ describe('features - BPMN search provider', function() {
       // then
       expect(elements).to.have.length(0);
     }));
+
   });
 
 
@@ -91,6 +92,21 @@ describe('features - BPMN search provider', function() {
 
       // then
       expect(elements).to.have.length(0);
+    }));
+
+
+    it('should not return root element (collabsed subprocess)', inject(function(bpmnSearch, elementRegistry) {
+
+      // given
+      var subprocessShape = elementRegistry.get('collapsed');
+      var pattern = 'Collapsed';
+
+      // when
+      var elements = bpmnSearch.find(pattern);
+
+      // then
+      expect(elements).to.have.length(1);
+      expect(elements[0].element).to.eql(subprocessShape);
     }));
 
 
@@ -160,7 +176,6 @@ describe('features - BPMN search provider', function() {
       }));
 
     });
-
 
 
   });

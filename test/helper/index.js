@@ -284,9 +284,9 @@ export function enableLogging(modeler, force) {
   var saveXML = logConfigured('save-xml', force);
 
   saveXML && modeler.on('commandStack.changed', function() {
-    modeler.saveXML({ format: true }).then(function(result) {
-      console.log(result.xml);
-    });
+    Promise.resolve()
+      .then(() => modeler.saveXML({ format: true }))
+      .then((result) => console.log(result.xml));
   });
 }
 
