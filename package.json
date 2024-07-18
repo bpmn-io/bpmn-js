@@ -112,7 +112,7 @@
   },
   "dependencies": {
     "bpmn-moddle": "^8.1.0",
-    "diagram-js": "https://github.com/5minds/diagram-js.git#feature/merge_latest_develop",
+    "diagram-js": "https://github.com/5minds/diagram-js.git",
     "diagram-js-direct-editing": "^3.0.1",
     "ids": "^1.0.5",
     "inherits-browser": "^0.1.0",
