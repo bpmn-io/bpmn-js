@@ -54,7 +54,9 @@
     </bpmn:intermediateThrowEvent>
     <bpmn:sequenceFlow id="SequenceFlow_19p2kv6" sourceRef="IntermediateThrowEvent_0yy98gf" targetRef="TASK_0" />
     <bpmn:dataStoreReference id="DataStoreReference_0r0lie7" />
-    <bpmn:subProcess id="SUBPROCESS_1" name="SUBPROCESS_1" />
+    <bpmn:subProcess id="SUBPROCESS_1" name="SUBPROCESS_1">
+      <bpmn:task id="TASK_6" name="TASK_6" />
+    </bpmn:subProcess>
     <bpmn:textAnnotation id="TextAnnotation_0czqc1j" />
     <bpmn:association id="Association_1ebqqnb" sourceRef="TASK_3" targetRef="TextAnnotation_0czqc1j" />
   </bpmn:process>
@@ -200,6 +202,10 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SUBPROCESS_1_di" bpmnElement="SUBPROCESS_1" isExpanded="true">
         <dc:Bounds x="525" y="308" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TASK_6_di" bpmnElement="TASK_6">
+        <dc:Bounds x="550" y="370" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
