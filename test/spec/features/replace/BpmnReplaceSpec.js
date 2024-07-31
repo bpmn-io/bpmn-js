@@ -440,6 +440,7 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(isExpanded(newShape)).to.be.false; // collapsed
       expect(newShape.children).to.be.empty;
+      expect(newShape.di.isHorizontal).to.be.true;
 
       expect(newShape).to.have.bounds(collapsedBounds);
 
@@ -466,6 +467,72 @@ describe('features/replace - bpmn replace', function() {
       // then
       expect(isExpanded(newShape)).to.be.true; // expanded
       expect(newShape.children).to.be.empty;
+      expect(newShape.di.isHorizontal).to.be.true;
+
+      expect(newShape).to.have.bounds(expandedBounds);
+    }));
+
+  });
+
+
+  describe('should replace in vertical collaboration', function() {
+
+    var diagramXML = require('./BpmnReplace.collaboration.vertical.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    it('expanded with collapsed pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('V_Participant_1');
+
+      var messageFlow = elementRegistry.get('V_MessageFlow_B_to_A');
+
+      var collapsedBounds = assign({}, getBounds(shape), { width: 60 });
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: false
+      });
+
+      // then
+      expect(isExpanded(newShape)).to.be.false; // collapsed
+      expect(newShape.children).to.be.empty;
+      expect(newShape.di.isHorizontal).to.be.false;
+
+      expect(newShape).to.have.bounds(collapsedBounds);
+
+      expect(messageFlow).to.have.waypoints([
+        { x: 436, y: 368 },
+        { x: newShape.x + collapsedBounds.width, y: 368 }
+      ]);
+    }));
+
+
+    it('collapsed with expanded pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('V_Participant_2');
+
+      var expandedBounds = assign({}, getBounds(shape), { width: 250 });
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: true
+      });
+
+      // then
+      expect(isExpanded(newShape)).to.be.true; // expanded
+      expect(newShape.children).to.be.empty;
+      expect(newShape.di.isHorizontal).to.be.false;
 
       expect(newShape).to.have.bounds(expandedBounds);
     }));
@@ -502,6 +569,40 @@ describe('features/replace - bpmn replace', function() {
 
       expect(elementRegistry.get('MessageFlow_1')).to.exist;
       expect(elementRegistry.get('MessageFlow_2')).to.exist;
+    }));
+
+  });
+
+
+  describe('should collapse vertical pool, reconnecting message flows', function() {
+
+    var diagramXML = require('./BpmnReplace.poolMessageFlows.vertical.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules,
+      moddleExtensions: {
+        camunda: camundaPackage
+      }
+    }));
+
+
+    it('expanded with collapsed pool', inject(function(elementRegistry, bpmnReplace) {
+
+      // given
+      var shape = elementRegistry.get('V_Participant_1');
+
+      // when
+      var newShape = bpmnReplace.replaceElement(shape, {
+        type: 'bpmn:Participant',
+        isExpanded: false
+      });
+
+      // then
+      expect(isExpanded(newShape)).to.be.false; // collapsed
+      expect(newShape.children).to.be.empty;
+
+      expect(elementRegistry.get('V_MessageFlow_1')).to.exist;
+      expect(elementRegistry.get('V_MessageFlow_2')).to.exist;
     }));
 
   });
