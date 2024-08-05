@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.9.2
+
+* `FIX`: keep direction when collapsing pools ([#2208](https://github.com/bpmn-io/bpmn-js/issues/2208))
+
 ## 17.9.1
 
 * `FIX`: show delete action for labels ([#2163](https://github.com/bpmn-io/bpmn-js/issues/2163))
