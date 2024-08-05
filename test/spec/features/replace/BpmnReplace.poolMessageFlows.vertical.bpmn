@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.5.0">
+  <bpmn:collaboration id="Collaboration_16ydlxc">
+    <bpmn:participant id="V_Participant_1" name="V_Participant_1" processRef="Process_1" />
+    <bpmn:participant id="V_Participant_2" name="V_Participant_2" processRef="Process_2" />
+    <bpmn:messageFlow id="V_MessageFlow_1" sourceRef="Task_A" targetRef="Task_B" />
+    <bpmn:messageFlow id="V_MessageFlow_2" sourceRef="Task_B" targetRef="Task_A" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet />
+    <bpmn:task id="Task_B" name="Task_B" />
+  </bpmn:process>
+  <bpmn:process id="Process_2" isExecutable="false">
+    <bpmn:task id="Task_A" name="Task_A" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_16ydlxc">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="V_Participant_1" isHorizontal="false">
+        <dc:Bounds x="483" y="94" width="149" height="372" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_B_di" bpmnElement="Task_B">
+        <dc:Bounds x="522" y="342" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_2_di" bpmnElement="V_Participant_2" isHorizontal="false">
+        <dc:Bounds x="40" y="96" width="125" height="383" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_A_di" bpmnElement="Task_A">
+        <dc:Bounds x="51" y="342" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="V_MessageFlow_1_di" bpmnElement="V_MessageFlow_1">
+        <di:waypoint x="151" y="400" />
+        <di:waypoint x="522" y="402" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="301.5" y="815" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="MessageFlow_2_di" bpmnElement="V_MessageFlow_2">
+        <di:waypoint x="522" y="366" />
+        <di:waypoint x="151" y="366" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="316.5" y="795" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
