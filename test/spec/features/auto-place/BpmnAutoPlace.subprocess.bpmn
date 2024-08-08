@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1phrppp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <bpmn:process id="Process_0e3fgm1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1qlbfsz</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:subProcess id="Sub_Process">
+      <bpmn:incoming>Flow_1qlbfsz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0au85uv</bpmn:outgoing>
+      <bpmn:startEvent id="Nested_Start_Event" />
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1qlbfsz" sourceRef="StartEvent_1" targetRef="Sub_Process" />
+    <bpmn:endEvent id="Event_06byytn">
+      <bpmn:incoming>Flow_0au85uv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0au85uv" sourceRef="Sub_Process" targetRef="Event_06byytn" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0e3fgm1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0aamzwi_di" bpmnElement="Sub_Process">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06byytn_di" bpmnElement="Event_06byytn">
+        <dc:Bounds x="432" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1qlbfsz_di" bpmnElement="Flow_1qlbfsz">
+        <di:waypoint x="215" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0au85uv_di" bpmnElement="Flow_0au85uv">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="432" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_01vxuwr">
+    <bpmndi:BPMNPlane id="BPMNPlane_0kcojux" bpmnElement="Sub_Process">
+      <bpmndi:BPMNShape id="Event_08tsh87_di" bpmnElement="Nested_Start_Event">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
