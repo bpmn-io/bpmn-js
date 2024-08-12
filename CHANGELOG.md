@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: lane resize constraints for se and nw direction ([#2209](https://github.com/bpmn-io/bpmn-js/issues/2209))
+
 ## 17.9.2
 
 * `FIX`: keep direction when collapsing pools ([#2208](https://github.com/bpmn-io/bpmn-js/issues/2208))
