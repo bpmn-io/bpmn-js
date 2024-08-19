@@ -71,6 +71,13 @@ describe('features/auto-place', function() {
         expectedBounds: { x: 925, y: 368, width: 100, height: 80 }
       }));
 
+
+      it('after TASK_6', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'TASK_6',
+        expectedBounds: { x: 700, y: 370, width: 100, height: 80 }
+      }));
+
     });
 
 
@@ -184,6 +191,13 @@ describe('features/auto-place', function() {
         element: 'bpmn:Task',
         behind: 'V_Sub_Process_1',
         expectedBounds: { x: 699, y: 930, width: 100, height: 80 }
+      }));
+
+
+      it('below V_TASK_6', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'V_TASK_6',
+        expectedBounds: { x: 700, y: 730, width: 100, height: 80 }
       }));
 
     });
@@ -471,6 +485,130 @@ describe('features/auto-place', function() {
       behind: 'V_BOUNDARY_SUBPROCESS_LEFT',
       expectedBounds: { x: 420, y: 278, width: 100, height: 80 }
     }));
+
+  });
+
+
+  describe('nested element placement', function() {
+
+    describe('in collapsed subprocess', function() {
+
+      var diagramXML = require('./BpmnAutoPlace.subprocess.bpmn');
+
+      before(bootstrapModeler(diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          autoPlaceModule
+        ]
+      }));
+
+      beforeEach(inject(function(canvas) {
+        canvas.setRootElement(canvas.findRoot('Sub_Process_plane'));
+      }));
+
+
+      it('should place node horizontally after Nested_Start_Event', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 265, y: 57, width: 100, height: 80 }
+      }));
+
+
+      it('should place annotation horizontally above Nested_Start_Event', autoPlace({
+        element: 'bpmn:TextAnnotation',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 215, y: -1, width: 100, height: 30 }
+      }));
+
+
+      it('should place data store horizontally below Nested_Start_Event', autoPlace({
+        element: 'bpmn:DataStoreReference',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 205, y: 155, width: 50, height: 50 }
+      }));
+
+    });
+
+
+    describe('in collapsed horizontal subprocess', function() {
+
+      var diagramXML = require('./BpmnAutoPlace.subprocess.horizontal.bpmn');
+
+      before(bootstrapModeler(diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          autoPlaceModule
+        ]
+      }));
+
+      beforeEach(inject(function(canvas) {
+        canvas.setRootElement(canvas.findRoot('Sub_Process_plane'));
+      }));
+
+
+      it('should place node horizontally after Nested_Start_Event', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 265, y: 77, width: 100, height: 80 }
+      }));
+
+
+      it('should place annotation horizontally above Nested_Start_Event', autoPlace({
+        element: 'bpmn:TextAnnotation',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 215, y: 19, width: 100, height: 30 }
+      }));
+
+
+      it('should place data store horizontally below Nested_Start_Event', autoPlace({
+        element: 'bpmn:DataStoreReference',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 205, y: 175, width: 50, height: 50 }
+      }));
+
+    });
+
+
+    describe('in collapsed vertical subprocess', function() {
+
+      var diagramXML = require('./BpmnAutoPlace.subprocess.vertical.bpmn');
+
+      before(bootstrapModeler(diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          autoPlaceModule
+        ]
+      }));
+
+      beforeEach(inject(function(canvas) {
+        canvas.setRootElement(canvas.findRoot('Sub_Process_plane'));
+      }));
+
+
+      it('should place node vertically after Nested_Start_Event', autoPlace({
+        element: 'bpmn:Task',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 127, y: 165, width: 100, height: 80 }
+      }));
+
+
+      it('should place annotation vertically right of Nested_Start_Event', autoPlace({
+        element: 'bpmn:TextAnnotation',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 245, y: 115, width: 100, height: 30 }
+      }));
+
+
+      it('should place data store vertically left of Nested_Start_Event', autoPlace({
+        element: 'bpmn:DataStoreReference',
+        behind: 'Nested_Start_Event',
+        expectedBounds: { x: 69, y: 105, width: 50, height: 50 }
+      }));
+
+    });
 
   });
 
