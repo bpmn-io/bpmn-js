@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:startEvent id="Event_0wuaar2">
+      <bpmn:outgoing>Flow_1ank1yi</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Compensation_Boundary_Task">
+      <bpmn:incoming>Flow_1ank1yi</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1ank1yi" sourceRef="Event_0wuaar2" targetRef="Compensation_Boundary_Task" />
+    <bpmn:boundaryEvent id="Compensation_Boundary_Event" attachedToRef="Compensation_Boundary_Task">
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_0ibh5ku" />
+    </bpmn:boundaryEvent>
+    <bpmn:task id="Compensation_Activity" isForCompensation="true" />
+    <bpmn:association id="Association_0x72gur" associationDirection="One" sourceRef="Compensation_Boundary_Event" targetRef="Compensation_Activity" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Event_0wuaar2_di" bpmnElement="Event_0wuaar2">
+        <dc:Bounds x="152" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Compensation_Boundary_Task_di" bpmnElement="Compensation_Boundary_Task">
+        <dc:Bounds x="240" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Compensation_Activity_di" bpmnElement="Compensation_Activity">
+        <dc:Bounds x="370" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0x72gur_di" bpmnElement="Association_0x72gur">
+        <di:waypoint x="300" y="188" />
+        <di:waypoint x="300" y="250" />
+        <di:waypoint x="370" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0njauji_di" bpmnElement="Compensation_Boundary_Event">
+        <dc:Bounds x="282" y="152" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ank1yi_di" bpmnElement="Flow_1ank1yi">
+        <di:waypoint x="188" y="130" />
+        <di:waypoint x="240" y="130" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

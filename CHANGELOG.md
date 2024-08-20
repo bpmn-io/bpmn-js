@@ -6,6 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: pasting compensation activity without boundary event ([#2070](https://github.com/bpmn-io/bpmn-js/issues/2070))
 * `FIX`: lane resize constraints for se and nw direction ([#2209](https://github.com/bpmn-io/bpmn-js/issues/2209))
 
 ## 17.9.2
