@@ -279,7 +279,8 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
             x: externalLabelMid.x - externalLabelBounds.width / 2,
             y: externalLabelMid.y - externalLabelBounds.height / 2,
             width: externalLabelBounds.width,
-            height: externalLabelBounds.height
+            height: externalLabelBounds.height,
+            businessObject: intermediateThrowEvent.businessObject
           });
 
           create.start(canvasEvent({ x: 0, y: 0 }), [ intermediateThrowEvent, label ]);
