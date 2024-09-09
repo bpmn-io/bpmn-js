@@ -6,8 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.10.0
+
+* `CHORE`: correct various type hints ([#https://github.com/bpmn-io/bpmn-js/issues/2228](https://github.com/bpmn-io/bpmn-js/issues/2228))
 * `FIX`: pasting compensation activity without boundary event ([#2070](https://github.com/bpmn-io/bpmn-js/issues/2070))
 * `FIX`: lane resize constraints for se and nw direction ([#2209](https://github.com/bpmn-io/bpmn-js/issues/2209))
+* `FIX`: auto place elements vertically in sub-processes ([#2127](https://github.com/bpmn-io/bpmn-js/issues/2127))
+* `FIX`: hide lane label during direct editing
+* `DEPS`: update to `diagram-js@14.9.0`
 
 ## 17.9.2
 
