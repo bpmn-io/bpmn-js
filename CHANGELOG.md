@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.11.0
+
+* `FEAT`: align search styles with other popups ([#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `FEAT`: prioritize start of tokens in search results ([#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `FIX`: do not commit viewport changes on `ESC` ([#2189](https://github.com/bpmn-io/bpmn-js/issues/2189), [#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
+* `DEPS`: update to `diagram-js@14.10.0`
+
 ## 17.10.0
 
 * `CHORE`: correct various type hints ([#https://github.com/bpmn-io/bpmn-js/issues/2228](https://github.com/bpmn-io/bpmn-js/issues/2228))
