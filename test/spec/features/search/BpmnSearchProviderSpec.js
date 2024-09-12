@@ -206,6 +206,21 @@ describe('features - BPMN search provider', function() {
       expect(elements[5].element.id).to.eql('foo_1');
     }));
 
+
+    it('should handle elements without label', inject(function(bpmnSearch) {
+
+      // given
+      var pattern = 'ass';
+
+      // when
+      var elements = bpmnSearch.find(pattern);
+
+      // then
+      expect(elements).length(2);
+      expect(elements[0].element.id).to.eql('Association_1');
+      expect(elements[1].element.id).to.eql('Association_2');
+    }));
+
   });
 
 });
