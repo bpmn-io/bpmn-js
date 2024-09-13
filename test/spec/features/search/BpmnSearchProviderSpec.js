@@ -3,6 +3,10 @@ import {
   inject
 } from 'test/TestHelper';
 
+import {
+  pick
+} from 'min-dash';
+
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 import bpmnSearchModule from 'lib/features/search';
@@ -72,13 +76,13 @@ describe('features - BPMN search provider', function() {
       var elements = bpmnSearch.find(pattern);
 
       // then
-      expect(elements[0].primaryTokens).to.eql([
-        { normal: 'has matched ID' }
+      expectTokens(elements[0].primaryTokens, [
+        { value: 'has matched ID' }
       ]);
-      expect(elements[0].secondaryTokens).to.eql([
-        { normal: 'some_' },
-        { matched: 'DataStore' },
-        { normal: '_123456_id' }
+      expectTokens(elements[0].secondaryTokens, [
+        { value: 'some_' },
+        { value: 'DataStore', match: true },
+        { value: '_123456_id' }
       ]);
     }));
 
@@ -122,8 +126,10 @@ describe('features - BPMN search provider', function() {
         var elements = bpmnSearch.find(pattern);
 
         // then
-        expect(elements[0].primaryTokens).to.eql([
-          { matched: 'all matched' }
+        expectTokens(elements[0].primaryTokens, [
+          { value: 'all', match: true },
+          { value: ' ' },
+          { value: 'matched', match: true }
         ]);
       }));
 
@@ -137,9 +143,9 @@ describe('features - BPMN search provider', function() {
         var elements = bpmnSearch.find(pattern);
 
         // then
-        expect(elements[0].primaryTokens).to.eql([
-          { matched: 'before' },
-          { normal: ' 321' }
+        expectTokens(elements[0].primaryTokens, [
+          { value: 'before', match: true },
+          { value: ' 321' }
         ]);
       }));
 
@@ -153,10 +159,10 @@ describe('features - BPMN search provider', function() {
         var elements = bpmnSearch.find(pattern);
 
         // then
-        expect(elements[0].primaryTokens).to.eql([
-          { normal: '123 ' },
-          { matched: 'middle' },
-          { normal: ' 321' }
+        expectTokens(elements[0].primaryTokens, [
+          { value: '123 ' },
+          { value: 'middle', match: true },
+          { value: ' 321' }
         ]);
       }));
 
@@ -170,9 +176,9 @@ describe('features - BPMN search provider', function() {
         var elements = bpmnSearch.find(pattern);
 
         // then
-        expect(elements[0].primaryTokens).to.eql([
-          { normal: '123 ' },
-          { matched: 'after' }
+        expectTokens(elements[0].primaryTokens, [
+          { value: '123 ' },
+          { value: 'after', match: true }
         ]);
       }));
 
@@ -224,3 +230,14 @@ describe('features - BPMN search provider', function() {
   });
 
 });
+
+
+// helpers ///////////////
+
+function expectTokens(tokens, expectedTokens) {
+  const cleanTokens = tokens.map(
+    token => pick(token, [ 'value', 'match' ])
+  );
+
+  expect(cleanTokens).to.eql(expectedTokens);
+}
