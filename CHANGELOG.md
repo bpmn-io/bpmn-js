@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 17.11.1
+
+* `FIX`: handle searching elements without labels ([#2232](https://github.com/bpmn-io/bpmn-js/issues/2232), [#2234](https://github.com/bpmn-io/bpmn-js/pull/2234))
+
 ## 17.11.0
 
 * `FEAT`: align search styles with other popups ([#2187](https://github.com/bpmn-io/bpmn-js/pull/2187))
