@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.10.0">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1" name="Foo" />
     <bpmn:startEvent id="StartEvent_2" />
@@ -10,9 +10,10 @@
       <bpmn:text></bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:group id="Group_1" categoryValueRef="CategoryValue_1" />
+    <bpmn:group id="Group_2" />
   </bpmn:process>
   <bpmn:category id="Category_1">
-    <bpmn:categoryValue id="CategoryValue_1" />
+    <bpmn:categoryValue id="CategoryValue_1" value="Group 1" />
   </bpmn:category>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -32,14 +33,17 @@
         <dc:Bounds x="460" y="80" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1_di" bpmnElement="TextAnnotation_1">
-        <dc:Bounds x="426" y="220" width="100" height="30" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_13podyk_di" bpmnElement="Subprocess_1">
         <dc:Bounds x="600" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1_di" bpmnElement="TextAnnotation_1">
+        <dc:Bounds x="426" y="220" width="100" height="30" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
         <dc:Bounds x="165" y="190" width="150" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1txvenf_di" bpmnElement="Group_2">
+        <dc:Bounds x="490" y="190" width="150" height="115" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
