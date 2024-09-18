@@ -165,6 +165,20 @@ describe('features/modeling - update label', function() {
   ));
 
 
+  it('should not set a value if only whitespace is provided', inject(function(modeling, elementRegistry) {
+
+    // given
+    var group = elementRegistry.get('Empty_Label_Group');
+
+    // when
+    modeling.updateLabel(group, null);
+
+    // then
+    expect(group.businessObject.categoryValueRef).to.not.exist;
+    expect(group.label).to.not.exist;
+  }));
+
+
   it('should change value of group', inject(function(modeling, elementRegistry) {
 
     // given
