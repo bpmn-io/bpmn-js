@@ -19,7 +19,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 17.10.0
 
-* `CHORE`: correct various type hints ([#https://github.com/bpmn-io/bpmn-js/issues/2228](https://github.com/bpmn-io/bpmn-js/issues/2228))
+* `CHORE`: correct various type hints ([#2228](https://github.com/bpmn-io/bpmn-js/issues/2228))
 * `FIX`: pasting compensation activity without boundary event ([#2070](https://github.com/bpmn-io/bpmn-js/issues/2070))
 * `FIX`: lane resize constraints for se and nw direction ([#2209](https://github.com/bpmn-io/bpmn-js/issues/2209))
 * `FIX`: auto place elements vertically in sub-processes ([#2127](https://github.com/bpmn-io/bpmn-js/issues/2127))
