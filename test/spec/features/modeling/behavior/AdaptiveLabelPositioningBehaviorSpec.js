@@ -32,7 +32,6 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
     expect(orientation).to.eql(expectedOrientation);
   }
 
-
   describe('basics', function() {
 
     var diagramXML = require('./AdaptiveLabelPositioningBehavior.basics.bpmn');
@@ -221,6 +220,26 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
           expectLabelOrientation(target, 'top');
         }
       ));
+
+    });
+
+    describe('on annotation move / layout', function() {
+
+      it('should not move label', inject(function(elementRegistry, modeling) {
+
+        // given
+        var source = elementRegistry.get('Flow_167deqo'),
+            target = elementRegistry.get('TextAnnotation_1vnawwd');
+
+        const prevCoordinates = { x: source.x, y: source.y };
+
+        modeling.moveElements([ target ], { x: -110, y: 20 });
+
+        const newCoordinates = { x: source.x, y: source.y };
+
+        // then
+        expect(prevCoordinates).to.eql(newCoordinates);
+      }));
 
     });
 
