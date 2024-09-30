@@ -224,6 +224,22 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
     });
 
+    describe('on annotation move / layout', function() {
+
+      it('should not move label', inject(function(elementRegistry, modeling) {
+
+        // given
+        var source = elementRegistry.get('Flow_167deqo'),
+            target = elementRegistry.get('TextAnnotation_1vnawwd');
+
+        modeling.moveElements([ target ], { x: -110, y: 20 });
+
+        // then
+        expectLabelOrientation(source, 'top');
+      }));
+
+    });
+
 
     describe('on waypoints update', function() {
 
