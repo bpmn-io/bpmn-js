@@ -6,7 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-* `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114)
+* `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
 
 ### Breaking Changes
 
