@@ -25,7 +25,7 @@ jobs:
 
     - name: Notify failure on Slack
       if: failure()
-      uses: slackapi/slack-github-action@v1.24.0
+      uses: slackapi/slack-github-action@v1.27.0
       with:
         channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
         slack-message: "Automatic merge of <https://github.com/${{ github.repository }}/tree/${{ github.ref }}|${{ github.ref }}> to <https://github.com/${{ github.repository }}/tree/develop|${{ github.repository }}#develop> failed."
