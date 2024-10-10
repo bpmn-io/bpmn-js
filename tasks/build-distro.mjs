@@ -2,7 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 import cp from 'cpy';
-import del from 'del';
+import { deleteAsync as del } from 'del';
 
 import { execa as exec } from 'execa';
 
