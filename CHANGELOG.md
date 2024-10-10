@@ -5,6 +5,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 ## Unreleased
 
 ___Note:__ Yet to be released changes appear here._
+* `FIX`: flow text alignment issue when placed text annotation ([#2239](https://github.com/bpmn-io/bpmn-js/issues/2239))
 
 * `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
 
