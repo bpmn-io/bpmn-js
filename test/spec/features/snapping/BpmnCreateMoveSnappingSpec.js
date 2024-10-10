@@ -715,6 +715,38 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   });
 
+  describe('dragging elements', function() {
+    var diagramXML = require('./BpmnCreateMoveSnapping.process.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    it('should limit movement when attempting to drag outside the viewport', inject(function(elementRegistry, move, dragging, canvas) {
+
+      var task = elementRegistry.get('Task_1');
+      var viewbox = canvas.viewbox();
+      var initialX = task.x;
+      var initialY = task.y;
+
+      // when
+      move.start(canvasEvent({ x: task.x + task.width / 2, y: task.y + task.height / 2 }), task);
+
+      // Attempt to move far outside the viewport
+      var farAwayX = viewbox.x + viewbox.width * 2;
+      var farAwayY = viewbox.y + viewbox.height * 2;
+      dragging.move(canvasEvent({ x: farAwayX, y: farAwayY }));
+
+      dragging.end();
+
+      // then
+      expect(task.x).to.be.above(initialX, 'Task should have moved right');
+      expect(task.y).to.be.above(initialY, 'Task should have moved down');
+      expect(task.x).to.be.below(farAwayX, 'Task should not have moved as far right as attempted');
+      expect(task.y).to.be.below(farAwayY, 'Task should not have moved as far down as attempted');
+    }));
+  });
+
 });
 
 // helpers //////////
