@@ -39,8 +39,8 @@ describe('features/snapping - BpmnConnectSnapping', function() {
 
     describe('boundary event loop', function() {
 
-      it('should snap left',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap left', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_Bottom'),
@@ -65,12 +65,12 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 420,
             y: 115
           });
-        })
-      );
+        }
+      ));
 
 
-      it('should snap bottom',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap bottom (from bottom)', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_Bottom'),
@@ -95,12 +95,12 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 550,
             y: 115
           });
-        })
-      );
+        }
+      ));
 
 
-      it('should snap right',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap right', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_Right'),
@@ -125,12 +125,12 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 580,
             y: 90
           });
-        })
-      );
+        }
+      ));
 
 
-      it('should snap bottom',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap bottom (from right)', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var boundaryEvent = elementRegistry.get('BoundaryEvent_Right'),
@@ -155,16 +155,16 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 580,
             y: 180
           });
-        })
-      );
+        }
+      ));
 
     });
 
 
     describe('activity target', function() {
 
-      it('should snap to task mid',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap to task mid', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_2'),
@@ -189,12 +189,12 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 200,
             y: 845
           });
-        })
-      );
+        }
+      ));
 
 
-      it('should snap to sub-process mid',
-        inject(function(connect, dragging, elementRegistry) {
+      it('should snap to sub-process mid', inject(
+        function(connect, dragging, elementRegistry) {
 
           // given
           var startEvent = elementRegistry.get('StartEvent_3'),
@@ -219,14 +219,14 @@ describe('features/snapping - BpmnConnectSnapping', function() {
             x: 325,
             y: 1025
           });
-        })
-      );
+        }
+      ));
 
     });
 
 
-    it('should to snap gateway target mid',
-      inject(function(connect, dragging, elementRegistry) {
+    it('should to snap gateway target mid', inject(
+      function(connect, dragging, elementRegistry) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1'),
@@ -251,12 +251,12 @@ describe('features/snapping - BpmnConnectSnapping', function() {
           x: 250,
           y: 50
         });
-      })
-    );
+      }
+    ));
 
 
-    it('should snap to event target mid',
-      inject(function(connect, dragging, elementRegistry) {
+    it('should snap to event target mid', inject(
+      function(connect, dragging, elementRegistry) {
 
         // given
         var startEvent = elementRegistry.get('StartEvent_1'),
@@ -281,8 +281,8 @@ describe('features/snapping - BpmnConnectSnapping', function() {
           x: 80,
           y: 240
         });
-      })
-    );
+      }
+    ));
 
   });
 

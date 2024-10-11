@@ -24,7 +24,7 @@ describe('helper - inject', function() {
     var expected = 'resolved';
 
     // when
-    var test = inject(function(eventBus) {
+    var testFn = inject(function(eventBus) {
 
       expect(eventBus).to.exist;
 
@@ -32,7 +32,7 @@ describe('helper - inject', function() {
     });
 
     // then
-    return test().then(function(result) {
+    return testFn().then(function(result) {
 
       expect(result).to.eql(expected);
     });
@@ -53,14 +53,14 @@ describe('helper - inject', function() {
     }
 
     // when
-    var test = inject(function(eventBus) {
+    var testFn = inject(function(eventBus) {
       expect(eventBus).to.exist;
 
       return Promise.reject(expected);
     });
 
     // then
-    return test().then(onResolved, onRejected);
+    return testFn().then(onResolved, onRejected);
   });
 
 });

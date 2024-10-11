@@ -67,7 +67,7 @@ describe('features - bpmn-factory', function() {
       }));
 
 
-      it('should assign id with generic semantic prefix (Flow)', inject(
+      it('should assign id with generic semantic prefix (SequenceFlow)', inject(
         function(bpmnFactory) {
           var flow = bpmnFactory.create('bpmn:SequenceFlow');
 
@@ -77,7 +77,7 @@ describe('features - bpmn-factory', function() {
       );
 
 
-      it('should assign id with generic semantic prefix (Flow)', inject(
+      it('should assign id with generic semantic prefix (MessageFlow)', inject(
         function(bpmnFactory) {
           var flow = bpmnFactory.create('bpmn:MessageFlow');
 

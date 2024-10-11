@@ -16,6 +16,7 @@ describe('features/modeling - #removeShape', function() {
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
+
   describe('shape handling', function() {
 
     it('should execute', inject(function(elementRegistry, modeling) {
@@ -73,7 +74,7 @@ describe('features/modeling - #removeShape', function() {
 });
 
 
-describe('features/modeling - #removeShape', function() {
+describe('features/modeling - #removeShape - cropping', function() {
 
   var diagramXML = require('./DeleteShape.cropping.bpmn');
 

@@ -49,7 +49,7 @@ describe('features/modeling - TextAnnotationBehavior', function() {
   }));
 
 
-  it('should NOT resize Container on Text Annotation resize', inject(function(modeling) {
+  it('should NOT resize Container on Text Annotation move', inject(function(modeling) {
 
     // when
     modeling.moveShape(annotation, { x: 250, y: 250 });
