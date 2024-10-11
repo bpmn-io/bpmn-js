@@ -1,9 +1,0 @@
-{
-  "extends": "plugin:bpmn-io/browser",
-  "rules": {
-    "no-restricted-imports": [ "error", {
-      "name": "inherits",
-      "message": "Use inherits-browser instead"
-    } ]
-  }
-}
