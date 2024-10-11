@@ -307,7 +307,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
     }));
 
 
-    it('should undo', inject(function(elementRegistry, modeling, bpmnjs, commandStack) {
+    it('should redo', inject(function(elementRegistry, modeling, bpmnjs, commandStack) {
 
       // given
       var subProcess = elementRegistry.get('SubProcess_2');

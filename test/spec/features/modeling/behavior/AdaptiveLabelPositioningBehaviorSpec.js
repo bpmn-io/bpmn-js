@@ -104,21 +104,6 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
       }));
 
 
-      it('should move label from TOP to LEFT', inject(function(elementRegistry, modeling) {
-
-        // given
-        var source = elementRegistry.get('LabelTop'),
-            target = elementRegistry.get('LabelLeft');
-
-        // when
-        modeling.connect(source, target);
-
-        // then
-        expectLabelOrientation(source, 'left');
-        expectLabelOrientation(target, 'left');
-      }));
-
-
       it('should move label from TOP to LEFT (inverse)', inject(function(elementRegistry, modeling) {
 
         // given

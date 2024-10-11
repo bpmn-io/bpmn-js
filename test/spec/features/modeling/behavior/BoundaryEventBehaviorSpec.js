@@ -66,7 +66,7 @@ describe('features/modeling/behavior - boundary event', function() {
 
   describe('should keep root element reference on replace', function() {
 
-    it('interrupting to non-interrupting', function() {
+    describe('interrupting to non-interrupting', function() {
 
       it('message reference', inject(function(bpmnReplace, elementRegistry) {
 
@@ -154,7 +154,7 @@ describe('features/modeling/behavior - boundary event', function() {
     });
 
 
-    it('non-interrupting to interrupting', function() {
+    describe('non-interrupting to interrupting', function() {
 
       it('message reference', inject(function(bpmnReplace, elementRegistry) {
 

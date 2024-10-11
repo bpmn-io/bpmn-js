@@ -28,7 +28,7 @@ import coreModule from 'lib/core';
 import gridSnappingModule from 'lib/features/grid-snapping';
 
 
-describe('behavior - LabelBehavior', function() {
+describe('features/modeling/behavior - LabelBehavior', function() {
 
   var diagramXML = require('./LabelBehavior.bpmn');
 
@@ -842,57 +842,54 @@ describe('behavior - LabelBehavior', function() {
 });
 
 
-describe('behavior - LabelBehavior', function() {
+describe('features/modeling/behavior - LabelBehavior - copy/paste integration', function() {
 
-  describe('copy/paste integration', function() {
+  var diagramXML = require('./LabelBehavior.copyPaste.bpmn');
 
-    var diagramXML = require('./LabelBehavior.copyPaste.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: [
-        modelingModule,
-        coreModule,
-        gridSnappingModule
-      ]
-    }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      modelingModule,
+      coreModule,
+      gridSnappingModule
+    ]
+  }));
 
 
-    it('should skip adjustment during creation', inject(
-      function(elementRegistry, copyPaste, canvas, dragging) {
+  it('should skip adjustment during creation', inject(
+    function(elementRegistry, copyPaste, canvas, dragging) {
 
-        // given
-        var elements = [
-          elementRegistry.get('Source'),
-          elementRegistry.get('Target'),
-          elementRegistry.get('SequenceFlow'),
-          elementRegistry.get('SequenceFlow').label
-        ];
+      // given
+      var elements = [
+        elementRegistry.get('Source'),
+        elementRegistry.get('Target'),
+        elementRegistry.get('SequenceFlow'),
+        elementRegistry.get('SequenceFlow').label
+      ];
 
-        var rootElement = canvas.getRootElement();
+      var rootElement = canvas.getRootElement();
 
-        copyPaste.copy(elements);
+      copyPaste.copy(elements);
 
-        // when
-        var pastedElements = copyPaste.paste({
-          element: rootElement,
-          point: {
-            x: 700,
-            y: 300
-          }
-        });
+      // when
+      var pastedElements = copyPaste.paste({
+        element: rootElement,
+        point: {
+          x: 700,
+          y: 300
+        }
+      });
 
-        var label = pastedElements[3];
+      var label = pastedElements[3];
 
-        // then
-        expect(label).to.exist;
+      // then
+      expect(label).to.exist;
 
-        expect(label).to.have.position({ x: 681, y: 287 });
-      }
-    ));
-
-  });
+      expect(label).to.have.position({ x: 681, y: 287 });
+    }
+  ));
 
 });
+
 
 // helpers //////////
 

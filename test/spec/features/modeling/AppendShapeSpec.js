@@ -22,6 +22,7 @@ describe('features/modeling - append shape', function() {
   var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
 
   var testModules = [ coreModule, modelingModule ];
+
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
