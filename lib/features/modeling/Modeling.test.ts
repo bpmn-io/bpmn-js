@@ -22,7 +22,7 @@ const modeler = new Modeler();
 const elementFactory = modeler.get<ElementFactory>('elementFactory');
 
 const sequenceFlow = elementFactory.create('connection', { type: 'bpmn:SequenceFlow' }),
-      process = elementFactory.create('root', { type: 'bpmn:Process' }),
+      bpmnProcess = elementFactory.create('root', { type: 'bpmn:Process' }),
       subProcess = elementFactory.create('shape', { type: 'bpmn:SubProcess' }),
       task = elementFactory.create('shape', { type: 'bpmn:Task' });
 
@@ -99,19 +99,19 @@ modeling.setColor([ task ], { stroke: 'green' });
  * Integration
  */
 
-expectType<Connection>(modeling.createConnection(subProcess, task, sequenceFlow, process));
+expectType<Connection>(modeling.createConnection(subProcess, task, sequenceFlow, bpmnProcess));
 
 expectType<Label>(modeling.createLabel(task, { x: 100, y: 100 }, {
   businessObject: getBusinessObject(task)
 }));
 
-expectType<Shape>(modeling.createShape(task, { x: 100, y: 100 }, process));
+expectType<Shape>(modeling.createShape(task, { x: 100, y: 100 }, bpmnProcess));
 
 expectType<Element[]>(modeling.createElements([
   subProcess,
   task,
   sequenceFlow
-], { x: 100, y: 100 }, process));
+], { x: 100, y: 100 }, bpmnProcess));
 
 modeling.moveShape(task, { x: 100, y: 100 });
 
