@@ -2,7 +2,7 @@
   "name": "bpmn-js",
   "version": "17.11.1",
   "description": "A bpmn 2.0 toolkit and web modeler",
-  "main": "index.js",
+  "main": "lib/index.js",
   "files": [
     "dist",
     "lib",
