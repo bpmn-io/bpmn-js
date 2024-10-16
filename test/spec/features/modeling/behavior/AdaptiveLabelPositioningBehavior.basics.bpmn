@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="3.5.0">
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
   <process id="Process_1" isExecutable="false">
     <exclusiveGateway id="LabelBottom" name="BOTTOM" />
     <exclusiveGateway id="LabelLeft" name="LEFT" />
@@ -45,6 +45,17 @@
       <incoming>SequenceFlow_3</incoming>
     </endEvent>
     <sequenceFlow id="SequenceFlow_3" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_1" />
+    <startEvent id="Event_01mx9s0" name="START">
+      <outgoing>Flow_167deqo</outgoing>
+    </startEvent>
+    <endEvent id="Event_11bow2d" name="END">
+      <incoming>Flow_167deqo</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_167deqo" name="label" sourceRef="Event_01mx9s0" targetRef="Event_11bow2d" />
+    <textAnnotation id="TextAnnotation_1vnawwd">
+      <text>foo</text>
+    </textAnnotation>
+    <association id="Association_1yuzjgg" associationDirection="None" sourceRef="Flow_167deqo" targetRef="TextAnnotation_1vnawwd" />
   </process>
   <bpmndi:BPMNDiagram id="BpmnDiagram_1">
     <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
@@ -57,7 +68,7 @@
       <bpmndi:BPMNShape id="LabelLeft_di" bpmnElement="LabelLeft" isMarkerVisible="true">
         <omgdc:Bounds x="359" y="82" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="314" y="101" width="28" height="14" />
+          <omgdc:Bounds x="315" y="101" width="27" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="LabelTop_di" bpmnElement="LabelTop" isMarkerVisible="true">
@@ -90,6 +101,49 @@
           <omgdc:Bounds x="355" y="424" width="60" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelImpossible_di" bpmnElement="LabelImpossible" isMarkerVisible="true">
+        <omgdc:Bounds x="683" y="308" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="745" y="327" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <omgdc:Bounds x="826" y="293" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NoLabel_di" bpmnElement="NoLabel" isMarkerVisible="true">
+        <omgdc:Bounds x="683" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="120" y="570" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_02fomt2_di" bpmnElement="ExclusiveGateway_02fomt2" isMarkerVisible="true">
+        <omgdc:Bounds x="886" y="82" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0i2uvba_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
+        <omgdc:Bounds x="1035" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1050" y="152" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0l1udor_di" bpmnElement="EndEvent_1">
+        <omgdc:Bounds x="1042" y="315" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_01mx9s0_di" bpmnElement="Event_01mx9s0">
+        <omgdc:Bounds x="152" y="542" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="152" y="585" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11bow2d_di" bpmnElement="Event_11bow2d">
+        <omgdc:Bounds x="402" y="542" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="408" y="585" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1yuzjgg_di" bpmnElement="Association_1yuzjgg">
+        <omgdi:waypoint x="295" y="560" />
+        <omgdi:waypoint x="371" y="520" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1_di" bpmnElement="SequenceFlow_1">
         <omgdi:waypoint x="384" y="275" />
         <omgdi:waypoint x="384" y="370" />
@@ -104,15 +158,6 @@
           <omgdc:Bounds x="193" y="317" width="7" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="LabelImpossible_di" bpmnElement="LabelImpossible" isMarkerVisible="true">
-        <omgdc:Bounds x="683" y="308" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="745" y="327" width="67" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
-        <omgdc:Bounds x="826" y="293" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qmllcx_di" bpmnElement="SequenceFlow_1qmllcx">
         <omgdi:waypoint x="876" y="293" />
         <omgdi:waypoint x="876" y="202" />
@@ -141,34 +186,27 @@
           <omgdc:Bounds x="719.5" y="432" width="0" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="NoLabel_di" bpmnElement="NoLabel" isMarkerVisible="true">
-        <omgdc:Bounds x="683" y="82" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="120" y="570" width="22" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_02fomt2_di" bpmnElement="ExclusiveGateway_02fomt2" isMarkerVisible="true">
-        <omgdc:Bounds x="886" y="82" width="50" height="50" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0isa70k_di" bpmnElement="SequenceFlow_0isa70k">
         <omgdi:waypoint x="708" y="132" />
         <omgdi:waypoint x="708" y="159" />
         <omgdi:waypoint x="911" y="159" />
         <omgdi:waypoint x="911" y="132" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0i2uvba_di" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <omgdc:Bounds x="1035" y="82" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="1050" y="152" width="20" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0l1udor_di" bpmnElement="EndEvent_1">
-        <omgdc:Bounds x="1042" y="315" width="36" height="36" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1hp7ppg_di" bpmnElement="SequenceFlow_3">
         <omgdi:waypoint x="1060" y="132" />
         <omgdi:waypoint x="1060" y="315" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_167deqo_di" bpmnElement="Flow_167deqo">
+        <omgdi:waypoint x="188" y="560" />
+        <omgdi:waypoint x="402" y="560" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="283" y="542" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1vnawwd_di" bpmnElement="TextAnnotation_1vnawwd">
+        <omgdc:Bounds x="350" y="490" width="100" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </definitions>
