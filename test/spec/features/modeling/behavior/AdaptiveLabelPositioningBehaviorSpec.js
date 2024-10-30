@@ -223,6 +223,7 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
     });
 
+
     describe('on annotation move / layout', function() {
 
       it('should not move label', inject(function(elementRegistry, modeling) {
