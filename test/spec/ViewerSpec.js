@@ -81,6 +81,19 @@ describe('Viewer', function() {
   });
 
 
+  it('should not include Outline module by default', function() {
+
+    // given
+    var viewer = new Viewer({ container: container });
+
+    // when
+    var outline = viewer.get('outline', false);
+
+    // then
+    expect(outline).not.to.exist;
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function() {
