@@ -537,20 +537,21 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var task = elementRegistry.get('SequentialTask'),
             businessObject = getBusinessObject(task),
-            loopCharacteristics = Object.assign({}, businessObject.loopCharacteristics);
+            loopCharacteristics = businessObject.get('loopCharacteristics');
 
         openPopup(task);
 
         // assume
-        expect(loopCharacteristics.isSequential).to.be.true;
+        expect(loopCharacteristics.get('isSequential')).to.be.true;
 
         // when
         triggerAction('toggle-parallel-mi');
 
         // then
-        var newLoopCharacteristics = businessObject.loopCharacteristics;
+        const newLoopCharacteristics = businessObject.get('loopCharacteristics');
 
-        expect(newLoopCharacteristics.isSequential).to.be.false;
+        expect(newLoopCharacteristics).to.equal(loopCharacteristics);
+        expect(newLoopCharacteristics.get('isSequential')).to.be.false;
         expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(omit(loopCharacteristics, 'isSequential'));
       }));
 
@@ -662,21 +663,22 @@ describe('features/popup-menu - replace menu provider', function() {
         // given
         var task = elementRegistry.get('ParallelTask'),
             businessObject = getBusinessObject(task),
-            loopCharacteristics = Object.assign({}, businessObject.loopCharacteristics);
+            loopCharacteristics = businessObject.get('loopCharacteristics');
 
         openPopup(task);
 
         // assume
-        expect(loopCharacteristics.isSequential).to.be.undefined;
+        expect(loopCharacteristics.get('isSequential')).to.be.false;
 
         // when
         triggerAction('toggle-sequential-mi');
 
         // then
-        var newLoopCharacteristics = businessObject.loopCharacteristics;
+        var newLoopCharacteristics = businessObject.get('loopCharacteristics');
 
-        expect(newLoopCharacteristics.isSequential).to.be.true;
-        expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(loopCharacteristics);
+        expect(newLoopCharacteristics).to.equal(loopCharacteristics);
+        expect(newLoopCharacteristics.get('isSequential')).to.be.true;
+        expect(omit(newLoopCharacteristics, 'isSequential')).to.eql(omit(loopCharacteristics, 'isSequential'));
       }));
 
     });
