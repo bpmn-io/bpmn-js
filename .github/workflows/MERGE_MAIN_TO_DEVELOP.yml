@@ -5,7 +5,7 @@ on:
     - "main"
 
 jobs:
-  Merge_main_to_develop:
+  merge_main_to_develop:
     runs-on: ubuntu-latest
     permissions:
       contents: write

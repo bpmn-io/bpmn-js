@@ -1,11 +1,11 @@
+name: RELEASE
 on:
   push:
     branches:
       - main
       - develop
-name: release
 jobs:
-  release-please:
+  release_please:
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag: ${{ steps.release.outputs.tag_name }}
@@ -23,8 +23,8 @@ jobs:
           release-type: node
 
   publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
+    needs: release_please
+    if: ${{ needs.release_please.outputs.release_created }}
 
     runs-on: ubuntu-latest
     steps:

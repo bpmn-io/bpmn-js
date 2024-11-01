@@ -9,7 +9,7 @@ on:
       - '**/*.md'
 
 jobs:
-  CodeQL-Build:
+  codeql-build:
     # CodeQL runs on ubuntu-latest, windows-latest, and macos-latest
     runs-on: ubuntu-latest
 
