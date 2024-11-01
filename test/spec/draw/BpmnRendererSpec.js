@@ -420,7 +420,6 @@ describe('draw - bpmn renderer', function() {
           var svg = canvas._svg,
               markerPath = svg.querySelector(`[data-element-id="${id}"] marker path`);
 
-          console.log(id, markerPath);
           expect(markerPath).to.exist;
 
           stroke && expect(markerPath.style.stroke).to.eql(stroke);
