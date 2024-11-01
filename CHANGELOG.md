@@ -14,7 +14,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ### Breaking Changes
 
-* Require `Node >= 18` for building the project.
+* Require `Node >= 20`
 * `Canvas` is now a focusable element and provides better support for native browser behaviors. Focus can be controlled with new `focus` and `restoreFocus` APIs.
 * Keyboard is now implicitly bound to canvas SVG element. Calls to `keyboard.bind` and `keyboard.bindTo` now result with a descriptive console error and have no effect.
 
