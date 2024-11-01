@@ -6,9 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: remove `outline` from `Viewer` modules ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
 * `FEAT`: make `Canvas` a focusable element ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
 * `FEAT`: implicit keyboard binding ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
 * `FIX`: prevent crash during label adjustment ([#2239](https://github.com/bpmn-io/bpmn-js/issues/2239))
+* `FIX`: prevent covering multi selection with black box in `Viewer` ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
 * `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
 * `DEPS`: update to `diagram-js@15.0.0`
 
