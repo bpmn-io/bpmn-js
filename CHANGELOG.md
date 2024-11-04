@@ -10,7 +10,10 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: make `Canvas` a focusable element ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
 * `FEAT`: implicit keyboard binding ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
 * `FIX`: prevent crash during label adjustment ([#2239](https://github.com/bpmn-io/bpmn-js/issues/2239))
+* `FIX`: keep existing loop characteristics when toggling through the replace menu ([#2251](https://github.com/bpmn-io/bpmn-js/pull/2251))
 * `FIX`: prevent covering multi selection with black box in `Viewer` ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
+* `FIX`: generate types for main entry ([`986e2bb`](https://github.com/bpmn-io/bpmn-js/commit/986e2bb51ea301e6e0df56f3606a27424fb90179))
+* `FIX`: correct handling of group name with whitespace only ([#2231](https://github.com/bpmn-io/bpmn-js/issues/2231))
 * `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
 * `DEPS`: update to `diagram-js@15.0.0`
 
