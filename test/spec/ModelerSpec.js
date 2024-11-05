@@ -215,6 +215,19 @@ describe('Modeler', function() {
   });
 
 
+  it('should include Outline module by default', function() {
+
+    // given
+    var modeler = new Modeler();
+
+    // when
+    var outline = modeler.get('outline', false);
+
+    // then
+    expect(outline).to.exist;
+  });
+
+
   describe('overlay support', function() {
 
     it('should allow to add overlays', function() {
