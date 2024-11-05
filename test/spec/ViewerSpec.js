@@ -84,7 +84,7 @@ describe('Viewer', function() {
   it('should not include Outline module by default', function() {
 
     // given
-    var viewer = new Viewer({ container: container });
+    var viewer = new Viewer();
 
     // when
     var outline = viewer.get('outline', false);
