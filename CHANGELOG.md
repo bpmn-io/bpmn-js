@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.0.0
+
 * `FEAT`: remove `outline` from `Viewer` modules ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
 * `FEAT`: make `Canvas` a focusable element ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
 * `FEAT`: implicit keyboard binding ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662))
