@@ -16,7 +16,8 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: generate types for main entry ([`986e2bb`](https://github.com/bpmn-io/bpmn-js/commit/986e2bb51ea301e6e0df56f3606a27424fb90179))
 * `FIX`: correct handling of group name with whitespace only ([#2231](https://github.com/bpmn-io/bpmn-js/issues/2231))
 * `DEPS`: update to `bpmn-moddle@9` ([#2114](https://github.com/bpmn-io/bpmn-js/pull/2114))
-* `DEPS`: update to `diagram-js@15.0.0`
+* `DEPS`: update to `diagram-js@15.1.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.2.0`
 
 ### Breaking Changes
 
