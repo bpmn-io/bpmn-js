@@ -6,6 +6,32 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.0.0](https://github.com/bpmn-io/bpmn-js/compare/v17.11.1...v18.0.0) (2024-11-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* update to `bpmn-moddle@9`
+
+### deps
+
+* update to `bpmn-moddle@9` ([3e2a765](https://github.com/bpmn-io/bpmn-js/commit/3e2a765bf40dedd7e788dd726efb0c69fd70ddc7))
+
+
+### Features
+
+* **search:** integrate with unified search ([8383966](https://github.com/bpmn-io/bpmn-js/commit/83839669bb8c9c6a52c436b8b25d518606db5094))
+
+
+### Bug Fixes
+
+* empty whitespaces label in group ([303ca88](https://github.com/bpmn-io/bpmn-js/commit/303ca886154152ecc9e6ec4ceb193c7cba2cf1cf)), closes [#2231](https://github.com/bpmn-io/bpmn-js/issues/2231)
+* flow text alignment issue when placed text annotationt ([#2241](https://github.com/bpmn-io/bpmn-js/issues/2241)) ([e5f1637](https://github.com/bpmn-io/bpmn-js/commit/e5f1637e7e0a1500216179ade3a4630c8c79d26a))
+* generate types for main entry point ([986e2bb](https://github.com/bpmn-io/bpmn-js/commit/986e2bb51ea301e6e0df56f3606a27424fb90179))
+* **Modeler:** re-add outline feature ([9f41690](https://github.com/bpmn-io/bpmn-js/commit/9f41690c22cee6f64c8506313487ee45d108a86e))
+* **replace-menu:** keep existing loop characteristics ([#2251](https://github.com/bpmn-io/bpmn-js/issues/2251)) ([e937bd9](https://github.com/bpmn-io/bpmn-js/commit/e937bd9c035f9f10a4ff461f7902c8946fc66378))
+* **viewer:** remove outline module from default modules ([583195a](https://github.com/bpmn-io/bpmn-js/commit/583195a4fa3a88f9f4ba21d79f733952a43f56cb)), closes [#2135](https://github.com/bpmn-io/bpmn-js/issues/2135)
+
 ## 18.0.0
 
 * `FEAT`: remove `outline` from `Viewer` modules ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
