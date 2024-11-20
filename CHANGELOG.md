@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.1.0
+
+* `FIX`: clear selection when opening search pad ([bpmn-io/diagram-js#947](https://github.com/bpmn-io/diagram-js/pull/947))
+* `FIX`: correct dangling selection after search pad interaction ([bpmn-io/diagram-js#947](https://github.com/bpmn-io/diagram-js/pull/947))
+* `DEPS`: update to `diagram-js@15.2.2`
+
 ## 18.0.0
 
 * `FEAT`: remove `outline` from `Viewer` modules ([#2135](https://github.com/bpmn-io/bpmn-js/issues/2135))
