@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: adjust search to prioritize start of word and exact matches ([bpmn-io/diagram-js#953](https://github.com/bpmn-io/diagram-js/pull/953))
+* `FIX`: ignore whitespace when searching ([bpmn-io/diagram-js#954](https://github.com/bpmn-io/diagram-js/pull/954))
+
 ## 18.1.0
 
 * `FIX`: clear selection when opening search pad ([bpmn-io/diagram-js#947](https://github.com/bpmn-io/diagram-js/pull/947))
