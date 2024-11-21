@@ -127,9 +127,7 @@ describe('features - BPMN search provider', function() {
 
         // then
         expectTokens(elements[0].primaryTokens, [
-          { value: 'all', match: true },
-          { value: ' ' },
-          { value: 'matched', match: true }
+          { value: 'all matched', match: true }
         ]);
       }));
 
