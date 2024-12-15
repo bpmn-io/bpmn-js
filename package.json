@@ -67,7 +67,7 @@
     "@bpmn-io/a11y": "^0.1.0",
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-replace": "^6.0.0",
     "@rollup/plugin-terser": "^0.4.4",
     "babel-loader": "^9.2.1",
