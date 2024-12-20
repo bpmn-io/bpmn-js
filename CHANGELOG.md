@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.1.2
+
+* `FIX`: canvas `autoFocus` must explicitly be enabled ([bpmn-io/diagram-js#956](https://github.com/bpmn-io/diagram-js/pull/956))
+* `FIX`: properly integrate `zoomscroll` with canvas focus ([bpmn-io/diagram-js#956](https://github.com/bpmn-io/diagram-js/pull/956))
+* `FIX`: properly integrate `movecanvas` with canvas focus ([bpmn-io/diagram-js#956](https://github.com/bpmn-io/diagram-js/pull/956))
+
 ## 18.1.1
 
 * `FIX`: adjust search to prioritize start of word and exact matches ([bpmn-io/diagram-js#953](https://github.com/bpmn-io/diagram-js/pull/953))
