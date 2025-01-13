@@ -5,7 +5,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-20.04, windows-latest ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
@@ -19,6 +19,8 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
+    - name: Project setup
+      uses: bpmn-io/actions/setup@latest
     - name: Build
       if: runner.os == 'Linux'
       env:
