@@ -1,5 +1,9 @@
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
+import {
+  query as domQuery
+} from 'min-dom';
+
 import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';
@@ -390,9 +394,9 @@ describe('Viewer', function() {
     function verifyDrilldown(xml) {
 
       return createViewer(container, Viewer, xml).then(function() {
-        var drilldown = container.querySelector('.bjs-drilldown');
-        var breadcrumbs = container.querySelector('.bjs-breadcrumbs');
-        var djsContainer = container.querySelector('.djs-container');
+        var drilldown = domQuery('.bjs-drilldown', container);
+        var breadcrumbs = domQuery('.bjs-breadcrumbs', container);
+        var djsContainer = domQuery('.djs-container', container);
 
         // assume
         expect(drilldown).to.exist;
@@ -1546,12 +1550,12 @@ describe('Viewer', function() {
           throw err;
         }
 
-        var svgDoc = viewer._container.childNodes[1].childNodes[1];
+        var svgDoc = domQuery('svg', viewer._container);
 
         appendTestRect(svgDoc);
         appendTestRect(svgDoc);
 
-        expect(svgDoc.querySelectorAll('.outer-bound-marker')).to.exist;
+        expect(domQuery('.outer-bound-marker', svgDoc)).to.exist;
 
         // when
         return viewer.saveSVG();
@@ -1564,7 +1568,7 @@ describe('Viewer', function() {
 
         // then
         expect(validSVG(svg)).to.be.true;
-        expect(svgDoc.querySelector('.outer-bound-marker')).to.be.null;
+        expect(domQuery('.outer-bound-marker', svgDoc)).not.to.exist;
 
       });
     });
