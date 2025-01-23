@@ -89,7 +89,7 @@ describe('features/modeling - collapse and expand elements', function() {
         // when
         var expandedAdHocSubProcess = bpmnReplace.replaceElement(collapsedAdHocSubProcess,
           {
-            type: 'bpmn:SubProcess',
+            type: 'bpmn:AdHocSubProcess',
             isExpanded: true
           }
         );
@@ -322,12 +322,12 @@ describe('features/modeling - collapse and expand elements', function() {
       inject(function(elementRegistry, bpmnReplace) {
 
         // given
-        var expandedSubProcess = elementRegistry.get('SubProcess_2');
+        var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
 
         // when
         var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
           {
-            type: 'bpmn:SubProcess',
+            type: 'bpmn:AdHocSubProcess',
             isExpanded: false
           }
         );
@@ -342,12 +342,12 @@ describe('features/modeling - collapse and expand elements', function() {
       inject(function(elementRegistry, bpmnReplace) {
 
         // given
-        var expandedSubProcess = elementRegistry.get('SubProcess_2');
+        var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
 
         // when
         var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
           {
-            type: 'bpmn:SubProcess',
+            type: 'bpmn:AdHocSubProcess',
             isExpanded: false
           }
         );
@@ -364,7 +364,7 @@ describe('features/modeling - collapse and expand elements', function() {
       inject(function(elementRegistry, bpmnReplace) {
 
         // given
-        var expandedSubProcess = elementRegistry.get('SubProcess_2');
+        var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
         var originalChildren = expandedSubProcess.children.slice();
 
         // when
@@ -376,7 +376,7 @@ describe('features/modeling - collapse and expand elements', function() {
         );
 
         // then
-        var plane = elementRegistry.get('SubProcess_2_plane');
+        var plane = elementRegistry.get('AdHocSubProcess_1_plane');
         originalChildren.forEach(function(c) {
           expect(plane.children).to.include(c);
         });
@@ -390,7 +390,7 @@ describe('features/modeling - collapse and expand elements', function() {
         inject(function(elementRegistry, bpmnReplace) {
 
           // given
-          var expandedSubProcess = elementRegistry.get('SubProcess_2');
+          var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
           var oldMid = {
             x: expandedSubProcess.x + expandedSubProcess.width / 2,
             y: expandedSubProcess.y + expandedSubProcess.height / 2
@@ -399,7 +399,7 @@ describe('features/modeling - collapse and expand elements', function() {
           // when
           var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
             {
-              type: 'bpmn:SubProcess',
+              type: 'bpmn:AdHocSubProcess',
               isExpanded: false
             }
           );
@@ -426,10 +426,10 @@ describe('features/modeling - collapse and expand elements', function() {
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
           // given
-          var expandedSubProcess = elementRegistry.get('SubProcess_2');
+          var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
           var collapsedSubProcess = bpmnReplace.replaceElement(expandedSubProcess,
             {
-              type: 'bpmn:SubProcess',
+              type: 'bpmn:AdHocSubProcess',
               isExpanded: false
             }
           );
@@ -447,7 +447,7 @@ describe('features/modeling - collapse and expand elements', function() {
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
           // given
-          var expandedSubProcess = elementRegistry.get('SubProcess_2');
+          var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
           var originalBounds = {
             x: expandedSubProcess.x,
             y: expandedSubProcess.y,
@@ -457,7 +457,7 @@ describe('features/modeling - collapse and expand elements', function() {
 
           bpmnReplace.replaceElement(expandedSubProcess,
             {
-              type: 'bpmn:SubProcess',
+              type: 'bpmn:AdHocSubProcess',
               isExpanded: false
             }
           );
@@ -475,12 +475,12 @@ describe('features/modeling - collapse and expand elements', function() {
         inject(function(elementRegistry, bpmnReplace, commandStack) {
 
           // given
-          var expandedSubProcess = elementRegistry.get('SubProcess_2');
+          var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
           var originalChildren = expandedSubProcess.children.slice();
 
           bpmnReplace.replaceElement(expandedSubProcess,
             {
-              type: 'bpmn:SubProcess',
+              type: 'bpmn:AdHocSubProcess',
               isExpanded: false
             }
           );
@@ -589,7 +589,7 @@ describe('features/modeling - collapse and expand elements', function() {
         inject(function(eventBus, bpmnReplace, elementRegistry) {
 
           // given
-          var expandedSubProcess = elementRegistry.get('SubProcess_2');
+          var expandedSubProcess = elementRegistry.get('AdHocSubProcess_1');
 
           // should not be called
           eventBus.once('commandStack.shape.toggleCollapse.execute', function(e) {

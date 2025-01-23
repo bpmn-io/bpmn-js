@@ -361,72 +361,6 @@ describe('features/popup-menu - replace menu provider', function() {
         expect(toggleActive('toggle-loop')).to.be.true;
       }));
 
-
-      it('should be true for ad hoc marker', inject(function(elementRegistry) {
-
-        // given
-        var AdHocSubProcess = elementRegistry.get('AdHocSubProcess');
-
-        // when
-        openPopup(AdHocSubProcess);
-
-        // then
-        expect(toggleActive('toggle-adhoc')).to.be.true;
-      }));
-
-    });
-
-
-    describe('exclusive toggle buttons', function() {
-
-      it('should not toggle non exclusive buttons off', inject(function(elementRegistry) {
-        var subProcess = elementRegistry.get('AdHocSubProcess');
-
-        openPopup(subProcess);
-
-        // when
-        triggerAction('toggle-parallel-mi');
-
-        openPopup(subProcess);
-
-        // then
-        expect(domClasses(queryEntry('toggle-adhoc')).has('active')).to.be.true;
-      }));
-
-    });
-
-
-    describe('non exclusive toggle buttons', function() {
-
-      it('should not toggle exclusive buttons off',
-        inject(function(elementRegistry) {
-
-          // given
-          var subProcess = elementRegistry.get('SubProcess');
-
-          // when
-
-          // toggle parallel on
-          openPopup(subProcess);
-
-          triggerAction('toggle-parallel-mi');
-
-          // toggle ad hoc on
-          openPopup(subProcess);
-
-          var adHocSubProcess = triggerAction('toggle-adhoc');
-
-          openPopup(adHocSubProcess);
-
-          // then
-          var parallelEntry = queryEntry('toggle-parallel-mi');
-          var adHocEntry = queryEntry('toggle-adhoc');
-
-          expect(domClasses(parallelEntry).has('active')).to.be.true;
-          expect(domClasses(adHocEntry).has('active')).to.be.true;
-        })
-      );
-
     });
 
 
@@ -1105,6 +1039,23 @@ describe('features/popup-menu - replace menu provider', function() {
       })
     );
 
+
+    it('should replace sub processes -> ad hoc sub process',
+      inject(function(elementRegistry) {
+
+        // given
+        var subprocess = elementRegistry.get('SubProcess');
+
+        openPopup(subprocess);
+
+        // when
+        var adHocSubProcess = triggerAction('replace-with-ad-hoc-subprocess');
+
+        // then
+        expect(adHocSubProcess.type).to.equal('bpmn:AdHocSubProcess');
+      })
+    );
+
   });
 
 
@@ -1672,26 +1623,272 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
+    describe('subprocesses', function() {
+
+      var diagramXML = require('./ReplaceMenuProvider.subProcesses.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+      describe('subprocess', function() {
+
+        it('options do not include subprocess itself', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('SubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+
+        it('options include collapsed subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('SubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options include ad hoc subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('SubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-ad-hoc-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options do not include collapsed ad hoc subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('SubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-ad-hoc-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+      });
+
+      describe('ad hoc subprocess', function() {
+
+        it('options do not include ad hoc subprocess itself', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-ad-hoc-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+
+        it('options include collapsed subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-ad-hoc-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options include subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options do not include collapsed subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+      });
+
+    });
+
+
     describe('collapsed subprocesses', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
+      describe('collapsed subprocess', function() {
 
-      it('options do not include collapsed subprocesses itself', inject(function(elementRegistry) {
+        it('options do not include collapsed subprocess itself', inject(function(elementRegistry) {
 
-        // given
-        var collapsedSubProcess = elementRegistry.get('Task_1');
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
 
-        // when
-        openPopup(collapsedSubProcess);
+          // when
+          openPopup(collapsedSubProcess);
 
-        var collapsedSubProcessEntry = queryEntry('replace-with-collapsed-subprocess');
+          var entry = queryEntry('replace-with-collapsed-subprocess');
 
-        // then
-        expect(collapsedSubProcessEntry).not.to.exist;
-      }));
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+
+        it('options include collapsed ad hoc subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-ad-hoc-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options include expanded subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-expanded-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options do not include ad hoc subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-ad-hoc-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+      });
+
+      describe('collapsed ad hoc subprocess', function() {
+
+        it('options do not include collapsed ad hoc subprocess itself', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-ad-hoc-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+
+        it('options include collapsed subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options include expanded ad hoc subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-ad-hoc-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
+        it('options do not include expanded subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('AdhocSubProcess_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-subprocess');
+
+          // then
+          expect(entry).not.to.exist;
+        }));
+
+      });
 
     });
 
@@ -2485,7 +2682,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('adhoc sub process', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
+      var diagramXML = require('./ReplaceMenuProvider.subProcesses.bpmn');
 
       beforeEach(bootstrapModeler(diagramXML, {
         modules: testModules.concat(autoResizeModule)
@@ -2499,15 +2696,14 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var subProcess = elementRegistry.get('SubProcess_1');
 
-          var resizeShapeSpy = sinon.spy(modeling, 'resizeShape');
-
           // when
           openPopup(subProcess);
 
-          triggerAction('toggle-adhoc');
+          const adHocSubProcess = triggerAction('replace-with-ad-hoc-subprocess');
 
           // then
-          expect(resizeShapeSpy).not.to.have.been.called;
+          const sizeChanged = didSizeChange(subProcess, adHocSubProcess);
+          expect(sizeChanged).to.be.false;
         }));
 
 
@@ -2521,7 +2717,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(subProcess);
 
-          triggerAction('toggle-adhoc');
+          triggerAction('replace-with-ad-hoc-subprocess');
 
           // then
           expect(layoutConnectionSpy).not.to.have.been.called;
@@ -2536,15 +2732,14 @@ describe('features/popup-menu - replace menu provider', function() {
           // given
           var adhocSubProcess = elementRegistry.get('AdhocSubProcess_1');
 
-          var resizeShapeSpy = sinon.spy(modeling, 'resizeShape');
-
           // when
           openPopup(adhocSubProcess);
 
-          triggerAction('toggle-adhoc');
+          const subprocess = triggerAction('replace-with-subprocess');
 
           // then
-          expect(resizeShapeSpy).not.to.have.been.called;
+          const sizeChanged = didSizeChange(adhocSubProcess, subprocess);
+          expect(sizeChanged).to.be.false;
         }));
 
 
@@ -2558,7 +2753,7 @@ describe('features/popup-menu - replace menu provider', function() {
           // when
           openPopup(adhocSubProcess);
 
-          triggerAction('toggle-adhoc');
+          triggerAction('replace-with-subprocess');
 
           // then
           expect(layoutConnectionSpy).not.to.have.been.called;
@@ -2787,4 +2982,9 @@ function triggerAction(id) {
 function getMenuContainer() {
   const popup = getBpmnJS().get('popupMenu');
   return popup._current.container;
+}
+
+function didSizeChange(element, newElement) {
+  return element.di.bounds.width !== newElement.di.bounds.width ||
+          element.di.bounds.height !== newElement.di.bounds.height;
 }
