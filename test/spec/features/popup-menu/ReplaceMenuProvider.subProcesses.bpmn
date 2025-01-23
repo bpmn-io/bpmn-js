@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.30.0">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_1">
+      <bpmn:task id="Activity_0j5zj2x" />
+    </bpmn:subProcess>
+    <bpmn:adHocSubProcess id="AdhocSubProcess_1">
+      <bpmn:task id="Activity_1j5hq1s" />
+    </bpmn:adHocSubProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_0loe8m1_di" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds x="160" y="60" width="360" height="210" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j5zj2x_di" bpmnElement="Activity_0j5zj2x">
+        <dc:Bounds x="290" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="AdHocSubProcess_0lfb35q_di" bpmnElement="AdhocSubProcess_1" isExpanded="true">
+        <dc:Bounds x="600" y="65" width="360" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14akb0e" bpmnElement="Activity_1j5hq1s">
+        <dc:Bounds x="740" y="120" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
