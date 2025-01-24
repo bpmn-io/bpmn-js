@@ -6,6 +6,18 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.2.0](https://github.com/bpmn-io/bpmn-js/compare/v18.1.2...v18.2.0) (2025-01-24)
+
+
+### Features
+
+* create ad-hoc sub process via replace menu ([d9b908b](https://github.com/bpmn-io/bpmn-js/commit/d9b908b0318432b40f91b5da7a22b1c369f98ae8))
+
+
+### Bug Fixes
+
+* **BaseViewer:** swap canvas and project logo ([e44e925](https://github.com/bpmn-io/bpmn-js/commit/e44e925964267376212dfed53ab603028c6f7c7d))
+
 ## 18.2.0
 
 * `FEAT`: add ad-hoc subprocess option to replace menu ([#2276](https://github.com/bpmn-io/bpmn-js/pull/2276))
