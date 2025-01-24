@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.2.0
+
+* `FEAT`: add ad-hoc subprocess option to replace menu ([#2276](https://github.com/bpmn-io/bpmn-js/pull/2276))
+
 ## 18.1.2
 
 * `FIX`: canvas `autoFocus` must explicitly be enabled ([bpmn-io/diagram-js#956](https://github.com/bpmn-io/diagram-js/pull/956))
