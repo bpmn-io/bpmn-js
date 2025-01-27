@@ -23,6 +23,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        
+    - name: Setup project
+      uses: bpmn-io/actions/setup@latest
 
     - name: Set TAG
       run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
