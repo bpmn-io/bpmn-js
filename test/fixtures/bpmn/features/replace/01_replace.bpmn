@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.1.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:startEvent id="StartEvent_1" name="KEEP ME">
       <bpmn:outgoing>SequenceFlow_1</bpmn:outgoing>
@@ -70,9 +70,25 @@
     <bpmn:startEvent id="StartEvent_5">
       <bpmn:messageEventDefinition id="MessageEventDefinition_0mynzm8" />
     </bpmn:startEvent>
-    <bpmn:subProcess id="SubProcess_2" />
-    <bpmn:subProcess id="EventSubProcess_2" triggeredByEvent="true" />
+    <bpmn:subProcess id="SubProcess_2">
+      <bpmn:intermediateCatchEvent id="IntermediateCatchMessageEvent">
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0ntrjf5" />
+      </bpmn:intermediateCatchEvent>
+      <bpmn:intermediateThrowEvent id="CompensationEvent">
+        <bpmn:compensateEventDefinition id="CompensateEventDefinition_0xibqo0" />
+      </bpmn:intermediateThrowEvent>
+    </bpmn:subProcess>
+    <bpmn:subProcess id="EventSubProcess_2" triggeredByEvent="true">
+      <bpmn:endEvent id="ErrorEvent">
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1wj8dp2" />
+      </bpmn:endEvent>
+    </bpmn:subProcess>
     <bpmn:complexGateway id="ComplexGateway_1" />
+    <bpmn:intermediateCatchEvent id="ConditionalEvent">
+      <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_0ubws14">
+        <bpmn:condition xsi:type="bpmn:tFormalExpression" />
+      </bpmn:conditionalEventDefinition>
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -97,8 +113,8 @@
           <dc:Bounds x="669" y="70" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1g9qldn_di" bpmnElement="ComplexGateway_1">
-        <dc:Bounds x="212" y="825" width="50" height="50" />
+      <bpmndi:BPMNShape id="Event_0o3fiwu_di" bpmnElement="ConditionalEvent">
+        <dc:Bounds x="872" y="480" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds x="221" y="208" width="350" height="200" />
@@ -165,8 +181,20 @@
       <bpmndi:BPMNShape id="Activity_0cb78c0_di" bpmnElement="SubProcess_2" isExpanded="true">
         <dc:Bounds x="221" y="590" width="350" height="200" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0snvrjf_di" bpmnElement="IntermediateCatchMessageEvent">
+        <dc:Bounds x="262" y="672" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jo3l8m_di" bpmnElement="CompensationEvent">
+        <dc:Bounds x="412" y="672" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0cmryx4_di" bpmnElement="EventSubProcess_2" isExpanded="true">
         <dc:Bounds x="659" y="590" width="193" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pr5js5_di" bpmnElement="ErrorEvent">
+        <dc:Bounds x="752" y="662" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1g9qldn_di" bpmnElement="ComplexGateway_1">
+        <dc:Bounds x="212" y="825" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
         <dc:Bounds x="382" y="144" width="36" height="36" />
