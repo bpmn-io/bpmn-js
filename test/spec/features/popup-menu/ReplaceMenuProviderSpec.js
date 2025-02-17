@@ -1094,7 +1094,7 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(queryEntry('replace-with-non-interrupting-message-start')).to.be.null;
           expect(queryEntry('replace-with-message-start')).to.exist;
 
-          expect(queryBodyEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(14);
         })
       );
 
@@ -1118,7 +1118,7 @@ describe('features/popup-menu - replace menu provider', function() {
           expect(queryEntry('replace-with-conditional-start')).to.exist;
           expect(queryEntry('replace-with-non-interrupting-conditional-start')).to.be.null;
 
-          expect(queryBodyEntries()).to.have.length(11);
+          expect(queryBodyEntries()).to.have.length(12);
         })
       );
 
@@ -1240,6 +1240,107 @@ describe('features/popup-menu - replace menu provider', function() {
         })
       );
 
+
+      it('should show corresponding variants for a timer event',
+        inject(function(elementRegistry) {
+
+          // given
+          var timerStartEvent = elementRegistry.get('StartEvent_4');
+
+          // when
+          openPopup(timerStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-timer-start')).to.be.null;
+          expect(queryEntry('replace-with-timer-intermediate-catch')).exist;
+        })
+      );
+
+
+      it('should show corresponding variants for a message event',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('StartEvent_5');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-message-start')).to.be.null;
+          expect(queryEntry('replace-with-message-intermediate-catch')).exist;
+          expect(queryEntry('replace-with-message-intermediate-throw')).exist;
+          expect(queryEntry('replace-with-message-end')).exist;
+        })
+      );
+
+
+      it('should show corresponding variants for a compensation event',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('CompensationEvent');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-compensation-start')).to.be.null;
+          expect(queryEntry('replace-with-compensation-intermediate-throw')).to.be.null;
+          expect(queryEntry('replace-with-compensation-end')).exist;
+        })
+      );
+
+
+      it('should show corresponding variants for a conditional event',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('ConditionalEvent');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-conditional-start')).exist;
+          expect(queryEntry('replace-with-conditional-intermediate-catch')).to.be.null;
+        })
+      );
+
+
+      it('should show corresponding variants for an error event',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('ErrorEvent');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-error-start')).exist;
+          expect(queryEntry('replace-with-error-end')).to.be.null;
+        })
+      );
+
+
+      it('should NOT show corresponding start event variants for a message event in subprocess',
+        inject(function(elementRegistry) {
+
+          // given
+          var messageStartEvent = elementRegistry.get('IntermediateCatchMessageEvent');
+
+          // when
+          openPopup(messageStartEvent);
+
+          // then
+          expect(queryEntry('replace-with-message-start')).to.be.null;
+          expect(queryEntry('replace-with-message-intermediate-catch')).to.be.null;
+          expect(queryEntry('replace-with-message-intermediate-throw')).exist;
+          expect(queryEntry('replace-with-message-end')).exist;
+        })
+      );
+
     });
 
 
@@ -1262,7 +1363,7 @@ describe('features/popup-menu - replace menu provider', function() {
             openPopup(endEvent);
 
             // then
-            expect(queryBodyEntries()).to.have.length(9);
+            expect(queryBodyEntries()).to.have.length(11);
 
             expect(queryEntry('replace-with-cancel-end')).to.exist;
           })
