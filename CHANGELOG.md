@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.3.0
+
+* `FEAT`: allow to replace between variants of typed events ([#2282](https://github.com/bpmn-io/bpmn-js/pull/2282))
+
 ## 18.2.0
 
 * `FEAT`: add ad-hoc subprocess option to replace menu ([#2276](https://github.com/bpmn-io/bpmn-js/pull/2276))
