@@ -553,6 +553,167 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   });
 
+
+  describe('artifacts', function() {
+
+    var diagramXML = require('./BpmnSpaceTool.artifacts.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    describe('should move visually contained', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_1');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: 100 }, false, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X + 100);
+        expect(group.x).to.equal(group_X + 100);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_4');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: 100 }, false, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X + 100);
+        expect(group.x).to.equal(group_X + 100);
+      }));
+
+
+      it('on root', inject(function() {
+
+        // given
+        var textAnnotation_in_PARTICIPANT = $element('ANNOTATION_1');
+        var textAnnotation_in_PARTICIPANT_X = textAnnotation_in_PARTICIPANT.x;
+
+        var textAnnotation_in_SUB = $element('ANNOTATION_4');
+        var textAnnotation_in_SUB_X = textAnnotation_in_SUB.x;
+
+        var group_in_PARTICIPANT = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_in_PARTICIPANT_X = group_in_PARTICIPANT.x;
+
+        var group_in_SUB = $element('GROUP_CONTAINED_SUB');
+        var group_in_SUB_X = group_in_SUB.x;
+
+        // when
+        makeSpace(leftOf('PARTICIPANT'), { dx: 100 }, false);
+
+        // then
+        expect(textAnnotation_in_PARTICIPANT.x).to.equal(textAnnotation_in_PARTICIPANT_X + 100);
+        expect(textAnnotation_in_SUB.x).to.equal(textAnnotation_in_SUB_X + 100);
+        expect(group_in_PARTICIPANT.x).to.equal(group_in_PARTICIPANT_X + 100);
+        expect(group_in_SUB.x).to.equal(group_in_SUB_X + 100);
+      }));
+
+    });
+
+
+    describe('should ignore outside of containment', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_3');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_OUTSIDE');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf('TASK'), { dx: 100 }, false, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_5');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_OUTSIDE_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf('GROUP_CONTAINED_SUB'), { dx: 100 }, false, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+    });
+
+
+    describe('should ignore unaffected inside of containment', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_1');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: -100 }, true, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_4');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: -100 }, true, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+    });
+
+  });
+
 });
 
 
@@ -600,7 +761,6 @@ function $element(id) {
   });
 }
 
-// eslint-disable-next-line "no-unused-vars"
 function leftOf(element) {
 
   element = $element(element);

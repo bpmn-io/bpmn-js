@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14kk48y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.32.0-rc.0">
+  <bpmn:collaboration id="COLLABORATION">
+    <bpmn:participant id="PARTICIPANT" name="PARTICIPANT" processRef="PROCESS" />
+    <bpmn:textAnnotation id="ANNOTATION_1">
+      <bpmn:text>ANNOTATION_1</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="ANNOTATION_3">
+      <bpmn:text>ANNOTATION_3</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="ANNOTATION_2">
+      <bpmn:text>ANNOTATION_2</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:group id="GROUP_CONTAINED_PARTICIPANT" categoryValueRef="CategoryValue_1fn4md7" />
+    <bpmn:group id="GROUP_OUTSIDE" categoryValueRef="CategoryValue_0w429b8" />
+    <bpmn:group id="GROUP_CONTAINED_SUB" categoryValueRef="CategoryValue_0l3p581" />
+    <bpmn:textAnnotation id="ANNOTATION_4">
+      <bpmn:text>ANNOTATION_4</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1iiawtv" associationDirection="None" sourceRef="ANNOTATION_4" targetRef="GROUP_CONTAINED_SUB" />
+    <bpmn:association id="Association_180iz30" associationDirection="None" sourceRef="TASK" targetRef="ANNOTATION_1" />
+    <bpmn:association id="Association_08csipe" associationDirection="None" sourceRef="TASK" targetRef="ANNOTATION_3" />
+    <bpmn:textAnnotation id="ANNOTATION_5">
+      <bpmn:text>ANNOTATION_5</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:group id="GROUP_OUTSIDE_SUB" categoryValueRef="CategoryValue_1rcl2uo" />
+  </bpmn:collaboration>
+  <bpmn:process id="PROCESS" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_04jep3i" />
+    <bpmn:task id="TASK" name="TASK" />
+    <bpmn:subProcess id="SUB" name="SUB" />
+  </bpmn:process>
+  <bpmn:category id="Category_0tto0k6">
+    <bpmn:categoryValue id="CategoryValue_1fn4md7" value="GROUP_CONTAINED_PARTICIPANT" />
+  </bpmn:category>
+  <bpmn:category id="Category_002evdo">
+    <bpmn:categoryValue id="CategoryValue_0w429b8" value="GROUP_OUTSIDE" />
+  </bpmn:category>
+  <bpmn:category id="Category_1u7ocho">
+    <bpmn:categoryValue id="CategoryValue_0l3p581" value="GROUP_CONTAINED_SUB" />
+  </bpmn:category>
+  <bpmn:category id="Category_00robw0">
+    <bpmn:categoryValue id="CategoryValue_1rcl2uo" value="GROUP_OUTSIDE_SUB" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="COLLABORATION">
+      <bpmndi:BPMNShape id="Participant_0lm71nu_di" bpmnElement="PARTICIPANT" isHorizontal="true">
+        <dc:Bounds x="160" y="130" width="900" height="420" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1g8l8sp_di" bpmnElement="TASK">
+        <dc:Bounds x="280" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mtvx36_di" bpmnElement="SUB" isExpanded="true">
+        <dc:Bounds x="650" y="200" width="350" height="280" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_180iz30_di" bpmnElement="Association_180iz30">
+        <di:waypoint x="379" y="287" />
+        <di:waypoint x="494" y="209" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_08csipe_di" bpmnElement="Association_08csipe">
+        <di:waypoint x="336" y="360" />
+        <di:waypoint x="378" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1iiawtv_di" bpmnElement="Association_1iiawtv">
+        <di:waypoint x="869" y="410" />
+        <di:waypoint x="850" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0kurhwc_di" bpmnElement="ANNOTATION_1">
+        <dc:Bounds x="470" y="170" width="109.99999237060547" height="39" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1vsrf4d" bpmnElement="ANNOTATION_2">
+        <dc:Bounds x="450" y="430" width="110" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1q5j3c0_di" bpmnElement="GROUP_CONTAINED_PARTICIPANT">
+        <dc:Bounds x="240" y="190" width="170" height="220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="282" y="197" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0m8gbmr" bpmnElement="GROUP_OUTSIDE">
+        <dc:Bounds x="210" y="80" width="370" height="500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="355" y="87" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0r40zjh_di" bpmnElement="ANNOTATION_3">
+        <dc:Bounds x="330" y="650" width="110" height="41" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_0887xry_di" bpmnElement="GROUP_CONTAINED_SUB">
+        <dc:Bounds x="690" y="240" width="200" height="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="748" y="247" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0hnq4f9" bpmnElement="ANNOTATION_4">
+        <dc:Bounds x="820" y="410" width="110" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_0m4uhit_di" bpmnElement="GROUP_OUTSIDE_SUB">
+        <dc:Bounds x="725" y="140" width="300" height="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="837" y="147" width="80" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0t9rdue" bpmnElement="ANNOTATION_5">
+        <dc:Bounds x="870" y="490" width="109.99999237060547" height="25.999998092651367" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
