@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14kk48y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.32.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_14kk48y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.12.1">
   <bpmn:collaboration id="Collaboration_0ci7cuj">
     <bpmn:participant id="Participant_1" name="Expanded Pool" processRef="Process_1" />
     <bpmn:participant id="Participant_2" name="Empty Pool" />
-    <bpmn:participant id="Participant_3" name="Pool with text annotations" processRef="Process_3" />
-    <bpmn:textAnnotation id="TextAnnotation_1">
-      <bpmn:text>text 1</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_2">
-      <bpmn:text>text 2</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:textAnnotation id="TextAnnotation_3">
-      <bpmn:text>text 3</bpmn:text>
-    </bpmn:textAnnotation>
   </bpmn:collaboration>
   <bpmn:process id="Process_1" isExecutable="true" />
-  <bpmn:process id="Process_3" isExecutable="false">
-    <bpmn:task id="Activity_1" />
-    <bpmn:association id="Association_180iz30" associationDirection="None" sourceRef="Activity_1" targetRef="TextAnnotation_1" />
-    <bpmn:association id="Association_08csipe" associationDirection="None" sourceRef="Activity_1" targetRef="TextAnnotation_2" />
-  </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0ci7cuj">
       <bpmndi:BPMNShape id="Participant_0f6z5qz_di" bpmnElement="Participant_1" isHorizontal="true">
@@ -28,33 +13,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_1pw3o1x_di" bpmnElement="Participant_2" isHorizontal="true">
         <dc:Bounds x="160" y="170" width="600" height="60" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_0lm71nu_di" bpmnElement="Participant_3" isHorizontal="true">
-        <dc:Bounds x="160" y="250" width="600" height="250" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1g8l8sp_di" bpmnElement="Activity_1">
-        <dc:Bounds x="310" y="340" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_180iz30_di" bpmnElement="Association_180iz30">
-        <di:waypoint x="410" y="358" />
-        <di:waypoint x="496" y="320" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_08csipe_di" bpmnElement="Association_08csipe">
-        <di:waypoint x="393" y="420" />
-        <di:waypoint x="518" y="570" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="TextAnnotation_0kurhwc_di" bpmnElement="TextAnnotation_1">
-        <dc:Bounds x="480" y="290" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0r40zjh_di" bpmnElement="TextAnnotation_2">
-        <dc:Bounds x="480" y="570" width="100" height="30" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_05zy3rg" bpmnElement="TextAnnotation_3">
-        <dc:Bounds x="200" y="360" width="100" height="30" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
