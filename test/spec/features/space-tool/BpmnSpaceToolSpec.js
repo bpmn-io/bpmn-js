@@ -551,6 +551,102 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       });
     }));
 
+
+    it('should move text annotations in a participant', inject(function(dragging, elementRegistry, spaceTool) {
+
+      // given
+      var textAnnotation = elementRegistry.get('TextAnnotation_1');
+      var textAnnotationX = textAnnotation.x;
+
+      var task = elementRegistry.get('Activity_1');
+      var taskMid = getMid(task);
+      var rightOfTask = task.x + task.width + 10;
+
+      // when
+      var element = elementRegistry.get('Participant_3');
+      var gfx = elementRegistry.getGraphics(element);
+      var hover = { element, gfx };
+
+      makeSpace({ x: rightOfTask, y: taskMid.y }, { dx: 100 }, false, hover);
+
+      // then
+      expect(textAnnotation.x).to.equal(textAnnotationX + 100);
+    }));
+
+
+    it('should only move text annotations in space tool range', inject(function(dragging, elementRegistry, spaceTool) {
+
+      // given
+      var textAnnotationToMove = elementRegistry.get('TextAnnotation_1');
+      var textAnnotationToMove_X = textAnnotationToMove.x;
+
+      var textAnnotationToStay = elementRegistry.get('TextAnnotation_3');
+      var textAnnotationToStay_X = textAnnotationToStay.x;
+
+      var task = elementRegistry.get('Activity_1');
+      var taskMid = getMid(task);
+      var rightOfTask = task.x + task.width + 10;
+
+      // when
+      var element = elementRegistry.get('Participant_3');
+      var gfx = elementRegistry.getGraphics(element);
+      var hover = { element, gfx };
+
+      makeSpace({ x: rightOfTask, y: taskMid.y }, { dx: 100 }, false, hover);
+
+      // then
+      expect(textAnnotationToMove.x).to.equal(textAnnotationToMove_X + 100);
+      expect(textAnnotationToStay.x).to.equal(textAnnotationToStay_X);
+    }));
+
+
+    it('should only move text annotations in space tool range (inverted)', inject(function(dragging, elementRegistry, spaceTool) {
+
+      // given
+      var textAnnotationToMove = elementRegistry.get('TextAnnotation_3');
+      var textAnnotationToMove_X = textAnnotationToMove.x;
+
+      var textAnnotationToStay = elementRegistry.get('TextAnnotation_1');
+      var textAnnotationToStay_X = textAnnotationToStay.x;
+
+      var task = elementRegistry.get('Activity_1');
+      var taskMid = getMid(task);
+      var rightOfTask = task.x + task.width + 10;
+
+      // when
+      var element = elementRegistry.get('Participant_3');
+      var gfx = elementRegistry.getGraphics(element);
+      var hover = { element, gfx };
+
+      makeSpace({ x: rightOfTask, y: taskMid.y }, { dx: -100 }, true, hover);
+
+      // then
+      expect(textAnnotationToMove.x).to.equal(textAnnotationToMove_X - 100);
+      expect(textAnnotationToStay.x).to.equal(textAnnotationToStay_X);
+    }));
+
+
+    it('should not move text annotations outside of participant', inject(function(dragging, elementRegistry, spaceTool) {
+
+      // given
+      var textAnnotation = elementRegistry.get('TextAnnotation_2');
+      var textAnnotationX = textAnnotation.x;
+
+      var task = elementRegistry.get('Activity_1');
+      var taskMid = getMid(task);
+      var rightOfTask = task.x + task.width + 10;
+
+      // when
+      var element = elementRegistry.get('Participant_3');
+      var gfx = elementRegistry.getGraphics(element);
+      var hover = { element, gfx };
+
+      makeSpace({ x: rightOfTask, y: taskMid.y }, { dx: 100 }, false, hover);
+
+      // then
+      expect(textAnnotation.x).to.equal(textAnnotationX);
+    }));
+
   });
 
 });
@@ -558,7 +654,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
 // helpers //////////
 
-function makeSpace(start, delta, invert) {
+function makeSpace(start, delta, invert, hover) {
   var modifier = invert ? invertModifier : {};
 
   var end = {
@@ -568,6 +664,8 @@ function makeSpace(start, delta, invert) {
 
   return getBpmnJS().invoke(function(spaceTool, dragging) {
     spaceTool.activateMakeSpace(canvasEvent(start));
+
+    hover && dragging.hover(hover);
 
     dragging.move(canvasEvent(end, modifier));
 
