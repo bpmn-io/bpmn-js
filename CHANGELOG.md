@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.3.1
+
+* `FIX`: move artifacts when a participant is resized by space tool ([#2285](https://github.com/bpmn-io/bpmn-js/pull/2285))
+
 ## 18.3.0
 
 * `FEAT`: allow to replace between variants of typed events ([#2282](https://github.com/bpmn-io/bpmn-js/pull/2282))
