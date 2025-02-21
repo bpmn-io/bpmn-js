@@ -14,7 +14,7 @@ import { createCanvasEvent as canvasEvent } from '../../../util/MockEvents';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
 
-import { pick } from 'min-dash';
+import { isString, pick } from 'min-dash';
 
 import { isMac } from 'diagram-js/lib/util/Platform';
 
@@ -53,10 +53,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
     describe('add space', function() {
 
-      it('should add space top', inject(function(elementRegistry) {
+      it('should add space top', inject(function() {
 
         // given
-        var subProcess1 = elementRegistry.get('SubProcess_1');
+        var subProcess1 = $element('SubProcess_1');
 
         var subProcess1Bounds = getBounds(subProcess1);
 
@@ -73,16 +73,16 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should add space right', inject(function(elementRegistry) {
+      it('should add space right', inject(function() {
 
         // given
-        var endEvent1 = elementRegistry.get('EndEvent_1'),
-            endEvent2 = elementRegistry.get('EndEvent_2'),
+        var endEvent1 = $element('EndEvent_1'),
+            endEvent2 = $element('EndEvent_2'),
             endEvent1Label = endEvent1.label,
             endEvent2Label = endEvent2.label,
-            sequenceFlow2 = elementRegistry.get('SequenceFlow_2'),
-            sequenceFlow4 = elementRegistry.get('SequenceFlow_4'),
-            subProcess1 = elementRegistry.get('SubProcess_1');
+            sequenceFlow2 = $element('SequenceFlow_2'),
+            sequenceFlow4 = $element('SequenceFlow_4'),
+            subProcess1 = $element('SubProcess_1');
 
         var endEvent1Mid = getMid(endEvent1),
             endEvent2Mid = getMid(endEvent2),
@@ -129,10 +129,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should add space bottom', inject(function(elementRegistry) {
+      it('should add space bottom', inject(function() {
 
         // given
-        var subProcess1 = elementRegistry.get('SubProcess_1');
+        var subProcess1 = $element('SubProcess_1');
 
         var subProcess1Bounds = getBounds(subProcess1);
 
@@ -149,16 +149,16 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should add space left', inject(function(elementRegistry) {
+      it('should add space left', inject(function() {
 
         // given
-        var startEvent1 = elementRegistry.get('StartEvent_1'),
-            startEvent2 = elementRegistry.get('StartEvent_2'),
+        var startEvent1 = $element('StartEvent_1'),
+            startEvent2 = $element('StartEvent_2'),
             startEvent1Label = startEvent1.label,
             startEvent2Label = startEvent2.label,
-            sequenceFlow1 = elementRegistry.get('SequenceFlow_1'),
-            sequenceFlow3 = elementRegistry.get('SequenceFlow_3'),
-            subProcess1 = elementRegistry.get('SubProcess_1');
+            sequenceFlow1 = $element('SequenceFlow_1'),
+            sequenceFlow3 = $element('SequenceFlow_3'),
+            subProcess1 = $element('SubProcess_1');
 
         var startEvent1Mid = getMid(startEvent1),
             startEvent2Mid = getMid(startEvent2),
@@ -209,10 +209,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
     describe('remove', function() {
 
-      it('should remove space top', inject(function(elementRegistry) {
+      it('should remove space top', inject(function() {
 
         // given
-        var subProcess1 = elementRegistry.get('SubProcess_1');
+        var subProcess1 = $element('SubProcess_1');
 
         var subProcess1Bounds = getBounds(subProcess1);
 
@@ -229,16 +229,16 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should remove space right', inject(function(elementRegistry) {
+      it('should remove space right', inject(function() {
 
         // given
-        var endEvent1 = elementRegistry.get('EndEvent_1'),
-            endEvent2 = elementRegistry.get('EndEvent_2'),
+        var endEvent1 = $element('EndEvent_1'),
+            endEvent2 = $element('EndEvent_2'),
             endEvent1Label = endEvent1.label,
             endEvent2Label = endEvent2.label,
-            sequenceFlow2 = elementRegistry.get('SequenceFlow_2'),
-            sequenceFlow4 = elementRegistry.get('SequenceFlow_4'),
-            subProcess1 = elementRegistry.get('SubProcess_1');
+            sequenceFlow2 = $element('SequenceFlow_2'),
+            sequenceFlow4 = $element('SequenceFlow_4'),
+            subProcess1 = $element('SubProcess_1');
 
         var endEvent1Mid = getMid(endEvent1),
             endEvent2Mid = getMid(endEvent2),
@@ -282,10 +282,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should remove space bottom', inject(function(elementRegistry) {
+      it('should remove space bottom', inject(function() {
 
         // given
-        var subProcess1 = elementRegistry.get('SubProcess_1');
+        var subProcess1 = $element('SubProcess_1');
 
         var subProcess1Bounds = getBounds(subProcess1);
 
@@ -302,16 +302,16 @@ describe('features/space-tool - BpmnSpaceTool', function() {
       }));
 
 
-      it('should remove space left', inject(function(elementRegistry) {
+      it('should remove space left', inject(function() {
 
         // given
-        var startEvent1 = elementRegistry.get('StartEvent_1'),
-            startEvent2 = elementRegistry.get('StartEvent_2'),
+        var startEvent1 = $element('StartEvent_1'),
+            startEvent2 = $element('StartEvent_2'),
             startEvent1Label = startEvent1.label,
             startEvent2Label = startEvent2.label,
-            sequenceFlow1 = elementRegistry.get('SequenceFlow_1'),
-            sequenceFlow3 = elementRegistry.get('SequenceFlow_3'),
-            subProcess1 = elementRegistry.get('SubProcess_1');
+            sequenceFlow1 = $element('SequenceFlow_1'),
+            sequenceFlow3 = $element('SequenceFlow_3'),
+            subProcess1 = $element('SubProcess_1');
 
         var startEvent1Mid = getMid(startEvent1),
             startEvent2Mid = getMid(startEvent2),
@@ -375,7 +375,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     it('should not resize text annotations', inject(function(dragging, elementRegistry, spaceTool) {
 
       // given
-      var textAnnotation = elementRegistry.get('TextAnnotation_1'),
+      var textAnnotation = $element('TextAnnotation_1'),
           textAnnotationMid = getMid(textAnnotation),
           textAnnotationWidth = textAnnotation.width;
 
@@ -406,10 +406,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should move boundary event when moving subprocess', inject(function(elementRegistry) {
+    it('should move boundary event when moving subprocess', inject(function() {
 
       // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+      var boundaryEvent = $element('BoundaryEvent_2');
 
       var boundaryEventMid = getMid(boundaryEvent);
 
@@ -424,10 +424,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should move boundary event when resizing subprocess', inject(function(elementRegistry) {
+    it('should move boundary event when resizing subprocess', inject(function() {
 
       // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+      var boundaryEvent = $element('BoundaryEvent_2');
 
       var boundaryEventMid = getMid(boundaryEvent);
 
@@ -442,10 +442,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should not move boundary event if subprocess not moving or resizing', inject(function(elementRegistry) {
+    it('should not move boundary event if subprocess not moving or resizing', inject(function() {
 
       // given
-      var boundaryEvent = elementRegistry.get('BoundaryEvent_2');
+      var boundaryEvent = $element('BoundaryEvent_2');
 
       var boundaryEventMid = getMid(boundaryEvent);
 
@@ -472,10 +472,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should resize an expanded pool horizontally', inject(function(elementRegistry) {
+    it('should resize an expanded pool horizontally', inject(function() {
 
       // given
-      var participant1 = elementRegistry.get('Participant_1');
+      var participant1 = $element('Participant_1');
 
       var participant1Bounds = getBounds(participant1);
 
@@ -492,10 +492,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should resize an expanded pool vertically', inject(function(elementRegistry) {
+    it('should resize an expanded pool vertically', inject(function() {
 
       // given
-      var participant1 = elementRegistry.get('Participant_1');
+      var participant1 = $element('Participant_1');
 
       var participant1Bounds = getBounds(participant1);
 
@@ -512,10 +512,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should resize an empty pool horizontally', inject(function(elementRegistry) {
+    it('should resize an empty pool horizontally', inject(function() {
 
       // given
-      var participant2 = elementRegistry.get('Participant_2');
+      var participant2 = $element('Participant_2');
 
       var participant2Bounds = getBounds(participant2);
 
@@ -532,10 +532,10 @@ describe('features/space-tool - BpmnSpaceTool', function() {
     }));
 
 
-    it('should not resize an empty pool vertically', inject(function(elementRegistry) {
+    it('should not resize an empty pool vertically', inject(function() {
 
       // given
-      var participant2 = elementRegistry.get('Participant_2');
+      var participant2 = $element('Participant_2');
 
       var participant2Bounds = getBounds(participant2);
 
@@ -553,12 +553,173 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   });
 
+
+  describe('artifacts', function() {
+
+    var diagramXML = require('./BpmnSpaceTool.artifacts.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    beforeEach(inject(function(dragging) {
+      dragging.setOptions({ manual: true });
+    }));
+
+
+    describe('should move visually contained', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_1');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: 100 }, false, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X + 100);
+        expect(group.x).to.equal(group_X + 100);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_4');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: 100 }, false, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X + 100);
+        expect(group.x).to.equal(group_X + 100);
+      }));
+
+
+      it('on root', inject(function() {
+
+        // given
+        var textAnnotation_in_PARTICIPANT = $element('ANNOTATION_1');
+        var textAnnotation_in_PARTICIPANT_X = textAnnotation_in_PARTICIPANT.x;
+
+        var textAnnotation_in_SUB = $element('ANNOTATION_4');
+        var textAnnotation_in_SUB_X = textAnnotation_in_SUB.x;
+
+        var group_in_PARTICIPANT = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_in_PARTICIPANT_X = group_in_PARTICIPANT.x;
+
+        var group_in_SUB = $element('GROUP_CONTAINED_SUB');
+        var group_in_SUB_X = group_in_SUB.x;
+
+        // when
+        makeSpace(leftOf('PARTICIPANT'), { dx: 100 }, false);
+
+        // then
+        expect(textAnnotation_in_PARTICIPANT.x).to.equal(textAnnotation_in_PARTICIPANT_X + 100);
+        expect(textAnnotation_in_SUB.x).to.equal(textAnnotation_in_SUB_X + 100);
+        expect(group_in_PARTICIPANT.x).to.equal(group_in_PARTICIPANT_X + 100);
+        expect(group_in_SUB.x).to.equal(group_in_SUB_X + 100);
+      }));
+
+    });
+
+
+    describe('should ignore outside of containment', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_3');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_OUTSIDE');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf('TASK'), { dx: 100 }, false, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_5');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_OUTSIDE_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf('GROUP_CONTAINED_SUB'), { dx: 100 }, false, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+    });
+
+
+    describe('should ignore unaffected inside of containment', function() {
+
+      it('in participant', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_1');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_PARTICIPANT');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: -100 }, true, 'PARTICIPANT');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+
+      it('in subprocess', inject(function() {
+
+        // given
+        var textAnnotation = $element('ANNOTATION_4');
+        var textAnnotation_X = textAnnotation.x;
+
+        var group = $element('GROUP_CONTAINED_SUB');
+        var group_X = group.x;
+
+        // when
+        makeSpace(leftOf(group), { dx: -100 }, true, 'SUB');
+
+        // then
+        expect(textAnnotation.x).to.equal(textAnnotation_X);
+        expect(group.x).to.equal(group_X);
+      }));
+
+    });
+
+  });
+
 });
 
 
 // helpers //////////
 
-function makeSpace(start, delta, invert) {
+function makeSpace(start, delta, invert, target) {
   var modifier = invert ? invertModifier : {};
 
   var end = {
@@ -566,13 +727,63 @@ function makeSpace(start, delta, invert) {
     y: start.y + (delta.dy || 0)
   };
 
-  return getBpmnJS().invoke(function(spaceTool, dragging) {
+  return getBpmnJS().invoke(function(spaceTool, dragging, canvas) {
     spaceTool.activateMakeSpace(canvasEvent(start));
+
+    if (target) {
+      target = $element(target);
+
+      dragging.hover({
+        element: target,
+        gfx: canvas.getGraphics(target)
+      });
+    }
 
     dragging.move(canvasEvent(end, modifier));
 
     dragging.end();
   });
+}
+
+function $element(id) {
+
+  if (!isString(id)) {
+    return id;
+  }
+
+  return getBpmnJS().invoke(function(elementRegistry) {
+
+    const element = elementRegistry.get(id);
+
+    expect(element, `element <#${id}>`).to.exist;
+
+    return element;
+  });
+}
+
+function leftOf(element) {
+
+  element = $element(element);
+
+  const mid = getMid(element);
+
+  return {
+    x: element.x - 10,
+    y: mid.y
+  };
+}
+
+// eslint-disable-next-line "no-unused-vars"
+function rightOf(element) {
+
+  element = $element(element);
+
+  const mid = getMid(element);
+
+  return {
+    x: element.x + element.width + 10,
+    y: mid.y
+  };
 }
 
 function getBounds(shape) {
