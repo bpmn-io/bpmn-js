@@ -60,7 +60,7 @@ describe('features/modeling - ModelingFeedback', function() {
       dragging.end();
 
       // then
-      expectTooltip('error', 'Data objects must be placed within a pool/participant.');
+      expectTooltip('error', 'Data object must be placed within a pool/participant.');
     }
   ));
 
