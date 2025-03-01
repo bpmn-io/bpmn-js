@@ -922,6 +922,8 @@ describe('features/copy-paste', function() {
       }
     ));
 
+    it('integration', integrationTest('SUB_PROCESS'));
+
   });
 
 
