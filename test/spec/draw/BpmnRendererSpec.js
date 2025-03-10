@@ -164,6 +164,15 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render event subprocess icons', function() {
+    var xml = require('../../fixtures/bpmn/draw/event-subprocess-icons.bpmn');
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      checkErrors(result.error, result.warnings);
+    });
+  });
+
+
   it('should render gateways', function() {
     var xml = require('../../fixtures/bpmn/draw/gateways.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
