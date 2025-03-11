@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="0.7.0-dev">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:dataStoreReference id="DataStoreReference" />
+    <bpmn:dataObjectReference id="DataObjectReference" dataObjectRef="DataObject" />
+    <bpmn:dataObject id="DataObject" />
+    <bpmn:subProcess id="Subprocess">
+      <bpmn:task id="Task">
+        <bpmn:dataOutputAssociation id="DataStoreOutputAssociation">
+          <bpmn:targetRef>DataStoreReference</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+        <bpmn:dataOutputAssociation id="DataObjectOutputAssociation">
+          <bpmn:targetRef>DataObjectReference</bpmn:targetRef>
+        </bpmn:dataOutputAssociation>
+      </bpmn:task>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="DataStoreReference_di" bpmnElement="DataStoreReference">
+        <dc:Bounds x="555" y="565" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DataObjectReference_di" bpmnElement="DataObjectReference">
+        <dc:Bounds x="742" y="555" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Subprocess_di" bpmnElement="Subprocess" isExpanded="true">
+        <dc:Bounds x="450" y="260" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_di" bpmnElement="Task">
+        <dc:Bounds x="540" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DataStoreOutputAssociation_di" bpmnElement="DataStoreOutputAssociation">
+        <di:waypoint x="587" y="400" />
+        <di:waypoint x="580" y="565" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataObjectOutputAssociation_di" bpmnElement="DataObjectOutputAssociation">
+        <di:waypoint x="621" y="400" />
+        <di:waypoint x="742" y="557" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
