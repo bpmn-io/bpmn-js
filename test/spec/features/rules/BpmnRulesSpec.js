@@ -261,6 +261,17 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
+    it('connect SequenceFlow -> TextAnnotation', inject(function() {
+
+      expectCanConnect('SequenceFlow', 'TextAnnotation', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
     it('connect Task -> IntermediateThrowEvent_Link', inject(function() {
 
       expectCanConnect('Task', 'IntermediateThrowEvent_Link', {
