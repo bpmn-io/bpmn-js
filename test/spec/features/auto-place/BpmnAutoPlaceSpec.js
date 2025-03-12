@@ -33,49 +33,49 @@ describe('features/auto-place', function() {
       it('at default distance after START_EVENT_1', autoPlace({
         element: 'bpmn:Task',
         behind: 'START_EVENT_1',
-        expectedBounds: { x: 1052, y: 224, width: 100, height: 80 }
+        expectedBounds: { x: 1252, y: 324, width: 100, height: 80 }
       }));
 
 
       it('at incoming distance after TASK_0', autoPlace({
         element: 'bpmn:Task',
         behind: 'TASK_0',
-        expectedBounds: { x: 262, y: 54, width: 100, height: 80 }
+        expectedBounds: { x: 462, y: 154, width: 100, height: 80 }
       }));
 
 
       it('at incoming distance / quorum after TASK_5', autoPlace({
         element: 'bpmn:Task',
         behind: 'TASK_5',
-        expectedBounds: { x: 296, y: 390, width: 100, height: 80 }
+        expectedBounds: { x: 496, y: 490, width: 100, height: 80 }
       }));
 
 
       it('at existing outgoing / below TASK_2', autoPlace({
         element: 'bpmn:Task',
         behind: 'TASK_1',
-        expectedBounds: { x: 279, y: 293, width: 100, height: 80 }
+        expectedBounds: { x: 479, y: 400, width: 100, height: 80 }
       }));
 
 
       it('ignoring existing, far away outgoing of TASK_3', autoPlace({
         element: 'bpmn:Task',
         behind: 'TASK_3',
-        expectedBounds: { x: 746, y: 127, width: 100, height: 80 }
+        expectedBounds: { x: 946, y: 227, width: 100, height: 80 }
       }));
 
 
       it('behind bpmn:SubProcess', autoPlace({
         element: 'bpmn:Task',
         behind: 'SUBPROCESS_1',
-        expectedBounds: { x: 925, y: 368, width: 100, height: 80 }
+        expectedBounds: { x: 1125, y: 468, width: 100, height: 80 }
       }));
 
 
       it('after TASK_6', autoPlace({
         element: 'bpmn:Task',
         behind: 'TASK_6',
-        expectedBounds: { x: 700, y: 370, width: 100, height: 80 }
+        expectedBounds: { x: 900, y: 470, width: 100, height: 80 }
       }));
 
     });
@@ -86,14 +86,14 @@ describe('features/auto-place', function() {
       it('bottom right of source', autoPlace({
         element: 'bpmn:DataStoreReference',
         behind: 'TASK_2',
-        expectedBounds: { x: 369, y: 303, width: 50, height: 50 }
+        expectedBounds: { x: 569, y: 410, width: 50, height: 50 }
       }));
 
 
       it('next to existing', autoPlace({
         element: 'bpmn:DataStoreReference',
         behind: 'TASK_3',
-        expectedBounds: { x: 769, y: 247, width: 50, height: 50 }
+        expectedBounds: { x: 969, y: 347, width: 50, height: 50 }
       }));
 
     });
