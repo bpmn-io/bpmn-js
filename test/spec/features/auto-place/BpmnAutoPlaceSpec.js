@@ -104,14 +104,14 @@ describe('features/auto-place', function() {
       it('top right of source', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_2',
-        expectedBounds: { x: 379, y: 103, width: 100, height: 30 }
+        expectedBounds: { x: 579, y: 210, width: 100, height: 30 }
       }));
 
 
       it('above existing', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_3',
-        expectedBounds: { x: 696, y: -4, width: 100, height: 30 }
+        expectedBounds: { x: 896, y: 96, width: 100, height: 30 }
       }));
 
 
@@ -120,14 +120,32 @@ describe('features/auto-place', function() {
         it('top right', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 300, y: 158, width: 100, height: 30 }
+          expectedBounds: { x: 500, y: 265, width: 100, height: 30 }
         }));
 
 
         it('above existing', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 300, y: 98, width: 100, height: 30 }
+          expectedBounds: { x: 500, y: 205, width: 100, height: 30 }
+        }));
+
+      });
+
+
+      describe('on messageflow', function() {
+
+        it('bottom right', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'MessageFlow_1',
+          expectedBounds: { x: 579, y: 580, width: 100, height: 30 }
+        }));
+
+
+        it('next to existing', autoPlace({
+          element: 'bpmn:TextAnnotation',
+          behind: 'MessageFlow_1',
+          expectedBounds: { x: 709, y: 580, width: 100, height: 30 }
         }));
 
       });
