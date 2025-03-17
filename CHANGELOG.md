@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.3.2
+
+* `FIX`: remove default start event for ad-hoc subprocess ([#2295](https://github.com/bpmn-io/bpmn-js/issues/2295))
+* `FIX`: show modeling feedback error for data objects ([#2290](https://github.com/bpmn-io/bpmn-js/pull/2290))
+
 ## 18.3.1
 
 * `FIX`: move artifacts when a participant is resized by space tool ([#2285](https://github.com/bpmn-io/bpmn-js/pull/2285))
