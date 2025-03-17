@@ -6,13 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## [18.3.2](https://github.com/bpmn-io/bpmn-js/compare/v18.3.1...v18.3.2) (2025-03-17)
+## 18.3.2
 
-
-### Bug Fixes
-
-* remove default start event for ad-hoc subprocess ([#2295](https://github.com/bpmn-io/bpmn-js/issues/2295)) ([3177395](https://github.com/bpmn-io/bpmn-js/commit/3177395323d7dba4d11e1d466d7f53460a202f91))
-* show modeling feedback error for data objects ([d348b50](https://github.com/bpmn-io/bpmn-js/commit/d348b50e154d815ebfc1aa88bbe1e58e2a080c82))
+* `FIX`: remove default start event for ad-hoc subprocess ([#2295](https://github.com/bpmn-io/bpmn-js/issues/2295))
+* `FIX`: show modeling feedback error for data objects ([#2290](https://github.com/bpmn-io/bpmn-js/pull/2290))
 
 ## 18.3.1
 
