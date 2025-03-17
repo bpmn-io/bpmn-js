@@ -74,6 +74,30 @@ describe('features/modeling/behavior - subprocess start event', function() {
     });
 
 
+    describe('task -> adhoc subprocess', function() {
+
+      it('should NOT add start event child to adhoc subprocess', inject(
+        function(elementRegistry, bpmnReplace) {
+
+          // given
+          var task = elementRegistry.get('Task_1'),
+              collapsedSubProcess,
+              startEvents;
+
+          // when
+          collapsedSubProcess = bpmnReplace.replaceElement(task, {
+            type: 'bpmn:AdHocSubProcess',
+            isExpanded: true
+          });
+
+          // then
+          startEvents = getChildStartEvents(collapsedSubProcess);
+
+          expect(startEvents).to.have.length(0);
+        }));
+    });
+
+
     describe('task -> collapsed subprocess', function() {
 
       it('should NOT add start event child to subprocess', inject(
