@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.4.0
+
+* `FEAT`: render collapsed event subprocess icons ([#50](https://github.com/bpmn-io/bpmn-js/issues/50))
+
 ## 18.3.2
 
 * `FIX`: remove default start event for ad-hoc subprocess ([#2295](https://github.com/bpmn-io/bpmn-js/issues/2295))
