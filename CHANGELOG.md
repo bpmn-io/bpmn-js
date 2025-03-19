@@ -6,12 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
-## [18.4.0](https://github.com/bpmn-io/bpmn-js/compare/v18.3.2...v18.4.0) (2025-03-17)
+## 18.4.0
 
-
-### Features
-
-* render event subprocess icons ([cfec0a9](https://github.com/bpmn-io/bpmn-js/commit/cfec0a9d5a59dd282eb1548d54b23887a9615e7e)), closes [#50](https://github.com/bpmn-io/bpmn-js/issues/50)
+* `FEAT`: render collapsed event subprocess icons ([#50](https://github.com/bpmn-io/bpmn-js/issues/50))
 
 ## 18.3.2
 
