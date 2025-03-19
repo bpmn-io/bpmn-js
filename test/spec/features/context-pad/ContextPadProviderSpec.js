@@ -388,6 +388,16 @@ describe('features - context-pad', function() {
       ]);
     }));
 
+    it('should provide MessageFlow entries', inject(function() {
+
+      expectContextPadEntries('MessageFlow_1', [
+        'append.text-annotation',
+        'delete',
+        '!replace',
+        '!connect'
+      ]);
+    }));
+
   });
 
 
