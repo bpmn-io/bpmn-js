@@ -261,17 +261,6 @@ describe('features/modeling/rules - BpmnRules', function() {
     }));
 
 
-    it('connect SequenceFlow -> TextAnnotation', inject(function() {
-
-      expectCanConnect('SequenceFlow', 'TextAnnotation', {
-        sequenceFlow: false,
-        messageFlow: false,
-        association: true,
-        dataAssociation: false
-      });
-    }));
-
-
     it('connect Task -> IntermediateThrowEvent_Link', inject(function() {
 
       expectCanConnect('Task', 'IntermediateThrowEvent_Link', {
@@ -1128,6 +1117,17 @@ describe('features/modeling/rules - BpmnRules', function() {
         dataAssociation: false
       });
     });
+
+
+    it('connect MessageFlow -> TextAnnotation', inject(function() {
+
+      expectCanConnect('MessageFlow_2', 'TextAnnotation_Global', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
 
 
     it('drop TextAnnotation_Global -> Participant', inject(function() {
