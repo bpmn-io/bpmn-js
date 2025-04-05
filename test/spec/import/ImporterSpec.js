@@ -746,6 +746,23 @@ describe('import - Importer', function() {
       });
     });
 
+    it('should import text annotations of message flows', function() {
+      // given
+      var xml = require('../../fixtures/bpmn/import/text-annotation-message-flow.bpmn');
+  
+      // when
+      return runImport(diagram, xml).then(function() {
+        // then
+        var textAnnotation = diagram.get('elementRegistry').get('TextAnnotation_1');
+        var messageFlow = diagram.get('elementRegistry').get('MessageFlow_1');
+        var association = diagram.get('elementRegistry').get('Association_1');
+  
+        expect(textAnnotation).to.exist;
+        expect(association.source).to.equal(messageFlow);
+        expect(association.target).to.equal(textAnnotation);
+      });
+    });
+
   });
 
 
