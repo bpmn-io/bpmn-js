@@ -26,7 +26,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
   describe('incomming association', function() {
 
-    it('should reconnect on bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -54,8 +54,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-
-    it('should reconnect on connection move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startEvent = elementRegistry.get('StartEvent_1');
@@ -73,7 +72,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-    it('should reconnect on waypoint update', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -96,12 +95,82 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
+
+    it('should reconnect on messageflow bendpoint move', inject(function(elementRegistry, modeling) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlow_1');
+      var association = elementRegistry.get('Association_4');
+
+      // when
+      var newWaypoints = copyWaypoints(messageFlow);
+      newWaypoints.splice(1, 0,
+        { x: 200, y: 500 }
+      );
+
+      var hints = {
+        bendpointMove: {
+          bendpointIndex: 1,
+          insert: true
+        }
+      };
+
+      modeling.updateWaypoints(messageFlow, newWaypoints, hints);
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 353, y: 540 },
+        { x: 240, y: 595 },
+      ]);
+    }));
+
+    it('should reconnect on messageflow connection move', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startParticipant = elementRegistry.get('Participant_1');
+      var endParticipant = elementRegistry.get('Participant_2');
+      var association = elementRegistry.get('Association_4');
+
+      // when
+      modeling.moveElements([ startParticipant, endParticipant ], { x: 0, y: 200 });
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 353, y: 540 },
+        { x: 280, y: 700 },
+      ]);
+
+    }));
+
+    it('should reconnect on messageflow waypoint update', inject(function(elementRegistry, modeling) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlow_1');
+      var association = elementRegistry.get('Association_4');
+
+      // when
+      var newWaypoints = [
+        messageFlow.waypoints[0],
+        { x: messageFlow.waypoints[0].x-50, y: messageFlow.waypoints[0].y-20 },
+        { x: messageFlow.waypoints[1].x-50, y: messageFlow.waypoints[1].y+20 },
+        messageFlow.waypoints[1],
+      ];
+
+      modeling.updateWaypoints(messageFlow, newWaypoints);
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 353, y: 540 },
+        { x: 230, y: 500 }
+      ]);
+    }));
+
   });
 
 
   describe('outgoing association', function() {
 
-    it('should reconnect on bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -129,8 +198,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-
-    it('should reconnect on connection move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startEvent = elementRegistry.get('StartEvent_1');
@@ -148,8 +216,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-
-    it('should reconnect on waypoint update', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequenceflow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -169,6 +236,76 @@ describe('behavior - LayoutConnectionBehavior', function() {
       expectApproximateWaypoints(association, [
         { x: 460, y: 300 },
         { x: 525, y: 110 }
+      ]);
+    }));
+
+
+    it('should reconnect on messageflow bendpoint move', inject(function(elementRegistry, modeling) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlow_1');
+      var association = elementRegistry.get('Association_3');
+
+      // when
+      var newWaypoints = copyWaypoints(messageFlow);
+      newWaypoints.splice(1, 0,
+        { x: 200, y: 500 }
+      );
+
+      var hints = {
+        bendpointMove: {
+          bendpointIndex: 1,
+          insert: true
+        }
+      };
+
+      modeling.updateWaypoints(messageFlow, newWaypoints, hints);
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 240, y: 595 },
+        { x: 353, y: 540 }
+      ]);
+    }));
+
+    it('should reconnect on messageflow connection move', inject(function(elementRegistry, modeling) {
+
+      // given
+      var startParticipant = elementRegistry.get('Participant_1');
+      var endParticipant = elementRegistry.get('Participant_2');
+      var association = elementRegistry.get('Association_3');
+
+      // when
+      modeling.moveElements([ startParticipant, endParticipant ], { x: 0, y: 200 });
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 280, y: 700 },
+        { x: 353, y: 540 }
+      ]);
+
+    }));
+
+    it('should reconnect on messageflow waypoint update', inject(function(elementRegistry, modeling) {
+
+      // given
+      var messageFlow = elementRegistry.get('MessageFlow_1');
+      var association = elementRegistry.get('Association_3');
+
+      // when
+      var newWaypoints = [
+        messageFlow.waypoints[0],
+        { x: messageFlow.waypoints[0].x-50, y: messageFlow.waypoints[0].y-20 },
+        { x: messageFlow.waypoints[1].x-50, y: messageFlow.waypoints[1].y+20 },
+        messageFlow.waypoints[1],
+      ];
+
+      modeling.updateWaypoints(messageFlow, newWaypoints);
+
+      // then
+      expectApproximateWaypoints(association, [
+        { x: 230, y: 500 },
+        { x: 353, y: 540 }
       ]);
     }));
 
