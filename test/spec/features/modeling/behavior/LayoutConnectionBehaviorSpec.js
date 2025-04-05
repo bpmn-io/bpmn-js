@@ -151,8 +151,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
       // when
       var newWaypoints = [
         messageFlow.waypoints[0],
-        { x: messageFlow.waypoints[0].x-50, y: messageFlow.waypoints[0].y-20 },
-        { x: messageFlow.waypoints[1].x-50, y: messageFlow.waypoints[1].y+20 },
+        { x: 230, y: 670 },
+        { x: 230, y: 330 },
         messageFlow.waypoints[1],
       ];
 
@@ -295,8 +295,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
       // when
       var newWaypoints = [
         messageFlow.waypoints[0],
-        { x: messageFlow.waypoints[0].x-50, y: messageFlow.waypoints[0].y-20 },
-        { x: messageFlow.waypoints[1].x-50, y: messageFlow.waypoints[1].y+20 },
+        { x: 230, y: 670 },
+        { x: 230, y: 330 },
         messageFlow.waypoints[1],
       ];
 
