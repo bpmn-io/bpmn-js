@@ -64,7 +64,7 @@ describe('features/modeling/behavior - boundary event', function() {
   });
 
 
-  describe.skip('should keep root element reference on replace', function() {
+  describe('should keep root element reference on replace', function() {
 
     describe('interrupting to non-interrupting', function() {
 
@@ -85,7 +85,7 @@ describe('features/modeling/behavior - boundary event', function() {
         });
 
         // then
-        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'messageRef')).to.equal(message);
+        expectRefEquals(interruptingBoundaryEvent, nonInterruptingBoundaryEvent, 'messageRef');
       }));
 
 
@@ -106,7 +106,7 @@ describe('features/modeling/behavior - boundary event', function() {
         });
 
         // then
-        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'escalationRef')).to.equal(escalation);
+        expectRefEquals(interruptingBoundaryEvent, nonInterruptingBoundaryEvent, 'escalationRef');
       }));
 
 
@@ -127,7 +127,7 @@ describe('features/modeling/behavior - boundary event', function() {
         });
 
         // then
-        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'errorRef')).to.equal(error);
+        expectRefEquals(interruptingBoundaryEvent, nonInterruptingBoundaryEvent, 'errorRef');
       }));
 
 
@@ -148,7 +148,7 @@ describe('features/modeling/behavior - boundary event', function() {
         });
 
         // then
-        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'signalRef')).to.equal(signal);
+        expectRefEquals(interruptingBoundaryEvent, nonInterruptingBoundaryEvent, 'signalRef');
       }));
 
     });
@@ -173,7 +173,7 @@ describe('features/modeling/behavior - boundary event', function() {
         });
 
         // then
-        expect(getReferencedRootElement(nonInterruptingBoundaryEvent, 'messageRef')).to.equal(message);
+        expectRefEquals(interruptingBoundaryEvent, nonInterruptingBoundaryEvent, 'messageRef');
       }));
 
     });
@@ -190,4 +190,13 @@ function getReferencedRootElement(element, propertyName) {
       eventDefinition = businessObject.eventDefinitions[ 0 ];
 
   return eventDefinition.get(propertyName);
+}
+
+function expectRefEquals(element, newElement, propertyName) {
+  const previousRefElement = getReferencedRootElement(element, propertyName);
+  const newRefElement = getReferencedRootElement(newElement, propertyName);
+
+  // expect name to be same
+  expect(previousRefElement).to.equal(newRefElement);
+
 }
