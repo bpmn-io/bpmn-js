@@ -1119,6 +1119,17 @@ describe('features/modeling/rules - BpmnRules', function() {
     });
 
 
+    it('connect MessageFlow -> TextAnnotation', inject(function() {
+
+      expectCanConnect('MessageFlow_2', 'TextAnnotation_Global', {
+        sequenceFlow: false,
+        messageFlow: false,
+        association: true,
+        dataAssociation: false
+      });
+    }));
+
+
     it('drop TextAnnotation_Global -> Participant', inject(function() {
       expectCanDrop('TextAnnotation_Global', 'Participant', true);
     }));

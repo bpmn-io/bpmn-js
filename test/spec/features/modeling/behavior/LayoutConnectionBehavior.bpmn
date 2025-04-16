@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="simple" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0-rc.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="simple" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.3.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:collaboration id="Collaboration_1wcsthq">
+    <bpmn2:participant id="Participant_1" processRef="Process_1" />
+    <bpmn2:participant id="Participant_2" processRef="Process_2" />
+    <bpmn2:messageFlow id="MessageFlow_1" sourceRef="Participant_2" targetRef="Participant_1" />
+    <bpmn2:textAnnotation id="TextAnnotation_1" />
+    <bpmn2:association id="Association_2" sourceRef="SequenceFlow_1" targetRef="TextAnnotation_1" />
+    <bpmn2:association id="Association_1" sourceRef="TextAnnotation_1" targetRef="SequenceFlow_1" />
+    <bpmn2:textAnnotation id="TextAnnotation_2" />
+    <bpmn2:association id="Association_3" associationDirection="None" sourceRef="MessageFlow_1" targetRef="TextAnnotation_2" />
+    <bpmn2:association id="Association_4" associationDirection="None" sourceRef="TextAnnotation_2" targetRef="MessageFlow_1" />
+  </bpmn2:collaboration>
   <bpmn2:process id="Process_1" isExecutable="false">
     <bpmn2:endEvent id="EndEvent_1" name="End Event">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -8,12 +19,13 @@
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="Flow" sourceRef="StartEvent_1" targetRef="EndEvent_1" />
-    <bpmn2:textAnnotation id="TextAnnotation_1" />
-    <bpmn2:association id="Association_1" sourceRef="TextAnnotation_1" targetRef="SequenceFlow_1" />
-    <bpmn2:association id="Association_2" sourceRef="SequenceFlow_1" targetRef="TextAnnotation_1" />
   </bpmn2:process>
+  <bpmn2:process id="Process_2" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1wcsthq">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="107" y="60" width="650" height="250" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_11" targetElement="_BPMNShape_EndEvent_2">
         <di:waypoint x="194" y="150" />
         <di:waypoint x="700" y="150" />
@@ -43,6 +55,24 @@
       <bpmndi:BPMNEdge id="Association_2_di" bpmnElement="Association_2">
         <di:waypoint x="460" y="150" />
         <di:waypoint x="525" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_2_di" bpmnElement="Participant_2" isHorizontal="true">
+        <dc:Bounds x="160" y="690" width="600" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="MessageFlow_1_di" bpmnElement="MessageFlow_1">
+        <di:waypoint x="280" y="690" />
+        <di:waypoint x="280" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_2_di" bpmnElement="TextAnnotation_2">
+        <dc:Bounds x="330" y="540" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_3_di" bpmnElement="Association_3">
+        <di:waypoint x="280" y="500" />
+        <di:waypoint x="353" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_4_di" bpmnElement="Association_4">
+        <di:waypoint x="353" y="540" />
+        <di:waypoint x="280" y="500" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
