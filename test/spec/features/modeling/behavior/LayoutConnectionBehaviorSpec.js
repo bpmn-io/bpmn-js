@@ -26,7 +26,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
   describe('incomming association', function() {
 
-    it('should reconnect on sequenceflow bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -54,7 +54,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-    it('should reconnect on sequenceflow connection move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startEvent = elementRegistry.get('StartEvent_1');
@@ -72,7 +72,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-    it('should reconnect on sequenceflow waypoint update', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -96,7 +96,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
     }));
 
 
-    it('should reconnect on messageflow bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on message flow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var messageFlow = elementRegistry.get('MessageFlow_1');
@@ -124,7 +124,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-    it('should reconnect on messageflow connection move', inject(function(elementRegistry, modeling) {
+
+    it('should reconnect on message flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startParticipant = elementRegistry.get('Participant_1');
@@ -142,7 +143,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-    it('should reconnect on messageflow waypoint update', inject(function(elementRegistry, modeling) {
+
+    it('should reconnect on message flow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var messageFlow = elementRegistry.get('MessageFlow_1');
@@ -170,7 +172,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
   describe('outgoing association', function() {
 
-    it('should reconnect on sequenceflow bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -198,7 +200,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-    it('should reconnect on sequenceflow connection move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startEvent = elementRegistry.get('StartEvent_1');
@@ -216,7 +218,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-    it('should reconnect on sequenceflow waypoint update', inject(function(elementRegistry, modeling) {
+    it('should reconnect on sequence flow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var sequenceFlow = elementRegistry.get('SequenceFlow_1');
@@ -240,7 +242,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
     }));
 
 
-    it('should reconnect on messageflow bendpoint move', inject(function(elementRegistry, modeling) {
+    it('should reconnect on message flow bendpoint move', inject(function(elementRegistry, modeling) {
 
       // given
       var messageFlow = elementRegistry.get('MessageFlow_1');
@@ -268,7 +270,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
-    it('should reconnect on messageflow connection move', inject(function(elementRegistry, modeling) {
+
+    it('should reconnect on message flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
       var startParticipant = elementRegistry.get('Participant_1');
@@ -286,7 +289,8 @@ describe('behavior - LayoutConnectionBehavior', function() {
 
     }));
 
-    it('should reconnect on messageflow waypoint update', inject(function(elementRegistry, modeling) {
+
+    it('should reconnect on message flow waypoint update', inject(function(elementRegistry, modeling) {
 
       // given
       var messageFlow = elementRegistry.get('MessageFlow_1');

@@ -746,6 +746,7 @@ describe('import - Importer', function() {
       });
     });
 
+
     it('should import text annotations of message flows', function() {
 
       // given
