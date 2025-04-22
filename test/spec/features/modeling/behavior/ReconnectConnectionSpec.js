@@ -74,6 +74,7 @@ describe('features/modeling - reconnect connection', function() {
     }));
   });
 
+
   describe('reconnect DataInputAssociations', function() {
 
     beforeEach(function() {

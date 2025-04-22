@@ -174,6 +174,7 @@ describe('label bounds', function() {
 
     });
 
+
     describe('label outlines', function() {
 
       it('should update after element bounds have been updated',

@@ -1793,6 +1793,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
       });
 
+
       describe('ad hoc subprocess', function() {
 
         it('options do not include ad hoc subprocess itself', inject(function(elementRegistry) {
@@ -1927,6 +1928,7 @@ describe('features/popup-menu - replace menu provider', function() {
         }));
 
       });
+
 
       describe('collapsed ad hoc subprocess', function() {
 
@@ -2825,6 +2827,7 @@ describe('features/popup-menu - replace menu provider', function() {
         }));
 
       });
+
 
       describe('adhoc -> sub process', function() {
 

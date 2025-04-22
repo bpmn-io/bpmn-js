@@ -790,7 +790,6 @@ describe('features/modeling/behavior - LabelBehavior', function() {
       }));
 
 
-
       it('to the left', inject(function(elementRegistry, modeling) {
 
         // given

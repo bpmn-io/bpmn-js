@@ -469,53 +469,66 @@ describe('features - label-editing', function() {
 
       it('gateway', directEdit('ExclusiveGateway_1'));
 
+
       it('gateway via label', directEdit('ExclusiveGateway_1_label'));
 
 
       it('event', directEdit('StartEvent_1'));
 
+
       it('event via label', directEdit('StartEvent_1_label'));
+
 
       it('event without label', directEdit('EndEvent_1'));
 
 
       it('data store reference', directEdit('DataStoreReference_1'));
 
+
       it('data object reference', directEdit('DataObjectReference_1'));
 
 
       it('sequenceflow', directEdit('SequenceFlow_1'));
 
+
       it('sequenceflow via label', directEdit('SequenceFlow_1_label'));
+
 
       it('sequenceflow without label', directEdit('SequenceFlow_2'));
 
 
       it('message flow', directEdit('MessageFlow_1'));
 
+
       it('message flow via label', directEdit('MessageFlow_1_label'));
 
 
       it('pool', directEdit('Participant_1'));
 
+
       it('pool, collapsed', directEdit('Participant_2'));
 
+
       it('vertical pool', directEdit('Participant_3'));
+
 
       it('vertical pool, collapsed', directEdit('Participant_4'));
 
 
       it('lane with label', directEdit('Lane_1'));
 
+
       it('lane without label', directEdit('Lane_2'));
 
 
       it('data input', directEdit('DataInput'));
 
+
       it('data output', directEdit('DataOutput'));
 
 
       it('group', directEdit('Group_1'));
+
 
       it('group via label', directEdit('Group_1_label'));
 
