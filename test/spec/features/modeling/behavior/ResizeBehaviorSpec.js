@@ -772,6 +772,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
   });
 
+
   describe('vertical #getParticipantResizeConstraints', function() {
 
     describe('lanes', function() {
@@ -953,6 +954,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
       }));
 
+
       it('left lane (E)', inject(function(elementRegistry) {
 
         // given
@@ -971,6 +973,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
         });
 
       }));
+
 
       it('nested left lane (E)', inject(function(elementRegistry) {
 
@@ -1074,6 +1077,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
   });
 
+
   describe('LaneUtil', function() {
 
     describe('lane minimum dimensions', function() {
@@ -1125,6 +1129,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
       );
 
     });
+
 
     describe('vertical lane minimum dimensions', function() {
 

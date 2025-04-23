@@ -54,6 +54,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
+
     it('should reconnect on sequence flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
@@ -71,6 +72,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
 
     }));
+
 
     it('should reconnect on sequence flow waypoint update', inject(function(elementRegistry, modeling) {
 
@@ -200,6 +202,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
     }));
 
+
     it('should reconnect on sequence flow connection move', inject(function(elementRegistry, modeling) {
 
       // given
@@ -217,6 +220,7 @@ describe('behavior - LayoutConnectionBehavior', function() {
       ]);
 
     }));
+
 
     it('should reconnect on sequence flow waypoint update', inject(function(elementRegistry, modeling) {
 

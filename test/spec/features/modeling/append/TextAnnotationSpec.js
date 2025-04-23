@@ -24,6 +24,7 @@ describe('features/modeling - append text-annotation', function() {
 
     it('in lane');
 
+
     it('in participant', inject(function(elementRegistry, modeling, canvas) {
 
       // given
@@ -85,6 +86,7 @@ describe('features/modeling - append text-annotation', function() {
       expect(connecting.$parent.id).to.equal('_Collaboration_2');
     }));
 
+
     it('with right size', inject(function(elementRegistry, elementFactory, modeling) {
 
       // given
@@ -98,7 +100,6 @@ describe('features/modeling - append text-annotation', function() {
       expect(annotationShape.height).to.eql(30);
     }));
   });
-
 
 
   describe('undo', function() {

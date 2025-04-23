@@ -930,6 +930,7 @@ describe('features/modeling - add Lane', function() {
 
   });
 
+
   describe('flow node handling - vertical', function() {
 
     var diagramXML = require('./lanes-flow-nodes-vertical.bpmn');
@@ -960,6 +961,7 @@ describe('features/modeling - add Lane', function() {
         return modeling.addLane(existingLane, 'right');
       });
     }
+
 
     it('should move flow nodes', inject(function(elementRegistry, modeling) {
 

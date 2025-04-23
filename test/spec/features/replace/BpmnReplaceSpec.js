@@ -1630,6 +1630,7 @@ describe('features/replace - bpmn replace', function() {
       })
     );
 
+
     it('should replace error start event after moving it outside event sub process',
       inject(function(elementRegistry, bpmnReplace, modeling) {
 
@@ -1649,6 +1650,7 @@ describe('features/replace - bpmn replace', function() {
         expect(startEventAfter.parent).to.equal(root);
       })
     );
+
 
     it('should replace error start event after moving it to a regular sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
@@ -1670,6 +1672,7 @@ describe('features/replace - bpmn replace', function() {
 
       })
     );
+
 
     it('should not replace error start event after moving it to another event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
@@ -1697,6 +1700,7 @@ describe('features/replace - bpmn replace', function() {
 
       })
     );
+
 
     it('should replace error start event when replacing parent event sub process',
       inject(function(elementRegistry, bpmnReplace) {
@@ -1928,6 +1932,7 @@ describe('features/replace - bpmn replace', function() {
 
       expect(newDi).to.not.equal(di);
     }));
+
 
     it('should maintain colors', inject(function(elementRegistry, bpmnReplace, modeling) {
 

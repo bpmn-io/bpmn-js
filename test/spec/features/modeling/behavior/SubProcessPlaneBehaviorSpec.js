@@ -235,6 +235,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
       ));
     });
 
+
     describe('task -> expanded subprocess', function() {
 
       it('should not add new diagram for collapsed subprocess', inject(

@@ -620,6 +620,7 @@ describe('features/copy-paste', function() {
 
       it('expanded participant', integrationTest('Participant_1'));
 
+
       it('collapsed participant', integrationTest('Participant_2'));
 
     });

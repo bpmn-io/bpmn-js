@@ -44,6 +44,7 @@ describe('features/modeling - ModelingFeedback', function() {
       expectTooltip('error', 'flow elements must be children of pools/participants');
     }));
 
+
   it('should indicate error when placing data objects inside collaboration', inject(
     function(create, canvas, elementFactory, dragging) {
 

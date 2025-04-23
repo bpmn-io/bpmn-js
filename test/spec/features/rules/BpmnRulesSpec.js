@@ -2053,9 +2053,11 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanInsert('END', 'S1', false);
     });
 
+
     it('insert START -> S1', function() {
       expectCanInsert('START', 'S1', false);
     });
+
 
     it('insert GATEWAY -> S1', function() {
       expectCanInsert('GATEWAY', 'S1', true);

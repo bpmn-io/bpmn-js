@@ -189,6 +189,7 @@ describe('features/modeling - root element reference behavior', function() {
 
       });
 
+
       describe(`${type} (modeling#updateProperties)`, function() {
 
         var boundaryEvent,
@@ -286,6 +287,7 @@ describe('features/modeling - root element reference behavior', function() {
         }));
 
       });
+
 
       describe(`${type} (modeling#updateModdleProperties)`, function() {
 

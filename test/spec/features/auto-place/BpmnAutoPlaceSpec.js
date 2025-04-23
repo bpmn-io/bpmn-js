@@ -154,6 +154,7 @@ describe('features/auto-place', function() {
 
   });
 
+
   describe('vertical element placement', function() {
 
     var diagramXML = require('./BpmnAutoPlace.vertical.bpmn');
