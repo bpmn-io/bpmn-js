@@ -467,70 +467,106 @@ describe('features - label-editing', function() {
       it('task', directEdit('Task_1'));
 
 
-      it('gateway', directEdit('ExclusiveGateway_1'));
+      describe('gateway', function() {
+
+        it('simple', directEdit('ExclusiveGateway_1'));
 
 
-      it('gateway via label', directEdit('ExclusiveGateway_1_label'));
+        it('via label', directEdit('ExclusiveGateway_1_label'));
+
+      });
 
 
-      it('event', directEdit('StartEvent_1'));
+      describe('event', function() {
+
+        it('start', directEdit('StartEvent_1'));
 
 
-      it('event via label', directEdit('StartEvent_1_label'));
+        it('event via label', directEdit('StartEvent_1_label'));
 
 
-      it('event without label', directEdit('EndEvent_1'));
+        it('event without label', directEdit('EndEvent_1'));
+
+      });
 
 
-      it('data store reference', directEdit('DataStoreReference_1'));
+      describe('data reference', function() {
+
+        it('data store reference', directEdit('DataStoreReference_1'));
 
 
-      it('data object reference', directEdit('DataObjectReference_1'));
+        it('data object reference', directEdit('DataObjectReference_1'));
+
+      });
 
 
-      it('sequenceflow', directEdit('SequenceFlow_1'));
+      describe('sequenceflow', function() {
+
+        it('simple', directEdit('SequenceFlow_1'));
 
 
-      it('sequenceflow via label', directEdit('SequenceFlow_1_label'));
+        it('via label', directEdit('SequenceFlow_1_label'));
 
 
-      it('sequenceflow without label', directEdit('SequenceFlow_2'));
+        it('without label', directEdit('SequenceFlow_2'));
+
+      });
 
 
-      it('message flow', directEdit('MessageFlow_1'));
+      describe('message flow', function() {
+
+        it('simple', directEdit('MessageFlow_1'));
 
 
-      it('message flow via label', directEdit('MessageFlow_1_label'));
+        it('via label', directEdit('MessageFlow_1_label'));
+
+      });
 
 
-      it('pool', directEdit('Participant_1'));
+      describe('pool', function() {
+
+        it('simple', directEdit('Participant_1'));
 
 
-      it('pool, collapsed', directEdit('Participant_2'));
+        it('collapsed', directEdit('Participant_2'));
 
 
-      it('vertical pool', directEdit('Participant_3'));
+        it('vertical', directEdit('Participant_3'));
 
 
-      it('vertical pool, collapsed', directEdit('Participant_4'));
+        it('vertical, collapsed', directEdit('Participant_4'));
+
+      });
 
 
-      it('lane with label', directEdit('Lane_1'));
+      describe('lane', function() {
+
+        it('lane with label', directEdit('Lane_1'));
 
 
-      it('lane without label', directEdit('Lane_2'));
+        it('lane without label', directEdit('Lane_2'));
+
+      });
 
 
-      it('data input', directEdit('DataInput'));
+      describe('data IO', function() {
+
+        it('data input', directEdit('DataInput'));
 
 
-      it('data output', directEdit('DataOutput'));
+        it('data output', directEdit('DataOutput'));
+
+      });
 
 
-      it('group', directEdit('Group_1'));
+      describe('group', function() {
+
+        it('simple', directEdit('Group_1'));
 
 
-      it('group via label', directEdit('Group_1_label'));
+        it(' via label', directEdit('Group_1_label'));
+
+      });
 
     });
 
