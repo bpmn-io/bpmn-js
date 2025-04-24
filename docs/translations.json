@@ -56,6 +56,7 @@
   "Create pool/participant",
   "Create start event",
   "Create task",
+  "Data object must be placed within a pool/participant.",
   "Data object reference",
   "Data store reference",
   "Default flow",
