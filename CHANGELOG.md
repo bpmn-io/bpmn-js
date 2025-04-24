@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.6.0
+
+* `FEAT`: support searching through arrays in popup menu ([bpmn-io/diagram-js#970](https://github.com/bpmn-io/diagram-js/pull/970))
+* `FEAT`: prioritize `search` over `description` when matching popup menu entries ([bpmn-io/diagram-js#963](https://github.com/bpmn-io/diagram-js/pull/963))
+* `FEAT`: sort `search` terms across all keys ([bpmn-io/diagram-js#963](https://github.com/bpmn-io/diagram-js/pull/963))
+* `FIX`: always select first search entry ([bpmn-io/diagram-js#967](https://github.com/bpmn-io/diagram-js/pull/967))
+* `DEPS`: update to `diagram-js@15.3.0`
+
 ## 18.5.0
 
 * `FEAT`: allow text annotations for message flows ([#2281](https://github.com/bpmn-io/bpmn-js/issues/2281))
