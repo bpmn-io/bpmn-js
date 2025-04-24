@@ -200,14 +200,17 @@ describe('features - BPMN search provider', function() {
       // when
       var elements = bpmnSearch.find(pattern);
 
+      var idsAndNames = elements.map(e => [ e.element.id, e.element.businessObject.name ]);
+
       // then
-      expect(elements).length(6);
-      expect(elements[0].element.id).to.eql('foo_2');
-      expect(elements[1].element.id).to.eql('foo_3');
-      expect(elements[2].element.id).to.eql('bar');
-      expect(elements[3].element.id).to.eql('baz');
-      expect(elements[4].element.id).to.eql('foo_0');
-      expect(elements[5].element.id).to.eql('foo_1');
+      expect(idsAndNames).to.eql([
+        [ 'foo_2', 'foo bar' ],
+        [ 'foo_3', 'foo bar' ],
+        [ 'bar', 'foo bar' ],
+        [ 'foo_0', 'bar' ],
+        [ 'foo_1', 'baz' ],
+        [ 'baz', 'bar foo' ]
+      ]);
     }));
 
 
