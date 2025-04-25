@@ -64,7 +64,7 @@ describe('features/modeling/behavior - boundary event', function() {
   });
 
 
-  describe.skip('should keep root element reference on replace', function() {
+  describe('should keep root element reference on replace', function() {
 
     describe('interrupting to non-interrupting', function() {
 
