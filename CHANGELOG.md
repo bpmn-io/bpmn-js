@@ -8,7 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 18.6.1
 
-* `FIX`: copy error, escalation, message and signal references when copying elements ([#2301](https://github.com/bpmn-io/diagram-js/pull/2301))
+* `FIX`: copy error, escalation, message and signal references when copying elements ([#1906](https://github.com/bpmn-io/bpmn-js/issues/1906), [#2249](https://github.com/bpmn-io/bpmn-js/issues/2249), [#2301](https://github.com/bpmn-io/bpmn-js/pull/2301))
 
 ## 18.6.0
 
