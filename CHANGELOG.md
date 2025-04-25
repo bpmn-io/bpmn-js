@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.6.1
+
+* `FIX`: copy error, escalation, message and signal references when copying elements ([#2301](https://github.com/bpmn-io/diagram-js/pull/2301))
+
 ## 18.6.0
 
 * `FEAT`: support searching through arrays in popup menu ([bpmn-io/diagram-js#970](https://github.com/bpmn-io/diagram-js/pull/970))
