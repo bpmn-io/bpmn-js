@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.6.1](https://github.com/bpmn-io/bpmn-js/compare/v18.6.0...v18.6.1) (2025-04-25)
+
+
+### Bug Fixes
+
+* event references are not lost when switching elements ([ea35d60](https://github.com/bpmn-io/bpmn-js/commit/ea35d6085509f3313daa589895b6786b83207185))
+
 ## 18.6.1
 
 * `FIX`: copy error, escalation, message and signal references when copying elements ([#2301](https://github.com/bpmn-io/diagram-js/pull/2301))
