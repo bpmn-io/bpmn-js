@@ -823,6 +823,162 @@ describe('features/copy-paste/ModdleCopy', function() {
       expect(newGroup.categoryValueRef.$parent).to.equal(newCategory);
     }));
 
+
+    describe('default events', function() {
+
+      describe('allowed references', function() {
+
+        it('should copy error reference', inject(function(moddle, moddleCopy) {
+
+          // given
+          var boundaryEvent = moddle.create('bpmn:BoundaryEvent'),
+              errorEventDefinition = moddle.create('bpmn:ErrorEventDefinition');
+
+          errorEventDefinition.$parent = boundaryEvent;
+
+          boundaryEvent.eventDefinitions = [ errorEventDefinition ];
+
+          var error = moddle.create('bpmn:Error');
+
+          errorEventDefinition.errorRef = error;
+
+          // when
+          var boundaryEventCopy = moddleCopy.copyElement(boundaryEvent, moddle.create('bpmn:BoundaryEvent'));
+
+          // then
+          expect(boundaryEventCopy.eventDefinitions).to.have.length(1);
+          expect(boundaryEventCopy.eventDefinitions[0]).not.to.equal(errorEventDefinition);
+          expect(boundaryEventCopy.eventDefinitions[0].$type).to.equal('bpmn:ErrorEventDefinition');
+          expect(boundaryEventCopy.eventDefinitions[0].errorRef).to.exist;
+          expect(boundaryEventCopy.eventDefinitions[0].errorRef).to.equal(error);
+        }));
+
+
+        it('should copy escalation reference', inject(function(moddle, moddleCopy) {
+
+          // given
+          var boundaryEvent = moddle.create('bpmn:BoundaryEvent'),
+              escalationEventDefinition = moddle.create('bpmn:EscalationEventDefinition');
+
+          escalationEventDefinition.$parent = boundaryEvent;
+
+          boundaryEvent.eventDefinitions = [ escalationEventDefinition ];
+
+          var error = moddle.create('bpmn:Escalation');
+
+          escalationEventDefinition.escalationRef = error;
+
+          // when
+          var boundaryEventCopy = moddleCopy.copyElement(boundaryEvent, moddle.create('bpmn:BoundaryEvent'));
+
+          // then
+          expect(boundaryEventCopy.eventDefinitions).to.have.length(1);
+          expect(boundaryEventCopy.eventDefinitions[0]).not.to.equal(escalationEventDefinition);
+          expect(boundaryEventCopy.eventDefinitions[0].$type).to.equal('bpmn:EscalationEventDefinition');
+          expect(boundaryEventCopy.eventDefinitions[0].escalationRef).to.exist;
+          expect(boundaryEventCopy.eventDefinitions[0].escalationRef).to.equal(error);
+        }));
+
+
+        it('should copy message reference (event)', inject(function(moddle, moddleCopy) {
+
+          // given
+          var boundaryEvent = moddle.create('bpmn:BoundaryEvent'),
+              messageEventDefinition = moddle.create('bpmn:MessageEventDefinition');
+
+          messageEventDefinition.$parent = boundaryEvent;
+
+          boundaryEvent.eventDefinitions = [ messageEventDefinition ];
+
+          var message = moddle.create('bpmn:Message');
+
+          messageEventDefinition.messageRef = message;
+
+          // when
+          var boundaryEventCopy = moddleCopy.copyElement(boundaryEvent, moddle.create('bpmn:BoundaryEvent'));
+
+          // then
+          expect(boundaryEventCopy.eventDefinitions).to.have.length(1);
+          expect(boundaryEventCopy.eventDefinitions[0]).not.to.equal(messageEventDefinition);
+          expect(boundaryEventCopy.eventDefinitions[0].$type).to.equal('bpmn:MessageEventDefinition');
+          expect(boundaryEventCopy.eventDefinitions[0].messageRef).to.exist;
+          expect(boundaryEventCopy.eventDefinitions[0].messageRef).to.equal(message);
+        }));
+
+
+        it('should copy message reference (receive task)', inject(function(moddle, moddleCopy) {
+
+          // given
+          var receiveTask = moddle.create('bpmn:ReceiveTask');
+
+          var message = moddle.create('bpmn:Message');
+
+          receiveTask.messageRef = message;
+
+          // when
+          var receiveTaskCopy = moddleCopy.copyElement(receiveTask, moddle.create('bpmn:ReceiveTask'));
+
+          // then
+          expect(receiveTaskCopy.messageRef).to.exist;
+          expect(receiveTaskCopy.messageRef).to.equal(message);
+        }));
+
+
+        it('should copy signal reference', inject(function(moddle, moddleCopy) {
+
+          // given
+          var boundaryEvent = moddle.create('bpmn:BoundaryEvent'),
+              signalEventDefinition = moddle.create('bpmn:SignalEventDefinition');
+
+          signalEventDefinition.$parent = boundaryEvent;
+
+          boundaryEvent.eventDefinitions = [ signalEventDefinition ];
+
+          var signal = moddle.create('bpmn:Signal');
+
+          signalEventDefinition.signalRef = signal;
+
+          // when
+          var boundaryEventCopy = moddleCopy.copyElement(boundaryEvent, moddle.create('bpmn:BoundaryEvent'));
+
+          // then
+          expect(boundaryEventCopy.eventDefinitions).to.have.length(1);
+          expect(boundaryEventCopy.eventDefinitions[0]).not.to.equal(signalEventDefinition);
+          expect(boundaryEventCopy.eventDefinitions[0].$type).to.equal('bpmn:SignalEventDefinition');
+          expect(boundaryEventCopy.eventDefinitions[0].signalRef).to.exist;
+          expect(boundaryEventCopy.eventDefinitions[0].signalRef).to.equal(signal);
+        }));
+
+      });
+
+
+      describe('disallowed properties', function() {
+
+        it('should NOT copy incoming and outgoing', inject(function(moddle, moddleCopy) {
+
+          // given
+          var incoming = moddle.create('bpmn:SequenceFlow'),
+              outgoing = moddle.create('bpmn:SequenceFlow'),
+              task = moddle.create('bpmn:Task', {
+                incoming: [ incoming ],
+                outgoing: [ outgoing ]
+              });
+
+          expect(task.get('incoming')).to.have.length(1);
+          expect(task.get('outgoing')).to.have.length(1);
+
+          // when
+          var taskCopy = moddleCopy.copyElement(task, moddle.create('bpmn:Task'));
+
+          // then
+          expect(taskCopy.get('incoming')).to.have.length(0);
+          expect(taskCopy.get('outgoing')).to.have.length(0);
+        }));
+
+      });
+
+    });
+
   });
 
 
