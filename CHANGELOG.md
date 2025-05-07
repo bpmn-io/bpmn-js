@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: re-add outline in viewer and removed from modeler (outline can be accessed via viewer) ([#2302](https://github.com/bpmn-io/bpmn-js/issues/2302))
+
 ## 18.6.1
 
 * `FIX`: copy error, escalation, message and signal references when copying elements ([#2301](https://github.com/bpmn-io/diagram-js/pull/2301))
