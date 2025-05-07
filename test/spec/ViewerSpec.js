@@ -85,7 +85,7 @@ describe('Viewer', function() {
   });
 
 
-  it('should not include Outline module by default', function() {
+  it('should include Outline module by default', function() {
 
     // given
     var viewer = new Viewer();
@@ -94,7 +94,7 @@ describe('Viewer', function() {
     var outline = viewer.get('outline', false);
 
     // then
-    expect(outline).not.to.exist;
+    expect(outline).to.exist;
   });
 
 

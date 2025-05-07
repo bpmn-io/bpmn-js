@@ -215,13 +215,13 @@ describe('Modeler', function() {
   });
 
 
-  it('should include Outline module by default', function() {
+  it('should include Outline module by default from Viewer', function() {
 
     // given
-    var modeler = new Modeler();
+    var viewer = new Modeler.Viewer();
 
     // when
-    var outline = modeler.get('outline', false);
+    var outline = viewer.get('outline', false);
 
     // then
     expect(outline).to.exist;
