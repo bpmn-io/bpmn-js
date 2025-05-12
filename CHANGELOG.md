@@ -85,6 +85,7 @@ ___Note:__ Yet to be released changes appear here._
 * Require `Node >= 20`
 * `Canvas` is now a focusable element and provides better support for native browser behaviors. Focus can be controlled with new `focus` and `restoreFocus` APIs ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662)).
 * Keyboard is now implicitly bound to canvas SVG element. Calls to `keyboard.bind` and `keyboard.bindTo` now result with a descriptive console error and have no effect ([bpmn-io/diagram-js#662](https://github.com/bpmn-io/diagram-js/pull/662)).
+* Selection outline is no longer included in the viewer. If needed, add it as an additional module ([#2253](https://github.com/bpmn-io/bpmn-js/pull/2253)).
 
 ## 17.11.1
 
