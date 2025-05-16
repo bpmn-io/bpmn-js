@@ -409,6 +409,68 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render collapsed subprocess marker centered', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('SubProcessCollapsed');
+
+        const marker = domQuery('[data-marker=sub-process]', task);
+
+        expect(haveSameCenterX(task, marker)).to.be.true;
+      })();
+    });
+  });
+
+
+  it('should render compensation marker centered', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('TaskCompensation');
+
+        const marker = domQuery('[data-marker=compensation]', task);
+
+        expect(haveSameCenterX(task, marker)).to.be.true;
+      })();
+    });
+  });
+
+  it('should render ad-hoc marker centered on expanded subprocess', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('AdHocSubProcessExpanded');
+
+        const marker = domQuery('[data-marker=adhoc]', task);
+
+        expect(haveSameCenterX(task, marker)).to.be.true;
+      })();
+    });
+  });
+
+
   it('should properly render connection markers (2)', function() {
     var xml = require('./BpmnRenderer.connection-colors.bpmn');
 
@@ -909,4 +971,14 @@ function isCollapsedSubProcess(element) {
     'bpmn:AdHocSubProcess',
     'bpmn:Transaction'
   ]) && !isExpanded(element);
+}
+
+function haveSameCenterX(element, element2) {
+  const bbox1 = element.getBoundingClientRect();
+  const bbox2 = element2.getBoundingClientRect();
+
+  const center1 = bbox1.left + (bbox1.width / 2);
+  const center2 = bbox2.left + (bbox2.width / 2);
+
+  return Math.abs(center1 - center2) < 3;
 }
