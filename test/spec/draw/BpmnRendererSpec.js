@@ -424,7 +424,7 @@ describe('draw - bpmn renderer', function() {
 
         const marker = domQuery('[data-marker=sub-process]', task);
 
-        expect(haveSameCenterX(task, marker)).to.be.true;
+        expectDistance(task, marker, { x: 0 });
       })();
     });
   });
@@ -445,7 +445,7 @@ describe('draw - bpmn renderer', function() {
 
         const marker = domQuery('[data-marker=compensation]', task);
 
-        expect(haveSameCenterX(task, marker)).to.be.true;
+        expectDistance(task, marker, { x: 0 });
       })();
     });
   });
@@ -465,7 +465,7 @@ describe('draw - bpmn renderer', function() {
 
         const marker = domQuery('[data-marker=adhoc]', task);
 
-        expect(haveSameCenterX(task, marker)).to.be.true;
+        expectDistance(task, marker, { x: 0 });
       })();
     });
   });
@@ -973,12 +973,35 @@ function isCollapsedSubProcess(element) {
   ]) && !isExpanded(element);
 }
 
-function haveSameCenterX(element, element2) {
-  const bbox1 = element.getBoundingClientRect();
+/**
+ * Expect distance between two elements.
+ *
+ * @param {SVGAElement} element1
+ * @param {SVGAElement} element2
+ * @param { { x: number; y: number } } distance
+ * @param {number} [tolerance=3]
+ *
+ * @returns {void}
+ */
+function expectDistance(element1, element2, distance, tolerance = 3) {
+  const {
+    x = Infinity,
+    y = Infinity
+  } = distance;
+
+  const bbox1 = element1.getBoundingClientRect();
   const bbox2 = element2.getBoundingClientRect();
 
-  const center1 = bbox1.left + (bbox1.width / 2);
-  const center2 = bbox2.left + (bbox2.width / 2);
+  const center1 = {
+    x: bbox1.left + (bbox1.width / 2),
+    y: bbox1.top + (bbox1.height / 2)
+  };
 
-  return Math.abs(center1 - center2) < 3;
+  const center2 = {
+    x: bbox2.left + (bbox2.width / 2),
+    y: bbox2.top + (bbox2.height / 2)
+  };
+
+  expect(Math.abs(center1.x - center2.x)).to.be.lessThan(x + tolerance);
+  expect(Math.abs(center1.y - center2.y)).to.be.lessThan(y + tolerance);
 }
