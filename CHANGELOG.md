@@ -6,6 +6,15 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.6.2](https://github.com/bpmn-io/bpmn-js/compare/v18.6.1...v18.6.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* center task markers ([a0c4774](https://github.com/bpmn-io/bpmn-js/commit/a0c477410518b0263495cd29e72f140132f9280f))
+* re-add outline in viewer and removed from modeler ([58937f2](https://github.com/bpmn-io/bpmn-js/commit/58937f25e93d2d79f303be429fbdb3123ecc63e1))
+* revert re-add outline in viewer and removed from modeler ([71a9d96](https://github.com/bpmn-io/bpmn-js/commit/71a9d969e186b391bee8886b72bbe6927e6796ab))
+
 ## 18.6.2
 
 * `FIX`: center task markers ([#1995](https://github.com/bpmn-io/bpmn-js/issues/1995))
