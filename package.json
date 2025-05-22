@@ -100,7 +100,7 @@
     "npm-run-all2": "^8.0.0",
     "puppeteer": "~24.5.0",
     "remark-cli": "^12.0.0",
-    "remark-preset-bpmn-io": "^0.2.1",
+    "remark-preset-bpmn-io": "^0.3.0",
     "rollup": "^4.39.0",
     "rollup-plugin-license": "^3.6.0",
     "sinon": "^17.0.1",
