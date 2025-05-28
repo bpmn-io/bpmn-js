@@ -409,6 +409,68 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render collapsed subprocess marker centered', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('SubProcessCollapsed');
+
+        const marker = domQuery('[data-marker=sub-process]', task);
+
+        expectDistance(task, marker, { x: 0 });
+      })();
+    });
+  });
+
+
+  it('should render compensation marker centered', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('TaskCompensation');
+
+        const marker = domQuery('[data-marker=compensation]', task);
+
+        expectDistance(task, marker, { x: 0 });
+      })();
+    });
+  });
+
+  it('should render ad-hoc marker centered on expanded subprocess', function() {
+    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      var err = result.error;
+
+      expect(err).not.to.exist;
+
+      inject(function(elementRegistry) {
+
+        var task = elementRegistry.getGraphics('AdHocSubProcessExpanded');
+
+        const marker = domQuery('[data-marker=adhoc]', task);
+
+        expectDistance(task, marker, { x: 0 });
+      })();
+    });
+  });
+
+
   it('should properly render connection markers (2)', function() {
     var xml = require('./BpmnRenderer.connection-colors.bpmn');
 
@@ -909,4 +971,37 @@ function isCollapsedSubProcess(element) {
     'bpmn:AdHocSubProcess',
     'bpmn:Transaction'
   ]) && !isExpanded(element);
+}
+
+/**
+ * Expect distance between two elements.
+ *
+ * @param {SVGAElement} element1
+ * @param {SVGAElement} element2
+ * @param { { x: number; y: number } } distance
+ * @param {number} [tolerance=3]
+ *
+ * @returns {void}
+ */
+function expectDistance(element1, element2, distance, tolerance = 3) {
+  const {
+    x = Infinity,
+    y = Infinity
+  } = distance;
+
+  const bbox1 = element1.getBoundingClientRect();
+  const bbox2 = element2.getBoundingClientRect();
+
+  const center1 = {
+    x: bbox1.left + (bbox1.width / 2),
+    y: bbox1.top + (bbox1.height / 2)
+  };
+
+  const center2 = {
+    x: bbox2.left + (bbox2.width / 2),
+    y: bbox2.top + (bbox2.height / 2)
+  };
+
+  expect(Math.abs(center1.x - center2.x)).to.be.lessThan(x + tolerance);
+  expect(Math.abs(center1.y - center2.y)).to.be.lessThan(y + tolerance);
 }
