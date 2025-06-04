@@ -23,32 +23,60 @@ describe('features/window-copy-paste', function() {
     })
   );
 
+  this.beforeAll(function() {
+    if (!navigator.clipboard) {
+      navigator.clipboard = {};
+    }
+    var content = '';
+    navigator.clipboard.writeText = (text) => {
+      content = text;
+      return Promise.resolve();
+    };
+    navigator.clipboard.readText = () => Promise.resolve(content);
+  });
+
   describe('revive string', function() {
-    it('should pass with valid JSON', inject(function(
+    it('should pass with valid JSON', inject(async function(
         elementRegistry,
-        moddle,
         copyPaste,
         clipboard,
         eventBus
     ) {
 
-      // create event
       var startEvent = elementRegistry.get('StartEvent_1');
       copyPaste.copy(startEvent);
 
-      setTimeout(function() {
-        eventBus.fire('canvas.focus.changed', {
-          focused: true,
-        });
-      }, 1000);
+      // get tree from clipboard
+      var tree = clipboard.get();
 
-      // wait for 1 second to ensure clipboard is set
-      setTimeout(function() {
-        var revived = clipboard.get();
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      eventBus.fire('canvas.focus.changed', { focused: true });
 
-        expect(revived).to.equal(startEvent);
-      }, 1000);
+      // get revived tree from system clipboard
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      var revived_tree = clipboard.get();
+
+      // strip di properties
+      tree['0'].forEach((element) => delete element.di);
+      revived_tree['0'].forEach((element) => delete element.di);
+
+      // check that revived tree is identical to the original tree
+      expect(revived_tree).to.jsonEqual(tree);
     }));
+
+    it('should fail with invalid JSON', inject(async function(eventBus, clipboard) {
+      navigator.clipboard.writeText('invalid JSON string');
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      eventBus.fire('canvas.focus.changed', { focused: true });
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      var revived_tree = clipboard.get();
+
+      // check that revived tree is empty
+      expect(revived_tree).to.be.undefined;
+    }
+    ));
   });
 
   // Test copy/paste into system cliboard
