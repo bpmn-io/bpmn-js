@@ -621,6 +621,7 @@ describe('Modeler', function() {
         expect(modeler.get('keyboard')).to.exist;
         expect(modeler.get('keyboardMoveSelection')).to.exist;
         expect(modeler.get('labelEditingProvider')).to.exist;
+        expect(modeler.get('labelLink')).to.exist;
         expect(modeler.get('modeling')).to.exist;
         expect(modeler.get('move')).to.exist;
         expect(modeler.get('paletteProvider')).to.exist;
