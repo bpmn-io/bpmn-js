@@ -1894,6 +1894,55 @@ describe('features/modeling/rules - BpmnRules', function() {
   });
 
 
+  describe('non-interrupting start events', function() {
+    var testXML = require('./BpmnRules.process.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+    it('should not create on Process', inject(function(elementFactory) {
+
+      // given
+      var nonInterruptingMessageStartEvent = elementFactory.createShape({
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition',
+        isInterrupting: false
+      });
+
+      // then
+      expectCanCreate(nonInterruptingMessageStartEvent, 'Process', false);
+    }));
+
+
+    it('should not create on SubProcess', inject(function(elementFactory) {
+
+      // given
+      var nonInterruptingMessageStartEvent = elementFactory.createShape({
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition',
+        isInterrupting: false
+      });
+
+      // then
+      expectCanCreate(nonInterruptingMessageStartEvent, 'SubProcess', false);
+    }));
+
+
+    it('should create on EventSubProcess', inject(function(elementFactory) {
+
+      // given
+      var nonInterruptingMessageStartEvent = elementFactory.createShape({
+        type: 'bpmn:StartEvent',
+        eventDefinitionType: 'bpmn:MessageEventDefinition',
+        isInterrupting: false
+      });
+
+      // then
+      expectCanCreate(nonInterruptingMessageStartEvent, 'EventSubProcess', true);
+    }));
+
+  });
+
+
   describe('lanes', function() {
 
     var testXML = require('./BpmnRules.collaboration-lanes.bpmn');
