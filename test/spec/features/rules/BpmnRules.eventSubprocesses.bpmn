@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="sid-38422fae-e03e-43a3-bef4-bd33b32041b2" targetNamespace="http://bpmn.io/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.0-nightly.20210427">
+  <process id="Process_1" isExecutable="false">
+    <subProcess id="EventSubProcess" triggeredByEvent="true">
+      <startEvent id="NonInterruptingStartEvent" isInterrupting="false">
+        <messageEventDefinition id="MessageEventDefinition_0itih3i" />
+      </startEvent>
+    </subProcess>
+  </process>
+  <bpmndi:BPMNDiagram id="BpmnDiagram_1">
+    <bpmndi:BPMNPlane id="BpmnPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="EventSubProcess_di" bpmnElement="EventSubProcess" isExpanded="true">
+        <omgdc:Bounds x="540" y="390" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="NonInterruptingStartEvent_di" bpmnElement="NonInterruptingStartEvent">
+        <omgdc:Bounds x="602" y="462" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
