@@ -197,7 +197,7 @@ describe('features/grid-snapping', function() {
       ]);
 
       // when
-      move.start(canvasEvent({ x: 700, y: 20 }), textAnnotation);
+      move.start(canvasEvent({ x: 700, y: 30 }), textAnnotation);
 
       dragging.move(canvasEvent({ x: 706, y: 32 }));
       dragging.move(canvasEvent({ x: 712, y: 44 }));
@@ -209,17 +209,17 @@ describe('features/grid-snapping', function() {
 
       // then
       expect(events.map(position('top-left'))).to.eql([
-        { x: 710, y: 30 }, // move
-        { x: 710, y: 40 }, // move
-        { x: 720, y: 60 }, // move
-        { x: 720, y: 70 }, // move
-        { x: 730, y: 80 }, // move
-        { x: 730, y: 80 } // end
+        { x: 710, y: 25 }, // move
+        { x: 710, y: 35 }, // move
+        { x: 720, y: 55 }, // move
+        { x: 720, y: 65 }, // move
+        { x: 730, y: 75 }, // move
+        { x: 730, y: 75 } // end
       ]);
 
       // expect snapped to top-left
       expect(textAnnotation.x).to.equal(730);
-      expect(textAnnotation.y).to.equal(80);
+      expect(textAnnotation.y).to.equal(70);
     }));
 
   });
