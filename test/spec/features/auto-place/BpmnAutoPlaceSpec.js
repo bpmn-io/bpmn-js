@@ -104,14 +104,14 @@ describe('features/auto-place', function() {
       it('top right of source', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_2',
-        expectedBounds: { x: 579, y: 210, width: 100, height: 30 }
+        expectedBounds: { x: 579, y: 210, width: 100, height: 40 }
       }));
 
 
       it('above existing', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'TASK_3',
-        expectedBounds: { x: 896, y: 96, width: 100, height: 30 }
+        expectedBounds: { x: 896, y: 96, width: 100, height: 40 }
       }));
 
 
@@ -120,14 +120,14 @@ describe('features/auto-place', function() {
         it('top right', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 500, y: 265, width: 100, height: 30 }
+          expectedBounds: { x: 500, y: 265, width: 100, height: 40 }
         }));
 
 
         it('above existing', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 500, y: 205, width: 100, height: 30 }
+          expectedBounds: { x: 500, y: 205, width: 100, height: 40 }
         }));
 
       });
@@ -138,14 +138,14 @@ describe('features/auto-place', function() {
         it('bottom right', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'MessageFlow_1',
-          expectedBounds: { x: 579, y: 580, width: 100, height: 30 }
+          expectedBounds: { x: 579, y: 580, width: 100, height: 40 }
         }));
 
 
         it('next to existing', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'MessageFlow_1',
-          expectedBounds: { x: 709, y: 580, width: 100, height: 30 }
+          expectedBounds: { x: 709, y: 580, width: 100, height: 40 }
         }));
 
       });
@@ -245,14 +245,14 @@ describe('features/auto-place', function() {
       it('bottom right of source', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'V_Task_2',
-        expectedBounds: { x: 550, y: 530, width: 100, height: 30 }
+        expectedBounds: { x: 550, y: 530, width: 100, height: 40 }
       }));
 
 
       it('right of existing', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'V_Task_3',
-        expectedBounds: { x: 600, y: 840, width: 100, height: 30 }
+        expectedBounds: { x: 600, y: 840, width: 100, height: 40 }
       }));
 
 
@@ -261,14 +261,14 @@ describe('features/auto-place', function() {
         it('bottom right', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 500, y: 445, width: 100, height: 30 }
+          expectedBounds: { x: 500, y: 445, width: 100, height: 40 }
         }));
 
 
         it('right of existing', autoPlace({
           element: 'bpmn:TextAnnotation',
           behind: 'SequenceFlow_1',
-          expectedBounds: { x: 630, y: 445, width: 100, height: 30 }
+          expectedBounds: { x: 630, y: 445, width: 100, height: 40 }
         }));
 
       });
@@ -537,7 +537,7 @@ describe('features/auto-place', function() {
       it('should place annotation horizontally above Nested_Start_Event', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'Nested_Start_Event',
-        expectedBounds: { x: 215, y: -1, width: 100, height: 30 }
+        expectedBounds: { x: 215, y: -1, width: 100, height: 40 }
       }));
 
 
@@ -577,7 +577,7 @@ describe('features/auto-place', function() {
       it('should place annotation horizontally above Nested_Start_Event', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'Nested_Start_Event',
-        expectedBounds: { x: 215, y: 19, width: 100, height: 30 }
+        expectedBounds: { x: 215, y: 19, width: 100, height: 40 }
       }));
 
 
@@ -617,7 +617,7 @@ describe('features/auto-place', function() {
       it('should place annotation vertically right of Nested_Start_Event', autoPlace({
         element: 'bpmn:TextAnnotation',
         behind: 'Nested_Start_Event',
-        expectedBounds: { x: 245, y: 115, width: 100, height: 30 }
+        expectedBounds: { x: 245, y: 115, width: 100, height: 40 }
       }));
 
 
