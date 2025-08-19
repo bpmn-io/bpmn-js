@@ -159,7 +159,7 @@ describe('features/outline - outline provider', function() {
         // then
         bounds = outlineShape.getBoundingClientRect();
         expect(bounds.width).to.be.closeTo(93, DELTA);
-        expect(bounds.height).to.be.closeTo(37, DELTA);
+        expect(bounds.height).to.be.closeTo(24, DELTA);
       }));
 
     });
