@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.6.3
+
+* `FIX`: remove `AdHocSubProcess#cancelRemainingInstances` default value ([bpmn-io/bpmn-moddle#131](https://github.com/bpmn-io/bpmn-moddle/issues/131))
+* `DEPS`: update to `bpmn-moddle@9.0.3`
+
 ## 18.6.2
 
 * `FIX`: center task markers ([#1995](https://github.com/bpmn-io/bpmn-js/issues/1995))
