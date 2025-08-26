@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "18.6.2",
+  "version": "18.6.3",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "lib/index.js",
   "files": [
@@ -77,8 +77,8 @@
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "4.1.2",
     "chai-match": "^1.1.1",
-    "cpy": "^11.0.0",
-    "cross-env": "^7.0.3",
+    "cpy": "^12.0.0",
+    "cross-env": "^10.0.0",
     "del": "^8.0.0",
     "del-cli": "^6.0.0",
     "eslint": "^9.24.0",
@@ -110,7 +110,7 @@
     "webpack": "^5.95.0"
   },
   "dependencies": {
-    "bpmn-moddle": "^9.0.1",
+    "bpmn-moddle": "^9.0.3",
     "diagram-js": "^15.3.0",
     "diagram-js-direct-editing": "^3.2.0",
     "ids": "^1.0.5",
