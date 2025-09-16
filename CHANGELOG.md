@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+
+## 18.6.4
+
+* `FIX`: revert `AdHocSubProcess#cancelRemainingInstances` default value removal ([bpmn-io/bpmn-moddle#132](https://github.com/bpmn-io/bpmn-moddle/pull/132))
+* `DEPS`: update to `bpmn-moddle@9.0.4`
+
 ## 18.6.3
 
 * `FIX`: remove `AdHocSubProcess#cancelRemainingInstances` default value ([bpmn-io/bpmn-moddle#131](https://github.com/bpmn-io/bpmn-moddle/issues/131))
