@@ -27,7 +27,6 @@ import {
 } from 'min-dash';
 
 import { getDi } from 'lib/util/ModelUtil';
-import xml from '../fixtures/bpmn/collapsed-sub-process.bpmn';
 import diagramXML from './features/grid-snapping/basic.bpmn';
 import coreModule from '../../lib/core';
 import createModule from 'diagram-js/lib/features/create';
