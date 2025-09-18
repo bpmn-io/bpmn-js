@@ -45,6 +45,32 @@ describe('features/modeling/behavior - data object', function() {
     }));
 
 
+    it('should copy the isCollection property in DataObject if present', inject(function(modeling, copyPaste) {
+
+      // when
+      var dataObjectRefShape = modeling.createShape({ type: 'bpmn:DataObjectReference' },
+        { x: 220, y: 220 }, rootShape);
+      dataObjectRefShape.businessObject.dataObjectRef.isCollection = true;
+
+      copyPaste.copy(dataObjectRefShape);
+      var pastedElements = copyPaste.paste({
+        element: rootShape,
+        point: {
+          x: 350,
+          y: 150
+        }
+      });
+
+      var dataObject = pastedElements[0].businessObject.dataObjectRef;
+
+      // then
+      expect(dataObject).to.exist;
+      expect(is(dataObject, 'bpmn:DataObject')).to.be.true;
+      expect(dataObject.id).to.exist;
+      expect(dataObject.isCollection).to.be.true;
+    }));
+
+
     it('should create the corresponding DataObject / undo');
 
 
