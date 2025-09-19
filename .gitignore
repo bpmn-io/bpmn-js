@@ -1,7 +1,6 @@
 node_modules/
 dist/
 coverage/
-index.d.ts
 lib/**/*.d.ts
 .idea
 *.iml
