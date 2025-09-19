@@ -8,7 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 18.6.5
 
-* `FIX`: ensure popup menu keyboard navigation accounts for group order ([#989](https://github.com/bpmn-io/diagram-js/pull/989))
+* `FIX`: ensure popup menu keyboard navigation accounts for group order ([bpmn-io/diagram-js#989](https://github.com/bpmn-io/diagram-js/pull/989))
 * `DEPS`: update to `diagram-js@15.3.1`
 
 ## 18.6.4
