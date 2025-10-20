@@ -705,17 +705,13 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
+              x: bounds.x,
               y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
+              width: bounds.width + 10 * zoom,
               height: bounds.height + (5 * zoom) + 7
             });
           }
@@ -731,17 +727,13 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
+              x: bounds.x,
               y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
+              width: bounds.width + 10 * zoom,
               height: bounds.height + (5 * zoom) + (7 * zoom)
             });
           }
@@ -799,17 +791,13 @@ describe('features - label-editing', function() {
             var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceFlow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceFlow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
+              x: bounds.x,
               y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
+              width: bounds.width + 10 * zoom,
               height: bounds.height + (5 * zoom) + 7
             });
           }
@@ -825,17 +813,13 @@ describe('features - label-editing', function() {
             var sequenceflow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceflow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceflow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
+              x: bounds.x,
               y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
+              width: bounds.width + 10 * zoom,
               height: bounds.height + (5 * zoom) + (7 * zoom)
             });
           }
