@@ -6,6 +6,21 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.7.0
+
+* `FEAT`: support disabled entries in popup menu ([bpmn-io/diagram-js#987](https://github.com/bpmn-io/diagram-js/pull/987))
+* `DEPS`: update to `diagram-js@15.4.0`
+
+## 18.6.5
+
+* `FIX`: ensure popup menu keyboard navigation accounts for group order ([bpmn-io/diagram-js#989](https://github.com/bpmn-io/diagram-js/pull/989))
+* `DEPS`: update to `diagram-js@15.3.1`
+
+## 18.6.4
+
+* `FIX`: revert `AdHocSubProcess#cancelRemainingInstances` default value removal ([bpmn-io/bpmn-moddle#132](https://github.com/bpmn-io/bpmn-moddle/pull/132))
+* `DEPS`: update to `bpmn-moddle@9.0.4`
+
 ## 18.6.3
 
 * `FIX`: remove `AdHocSubProcess#cancelRemainingInstances` default value ([bpmn-io/bpmn-moddle#131](https://github.com/bpmn-io/bpmn-moddle/issues/131))
