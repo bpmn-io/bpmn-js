@@ -953,7 +953,7 @@ describe('Modeler', function() {
 
   });
 
-  describe('artifacts hence with their participants', function() {
+  describe('artifacts move with their participants', function() {
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: [
