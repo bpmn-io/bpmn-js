@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.8.0](https://github.com/bpmn-io/bpmn-js/compare/v18.7.0...v18.8.0) (2025-10-24)
+
+
+### Features
+
+* allow copying data object references ([108bdf8](https://github.com/bpmn-io/bpmn-js/commit/108bdf8886979dd119ab7369b505f7edeca16dee))
+* copy `isCollection` property of data objects ([55d11ea](https://github.com/bpmn-io/bpmn-js/commit/55d11eaf80ff7327156195f8df537685327ce62c))
+
 ## 18.8.0
 
 * `FEAT`: allow copying data object references and `isCollection` property ([#2348](https://github.com/bpmn-io/bpmn-js/pull/2348))
