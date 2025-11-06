@@ -763,6 +763,21 @@ describe('draw - bpmn renderer', function() {
         expect(TextAnnotationPath).to.equal('M368,156l100,0l0,80l-100,0z');
       }));
 
+
+      it('should return a rectangular path for external label', inject(function(elementRegistry, graphicsFactory) {
+
+        // given
+        const event = elementRegistry.get('StartEvent_1');
+        const label = event.labels[0];
+
+        // when
+        const labelPath = graphicsFactory.getShapePath(label);
+
+        // then
+        expect(labelPath).to.equal('M163,303l47,0a4,4,0,0,1,4,4l0,6a4,4,0,0,1,-4,4l-47,0a4,4,0,0,1,' +
+          '-4,-4l0,-6a4,4,0,0,1,4,-4z');
+      }));
+
     });
 
   });
