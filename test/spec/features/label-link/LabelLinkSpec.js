@@ -10,6 +10,8 @@ import labelLinkModule from 'lib/features/label-link';
 
 import { queryAll as domQueryAll } from 'min-dom';
 
+import { expectSvgPath } from '../../../util/svgHelpers';
+
 
 describe('features/label-link - label link', function() {
 
@@ -150,5 +152,6 @@ function queryAllLinks() {
 function expectLinkWithPath(path) {
   const links = queryAllLinks();
   const linePath = links[0].getAttribute('d');
-  expect(linePath).to.eql(path);
+
+  expectSvgPath(linePath, path);
 }

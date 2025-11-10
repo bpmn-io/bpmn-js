@@ -34,6 +34,8 @@ import {
 
 import customRendererModule from './custom-renderer';
 
+import { expectSvgPath } from '../../util/svgHelpers';
+
 
 /**
  * @typedef {import('../../../lib/model/Types').Element} Element
@@ -764,7 +766,7 @@ describe('draw - bpmn renderer', function() {
       }));
 
 
-      it('should return a rectangular path for external label', inject(function(elementRegistry, graphicsFactory) {
+      it('should return a rounded rectangular path for external label', inject(function(elementRegistry, graphicsFactory) {
 
         // given
         const event = elementRegistry.get('StartEvent_1');
@@ -774,8 +776,10 @@ describe('draw - bpmn renderer', function() {
         const labelPath = graphicsFactory.getShapePath(label);
 
         // then
-        expect(labelPath).to.equal('M163,303l47,0a4,4,0,0,1,4,4l0,6a4,4,0,0,1,-4,4l-47,0a4,4,0,0,1,' +
-          '-4,-4l0,-6a4,4,0,0,1,4,-4z');
+        expectSvgPath(
+          labelPath,
+          'M163,303l47,0a4,4,0,0,1,4,4l0,6a4,4,0,0,1,-4,4l-47,0a4,4,0,0,1,-4,-4l0,-6a4,4,0,0,1,4,-4z'
+        );
       }));
 
     });
