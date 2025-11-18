@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.9.0
+
+* `FEAT`: visually link external label with its target ([#2328](https://github.com/bpmn-io/bpmn-js/pull/2328))
+* `FEAT`: add support for labels to `OutlineProvider#getOutline`
+* `FIX`: ensure `BpmnRenderer#getShapePath` returns correct path for labels
+
 ## 18.8.0
 
 * `FEAT`: allow copying data object references and `isCollection` property ([#2348](https://github.com/bpmn-io/bpmn-js/pull/2348))
