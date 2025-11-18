@@ -6,6 +6,20 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.9.0](https://github.com/bpmn-io/bpmn-js/compare/v18.8.0...v18.9.0) (2025-11-18)
+
+
+### Features
+
+* **label-link:** visually link external label with its target ([19cf179](https://github.com/bpmn-io/bpmn-js/commit/19cf179d886f9a1cc7027279ce3a08a59683de85))
+* **OutlineProvider:** return outline for an external label ([5034cb2](https://github.com/bpmn-io/bpmn-js/commit/5034cb29f796b03800deed21029a63a1e102827a))
+
+
+### Bug Fixes
+
+* **BpmnRenderer:** return correct path shape for labels ([dc2998d](https://github.com/bpmn-io/bpmn-js/commit/dc2998d92459a62bc59d367ba30ac543a60154fc))
+* typo ([47fd319](https://github.com/bpmn-io/bpmn-js/commit/47fd3197ab529ad4f9cdb1c235ef309348e69909))
+
 ## 18.9.0
 
 * `FEAT`: visually link external label with its target ([#2328](https://github.com/bpmn-io/bpmn-js/pull/2328))
