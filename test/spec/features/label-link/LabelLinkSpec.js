@@ -6,6 +6,7 @@ import {
 import coreModule from 'lib/core';
 import modelingModule from 'lib/features/modeling';
 import outlineModule from 'lib/features/outline';
+import drilldownModule from 'lib/features/drilldown';
 import labelLinkModule from 'lib/features/label-link';
 
 import { queryAll as domQueryAll } from 'min-dom';
@@ -17,7 +18,13 @@ describe('features/label-link - label link', function() {
 
   var diagramXML = require('./LabelLink.bpmn');
 
-  var testModules = [ coreModule, modelingModule, outlineModule, labelLinkModule ];
+  var testModules = [
+    coreModule,
+    modelingModule,
+    outlineModule,
+    drilldownModule,
+    labelLinkModule
+  ];
 
   beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
@@ -38,7 +45,7 @@ describe('features/label-link - label link', function() {
       selection.select(element);
 
       // then
-      expectLinkWithPath('M450,265L450,313');
+      expectLinkWithPath('M450,335L450,383');
     })
   );
 
@@ -53,7 +60,7 @@ describe('features/label-link - label link', function() {
       selection.select(element);
 
       // then
-      expectLinkWithPath('M328.5,240L364,197');
+      expectLinkWithPath('M328,310L364,267');
     })
   );
 
@@ -68,7 +75,7 @@ describe('features/label-link - label link', function() {
       selection.select(element);
 
       // then
-      expectLinkWithPath('M318,115L345,77');
+      expectLinkWithPath('M318,185L345,147');
     })
   );
 
@@ -103,7 +110,7 @@ describe('features/label-link - label link', function() {
       const links = queryAllLinks();
       expect(links).to.have.length(1);
 
-      expectLinkWithPath('M532,255L459,313');
+      expectLinkWithPath('M532,325L459,383');
     })
   );
 
@@ -123,7 +130,7 @@ describe('features/label-link - label link', function() {
       const links = queryAllLinks();
       expect(links).to.have.length(1);
 
-      expectLinkWithPath('M464,251L533,306');
+      expectLinkWithPath('M464,321L533,376');
     })
   );
 
@@ -139,7 +146,92 @@ describe('features/label-link - label link', function() {
       selection.select([ element, label ]);
 
       // then
-      expectLinkWithPath('M450,265L450,306');
+      expectLinkWithPath('M450,335L450,376');
+    })
+  );
+
+
+  it('should show label for event in expanded subprocess', inject(
+    function(selection, elementRegistry) {
+
+      // given
+      const element = elementRegistry.get('Subprocess_Event');
+
+      // when
+      selection.select(element);
+
+      // then
+      expectLinkWithPath('M498,169L527,97');
+    })
+  );
+
+
+  it('should show label for event in collapsed subprocess plane', inject(
+    function(selection, elementRegistry, bpmnReplace, canvas) {
+
+      // given
+      const subprocess = elementRegistry.get('Subprocess');
+
+      // when
+      selection.select(subprocess);
+      bpmnReplace.replaceElement(subprocess, {
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      });
+
+      var subprocessRoot = canvas.findRoot('Subprocess_plane');
+      canvas.setRootElement(subprocessRoot);
+
+      selection.select(elementRegistry.get('Subprocess_Event'));
+
+      // then
+      expectLinkWithPath('M206,246L235,174');
+    })
+  );
+
+
+  it('should not show label after collapsing a subprocess', inject(
+    function(selection, elementRegistry, bpmnReplace) {
+
+      // given
+      const subprocess = elementRegistry.get('Subprocess');
+
+      // when
+      selection.select(subprocess);
+      bpmnReplace.replaceElement(subprocess, {
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      });
+
+      // then
+      const links = queryAllLinks();
+      expect(links).to.have.length(0);
+    })
+  );
+
+
+  it('should not show label after expanding a subprocess', inject(
+    function(selection, elementRegistry, bpmnReplace) {
+
+      // given
+      const subprocess = elementRegistry.get('Subprocess');
+
+      // when
+      selection.select(subprocess);
+
+      bpmnReplace.replaceElement(subprocess, {
+        type: 'bpmn:SubProcess',
+        isExpanded: false
+      });
+
+      bpmnReplace.replaceElement(subprocess, {
+        type: 'bpmn:SubProcess',
+        isExpanded: true
+      });
+
+      // then
+      const links = queryAllLinks();
+      expect(links).to.have.length(0);
     })
   );
 });

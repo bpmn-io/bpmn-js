@@ -7,7 +7,7 @@
  */
 export function expectSvgPath(actual, expected, tolerance = 2) {
   const result = compareSvgPaths(actual, expected, tolerance);
-  expect(result).to.be.true;
+  expect(result).to.equal(true, `expected SVG path "${actual}" to approximately equal "${expected}"`);
 }
 
 /**
