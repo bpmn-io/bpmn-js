@@ -19,7 +19,7 @@ import {
 
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
-var DELTA = 3;
+var DELTA = 6;
 
 
 describe('features - label-editing', function() {

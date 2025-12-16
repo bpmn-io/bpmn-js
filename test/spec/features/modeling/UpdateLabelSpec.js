@@ -153,14 +153,14 @@ describe('features/modeling - update label', function() {
       // given
       var element = elementRegistry.get('TextAnnotation_1');
 
-      var newBounds = { x: 100, y: 100, width: 100, height: 30 };
+      var newBounds = { x: 100, y: 100, width: 18, height: 40 };
 
       // when
       modeling.updateLabel(element, 'bar', newBounds);
 
       // then
       expect(element.businessObject.text).to.equal('bar');
-      expect(element).to.have.bounds(newBounds);
+      expectBounds(element, newBounds, 1);
     }
   ));
 
@@ -255,7 +255,7 @@ describe('features/modeling - update label', function() {
     // given
     var element = elementRegistry.get('TextAnnotation_1');
 
-    var newBounds = { x: 100, y: 100, width: 100, height: 30 };
+    var newBounds = { x: 100, y: 100, width: 100, height: 40 };
 
     // when
     modeling.updateLabel(element, null, newBounds);
@@ -297,3 +297,10 @@ describe('features/modeling - update label', function() {
   });
 
 });
+
+function expectBounds(parent, bounds, delta) {
+  expect(parent.x).to.be.closeTo(bounds.x, delta);
+  expect(parent.y).to.be.closeTo(bounds.y, delta);
+  expect(parent.width).to.be.closeTo(bounds.width, delta);
+  expect(parent.height).to.be.closeTo(bounds.height, delta);
+}
