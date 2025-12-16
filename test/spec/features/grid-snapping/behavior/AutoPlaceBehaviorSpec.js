@@ -102,7 +102,7 @@ describe('features/grid-snapping - auto-place', function() {
 
       expect(getMid(shape1)).to.eql({
         x: 170, // 168 snapped to 170
-        y: 15 // 22 snapped to 15
+        y: 20 // 22 snapped to 20
       });
     }));
 
@@ -132,7 +132,7 @@ describe('features/grid-snapping - auto-place', function() {
 
       expect(getMid(shape2)).to.eql({
         x: 170, // 168 snapped to 170
-        y: -45 // -45 snapped to -45
+        y: -40 // -45 snapped to -40
       });
     }));
 

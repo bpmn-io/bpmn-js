@@ -914,6 +914,9 @@ describe('draw - bpmn renderer', function() {
             if (isCollapsedSubProcess(element)) {
               expect(svgAttr(rect, 'width')).to.equal('100');
               expect(svgAttr(rect, 'height')).to.equal('80');
+            } else if (element.type === 'bpmn:TextAnnotation') {
+              expect(svgAttr(rect, 'width')).to.equal('78');
+              expect(svgAttr(rect, 'height')).to.equal('40');
             } else {
               expect(svgAttr(rect, 'width')).to.equal('200');
               expect(svgAttr(rect, 'height')).to.equal('100');

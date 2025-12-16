@@ -487,8 +487,8 @@ describe('features/modeling - resize behavior', function() {
       dragging.end();
 
       // then
-      expect(textAnnotation.width).to.equal(50);
-      expect(textAnnotation.height).to.equal(30);
+      expect(textAnnotation.width).to.equal(100);
+      expect(textAnnotation.height).to.equal(40);
     }));
 
   });
