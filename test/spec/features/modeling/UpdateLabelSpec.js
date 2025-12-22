@@ -164,6 +164,29 @@ describe('features/modeling - update label', function() {
     }
   ));
 
+  it('should not change text annotation text and bounds', inject(
+    function(modeling, elementRegistry) {
+
+      // given
+      var text = 'this should be the text';
+      var element = elementRegistry.get('TextAnnotation_1');
+
+      // when
+      modeling.updateLabel(element, text);
+
+      var oldBounds = { x: element.x, y: element.y, width: element.width, height: element.height };
+      var newBounds = { x: oldBounds.x, y: oldBounds.y + 100, width: oldBounds.width, height: oldBounds.height + 100 };
+
+      modeling.resizeShape(element, newBounds);
+
+      newBounds = { x: oldBounds.x + 100, y: oldBounds.y, width: oldBounds.width + 100, height: oldBounds.height };
+
+      // then
+      expect(element.businessObject.text).to.equal(text);
+      expectBounds(element, oldBounds, 1);
+    }
+  ));
+
 
   it('should update group label', inject(function(modeling, elementRegistry) {
 
