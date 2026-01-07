@@ -35,20 +35,6 @@ try {
 Checkout our [examples](https://github.com/bpmn-io/bpmn-js-examples) for many
 more supported usage scenarios.
 
-### Dynamic Attach/Detach
-
-You may attach or detach the viewer dynamically to any element on the page, too:
-
-```javascript
-const viewer = new BpmnJS();
-
-// attach it to some element
-viewer.attachTo('#container');
-
-// detach the panel
-viewer.detach();
-```
-
 ## Resources
 
 * [Demo](http://demo.bpmn.io)
