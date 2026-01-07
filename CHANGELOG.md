@@ -370,20 +370,20 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 14.1.3
 
-* `CHORE`: correctly output tag in https://github.com/bpmn-io/bpmn-js/pull/1982
+* `CHORE`: correctly output tag in [#1982](https://github.com/bpmn-io/bpmn-js/pull/1982)
 
 ## 14.1.2
 
-* `CHORE`: fix POST_RELEASE job in https://github.com/bpmn-io/bpmn-js/pull/1980
+* `CHORE`: fix POST_RELEASE job in [#1980](https://github.com/bpmn-io/bpmn-js/pull/1980)
 
 ## 14.1.1
 
-* `FIX`: asset path by @nikku in https://github.com/bpmn-io/bpmn-js/pull/1977
+* `FIX`: asset path by [__@nikku__](https://github.com/nikku) in [#1977](https://github.com/bpmn-io/bpmn-js/pull/1977)
 
 ## 14.1.0
 
-* `FEAT`: ensure lanes aren't resized when using space tool in https://github.com/bpmn-io/bpmn-js/pull/1972
-* `DOCS`: update translations for v14.0.0 by @bpmn-io-bot in https://github.com/bpmn-io/bpmn-js/pull/1948
+* `FEAT`: ensure lanes aren't resized when using space tool in [#1972](https://github.com/bpmn-io/bpmn-js/pull/1972)
+* `DOCS`: update translations for v14.0.0 by [__@bpmn-io-bot__](https://github.com/bpmn-io-bot) in [#1948](https://github.com/bpmn-io/bpmn-js/pull/1948)
 
 ## 14.0.0
 
