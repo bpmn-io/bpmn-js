@@ -1,11 +1,54 @@
 name: CI
 on: [ push, pull_request ]
 jobs:
-  build:
+  build_browsers:
 
     strategy:
+      fail-fast: false
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest ]
+        browser: [ Firefox, ChromeHeadless ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 24
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm ci
+    - name: Project setup
+      uses: bpmn-io/actions/setup@latest
+    - name: Build (with coverage)
+      if: matrix.browser == 'ChromeHeadless'
+      env:
+        COVERAGE: 1
+        TEST_BROWSERS: ${{ matrix.browser }}
+      run: npm run all
+    - name: Build
+      if: matrix.browser == 'Firefox'
+      env:
+        TEST_BROWSERS: ${{ matrix.browser }}
+      run: xvfb-run npm run all
+    - name: Upload coverage
+      if: matrix.browser == 'ChromeHeadless'
+      uses: codecov/codecov-action@v5
+      with:
+        fail_ci_if_error: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  build_os:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ macos-latest, windows-latest ]
+        browser: [ ChromeHeadless ]
 
     runs-on: ${{ matrix.os }}
 
@@ -22,20 +65,6 @@ jobs:
     - name: Project setup
       uses: bpmn-io/actions/setup@latest
     - name: Build
-      if: runner.os == 'Linux'
       env:
-        COVERAGE: 1
-        TEST_BROWSERS: Firefox,ChromeHeadless
-      run: xvfb-run npm run all
-    - name: Build
-      if: runner.os != 'Linux'
-      env:
-        TEST_BROWSERS: ChromeHeadless
+        TEST_BROWSERS: ${{ matrix.browser }}
       run: npm run all
-    - name: Upload Coverage
-      uses: codecov/codecov-action@v5
-      if: runner.os == 'Linux'
-      with:
-        fail_ci_if_error: true
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
