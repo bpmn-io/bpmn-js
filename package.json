@@ -115,7 +115,7 @@
     "diagram-js-direct-editing": "^3.2.0",
     "ids": "^1.0.5",
     "inherits-browser": "^0.1.0",
-    "min-dash": "^4.2.3",
+    "min-dash": "^5.0.0",
     "min-dom": "^4.2.1",
     "tiny-svg": "^3.1.3"
   },
