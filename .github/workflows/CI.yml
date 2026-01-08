@@ -28,7 +28,7 @@ jobs:
       env:
         COVERAGE: 1
         TEST_BROWSERS: ${{ matrix.browser }}
-      run: xvfb-run npm run all
+      run: npm run all
     - name: Build
       if: matrix.browser == 'Firefox'
       env:
