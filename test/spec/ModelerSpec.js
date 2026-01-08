@@ -288,6 +288,7 @@ describe('Modeler', function() {
         'undo',
         'redo',
         'copy',
+        'duplicate',
         'paste',
         'stepZoom',
         'zoom',

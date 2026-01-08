@@ -56,6 +56,7 @@ describe('features/keyboard', function() {
         'undo',
         'redo',
         'copy',
+        'duplicate',
         'paste',
         'zoom',
         'removeSelection',
