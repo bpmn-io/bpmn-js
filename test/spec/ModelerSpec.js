@@ -1061,7 +1061,6 @@ describe('Modeler', function() {
       const oldX = group.x;
       const oldY = group.y;
 
-      console.log(participant1);
       move.start(
         createCanvasEvent({ x: participant1.x + 20, y: participant1.y + 20 }),
         participant1
