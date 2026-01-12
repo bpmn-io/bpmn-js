@@ -485,6 +485,41 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
   });
 
 
+  describe('label snapping inside participant', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.label-snapping.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should have label with labelTarget inside participant', inject(
+      function(elementRegistry) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
+        var startEventLabel = startEvent.label;
+        var participant = elementRegistry.get('Participant_1');
+
+        // then
+        // Label should exist with correct labelTarget
+        expect(startEventLabel).to.exist;
+        expect(startEventLabel.labelTarget).to.equal(startEvent);
+
+        // Label owner (startEvent) should be inside the participant
+        expect(startEvent.parent).to.equal(participant);
+
+        // This verifies the precondition for our fix:
+        // When moving the label, FixHoverBehavior sets target to root,
+        // but our fix detects labelTarget is inside a participant
+        // and adds snap targets from that participant
+      }
+    ));
+
+  });
+
+
   describe('docking points', function() {
 
     describe('move mode', function() {
