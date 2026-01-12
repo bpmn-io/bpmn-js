@@ -1071,6 +1071,31 @@ describe('Modeler', function() {
       expect(newGroup.x).to.equal(oldX);
       expect(newGroup.y).to.equal(oldY);
     });
+
+    it('should delete when participant is deleted', async function() {
+      var xml = require('../fixtures/bpmn/participant-with-one-group.bpmn');
+
+      const result = await createModeler(xml);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var modeling = modeler.get('modeling');
+      var elementRegistry = modeler.get('elementRegistry');
+
+      var participant = elementRegistry.get('Participant_1axg5jz');
+      var group = elementRegistry.get('Group_0rfu791');
+
+      expect(participant).to.exist;
+      expect(group).to.exist;
+
+      modeling.removeShape(participant);
+
+      var participantFound = elementRegistry.get('Participant_1axg5jz');
+      var groupFound = elementRegistry.get('Group_0rfu791');
+
+      expect(participantFound).to.not.exist;
+      expect(groupFound).to.not.exist;
+    });
   });
 });
 
