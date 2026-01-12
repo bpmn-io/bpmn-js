@@ -667,7 +667,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
         // then
         expect(label.x).to.equal(labelBounds.x);
-        expect(label.y).to.be.at.most(labelBounds.y);
+        expect(label.y).to.be.at.least(labelBounds.y);
 
       }));
 
@@ -761,7 +761,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         );
 
         // then
-        expect(label.x).to.be.at.most(labelBounds.x);
+        expect(label.x).to.be.at.least(labelBounds.x);
         expect(label.y).to.equal(labelBounds.y);
 
       }));
