@@ -187,7 +187,6 @@ describe('features/modeling - update label', function() {
     }
   ));
 
-
   it('should update group label', inject(function(modeling, elementRegistry) {
 
     // given
