@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `bpmn-moddle@10.0.0`
+
 ## 18.10.1
 
 * `DEPS`: update to `min-dash@4.2.3`
