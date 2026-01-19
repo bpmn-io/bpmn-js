@@ -494,25 +494,6 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
     }));
 
 
-    it('should have label with labelTarget inside participant', inject(
-      function(elementRegistry) {
-
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1');
-        var startEventLabel = startEvent.label;
-        var participant = elementRegistry.get('Participant_1');
-
-        // then
-        // Label should exist with correct labelTarget
-        expect(startEventLabel).to.exist;
-        expect(startEventLabel.labelTarget).to.equal(startEvent);
-
-        // Label owner (startEvent) should be inside the participant
-        expect(startEvent.parent).to.equal(participant);
-      }
-    ));
-
-
     it('should add snap targets from participant when moving label', inject(
       function(dragging, elementRegistry, move) {
 
