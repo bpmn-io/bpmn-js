@@ -11,8 +11,7 @@
       </bpmn:lane>
       <bpmn:lane id="Lane_2" />
     </bpmn:laneSet>
-    <bpmn:startEvent id="StartEvent_1" name="Start">
-    </bpmn:startEvent>
+    <bpmn:startEvent id="StartEvent_1" name="Start" />
     <bpmn:exclusiveGateway id="Gateway_1" name="Decision" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">

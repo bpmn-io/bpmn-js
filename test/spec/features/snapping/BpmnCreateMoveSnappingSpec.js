@@ -503,17 +503,18 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
         var labelMid = mid(startEventLabel);
 
-        // when - move the label (this triggers the label snapping fix code)
-        // The fix in addSnapTargetPoints detects shape.labelTarget,
-        // finds the participant ancestor, and adds snap targets from it
+        // when
         move.start(canvasEvent(labelMid), startEventLabel);
-        dragging.move(canvasEvent({ x: labelMid.x + 50, y: labelMid.y }));
+
+        dragging.hover({ element: startEvent.parent, gfx: elementRegistry.getGraphics(startEvent.parent) });
+        dragging.move(canvasEventTopLeft({ x: 395, y: labelMid.y + 50 }, startEventLabel));
         dragging.end();
 
-        // then - verify move completed without errors
-        // The code path through getParticipantAncestor and the
-        // label snapping fix was exercised
-        expect(startEventLabel.x).to.exist;
+        // then
+        expect(mid(startEventLabel)).to.eql({
+          x: 400, // 395 snapped to 400
+          y: labelMid.y + 50
+        });
       }
     ));
 
