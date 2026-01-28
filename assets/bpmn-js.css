@@ -150,7 +150,7 @@
   border-radius: 4px;
   pointer-events: none;
   white-space: nowrap;
-  transform: rotate(270deg);
+  /*transform: rotate(270deg);*/
 }
 
 .hidden{
