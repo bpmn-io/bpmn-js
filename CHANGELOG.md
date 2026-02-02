@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add `cut` action and keyboard shortcut ([bpmn-io/diagram-js#1006](https://github.com/bpmn-io/diagram-js/pull/1006))
+* `DEPS`: update to `diagram-js@15.7.0`
 * `DEPS`: update to `bpmn-moddle@10.0.0`
 
 ## 18.10.1
