@@ -1517,6 +1517,55 @@ describe('features/modeling/rules - BpmnRules', function() {
         });
       }
     ));
+  });
+
+
+  describe('event keyboard move', function() {
+
+    var testXML = require('./BpmnRules.boundaryEvent.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should NOT allow keyboard move of boundary event without host',
+      inject(function(elementRegistry, rules) {
+
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+        // when
+        var canMove = rules.allowed('elements.move', {
+          shapes: [ boundaryEvent ],
+          hints: {
+            keyboardMove: true
+          }
+        });
+
+        // then
+        expect(canMove).to.be.false;
+      })
+    );
+
+
+    it('should allow keyboard move of boundary event with host',
+      inject(function(elementRegistry, rules) {
+
+        // given
+        var task = elementRegistry.get('Task');
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+        // when
+        var canMove = rules.allowed('elements.move', {
+          shapes: [ task, boundaryEvent ],
+          hints: {
+            keyboardMove: true
+          }
+        });
+
+        // then
+        expect(canMove).to.be.true;
+      })
+    );
 
   });
 
