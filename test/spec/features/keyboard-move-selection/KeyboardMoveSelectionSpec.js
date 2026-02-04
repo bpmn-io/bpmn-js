@@ -75,4 +75,53 @@ describe('features/keyboard-move-selection', function() {
     expect(getMid(lane)).to.eql(mid);
   }));
 
+
+  it('should NOT move boundary event without host', inject(
+    function(elementRegistry, keyboardMoveSelection, selection, rules) {
+
+      // given
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+      selection.select(boundaryEvent);
+
+      var mid = getMid(boundaryEvent);
+      var hostBeforeMove = boundaryEvent.host;
+
+      // when
+      keyboardMoveSelection.moveSelection('right');
+      keyboardMoveSelection.moveSelection('right');
+      keyboardMoveSelection.moveSelection('right');
+
+      // then
+
+      // position should not change
+      expect(getMid(boundaryEvent)).to.eql(mid);
+
+      // shouldn't be deattached from host
+      expect(boundaryEvent.host).to.equal(hostBeforeMove);
+    }
+  ));
+
+
+  it('should move boundary event with host', inject(
+    function(elementRegistry, keyboardMoveSelection, selection) {
+
+      // given
+      var task = elementRegistry.get('Task_1');
+      var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+      selection.select([ task, boundaryEvent ]);
+
+      var taskMid = getMid(task);
+      var boundaryMid = getMid(boundaryEvent);
+
+      // when
+      keyboardMoveSelection.moveSelection('right');
+
+      // then
+      expect(getMid(task)).not.to.eql(taskMid);
+      expect(getMid(boundaryEvent)).not.to.eql(boundaryMid);
+    }
+  ));
+
 });
