@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: activate wheel zoom/scoll on `mouseover` ([#1008](https://github.com/bpmn-io/diagram-js/pull/1008))
+* `DEPS`: update to `diagram-js@15.9.0`
+
 ## 18.11.0
 
 * `FEAT`: add `cut` action and keyboard shortcut ([bpmn-io/diagram-js#1006](https://github.com/bpmn-io/diagram-js/pull/1006))
