@@ -290,6 +290,7 @@ describe('Modeler', function() {
         'copy',
         'duplicate',
         'paste',
+        'cut',
         'stepZoom',
         'zoom',
         'removeSelection',

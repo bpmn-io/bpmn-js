@@ -58,6 +58,7 @@ describe('features/keyboard', function() {
         'copy',
         'duplicate',
         'paste',
+        'cut',
         'zoom',
         'removeSelection',
         'selectElements',
