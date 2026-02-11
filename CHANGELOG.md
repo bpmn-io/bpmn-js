@@ -10,7 +10,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: activate wheel zoom/scoll on `mouseover` ([#1008](https://github.com/bpmn-io/diagram-js/pull/1008))
 * `FEAT`: prevent keyboard movement for boundary events without host ([#2386](https://github.com/bpmn-io/bpmn-js/pull/2386))
-* `FIX`: prevent accidental creation of intermediate events during keyboard move ([#1803](https://github.com/bpmn-io/bpmn-js/issues/1803))
+* `FIX`: prevent accidental creation of intermediate events during keyboard move ([#1803](https://github.com/bpmn-io/bpmn-js/issues/1803), [#1876](https://github.com/bpmn-io/bpmn-js/issues/1876))
 * `DEPS`: update to `diagram-js@15.9.0`
 
 ## 18.11.0
