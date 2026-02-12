@@ -139,7 +139,7 @@ describe('features/outline - outline provider', function() {
 
       var DELTA = 3;
 
-      it('should update label according to label dimentions', inject(function(elementRegistry, selection, modeling) {
+      it('should update label according to label dimensions', inject(function(elementRegistry, selection, modeling) {
 
         // given
         var event = elementRegistry.get('Event');
@@ -158,8 +158,8 @@ describe('features/outline - outline provider', function() {
 
         // then
         bounds = outlineShape.getBoundingClientRect();
-        expect(bounds.width).to.be.closeTo(93, DELTA);
-        expect(bounds.height).to.be.closeTo(37, DELTA);
+        expect(bounds.width).to.be.closeTo(33, DELTA);
+        expect(bounds.height).to.be.closeTo(25, DELTA);
       }));
 
     });

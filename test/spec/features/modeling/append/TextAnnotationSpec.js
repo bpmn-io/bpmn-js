@@ -97,7 +97,23 @@ describe('features/modeling - append text-annotation', function() {
 
       // then
       expect(annotationShape.width).to.eql(100);
-      expect(annotationShape.height).to.eql(30);
+      expect(annotationShape.height).to.eql(40);
+    }));
+
+    it('and stick with right size', inject(function(elementRegistry, elementFactory, modeling) {
+
+      // given
+      var eventShape = elementRegistry.get('IntermediateCatchEvent_1');
+      var oldBounds = { x: eventShape.x, y: eventShape.y, width: eventShape.width, height: eventShape.height };
+      var newBounds = { x: oldBounds.x + 100, y: oldBounds.y, width: oldBounds.width + 100, height: oldBounds.height };
+
+      // when
+      var annotationShape = modeling.appendShape(eventShape, { type: 'bpmn:TextAnnotation' });
+      modeling.resizeShape(annotationShape, newBounds);
+
+      // then
+      expect(annotationShape.width).to.eql(100);
+      expect(annotationShape.height).to.eql(40);
     }));
   });
 

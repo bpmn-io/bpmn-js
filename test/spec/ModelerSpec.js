@@ -4,29 +4,22 @@ import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
 
-import { isAny } from 'lib/util/ModelUtil';
+import { getDi, isAny } from 'lib/util/ModelUtil';
 
 import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard';
 
 import TestContainer from 'mocha-test-container-support';
 
-import {
-  createCanvasEvent
-} from '../util/MockEvents';
+import { createCanvasEvent } from '../util/MockEvents';
 
-import {
-  setBpmnJS,
-  clearBpmnJS,
-  collectTranslations,
-  enableLogging
-} from 'test/TestHelper';
+import { bootstrapModeler, clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
 
-import {
-  pick,
-  find
-} from 'min-dash';
-
-import { getDi } from 'lib/util/ModelUtil';
+import { find, pick } from 'min-dash';
+import createModule from 'diagram-js/lib/features/create';
+import resizeModule from 'diagram-js/lib/features/resize';
+import moveModule from 'diagram-js/lib/features/move';
+import coreModule from 'lib/core';
+import modelingModule from 'lib/features/modeling';
 
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
@@ -949,6 +942,71 @@ describe('Modeler', function() {
     });
 
   });
+
+  describe('resize text element and preserve width', function() {
+
+    var diagramXML = require('../fixtures/bpmn/simple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        createModule,
+        modelingModule,
+        resizeModule,
+        moveModule
+      ]
+    }));
+
+    it('should adapt width of StartEvent label when text is changed and resized horizontally', async function() {
+
+      const result = await createModeler(diagramXML);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var modeling = modeler.get('modeling');
+
+      var startEvent = elementRegistry.get('StartEvent_2');
+      expect(startEvent).to.exist;
+
+      var label = startEvent.label;
+      expect(label).to.exist;
+      expect(label.businessObject.name).to.equal('Start');
+
+      modeling.updateLabel(startEvent, 'This is a much longer start event text');
+
+      modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width + 20, height: label.height }, 'e');
+
+      const updatedLabel = elementRegistry.get(label.id);
+      expect(updatedLabel.width).to.closeTo(105, 3);
+    });
+
+    it('should adapt width of StartEvent label when text is changed and resized vertically', async function() {
+
+      const result = await createModeler(diagramXML);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var modeling = modeler.get('modeling');
+
+      var startEvent = elementRegistry.get('StartEvent_2');
+      expect(startEvent).to.exist;
+
+      var label = startEvent.label;
+      expect(label).to.exist;
+      expect(label.businessObject.name).to.equal('Start');
+
+      modeling.updateLabel(startEvent, 'This is a much longer start event text');
+
+      modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width, height: label.height - 20 }, 'e');
+
+      const updatedLabel = elementRegistry.get(label.id);
+      expect(updatedLabel.height).to.equal(36);
+    });
+
+  });
+
 
 });
 
