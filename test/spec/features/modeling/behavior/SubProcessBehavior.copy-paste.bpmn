@@ -141,20 +141,20 @@
         <di:waypoint x="663" y="118" />
         <di:waypoint x="649" y="88" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SubProcess_3_di" bpmnElement="SubProcess_3" isExpanded="false" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="SubProcess_3_di" bpmnElement="SubProcess_3" isExpanded="false">
         <dc:Bounds x="155.5" y="430" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1k76h3w">
     <bpmndi:BPMNPlane id="BPMNPlane_121uvzu" bpmnElement="SubProcess_3">
-      <bpmndi:BPMNShape id="TextAnnotation_0zlz2tq_di" bpmnElement="TextAnnotation_0zlz2tq" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="TextAnnotation_0zlz2tq_di" bpmnElement="TextAnnotation_0zlz2tq">
         <dc:Bounds x="597" y="160" width="100" height="30" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1ee0a66_di" bpmnElement="Activity_1ee0a66" isExpanded="true" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Activity_1ee0a66_di" bpmnElement="Activity_1ee0a66" isExpanded="true">
         <dc:Bounds x="180" y="220" width="461" height="259" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0fotq2x_di" bpmnElement="Flow_0fotq2x" $type="bpmndi:BPMNEdge" businessObject="[object Object]">
+      <bpmndi:BPMNEdge id="Flow_0fotq2x_di" bpmnElement="Flow_0fotq2x">
         <di:waypoint x="376" y="358" />
         <di:waypoint x="376" y="407" />
         <di:waypoint x="491" y="407" />
@@ -162,54 +162,54 @@
           <dc:Bounds x="381" y="250.5" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0jd8k12_di" bpmnElement="Flow_0jd8k12" $type="bpmndi:BPMNEdge" businessObject="[object Object]">
+      <bpmndi:BPMNEdge id="Flow_0jd8k12_di" bpmnElement="Flow_0jd8k12">
         <di:waypoint x="236" y="318" />
         <di:waypoint x="326" y="318" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="270" y="423" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0d51bg2_di" bpmnElement="Flow_0d51bg2" $type="bpmndi:BPMNEdge" businessObject="[object Object]">
+      <bpmndi:BPMNEdge id="Flow_0d51bg2_di" bpmnElement="Flow_0d51bg2">
         <di:waypoint x="426" y="318" />
         <di:waypoint x="576" y="318" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="421" y="166" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_1b2gd6e_di" bpmnElement="Event_1b2gd6e" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Event_1b2gd6e_di" bpmnElement="Event_1b2gd6e">
         <dc:Bounds x="200" y="300" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="206" y="251" width="24" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1dv9cu8_di" bpmnElement="Event_1dv9cu8" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Event_1dv9cu8_di" bpmnElement="Event_1dv9cu8">
         <dc:Bounds x="576" y="300" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="580" y="374" width="30" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1joj57w_di" bpmnElement="Activity_1joj57w" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Activity_1joj57w_di" bpmnElement="Activity_1joj57w">
         <dc:Bounds x="326" y="278" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_17rtxbp_di" bpmnElement="Event_17rtxbp" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Event_17rtxbp_di" bpmnElement="Event_17rtxbp">
         <dc:Bounds x="491" y="389" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="431" y="323" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0pxvi7j_di" bpmnElement="Event_0pxvi7j" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Event_0pxvi7j_di" bpmnElement="Event_0pxvi7j">
         <dc:Bounds x="308" y="340" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="248" y="274" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_180mojf_di" bpmnElement="Event_180mojf" $type="bpmndi:BPMNShape" businessObject="[object Object]">
+      <bpmndi:BPMNShape id="Event_180mojf_di" bpmnElement="Event_180mojf">
         <dc:Bounds x="408" y="340" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="348" y="274" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0kvpg31_di" bpmnElement="Association_0kvpg31" $type="bpmndi:BPMNEdge" businessObject="[object Object]">
+      <bpmndi:BPMNEdge id="Association_0kvpg31_di" bpmnElement="Association_0kvpg31">
         <di:waypoint x="628" y="220" />
         <di:waypoint x="614" y="190" />
       </bpmndi:BPMNEdge>
