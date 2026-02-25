@@ -166,6 +166,105 @@ describe('features/modeling/behavior - subprocess planes', function() {
   });
 
 
+  describe('annotations', function() {
+
+    var nestedAnnotationsXML = require('./SubProcessBehavior.nested-subprocess-annotations.bpmn');
+
+    beforeEach(bootstrapModeler(nestedAnnotationsXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        replaceModule
+      ]
+    }));
+
+
+    it('should move annotation to plane when collapsed', inject(
+      function(canvas, bpmnReplace, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            annotation = elementRegistry.get('TextAnnotation_1'),
+            association = elementRegistry.get('Association_1'),
+            startEvent = elementRegistry.get('StartEvent_1');
+
+        // assume
+        expect(annotation.parent).to.equal(canvas.getRootElement());
+        expect(startEvent.label).to.exist;
+
+        // when
+        bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          isExpanded: false
+        });
+
+        // then
+        var plane = elementRegistry.get('SubProcess_1_plane');
+
+        expect(annotation.parent).to.equal(plane);
+        expect(association.parent).to.equal(plane);
+        expect(startEvent.label.parent).to.equal(plane);
+      }
+    ));
+
+
+    it('should move annotation back to process level after collapse and expand', inject(
+      function(canvas, elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            annotation = elementRegistry.get('TextAnnotation_1'),
+            association = elementRegistry.get('Association_1');
+
+        // when
+        modeling.toggleCollapse(subProcess);
+        modeling.toggleCollapse(subProcess);
+
+        // then
+        var rootElement = canvas.getRootElement();
+        expect(annotation.parent).to.equal(rootElement);
+        expect(association.parent).to.equal(rootElement);
+      }
+    ));
+
+
+    it('should remove annotation after collapse, expand, and delete', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        modeling.toggleCollapse(subProcess);
+        modeling.toggleCollapse(subProcess);
+
+        // when
+        modeling.removeElements([ subProcess ]);
+
+        // then
+        expect(elementRegistry.get('TextAnnotation_1')).to.not.exist;
+        expect(elementRegistry.get('Association_1')).to.not.exist;
+      }
+    ));
+
+
+    it('should remove annotation when subprocess is deleted', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        modeling.removeShape(subProcess);
+
+        // then
+        expect(elementRegistry.get('TextAnnotation_1')).to.not.exist;
+        expect(elementRegistry.get('Association_1')).to.not.exist;
+      }
+    ));
+
+  });
+
+
   describe('replace', function() {
 
     describe('task -> collapsed subprocess', function() {
