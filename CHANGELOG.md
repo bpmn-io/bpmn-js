@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: fix sub-process annotations handling during collapse/expand, copy/paste, and remove actions ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388))
+* `FIX`: fixed failure when undo of a pasted collapsed sub-process ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388))
+
 ## 18.13.0
 
 * `FEAT`: allow to create child elements from the context pad ([#2391](https://github.com/bpmn-io/bpmn-js/issues/2391))
