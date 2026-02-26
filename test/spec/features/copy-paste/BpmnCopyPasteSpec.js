@@ -52,7 +52,8 @@ describe('features/copy-paste', function() {
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
       collaborationAssociationsXML = require('./data-associations.bpmn'),
       eventBasedGatewayXML = require('./event-based-gateway.bpmn'),
-      collapsedSubprocessXML = require('./collapsed-subprocess.bpmn');
+      collapsedSubprocessXML = require('./collapsed-subprocess.bpmn'),
+      nestedSubprocessAnnotationsXML = require('./nested-subprocess-annotations.bpmn');
 
 
   describe('basic diagram', function() {
@@ -920,6 +921,91 @@ describe('features/copy-paste', function() {
         });
 
         expect(escalations).to.have.length(1);
+      }
+    ));
+
+  });
+
+
+  describe('expanded sub-process', function() {
+
+    beforeEach(bootstrapModeler(nestedSubprocessAnnotationsXML, {
+      modules: testModules
+    }));
+
+
+    it('should paste with children', inject(
+      function(canvas, copyPaste, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            nestedSubProcess = elementRegistry.get('SubProcess_2'),
+            rootElement = canvas.getRootElement();
+
+        // when
+        copyPaste.copy(subProcess);
+
+        var pastedElements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 800,
+            y: 200
+          }
+        });
+
+        // then
+        var pastedSubProcesses = pastedElements.filter(function(el) {
+          return is(el, 'bpmn:SubProcess');
+        });
+
+        var pastedParentSubProcess = pastedSubProcesses.find(function(el) {
+          return el.parent === rootElement;
+        });
+
+        var pastedNestedSubProcess = pastedSubProcesses.find(function(el) {
+          return el.parent === pastedParentSubProcess;
+        });
+
+        expect(pastedSubProcesses).to.have.length(2);
+        expect(pastedNestedSubProcess).to.exist;
+        expect(pastedNestedSubProcess.children).to.have.length(nestedSubProcess.children.length);
+      }
+    ));
+
+
+    it('should paste with annotations', inject(
+      function(canvas, copyPaste, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            rootElement = canvas.getRootElement();
+
+        // when
+        copyPaste.copy(subProcess);
+
+        var pastedElements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 800,
+            y: 200
+          }
+        });
+
+        // then
+        var pastedAnnotation = find(pastedElements, function(element) {
+          return is(element, 'bpmn:TextAnnotation');
+        });
+
+        var pastedAssociation = find(pastedElements, function(element) {
+          return is(element, 'bpmn:Association');
+        });
+
+        expect(pastedAnnotation).to.exist;
+        expect(pastedAssociation).to.exist;
+        expect(pastedAssociation.source).to.equal(
+          find(pastedElements, function(el) { return is(el, 'bpmn:Task'); })
+        );
+        expect(pastedAssociation.target).to.equal(pastedAnnotation);
       }
     ));
 
