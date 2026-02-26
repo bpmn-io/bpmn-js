@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: correct handling of annotations during sub-process collapse/expand, copy/paste, and remove actions ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388))
+* `FIX`: allow undo of pasted sub-process ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388), [#2269](https://github.com/bpmn-io/bpmn-js/issues/2269))
+
 ## 18.13.1
 
 * `FIX`: correct sequence flow layout for corner boundary events whose target is strictly axis-aligned ([#2270](https://github.com/bpmn-io/bpmn-js/issues/2270))
