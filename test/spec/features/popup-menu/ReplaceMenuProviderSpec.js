@@ -1056,6 +1056,28 @@ describe('features/popup-menu - replace menu provider', function() {
       })
     );
 
+
+    it('should replace interrupting event <-> non-interrupting event',
+      inject(function(elementRegistry) {
+
+        // given
+        const event = elementRegistry.get('MessageStartEvent');
+
+        // when
+        openPopup(event);
+        const nonInterruptingEvent = triggerAction('replace-with-non-interrupting-message-start');
+
+        // then
+        expect(nonInterruptingEvent.businessObject.isInterrupting, 'isInterrupting').to.be.false;
+
+        // when
+        openPopup(nonInterruptingEvent);
+        const interruptingEvent = triggerAction('replace-with-message-start');
+
+        // then
+        expect(interruptingEvent.businessObject.isInterrupting, 'isInterrupting').to.be.true;
+      })
+    );
   });
 
 
