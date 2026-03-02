@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.12.1
+
+* `FIX`: correctly replace non-interrupting event with an interrupting one ([#2313](https://github.com/bpmn-io/bpmn-js/issues/2313))
+
 ## 18.12.0
 
 * `FEAT`: activate wheel zoom/scoll on `mouseover` ([#1008](https://github.com/bpmn-io/diagram-js/pull/1008))
