@@ -186,6 +186,8 @@ describe('features/modeling/behavior - subprocess planes', function() {
         var subProcess = elementRegistry.get('SubProcess_1'),
             annotation = elementRegistry.get('TextAnnotation_1'),
             association = elementRegistry.get('Association_1'),
+            subProcessAnnotation = elementRegistry.get('TextAnnotation_2'),
+            subProcessAssociation = elementRegistry.get('Association_2'),
             startEvent = elementRegistry.get('StartEvent_1');
 
         // assume
@@ -204,6 +206,37 @@ describe('features/modeling/behavior - subprocess planes', function() {
         expect(annotation.parent).to.equal(plane);
         expect(association.parent).to.equal(plane);
         expect(startEvent.label.parent).to.equal(plane);
+
+        // annotation connected to the sub-process itself should stay outside
+        expect(subProcessAnnotation.parent).to.equal(canvas.getRootElement());
+        expect(subProcessAssociation.parent).to.equal(canvas.getRootElement());
+      }
+    ));
+
+
+    it('should keep only subprocess annotation when connected to both subprocess and inner element', inject(
+      function(canvas, elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            task = elementRegistry.get('Task_1'),
+            annotation = elementRegistry.get('TextAnnotation_2');
+
+        // connect annotation to both subprocess (existing) and inner element
+        var localAssociation = modeling.connect(task, annotation, {
+          type: 'bpmn:Association',
+          associationDirection: 'one'
+        });
+
+        // when
+        modeling.toggleCollapse(subProcess);
+
+        // then
+        // annotation connected to the sub-process stays outside
+        expect(annotation.parent).to.equal(canvas.getRootElement());
+
+        // local association is removed
+        expect(elementRegistry.get(localAssociation.id)).to.not.exist;
       }
     ));
 
@@ -259,6 +292,8 @@ describe('features/modeling/behavior - subprocess planes', function() {
         // then
         expect(elementRegistry.get('TextAnnotation_1')).to.not.exist;
         expect(elementRegistry.get('Association_1')).to.not.exist;
+        expect(elementRegistry.get('TextAnnotation_2')).to.not.exist;
+        expect(elementRegistry.get('Association_2')).to.not.exist;
       }
     ));
 
