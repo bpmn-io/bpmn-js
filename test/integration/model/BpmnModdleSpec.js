@@ -1,4 +1,4 @@
-import BpmnModdle from 'bpmn-moddle';
+import { BpmnModdle } from 'bpmn-moddle';
 
 
 describe('bpmn-moddle', function() {

@@ -1,7 +1,7 @@
 import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram';
-import BpmnModdle from 'bpmn-moddle';
+import { BpmnModdle } from 'bpmn-moddle';
 
 import {
   importBpmnDiagram

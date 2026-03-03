@@ -20,7 +20,11 @@
     <bpmn2:subProcess id="SubProcess" />
     <bpmn2:transaction id="Transaction" />
     <bpmn2:adHocSubProcess id="AdHocSubProcess" />
-    <bpmn2:subProcess id="EventSubProcess" triggeredByEvent="true" />
+    <bpmn2:subProcess id="EventSubProcess" triggeredByEvent="true">
+      <bpmn2:startEvent id="MessageStartEvent">
+        <bpmn2:messageEventDefinition id="MessageEventDefinition_0xmds0m" />
+      </bpmn2:startEvent>
+    </bpmn2:subProcess>
     <bpmn2:adHocSubProcess id="AdHocSubProcessExpanded" />
     <bpmn2:subProcess id="SubProcessCollapsed" />
     <bpmn2:task id="TaskCompensation" name="Task" isForCompensation="true"/>
@@ -39,9 +43,6 @@
       <bpmndi:BPMNShape id="_BPMNShape_Task_8" bpmnElement="Task">
         <dc:Bounds x="588" y="100" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0378hpz" bpmnElement="TaskCompensation">
-        <dc:Bounds x="1000" y="100" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_di" bpmnElement="SubProcess" isExpanded="true">
         <dc:Bounds x="161" y="224" width="350" height="200" />
       </bpmndi:BPMNShape>
@@ -54,11 +55,17 @@
       <bpmndi:BPMNShape id="SubProcess_0oip8c9_di" bpmnElement="EventSubProcess" isExpanded="true">
         <dc:Bounds x="161" y="474" width="350" height="200" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iocal3_di" bpmnElement="MessageStartEvent">
+        <dc:Bounds x="202" y="562" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0lpc84d_di" bpmnElement="AdHocSubProcessExpanded" isExpanded="true">
         <dc:Bounds x="556" y="474" width="350" height="200" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0qrv1en_di" bpmnElement="SubProcessCollapsed">
         <dc:Bounds x="860" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0378hpz" bpmnElement="TaskCompensation">
+        <dc:Bounds x="1000" y="100" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

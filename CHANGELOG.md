@@ -6,6 +6,48 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.12.1
+
+* `FIX`: correctly replace non-interrupting event with an interrupting one ([#2313](https://github.com/bpmn-io/bpmn-js/issues/2313))
+
+## 18.12.0
+
+* `FEAT`: activate wheel zoom/scoll on `mouseover` ([#1008](https://github.com/bpmn-io/diagram-js/pull/1008))
+* `FEAT`: prevent keyboard movement for boundary events without host ([#2386](https://github.com/bpmn-io/bpmn-js/pull/2386))
+* `FIX`: prevent accidental creation of intermediate events during keyboard move ([#1803](https://github.com/bpmn-io/bpmn-js/issues/1803), [#1876](https://github.com/bpmn-io/bpmn-js/issues/1876))
+* `DEPS`: update to `diagram-js@15.9.0`
+
+## 18.11.0
+
+* `FEAT`: add `cut` action and keyboard shortcut ([bpmn-io/diagram-js#1006](https://github.com/bpmn-io/diagram-js/pull/1006))
+* `DEPS`: update to `diagram-js@15.7.0`
+* `DEPS`: update to `bpmn-moddle@10.0.0`
+* `DEPS`: update to `min-dash@5.0.0`
+* `DEPS`: update to `ids@3.0.0`
+* `DEPS`: update to `tiny-svg@4.1.4`
+* `DEPS`: update to `diagram-js-direct-editing@3.3.0`
+* `DEPS`: update to `min-dom@5.2.0`
+
+## 18.10.1
+
+* `DEPS`: update to `min-dash@4.2.3`
+* `DEPS`: update to `tiny-svg@3.1.3`
+
+## 18.10.0
+
+* `FEAT`: add ability to duplicate elements ([bpmn-io/diagram-js#998](https://github.com/bpmn-io/diagram-js/pull/998))
+* `DEPS`: update to `diagram-js@15.5.0`
+
+## 18.9.1
+
+* `FIX`: only draw links for currently selected elements ([#2365](https://github.com/bpmn-io/bpmn-js/pull/2365))
+
+## 18.9.0
+
+* `FEAT`: visually link external label with its target ([#2328](https://github.com/bpmn-io/bpmn-js/pull/2328))
+* `FEAT`: add support for labels to `OutlineProvider#getOutline`
+* `FIX`: ensure `BpmnRenderer#getShapePath` returns correct path for labels
+
 ## 18.8.0
 
 * `FEAT`: allow copying data object references and `isCollection` property ([#2348](https://github.com/bpmn-io/bpmn-js/pull/2348))
@@ -360,20 +402,20 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 14.1.3
 
-* `CHORE`: correctly output tag in https://github.com/bpmn-io/bpmn-js/pull/1982
+* `CHORE`: correctly output tag in [#1982](https://github.com/bpmn-io/bpmn-js/pull/1982)
 
 ## 14.1.2
 
-* `CHORE`: fix POST_RELEASE job in https://github.com/bpmn-io/bpmn-js/pull/1980
+* `CHORE`: fix POST_RELEASE job in [#1980](https://github.com/bpmn-io/bpmn-js/pull/1980)
 
 ## 14.1.1
 
-* `FIX`: asset path by @nikku in https://github.com/bpmn-io/bpmn-js/pull/1977
+* `FIX`: asset path by [__@nikku__](https://github.com/nikku) in [#1977](https://github.com/bpmn-io/bpmn-js/pull/1977)
 
 ## 14.1.0
 
-* `FEAT`: ensure lanes aren't resized when using space tool in https://github.com/bpmn-io/bpmn-js/pull/1972
-* `DOCS`: update translations for v14.0.0 by @bpmn-io-bot in https://github.com/bpmn-io/bpmn-js/pull/1948
+* `FEAT`: ensure lanes aren't resized when using space tool in [#1972](https://github.com/bpmn-io/bpmn-js/pull/1972)
+* `DOCS`: update translations for v14.0.0 by [__@bpmn-io-bot__](https://github.com/bpmn-io-bot) in [#1948](https://github.com/bpmn-io/bpmn-js/pull/1948)
 
 ## 14.0.0
 
