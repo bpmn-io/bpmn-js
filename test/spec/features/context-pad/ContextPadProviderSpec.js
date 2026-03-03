@@ -787,6 +787,82 @@ describe('features - context-pad', function() {
 
   });
 
+
+  describe('collapsed sub-process', function() {
+
+    var diagramXML = require('../../../fixtures/bpmn/collapsed-sub-process.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules.concat(autoPlaceModule)
+    }));
+
+
+    it('should provide add-to-sub-process entries', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var collapsedSubProcess = elementRegistry.get('collapsedProcess');
+
+      // when
+      contextPad.open(collapsedSubProcess);
+
+      var entries = contextPad._current.entries;
+
+      // then
+      expect(entries).to.have.property('append.end-event');
+      expect(entries).to.have.property('append.gateway');
+      expect(entries).to.have.property('append.append-task');
+      expect(entries).to.have.property('append.intermediate-event');
+    }));
+
+
+    it('should create element inside collapsed sub-process on click',
+      inject(function(elementRegistry, contextPad, canvas) {
+
+        // given
+        var collapsedSubProcess = elementRegistry.get('collapsedProcess');
+
+        contextPad.open(collapsedSubProcess);
+
+        var event = padEvent('append.append-task');
+
+        // when
+        contextPad.trigger('click', event);
+
+        // then
+        var planeRoot = canvas.findRoot(collapsedSubProcess.id + '_plane');
+
+        expect(planeRoot).to.exist;
+        expect(planeRoot.children).to.have.length.above(0);
+
+        var task = planeRoot.children.find(function(child) {
+          return child.type === 'bpmn:Task';
+        });
+
+        expect(task).to.exist;
+      })
+    );
+
+
+    it('should NOT create sequence flow when adding element to collapsed sub-process',
+      inject(function(elementRegistry, contextPad, canvas) {
+
+        // given
+        var collapsedSubProcess = elementRegistry.get('collapsedProcess');
+
+        contextPad.open(collapsedSubProcess);
+
+        var event = padEvent('append.append-task');
+
+        // when
+        contextPad.trigger('click', event);
+
+        // then
+        expect(collapsedSubProcess.outgoing).to.have.length(1);
+      })
+    );
+
+  });
+
 });
 
 

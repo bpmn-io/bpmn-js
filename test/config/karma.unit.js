@@ -50,6 +50,10 @@ module.exports = function(karma) {
     reporters: [ 'progress' ].concat(coverage ? 'coverage' : []),
 
     customLaunchers: {
+      'ChromeHeadlessNoSandbox': {
+        base: 'ChromeHeadless',
+        flags: [ '--no-sandbox' ]
+      },
       'FirefoxHeadless': {
         base: 'Firefox',
         flags: [ '-headless' ],
