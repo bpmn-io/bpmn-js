@@ -672,6 +672,34 @@ describe('features/modeling/behavior - subprocess planes', function() {
       }
     ));
 
+
+    it('should undo paste of collapsed subprocess', inject(
+      function(canvas, commandStack, copyPaste, elementRegistry) {
+
+        // given
+        var subprocess = elementRegistry.get('SubProcess_3'),
+            rootElement = canvas.getRootElement();
+
+        var childrenCount = rootElement.children.length;
+
+        copyPaste.copy(subprocess);
+
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 300,
+            y: 300
+          }
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(rootElement.children).to.have.length(childrenCount);
+      }
+    ));
+
   });
 
 });
