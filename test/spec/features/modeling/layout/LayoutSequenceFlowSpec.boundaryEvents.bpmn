@@ -13,6 +13,12 @@
     <bpmn:boundaryEvent id="BoundaryEvent_RightCenter" attachedToRef="SubProcess" />
     <bpmn:task id="Task_Bottom" />
     <bpmn:task id="Task_Top" />
+    <bpmn:task id="Task_CornerBoundary" />
+    <bpmn:boundaryEvent id="BoundaryEvent_BottomRightCorner" attachedToRef="Task_CornerBoundary" />
+    <bpmn:task id="Task_CornerTarget" />
+    <bpmn:task id="Task_CornerBoundaryH" />
+    <bpmn:boundaryEvent id="BoundaryEvent_TopRightCorner" attachedToRef="Task_CornerBoundaryH" />
+    <bpmn:task id="Task_CornerTargetH" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -51,6 +57,24 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_1bc634w_di" bpmnElement="Task_Top">
         <dc:Bounds x="400" y="0" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CornerBoundary_di" bpmnElement="Task_CornerBoundary">
+        <dc:Bounds x="800" y="300" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_BottomRightCorner_di" bpmnElement="BoundaryEvent_BottomRightCorner">
+        <dc:Bounds x="891" y="371" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CornerTarget_di" bpmnElement="Task_CornerTarget">
+        <dc:Bounds x="859" y="480" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CornerBoundaryH_di" bpmnElement="Task_CornerBoundaryH">
+        <dc:Bounds x="800" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BoundaryEvent_TopRightCorner_di" bpmnElement="BoundaryEvent_TopRightCorner">
+        <dc:Bounds x="891" y="91" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CornerTargetH_di" bpmnElement="Task_CornerTargetH">
+        <dc:Bounds x="1000" y="69" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

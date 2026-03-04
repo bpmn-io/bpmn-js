@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: correct sequence flow layout for corner boundary events whose target is strictly axis-aligned ([#2270](https://github.com/bpmn-io/bpmn-js/issues/2270))
+
 ## 18.13.0
 
 * `FEAT`: allow to create child elements from the context pad ([#2391](https://github.com/bpmn-io/bpmn-js/issues/2391))
