@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.13.0
+
+* `FEAT`: allow to create child elements from the context pad ([#2391](https://github.com/bpmn-io/bpmn-js/issues/2391))
+
 ## 18.12.1
 
 * `FIX`: correctly replace non-interrupting event with an interrupting one ([#2313](https://github.com/bpmn-io/bpmn-js/issues/2313))
