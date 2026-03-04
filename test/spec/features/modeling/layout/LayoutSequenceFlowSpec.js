@@ -281,6 +281,55 @@ describe('features/modeling - layout', function() {
         ]);
       });
 
+
+      it('should layout straight for axis-aligned corner boundary event', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          // BoundaryEvent_BottomRightCorner is on the bottom-right corner of
+          // Task_CornerBoundary (mid x=909, y=389 — outside the contracted task
+          // bounds right=890, bottom=370 — giving 'bottom-right' orientation).
+          // Task_CornerTarget center x=909 matches exactly, so getOrientation
+          // returns strict 'bottom' with no horizontal component, triggering the
+          // early return in getBoundaryEventTargetLayout → layout 'b:v'.
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_BottomRightCorner'),
+              targetTask = elementRegistry.get('Task_CornerTarget');
+
+          // when
+          var connection = modeling.connect(boundaryEvent, targetTask);
+
+          // then - straight vertical line, no extra waypoints
+          expect(connection).to.have.waypoints([
+            { x: 909, y: 407 },
+            { x: 909, y: 480 }
+          ]);
+        }
+      ));
+
+
+      it('should layout straight for horizontally axis-aligned corner boundary event', inject(
+        function(elementRegistry, modeling) {
+
+          // given
+          // BoundaryEvent_TopRightCorner is on the top-right corner of
+          // Task_CornerBoundaryH (mid x=909, y=109 — outside the contracted task
+          // bounds right=890, top=110 — giving 'top-right' orientation).
+          // Task_CornerTargetH center y=109 matches exactly, so getOrientation
+          // returns strict 'right' with no vertical component, triggering the
+          // early return in getBoundaryEventTargetLayout → layout 'r:h'.
+          var boundaryEvent = elementRegistry.get('BoundaryEvent_TopRightCorner'),
+              targetTask = elementRegistry.get('Task_CornerTargetH');
+
+          // when
+          var connection = modeling.connect(boundaryEvent, targetTask);
+
+          // then - straight horizontal line, no extra waypoints
+          expect(connection).to.have.waypoints([
+            { x: 927, y: 109 },
+            { x: 1000, y: 109 }
+          ]);
+        }
+      ));
     });
 
   });
