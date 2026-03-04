@@ -482,6 +482,50 @@ describe('features - context-pad', function() {
       })
     );
 
+
+    describe('drop onto sub-process', function() {
+
+      var basicTests = [
+        { action: 'append.append-task', expectedElement: 'bpmn:Task' },
+        { action: 'append.intermediate-event', expectedElement: 'bpmn:IntermediateThrowEvent' }
+      ];
+
+
+      for (const { action, expectedElement, iit = it } of basicTests) {
+
+        iit(`should create ${expectedElement}`, inject(function(dragging, contextPad, elementRegistry) {
+
+          // given
+          var subProcess = elementRegistry.get('SubProcess_1');
+
+          // when
+          contextPad.open(subProcess);
+
+          contextPad.trigger('dragstart', padEvent(action));
+
+          dragging.move(canvasEvent({ x: subProcess.x, y: subProcess.y }));
+          dragging.hover({ element: subProcess });
+          dragging.move(canvasEvent({ x: subProcess.x + 200, y: subProcess.y + 70 }));
+          dragging.end();
+
+          // then
+          // find new, unnamed element
+          var newElement = subProcess.children.find(element => {
+            return (
+              is(element, expectedElement) &&
+              !element.businessObject.name
+            );
+          });
+
+          expect(newElement, `element of type ${expectedElement}`).to.exist;
+
+          expect(newElement.incoming, 'incoming connections').to.be.empty;
+        }));
+
+      }
+
+    });
+
   });
 
 
