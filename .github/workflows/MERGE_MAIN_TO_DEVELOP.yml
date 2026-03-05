@@ -1,4 +1,4 @@
-name: MERGE_MASTER_TO_DEVELOP
+name: MERGE_MAIN_TO_DEVELOP
 on:
   push:
     branches:
@@ -14,6 +14,8 @@ jobs:
     - name: Checkout develop
       uses: actions/checkout@v6
       with:
+        token: ${{ secrets.BPMN_IO_TOKEN }}
+        persist_credentials: true
         ref: develop
         fetch-depth: 0
     - name: Merge main to develop and push
