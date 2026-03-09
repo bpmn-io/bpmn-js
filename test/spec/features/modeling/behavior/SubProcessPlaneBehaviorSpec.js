@@ -166,6 +166,140 @@ describe('features/modeling/behavior - subprocess planes', function() {
   });
 
 
+  describe('annotations', function() {
+
+    var nestedAnnotationsXML = require('./SubProcessBehavior.nested-subprocess-annotations.bpmn');
+
+    beforeEach(bootstrapModeler(nestedAnnotationsXML, {
+      modules: [
+        coreModule,
+        modelingModule,
+        replaceModule
+      ]
+    }));
+
+
+    it('should move annotation to plane when collapsed', inject(
+      function(canvas, bpmnReplace, elementRegistry) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            annotation = elementRegistry.get('TextAnnotation_1'),
+            association = elementRegistry.get('Association_1'),
+            subProcessAnnotation = elementRegistry.get('TextAnnotation_2'),
+            subProcessAssociation = elementRegistry.get('Association_2'),
+            startEvent = elementRegistry.get('StartEvent_1');
+
+        // assume
+        expect(annotation.parent).to.equal(canvas.getRootElement());
+        expect(startEvent.label).to.exist;
+
+        // when
+        bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          isExpanded: false
+        });
+
+        // then
+        var plane = elementRegistry.get('SubProcess_1_plane');
+
+        expect(annotation.parent).to.equal(plane);
+        expect(association.parent).to.equal(plane);
+        expect(startEvent.label.parent).to.equal(plane);
+
+        // annotation connected to the sub-process itself should stay outside
+        expect(subProcessAnnotation.parent).to.equal(canvas.getRootElement());
+        expect(subProcessAssociation.parent).to.equal(canvas.getRootElement());
+      }
+    ));
+
+
+    it('should keep only subprocess annotation when connected to both subprocess and inner element', inject(
+      function(canvas, elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            task = elementRegistry.get('Task_1'),
+            annotation = elementRegistry.get('TextAnnotation_2');
+
+        // connect annotation to both subprocess (existing) and inner element
+        var localAssociation = modeling.connect(task, annotation, {
+          type: 'bpmn:Association',
+          associationDirection: 'one'
+        });
+
+        // when
+        modeling.toggleCollapse(subProcess);
+
+        // then
+        // annotation connected to the sub-process stays outside
+        expect(annotation.parent).to.equal(canvas.getRootElement());
+
+        // local association is removed
+        expect(elementRegistry.get(localAssociation.id)).to.not.exist;
+      }
+    ));
+
+
+    it('should move annotation back to process level after collapse and expand', inject(
+      function(canvas, elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1'),
+            annotation = elementRegistry.get('TextAnnotation_1'),
+            association = elementRegistry.get('Association_1');
+
+        // when
+        modeling.toggleCollapse(subProcess);
+        modeling.toggleCollapse(subProcess);
+
+        // then
+        var rootElement = canvas.getRootElement();
+        expect(annotation.parent).to.equal(rootElement);
+        expect(association.parent).to.equal(rootElement);
+      }
+    ));
+
+
+    it('should remove annotation after collapse, expand, and delete', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        modeling.toggleCollapse(subProcess);
+        modeling.toggleCollapse(subProcess);
+
+        // when
+        modeling.removeElements([ subProcess ]);
+
+        // then
+        expect(elementRegistry.get('TextAnnotation_1')).to.not.exist;
+        expect(elementRegistry.get('Association_1')).to.not.exist;
+      }
+    ));
+
+
+    it('should remove annotation when subprocess is deleted', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        modeling.removeShape(subProcess);
+
+        // then
+        expect(elementRegistry.get('TextAnnotation_1')).to.not.exist;
+        expect(elementRegistry.get('Association_1')).to.not.exist;
+        expect(elementRegistry.get('TextAnnotation_2')).to.not.exist;
+        expect(elementRegistry.get('Association_2')).to.not.exist;
+      }
+    ));
+
+  });
+
+
   describe('replace', function() {
 
     describe('task -> collapsed subprocess', function() {
@@ -535,6 +669,34 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
         expect(newRoot).to.exist;
         expect(newRoot.children).to.have.length(6);
+      }
+    ));
+
+
+    it('should undo paste of collapsed subprocess', inject(
+      function(canvas, commandStack, copyPaste, elementRegistry) {
+
+        // given
+        var subprocess = elementRegistry.get('SubProcess_3'),
+            rootElement = canvas.getRootElement();
+
+        var childrenCount = rootElement.children.length;
+
+        copyPaste.copy(subprocess);
+
+        copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 300,
+            y: 300
+          }
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(rootElement.children).to.have.length(childrenCount);
       }
     ));
 
