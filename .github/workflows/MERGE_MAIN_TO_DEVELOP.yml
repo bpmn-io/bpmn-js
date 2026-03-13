@@ -27,7 +27,7 @@ jobs:
 
     - name: Notify failure on Slack
       if: failure()
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi/slack-github-action@v3
       with:
         method: chat.postMessage
         token: ${{ secrets.SLACK_BOT_TOKEN }}
