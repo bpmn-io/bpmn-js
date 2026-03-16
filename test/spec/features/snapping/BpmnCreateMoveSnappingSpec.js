@@ -485,6 +485,83 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
   });
 
 
+  describe('label snapping inside participant', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.label-snapping.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should add snap targets from participant when moving label', inject(
+      function(dragging, elementRegistry, move) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
+        var startEventLabel = startEvent.label;
+
+        var labelMid = mid(startEventLabel);
+
+        // when
+        move.start(canvasEvent(labelMid), startEventLabel);
+
+        dragging.hover({ element: startEvent.parent, gfx: elementRegistry.getGraphics(startEvent.parent) });
+        dragging.move(canvasEventTopLeft({ x: 395, y: labelMid.y + 50 }, startEventLabel));
+        dragging.end();
+
+        // then
+        expect(mid(startEventLabel)).to.eql({
+          x: 400, // 395 snapped to 400
+          y: labelMid.y + 50
+        });
+      }
+    ));
+
+  });
+
+
+  describe('label snapping in process (no participant)', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.process.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+
+    it('should handle label move when no participant ancestor exists', inject(
+      function(dragging, elementRegistry, move, modeling, elementFactory, canvas) {
+
+        // given - create a StartEvent with external label in the process (no participant)
+        var process = elementRegistry.get('Process_1');
+        var startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+
+        modeling.createShape(startEvent, { x: 300, y: 150 }, process);
+        modeling.updateLabel(startEvent, 'Start');
+
+        var startEventLabel = startEvent.label;
+
+        // Verify label was created
+        expect(startEventLabel).to.exist;
+        expect(startEventLabel.labelTarget).to.equal(startEvent);
+
+        var labelMid = mid(startEventLabel);
+
+        // when - move the label (getParticipantAncestor returns null for process)
+        // This exercises the code path where no participant ancestor exists
+        move.start(canvasEvent(labelMid), startEventLabel);
+        dragging.move(canvasEvent({ x: labelMid.x + 50, y: labelMid.y }));
+        dragging.end();
+
+        // then
+        expect(startEventLabel.x).to.exist;
+      }
+    ));
+
+  });
+
+
   describe('docking points', function() {
 
     describe('move mode', function() {
