@@ -18,7 +18,7 @@ import {
   setBpmnJS,
   clearBpmnJS,
   collectTranslations,
-  enableLogging
+  enableLogging, bootstrapModeler
 } from 'test/TestHelper';
 
 import {
@@ -27,6 +27,12 @@ import {
 } from 'min-dash';
 
 import { getDi } from 'lib/util/ModelUtil';
+import diagramXML from './features/grid-snapping/basic.bpmn';
+import coreModule from '../../lib/core';
+import createModule from 'diagram-js/lib/features/create';
+import gridSnappingModule from '../../lib/features/grid-snapping';
+import modelingModule from '../../lib/features/modeling';
+import moveModule from 'diagram-js/lib/features/move';
 
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
@@ -950,6 +956,150 @@ describe('Modeler', function() {
 
   });
 
+  describe('artifacts move with their participants', function() {
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        createModule,
+        gridSnappingModule,
+        modelingModule,
+        moveModule
+      ]
+    }));
+
+
+    it('should drag participant and annotation should follow', async function() {
+      var xml = require('../fixtures/bpmn/participant-with-one-artifact.bpmn');
+
+      const result = await createModeler(xml);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var dragging = modeler.get('dragging');
+      var move = modeler.get('move');
+
+      var participant = elementRegistry.get('Participant_1axg5jz');
+      var annotation = elementRegistry.get('TextAnnotation_0hsrpnp');
+
+      expect(participant).to.exist;
+      expect(annotation).to.exist;
+
+      const oldX = annotation.x;
+      const oldY = annotation.y;
+
+      move.start(
+        createCanvasEvent({ x: participant.x + 10, y: participant.y + 10 }),
+        participant
+      );
+
+      dragging.move(createCanvasEvent({ x: participant.x + 110, y: participant.y + 60 }));
+
+      dragging.end();
+
+      const newAnnotation = elementRegistry.get('TextAnnotation_0hsrpnp');
+
+      expect(newAnnotation.x).to.equal(oldX + 100);
+      expect(newAnnotation.y).to.equal(oldY + 50);
+    });
+
+    it('should drag participant and group should follow', async function() {
+      var xml = require('../fixtures/bpmn/participant-with-one-group.bpmn');
+
+      const result = await createModeler(xml);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var move = modeler.get('move');
+      var dragging = modeler.get('dragging');
+
+      var participant = elementRegistry.get('Participant_1axg5jz');
+      var group = elementRegistry.get('Group_0rfu791');
+
+      expect(participant).to.exist;
+      expect(group).to.exist;
+
+      const oldX = group.x;
+      const oldY = group.y;
+
+      move.start(
+        createCanvasEvent({ x: participant.x + 20, y: participant.y + 20 }),
+        participant
+      );
+
+      dragging.move(createCanvasEvent({ x: participant.x + 140, y: participant.y + 80 }));
+
+      dragging.end();
+
+      const newGroup = elementRegistry.get('Group_0rfu791');
+
+      expect(newGroup.x).to.equal(oldX + 120);
+      expect(newGroup.y).to.equal(oldY + 60);
+    });
+
+    it('should NOT move group when it overlaps two participants and one participant is dragged', async function() {
+      var xml = require('../fixtures/bpmn/participants-with-artifact.bpmn');
+
+      const result = await createModeler(xml);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var move = modeler.get('move');
+      var dragging = modeler.get('dragging');
+
+      var participant1 = elementRegistry.get('Participant_09y906w');
+      var participant2 = elementRegistry.get('Participant_1svjgx6');
+      var group = elementRegistry.get('Group_0007vsj');
+
+      expect(participant1).to.exist;
+      expect(participant2).to.exist;
+      expect(group).to.exist;
+
+      const oldX = group.x;
+      const oldY = group.y;
+
+      move.start(
+        createCanvasEvent({ x: participant1.x + 20, y: participant1.y + 20 }),
+        participant1
+      );
+
+      dragging.move(createCanvasEvent({ x: participant1.x + 120, y: participant1.y + 80 }));
+      dragging.end();
+
+      const newGroup = elementRegistry.get('Group_0007vsj');
+
+      expect(newGroup.x).to.equal(oldX);
+      expect(newGroup.y).to.equal(oldY);
+    });
+
+    it('should delete when participant is deleted', async function() {
+      var xml = require('../fixtures/bpmn/participant-with-one-group.bpmn');
+
+      const result = await createModeler(xml);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var modeling = modeler.get('modeling');
+      var elementRegistry = modeler.get('elementRegistry');
+
+      var participant = elementRegistry.get('Participant_1axg5jz');
+      var group = elementRegistry.get('Group_0rfu791');
+
+      expect(participant).to.exist;
+      expect(group).to.exist;
+
+      modeling.removeShape(participant);
+
+      var participantFound = elementRegistry.get('Participant_1axg5jz');
+      var groupFound = elementRegistry.get('Group_0rfu791');
+
+      expect(participantFound).to.not.exist;
+      expect(groupFound).to.not.exist;
+    });
+  });
 });
 
 
