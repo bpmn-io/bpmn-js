@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.13.2](https://github.com/bpmn-io/bpmn-js/compare/v18.13.1...v18.13.2) (2026-03-23)
+
+
+### Bug Fixes
+
+* correct undo of pasted collapsed sub-process ([6159971](https://github.com/bpmn-io/bpmn-js/commit/615997168c811fe47fff230bd841c9b3e155dc29))
+* properly handle text annotations during during sub-process operations ([969db73](https://github.com/bpmn-io/bpmn-js/commit/969db7325aa0e3c9586a8bb6451074d76aa3b52e))
+
 ## 18.13.2
 
 * `FIX`: disable grouping in popup menu during search ([bpmn-io/diagram-js#1014](https://github.com/bpmn-io/diagram-js/pull/1014))
