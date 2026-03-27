@@ -85,6 +85,16 @@
       <bpmn:outgoing>SequenceFlow_B</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_A</bpmn:outgoing>
     </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_C">
+      <bpmn:outgoing>SequenceFlow_C1</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_C2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:receiveTask id="ReceiveTask_D">
+      <bpmn:incoming>SequenceFlow_C1</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_C2</bpmn:incoming>
+    </bpmn:receiveTask>
+    <bpmn:sequenceFlow id="SequenceFlow_C1" sourceRef="ExclusiveGateway_C" targetRef="ReceiveTask_D" />
+    <bpmn:sequenceFlow id="SequenceFlow_C2" sourceRef="ExclusiveGateway_C" targetRef="ReceiveTask_D" />
     <bpmn:sequenceFlow id="SequenceFlow_1pcgnez" sourceRef="ExclusiveGateway_19dpeel" targetRef="ReceiveTask_B" />
     <bpmn:sequenceFlow id="SequenceFlow_1cnfp7p" sourceRef="Task_09nm5iv" targetRef="ReceiveTask_B" />
     <bpmn:sequenceFlow id="SequenceFlow_0zasly0" sourceRef="ExclusiveGateway_1m9am02" targetRef="ReceiveTask_C" />
@@ -249,6 +259,21 @@
         <di:waypoint x="230" y="518" />
         <di:waypoint x="230" y="603" />
         <di:waypoint x="359" y="603" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_C_di" bpmnElement="ExclusiveGateway_C" isMarkerVisible="true">
+        <dc:Bounds x="500" y="468" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_D_di" bpmnElement="ReceiveTask_D">
+        <dc:Bounds x="610" y="453" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_C1_di" bpmnElement="SequenceFlow_C1">
+        <di:waypoint x="550" y="493" />
+        <di:waypoint x="610" y="493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_C2_di" bpmnElement="SequenceFlow_C2">
+        <di:waypoint x="525" y="518" />
+        <di:waypoint x="660" y="518" />
+        <di:waypoint x="660" y="533" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_12n9t4l_di" bpmnElement="Participant_12n9t4l" isHorizontal="true">
         <dc:Bounds x="430" y="81" width="600" height="250" />

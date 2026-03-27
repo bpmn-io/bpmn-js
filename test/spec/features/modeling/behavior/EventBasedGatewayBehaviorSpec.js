@@ -106,4 +106,65 @@ describe('features/modeling/behavior - event-based gateway', function() {
 
   });
 
+
+  describe('when replacing gateway with event-based gateway', function() {
+
+    beforeEach(bootstrapModeler(
+      diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          replaceModule
+        ]
+      }
+    ));
+
+
+    it('should remove duplicate connections to the same target',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var gateway = elementRegistry.get('ExclusiveGateway_C'),
+            receiveTask = elementRegistry.get('ReceiveTask_D');
+
+        // assume
+        expect(gateway.outgoing).to.have.length(2);
+        expect(receiveTask.incoming).to.have.length(2);
+
+        // when
+        var newGateway = bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // then
+        expect(newGateway.outgoing).to.have.length(1);
+        expect(newGateway.outgoing[0].target).to.equal(receiveTask);
+        expect(receiveTask.incoming).to.have.length(1);
+      })
+    );
+
+
+    it('should undo removal of duplicate connections',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
+
+        // given
+        var gateway = elementRegistry.get('ExclusiveGateway_C'),
+            receiveTask = elementRegistry.get('ReceiveTask_D');
+
+        bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        gateway = elementRegistry.get('ExclusiveGateway_C');
+        expect(gateway.outgoing).to.have.length(2);
+        expect(receiveTask.incoming).to.have.length(2);
+      })
+    );
+
+  });
+
 });
