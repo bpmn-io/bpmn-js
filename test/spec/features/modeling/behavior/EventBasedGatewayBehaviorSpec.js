@@ -106,4 +106,108 @@ describe('features/modeling/behavior - event-based gateway', function() {
 
   });
 
+
+  describe('when replacing with event-based gateway', function() {
+
+    beforeEach(bootstrapModeler(
+      diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          replaceModule
+        ]
+      }
+    ));
+
+
+    it('should remove outgoing sequence flows to non-event-based targets',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var gateway = elementRegistry.get('ExclusiveGateway_C');
+
+        // when
+        var newGateway = bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // then
+        // only the connection to ReceiveTask (event-based target) should remain
+        expect(newGateway.outgoing).to.have.length(1);
+        expect(newGateway.outgoing[0].target.id).to.equal('ReceiveTask_C3');
+
+        // connections to non-event-based targets should be removed
+        expect(elementRegistry.get('SequenceFlow_C1')).not.to.exist;
+        expect(elementRegistry.get('SequenceFlow_C2')).not.to.exist;
+        expect(elementRegistry.get('SequenceFlow_C3')).to.exist;
+      })
+    );
+
+
+    it('should remove outgoing sequence flows to event-based targets that have other non-event-based incoming',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        // ExclusiveGateway_B has outgoing to ReceiveTask_B and ReceiveTask_C
+        // which also have incoming from other non-event-based sources
+        var gateway = elementRegistry.get('ExclusiveGateway_B');
+
+        // when
+        var newGateway = bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:EventBasedGateway'
+        });
+
+        // then
+        // outgoing connections to event-based targets should be kept
+        expect(newGateway.outgoing).to.have.length(2);
+
+        // non-event-based incoming connections to targets should be removed
+        var receiveTaskB = elementRegistry.get('ReceiveTask_B');
+        var receiveTaskC = elementRegistry.get('ReceiveTask_C');
+
+        expect(receiveTaskB.incoming).to.have.length(1);
+        expect(receiveTaskB.incoming[0].source).to.equal(newGateway);
+        expect(receiveTaskC.incoming).to.have.length(1);
+        expect(receiveTaskC.incoming[0].source).to.equal(newGateway);
+      })
+    );
+
+  });
+
+
+  describe('when replacing event-based gateway with another gateway', function() {
+
+    beforeEach(bootstrapModeler(
+      diagramXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          replaceModule
+        ]
+      }
+    ));
+
+
+    it('should keep outgoing sequence flows when replacing with inclusive gateway',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var gateway = elementRegistry.get('EventBasedGateway_B');
+        var target1 = elementRegistry.get('IntermediateCatchEvent');
+        var target2 = elementRegistry.get('IntermediateCatchEvent_1cagdda');
+
+        // when
+        var newGateway = bpmnReplace.replaceElement(gateway, {
+          type: 'bpmn:InclusiveGateway'
+        });
+
+        // then
+        expect(newGateway.outgoing).to.have.length(2);
+        expect(target1.incoming).to.have.length(1);
+        expect(target2.incoming).to.have.length(1);
+      })
+    );
+
+  });
+
 });

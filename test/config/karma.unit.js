@@ -112,5 +112,12 @@ module.exports = function(karma) {
     config.envPreprocessor = [].concat(config.envPreprocessor || [], 'SINGLE_START');
   }
 
+  config.customLaunchers = {
+    ChromeHeadlessNoSandbox: {
+      base: 'ChromeHeadless',
+      flags: ['--no-sandbox']
+    }
+  };
+
   karma.set(config);
 };

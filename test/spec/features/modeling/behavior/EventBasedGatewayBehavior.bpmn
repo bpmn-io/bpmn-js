@@ -85,6 +85,17 @@
       <bpmn:outgoing>SequenceFlow_B</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_A</bpmn:outgoing>
     </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_C">
+      <bpmn:outgoing>SequenceFlow_C1</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_C2</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_C3</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_C1" />
+    <bpmn:task id="Task_C2" />
+    <bpmn:receiveTask id="ReceiveTask_C3" />
+    <bpmn:sequenceFlow id="SequenceFlow_C1" sourceRef="ExclusiveGateway_C" targetRef="Task_C1" />
+    <bpmn:sequenceFlow id="SequenceFlow_C2" sourceRef="ExclusiveGateway_C" targetRef="Task_C2" />
+    <bpmn:sequenceFlow id="SequenceFlow_C3" sourceRef="ExclusiveGateway_C" targetRef="ReceiveTask_C3" />
     <bpmn:sequenceFlow id="SequenceFlow_1pcgnez" sourceRef="ExclusiveGateway_19dpeel" targetRef="ReceiveTask_B" />
     <bpmn:sequenceFlow id="SequenceFlow_1cnfp7p" sourceRef="Task_09nm5iv" targetRef="ReceiveTask_B" />
     <bpmn:sequenceFlow id="SequenceFlow_0zasly0" sourceRef="ExclusiveGateway_1m9am02" targetRef="ReceiveTask_C" />
@@ -249,6 +260,32 @@
         <di:waypoint x="230" y="518" />
         <di:waypoint x="230" y="603" />
         <di:waypoint x="359" y="603" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_C_di" bpmnElement="ExclusiveGateway_C" isMarkerVisible="true">
+        <dc:Bounds x="500" y="468" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_C1_di" bpmnElement="Task_C1">
+        <dc:Bounds x="610" y="453" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_C2_di" bpmnElement="Task_C2">
+        <dc:Bounds x="610" y="553" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_C3_di" bpmnElement="ReceiveTask_C3">
+        <dc:Bounds x="610" y="363" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_C1_di" bpmnElement="SequenceFlow_C1">
+        <di:waypoint x="550" y="493" />
+        <di:waypoint x="610" y="493" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_C2_di" bpmnElement="SequenceFlow_C2">
+        <di:waypoint x="525" y="518" />
+        <di:waypoint x="525" y="593" />
+        <di:waypoint x="610" y="593" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_C3_di" bpmnElement="SequenceFlow_C3">
+        <di:waypoint x="525" y="468" />
+        <di:waypoint x="525" y="403" />
+        <di:waypoint x="610" y="403" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_12n9t4l_di" bpmnElement="Participant_12n9t4l" isHorizontal="true">
         <dc:Bounds x="430" y="81" width="600" height="250" />
