@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.14.0
+
+* `FEAT`: prioritize full word matches in search ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `FEAT`: factor match density into search ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `CHORE`: prioritize later search matches slightly lower ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `DEPS`: update to `diagram-js@15.11.0`
+* `DEPS`: update to `ids@3.0.3`
+
 ## 18.13.2
 
 * `FIX`: disable grouping in popup menu during search ([bpmn-io/diagram-js#1014](https://github.com/bpmn-io/diagram-js/pull/1014))
