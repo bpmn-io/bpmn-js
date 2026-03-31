@@ -573,8 +573,8 @@ describe('features - label-editing', function() {
 
     describe('on element creation', function() {
 
-      function createTaskElement(context) {
-        var shape = elementFactory.create('shape', { type: 'bpmn:Task' }),
+      function createElement(type, context) {
+        var shape = elementFactory.create('shape', { type: type }),
             parent = elementRegistry.get('SubProcess_1'),
             parentGfx = elementRegistry.getGraphics(parent);
 
@@ -585,6 +585,10 @@ describe('features - label-editing', function() {
         });
         dragging.move(canvasEvent({ x: 400, y: 250 }));
         dragging.end();
+      }
+
+      function createTaskElement(context) {
+        createElement('bpmn:Task', context);
       }
 
       function createParticipant() {
@@ -623,6 +627,117 @@ describe('features - label-editing', function() {
 
           // then
           expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on StartEvent creation', function() {
+
+          // when
+          createElement('bpmn:StartEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on EndEvent creation', function() {
+
+          // when
+          createElement('bpmn:EndEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on IntermediateThrowEvent creation', function() {
+
+          // when
+          createElement('bpmn:IntermediateThrowEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on CallActivity creation', function() {
+
+          // when
+          createElement('bpmn:CallActivity');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+        it('on subProcess creation', function() {
+
+          // when
+          createElement('bpmn:SubProcess');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+        it('on adHocSubProcess creation', function() {
+
+          // when
+          createElement('bpmn:AdHocSubProcess');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+      });
+
+      describe('should NOT activate', function() {
+
+        it('on ExclusiveGateway creation', function() {
+
+          // when
+          createElement('bpmn:ExclusiveGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on ParallelGateway creation', function() {
+
+          // when
+          createElement('bpmn:ParallelGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on InclusiveGateway creation', function() {
+
+          // when
+          createElement('bpmn:InclusiveGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on ComplexGateway creation', function() {
+
+          // when
+          createElement('bpmn:ComplexGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on EventBasedGateway creation', function() {
+
+          // when
+          createElement('bpmn:EventBasedGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
         });
 
       });
