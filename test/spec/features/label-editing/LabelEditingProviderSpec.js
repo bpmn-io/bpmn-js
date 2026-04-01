@@ -691,6 +691,19 @@ describe('features - label-editing', function() {
 
       describe('should NOT activate', function() {
 
+        it('with behavior hint', function() {
+
+          // when
+          createTaskElement({
+            hints: { createElementsBehavior: false }
+          });
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+
+        });
+
+
         it('on ExclusiveGateway creation', function() {
 
           // when
@@ -740,21 +753,8 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.false;
         });
 
-      });
-
-
-      it('should NOT activate with behavior hint', function() {
-
-        // when
-        createTaskElement({
-          hints: { createElementsBehavior: false }
-        });
-
-        // then
-        expect(directEditing.isActive()).to.be.false;
 
       });
-
 
     });
 
