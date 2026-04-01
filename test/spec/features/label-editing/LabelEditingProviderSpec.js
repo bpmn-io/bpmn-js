@@ -669,7 +669,7 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
         });
 
-        it('on subProcess creation', function() {
+        it('on SubProcess creation', function() {
 
           // when
           createElement('bpmn:SubProcess');
@@ -678,7 +678,7 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
         });
 
-        it('on adHocSubProcess creation', function() {
+        it('on AdHocSubProcess creation', function() {
 
           // when
           createElement('bpmn:AdHocSubProcess');
