@@ -71,7 +71,7 @@
     "@rollup/plugin-replace": "^6.0.3",
     "@rollup/plugin-terser": "^1.0.0",
     "babel-loader": "^10.0.0",
-    "babel-plugin-istanbul": "^7.0.1",
+    "babel-plugin-istanbul": "^8.0.0",
     "bio-dts": "^0.11.0",
     "bpmn-font": "^0.12.1",
     "camunda-bpmn-moddle": "^4.0.1",
