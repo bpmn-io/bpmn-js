@@ -824,10 +824,10 @@ describe('features - label-editing', function() {
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: bounds.x,
-              y: bounds.y - (7 * zoom),
-              width: bounds.width + 10 * zoom,
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -846,10 +846,10 @@ describe('features - label-editing', function() {
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: bounds.x,
-              y: bounds.y - (7 * zoom),
-              width: bounds.width + 10 * zoom,
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -910,10 +910,10 @@ describe('features - label-editing', function() {
             directEditing.activate(sequenceFlow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: bounds.x,
-              y: bounds.y - (7 * zoom),
-              width: bounds.width + 10 * zoom,
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -932,10 +932,10 @@ describe('features - label-editing', function() {
             directEditing.activate(sequenceflow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: bounds.x,
-              y: bounds.y - (7 * zoom),
-              width: bounds.width + 10 * zoom,
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));

@@ -148,19 +148,22 @@ describe('features/modeling - update label', function() {
 
 
   it('should change text annotation text and bounds', inject(
-    function(modeling, elementRegistry) {
+    function(modeling, elementRegistry, textRenderer) {
 
       // given
       var element = elementRegistry.get('TextAnnotation_1');
 
-      var newBounds = { x: 100, y: 100, width: 18, height: 40 };
-
       // when
-      modeling.updateLabel(element, 'bar', newBounds);
+      modeling.updateLabel(element, 'bar');
 
       // then
+      var expectedBounds = textRenderer.getTextAnnotationBounds(
+        { x: element.x, y: element.y, width: element.width, height: element.height },
+        'bar'
+      );
+
       expect(element.businessObject.text).to.equal('bar');
-      expectBounds(element, newBounds, 1);
+      expectBounds(element, expectedBounds, 1);
     }
   ));
 
