@@ -573,17 +573,35 @@ describe('features - label-editing', function() {
 
     describe('on element creation', function() {
 
-      function createElement(type, context) {
-        var shape = elementFactory.create('shape', { type: type }),
-            parent = elementRegistry.get('SubProcess_1'),
-            parentGfx = elementRegistry.getGraphics(parent);
+      /**
+       * @param {string|import('diagram-js/lib/model').Element} typeOrElement
+       * @param {any} [createContext]
+       * @param {string|import('diagram-js/lib/model').Element} [parentElementOrId]
+       */
+      function createElement(elementOrType, createContext = {}, parentElementOrId = 'SubProcess_1') {
 
-        create.start(canvasEvent({ x: 0, y: 0 }), [ shape ], context);
+        var parent = typeof parentElementOrId === 'string'
+          ? elementRegistry.get(parentElementOrId)
+          : parentElementOrId;
+
+        // assume
+        expect(parent, `<element#${parentElementOrId}>`).to.exist;
+
+        var shape = typeof elementOrType === 'string'
+          ? elementFactory.create('shape', { type: elementOrType })
+          : elementOrType;
+
+        var parentGfx = elementRegistry.getGraphics(parent);
+
+        create.start(canvasEvent({ x: 0, y: 0 }), [ shape ], createContext);
         dragging.hover({
           element: parent,
           gfx: parentGfx
         });
-        dragging.move(canvasEvent({ x: 400, y: 250 }));
+        dragging.move(canvasEvent({
+          x: (parent.x || 0) + 20 + shape.width / 2,
+          y: (parent.y || 0) + 20 + shape.width / 2
+        }));
         dragging.end();
       }
 
@@ -592,19 +610,7 @@ describe('features - label-editing', function() {
       }
 
       function createParticipant() {
-
-        var collaboration = elementRegistry.get('Collaboration_1o0amh9'),
-            collaborationGfx = elementRegistry.getGraphics(collaboration);
-
-        var participant = elementFactory.createParticipantShape();
-
-        // when
-        create.start(canvasEvent({ x: 400, y: 300 }), participant);
-
-        dragging.hover({ element: collaboration, gfx: collaborationGfx });
-        dragging.move(canvasEvent({ x: 400, y: 300 }));
-
-        dragging.end();
+        return createElement(elementFactory.createParticipantShape(), {}, 'Collaboration_1o0amh9');
       }
 
 
