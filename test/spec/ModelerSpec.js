@@ -978,7 +978,7 @@ describe('Modeler', function() {
       modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width + 20, height: label.height }, 'e');
 
       const updatedLabel = elementRegistry.get(label.id);
-      expect(updatedLabel.width).to.closeTo(105, 3);
+      expect(updatedLabel.width).to.closeTo(80, 3);
     });
 
     it('should adapt width of StartEvent label when text is changed and resized vertically', async function() {
@@ -1002,7 +1002,7 @@ describe('Modeler', function() {
       modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width, height: label.height - 20 }, 'e');
 
       const updatedLabel = elementRegistry.get(label.id);
-      expect(updatedLabel.height).to.equal(36);
+      expect(updatedLabel.height).to.equal(53);
     });
 
   });

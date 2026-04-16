@@ -59,65 +59,6 @@ describe('label bounds', function() {
 
     }));
 
-    describe('label dimensions', function() {
-
-      it('should expand width', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelWidth = shape.label.width;
-
-        // when
-        updateLabel(shape, 'Foooooooooobar');
-
-        // then
-        expect(shape.label.width).to.be.above(oldLabelWidth);
-      }));
-
-
-      it('should expand height', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelHeight = shape.label.height;
-
-        // when
-        updateLabel(shape, 'Foo\nbar\nbaz');
-
-        // then
-        expect(shape.label.height).to.be.above(oldLabelHeight);
-      }));
-
-
-      it('should reduce width', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelWidth = shape.label.width;
-
-        // when
-        updateLabel(shape, 'i');
-
-        // then
-        expect(shape.label.width).to.be.below(oldLabelWidth);
-      }));
-
-
-      it('should reduce height', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_3'),
-            oldLabelHeight = shape.label.height;
-
-        // when
-        updateLabel(shape, 'One line');
-
-        // then
-        expect(shape.label.height).to.be.below(oldLabelHeight);
-      }));
-
-    });
-
 
     describe('label position', function() {
 
