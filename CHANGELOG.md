@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: improve text rendering performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
+* `FEAT`: improve diagram import performance
+* `DEPS`: update to `diagram-js@15.12.0`
+
 ## 18.14.0
 
 * `FEAT`: prioritize full word matches in search ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
