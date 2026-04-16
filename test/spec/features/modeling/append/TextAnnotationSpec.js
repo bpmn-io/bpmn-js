@@ -112,7 +112,7 @@ describe('features/modeling - append text-annotation', function() {
       modeling.resizeShape(annotationShape, newBounds);
 
       // then
-      expect(annotationShape.width).to.eql(100);
+      expect(annotationShape.width).to.eql(newBounds.width);
       expect(annotationShape.height).to.eql(40);
     }));
   });

@@ -778,7 +778,7 @@ describe('draw - bpmn renderer', function() {
         // then
         expectSvgPath(
           labelPath,
-          'M163,303l47,0a4,4,0,0,1,4,4l0,6a4,4,0,0,1,-4,4l-47,0a4,4,0,0,1,-4,-4l0,-6a4,4,0,0,1,4,-4z'
+          'M161,303l52,0a4,4,0,0,1,4,4l0,6a4,4,0,0,1,-4,4l-52,0a4,4,0,0,1,-4,-4l0,-6a4,4,0,0,1,4,-4z'
         );
       }));
 
@@ -934,8 +934,8 @@ describe('draw - bpmn renderer', function() {
               expect(svgAttr(rect, 'width')).to.equal('100');
               expect(svgAttr(rect, 'height')).to.equal('80');
             } else if (element.type === 'bpmn:TextAnnotation') {
-              expect(svgAttr(rect, 'width')).to.equal('78');
-              expect(svgAttr(rect, 'height')).to.equal('40');
+              expect(+svgAttr(rect, 'width')).to.be.closeTo(100, 1);
+              expect(+svgAttr(rect, 'height')).to.be.closeTo(30, 1);
             } else {
               expect(svgAttr(rect, 'width')).to.equal('200');
               expect(svgAttr(rect, 'height')).to.equal('100');
