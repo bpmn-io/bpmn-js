@@ -630,6 +630,26 @@ describe('features - label-editing', function() {
         });
 
 
+        it('on StartEvent creation', function() {
+
+          // when
+          createElement('bpmn:StartEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on EndEvent creation', function() {
+
+          // when
+          createElement('bpmn:EndEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
         it('on IntermediateThrowEvent creation', function() {
 
           // when
@@ -681,26 +701,6 @@ describe('features - label-editing', function() {
           // then
           expect(directEditing.isActive()).to.be.false;
 
-        });
-
-
-        it('on plain StartEvent creation', function() {
-
-          // when
-          createElement('bpmn:StartEvent');
-
-          // then
-          expect(directEditing.isActive()).to.be.false;
-        });
-
-
-        it('on plain EndEvent creation', function() {
-
-          // when
-          createElement('bpmn:EndEvent');
-
-          // then
-          expect(directEditing.isActive()).to.be.false;
         });
 
 
