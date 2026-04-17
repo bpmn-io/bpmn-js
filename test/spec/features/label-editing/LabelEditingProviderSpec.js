@@ -578,7 +578,7 @@ describe('features - label-editing', function() {
        * @param {any} [createContext]
        * @param {string|import('diagram-js/lib/model').Element} [parentElementOrId]
        */
-      function createElement(elementOrType, createContext = {}, parentElementOrId = 'SubProcess_1') {
+      function createElement(elementOrType, createContext = {}, parentElementOrId = 'Participant_1') {
 
         var parent = typeof parentElementOrId === 'string'
           ? elementRegistry.get(parentElementOrId)
@@ -636,7 +636,7 @@ describe('features - label-editing', function() {
         });
 
 
-        it('on StartEvent creation', function() {
+        it('on StartEvent creation outside of sub-process', function() {
 
           // when
           createElement('bpmn:StartEvent');
@@ -646,10 +646,30 @@ describe('features - label-editing', function() {
         });
 
 
-        it('on EndEvent creation', function() {
+        it('on EndEvent creation outside of sub-process', function() {
 
           // when
           createElement('bpmn:EndEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on StartEvent creation inside of sub-process', function() {
+
+          // when
+          createElement('bpmn:StartEvent', {}, 'SubProcess_1');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on EndEvent creation inside of sub-process', function() {
+
+          // when
+          createElement('bpmn:EndEvent', {}, 'SubProcess_1');
 
           // then
           expect(directEditing.isActive()).to.be.true;
@@ -675,6 +695,7 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
         });
 
+
         it('on SubProcess creation', function() {
 
           // when
@@ -683,6 +704,7 @@ describe('features - label-editing', function() {
           // then
           expect(directEditing.isActive()).to.be.true;
         });
+
 
         it('on AdHocSubProcess creation', function() {
 
@@ -693,7 +715,38 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
         });
 
+
+        it('on DataObjectReference creation', function() {
+
+          // when
+          createElement('bpmn:DataObjectReference');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on DataStoreReference creation', function() {
+
+          // when
+          createElement('bpmn:DataStoreReference');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on Group creation', function() {
+
+          // when
+          createElement('bpmn:Group');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
       });
+
 
       describe('should NOT activate', function() {
 
@@ -758,7 +811,6 @@ describe('features - label-editing', function() {
           // then
           expect(directEditing.isActive()).to.be.false;
         });
-
 
       });
 
