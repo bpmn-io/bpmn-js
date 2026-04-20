@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0b1zo4e" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.46.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:category id="Category_0ei8scb">
+    <bpmn:categoryValue id="CategoryValue_14c326o" value="GROUP_CONTAINED_LANE" />
+  </bpmn:category>
+  <bpmn:collaboration id="Collaboration_1vsoq51">
+    <bpmn:participant id="PARTICIPANT_LANES" name="PARTICIPANT_LANES" processRef="Process_LANES" />
+    <bpmn:participant id="PARTICIPANT_NO_LANES" name="PARTICIPANT_NO_LANES" processRef="PROCESS_NO_LANES" />
+    <bpmn:group id="GROUP_CONTAINED_LANE" categoryValueRef="CategoryValue_14c326o" />
+    <bpmn:group id="GROUP_CONTAINED_PARTICIPANT" categoryValueRef="CategoryValue_1igwnnw" />
+    <bpmn:group id="GROUP_OVERFLOW" categoryValueRef="CategoryValue_05n5tvs" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_LANES" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_12m7aj6">
+      <bpmn:lane id="LANE" name="LANE" />
+      <bpmn:lane id="LANE_2" name="LANE_2" />
+    </bpmn:laneSet>
+  </bpmn:process>
+  <bpmn:process id="PROCESS_NO_LANES" isExecutable="false" />
+  <bpmn:category id="Category_0qseyjl">
+    <bpmn:categoryValue id="CategoryValue_1igwnnw" value="GROUP_CONTAINED_PARTICIPANT" />
+  </bpmn:category>
+  <bpmn:category id="Category_198yy5b">
+    <bpmn:categoryValue id="CategoryValue_05n5tvs" value="GROUP_OVERFLOW" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1vsoq51">
+      <bpmndi:BPMNShape id="Participant_0w47uyf_di" bpmnElement="PARTICIPANT_LANES" isHorizontal="true">
+        <dc:Bounds x="160" y="60" width="600" height="410" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0omi6i9_di" bpmnElement="LANE_2" isHorizontal="true">
+        <dc:Bounds x="190" y="265" width="570" height="205" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1kns5ex_di" bpmnElement="LANE" isHorizontal="true">
+        <dc:Bounds x="190" y="60" width="570" height="205" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1vo23dh_di" bpmnElement="PARTICIPANT_NO_LANES" isHorizontal="true">
+        <dc:Bounds x="160" y="510" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1xukybi_di" bpmnElement="GROUP_CONTAINED_LANE">
+        <dc:Bounds x="230" y="105" width="220" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="298" y="112" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1ixyxeb" bpmnElement="GROUP_CONTAINED_PARTICIPANT">
+        <dc:Bounds x="260" y="565" width="220" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="327" y="572" width="88" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1axubke" bpmnElement="GROUP_OVERFLOW">
+        <dc:Bounds x="580" y="395" width="220" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="653" y="402" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
