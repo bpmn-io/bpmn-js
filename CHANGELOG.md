@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FEAT`: improve text rendering performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
 * `FEAT`: improve diagram import performance
+* `FIX`: ignore broken `BPMNDI` when setting label colors ([#2418](https://github.com/bpmn-io/bpmn-js/pull/2418))
 * `DEPS`: update to `diagram-js@15.12.0`
 
 ## 18.14.0
