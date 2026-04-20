@@ -347,6 +347,43 @@ describe('features/modeling - set color', function() {
   });
 
 
+  describe('execute with incomplete DI', function() {
+
+    var incompleteDiXML = require('./SetColor.missingLabelDi.bpmn');
+
+    beforeEach(bootstrapModeler(incompleteDiXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
+
+
+    it('should ignore color updates on external labels without BPMNLabel DI', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            startEventLabel = startEventShape.label,
+            labelTargetShape = startEventLabel.labelTarget,
+            targetDi = getDi(labelTargetShape);
+
+        expect(targetDi.label).not.to.exist;
+
+        // when
+        expect(function() {
+          modeling.setColor(startEventLabel, { stroke: 'YELLOW', fill: 'FUCHSIA' });
+        }).not.to.throw();
+
+        // then
+        expect(targetDi.get('border-color')).not.to.exist;
+        expect(targetDi.get('background-color')).not.to.exist;
+        expect(targetDi.label).not.to.exist;
+      }
+    ));
+  });
+
+
   describe('undo', function() {
 
     it('setting fill color', inject(
