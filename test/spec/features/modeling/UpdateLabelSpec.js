@@ -178,11 +178,13 @@ describe('features/modeling - update label', function() {
       modeling.updateLabel(element, text);
 
       var oldBounds = { x: element.x, y: element.y, width: element.width, height: element.height };
-      var newBounds = { x: oldBounds.x, y: oldBounds.y + 100, width: oldBounds.width, height: oldBounds.height + 100 };
 
-      modeling.resizeShape(element, newBounds);
-
-      newBounds = { x: oldBounds.x + 100, y: oldBounds.y, width: oldBounds.width + 100, height: oldBounds.height };
+      modeling.resizeShape(element, {
+        x: oldBounds.x,
+        y: oldBounds.y + 50,
+        width: oldBounds.width,
+        height: oldBounds.height - 50
+      });
 
       // then
       expect(element.businessObject.text).to.equal(text);

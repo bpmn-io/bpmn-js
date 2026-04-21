@@ -596,6 +596,27 @@ describe('features/modeling/behavior - LabelBehavior', function() {
       }
     ));
 
+
+    it('should restore bounds on undo', inject(
+      function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var textAnnotationShape = elementRegistry.get('TextAnnotation_1');
+
+        var originalBounds = pick(textAnnotationShape, [ 'x', 'y', 'width', 'height' ]);
+
+        modeling.updateProperties(textAnnotationShape, {
+          text: 'a much longer text that results in a taller annotation box'
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(pick(textAnnotationShape, [ 'x', 'y', 'width', 'height' ])).to.eql(originalBounds);
+      }
+    ));
+
   });
 
 
