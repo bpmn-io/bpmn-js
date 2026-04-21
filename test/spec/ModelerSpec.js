@@ -12,14 +12,9 @@ import TestContainer from 'mocha-test-container-support';
 
 import { createCanvasEvent } from '../util/MockEvents';
 
-import { bootstrapModeler, clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
+import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
 
 import { find, pick } from 'min-dash';
-import createModule from 'diagram-js/lib/features/create';
-import resizeModule from 'diagram-js/lib/features/resize';
-import moveModule from 'diagram-js/lib/features/move';
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
 
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
@@ -946,16 +941,6 @@ describe('Modeler', function() {
   describe('resize text element and preserve width', function() {
 
     var diagramXML = require('../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: [
-        coreModule,
-        createModule,
-        modelingModule,
-        resizeModule,
-        moveModule
-      ]
-    }));
 
     it('should adapt width of StartEvent label when text is changed and resized horizontally', async function() {
 
