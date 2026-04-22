@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### 18.15.0
+
 * `FEAT`: show outline around lasso-selected elements ([#173](https://github.com/bpmn-io/bpmn-js/issues/173), [bpmn-io/diagram-js#1021](https://github.com/bpmn-io/diagram-js/pull/1021))
 * `FEAT`: improve text rendering performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
 * `FEAT`: improve diagram import performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
