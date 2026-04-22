@@ -12,6 +12,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: move enclosed artifacts with participants / sub-processes ([#1929](https://github.com/bpmn-io/bpmn-js/issues/1929), [#2419](https://github.com/bpmn-io/bpmn-js/issues/2419))
 * `FIX`: ignore broken `BPMNDI` when setting label colors ([#2418](https://github.com/bpmn-io/bpmn-js/pull/2418))
 * `DEPS`: update to `diagram-js@15.13.0`
+* `DEPS`: update to `min-dom@5.3.0`
 
 ## 18.14.0
 
