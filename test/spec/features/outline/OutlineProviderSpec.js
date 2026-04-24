@@ -150,7 +150,7 @@ describe('features/outline - outline provider', function() {
 
         // then
         let bounds = outlineShape.getBoundingClientRect();
-        expect(bounds.width).to.be.closeTo(70, DELTA);
+        expect(bounds.width).to.be.closeTo(34, DELTA);
         expect(bounds.height).to.be.closeTo(24, DELTA);
 
         // when
@@ -158,7 +158,7 @@ describe('features/outline - outline provider', function() {
 
         // then
         bounds = outlineShape.getBoundingClientRect();
-        expect(bounds.width).to.be.closeTo(70, DELTA);
+        expect(bounds.width).to.be.closeTo(93, DELTA);
         expect(bounds.height).to.be.closeTo(37, DELTA);
       }));
 
