@@ -51,7 +51,7 @@
       <bpmndi:BPMNShape id="BoundaryEvent_2_di" bpmnElement="BoundaryEvent_2">
         <omgdc:Bounds x="238" y="322" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="284" y="333" width="60" height="14" />
+          <omgdc:Bounds x="279" y="332" width="16" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_2_di" bpmnElement="EndEvent_2">
