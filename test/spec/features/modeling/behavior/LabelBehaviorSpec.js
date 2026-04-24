@@ -371,9 +371,9 @@ describe('features/modeling/behavior - LabelBehavior', function() {
           expect(label).to.exist;
           expect(elementRegistry.get(label.id)).to.exist;
 
-          expect(label.x).to.closeTo(277, 1);
-          expect(label.y).to.be.closeTo(145, 5);
-          expect(label.width).to.be.within(15, 62);
+          expect(label.x).to.closeTo(299, 1);
+          expect(label.y).to.be.closeTo(145, 1);
+          expect(label.width).to.be.within(15, 18);
           expect(label.height).to.be.within(13, 15);
         }
       ));
@@ -467,9 +467,9 @@ describe('features/modeling/behavior - LabelBehavior', function() {
       modeling.moveElements([ labelShape ], { x: 10, y: -10 });
 
       // then
-      expect(labelShape.x).to.be.within(172, 173);
+      expect(labelShape.x).to.be.within(193, 194);
       expect(labelShape.y).to.equal(128);
-      expect(startEventDi.label.bounds.x).to.be.within(172, 173);
+      expect(startEventDi.label.bounds.x).to.be.within(193, 194);
       expect(startEventDi.label.bounds.y).to.equal(128);
     }));
 
@@ -509,7 +509,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
           ]);
 
           // then
-          expect(sequenceFlowConnection.label.x).to.be.closeTo(251, 1);
+          expect(sequenceFlowConnection.label.x).to.be.closeTo(273, 1);
           expect(sequenceFlowConnection.label.y).to.be.closeTo(182, 1);
         }
       ));
@@ -904,7 +904,7 @@ describe('features/modeling/behavior - LabelBehavior - copy/paste integration', 
       // then
       expect(label).to.exist;
 
-      expect(label).to.have.position({ x: 655, y: 287 });
+      expect(label).to.have.position({ x: 681, y: 287 });
     }
   ));
 
