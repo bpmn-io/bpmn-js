@@ -146,6 +146,23 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
         expectLabelOrientation(source, 'right');
       }));
 
+
+      it('should move label away if correctly oriented but intersecting', inject(function(elementRegistry, modeling) {
+
+        // given
+        var element = elementRegistry.get('LabelIntersecting'),
+            source = elementRegistry.get('ExclusiveGateway_02fomt2');
+
+        // assume
+        expect(getOrientation(element.label, element)).to.eql('intersect');
+
+        // when
+        modeling.connect(source, element);
+
+        // then: label is repositioned to bottom and no longer overlaps
+        expect(getOrientation(element.label, element)).to.eql('bottom');
+      }));
+
     });
 
 
