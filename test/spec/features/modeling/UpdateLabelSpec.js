@@ -148,22 +148,49 @@ describe('features/modeling - update label', function() {
 
 
   it('should change text annotation text and bounds', inject(
-    function(modeling, elementRegistry) {
+    function(modeling, elementRegistry, textRenderer) {
 
       // given
       var element = elementRegistry.get('TextAnnotation_1');
 
-      var newBounds = { x: 100, y: 100, width: 100, height: 30 };
-
       // when
-      modeling.updateLabel(element, 'bar', newBounds);
+      modeling.updateLabel(element, 'bar');
 
       // then
+      var expectedBounds = textRenderer.getTextAnnotationBounds(
+        { x: element.x, y: element.y, width: element.width, height: element.height },
+        'bar'
+      );
+
       expect(element.businessObject.text).to.equal('bar');
-      expect(element).to.have.bounds(newBounds);
+      expectBounds(element, expectedBounds, 1);
     }
   ));
 
+  it('should not change text annotation text and bounds', inject(
+    function(modeling, elementRegistry) {
+
+      // given
+      var text = 'this should be the text';
+      var element = elementRegistry.get('TextAnnotation_1');
+
+      // when
+      modeling.updateLabel(element, text);
+
+      var oldBounds = { x: element.x, y: element.y, width: element.width, height: element.height };
+
+      modeling.resizeShape(element, {
+        x: oldBounds.x,
+        y: oldBounds.y + 50,
+        width: oldBounds.width,
+        height: oldBounds.height - 50
+      });
+
+      // then
+      expect(element.businessObject.text).to.equal(text);
+      expectBounds(element, oldBounds, 1);
+    }
+  ));
 
   it('should update group label', inject(function(modeling, elementRegistry) {
 
@@ -255,7 +282,7 @@ describe('features/modeling - update label', function() {
     // given
     var element = elementRegistry.get('TextAnnotation_1');
 
-    var newBounds = { x: 100, y: 100, width: 100, height: 30 };
+    var newBounds = { x: 100, y: 100, width: 100, height: 40 };
 
     // when
     modeling.updateLabel(element, null, newBounds);
@@ -297,3 +324,10 @@ describe('features/modeling - update label', function() {
   });
 
 });
+
+function expectBounds(parent, bounds, delta) {
+  expect(parent.x).to.be.closeTo(bounds.x, delta);
+  expect(parent.y).to.be.closeTo(bounds.y, delta);
+  expect(parent.width).to.be.closeTo(bounds.width, delta);
+  expect(parent.height).to.be.closeTo(bounds.height, delta);
+}

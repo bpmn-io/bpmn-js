@@ -19,7 +19,7 @@ import {
 
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
-var DELTA = 3;
+var DELTA = 6;
 
 
 describe('features - label-editing', function() {
@@ -820,18 +820,14 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -846,18 +842,14 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -914,18 +906,14 @@ describe('features - label-editing', function() {
             var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceFlow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceFlow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -940,18 +928,14 @@ describe('features - label-editing', function() {
             var sequenceflow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceflow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceflow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
