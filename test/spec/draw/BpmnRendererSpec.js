@@ -121,11 +121,48 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  it('should render data objects', function() {
+  it('should render data objects with correct markers', function() {
     var xml = require('../../fixtures/bpmn/draw/data-objects.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
+
+      inject(function(elementRegistry) {
+        [
+          [ 'DataInput_1' , 'rgb(34, 36, 42)' , 'none' ],
+          [ 'DataOutput_1' , 'rgb(34, 36, 42)', 'rgb(34, 36, 42)' ],
+        ].forEach(([ id, stroke, fill ]) => {
+          var dataObjectGfx = elementRegistry.getGraphics(id);
+          var allPaths = domQueryAll('.djs-visual path', dataObjectGfx);
+
+          expect(allPaths).to.have.lengthOf(2);
+
+          var marker = allPaths[1];
+          stroke && expect(marker.style.stroke, `expected stroke of ${id} to be ${stroke}`).to.eql(stroke);
+          fill && expect(marker.style.fill, `expected fill of ${id} to be ${fill}`).to.eql(fill);
+        });
+      })();
+    });
+  });
+
+
+  it('should render data objects with collection markers', function() {
+    var xml = require('../../fixtures/bpmn/draw/data-objects.bpmn');
+    return bootstrapViewer(xml).call(this).then(function(result) {
+
+      checkErrors(result.error, result.warnings);
+
+      inject(function(elementRegistry) {
+        [
+          'DataInput_2_collection',
+          'DataOutput_2_collection'
+        ].forEach(id => {
+          var dataObjectGfx = elementRegistry.getGraphics(id);
+          var allPaths = domQueryAll('.djs-visual path', dataObjectGfx);
+
+          expect(allPaths).to.have.lengthOf(3);
+        });
+      })();
     });
   });
 
