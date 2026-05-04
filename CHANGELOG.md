@@ -6,6 +6,21 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.16.0](https://github.com/bpmn-io/bpmn-js/compare/v18.15.0...v18.16.0) (2026-05-04)
+
+
+### Features
+
+* resizable labels ([578aec1](https://github.com/bpmn-io/bpmn-js/commit/578aec138b536b2f1f669ec8b32da731c1e00ce1))
+
+
+### Bug Fixes
+
+* adjust text annotation min size ([f76292a](https://github.com/bpmn-io/bpmn-js/commit/f76292a1f3aff77f32b638c36c796d8ed34eea06))
+* calculate label height to prevent text overflow ([5cf39c4](https://github.com/bpmn-io/bpmn-js/commit/5cf39c469b7b1bcba81d9d11042661a588212395))
+* only return undefined if no intersect ([4e3f178](https://github.com/bpmn-io/bpmn-js/commit/4e3f178ddb58cf1c4b8434b36ee9e5bd19aee7bf))
+* restore text annotation bounds on text change undo ([0938952](https://github.com/bpmn-io/bpmn-js/commit/09389525c9a439da348bf878859f131b0d6cbaee))
+
 ### 18.16.0
 
 * `FEAT`: make external labels resizable ([#2414](https://github.com/bpmn-io/bpmn-js/pull/2414))
