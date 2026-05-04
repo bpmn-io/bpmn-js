@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### 18.16.0
+
+* `FEAT`: make external labels resizable ([#2414](https://github.com/bpmn-io/bpmn-js/pull/2414))
+
 ### 18.15.0
 
 * `FEAT`: show outline around lasso-selected elements ([#173](https://github.com/bpmn-io/bpmn-js/issues/173), [bpmn-io/diagram-js#1021](https://github.com/bpmn-io/diagram-js/pull/1021))
