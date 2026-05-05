@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { forEach } from 'min-dash';
 
 import {

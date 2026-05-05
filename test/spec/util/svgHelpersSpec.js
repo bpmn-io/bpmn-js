@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { expectSvgPath, compareSvgPaths, pathToNumbers } from '../../util/svgHelpers';
 
 

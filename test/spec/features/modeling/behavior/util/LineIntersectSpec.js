@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import intersection from 'lib/features/modeling/behavior/util/LineIntersect';
 
 
