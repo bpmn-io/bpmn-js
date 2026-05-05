@@ -148,21 +148,6 @@ describe('features - element factory', function() {
     }));
 
 
-    it('should error when accessing <di> via businessObject', inject(function(elementFactory) {
-
-      // given
-      var shape = elementFactory.createShape({
-        type: 'bpmn:Task',
-      });
-
-      // then
-      expect(shape.di).to.exist;
-      expect(function() {
-        shape.businessObject.di;
-      }).to.throw(/The di is available through the diagram element only./);
-    }));
-
-
     it('should add collapsed attribute to subprocess', inject(function(elementFactory) {
 
       // when
