@@ -82,6 +82,10 @@ module.exports = function(karma) {
             sideEffects: true
           },
           {
+            test: require.resolve('../globals.js'),
+            sideEffects: true
+          },
+          {
             test: /\.css|\.bpmn$/,
             type: 'asset/source'
           }
