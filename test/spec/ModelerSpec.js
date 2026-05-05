@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import Modeler from 'lib/Modeler';

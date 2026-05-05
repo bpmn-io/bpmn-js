@@ -9,15 +9,19 @@ var VARIANT = process.env.VARIANT;
 
 var NODE_ENV = process.env.NODE_ENV;
 
+var basePath = '../..';
+
+var suite = 'test/distro/' + VARIANT + '.js';
+
 
 module.exports = function(karma) {
   karma.set({
 
-    basePath: '../../',
+    basePath,
 
     frameworks: [
       'mocha',
-      'sinon-chai'
+      'webpack'
     ],
 
     files: [
@@ -26,9 +30,12 @@ module.exports = function(karma) {
       'dist/assets/diagram-js.css',
       { pattern: 'resources/initial.bpmn', included: false },
       { pattern: 'dist/assets/**/*', included: false },
-      'test/distro/helper.js',
-      'test/distro/' + VARIANT + '.js'
+      suite
     ],
+
+    preprocessors: {
+      [ suite ]: [ 'webpack' ]
+    },
 
     reporters: [ 'progress' ],
 
@@ -37,7 +44,12 @@ module.exports = function(karma) {
     browserNoActivityTimeout: 30000,
 
     singleRun: true,
-    autoWatch: false
+    autoWatch: false,
+
+    webpack: {
+      mode: 'development',
+      devtool: 'eval-source-map'
+    }
   });
 
 };

@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import { queryAll as domQueryAll } from 'min-dom';
 
 import {

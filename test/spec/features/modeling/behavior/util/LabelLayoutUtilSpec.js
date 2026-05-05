@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 var getLabelAdjustment = require('lib/features/modeling/behavior/util/LabelLayoutUtil').getLabelAdjustment;
 
 

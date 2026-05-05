@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+
 /**
  * Assert if two SVG paths are approximately equal within a given tolerance.
  *

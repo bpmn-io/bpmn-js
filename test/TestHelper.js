@@ -19,18 +19,20 @@ insertCSS('diagram-js-testing.css',
 );
 
 
+import { use as chaiUse } from 'chai';
+import sinonChai from 'sinon-chai';
 import ChaiMatch from 'chai-match';
 import BoundsMatchers from './matchers/BoundsMatchers';
 import ConnectionMatchers from './matchers/ConnectionMatchers';
 import JSONMatcher from './matchers/JSONMatcher';
 
-/* global chai */
 
 // add suite specific matchers
-chai.use(ChaiMatch);
-chai.use(BoundsMatchers);
-chai.use(ConnectionMatchers);
-chai.use(JSONMatcher);
+chaiUse(sinonChai);
+chaiUse(ChaiMatch);
+chaiUse(BoundsMatchers);
+chaiUse(ConnectionMatchers);
+chaiUse(JSONMatcher);
 
 // be able to load files into running bpmn-js test cases
 document.documentElement.addEventListener('dragover', fileDrop('Drop a BPMN diagram to open it in the currently active test.', function(files) {
