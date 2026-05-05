@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### 18.16.1
+
+* `FIX`: render data output with filled arrow ([#2425](https://github.com/bpmn-io/bpmn-js/pull/2425))
+
 ### 18.16.0
 
 * `FEAT`: make external labels resizable ([#2414](https://github.com/bpmn-io/bpmn-js/pull/2414))
