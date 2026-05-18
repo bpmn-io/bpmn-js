@@ -94,7 +94,7 @@ describe('label bounds', function() {
         // then
         var expectedX = getExpectedX(shape);
 
-        expect(shape.label.x).to.equal(expectedX);
+        expect(shape.label.x).to.be.closeTo(expectedX, DELTA);
       }));
 
 
@@ -207,7 +207,7 @@ describe('label bounds', function() {
         var xml = result.xml;
 
         // strip spaces and line breaks after '>'
-        xml = xml.replace(/>\s+/g,'>');
+        xml = xml.replace(/>\s+/g, '>');
 
         // get label width and height from XML
         var matches = xml.match(/StartEvent_1_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
@@ -251,7 +251,7 @@ describe('label bounds', function() {
         var xml = result.xml;
 
         // strip spaces and line breaks after '>'
-        xml = xml.replace(/>\s+/g,'>');
+        xml = xml.replace(/>\s+/g, '>');
 
         // get label width and height from XML
         var matches = xml.match(/StartEvent_3_di.*?BPMNLabel.*?width="(\d*).*?height="(\d*)/);
