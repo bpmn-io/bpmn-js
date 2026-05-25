@@ -5,6 +5,7 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
+import { string } from 'rollup-plugin-string';
 import license from 'rollup-plugin-license';
 
 import {
@@ -100,6 +101,7 @@ function pgl(plugins = [], env = 'production') {
       preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify(env)
     }),
+    string({ include: '**/*.svg' }),
     nodeResolve(),
     commonjs(),
     json(),
