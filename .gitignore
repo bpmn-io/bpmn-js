@@ -1,5 +1,4 @@
 node_modules/
-dist/
 coverage/
 lib/**/*.d.ts
 .idea
