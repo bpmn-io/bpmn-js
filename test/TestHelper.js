@@ -7,11 +7,14 @@ import {
   getBpmnJS
 } from './helper';
 
+// Order matters: bpmn-js.css must load LAST so its rules naturally win
+// over diagram-js.css + bpmn-embedded.css for equal-specificity selectors,
+// eliminating the need for !important on most overrides.
 insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
 
-insertCSS('bpmn-js.css', require('../assets/bpmn-js.css'));
-
 insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
+
+insertCSS('bpmn-js.css', require('../assets/bpmn-js.css'));
 
 insertCSS('diagram-js-testing.css',
   'body .test-container { height: auto }' +

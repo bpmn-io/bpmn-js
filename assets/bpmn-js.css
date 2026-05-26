@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 .bjs-container {
-  --bjs-font-family: Arial, sans-serif;
+  --bjs-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --color-grey-225-10-15: hsl(225, 10%, 15%);
   --color-grey-225-10-35: hsl(225, 10%, 35%);
@@ -142,4 +144,238 @@
   margin: 0;
   height: 20px;
   width: 20px;
+}
+
+/**
+ * Modern visual polish
+ *
+ * bpmn-js.css is loaded after diagram-js.css and bpmn-embedded.css
+ * (see test/TestHelper.js), so equal-specificity overrides win by source
+ * order — no !important needed.
+ */
+
+/* refined editor blue — Linear / Figma style instead of the legacy cyan */
+.bjs-container,
+.djs-parent {
+  --color-blue-205-100-45: hsl(217, 91%, 55%);
+  --color-blue-205-100-50: hsl(217, 91%, 60%);
+  --color-blue-205-100-70: hsl(217, 91%, 78%);
+
+  --palette-entry-color: hsl(222, 22%, 28%);
+  --palette-entry-hover-color: hsl(217, 91%, 55%);
+}
+
+/* off-white canvas with subtle dot grid */
+.djs-container {
+  background-color: hsl(220, 20%, 98%);
+  background-image: radial-gradient(circle, hsl(220, 13%, 86%) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* crisp Inter rendering across the editor (HTML overlays + SVG labels) */
+.bjs-container,
+.djs-container,
+.djs-popup,
+.djs-context-pad {
+  font-family: var(--bjs-font-family);
+  font-feature-settings: "cv11", "ss01", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.djs-container text {
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
+/* selection + hover affordances */
+.djs-element.selected .djs-outline {
+  stroke-width: 1.75px;
+}
+
+.djs-element:hover:not(.selected) .djs-outline {
+  visibility: visible;
+  stroke: hsla(217, 91%, 60%, 0.45);
+  stroke-width: 1.25px;
+}
+
+.djs-connection.selected .djs-visual > :nth-child(1) {
+  stroke-width: 2.5px;
+}
+
+/* palette + popup surfaces */
+.djs-palette {
+  border-radius: 10px;
+  border-color: hsla(225, 10%, 15%, 0.08);
+  box-shadow:
+    0 10px 30px hsla(225, 25%, 20%, 0.10),
+    0 2px 6px hsla(225, 25%, 20%, 0.06);
+}
+
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
+  border-radius: 6px;
+  font-size: 22px;
+  transition: background-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.djs-palette .entry:hover {
+  background: hsla(217, 91%, 60%, 0.08);
+  transform: scale(1.08);
+}
+
+.djs-popup {
+  border-radius: 10px;
+  box-shadow:
+    0 12px 32px hsla(225, 25%, 20%, 0.14),
+    0 3px 6px hsla(225, 25%, 20%, 0.08);
+}
+
+/* element pop-in — only freshly added elements (class set by
+ * lib/features/element-enter on shape.added / connection.added).
+ * Scoped to .djs-visual so it never clobbers the positioning transform. */
+@keyframes bjs-element-enter {
+  from { opacity: 0; transform: scale(0.78); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.djs-element.bjs-just-added > .djs-visual {
+  animation: bjs-element-enter 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes bjs-connection-draw {
+  from { stroke-dasharray: 1500; stroke-dashoffset: 1500; }
+  to   { stroke-dasharray: 1500; stroke-dashoffset: 0; }
+}
+
+.djs-connection.bjs-just-added > .djs-visual > path,
+.djs-connection.bjs-just-added > .djs-visual > polyline {
+  animation: bjs-connection-draw 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.djs-dragger .djs-visual {
+  animation: none;
+}
+
+/* modern resize handles, bendpoints, snap guides */
+.djs-resizer-visual {
+  fill: hsl(0, 0%, 100%);
+  stroke: hsl(217, 91%, 60%);
+  stroke-width: 1.5px;
+  rx: 2;
+  ry: 2;
+  filter: drop-shadow(0 1px 2px hsla(225, 25%, 20%, 0.18));
+}
+
+.djs-resizer:hover .djs-resizer-visual {
+  fill: hsl(217, 91%, 60%);
+  stroke: hsl(0, 0%, 100%);
+}
+
+.djs-snap-line {
+  stroke: hsl(217, 91%, 60%);
+  stroke-opacity: 0.65;
+  stroke-width: 1px;
+  stroke-dasharray: 6 4;
+}
+
+.djs-bendpoint .djs-visual {
+  fill: hsl(0, 0%, 100%);
+  stroke: hsl(217, 91%, 60%);
+  stroke-width: 1.5px;
+}
+
+.djs-bendpoint:hover .djs-visual,
+.djs-bendpoint.floating .djs-visual {
+  fill: hsl(217, 91%, 60%);
+}
+
+/* context pad — one-click add: every action visible as a chip in a
+ * compact 2-column grid inside a single rounded surface */
+.djs-context-pad.open {
+  width: auto;
+  padding: 4px;
+  background: hsl(0, 0%, 100%);
+  border-radius: 12px;
+  box-shadow:
+    0 10px 30px hsla(225, 25%, 20%, 0.10),
+    0 2px 6px hsla(225, 25%, 20%, 0.06);
+}
+
+.djs-context-pad.open .group {
+  display: grid;
+  grid-template-columns: repeat(2, 24px);
+  gap: 2px;
+}
+
+.djs-context-pad.open .group + .group {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid hsla(225, 10%, 15%, 0.06);
+}
+
+.djs-context-pad .entry {
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 14px;
+  margin: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: hsl(222, 22%, 30%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 120ms ease, color 120ms ease;
+}
+
+.djs-context-pad .entry:hover {
+  background: hsla(217, 91%, 60%, 0.10);
+  color: hsl(217, 91%, 50%);
+}
+
+.djs-context-pad .entry[data-action="delete"]:hover {
+  background: hsla(0, 84%, 55%, 0.10);
+  color: hsl(0, 84%, 50%);
+}
+
+/* replace the wrench glyph with a swap/change icon (reads as
+ * "switch this element to another type") */
+.bpmn-icon-screw-wrench::before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 3L4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4'/></svg>");
+          mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M8 3L4 7l4 4M4 7h16M16 21l4-4-4-4M20 17H4'/></svg>");
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+          mask-position: center;
+  font-family: inherit;
+  vertical-align: middle;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .djs-element.bjs-just-added > .djs-visual,
+  .djs-connection.bjs-just-added > .djs-visual > path,
+  .djs-connection.bjs-just-added > .djs-visual > polyline {
+    animation: none;
+  }
+
+  .djs-palette .entry,
+  .djs-palette .djs-palette-toggle,
+  .djs-context-pad .entry {
+    transition: none;
+  }
+
+  .djs-palette .entry:hover {
+    transform: none;
+  }
 }
