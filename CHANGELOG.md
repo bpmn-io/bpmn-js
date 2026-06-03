@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: introduce multi-step navigation to popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: show search result number in popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: improve popup menu styling ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: improve popup menu assistive text and labels ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: do not cut of popup menu label and description tests ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+
 ### 18.16.1
 
 * `FIX`: render data output with filled arrow ([#2425](https://github.com/bpmn-io/bpmn-js/pull/2425))
