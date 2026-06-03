@@ -13,7 +13,6 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: improve popup menu styling ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
 * `FEAT`: improve popup menu assistive text and labels ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
 * `FEAT`: do not cut of popup menu label and description tests ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
-* `FIX`: render data output with filled arrow ([#2425](https://github.com/bpmn-io/bpmn-js/pull/2425))
 * `CHORE`: remove `businessObject.di` compatibility error ([#2429](https://github.com/bpmn-io/bpmn-js/pull/2429))
 * `DEPS`: update to `diagram-js@15.15.0`
 * `DEPS`: update to `diagram-js-direct-editing@3.4.0`
