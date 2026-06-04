@@ -6,8 +6,8 @@ const files = {
     'coverage'
   ],
   build: [
-    'test/config/*.js',
-    'tasks/**/*.mjs',
+    'test/config/*.cjs',
+    'tasks/**/*.js',
     '*.js',
     '*.mjs'
   ],
