@@ -1541,6 +1541,52 @@ describe('features/popup-menu - replace menu provider', function() {
     });
 
 
+    describe('groups', function() {
+
+      beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+
+
+      it('should group typed start events', inject(function(elementRegistry) {
+
+        // given
+        var startEvent = elementRegistry.get('StartEvent_1');
+
+        // when
+        openPopup(startEvent);
+
+        // then
+        expect(queryGroupHeaders()).to.eql([ 'Typed events' ]);
+      }));
+
+
+      it('should split boundary events into interrupting and non-interrupting', inject(function(elementRegistry) {
+
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_1');
+
+        // when
+        openPopup(boundaryEvent, 40);
+
+        // then
+        expect(queryGroupHeaders()).to.eql([ 'Interrupting', 'Non-interrupting' ]);
+      }));
+
+
+      it('should NOT add a header for the default group', inject(function(elementRegistry) {
+
+        // given
+        var gateway = elementRegistry.get('ExclusiveGateway_1');
+
+        // when
+        openPopup(gateway);
+
+        // then
+        expect(queryGroupHeaders()).to.be.empty;
+      }));
+
+    });
+
+
     describe('default flows', function() {
 
       var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
@@ -1729,7 +1775,7 @@ describe('features/popup-menu - replace menu provider', function() {
       beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
 
-      it('options should include subProcesses and callActivity', inject(function(elementRegistry) {
+      it('options should include callActivity and a sub-process step', inject(function(elementRegistry) {
 
         // given
         var taskElement = elementRegistry.get('Task_1');
@@ -1737,13 +1783,34 @@ describe('features/popup-menu - replace menu provider', function() {
         // when
         openPopup(taskElement);
 
-        var callActivityEntry = queryEntry('replace-with-call-activity'),
-            subProcessEntry = queryEntry('replace-with-collapsed-subprocess');
-
         // then
-        expect(callActivityEntry).to.exist;
-        expect(subProcessEntry).to.exist;
+        // call activity stays a direct option
+        expect(queryEntry('replace-with-call-activity')).to.exist;
+
+        // sub-processes are folded behind a step
+        expect(queryEntry('sub-processes')).to.exist;
+        expect(queryEntry('replace-with-collapsed-subprocess')).not.to.exist;
       }));
+
+
+      it('should nest sub-process options inside the step', inject(
+        function(elementRegistry, replaceMenuProvider) {
+
+          // given
+          var taskElement = elementRegistry.get('Task_1');
+
+          // when
+          var entries = replaceMenuProvider.getPopupMenuEntries(taskElement);
+
+          // then
+          expect(entries['sub-processes'].entries).to.have.keys([
+            'replace-with-collapsed-subprocess',
+            'replace-with-expanded-subprocess',
+            'replace-with-collapsed-ad-hoc-subprocess',
+            'replace-with-ad-hoc-subprocess'
+          ]);
+        }
+      ));
 
     });
 
@@ -3093,6 +3160,14 @@ function queryEntryLabel(id) {
   var entry = queryEntry(id);
 
   return domQuery('span', entry);
+}
+
+function queryGroupHeaders() {
+  var container = getMenuContainer();
+
+  return Array.from(domQueryAll('.djs-popup .entry-header', container), function(node) {
+    return node.textContent.trim();
+  });
 }
 
 function triggerAction(id) {
