@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   is,
   getDi
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 
 describe('import - model wiring', function() {
@@ -15,7 +15,7 @@ describe('import - model wiring', function() {
 
   describe('basics', function() {
 
-    var xml = require('../../fixtures/bpmn/import/process.bpmn');
+    var xml = require('bpmn-js/test/fixtures/bpmn/import/process.bpmn');
 
     beforeEach(bootstrapViewer(xml));
 
@@ -135,7 +135,7 @@ describe('import - model wiring', function() {
 
   describe('host attacher relationship', function() {
 
-    var xml = require('../../fixtures/bpmn/import/boundaryEvent.bpmn');
+    var xml = require('bpmn-js/test/fixtures/bpmn/import/boundaryEvent.bpmn');
 
     beforeEach(bootstrapViewer(xml));
 
@@ -164,7 +164,7 @@ describe('import - model wiring', function() {
 
   describe('lanes + flow elements', function() {
 
-    var xml = require('./lane-flowNodes.bpmn');
+    var xml = require('bpmn-js/test/spec/import/lane-flowNodes.bpmn');
 
     beforeEach(bootstrapViewer(xml));
 
@@ -199,7 +199,7 @@ describe('import - model wiring', function() {
 
   describe('lanes + flow elements / missing flowNodeRef', function() {
 
-    var xml = require('./lane-missing-flowNodeRef.bpmn');
+    var xml = require('bpmn-js/test/spec/import/lane-missing-flowNodeRef.bpmn');
 
     beforeEach(bootstrapViewer(xml));
 

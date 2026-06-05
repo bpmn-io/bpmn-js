@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import replaceModule from 'lib/features/replace';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceModule from 'bpmn-js/lib/features/replace';
 
-import { is, getDi } from 'lib/util/ModelUtil';
+import { is, getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
 describe('features/modeling/behavior - subprocess start event', function() {
 

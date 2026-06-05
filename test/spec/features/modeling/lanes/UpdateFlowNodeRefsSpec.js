@@ -3,11 +3,11 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import copyPasteModule from 'lib/features/copy-paste';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
 
 import {
   find

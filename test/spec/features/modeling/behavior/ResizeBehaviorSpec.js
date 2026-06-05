@@ -2,21 +2,21 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import resizeModule from 'diagram-js/lib/features/resize';
-import rulesModule from 'lib/features/rules';
-import snappingModule from 'lib/features/snapping';
+import rulesModule from 'bpmn-js/lib/features/rules';
+import snappingModule from 'bpmn-js/lib/features/snapping';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   getParticipantResizeConstraints
-} from 'lib/features/modeling/behavior/ResizeBehavior';
+} from 'bpmn-js/lib/features/modeling/behavior/ResizeBehavior.js';
 
 var testModules = [
   coreModule,

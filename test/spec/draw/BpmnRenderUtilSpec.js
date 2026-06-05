@@ -12,7 +12,7 @@ import {
   getFillColor,
   getStrokeColor,
   getLabelColor
-} from 'lib/draw/BpmnRenderUtil';
+} from 'bpmn-js/lib/draw/BpmnRenderUtil.js';
 
 
 describe('BpmnRenderUtil', function() {

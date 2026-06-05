@@ -3,7 +3,7 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import TestContainer from 'mocha-test-container-support';
 
@@ -14,20 +14,20 @@ import {
 
 import {
   is
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
-import contextPadModule from 'lib/features/context-pad';
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import replaceMenuModule from 'lib/features/popup-menu';
+import contextPadModule from 'bpmn-js/lib/features/context-pad';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceMenuModule from 'bpmn-js/lib/features/popup-menu';
 import createModule from 'diagram-js/lib/features/create';
-import customRulesModule from '../../../util/custom-rules';
-import autoPlaceModule from 'lib/features/auto-place';
-import appendMenuProvider from 'lib/features/popup-menu';
+import customRulesModule from 'bpmn-js/test/util/custom-rules/index.js';
+import autoPlaceModule from 'bpmn-js/lib/features/auto-place';
+import appendMenuProvider from 'bpmn-js/lib/features/popup-menu';
 
 
 describe('features - context-pad', function() {

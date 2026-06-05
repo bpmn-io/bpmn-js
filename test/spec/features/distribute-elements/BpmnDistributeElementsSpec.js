@@ -4,13 +4,13 @@ import { forEach } from 'min-dash';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import bpmnDistributeElements from 'lib/features/distribute-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import bpmnDistributeElements from 'bpmn-js/lib/features/distribute-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
 function last(arr) {
   return arr[arr.length - 1];

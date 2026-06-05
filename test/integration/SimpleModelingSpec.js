@@ -1,4 +1,4 @@
-import Modeler from 'lib/Modeler';
+import Modeler from 'bpmn-js/lib/Modeler.js';
 
 import TestContainer from 'mocha-test-container-support';
 

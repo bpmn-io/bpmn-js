@@ -1,9 +1,9 @@
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import { expect } from 'chai';
 
 

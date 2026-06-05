@@ -3,15 +3,15 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import replaceModule from 'lib/features/replace';
-import bpmnCopyPasteModule from 'lib/features/copy-paste';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceModule from 'bpmn-js/lib/features/replace';
+import bpmnCopyPasteModule from 'bpmn-js/lib/features/copy-paste';
 import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 import { keys } from 'min-dash';
 
 describe('features/modeling/behavior - subprocess planes', function() {

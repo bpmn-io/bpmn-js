@@ -2,7 +2,7 @@ import inherits from 'inherits-browser';
 
 import {
   is as isBpmn
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import CommandInterceptor from 'diagram-js/lib/command/CommandInterceptor.js';
 

@@ -3,22 +3,22 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 var pick = require('min-dash').pick;
 
 var getBBox = require('diagram-js/lib/util/Elements').getBBox;
 
-var getParent = require('lib/features/modeling/util/ModelingUtil').getParent;
+var getParent = require('bpmn-js/lib/features/modeling/util/ModelingUtil.js').getParent;
 
 
-import bpmnEditorActionsModule from 'lib/features/editor-actions';
+import bpmnEditorActionsModule from 'bpmn-js/lib/features/editor-actions';
 import selectionModule from 'diagram-js/lib/features/selection';
 import alignElementsModule from 'diagram-js/lib/features/align-elements';
 import distributeElementsModule from 'diagram-js/lib/features/distribute-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import contextPad from 'lib/features/context-pad';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import contextPad from 'bpmn-js/lib/features/context-pad';
 
 var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn');
 var collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');

@@ -1,7 +1,7 @@
-import CustomElementFactory from './CustomElementFactory';
-import CustomRenderer from './CustomRenderer';
-import CustomRules from './CustomRules';
-import CustomUpdater from './CustomUpdater';
+import CustomElementFactory from './CustomElementFactory.js';
+import CustomRenderer from './CustomRenderer.js';
+import CustomRules from './CustomRules.js';
+import CustomUpdater from './CustomUpdater.js';
 
 export default {
   __init__: [

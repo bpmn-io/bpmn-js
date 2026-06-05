@@ -4,11 +4,11 @@ import {
 
 import inherits from 'inherits-browser';
 
-import ElementFactory from 'lib/features/modeling/ElementFactory';
+import ElementFactory from 'bpmn-js/lib/features/modeling/ElementFactory.js';
 
 import {
   DEFAULT_LABEL_SIZE
-} from 'lib/util/LabelUtil';
+} from 'bpmn-js/lib/util/LabelUtil.js';
 
 
 export default function CustomElementFactory(injector) {

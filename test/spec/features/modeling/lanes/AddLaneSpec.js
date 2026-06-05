@@ -3,20 +3,20 @@ import {
   bootstrapModeler,
   inject,
   getBpmnJS
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   map,
   pick
 } from 'min-dash';
 
-import contextPadModule from 'lib/features/context-pad';
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import contextPadModule from 'bpmn-js/lib/features/context-pad';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   getChildLanes
-} from 'lib/features/modeling/util/LaneUtil';
+} from 'bpmn-js/lib/features/modeling/util/LaneUtil.js';
 
 import { query as domQuery } from 'min-dom';
 

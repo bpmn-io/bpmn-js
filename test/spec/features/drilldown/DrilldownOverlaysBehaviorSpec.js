@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import replaceModule from 'lib/features/replace';
-import drilldownModule from 'lib/features/drilldown';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceModule from 'bpmn-js/lib/features/replace';
+import drilldownModule from 'bpmn-js/lib/features/drilldown';
 import { classes } from 'min-dom';
 
 describe('features/modeling/behavior - subprocess planes', function() {

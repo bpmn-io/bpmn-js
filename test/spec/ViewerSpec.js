@@ -10,17 +10,17 @@ import TestContainer from 'mocha-test-container-support';
 
 import Diagram from 'diagram-js/lib/Diagram.js';
 
-import ViewerDefaultExport from '../../';
+import ViewerDefaultExport from 'bpmn-js';
 
-import Viewer from 'lib/Viewer';
+import Viewer from 'bpmn-js/lib/Viewer.js';
 
 import inherits from 'inherits-browser';
 
 import {
   createViewer
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import { getDi } from 'lib/util/ModelUtil';
+import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'viewer';
 

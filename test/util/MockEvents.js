@@ -4,7 +4,7 @@ import {
 
 import {
   getBpmnJS
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 
 /**

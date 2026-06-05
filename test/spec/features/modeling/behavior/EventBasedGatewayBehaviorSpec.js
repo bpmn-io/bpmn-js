@@ -2,19 +2,19 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import modelingModule from 'lib/features/modeling';
-import replaceModule from 'lib/features/replace';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceModule from 'bpmn-js/lib/features/replace';
 
-import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
+import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
 
 describe('features/modeling/behavior - event-based gateway', function() {
 
-  var diagramXML = require('./EventBasedGatewayBehavior.bpmn');
+  var diagramXML = require('bpmn-js/test/spec/features/modeling/behavior/EventBasedGatewayBehavior.bpmn');
 
   var testModules = [
     coreModule,
@@ -154,7 +154,7 @@ describe('features/modeling/behavior - event-based gateway', function() {
 
 describe('features/modeling/behavior - event-based gateway - integration', function() {
 
-  var diagramXML = require('./EventBasedGatewayBehavior.bpmn');
+  var diagramXML = require('bpmn-js/test/spec/features/modeling/behavior/EventBasedGatewayBehavior.bpmn');
 
   var testModules = [
     coreModule,

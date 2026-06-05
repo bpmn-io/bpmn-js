@@ -2,14 +2,14 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 var pick = require('min-dash').pick;
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-var getChildLanes = require('lib/features/modeling/util/LaneUtil').getChildLanes;
+var getChildLanes = require('bpmn-js/lib/features/modeling/util/LaneUtil.js').getChildLanes;
 
 
 function getBounds(element) {

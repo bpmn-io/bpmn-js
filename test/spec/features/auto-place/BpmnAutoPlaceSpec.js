@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import autoPlaceModule from 'lib/features/auto-place';
-import coreModule from 'lib/core';
-import labelEditingModule from 'lib/features/label-editing';
-import modelingModule from 'lib/features/modeling';
+import autoPlaceModule from 'bpmn-js/lib/features/auto-place';
+import coreModule from 'bpmn-js/lib/core';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import selectionModule from 'diagram-js/lib/features/selection';
 
-import { getBusinessObject } from '../../../../lib/util/ModelUtil';
+import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 
 
 describe('features/auto-place', function() {

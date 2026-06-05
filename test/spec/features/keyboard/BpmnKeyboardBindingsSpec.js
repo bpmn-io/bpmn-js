@@ -3,27 +3,27 @@ import sinon from 'sinon';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import { forEach } from 'min-dash';
 
-import copyPasteModule from 'lib/features/copy-paste';
-import coreModule from 'lib/core';
-import editorActionsModule from 'lib/features/editor-actions';
+import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
+import coreModule from 'bpmn-js/lib/core';
+import editorActionsModule from 'bpmn-js/lib/features/editor-actions';
 import globalConnectModule from 'diagram-js/lib/features/global-connect';
 import handToolModule from 'diagram-js/lib/features/hand-tool';
-import keyboardModule from 'lib/features/keyboard';
-import labelEditingModule from 'lib/features/label-editing';
+import keyboardModule from 'bpmn-js/lib/features/keyboard';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
 import lassoToolModule from 'diagram-js/lib/features/lasso-tool';
-import modelingModule from 'lib/features/modeling';
-import searchModule from 'lib/features/search';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import searchModule from 'bpmn-js/lib/features/search';
 import spaceToolModule from 'diagram-js/lib/features/space-tool';
 import popupMenu from 'diagram-js/lib/features/popup-menu';
-import contextPad from 'lib/features/context-pad';
+import contextPad from 'bpmn-js/lib/features/context-pad';
 
 import {
   createKeyEvent
-} from 'test/util/KeyEvents';
+} from 'bpmn-js/test/util/KeyEvents.js';
 
 
 describe('features/keyboard', function() {

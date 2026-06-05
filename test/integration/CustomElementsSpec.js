@@ -2,16 +2,16 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import Modeler from 'lib/Modeler';
+import Modeler from 'bpmn-js/lib/Modeler.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 
-import customElementsModules from './custom-elements';
+import customElementsModules from './custom-elements/index.js';
 
 var modelerModules = Modeler.prototype._modules,
     customModules = [ customElementsModules ];

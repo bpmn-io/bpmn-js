@@ -6,9 +6,9 @@ import { BpmnModdle } from 'bpmn-moddle';
 
 import {
   importBpmnDiagram
-} from 'lib/import/Importer';
+} from 'bpmn-js/lib/import/Importer.js';
 
-import CoreModule from 'lib/core';
+import CoreModule from 'bpmn-js/lib/core';
 
 import {
   matches as domMatches
@@ -22,7 +22,7 @@ import {
   find
 } from 'min-dash';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
 
 describe('import - Importer', function() {

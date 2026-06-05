@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import BaseViewer from 'lib/BaseViewer';
+import BaseViewer from 'bpmn-js/lib/BaseViewer.js';
 
 import inherits from 'inherits-browser';
 

@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   pick
 } from 'min-dash';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import bpmnSearchModule from 'lib/features/search';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import bpmnSearchModule from 'bpmn-js/lib/features/search';
 
 
 describe('features - BPMN search provider', function() {

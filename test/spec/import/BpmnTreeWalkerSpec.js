@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
-import BpmnTreeWalker from 'lib/import/BpmnTreeWalker';
+import BpmnTreeWalker from 'bpmn-js/lib/import/BpmnTreeWalker.js';
 
 import { BpmnModdle } from 'bpmn-moddle';
 
 import { find } from 'min-dash';
 
-import simpleXML from 'test/fixtures/bpmn/simple.bpmn';
-import collaboration from 'test/fixtures/bpmn/collaboration.bpmn';
+import simpleXML from 'bpmn-js/test/fixtures/bpmn/simple.bpmn';
+import collaboration from 'bpmn-js/test/fixtures/bpmn/collaboration.bpmn';
 
 
 describe('import - BpmnTreeWalker', function() {

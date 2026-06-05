@@ -2,22 +2,22 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   getBBox
 } from 'diagram-js/lib/util/Elements.js';
 
-import { getDi } from 'lib/util/ModelUtil';
 import { asTRBL } from 'diagram-js/lib/layout/LayoutUtil.js';
+import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 
 describe('features/modeling - create participant', function() {

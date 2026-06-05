@@ -1,12 +1,13 @@
 import { expect } from 'chai';
 import {
-  inject
-} from 'test/TestHelper';
+  inject,
+  bootstrapModeler,
+  getBpmnJS
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import DrilldownModule from 'lib/features/drilldown';
-import { bootstrapModeler, getBpmnJS } from '../../../helper';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import DrilldownModule from 'bpmn-js/lib/features/drilldown';
 
 
 describe('features - drilldown', function() {

@@ -3,16 +3,16 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import createModule from 'diagram-js/lib/features/create';
 import moveModule from 'diagram-js/lib/features/move';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import subProcessWithAnnotationsXML from './ArtifactBehavior.sub-process-basic.bpmn';
 import subProcessWithGroupXML from './ArtifactBehavior.sub-process-group.bpmn';

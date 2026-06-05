@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-var getLabelAdjustment = require('lib/features/modeling/behavior/util/LabelLayoutUtil').getLabelAdjustment;
+var getLabelAdjustment = require('bpmn-js/lib/features/modeling/behavior/util/LabelLayoutUtil.js').getLabelAdjustment;
 
 
 describe('modeling/behavior/util - LabelLayoutUtil#getLabelAdjustment', function() {

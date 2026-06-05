@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   getBusinessObject,
   is
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
-import bpmnCopyPasteModule from 'lib/features/copy-paste';
+import bpmnCopyPasteModule from 'bpmn-js/lib/features/copy-paste';
 import copyPasteModule from 'diagram-js/lib/features/copy-paste';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
 import { find } from 'min-dash';
 

@@ -2,14 +2,14 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
-import autoPlaceModule from 'lib/features/auto-place';
-import coreModule from 'lib/core';
-import gridSnappingModule from 'lib/features/grid-snapping';
-import modelingModule from 'lib/features/modeling';
+import autoPlaceModule from 'bpmn-js/lib/features/auto-place';
+import coreModule from 'bpmn-js/lib/core';
+import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 
 describe('features/grid-snapping - auto-place', function() {

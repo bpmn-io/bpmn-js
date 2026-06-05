@@ -3,16 +3,16 @@ import {
   bootstrapModeler,
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   attr as svgAttr,
   create as svgCreate
 } from 'tiny-svg';
 
-import coreModule from 'lib/core';
-import rendererModule from 'lib/draw';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import rendererModule from 'bpmn-js/lib/draw';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   query as domQuery,
@@ -21,21 +21,21 @@ import {
 
 import { getVisual } from 'diagram-js/lib/util/GraphicsUtil.js';
 
-import { isAny } from 'lib/features/modeling/util/ModelingUtil';
+import { isAny } from 'bpmn-js/lib/features/modeling/util/ModelingUtil.js';
 
-import { isExpanded } from 'lib/util/DiUtil';
+import { isExpanded } from 'bpmn-js/lib/util/DiUtil.js';
 
-import { isPlane } from 'lib/util/DrilldownUtil';
+import { isPlane } from 'bpmn-js/lib/util/DrilldownUtil.js';
 
 import {
   getDi,
   black,
   white
-} from 'lib/draw/BpmnRenderUtil';
+} from 'bpmn-js/lib/draw/BpmnRenderUtil.js';
 
-import customRendererModule from './custom-renderer';
+import customRendererModule from './custom-renderer/index.js';
 
-import { expectSvgPath } from '../../util/svgHelpers';
+import { expectSvgPath } from '../../util/svgHelpers.js';
 
 
 /**

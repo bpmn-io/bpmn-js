@@ -1,11 +1,11 @@
-export * from './helper';
+export * from 'bpmn-js/test/helper';
 
 import fileDrop from 'file-drops';
 
 import {
   insertCSS,
   getBpmnJS
-} from './helper';
+} from 'bpmn-js/test/helper';
 
 
 // add core styles

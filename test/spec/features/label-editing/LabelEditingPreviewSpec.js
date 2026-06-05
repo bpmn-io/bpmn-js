@@ -2,14 +2,14 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 var pick = require('min-dash').pick;
 
-import labelEditingModule from 'lib/features/label-editing';
-import coreModule from 'lib/core';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
+import coreModule from 'bpmn-js/lib/core';
 import draggingModule from 'diagram-js/lib/features/dragging';
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 
 describe('features - label-editing preview', function() {

@@ -3,17 +3,17 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import globalConnectModule from 'diagram-js/lib/features/global-connect';
 import connectionPreview from 'diagram-js/lib/features/connection-preview';
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 
-import { createCanvasEvent as canvasEvent } from '../../../../util/MockEvents';
+import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
 var testModules = [
   coreModule,

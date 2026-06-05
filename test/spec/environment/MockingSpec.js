@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import Events from 'diagram-js/lib/core/EventBus.js';
 
-import Viewer from 'lib/Viewer';
+import Viewer from 'bpmn-js/lib/Viewer.js';
 
 
 describe('environment - mocking', function() {

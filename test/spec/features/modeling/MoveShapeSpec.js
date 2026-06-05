@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import { getDi } from 'lib/util/ModelUtil';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
 
 describe('features/modeling - move shape', function() {

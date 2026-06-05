@@ -1,4 +1,4 @@
-import CustomRules from './CustomRules';
+import CustomRules from './CustomRules.js';
 
 export default {
   __init__: [ 'customRules' ],

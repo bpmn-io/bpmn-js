@@ -4,20 +4,20 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import modelingModule from 'lib/features/modeling';
-import paletteModule from 'lib/features/palette';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import paletteModule from 'bpmn-js/lib/features/palette';
 
 import { createMoveEvent } from 'diagram-js/lib/features/mouse/Mouse.js';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   query as domQuery,

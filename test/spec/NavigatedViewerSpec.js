@@ -1,15 +1,15 @@
 import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
-import NavigatedViewer from 'lib/NavigatedViewer';
+import NavigatedViewer from 'bpmn-js/lib/NavigatedViewer.js';
 
-import EditorActionsModule from 'lib/features/editor-actions';
+import EditorActionsModule from 'bpmn-js/lib/features/editor-actions';
 
 import TestContainer from 'mocha-test-container-support';
 
 import {
   createViewer
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'navigated-viewer';
 

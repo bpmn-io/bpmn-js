@@ -3,7 +3,7 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   query as domQuery
@@ -13,9 +13,9 @@ import {
   forEach
 } from 'min-dash';
 
-import alignElementsModule from 'lib/features/align-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import alignElementsModule from 'bpmn-js/lib/features/align-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
 
 

@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import keyboardMoveSelectionModule from 'diagram-js/lib/features/keyboard-move-selection';
-import modelingModule from 'lib/features/modeling';
-import rulesModule from 'lib/features/rules';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import rulesModule from 'bpmn-js/lib/features/rules';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 

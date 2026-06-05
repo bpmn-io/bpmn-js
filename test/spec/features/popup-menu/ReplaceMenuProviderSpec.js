@@ -6,17 +6,17 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   createEvent as globalEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
-import autoResizeModule from 'lib/features/auto-resize';
-import coreModule from 'lib/core';
-import customRulesModule from '../../../util/custom-rules';
-import modelingModule from 'lib/features/modeling';
-import replaceMenuProviderModule from 'lib/features/popup-menu';
+import autoResizeModule from 'bpmn-js/lib/features/auto-resize';
+import coreModule from 'bpmn-js/lib/core';
+import customRulesModule from 'bpmn-js/test/util/custom-rules/index.js';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceMenuProviderModule from 'bpmn-js/lib/features/popup-menu';
 
 import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
@@ -27,10 +27,10 @@ import {
   classes as domClasses
 } from 'min-dom';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
-import { isExpanded } from 'lib/util/DiUtil';
-import { getBusinessObject } from '../../../../lib/util/ModelUtil';
+import { isExpanded } from 'bpmn-js/lib/util/DiUtil.js';
+import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 import { omit } from 'min-dash';
 
 

@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   assign,
   pick
 } from 'min-dash';
 
-import modelingModule from 'lib/features/modeling';
-import replaceModule from 'lib/features/replace';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import replaceModule from 'bpmn-js/lib/features/replace';
 import moveModule from 'diagram-js/lib/features/move';
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 
 import camundaModdleModule from 'camunda-bpmn-moddle/lib';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
@@ -20,14 +20,14 @@ import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 import {
   is,
   getDi
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   isExpanded,
   isInterrupting,
   isEventSubProcess,
   hasErrorEventDefinition
-} from 'lib/util/DiUtil';
+} from 'bpmn-js/lib/util/DiUtil.js';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 

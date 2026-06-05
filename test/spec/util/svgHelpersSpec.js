@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { expectSvgPath, compareSvgPaths, pathToNumbers } from '../../util/svgHelpers';
+import { expectSvgPath, compareSvgPaths, pathToNumbers } from 'bpmn-js/test/util/svgHelpers.js';
 
 
 describe('test helpers - svgHelpers', function() {

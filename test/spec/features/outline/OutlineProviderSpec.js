@@ -2,18 +2,18 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import outlineProviderModule from 'lib/features/outline';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import outlineProviderModule from 'bpmn-js/lib/features/outline';
 
 import diagramXml from './OutlineProvider.bpmn';
 
 import {
   DATA_OBJECT_REFERENCE_OUTLINE_PATH,
   DATA_STORE_REFERENCE_OUTLINE_PATH
-} from 'lib/features/outline/OutlineUtil';
+} from 'bpmn-js/lib/features/outline/OutlineUtil.js';
 
 import {
   query as domQuery

@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import alignElementsModule from 'lib/features/align-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import alignElementsModule from 'bpmn-js/lib/features/align-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
 
 describe('features/align-elements', function() {

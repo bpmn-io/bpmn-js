@@ -2,18 +2,18 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   getBpmnJS
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   add,
   attach,
   connect
-} from './Helper';
+} from 'bpmn-js/test/spec/features/ordering/Helper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-import emptyProcessXML from 'test/fixtures/bpmn/collaboration/process-empty.bpmn';
+import emptyProcessXML from 'bpmn-js/test/fixtures/bpmn/collaboration/process-empty.bpmn';
 
 
 describe('features/modeling - di ordering', function() {

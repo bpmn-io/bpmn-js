@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import rulesModule from 'lib/features/rules';
-import snappingModule from 'lib/features/snapping';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import rulesModule from 'bpmn-js/lib/features/rules';
+import snappingModule from 'bpmn-js/lib/features/snapping';
 import spaceToolModule from 'diagram-js/lib/features/space-tool';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   GROUP_MIN_DIMENSIONS,
@@ -21,7 +21,7 @@ import {
   VERTICAL_LANE_MIN_DIMENSIONS,
   VERTICAL_PARTICIPANT_MIN_DIMENSIONS,
   SUB_PROCESS_MIN_DIMENSIONS
-} from 'lib/features/modeling/behavior/ResizeBehavior';
+} from 'bpmn-js/lib/features/modeling/behavior/ResizeBehavior.js';
 
 var testModules = [
   coreModule,

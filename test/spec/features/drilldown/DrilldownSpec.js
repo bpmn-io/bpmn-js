@@ -2,13 +2,15 @@ import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import {
-  inject
-} from 'test/TestHelper';
+  inject,
+  bootstrapModeler,
+  getBpmnJS
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import drilldownModule from 'lib/features/drilldown';
-import modelingModule from 'lib/features/modeling';
-import { bootstrapModeler, getBpmnJS } from '../../../helper';
+import coreModule from 'bpmn-js/lib/core';
+import drilldownModule from 'bpmn-js/lib/features/drilldown';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+
 import { classes } from 'min-dom';
 
 

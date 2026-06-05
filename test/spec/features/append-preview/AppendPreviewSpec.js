@@ -4,10 +4,10 @@ import { queryAll as domQueryAll } from 'min-dom';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import appendPreviewModule from 'lib/features/append-preview';
-import coreModule from 'lib/core';
+import appendPreviewModule from 'bpmn-js/lib/features/append-preview';
+import coreModule from 'bpmn-js/lib/core';
 
 describe('features/append-preview', function() {
 

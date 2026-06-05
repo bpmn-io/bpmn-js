@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
-import modelingModule from 'lib/features/modeling';
-import labelEditingModule from 'lib/features/label-editing';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
 import spaceTool from 'diagram-js/lib/features/space-tool';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 var testModules = [
   coreModule,

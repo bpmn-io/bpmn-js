@@ -1,19 +1,19 @@
 import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
-import Modeler from 'lib/Modeler';
-import Viewer from 'lib/Viewer';
-import NavigatedViewer from 'lib/NavigatedViewer';
+import Modeler from 'bpmn-js/lib/Modeler.js';
+import Viewer from 'bpmn-js/lib/Viewer.js';
+import NavigatedViewer from 'bpmn-js/lib/NavigatedViewer.js';
 
-import { getDi, isAny } from 'lib/util/ModelUtil';
+import { getDi, isAny } from 'bpmn-js/lib/util/ModelUtil.js';
 
 import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard.js';
 
 import TestContainer from 'mocha-test-container-support';
 
-import { createCanvasEvent } from '../util/MockEvents';
+import { createCanvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
-import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
+import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'bpmn-js/test/TestHelper.js';
 
 import { find, pick } from 'min-dash';
 

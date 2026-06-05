@@ -2,22 +2,22 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import replacePreviewModule from 'lib/features/replace-preview';
-import modelingModule from 'lib/features/modeling';
+import replacePreviewModule from 'bpmn-js/lib/features/replace-preview';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
-import coreModule from 'lib/core';
-import copyPasteModule from 'lib/features/copy-paste';
+import coreModule from 'bpmn-js/lib/core';
+import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
 
 import {
   getBusinessObject,
   is
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   query as domQuery
