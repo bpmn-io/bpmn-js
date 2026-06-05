@@ -27,10 +27,9 @@ import {
   classes as domClasses
 } from 'min-dom';
 
-import { is } from 'bpmn-js/lib/util/ModelUtil.js';
+import { is, getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 
 import { isExpanded } from 'bpmn-js/lib/util/DiUtil.js';
-import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 import { omit } from 'min-dash';
 
 import markersXML from '../../../fixtures/bpmn/draw/activity-markers-simple.bpmn';

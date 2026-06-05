@@ -181,7 +181,6 @@ describe('Modeler', function() {
   // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   !collectTranslations && describe('translate support', function() {
 
-
     it('should allow translation of multi-lingual strings', function() {
 
       return createModeler(simpleXML).then(function(result) {
