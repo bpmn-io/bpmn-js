@@ -102,6 +102,7 @@ describe('features/replace-preview', function() {
   }));
 
 
+  // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   skipCI('Mac OS') && it('should add dragger to context.visualReplacements once', inject(function(dragging) {
 
     // when
@@ -117,6 +118,7 @@ describe('features/replace-preview', function() {
   }));
 
 
+  // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   skipCI('Mac OS') && it('should remove dragger from context.visualReplacements', inject(
     function(elementRegistry, dragging) {
 
