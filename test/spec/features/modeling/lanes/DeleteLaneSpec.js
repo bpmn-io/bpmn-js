@@ -11,14 +11,19 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import lanesXML from './lanes.bpmn';
+import lanesVerticalXML from './lanes.vertical.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling - delete lane', function() {
 
-  var diagramXML = require('./lanes.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(lanesXML, { modules: testModules }));
 
 
   it('should remove first Lane', inject(function(elementRegistry, modeling) {
@@ -126,11 +131,7 @@ describe('features/modeling - delete lane', function() {
 
 describe('features/modeling - delete vertical lane', function() {
 
-  var diagramXML = require('./lanes.vertical.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(lanesVerticalXML, { modules: testModules }));
 
 
   it('should remove first Lane', inject(function(elementRegistry, modeling) {

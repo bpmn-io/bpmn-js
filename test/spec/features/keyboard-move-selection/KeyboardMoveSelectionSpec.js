@@ -11,19 +11,19 @@ import rulesModule from 'bpmn-js/lib/features/rules';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
+import diagramXML from './keyboard-move-selection.bpmn';
+
 
 describe('features/keyboard-move-selection', function() {
 
-  var diagramXML = require('./keyboard-move-selection.bpmn');
-
-  var testModules = [
-    coreModule,
-    keyboardMoveSelectionModule,
-    modelingModule,
-    rulesModule
-  ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      keyboardMoveSelectionModule,
+      modelingModule,
+      rulesModule
+    ]
+  }));
 
 
   it('should move task', inject(function(elementRegistry, keyboardMoveSelection, selection) {

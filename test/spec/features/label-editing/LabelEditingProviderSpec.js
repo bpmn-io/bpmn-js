@@ -18,15 +18,15 @@ import {
   createCanvasEvent as canvasEvent
 } from 'bpmn-js/test/util/MockEvents.js';
 
+import diagramXML from './LabelEditing.bpmn';
+
+
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
 var DELTA = 6;
 
 
 describe('features - label-editing', function() {
-
-  var diagramXML = require('./LabelEditing.bpmn');
-
 
   describe('basics', function() {
 

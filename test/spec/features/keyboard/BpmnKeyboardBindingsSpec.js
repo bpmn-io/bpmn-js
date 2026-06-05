@@ -25,28 +25,28 @@ import {
   createKeyEvent
 } from 'bpmn-js/test/util/KeyEvents.js';
 
+import diagramXML from '../../../fixtures/bpmn/simple.bpmn';
+
 
 describe('features/keyboard', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-  var testModules = [
-    copyPasteModule,
-    coreModule,
-    editorActionsModule,
-    globalConnectModule,
-    handToolModule,
-    keyboardModule,
-    labelEditingModule,
-    lassoToolModule,
-    modelingModule,
-    searchModule,
-    spaceToolModule,
-    popupMenu,
-    contextPad
-  ];
-
-  beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapViewer(diagramXML, {
+    modules: [
+      copyPasteModule,
+      coreModule,
+      editorActionsModule,
+      globalConnectModule,
+      handToolModule,
+      keyboardModule,
+      labelEditingModule,
+      lassoToolModule,
+      modelingModule,
+      searchModule,
+      spaceToolModule,
+      popupMenu,
+      contextPad
+    ]
+  }));
 
 
   describe('bpmn keyboard bindings', function() {

@@ -12,7 +12,7 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import paletteModule from 'bpmn-js/lib/features/palette';
 import contextPadModule from 'bpmn-js/lib/features/context-pad';
 
-var diagramXML = require('bpmn-js/test/fixtures/bpmn/simple.bpmn');
+import diagramXML from 'bpmn-js/test/fixtures/bpmn/simple.bpmn';
 
 
 // skipping this file during translation extraction

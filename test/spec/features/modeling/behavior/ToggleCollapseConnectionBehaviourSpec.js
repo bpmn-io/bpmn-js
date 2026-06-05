@@ -8,16 +8,18 @@ import {
 import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
-var testModules = [
-  coreModule,
-  modelingModule,
-];
+import diagramXML from './ToggleCollapseConnectionBehaviourSpec.bpmn';
+
 
 describe('features/modeling - Toggle Collapse Connection Behavior', function() {
 
-  var diagramXML = require('./ToggleCollapseConnectionBehaviourSpec.bpmn');
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+    ]
+  }));
 
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
   describe('Subprocess', function() {
 

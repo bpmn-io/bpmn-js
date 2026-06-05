@@ -16,6 +16,21 @@ import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import boundaryEventsLoopsXML from './LayoutSequenceFlowSpec.boundaryEventsLoops.bpmn';
+import boundaryEventsXML from './LayoutSequenceFlowSpec.boundaryEvents.bpmn';
+import boundaryEventsLoopsVerticalXML from './LayoutSequenceFlowSpec.vertical.boundaryEventsLoops.bpmn';
+import boundaryEventsVerticalXML from './LayoutSequenceFlowSpec.vertical.boundaryEvents.bpmn';
+import flowElementsXML from './LayoutSequenceFlowSpec.flowElements.bpmn';
+import flowElementsVerticalXML from './LayoutSequenceFlowSpec.vertical.flowElements.bpmn';
+import subProcessXML from './LayoutSequenceFlowSpec.subProcess.bpmn';
+import subProcessVerticalXML from './LayoutSequenceFlowSpec.vertical.subProcess.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling - layout', function() {
 
@@ -23,11 +38,7 @@ describe('features/modeling - layout', function() {
 
     describe('loops', function() {
 
-      var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEventsLoops.bpmn');
-
-      var testModules = [ coreModule, modelingModule ];
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsLoopsXML, { modules: testModules }));
 
 
       describe('in the corner', function() {
@@ -166,11 +177,7 @@ describe('features/modeling - layout', function() {
 
     describe('non-loops', function() {
 
-      var diagramXML = require('./LayoutSequenceFlowSpec.boundaryEvents.bpmn');
-
-      var testModules = [ coreModule, modelingModule ];
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
       it('attached top right, orientation top', function() {
@@ -340,11 +347,7 @@ describe('features/modeling - layout', function() {
 
     describe('loops', function() {
 
-      var diagramXML = require('./LayoutSequenceFlowSpec.vertical.boundaryEventsLoops.bpmn');
-
-      var testModules = [ coreModule, modelingModule ];
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsLoopsVerticalXML, { modules: testModules }));
 
 
       describe('in the corner', function() {
@@ -483,11 +486,7 @@ describe('features/modeling - layout', function() {
 
     describe('non-loops', function() {
 
-      var diagramXML = require('./LayoutSequenceFlowSpec.vertical.boundaryEvents.bpmn');
-
-      var testModules = [ coreModule, modelingModule ];
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsVerticalXML, { modules: testModules }));
 
 
       it('attached bottom left, orientation left', function() {
@@ -606,11 +605,7 @@ describe('features/modeling - layout', function() {
 
   describe('flow elements', function() {
 
-    var diagramXML = require('./LayoutSequenceFlowSpec.flowElements.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(flowElementsXML, { modules: testModules }));
 
 
     describe('loops', function() {
@@ -873,11 +868,7 @@ describe('features/modeling - layout', function() {
 
   describe('vertical flow elements', function() {
 
-    var diagramXML = require('./LayoutSequenceFlowSpec.vertical.flowElements.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(flowElementsVerticalXML, { modules: testModules }));
 
 
     describe('loops', function() {
@@ -1140,11 +1131,7 @@ describe('features/modeling - layout', function() {
 
   describe('subProcess', function() {
 
-    var diagramXML = require('./LayoutSequenceFlowSpec.subProcess.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(subProcessXML, { modules: testModules }));
 
 
     it('should layout straight between subProcesses (top -> bottom)', function() {
@@ -1256,11 +1243,7 @@ describe('features/modeling - layout', function() {
 
   describe('vertical subProcess', function() {
 
-    var diagramXML = require('./LayoutSequenceFlowSpec.vertical.subProcess.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(subProcessVerticalXML, { modules: testModules }));
 
 
     it('should layout straight between subProcesses (left -> right)', function() {

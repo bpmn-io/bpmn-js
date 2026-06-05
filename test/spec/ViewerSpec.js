@@ -22,6 +22,29 @@ import {
 
 import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import simpleXML from '../fixtures/bpmn/simple.bpmn';
+import diPlaneNoBpmnElementXML from '../fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn';
+import categoryValueXML from '../fixtures/bpmn/error/categoryValue.bpmn';
+import missingNamespaceXML from '../fixtures/bpmn/error/missing-namespace.bpmn';
+import duplicateIdsXML from '../fixtures/bpmn/error/duplicate-ids.bpmn';
+import emptyDefinitionsXML from '../fixtures/bpmn/empty-definitions.bpmn';
+import noProcessCollaborationXML from '../fixtures/bpmn/error/no-process-collaboration.bpmn';
+import otherXML from '../fixtures/bpmn/basic.bpmn';
+import collapsedSubProcessXML from '../fixtures/bpmn/collapsed-sub-process.bpmn';
+import collapsedSubProcessLegacyXML from '../fixtures/bpmn/collapsed-sub-process-legacy.bpmn';
+import multipleNestedProcessesXML from '../fixtures/bpmn/multiple-nested-processes.bpmn';
+import camundaModdle from '../fixtures/json/model/camunda.json';
+import camundaXML from '../fixtures/bpmn/extension/camunda.bpmn';
+import customXML from '../fixtures/bpmn/extension/custom.bpmn';
+import customModdle from '../fixtures/json/model/custom.json';
+import customOverrideXML from '../fixtures/bpmn/extension/custom-override.bpmn';
+import customOverrideModdle from '../fixtures/json/model/custom-override.json';
+import multipleXML from '../fixtures/bpmn/multiple-diagrams.bpmn';
+import multipleXMLOverlappingDI from '../fixtures/bpmn/multiple-diagrams-overlapping-di.bpmn';
+import multipleXMLWithLaneSet from '../fixtures/bpmn/multiple-diagrams-lanesets.bpmn';
+import complexXML from '../fixtures/bpmn/complex.bpmn';
+
+
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'viewer';
 
 
@@ -35,10 +58,9 @@ describe('Viewer', function() {
 
 
   (singleStart ? it.only : it)('should import simple process', function() {
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // when
-    return createViewer(container, Viewer, xml).then(function(result) {
+    return createViewer(container, Viewer, simpleXML).then(function(result) {
 
       var err = result.error;
       var warnings = result.warnings;
@@ -58,16 +80,15 @@ describe('Viewer', function() {
 
   it('should re-import simple process', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // given
-    return createViewer(container, Viewer, xml).then(function(result) {
+    return createViewer(container, Viewer, simpleXML).then(function(result) {
 
       var viewer = result.viewer;
 
       // when
       // mimic re-import of same diagram
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         // then
         expect(result.warnings).to.be.empty;
@@ -104,9 +125,8 @@ describe('Viewer', function() {
 
     it('should allow to add overlays', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         var viewer = result.viewer;
@@ -181,9 +201,9 @@ describe('Viewer', function() {
 
     it('should handle non-bpmn input', function() {
 
-      var xml = 'invalid stuff';
+      var simpleXML = 'invalid stuff';
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
 
@@ -196,10 +216,9 @@ describe('Viewer', function() {
 
     it('should handle invalid BPMNPlane#bpmnElement', function() {
 
-      var xml = require('../fixtures/bpmn/error/di-plane-no-bpmn-element.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, diPlaneNoBpmnElementXML).then(function(result) {
 
         var err = result.error;
         var warnings = result.warnings;
@@ -220,10 +239,9 @@ describe('Viewer', function() {
 
     it('should handle invalid namespaced element', function() {
 
-      var xml = require('../fixtures/bpmn/error/categoryValue.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, categoryValueXML).then(function(result) {
 
         var err = result.error;
         var warnings = result.warnings;
@@ -241,10 +259,9 @@ describe('Viewer', function() {
 
     it('should handle missing namespace', function() {
 
-      var xml = require('../fixtures/bpmn/error/missing-namespace.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, missingNamespaceXML).then(function(result) {
 
         var err = result.error;
         var warnings = result.warnings;
@@ -261,10 +278,9 @@ describe('Viewer', function() {
 
     it('should handle duplicate ids', function() {
 
-      var xml = require('../fixtures/bpmn/error/duplicate-ids.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, duplicateIdsXML).then(function(result) {
 
         var err = result.error;
         var warnings = result.warnings;
@@ -281,10 +297,9 @@ describe('Viewer', function() {
 
     it('should throw error due to missing diagram', function() {
 
-      var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, emptyDefinitionsXML).then(function(result) {
 
         var err = result.error;
 
@@ -296,10 +311,9 @@ describe('Viewer', function() {
 
     it('should handle missing process/collaboration', function() {
 
-      var xml = require('../fixtures/bpmn/error/no-process-collaboration.bpmn');
 
       // when
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, noProcessCollaborationXML).then(function(result) {
 
         var err = result.error;
 
@@ -315,9 +329,8 @@ describe('Viewer', function() {
 
     it('should provide self as <bpmnjs>', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var viewer = result.viewer;
         var err = result.error;
@@ -343,8 +356,7 @@ describe('Viewer', function() {
     it('should keep references to services across re-import', function() {
 
       // given
-      var someXML = require('../fixtures/bpmn/simple.bpmn'),
-          otherXML = require('../fixtures/bpmn/basic.bpmn');
+      var someXML = simpleXML;
 
       var viewer = new Viewer({ container: container });
 
@@ -394,23 +406,20 @@ describe('Viewer', function() {
     }
 
     it('should allow drill down into collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
 
-      return verifyDrilldown(xml);
+      return verifyDrilldown(collapsedSubProcessXML);
     });
 
 
     it('should allow drill down into legacy collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process-legacy.bpmn');
 
-      return verifyDrilldown(xml);
+      return verifyDrilldown(collapsedSubProcessLegacyXML);
     });
 
 
     it('should allow drill down into multi-di collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/multiple-nested-processes.bpmn');
 
-      return verifyDrilldown(xml);
+      return verifyDrilldown(multipleNestedProcessesXML);
     });
 
   });
@@ -423,7 +432,6 @@ describe('Viewer', function() {
     ];
 
     // given
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     var viewer;
 
@@ -437,7 +445,7 @@ describe('Viewer', function() {
       viewer = new Viewer({ container: container, modules: testModules });
 
       // when
-      return viewer.importXML(xml).catch(function(err) {
+      return viewer.importXML(simpleXML).catch(function(err) {
 
         // then
         expect(err.message).to.equal('No provider for "bpmnImporter"! (Resolving: bpmnImporter)');
@@ -452,7 +460,7 @@ describe('Viewer', function() {
       viewer = new Viewer({ container: container, additionalModules: testModules });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         // then
         var logger = viewer.get('logger');
@@ -479,22 +487,20 @@ describe('Viewer', function() {
     });
 
 
-    var camundaPackage = require('../fixtures/json/model/camunda');
 
     it('should provide custom moddle extensions', function() {
 
-      var xml = require('../fixtures/bpmn/extension/camunda.bpmn');
 
       // given
       viewer = new Viewer({
         container: container,
         moddleExtensions: {
-          camunda: camundaPackage
+          camunda: camundaModdle
         }
       });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(camundaXML).then(function(result) {
 
         var elementRegistry = viewer.get('elementRegistry');
 
@@ -523,9 +529,9 @@ describe('Viewer', function() {
     it('should allow to add default custom moddle extensions', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/extension/custom.bpmn'),
+      var simpleXML = customXML,
           additionalModdleDescriptors = {
-            custom: require('../fixtures/json/model/custom')
+            custom: customModdle
           };
 
       function CustomViewer(options) {
@@ -539,12 +545,12 @@ describe('Viewer', function() {
       viewer = new CustomViewer({
         container: container,
         moddleExtensions: {
-          camunda: camundaPackage
+          camunda: camundaModdle
         }
       });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         var elementRegistry = viewer.get('elementRegistry');
 
@@ -575,13 +581,11 @@ describe('Viewer', function() {
     it('should allow user to override default custom moddle extensions', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/extension/custom-override.bpmn');
 
       var additionalModdleDescriptors = {
-        custom: require('../fixtures/json/model/custom')
+        custom: customModdle
       };
 
-      var customOverride = require('../fixtures/json/model/custom-override');
 
       function CustomViewer(options) {
         Viewer.call(this, options);
@@ -594,13 +598,13 @@ describe('Viewer', function() {
       viewer = new CustomViewer({
         container: container,
         moddleExtensions: {
-          camunda: camundaPackage,
-          custom : customOverride
+          camunda: camundaModdle,
+          custom : customOverrideModdle
         }
       });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(customOverrideXML).then(function(result) {
 
         var elementRegistry = viewer.get('elementRegistry');
 
@@ -632,7 +636,6 @@ describe('Viewer', function() {
 
   describe('configuration', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should configure Canvas', function() {
 
@@ -645,7 +648,7 @@ describe('Viewer', function() {
       });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         var canvasConfig = viewer.get('config.canvas');
 
@@ -660,11 +663,10 @@ describe('Viewer', function() {
 
       it('should attach if provided', function() {
 
-        var xml = require('../fixtures/bpmn/simple.bpmn');
 
         var viewer = new Viewer({ container: container });
 
-        return viewer.importXML(xml).then(function(result) {
+        return viewer.importXML(simpleXML).then(function(result) {
 
           expect(viewer._container.parentNode).to.equal(container);
         });
@@ -673,11 +675,10 @@ describe('Viewer', function() {
 
       it('should not attach if absent', function() {
 
-        var xml = require('../fixtures/bpmn/simple.bpmn');
 
         var viewer = new Viewer();
 
-        return viewer.importXML(xml).then(function(result) {
+        return viewer.importXML(simpleXML).then(function(result) {
 
           expect(viewer._container.parentNode).to.equal(null);
         });
@@ -695,7 +696,6 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var events = [];
 
@@ -717,7 +717,7 @@ describe('Viewer', function() {
       });
 
       // when
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         // then
         expect(events).to.eql([
@@ -736,10 +736,9 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
-      viewer.importXML(xml);
+      viewer.importXML(simpleXML);
 
       // then
       viewer.on('import.done', function(event) {
@@ -750,7 +749,6 @@ describe('Viewer', function() {
 
     describe('multiple BPMNDiagram elements', function() {
 
-      var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
 
       it('should import default without bpmnDiagram specified', function() {
@@ -782,10 +780,9 @@ describe('Viewer', function() {
       it('should handle diagram not found', function() {
 
         // given
-        var xml = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
         // when
-        return createViewer(container, Viewer, xml, 'Diagram_IDontExist').then(function(result) {
+        return createViewer(container, Viewer, multipleXML, 'Diagram_IDontExist').then(function(result) {
 
           var err = result.error;
 
@@ -838,12 +835,10 @@ describe('Viewer', function() {
 
     describe('single diagram', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn'),
-          viewer,
-          definitions;
+      var viewer, definitions;
 
       beforeEach(function() {
-        return createViewer(container, Viewer, xml, null).then(function(result) {
+        return createViewer(container, Viewer, simpleXML, null).then(function(result) {
 
           var error = result.error;
           var tmpViewer = result.viewer;
@@ -919,9 +914,7 @@ describe('Viewer', function() {
 
     describe('multiple BPMNDiagram elements', function() {
 
-      var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
-          viewer,
-          definitions;
+      var viewer, definitions;
 
       beforeEach(function() {
         return createViewer(container, Viewer, multipleXML).then(function(result) {
@@ -1011,11 +1004,7 @@ describe('Viewer', function() {
 
   describe('#open', function() {
 
-    var multipleXMLSimple = require('../fixtures/bpmn/multiple-diagrams.bpmn'),
-        multipleXMLOverlappingDI = require('../fixtures/bpmn/multiple-diagrams-overlapping-di.bpmn'),
-        multipleXMLWithLaneSet = require('../fixtures/bpmn/multiple-diagrams-lanesets.bpmn'),
-        diagram1 = 'BpmnDiagram_1',
-        diagram2 = 'BpmnDiagram_2';
+    var multipleXMLSimple = multipleXML, diagram1 = 'BpmnDiagram_1', diagram2 = 'BpmnDiagram_2';
 
 
     it('should open the first diagram if id was not provided', function() {
@@ -1151,7 +1140,7 @@ describe('Viewer', function() {
     });
 
 
-    it('should complete with error if xml was not imported', function() {
+    it('should complete with error if simpleXML was not imported', function() {
 
       // given
       var viewer = new Viewer();
@@ -1250,9 +1239,8 @@ describe('Viewer', function() {
     it('should export XML', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         var viewer = result.viewer;
@@ -1275,12 +1263,11 @@ describe('Viewer', function() {
 
     it('should emit <saveXML.*> events', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var viewer;
       var events = [];
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         viewer = result.viewer;
@@ -1302,7 +1289,7 @@ describe('Viewer', function() {
           ]);
         });
 
-        return viewer.importXML(xml);
+        return viewer.importXML(simpleXML);
       }).then(function(result) {
 
         // when
@@ -1321,12 +1308,11 @@ describe('Viewer', function() {
 
     it('should emit <saveXML.done> on error', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var viewer;
       var events = [];
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         viewer = result.viewer;
@@ -1353,7 +1339,7 @@ describe('Viewer', function() {
           ]);
         });
 
-        return viewer.importXML(xml);
+        return viewer.importXML(simpleXML);
       }).then(function(result) {
 
         // when
@@ -1452,9 +1438,8 @@ describe('Viewer', function() {
     it('should export svg', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         var viewer = result.viewer;
@@ -1480,9 +1465,8 @@ describe('Viewer', function() {
       this.timeout(5000);
 
       // given
-      var xml = require('../fixtures/bpmn/complex.bpmn');
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, complexXML).then(function(result) {
 
         var err = result.error;
         var viewer = result.viewer;
@@ -1511,7 +1495,6 @@ describe('Viewer', function() {
     it('should remove outer-makers on export', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
       function appendTestRect(svgDoc) {
         var rect = document.createElementNS(svgDoc.namespaceURI, 'rect');
         rect.setAttribute('class', 'outer-bound-marker');
@@ -1522,7 +1505,7 @@ describe('Viewer', function() {
         svgDoc.appendChild(rect);
       }
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         var viewer = result.viewer;
@@ -1557,12 +1540,11 @@ describe('Viewer', function() {
 
     it('should emit <saveSVG.*> events', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var viewer;
       var events = [];
 
-      return createViewer(container, Viewer, xml).then(function(result) {
+      return createViewer(container, Viewer, simpleXML).then(function(result) {
 
         var err = result.error;
         viewer = result.viewer;
@@ -1583,7 +1565,7 @@ describe('Viewer', function() {
           ]);
         });
 
-        return viewer.importXML(xml);
+        return viewer.importXML(simpleXML);
       }).then(function() {
 
         // when
@@ -1608,7 +1590,6 @@ describe('Viewer', function() {
       // given
       var viewer = new Viewer({ container: container });
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
       viewer.on('foo', 1000, function() {
@@ -1616,7 +1597,7 @@ describe('Viewer', function() {
       }, viewer);
 
       // then
-      return viewer.importXML(xml).then(function() {
+      return viewer.importXML(simpleXML).then(function() {
         var eventBus = viewer.get('eventBus');
 
         var result = eventBus.fire('foo');
@@ -1629,7 +1610,6 @@ describe('Viewer', function() {
 
   describe('#off', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should remove listener permanently', function() {
 
@@ -1646,7 +1626,7 @@ describe('Viewer', function() {
       viewer.off('foo');
 
       // then
-      return viewer.importXML(xml).then(function() {
+      return viewer.importXML(simpleXML).then(function() {
         var eventBus = viewer.get('eventBus');
 
         var result = eventBus.fire('foo');
@@ -1668,7 +1648,7 @@ describe('Viewer', function() {
       viewer.on('foo', 1000, handler);
 
       // when
-      return viewer.importXML(xml).then(function() {
+      return viewer.importXML(simpleXML).then(function() {
         var eventBus = viewer.get('eventBus');
 
         // when
@@ -1705,11 +1685,10 @@ describe('Viewer', function() {
 
     it('should attach the viewer', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var viewer = new Viewer();
 
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         // assume
         expect(viewer._container.parentNode).not.to.exist;
@@ -1735,11 +1714,10 @@ describe('Viewer', function() {
 
     it('should detach the viewer', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var viewer = new Viewer({ container: container });
 
-      return viewer.importXML(xml).then(function(result) {
+      return viewer.importXML(simpleXML).then(function(result) {
 
         // assume
         expect(viewer._container.parentNode).to.equal(container);
@@ -1801,8 +1779,7 @@ describe('Viewer', function() {
     it('should report no issues', async function() {
 
       // given
-      const xml = require('../fixtures/bpmn/simple.bpmn');
-      await createViewer(container, Viewer, xml);
+      await createViewer(container, Viewer, simpleXML);
 
       // then
       await expectToBeAccessible(container);

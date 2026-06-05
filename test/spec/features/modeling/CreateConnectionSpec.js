@@ -11,14 +11,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import sequenceFlowsXML from '../../../fixtures/bpmn/sequence-flows.bpmn';
+
 
 describe('features/modeling - create connection', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(sequenceFlowsXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   it('should connect', inject(function(elementRegistry, modeling, bpmnFactory) {

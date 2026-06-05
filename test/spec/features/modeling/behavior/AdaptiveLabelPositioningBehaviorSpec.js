@@ -10,6 +10,10 @@ import { getOrientation } from 'diagram-js/lib/layout/LayoutUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from './AdaptiveLabelPositioningBehavior.basics.bpmn';
+import boundaryEventsXML from './AdaptiveLabelPositioningBehavior.boundary-events.bpmn';
+
+
 var testModules = [
   modelingModule,
   coreModule
@@ -36,9 +40,8 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
   describe('basics', function() {
 
-    var diagramXML = require('./AdaptiveLabelPositioningBehavior.basics.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: testModules
     }));
 
@@ -315,9 +318,8 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
   describe('boundary-events', function() {
 
-    var diagramXML = require('./AdaptiveLabelPositioningBehavior.boundary-events.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(boundaryEventsXML, {
       modules: testModules
     }));
 
@@ -438,9 +440,8 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
     describe('copy and paste', function() {
 
-      var diagramXML = require('./AdaptiveLabelPositioningBehavior.basics.bpmn');
 
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(basicXML, {
         modules: testModules
       }));
 

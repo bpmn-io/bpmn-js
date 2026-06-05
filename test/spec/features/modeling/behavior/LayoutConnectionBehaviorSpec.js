@@ -13,9 +13,10 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
-describe('behavior - LayoutConnectionBehavior', function() {
+import diagramXML from './LayoutConnectionBehavior.bpmn';
 
-  var diagramXML = require('./LayoutConnectionBehavior.bpmn');
+
+describe('behavior - LayoutConnectionBehavior', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

@@ -11,10 +11,11 @@ import replaceModule from 'bpmn-js/lib/features/replace';
 
 import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
+import diagramXML from './EventBasedGatewayBehavior.bpmn';
+
 
 describe('features/modeling/behavior - event-based gateway', function() {
 
-  var diagramXML = require('bpmn-js/test/spec/features/modeling/behavior/EventBasedGatewayBehavior.bpmn');
 
   var testModules = [
     coreModule,
@@ -154,7 +155,6 @@ describe('features/modeling/behavior - event-based gateway', function() {
 
 describe('features/modeling/behavior - event-based gateway - integration', function() {
 
-  var diagramXML = require('bpmn-js/test/spec/features/modeling/behavior/EventBasedGatewayBehavior.bpmn');
 
   var testModules = [
     coreModule,

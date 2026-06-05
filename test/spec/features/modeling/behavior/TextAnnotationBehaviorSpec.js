@@ -8,14 +8,18 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 import autoResizeModule from 'bpmn-js/lib/features/auto-resize';
 
+import diagramXML from './TextAnnotationBehaviorSpec.bpmn';
+
 
 describe('features/modeling - TextAnnotationBehavior', function() {
 
-  var testModules = [ coreModule, modelingModule, autoResizeModule ];
-
-  var processDiagramXML = require('./TextAnnotationBehaviorSpec.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      autoResizeModule
+    ]
+  }));
 
   var annotation,
       task,

@@ -10,9 +10,10 @@ import replaceModule from 'bpmn-js/lib/features/replace';
 import drilldownModule from 'bpmn-js/lib/features/drilldown';
 import { classes } from 'min-dom';
 
-describe('features/modeling/behavior - subprocess planes', function() {
+import diagramXML from './DrilldownOverlayBehaviorSpec.bpmn';
 
-  var diagramXML = require('./DrilldownOverlayBehaviorSpec.bpmn');
+
+describe('features/modeling/behavior - subprocess planes', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

@@ -9,14 +9,17 @@ import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from '../../../fixtures/bpmn/conditions.bpmn';
+
 
 describe('features/modeling - update properties', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/conditions.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   var updatedElements;

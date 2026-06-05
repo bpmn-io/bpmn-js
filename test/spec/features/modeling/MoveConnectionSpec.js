@@ -8,12 +8,12 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import diagramXML from '../../../fixtures/bpmn/sequence-flows.bpmn';
+
 
 describe('features/modeling - move connection', function() {
 
   describe('should move connection', function() {
-
-    var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: [

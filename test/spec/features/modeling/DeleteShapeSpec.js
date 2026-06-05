@@ -7,15 +7,19 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import sequenceFlowsXML from '../../../fixtures/bpmn/sequence-flows.bpmn';
+import croppingXML from './DeleteShape.cropping.bpmn';
 
-var testModules = [ coreModule, modelingModule ];
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 
 describe('features/modeling - #removeShape', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(sequenceFlowsXML, { modules: testModules }));
 
 
   describe('shape handling', function() {
@@ -77,9 +81,7 @@ describe('features/modeling - #removeShape', function() {
 
 describe('features/modeling - #removeShape - cropping', function() {
 
-  var diagramXML = require('./DeleteShape.cropping.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(croppingXML, { modules: testModules }));
 
 
   it('should crop waypoints on undo/redo', inject(

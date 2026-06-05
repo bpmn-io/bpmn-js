@@ -8,14 +8,17 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import diagramXML from '../../../fixtures/bpmn/simple.bpmn';
+
 
 describe('features/modeling - move shape', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('shape', function() {

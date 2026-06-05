@@ -4,11 +4,10 @@ import {
   inject
 } from 'bpmn-js/test/TestHelper.js';
 
+import diagramXML from './TextRenderer.bpmn';
+
 
 describe('draw - TextRenderer', function() {
-
-  var diagramXML = require('./TextRenderer.bpmn');
-
 
   describe('API', function() {
 

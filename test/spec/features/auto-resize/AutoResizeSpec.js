@@ -19,6 +19,14 @@ import {
   createCanvasEvent as canvasEvent
 } from 'bpmn-js/test/util/MockEvents.js';
 
+import participantXML from './AutoResize.participant.bpmn';
+import lanesXML from './AutoResize.lanes.bpmn';
+import subProcessesXML from './AutoResize.sub-processes.bpmn';
+import multiSelectionXML from './AutoResize.multi-selection.bpmn';
+import nestedSubProcessesXML from './AutoResize.nested-sub-processes.bpmn';
+import spaceToolXML from './AutoResize.space-tool.bpmn';
+
+
 function getBounds(shape) {
   return pick(shape, [ 'x', 'y', 'width', 'height' ]);
 }
@@ -36,14 +44,12 @@ describe('features/auto-resize', function() {
 
   describe('participant', function() {
 
-    var diagramXML = require('./AutoResize.participant.bpmn');
-
     var taskShape,
         participantShape,
         startEventShape,
         originalBounds;
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantXML, {
       modules: testModules
     }));
 
@@ -56,7 +62,6 @@ describe('features/auto-resize', function() {
       originalBounds = getBounds(participantShape);
 
       expect(originalBounds).to.eql({ x: 247, y: 160, width: 371, height: 178 });
-
     }));
 
 
@@ -283,9 +288,7 @@ describe('features/auto-resize', function() {
 
   describe('lane', function() {
 
-    var diagramXML = require('./AutoResize.lanes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesXML, {
       modules: testModules
     }));
 
@@ -326,9 +329,7 @@ describe('features/auto-resize', function() {
 
   describe('sub processes', function() {
 
-    var diagramXML = require('./AutoResize.sub-processes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(subProcessesXML, {
       modules: testModules
     }));
 
@@ -435,9 +436,7 @@ describe('features/auto-resize', function() {
 
   describe('after moving multiple elements', function() {
 
-    var diagramXML = require('./AutoResize.multi-selection.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(multiSelectionXML, {
       modules: testModules
     }));
 
@@ -533,9 +532,7 @@ describe('features/auto-resize', function() {
 
   describe('nested sub processes', function() {
 
-    var diagramXML = require('./AutoResize.nested-sub-processes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(nestedSubProcessesXML, {
       modules: testModules
     }));
 
@@ -576,13 +573,11 @@ describe('features/auto-resize', function() {
 
   describe('space-tool', function() {
 
-    var diagramXML = require('./AutoResize.space-tool.bpmn');
-
     var taskShape,
         participantShape,
         originalBounds;
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(spaceToolXML, {
       modules: testModules
     }));
 

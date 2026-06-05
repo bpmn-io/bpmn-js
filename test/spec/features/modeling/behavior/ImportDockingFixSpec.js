@@ -7,10 +7,10 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from './ImportDockingFix.bpmn';
+
 
 describe('features/modeling/behavior - ImportDockingFix', function() {
-
-  var diagramXML = require('./ImportDockingFix.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

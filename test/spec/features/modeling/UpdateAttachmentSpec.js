@@ -7,14 +7,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from '../../../fixtures/bpmn/boundary-events.bpmn';
+
 
 describe('features/modeling - update attachment', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   var subProcessElement, subProcess, task, boundaryEventElement, boundaryEvent;

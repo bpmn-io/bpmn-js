@@ -9,10 +9,10 @@ import coreModule from 'bpmn-js/lib/core';
 import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
+import diagramXML from './AutoResizeBehavior.bpmn';
+
 
 describe('features/grid-snapping - auto-resize', function() {
-
-  var diagramXML = require('./AutoResizeBehavior.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

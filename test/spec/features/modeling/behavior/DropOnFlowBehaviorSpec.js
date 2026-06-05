@@ -18,10 +18,10 @@ import {
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
+import diagramXML from './DropOnFlowBehavior.bpmn';
+
 
 describe('modeling/behavior - drop on connection', function() {
-
-  var diagramXML = require('./DropOnFlowBehavior.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

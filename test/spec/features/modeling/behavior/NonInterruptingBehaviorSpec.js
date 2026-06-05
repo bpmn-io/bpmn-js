@@ -7,16 +7,20 @@ import {
 import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
+import processDiagramXML from './NonInterruptingBehavior.bpmn';
+
 
 describe('features/modeling - non interrupting behavior', function() {
 
-  const testModules = [ coreModule, modelingModule ];
-
-  const processDiagramXML = require('./NonInterruptingBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(processDiagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
   let event;
+
 
   describe('start events', function() {
 

@@ -8,15 +8,18 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import replaceModule from 'bpmn-js/lib/features/replace';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from '../../../fixtures/bpmn/features/replace/association-gateways.bpmn';
 
 
 describe('features/replace - rules', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/replace/association-gateways.bpmn');
-
-  var testModules = [ coreModule, modelingModule, replaceModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      replaceModule
+    ]
+  }));
 
 
   describe('should keep associations', function() {

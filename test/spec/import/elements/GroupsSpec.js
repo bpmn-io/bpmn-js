@@ -4,16 +4,17 @@ import {
   inject
 } from 'bpmn-js/test/TestHelper.js';
 
+import groupsXML from './Groups.bpmn';
+
 
 describe('import - groups', function() {
 
   describe('should import groups', function() {
 
     it('with frame property set', function() {
-      var xml = require('./Groups.bpmn');
 
       // given
-      return bootstrapModeler(xml)().then(function(result) {
+      return bootstrapModeler(groupsXML)().then(function(result) {
 
         var err = result.error;
 

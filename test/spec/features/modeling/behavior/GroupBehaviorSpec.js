@@ -16,20 +16,18 @@ import coreModule from 'bpmn-js/lib/core';
 
 import { find } from 'min-dash';
 
+import diagramXML from './GroupBehaviorSpec.bpmn';
+
 
 describe('features/modeling/behavior - groups', function() {
 
-  var testModules = [
-    coreModule,
-    copyPasteModule,
-    bpmnCopyPasteModule,
-    modelingModule
-  ];
-
-  var processDiagramXML = require('./GroupBehaviorSpec.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, {
-    modules: testModules.concat(modelingModule)
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      copyPasteModule,
+      bpmnCopyPasteModule,
+      modelingModule
+    ]
   }));
 
 

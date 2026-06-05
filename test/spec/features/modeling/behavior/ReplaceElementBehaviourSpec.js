@@ -23,27 +23,29 @@ import {
   query as domQuery
 } from 'min-dom';
 
+import eventSubProcessesXML from '../../../../fixtures/bpmn/event-sub-processes.bpmn';
+import cancelEventsXML from '../../../../fixtures/bpmn/features/replace/cancel-events.bpmn';
+import connectionXML from '../../../../fixtures/bpmn/features/replace/connection.bpmn';
+
+
 var ATTACH = { attach: true };
+
+var testModules = [
+  replacePreviewModule,
+  modelingModule,
+  coreModule,
+  moveModule,
+  copyPasteModule
+];
 
 
 describe('features/modeling - replace element behavior', function() {
 
   describe('<shape.move>', function() {
 
-    var testModules = [
-      replacePreviewModule,
-      modelingModule,
-      coreModule,
-      moveModule,
-      copyPasteModule
-    ];
-
-
     describe('Start Events', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(eventSubProcessesXML, {
         modules: testModules
       }));
 
@@ -153,9 +155,7 @@ describe('features/modeling - replace element behavior', function() {
 
     describe('Cancel Events', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(cancelEventsXML, { modules: testModules }));
 
 
       describe('normal', function() {
@@ -467,9 +467,7 @@ describe('features/modeling - replace element behavior', function() {
 
     describe('outline', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/features/replace/connection.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(connectionXML, { modules: testModules }));
 
 
       it('should update size of outline on replace', inject(function(bpmnReplace, elementRegistry) {
@@ -497,9 +495,8 @@ describe('features/modeling - replace element behavior', function() {
 
   describe('shape.create', function() {
 
-    var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(eventSubProcessesXML, {
       modules: [
         replacePreviewModule,
         modelingModule,

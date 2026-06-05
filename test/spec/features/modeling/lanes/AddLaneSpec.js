@@ -20,11 +20,24 @@ import {
 
 import { query as domQuery } from 'min-dom';
 
+import lanesXML from './lanes.bpmn';
+import lanesVerticalXML from './lanes.vertical.bpmn';
+import lanesOnlyXML from './lanes.only.bpmn';
+import lanesOnlyVerticalXML from './lanes.only.vertical.bpmn';
+import participantNoLaneXML from './participant-no-lane.bpmn';
+import participantNoLaneVerticalXML from './participant-no-lane-vertical.bpmn';
+import lanesFlowNodesXML from './lanes-flow-nodes.bpmn';
+import lanesFlowNodesVerticalXML from './lanes-flow-nodes-vertical.bpmn';
+import participantSingleLaneXML from './participant-single-lane.bpmn';
+
+
 var DEFAULT_LANE_HEIGHT = 120,
     DEFAULT_VERTICAL_LANE_WIDTH = 120;
 
-var testModules = [ coreModule, modelingModule ];
-
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
@@ -35,9 +48,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('nested Lanes', function() {
 
-    var diagramXML = require('./lanes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesXML, {
       modules: testModules
     }));
 
@@ -244,9 +255,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('nested vertical Lanes', function() {
 
-    var diagramXML = require('./lanes.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesVerticalXML, {
       modules: testModules
     }));
 
@@ -457,9 +466,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('without Participant', function() {
 
-    var diagramXML = require('./lanes.only.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesOnlyXML, {
       modules: testModules
     }));
 
@@ -500,9 +507,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('vertical without Participant', function() {
 
-    var diagramXML = require('./lanes.only.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesOnlyVerticalXML, {
       modules: testModules
     }));
 
@@ -544,9 +549,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('Participant without Lane', function() {
 
-    var diagramXML = require('./participant-no-lane.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantNoLaneXML, {
       modules: testModules
     }));
 
@@ -629,9 +632,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('vertical Participant without Lane', function() {
 
-    var diagramXML = require('./participant-no-lane-vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantNoLaneVerticalXML, {
       modules: testModules
     }));
 
@@ -714,9 +715,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('flow node handling - basics', function() {
 
-    var diagramXML = require('./lanes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesXML, {
       modules: testModules
     }));
 
@@ -755,9 +754,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('flow node handling - basics vertical', function() {
 
-    var diagramXML = require('./lanes.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesVerticalXML, {
       modules: testModules
     }));
 
@@ -796,9 +793,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('flow node handling', function() {
 
-    var diagramXML = require('./lanes-flow-nodes.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesFlowNodesXML, {
       modules: testModules
     }));
 
@@ -934,9 +929,7 @@ describe('features/modeling - add Lane', function() {
 
   describe('flow node handling - vertical', function() {
 
-    var diagramXML = require('./lanes-flow-nodes-vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(lanesFlowNodesVerticalXML, {
       modules: testModules
     }));
 
@@ -1072,7 +1065,6 @@ describe('features/modeling - add Lane', function() {
 
   describe('Internet Explorer', function() {
 
-    var diagramXML = require('./participant-single-lane.bpmn');
 
     var testModules = [
       contextPadModule,
@@ -1080,7 +1072,7 @@ describe('features/modeling - add Lane', function() {
       modelingModule
     ];
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantSingleLaneXML, { modules: testModules }));
 
 
     // must be executed manually, cannot be reproduced programmatically

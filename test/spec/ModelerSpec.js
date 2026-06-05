@@ -17,6 +17,22 @@ import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'bpmn
 
 import { find, pick } from 'min-dash';
 
+import simpleXML from '../fixtures/bpmn/simple.bpmn';
+import collaborationMessageFlowsXML from '../fixtures/bpmn/collaboration-message-flows.bpmn';
+import lanesXML from './features/modeling/lanes/lanes.bpmn';
+import collaborationVerticalXML from '../fixtures/bpmn/collaboration-vertical.bpmn';
+import dataInputOutputXML from './features/modeling/input-output/DataInputOutput.bpmn';
+import complexXML from '../fixtures/bpmn/complex.bpmn';
+import emptyDefinitionsXML from '../fixtures/bpmn/empty-definitions.bpmn';
+import multipleXML from '../fixtures/bpmn/multiple-diagrams.bpmn';
+import otherXML from '../fixtures/bpmn/basic.bpmn';
+import copyPasteAXML from './Modeler.copy-paste.a.bpmn';
+import copyPasteBXML from './Modeler.copy-paste.b.bpmn';
+import copyPasteComplexXML from './Modeler.copy-paste.complex.bpmn';
+import copyPasteEmptyXML from './Modeler.copy-paste.empty.bpmn';
+import collapsedSubProcessXML from '../fixtures/bpmn/collapsed-sub-process.bpmn';
+import collapsedSubProcessLegacyXML from '../fixtures/bpmn/collapsed-sub-process-legacy.bpmn';
+
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
 
@@ -52,8 +68,7 @@ describe('Modeler', function() {
 
 
   (singleStart ? it.only : it)('should import simple process', function() {
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(simpleXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -61,8 +76,7 @@ describe('Modeler', function() {
 
 
   it('should import collaboration', function() {
-    var xml = require('../fixtures/bpmn/collaboration-message-flows.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(collaborationMessageFlowsXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -70,8 +84,7 @@ describe('Modeler', function() {
 
 
   it('should import nested lanes', function() {
-    var xml = require('./features/modeling/lanes/lanes.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(lanesXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -79,8 +92,7 @@ describe('Modeler', function() {
 
 
   it('should import vertical collaboration', function() {
-    var xml = require('../fixtures/bpmn/collaboration-vertical.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(collaborationVerticalXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -88,8 +100,7 @@ describe('Modeler', function() {
 
 
   it('should import ioSpecification', function() {
-    var xml = require('./features/modeling/input-output/DataInputOutput.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(dataInputOutputXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -97,8 +108,7 @@ describe('Modeler', function() {
 
 
   it.skip('should import complex', function() {
-    var xml = require('../fixtures/bpmn/complex.bpmn');
-    return createModeler(xml).then(function(result) {
+    return createModeler(complexXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -106,15 +116,14 @@ describe('Modeler', function() {
 
 
   it('should not import empty definitions', function() {
-    var xml = require('../fixtures/bpmn/empty-definitions.bpmn');
 
     // given
-    return createModeler(xml).then(function(result) {
+    return createModeler(emptyDefinitionsXML).then(function(result) {
 
       var modeler = result.modeler;
 
       // when
-      return modeler.importXML(xml);
+      return modeler.importXML(emptyDefinitionsXML);
     }).catch(function(err) {
 
       // then
@@ -125,16 +134,15 @@ describe('Modeler', function() {
 
   it('should re-import simple process', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     // given
-    return createModeler(xml).then(function(result) {
+    return createModeler(simpleXML).then(function(result) {
 
       var modeler = result.modeler;
 
       // when
       // mimic re-import of same diagram
-      return modeler.importXML(xml);
+      return modeler.importXML(simpleXML);
     }).then(function(result) {
 
       var warnings = result.warnings;
@@ -147,7 +155,6 @@ describe('Modeler', function() {
 
   it('should switch between diagrams', function() {
 
-    var multipleXML = require('../fixtures/bpmn/multiple-diagrams.bpmn');
 
     // given
     return createModeler(multipleXML).then(function(result) {
@@ -174,11 +181,10 @@ describe('Modeler', function() {
   // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   !collectTranslations && describe('translate support', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should allow translation of multi-lingual strings', function() {
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
         var err = result.error;
@@ -222,9 +228,8 @@ describe('Modeler', function() {
 
     it('should allow to add overlays', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
         var err = result.error;
@@ -318,9 +323,8 @@ describe('Modeler', function() {
 
     it('should allow to edit bendpoints', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
         var err = result.error;
@@ -355,9 +359,8 @@ describe('Modeler', function() {
 
     it('should allow color changes', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
 
@@ -387,7 +390,6 @@ describe('Modeler', function() {
   describe('configuration', function() {
 
     // given
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should configure Canvas', function() {
 
@@ -400,7 +402,7 @@ describe('Modeler', function() {
       });
 
       // when
-      return modeler.importXML(xml).then(function() {
+      return modeler.importXML(simpleXML).then(function() {
 
         var canvasConfig = modeler.get('config.canvas');
 
@@ -429,7 +431,6 @@ describe('Modeler', function() {
     it('should populate ids on import', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       var modeler = new Modeler({ container: container });
 
@@ -437,7 +438,7 @@ describe('Modeler', function() {
       var elementRegistry = modeler.get('elementRegistry');
 
       // when
-      return modeler.importXML(xml).then(function() {
+      return modeler.importXML(simpleXML).then(function() {
 
         var subProcess = elementRegistry.get('SubProcess_1').businessObject;
         var bpmnEdge = getDi(elementRegistry.get('SequenceFlow_3'));
@@ -453,8 +454,7 @@ describe('Modeler', function() {
     it('should clear ids before re-import', function() {
 
       // given
-      var someXML = require('../fixtures/bpmn/simple.bpmn'),
-          otherXML = require('../fixtures/bpmn/basic.bpmn');
+      var someXML = simpleXML;
 
       var modeler = new Modeler({ container: container });
 
@@ -503,9 +503,8 @@ describe('Modeler', function() {
 
     it('should provide self as <bpmnjs>', function() {
 
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
         var err = result.error;
@@ -534,8 +533,7 @@ describe('Modeler', function() {
     it('should keep references to services across re-import', function() {
 
       // given
-      var someXML = require('../fixtures/bpmn/simple.bpmn'),
-          otherXML = require('../fixtures/bpmn/basic.bpmn');
+      var someXML = simpleXML;
 
       var modeler = new Modeler({ container: container });
 
@@ -563,10 +561,9 @@ describe('Modeler', function() {
     it('should inject mandatory modules', function() {
 
       // given
-      var xml = require('../fixtures/bpmn/simple.bpmn');
 
       // when
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var modeler = result.modeler;
         var err = result.error;
@@ -626,8 +623,6 @@ describe('Modeler', function() {
 
     it('should share Clipboard', function() {
 
-      var aXML = require('./Modeler.copy-paste.a.bpmn');
-      var bXML = require('./Modeler.copy-paste.b.bpmn');
 
       var clipboardModule = {
         'clipboard': [ 'value', new Clipboard() ]
@@ -648,8 +643,8 @@ describe('Modeler', function() {
       });
 
       return Promise.all([
-        m1.importXML(aXML),
-        m2.importXML(bXML)
+        m1.importXML(copyPasteAXML),
+        m2.importXML(copyPasteBXML)
       ]).then(function() {
 
         // given
@@ -702,8 +697,6 @@ describe('Modeler', function() {
 
       this.timeout(3000);
 
-      var aXML = require('./Modeler.copy-paste.complex.bpmn');
-      var bXML = require('./Modeler.copy-paste.empty.bpmn');
 
       m2 = new Modeler({
         container: container
@@ -714,8 +707,8 @@ describe('Modeler', function() {
       });
 
       return Promise.all([
-        m1.importXML(aXML),
-        m2.importXML(bXML)
+        m1.importXML(copyPasteComplexXML),
+        m2.importXML(copyPasteEmptyXML)
       ]).then(function() {
 
         // given
@@ -850,14 +843,12 @@ describe('Modeler', function() {
     }
 
     it('should allow drill down into collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
-      return createModeler(xml).then(verifyDrilldown);
+      return createModeler(collapsedSubProcessXML).then(verifyDrilldown);
     });
 
 
     it('should allow drill down into collapsed sub-process after viewer.open', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
-      return createModeler(xml)
+      return createModeler(collapsedSubProcessXML)
         .then(function() {
           return modeler.open('rootProcess_diagram');
         })
@@ -866,16 +857,14 @@ describe('Modeler', function() {
 
 
     it('should allow drill down into legacy collapsed sub-process', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process-legacy.bpmn');
 
-      return createModeler(xml).then(verifyDrilldown);
+      return createModeler(collapsedSubProcessLegacyXML).then(verifyDrilldown);
     });
 
 
     it('should allow creation of groups in collapsed subprocesses', function() {
-      var xml = require('../fixtures/bpmn/collapsed-sub-process.bpmn');
 
-      return createModeler(xml).then(function() {
+      return createModeler(collapsedSubProcessXML).then(function() {
 
         // given
         var elementRegistry = modeler.get('elementRegistry'),
@@ -910,8 +899,7 @@ describe('Modeler', function() {
     it('should report no issues', async function() {
 
       // given
-      const xml = require('../fixtures/bpmn/simple.bpmn');
-      await createModeler(xml);
+      await createModeler(simpleXML);
 
       // then
       await expectToBeAccessible(container);
@@ -921,11 +909,10 @@ describe('Modeler', function() {
 
   describe('resize text element and preserve width', function() {
 
-    var diagramXML = require('../fixtures/bpmn/simple.bpmn');
 
     it('should adapt width of StartEvent label when text is changed and resized horizontally', async function() {
 
-      const result = await createModeler(diagramXML);
+      const result = await createModeler(simpleXML);
       expect(result.error).not.to.exist;
 
       var modeler = result.modeler;
@@ -949,7 +936,7 @@ describe('Modeler', function() {
 
     it('should adapt width of StartEvent label when text is changed and resized vertically', async function() {
 
-      const result = await createModeler(diagramXML);
+      const result = await createModeler(simpleXML);
       expect(result.error).not.to.exist;
 
       var modeler = result.modeler;

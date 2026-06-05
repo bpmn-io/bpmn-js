@@ -7,14 +7,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import processDiagramXML from './IdClaim.bpmn';
+
 
 describe('features/modeling - id claim management', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-  var processDiagramXML = require('./IdClaim.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(processDiagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
   var element, moddleElement, id;
 

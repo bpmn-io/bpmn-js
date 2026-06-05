@@ -13,10 +13,10 @@ import {
   find
 } from 'min-dash';
 
+import diagramXML from './UpdateFlowNodeRefs.basic.bpmn';
+
 
 describe('features/modeling - lanes - flowNodeRefs', function() {
-
-  var diagramXML = require('./UpdateFlowNodeRefs.basic.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

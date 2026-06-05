@@ -19,6 +19,13 @@ import { isString, pick } from 'min-dash';
 
 import { isMac } from 'diagram-js/lib/util/Platform.js';
 
+import basicsXML from './BpmnSpaceTool.basics.bpmn';
+import textAnnotationXML from './BpmnSpaceTool.text-annotations.bpmn';
+import boundaryEventsXML from './BpmnSpaceTool.boundary-events.bpmn';
+import participantsXML from './BpmnSpaceTool.participants.bpmn';
+import artifactsXML from './BpmnSpaceTool.artifacts.bpmn';
+
+
 var invertModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 
 
@@ -41,9 +48,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   describe('basics', function() {
 
-    var diagramXML = require('./BpmnSpaceTool.basics.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicsXML, {
       modules: testModules
     }));
 
@@ -362,9 +367,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   describe('text annotations', function() {
 
-    var diagramXML = require('./BpmnSpaceTool.text-annotations.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(textAnnotationXML, {
       modules: testModules
     }));
 
@@ -396,9 +399,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   describe('boundary events', function() {
 
-    var diagramXML = require('./BpmnSpaceTool.boundary-events.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(boundaryEventsXML, {
       modules: testModules
     }));
 
@@ -462,9 +463,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   describe('participants', function() {
 
-    var diagramXML = require('./BpmnSpaceTool.participants.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantsXML, {
       modules: testModules
     }));
 
@@ -557,9 +556,7 @@ describe('features/space-tool - BpmnSpaceTool', function() {
 
   describe('artifacts', function() {
 
-    var diagramXML = require('./BpmnSpaceTool.artifacts.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(artifactsXML, {
       modules: testModules
     }));
 

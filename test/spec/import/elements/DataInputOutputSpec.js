@@ -4,6 +4,8 @@ import {
   inject
 } from 'bpmn-js/test/TestHelper.js';
 
+import dataInputOutputXML from './DataInputOutput.bpmn';
+
 
 describe('import - data input/output', function() {
 
@@ -11,10 +13,9 @@ describe('import - data input/output', function() {
 
     it('with di', function() {
 
-      var xml = require('./DataInputOutput.bpmn');
 
       // given
-      return bootstrapViewer(xml).call(this).then(function(result) {
+      return bootstrapViewer(dataInputOutputXML).call(this).then(function(result) {
 
         var err = result.error;
 

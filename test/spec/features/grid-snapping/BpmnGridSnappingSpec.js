@@ -22,6 +22,10 @@ import {
   assign
 } from 'min-dash';
 
+import basicXML from './basic.bpmn';
+import gridSnappingXML from './BpmnGridSnapping.bpmn';
+
+
 var LOW_PRIORITY = 500;
 
 
@@ -31,9 +35,7 @@ describe('features/grid-snapping', function() {
 
     describe('create', function() {
 
-      var diagramXML = require('./basic.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(basicXML, {
         modules: [
           coreModule,
           createModule,
@@ -95,9 +97,7 @@ describe('features/grid-snapping', function() {
 
   describe('snap top-left on move', function() {
 
-    var diagramXML = require('./BpmnGridSnapping.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(gridSnappingXML, {
       modules: [
         coreModule,
         createModule,
@@ -228,9 +228,7 @@ describe('features/grid-snapping', function() {
 
   describe('auto resize <nwse> on toggle collapse', function() {
 
-    var diagramXML = require('./BpmnGridSnapping.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(gridSnappingXML, {
       modules: [
         coreModule,
         createModule,

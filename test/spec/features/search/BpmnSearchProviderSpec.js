@@ -12,6 +12,10 @@ import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import bpmnSearchModule from 'bpmn-js/lib/features/search';
 
+import collaborationXML from './bpmn-search-collaboration.bpmn';
+import basicXML from './bpmn-search.bpmn';
+import sortingXML from './bpmn-search-sorting.bpmn';
+
 
 describe('features - BPMN search provider', function() {
 
@@ -23,9 +27,8 @@ describe('features - BPMN search provider', function() {
 
 
   describe('collaboration', function() {
-    var diagramXML = require('./bpmn-search-collaboration.bpmn');
 
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapViewer(collaborationXML, { modules: testModules }));
 
 
     it('should not return root element (collaboration)', inject(function(bpmnSearch) {
@@ -45,9 +48,7 @@ describe('features - BPMN search provider', function() {
 
   describe('process', function() {
 
-    var diagramXML = require('./bpmn-search.bpmn');
-
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapViewer(basicXML, { modules: testModules }));
 
 
     it('find should return all elements that match label or ID', inject(function(bpmnSearch) {
@@ -188,9 +189,7 @@ describe('features - BPMN search provider', function() {
 
   describe('sorting', function() {
 
-    var diagramXML = require('./bpmn-search-sorting.bpmn');
-
-    beforeEach(bootstrapViewer(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapViewer(sortingXML, { modules: testModules }));
 
 
     it('should sort', inject(function(bpmnSearch) {

@@ -7,10 +7,10 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from '../../../../fixtures/bpmn/basic.bpmn';
+
 
 describe('features/modeling - layout data association', function() {
-
-  var diagramXML = require('../../../../fixtures/bpmn/basic.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

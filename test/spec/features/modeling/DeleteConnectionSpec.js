@@ -7,14 +7,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from '../../../fixtures/bpmn/sequence-flows.bpmn';
+
 
 describe('features/modeling - #removeConnection', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/sequence-flows.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('shape handling', function() {

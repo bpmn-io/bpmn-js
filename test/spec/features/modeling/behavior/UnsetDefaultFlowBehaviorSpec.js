@@ -7,14 +7,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from './UnsetDefaultFlowBehaviorSpec.bpmn';
+
 
 describe('features/modeling - delete default connection', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-  var processDiagramXML = require('./UnsetDefaultFlowBehaviorSpec.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
   var gateway,
       defaultConnection,

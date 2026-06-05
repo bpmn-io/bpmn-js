@@ -14,20 +14,20 @@ import { queryAll as domQueryAll } from 'min-dom';
 
 import { expectSvgPath } from 'bpmn-js/test/util/svgHelpers.js';
 
+import diagramXML from './LabelLink.bpmn';
+
 
 describe('features/label-link - label link', function() {
 
-  var diagramXML = require('./LabelLink.bpmn');
-
-  var testModules = [
-    coreModule,
-    modelingModule,
-    outlineModule,
-    drilldownModule,
-    labelLinkModule
-  ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      outlineModule,
+      drilldownModule,
+      labelLinkModule
+    ]
+  }));
 
 
   it('should not show when nothing selected', inject(function() {

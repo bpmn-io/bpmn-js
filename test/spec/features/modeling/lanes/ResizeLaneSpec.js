@@ -15,6 +15,9 @@ import {
   pick
 } from 'min-dash';
 
+import diagramXML from './lanes.bpmn';
+
+
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
 }
@@ -22,11 +25,12 @@ function getBounds(element) {
 
 describe('features/modeling - resize lane', function() {
 
-  var diagramXML = require('./lanes.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('vertical', function() {

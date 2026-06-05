@@ -11,10 +11,10 @@ import coreModule from 'bpmn-js/lib/core';
 import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
+import diagramXML from './AutoPlaceBehavior.bpmn';
+
 
 describe('features/grid-snapping - auto-place', function() {
-
-  var diagramXML = require('./AutoPlaceBehavior.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

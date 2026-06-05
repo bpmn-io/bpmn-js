@@ -9,12 +9,16 @@ import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import camundaModdleModule from 'camunda-bpmn-moddle/lib/index.js';
-import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
+import camundaModdle from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {
   getBusinessObject,
   is
 } from 'bpmn-js/lib/util/ModelUtil.js';
+
+import basicXML from '../../../fixtures/bpmn/basic.bpmn';
+import customModdle from '../../../fixtures/json/model/custom.json';
+
 
 var HIGH_PRIORITY = 3000;
 
@@ -28,12 +32,10 @@ describe('features/copy-paste/ModdleCopy', function() {
     modelingModule
   ];
 
-  var basicXML = require('../../../fixtures/bpmn/basic.bpmn');
-
   beforeEach(bootstrapModeler(basicXML, {
     modules: testModules,
     moddleExtensions: {
-      camunda: camundaPackage
+      camunda: camundaModdle
     }
   }));
 
@@ -985,12 +987,10 @@ describe('features/copy-paste/ModdleCopy', function() {
 
   describe('custom', function() {
 
-    var customPackage = require('../../../fixtures/json/model/custom.json');
-
     beforeEach(bootstrapModeler(basicXML, {
       modules: testModules,
       moddleExtensions: {
-        custom: customPackage
+        custom: customModdle
       }
     }));
 

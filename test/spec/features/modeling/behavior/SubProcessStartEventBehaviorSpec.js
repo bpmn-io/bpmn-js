@@ -10,9 +10,10 @@ import replaceModule from 'bpmn-js/lib/features/replace';
 
 import { is, getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
-describe('features/modeling/behavior - subprocess start event', function() {
+import diagramXML from './SubProcessBehavior.start-event.bpmn';
 
-  var diagramXML = require('./SubProcessBehavior.start-event.bpmn');
+
+describe('features/modeling/behavior - subprocess start event', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

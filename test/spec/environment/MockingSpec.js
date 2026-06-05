@@ -8,10 +8,10 @@ import Events from 'diagram-js/lib/core/EventBus.js';
 
 import Viewer from 'bpmn-js/lib/Viewer.js';
 
+import diagramXML from '../../fixtures/bpmn/simple.bpmn';
+
 
 describe('environment - mocking', function() {
-
-  var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
   var mockEvents, bootstrapCalled;
 

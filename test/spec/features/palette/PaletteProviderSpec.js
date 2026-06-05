@@ -24,19 +24,19 @@ import {
   queryAll as domQueryAll
 } from 'min-dom';
 
+import diagramXML from '../../../fixtures/bpmn/features/replace/01_replace.bpmn';
+
 
 describe('features/palette', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-  var testModules = [
-    coreModule,
-    createModule,
-    modelingModule,
-    paletteModule
-  ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      createModule,
+      modelingModule,
+      paletteModule
+    ]
+  }));
 
 
   it('should provide BPMN modeling palette', inject(function(canvas) {

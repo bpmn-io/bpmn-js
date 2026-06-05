@@ -8,10 +8,10 @@ import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
+import processDiagramXML from './CreateBehavior.bpmn';
+
 
 describe('features/modeling - CreateBehavior', function() {
-
-  var processDiagramXML = require('./CreateBehavior.bpmn');
 
   beforeEach(bootstrapModeler(processDiagramXML, {
     modules: [

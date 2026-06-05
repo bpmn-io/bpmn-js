@@ -13,18 +13,19 @@ import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import modelingFeedbackModule from 'bpmn-js/lib/features/modeling-feedback';
 
+import diagramXML from './ModelingFeedback.bpmn';
+
 
 describe('features/modeling - ModelingFeedback', function() {
 
-  var collaborationDiagramXML = require('./ModelingFeedback.bpmn');
-
-  beforeEach(bootstrapModeler(collaborationDiagramXML, {
+  beforeEach(bootstrapModeler(diagramXML, {
     modules: [
       coreModule,
       modelingModule,
       modelingFeedbackModule
     ]
   }));
+
 
   it('should indicate error when placing flow elements inside collaboration', inject(
     function(create, canvas, elementFactory, dragging) {

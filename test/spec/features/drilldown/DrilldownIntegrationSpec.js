@@ -8,19 +8,19 @@ import {
 import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import DrilldownModule from 'bpmn-js/lib/features/drilldown';
+import multiLayerXML from './nested-subprocesses.bpmn';
 
 
 describe('features - drilldown', function() {
 
-  var testModules = [
-    coreModule,
-    modelingModule,
-    DrilldownModule
-  ];
+  beforeEach(bootstrapModeler(multiLayerXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      DrilldownModule
+    ]
+  }));
 
-  var multiLayerXML = require('./nested-subprocesses.bpmn');
-
-  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
   describe('navigation - collaboration', function() {
 

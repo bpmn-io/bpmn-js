@@ -9,14 +9,20 @@ import {
   is
 } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
+
+import diagramXML from './CompensationAssociationBehavior.bpmn';
 
 
 describe('modeling/behavior - CompensationAssociation', function() {
 
-  var diagramXML = require('./CompensationAssociationBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: modelingModule }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   it('should use manhattan layout', inject(function(modeling, elementRegistry) {

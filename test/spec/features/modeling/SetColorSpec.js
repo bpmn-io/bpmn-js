@@ -9,14 +9,17 @@ import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from './SetColor.bpmn';
+import incompleteDiXML from './SetColor.missingLabelDi.bpmn';
+
+
 var FUCHSIA_HEX = '#ff00ff',
     YELLOW_HEX = '#ffff00';
 
+
 describe('features/modeling - set color', function() {
 
-  var diagramXML = require('./SetColor.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(basicXML, {
     modules: [
       coreModule,
       modelingModule
@@ -349,8 +352,6 @@ describe('features/modeling - set color', function() {
 
 
   describe('execute with incomplete DI', function() {
-
-    var incompleteDiXML = require('./SetColor.missingLabelDi.bpmn');
 
     beforeEach(bootstrapModeler(incompleteDiXML, {
       modules: [

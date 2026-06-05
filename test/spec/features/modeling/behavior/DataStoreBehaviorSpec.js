@@ -8,17 +8,25 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from './DataStoreBehavior.bpmn';
+import emptyPoolXML from './DataStoreBehavior.empty-pool.bpmn';
+import connectXML from './DataStoreBehavior.connect.bpmn';
+import processXML from './DataStoreBehavior.process.bpmn';
+import removeParticipantXML from './DataStoreBehavior.remove-participant.bpmn';
+import collaborationXML from './DataStoreBehavior.collaboration.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling/behavior - data store', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('create', function() {
 
-    var processDiagramXML = require('./DataStoreBehavior.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('should create DataStoreReference on participant', inject(function(elementRegistry, modeling) {
@@ -100,9 +108,8 @@ describe('features/modeling/behavior - data store', function() {
 
     describe('empty pool', function() {
 
-      var processDiagramXML = require('./DataStoreBehavior.empty-pool.bpmn');
+      beforeEach(bootstrapModeler(emptyPoolXML, { modules: testModules }));
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
       it('should create DataStoreReference on collaboration if first participant is an empty pool',
         inject(function(elementRegistry, modeling) {
@@ -137,9 +144,7 @@ describe('features/modeling/behavior - data store', function() {
 
   describe('move', function() {
 
-    var processDiagramXML = require('./DataStoreBehavior.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('should move DataStoreReference to Participant', inject(function(elementRegistry, modeling) {
@@ -223,9 +228,7 @@ describe('features/modeling/behavior - data store', function() {
 
   describe('connect', function() {
 
-    var processDiagramXML = require('./DataStoreBehavior.connect.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(connectXML, { modules: testModules }));
 
 
     describe('dataOutputAssociation', function() {
@@ -350,9 +353,9 @@ describe('features/modeling/behavior - data store', function() {
 
 
   describe('process', function() {
-    var processDiagramXML = require('./DataStoreBehavior.process.bpmn');
 
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(processXML, { modules: testModules }));
+
 
     it('should not update parent on subprocess delete', inject(
       function(elementRegistry, eventBus, modeling) {
@@ -378,13 +381,12 @@ describe('features/modeling/behavior - data store', function() {
   describe('collaboration', function() {
 
     describe('update parent on participant removed', function() {
-      var processDiagramXML = require('./DataStoreBehavior.remove-participant.bpmn');
 
       var dataStoreReferenceBo,
           participantBo,
           participant2Bo;
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(removeParticipantXML, { modules: testModules }));
 
       beforeEach(inject(function(elementRegistry, modeling) {
 
@@ -434,12 +436,11 @@ describe('features/modeling/behavior - data store', function() {
 
     describe('collaboration -> process', function() {
 
-      var processDiagramXML = require('./DataStoreBehavior.collaboration.bpmn');
 
       var dataStoreShape,
           participant;
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
       beforeEach(inject(function(elementRegistry, modeling) {
         dataStoreShape = elementRegistry.get('DataStoreReference');
@@ -485,13 +486,12 @@ describe('features/modeling/behavior - data store', function() {
 
     describe('process -> collaboration', function() {
 
-      var processDiagramXML = require('./DataStoreBehavior.process.bpmn');
 
       var dataStoreShape,
           participant,
           process;
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
       beforeEach(inject(function(canvas, elementRegistry, modeling) {
         process = canvas.getRootElement();

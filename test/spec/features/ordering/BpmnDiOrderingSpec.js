@@ -14,10 +14,13 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
 import emptyProcessXML from 'bpmn-js/test/fixtures/bpmn/collaboration/process-empty.bpmn';
+import wrongDiOrderXML from './wrong-di-order.bpmn';
 
 
 describe('features/modeling - di ordering', function() {
+
   var testModules = [ coreModule, modelingModule ];
+
 
   describe('boundary events', function() {
 
@@ -142,9 +145,9 @@ describe('features/modeling - di ordering', function() {
 
 
   describe('wrong ordering in xml', function() {
-    var diagramXML = require('./wrong-di-order.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(wrongDiOrderXML, { modules: testModules }));
+
 
     it('should correctly order di elements on export', function() {
 

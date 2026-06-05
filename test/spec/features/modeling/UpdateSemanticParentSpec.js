@@ -9,12 +9,10 @@ import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import diagramXML from './UpdateSemanticParent.bpmn';
+
 
 describe('features/modeling/behavior - update semantic parent', function() {
-
-  var diagramXML = require('./UpdateSemanticParent.bpmn');
-
-  var participant1Bo, participant1Di, participant2Bo, participant2Di, dataStoreBo, dataStoreDi;
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
@@ -22,6 +20,13 @@ describe('features/modeling/behavior - update semantic parent', function() {
       modelingModule
     ]
   }));
+
+  var participant1Bo,
+      participant1Di,
+      participant2Bo,
+      participant2Di,
+      dataStoreBo,
+      dataStoreDi;
 
   beforeEach(inject(function(commandStack, elementRegistry) {
     var participant1 = elementRegistry.get('Participant_1'),

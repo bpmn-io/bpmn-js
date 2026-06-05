@@ -9,17 +9,15 @@ import coreModule from 'bpmn-js/lib/core';
 
 import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import simpleXML from 'bpmn-js/test/fixtures/bpmn/simple.bpmn';
+import basicXML from './IsHorizontalFix.bpmn';
+
 
 describe('features/modeling/behavior - IsHorizontalFix', function() {
 
-  var diagramXML;
-
-
   describe('set on create', function() {
 
-    diagramXML = require('bpmn-js/test/fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: [
         coreModule,
         modelingModule
@@ -68,9 +66,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
 
   describe('set on change', function() {
 
-    diagramXML = require('./IsHorizontalFix.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: [
         coreModule,
         modelingModule
@@ -218,9 +214,7 @@ describe('features/modeling/behavior - IsHorizontalFix', function() {
 
   describe('never unset on revert', function() {
 
-    diagramXML = require('./IsHorizontalFix.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: [
         coreModule,
         modelingModule

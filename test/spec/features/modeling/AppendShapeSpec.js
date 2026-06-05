@@ -17,14 +17,17 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import simpleXML from '../../../fixtures/bpmn/simple.bpmn';
+
 
 describe('features/modeling - append shape', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(simpleXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('shape handling', function() {

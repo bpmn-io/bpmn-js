@@ -17,14 +17,18 @@ import distributeElementsModule from 'bpmn-js/lib/features/distribute-elements';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from '../../../fixtures/bpmn/distribute-elements.bpmn';
+
 
 describe('features/distribute-elements - popup menu', function() {
 
-  var testModules = [ distributeElementsModule, modelingModule, coreModule ];
-
-  var basicXML = require('../../../fixtures/bpmn/distribute-elements.bpmn');
-
-  beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(basicXML, {
+    modules: [
+      distributeElementsModule,
+      modelingModule,
+      coreModule
+    ]
+  }));
 
 
   it('should provide distribution buttons', inject(function(elementRegistry, popupMenu) {

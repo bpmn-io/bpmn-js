@@ -12,14 +12,22 @@ import selectionModule from 'diagram-js/lib/features/selection';
 
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import basicXML from './BpmnAutoPlace.bpmn';
+import verticalXML from './BpmnAutoPlace.vertical.bpmn';
+import multiConnectionXML from './BpmnAutoPlace.multi-connection.bpmn';
+import verticalMultiConnectionXML from './BpmnAutoPlace.vertical.multi-connection.bpmn';
+import boundaryEventsXML from './BpmnAutoPlace.boundary-events.bpmn';
+import verticalBoundaryEventsXML from './BpmnAutoPlace.vertical.boundary-events.bpmn';
+import subProcessXML from './BpmnAutoPlace.subprocess.bpmn';
+import subProcessHorizontalXML from './BpmnAutoPlace.subprocess.horizontal.bpmn';
+import subProcessVerticalXML from './BpmnAutoPlace.subprocess.vertical.bpmn';
+
 
 describe('features/auto-place', function() {
 
   describe('element placement', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(basicXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -158,9 +166,7 @@ describe('features/auto-place', function() {
 
   describe('vertical element placement', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.vertical.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(verticalXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -281,9 +287,7 @@ describe('features/auto-place', function() {
 
   describe('integration', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(basicXML, {
       modules: [
         autoPlaceModule,
         coreModule,
@@ -339,9 +343,7 @@ describe('features/auto-place', function() {
 
   describe('multi connection handling', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.multi-connection.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(multiConnectionXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -374,9 +376,7 @@ describe('features/auto-place', function() {
 
   describe('vertical multi connection handling', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.vertical.multi-connection.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(verticalMultiConnectionXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -409,9 +409,7 @@ describe('features/auto-place', function() {
 
   describe('boundary event connection handling', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.boundary-events.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(boundaryEventsXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -460,9 +458,7 @@ describe('features/auto-place', function() {
 
   describe('vertical boundary event connection handling', function() {
 
-    var diagramXML = require('./BpmnAutoPlace.vertical.boundary-events.bpmn');
-
-    before(bootstrapModeler(diagramXML, {
+    before(bootstrapModeler(verticalBoundaryEventsXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -513,9 +509,7 @@ describe('features/auto-place', function() {
 
     describe('in collapsed subprocess', function() {
 
-      var diagramXML = require('./BpmnAutoPlace.subprocess.bpmn');
-
-      before(bootstrapModeler(diagramXML, {
+      before(bootstrapModeler(subProcessXML, {
         modules: [
           coreModule,
           modelingModule,
@@ -553,9 +547,7 @@ describe('features/auto-place', function() {
 
     describe('in collapsed horizontal subprocess', function() {
 
-      var diagramXML = require('./BpmnAutoPlace.subprocess.horizontal.bpmn');
-
-      before(bootstrapModeler(diagramXML, {
+      before(bootstrapModeler(subProcessHorizontalXML, {
         modules: [
           coreModule,
           modelingModule,
@@ -593,9 +585,7 @@ describe('features/auto-place', function() {
 
     describe('in collapsed vertical subprocess', function() {
 
-      var diagramXML = require('./BpmnAutoPlace.subprocess.vertical.bpmn');
-
-      before(bootstrapModeler(diagramXML, {
+      before(bootstrapModeler(subProcessVerticalXML, {
         modules: [
           coreModule,
           modelingModule,

@@ -7,14 +7,15 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from './LayoutMessageFlowSpec.bpmn';
+import verticalXML from './LayoutMessageFlowSpec.vertical.bpmn';
+
+var testModules = [ coreModule, modelingModule ];
+
 
 describe('features/modeling - layout message flows', function() {
 
-  var diagramXML = require('./LayoutMessageFlowSpec.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
   it('should layout manhattan after Task move', inject(function(elementRegistry, modeling) {
@@ -315,11 +316,7 @@ describe('features/modeling - layout message flows', function() {
 
 describe('features/modeling - vertical layout message flows', function() {
 
-  var diagramXML = require('./LayoutMessageFlowSpec.vertical.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(verticalXML, { modules: testModules }));
 
 
   it('should layout manhattan after Task move', inject(function(elementRegistry, modeling) {

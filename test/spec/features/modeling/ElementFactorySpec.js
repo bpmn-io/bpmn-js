@@ -16,14 +16,17 @@ import {
   assign
 } from 'min-dash';
 
+import diagramXML from './ElementFactory.bpmn';
+
 
 describe('features - element factory', function() {
 
-  var diagramXML = require('./ElementFactory.bpmn');
-
-  var testModules = [ modelingModule, coreModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      modelingModule,
+      coreModule
+    ]
+  }));
 
 
   describe('basics', function() {

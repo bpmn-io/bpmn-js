@@ -13,10 +13,10 @@ import {
   getDi
 } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import diagramXML from '../../fixtures/bpmn/simple.bpmn';
+
 
 describe('util/ModelUtil', function() {
-
-  var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

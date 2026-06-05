@@ -23,16 +23,10 @@ import {
   innerSVG
 } from 'tiny-svg';
 
+import diagramXML from './BpmnReplacePreview.bpmn';
+
 
 describe('features/replace-preview', function() {
-
-  var diagramXML = require('./BpmnReplacePreview.bpmn');
-
-  var startEvent1,
-      rootElement;
-
-  var getGfx,
-      moveShape;
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [
@@ -42,6 +36,12 @@ describe('features/replace-preview', function() {
       coreModule
     ]
   }));
+
+  var startEvent1,
+      rootElement;
+
+  var getGfx,
+      moveShape;
 
   beforeEach(inject(function(canvas, elementRegistry, elementFactory, move, dragging) {
 

@@ -25,6 +25,11 @@ import {
   createCanvasEvent as canvasEvent
 } from 'bpmn-js/test/util/MockEvents.js';
 
+import messageSequenceFlowXML from './ReplaceConnectionBehavior.message-sequence-flow.bpmn';
+import associationXML from './ReplaceConnectionBehavior.association.bpmn';
+import boundaryEventXML from './ReplaceConnectionBehavior.boundary-events.bpmn';
+import connectionXML from '../../../../fixtures/bpmn/features/replace/connection.bpmn';
+
 
 function getConnection(source, target, connectionOrType) {
   return find(source.outgoing, function(c) {
@@ -48,21 +53,18 @@ function expectNotConnected(source, target, connectionOrType) {
   expect(getConnection(source, target, connectionOrType)).not.to.exist;
 }
 
+var testModules = [
+  coreModule,
+  moveModule,
+  modelingModule
+];
+
 
 describe('features/modeling - replace connection', function() {
 
-  var testModules = [
-    coreModule,
-    moveModule,
-    modelingModule
-  ];
-
-
   describe('should replace SequenceFlow <> MessageFlow', function() {
 
-    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, {
+    beforeEach(bootstrapModeler(messageSequenceFlowXML, {
       modules: testModules
     }));
 
@@ -313,9 +315,7 @@ describe('features/modeling - replace connection', function() {
 
   describe('should replace SequenceFlow <> Association', function() {
 
-    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, {
+    beforeEach(bootstrapModeler(messageSequenceFlowXML, {
       modules: testModules
     }));
 
@@ -345,12 +345,9 @@ describe('features/modeling - replace connection', function() {
 
   describe('text/data association', function() {
 
-    var processDiagramXML = require('./ReplaceConnectionBehavior.association.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, {
+    beforeEach(bootstrapModeler(associationXML, {
       modules: testModules
     }));
-
 
     var element;
 
@@ -404,9 +401,7 @@ describe('features/modeling - replace connection', function() {
 
     describe('moving host', function() {
 
-      var processDiagramXML = require('./ReplaceConnectionBehavior.boundary-events.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, {
+      beforeEach(bootstrapModeler(boundaryEventXML, {
         modules: testModules
       }));
 
@@ -417,6 +412,7 @@ describe('features/modeling - replace connection', function() {
           return elementRegistry.get(id);
         };
       }));
+
 
       it('should remove invalid connections', inject(function(modeling) {
 
@@ -474,9 +470,7 @@ describe('features/modeling - replace connection', function() {
 
     describe('moving along host with outgoing', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/features/replace/connection.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, {
+      beforeEach(bootstrapModeler(connectionXML, {
         modules: testModules
       }));
 
@@ -525,9 +519,7 @@ describe('features/modeling - replace connection', function() {
 
     describe('dragging selection cleanup', function() {
 
-      var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, {
+      beforeEach(bootstrapModeler(messageSequenceFlowXML, {
         modules: testModules.concat(bendpointsModule)
       }));
 
@@ -592,9 +584,8 @@ describe('features/modeling - replace connection', function() {
 
   describe('reconnecting to create loops', function() {
 
-    var processDiagramXML = require('./ReplaceConnectionBehavior.message-sequence-flow.bpmn');
 
-    beforeEach(bootstrapModeler(processDiagramXML, {
+    beforeEach(bootstrapModeler(messageSequenceFlowXML, {
       modules: testModules
     }));
 

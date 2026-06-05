@@ -9,12 +9,12 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
+import diagramXML from './RemoveEmbeddedLabelBoundsBehavior.bpmn';
+
 
 describe('features/modeling - RemoveEmbeddedLabelBoundsBehavior', function() {
 
-  var processDiagramXML = require('./RemoveEmbeddedLabelBoundsBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, {
+  beforeEach(bootstrapModeler(diagramXML, {
     modules: [
       coreModule,
       modelingModule

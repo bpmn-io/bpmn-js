@@ -13,22 +13,20 @@ import snappingModule from 'bpmn-js/lib/features/snapping';
 
 import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
+import diagramXML from './BpmnConnectSnapping.bpmn';
+
 
 describe('features/snapping - BpmnConnectSnapping', function() {
 
-  var testModules = [
-    connectModule,
-    coreModule,
-    globalConnectModule,
-    modelingModule,
-    rulesModule,
-    snappingModule
-  ];
-
-  var diagramXML = require('./BpmnConnectSnapping.bpmn');
-
   beforeEach(bootstrapModeler(diagramXML, {
-    modules: testModules
+    modules: [
+      connectModule,
+      coreModule,
+      globalConnectModule,
+      modelingModule,
+      rulesModule,
+      snappingModule
+    ]
   }));
 
   beforeEach(inject(function(dragging) {

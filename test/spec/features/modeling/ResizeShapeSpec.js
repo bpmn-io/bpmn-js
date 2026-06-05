@@ -13,14 +13,19 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import simpleXML from '../../../fixtures/bpmn/simple-resizable.bpmn';
+import boundaryEventsXML from '../../../fixtures/bpmn/boundary-events.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling - resize shape', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple-resizable.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(simpleXML, { modules: testModules }));
 
 
   describe('shape', function() {
@@ -129,11 +134,7 @@ describe('features/modeling - resize shape', function() {
 
   describe('integration', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-    var testModules = [ coreModule, modelingModule ];
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
     it('should not move Boundary Event if unnecessary', inject(function(elementRegistry, modeling) {

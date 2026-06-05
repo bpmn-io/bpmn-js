@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-var getAttachment = require('bpmn-js/lib/features/modeling/behavior/util/LineAttachmentUtil.js').getAttachment;
+
+import { getAttachment } from 'bpmn-js/lib/features/modeling/behavior/util/LineAttachmentUtil.js';
 
 var EPSILON = 0.1;
 

@@ -11,10 +11,10 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
+import diagramXML from './CreateParticipantBehavior.bpmn';
+
 
 describe('features/grid-snapping - create participant', function() {
-
-  var diagramXML = require('./CreateParticipantBehavior.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

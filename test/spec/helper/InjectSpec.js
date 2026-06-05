@@ -6,10 +6,10 @@ import {
 import coreModule from 'bpmn-js/lib/core';
 import { expect } from 'chai';
 
+import diagramXML from '../../fixtures/bpmn/simple.bpmn';
+
 
 describe('helper - inject', function() {
-
-  var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

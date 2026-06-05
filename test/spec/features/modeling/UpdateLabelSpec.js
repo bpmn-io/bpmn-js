@@ -6,11 +6,10 @@ import {
 
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
+import diagramXML from './UpdateLabel.bpmn';
 
 
 describe('features/modeling - update label', function() {
-
-  var diagramXML = require('./UpdateLabel.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

@@ -4,17 +4,17 @@ import {
   inject
 } from 'bpmn-js/test/TestHelper.js';
 
-var pick = require('min-dash').pick;
 
 import labelEditingModule from 'bpmn-js/lib/features/label-editing';
 import coreModule from 'bpmn-js/lib/core';
 import draggingModule from 'diagram-js/lib/features/dragging';
 import modelingModule from 'bpmn-js/lib/features/modeling';
+import { pick } from 'min-dash';
+
+import diagramXML from './LabelEditing.bpmn';
 
 
 describe('features - label-editing preview', function() {
-
-  var diagramXML = require('./LabelEditing.bpmn');
 
   beforeEach(bootstrapViewer(diagramXML, {
     modules: [

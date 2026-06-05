@@ -11,6 +11,9 @@ import {
   createViewer
 } from 'bpmn-js/test/TestHelper.js';
 
+import simpleXML from '../fixtures/bpmn/simple.bpmn';
+
+
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'navigated-viewer';
 
 
@@ -24,8 +27,7 @@ describe('NavigatedViewer', function() {
 
 
   (singleStart ? it.only : it)('should import simple process', function() {
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-    return createViewer(container, NavigatedViewer, xml).then(function(result) {
+    return createViewer(container, NavigatedViewer, simpleXML).then(function(result) {
 
       expect(result.error).not.to.exist;
     });
@@ -76,11 +78,10 @@ describe('NavigatedViewer', function() {
 
   describe('navigation features', function() {
 
-    var xml = require('../fixtures/bpmn/simple.bpmn');
 
     it('should include zoomScroll', function() {
 
-      return createViewer(container, NavigatedViewer, xml).then(function(result) {
+      return createViewer(container, NavigatedViewer, simpleXML).then(function(result) {
 
         var viewer = result.viewer;
         var err = result.error;
@@ -92,7 +93,7 @@ describe('NavigatedViewer', function() {
 
 
     it('should include moveCanvas', function() {
-      return createViewer(container, NavigatedViewer, xml).then(function(result) {
+      return createViewer(container, NavigatedViewer, simpleXML).then(function(result) {
 
         var viewer = result.viewer;
         var err = result.error;
@@ -109,8 +110,7 @@ describe('NavigatedViewer', function() {
     it('should report no issues', async function() {
 
       // given
-      const xml = require('../fixtures/bpmn/simple.bpmn');
-      await createViewer(container, NavigatedViewer, xml);
+      await createViewer(container, NavigatedViewer, simpleXML);
 
       // then
       await expectToBeAccessible(container);

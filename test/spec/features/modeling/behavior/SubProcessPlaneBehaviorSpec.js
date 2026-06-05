@@ -14,11 +14,15 @@ import copyPasteModule from 'diagram-js/lib/features/copy-paste';
 import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 import { keys } from 'min-dash';
 
+import planesXML from './SubProcessBehavior.planes.bpmn';
+import nestedSubProcessAnnotationsXML from './SubProcessBehavior.nested-subprocess-annotations.bpmn';
+import multiplePlanesXML from './SubProcessBehavior.multiple-planes.bpmn';
+import copyPasteXML from './SubProcessBehavior.copy-paste.bpmn';
+
+
 describe('features/modeling/behavior - subprocess planes', function() {
 
-  var diagramXML = require('./SubProcessBehavior.planes.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(planesXML, {
     modules: [
       coreModule,
       modelingModule,
@@ -170,9 +174,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   describe('annotations', function() {
 
-    var nestedAnnotationsXML = require('./SubProcessBehavior.nested-subprocess-annotations.bpmn');
-
-    beforeEach(bootstrapModeler(nestedAnnotationsXML, {
+    beforeEach(bootstrapModeler(nestedSubProcessAnnotationsXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -401,9 +403,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   describe('remove', function() {
 
-    var multipleDiagramXML = require('./SubProcessBehavior.multiple-planes.bpmn');
-
-    beforeEach(bootstrapModeler(multipleDiagramXML, {
+    beforeEach(bootstrapModeler(multiplePlanesXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -466,9 +466,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   describe('update', function() {
 
-    var multipleDiagramXML = require('./SubProcessBehavior.multiple-planes.bpmn');
-
-    beforeEach(bootstrapModeler(multipleDiagramXML, {
+    beforeEach(bootstrapModeler(multiplePlanesXML, {
       modules: [
         coreModule,
         modelingModule,
@@ -616,9 +614,7 @@ describe('features/modeling/behavior - subprocess planes', function() {
 
   describe('copy/paste', function() {
 
-    var copyXML = require('./SubProcessBehavior.copy-paste.bpmn');
-
-    beforeEach(bootstrapModeler(copyXML, {
+    beforeEach(bootstrapModeler(copyPasteXML, {
       modules: [
         coreModule,
         modelingModule,

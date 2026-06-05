@@ -12,18 +12,16 @@ import {
   getDi
 } from 'bpmn-js/lib/util/ModelUtil.js';
 
-var testModules = [
-  modelingModule,
-  coreModule
-];
+import diagramXML from './ToggleElementCollapseBehaviour.bpmn';
 
 
 describe('features/modeling - collapse and expand elements', function() {
 
-  var diagramXML = require('./ToggleElementCollapseBehaviour.bpmn');
-
   beforeEach(bootstrapModeler(diagramXML, {
-    modules: testModules
+    modules: [
+      modelingModule,
+      coreModule
+    ]
   }));
 
 

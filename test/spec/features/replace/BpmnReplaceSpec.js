@@ -31,23 +31,34 @@ import {
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
+import replaceXML from '../../../fixtures/bpmn/features/replace/01_replace.bpmn';
+import collapsedSubProcessXML from './BpmnReplace.collapsedSubProcess.bpmn';
+import collaborationXML from './BpmnReplace.collaboration.bpmn';
+import collaborationVerticalXML from './BpmnReplace.collaboration.vertical.bpmn';
+import poolMessageFlowsXML from './BpmnReplace.poolMessageFlows.bpmn';
+import poolMessageFlowsVerticalXML from './BpmnReplace.poolMessageFlows.vertical.bpmn';
+import dataObjectsXML from './BpmnReplace.dataObjects.bpmn';
+import compensationXML from './BpmnReplace.compensation.bpmn';
+import eventSubProcessesXML from './BpmnReplace.eventSubProcesses.bpmn';
+import basicXML from '../../../fixtures/bpmn/basic.bpmn';
+import copyPropertiesXML from '../../../fixtures/bpmn/features/replace/copy-properties.bpmn';
+import dataElementsXML from '../../../fixtures/bpmn/features/replace/data-elements.bpmn';
+
+
+var testModules = [
+  camundaModdleModule,
+  coreModule,
+  modelingModule,
+  moveModule,
+  replaceModule
+];
+
 
 describe('features/replace - bpmn replace', function() {
 
-  var testModules = [
-    camundaModdleModule,
-    coreModule,
-    modelingModule,
-    moveModule,
-    replaceModule
-  ];
-
-
   describe('should replace', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -338,15 +349,12 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should replace in sub-process (collapsed)', function() {
 
-    var diagramXML = require('./BpmnReplace.collapsedSubProcess.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collapsedSubProcessXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
       }
     }));
-
 
     beforeEach(inject(function(canvas) {
       canvas.setRootElement(canvas.findRoot('SubProcess_Collapsed_plane'));
@@ -413,9 +421,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should replace in collaboration', function() {
 
-    var diagramXML = require('./BpmnReplace.collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collaborationXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -478,9 +484,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should replace in vertical collaboration', function() {
 
-    var diagramXML = require('./BpmnReplace.collaboration.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collaborationVerticalXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -543,9 +547,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should collapse pool, reconnecting message flows', function() {
 
-    var diagramXML = require('./BpmnReplace.poolMessageFlows.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(poolMessageFlowsXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -577,9 +579,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should collapse vertical pool, reconnecting message flows', function() {
 
-    var diagramXML = require('./BpmnReplace.poolMessageFlows.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(poolMessageFlowsVerticalXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -611,9 +611,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('should replace with data objects', function() {
 
-    var diagramXML = require('./BpmnReplace.dataObjects.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(dataObjectsXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -656,9 +654,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('position and size', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -732,9 +728,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('selection', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -764,9 +758,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('label', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -816,9 +808,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('undo support', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -881,9 +871,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('connection handling', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1120,9 +1108,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('children handling', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1166,9 +1152,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('sub processes', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1373,9 +1357,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('morph task with boundaryEvent', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(replaceXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1429,9 +1411,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('compensation activity', function() {
 
-    var diagramXML = require('./BpmnReplace.compensation.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(compensationXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1459,9 +1439,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('event sub processes', function() {
 
-    var diagramXML = require('./BpmnReplace.eventSubProcesses.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(eventSubProcessesXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1765,9 +1743,7 @@ describe('features/replace - bpmn replace', function() {
 
   describe('events', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: testModules,
       moddleExtensions: {
         camunda: camundaPackage
@@ -1839,7 +1815,6 @@ describe('features/replace - bpmn replace', function() {
 
 
   describe('properties', function() {
-    var copyPropertiesXML = require('../../../fixtures/bpmn/features/replace/copy-properties.bpmn');
 
     beforeEach(bootstrapModeler(copyPropertiesXML, {
       modules: testModules,
@@ -1847,6 +1822,7 @@ describe('features/replace - bpmn replace', function() {
         camunda: camundaPackage
       }
     }));
+
 
     it('should copy properties', inject(function(bpmnReplace, elementRegistry) {
 
@@ -1912,9 +1888,8 @@ describe('features/replace - bpmn replace', function() {
 
   describe('colors', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn');
+    beforeEach(bootstrapModeler(replaceXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     it('should have new di', inject(function(elementRegistry, bpmnReplace) {
 
@@ -1966,15 +1941,11 @@ describe('features/replace - bpmn replace', function() {
 
   describe('center', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn');
-
-    var testModules = [
-      modelingModule,
-      coreModule
-    ];
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
+    beforeEach(bootstrapModeler(dataElementsXML, {
+      modules: [
+        modelingModule,
+        coreModule
+      ]
     }));
 
 

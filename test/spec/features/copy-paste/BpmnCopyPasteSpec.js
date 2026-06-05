@@ -32,6 +32,17 @@ import {
 
 import { isRoot } from 'diagram-js/lib/util/ModelUtil.js';
 
+import basicXML from './basic.bpmn';
+import copyPropertiesXML from './copy-properties.bpmn';
+import propertiesXML from './properties.bpmn';
+import complexXML from './complex.bpmn';
+import collaborationXML from './collaboration.bpmn';
+import collaborationMultipleXML from './collaboration-multiple.bpmn';
+import collaborationAssociationsXML from './data-associations.bpmn';
+import eventBasedGatewayXML from './event-based-gateway.bpmn';
+import collapsedSubprocessXML from './collapsed-subprocess.bpmn';
+import nestedSubprocessAnnotationsXML from './nested-subprocess-annotations.bpmn';
+
 /**
  * @typedef {import('../../../../lib/model/Types').Element} Element
  */
@@ -46,16 +57,6 @@ describe('features/copy-paste', function() {
     modelingModule
   ];
 
-  var basicXML = require('./basic.bpmn'),
-      copyPropertiesXML = require('./copy-properties.bpmn'),
-      propertiesXML = require('./properties.bpmn'),
-      complexXML = require('./complex.bpmn'),
-      collaborationXML = require('./collaboration.bpmn'),
-      collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
-      collaborationAssociationsXML = require('./data-associations.bpmn'),
-      eventBasedGatewayXML = require('./event-based-gateway.bpmn'),
-      collapsedSubprocessXML = require('./collapsed-subprocess.bpmn'),
-      nestedSubprocessAnnotationsXML = require('./nested-subprocess-annotations.bpmn');
 
 
   describe('basic diagram', function() {

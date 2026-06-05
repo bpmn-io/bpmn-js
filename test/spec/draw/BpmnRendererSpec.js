@@ -37,6 +37,46 @@ import customRendererModule from './custom-renderer/index.js';
 
 import { expectSvgPath } from '../../util/svgHelpers.js';
 
+import labelsXML from './BpmnRenderer.labels.bpmn';
+import activityMarkersXML from '../../fixtures/bpmn/draw/activity-markers.bpmn';
+import associationsXML from '../../fixtures/bpmn/draw/associations.bpmn';
+import activityMarkersCombinationXML from '../../fixtures/bpmn/draw/activity-markers-combination.bpmn';
+import conditionalFlowXML from '../../fixtures/bpmn/draw/conditional-flow.bpmn';
+import conditionalFlowDefaultXML from '../../fixtures/bpmn/draw/conditional-flow-default.bpmn';
+import conditionalFlowGatewaysXML from '../../fixtures/bpmn/draw/conditional-flow-gateways.bpmn';
+import conditionalFlowTypedTaskXML from '../../fixtures/bpmn/draw/conditional-flow-typed-task.bpmn';
+import dataObjectsXML from '../../fixtures/bpmn/draw/data-objects.bpmn';
+import eventsXML from '../../fixtures/bpmn/draw/events.bpmn';
+import eventsInterruptingXML from '../../fixtures/bpmn/draw/events-interrupting.bpmn';
+import eventSubprocessesCollapsedXML from '../../fixtures/bpmn/draw/event-subprocesses-collapsed.bpmn';
+import eventSubprocessesExpandedXML from '../../fixtures/bpmn/draw/event-subprocesses-expanded.bpmn';
+import eventSubprocessIconsXML from '../../fixtures/bpmn/draw/event-subprocess-icons.bpmn';
+import gatewaysXML from '../../fixtures/bpmn/draw/gateways.bpmn';
+import groupXML from '../../fixtures/bpmn/draw/group.bpmn';
+import messageMarkerXML from '../../fixtures/bpmn/draw/message-marker.bpmn';
+import messageLabelXML from '../../fixtures/bpmn/draw/message-label.bpmn';
+import poolsXML from '../../fixtures/bpmn/draw/pools.bpmn';
+import verticalPoolsXML from '../../fixtures/bpmn/draw/vertical-pools.bpmn';
+import poolsWithCollectionMarkerXML from '../../fixtures/bpmn/draw/pools-with-collection-marker.bpmn';
+import taskTypesXML from '../../fixtures/bpmn/draw/task-types.bpmn';
+import textAnnotationXML from '../../fixtures/bpmn/draw/text-annotation.bpmn';
+import flowMarkersXML from '../../fixtures/bpmn/flow-markers.bpmn';
+import xorXML from '../../fixtures/bpmn/draw/xor.bpmn';
+import boundaryEventZIndexXML from '../../fixtures/bpmn/draw/boundary-event-z-index.bpmn';
+import boundaryEventWithoutRefnodeXML from '../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn';
+import boundaryEventWithRefnodeXML from '../../fixtures/bpmn/draw/boundary-event-with-refnode.bpmn';
+import gatewayTypeDefaultXML from '../../fixtures/bpmn/draw/gateway-type-default.bpmn';
+import callActivityXML from '../../fixtures/bpmn/draw/call-activity.bpmn';
+import activityMarkersSimpleXML from '../../fixtures/bpmn/draw/activity-markers-simple.bpmn';
+import simpleXML from '../../fixtures/bpmn/simple.bpmn';
+import colorsXML from './BpmnRenderer.colors.bpmn';
+import connectionColorsXML from './BpmnRenderer.connection-colors.bpmn';
+import sequenceFlowNoSourceXML from './BpmnRenderer.sequenceFlow-no-source.bpmn';
+import groupColorsXML from './BpmnRenderer.group-colors.bpmn';
+import croppingXML from './BpmnRenderer.simple-cropping.bpmn';
+import kitchenSinkXML from '../../fixtures/bpmn/kitchen-sink.bpmn';
+import noEventIconsXML from './BpmnRenderer.no-event-icons.bpmn';
+
 
 /**
  * @typedef {import('../../../lib/model/Types').Element} Element
@@ -51,8 +91,7 @@ function checkErrors(err, warnings) {
 describe('draw - bpmn renderer', function() {
 
   it('should render labels', function() {
-    var xml = require('./BpmnRenderer.labels.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(labelsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -60,8 +99,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render activity markers', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -69,8 +107,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render association markers', function() {
-    var xml = require('../../fixtures/bpmn/draw/associations.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(associationsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -78,8 +115,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render activity markers (combination)', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers-combination.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersCombinationXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -87,8 +123,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render conditional flows', function() {
-    var xml = require('../../fixtures/bpmn/draw/conditional-flow.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(conditionalFlowXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -96,8 +131,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render conditional default flows', function() {
-    var xml = require('../../fixtures/bpmn/draw/conditional-flow-default.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(conditionalFlowDefaultXML).call(this).then(function(result) {
 
       return checkErrors(result.error, result.warnings);
     });
@@ -105,8 +139,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render NO conditional flow (gateway)', function() {
-    var xml = require('../../fixtures/bpmn/draw/conditional-flow-gateways.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(conditionalFlowGatewaysXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -114,8 +147,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render conditional flow (typed task)', function() {
-    var xml = require('../../fixtures/bpmn/draw/conditional-flow-typed-task.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(conditionalFlowTypedTaskXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -123,8 +155,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render data objects with correct markers', function() {
-    var xml = require('../../fixtures/bpmn/draw/data-objects.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(dataObjectsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
 
@@ -148,8 +179,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render data objects with collection markers', function() {
-    var xml = require('../../fixtures/bpmn/draw/data-objects.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(dataObjectsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
 
@@ -169,8 +199,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render events', function() {
-    var xml = require('../../fixtures/bpmn/draw/events.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(eventsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -178,8 +207,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render events (interrupting)', function() {
-    var xml = require('../../fixtures/bpmn/draw/events-interrupting.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(eventsInterruptingXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -187,8 +215,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render event subprocesses (collapsed)', function() {
-    var xml = require('../../fixtures/bpmn/draw/event-subprocesses-collapsed.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(eventSubprocessesCollapsedXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -196,8 +223,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render event subprocesses (expanded)', function() {
-    var xml = require('../../fixtures/bpmn/draw/event-subprocesses-expanded.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(eventSubprocessesExpandedXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -205,8 +231,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render event subprocess icons', function() {
-    var xml = require('../../fixtures/bpmn/draw/event-subprocess-icons.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(eventSubprocessIconsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -214,8 +239,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render gateways', function() {
-    var xml = require('../../fixtures/bpmn/draw/gateways.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(gatewaysXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -223,8 +247,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render group', function() {
-    var xml = require('../../fixtures/bpmn/draw/group.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(groupXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -232,8 +255,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render message marker', function() {
-    var xml = require('../../fixtures/bpmn/draw/message-marker.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(messageMarkerXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -241,8 +263,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render message label', function() {
-    var xml = require('../../fixtures/bpmn/draw/message-label.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(messageLabelXML).call(this).then(function(result) {
       checkErrors(result.error, result.warnings);
       inject(function(elementRegistry) {
 
@@ -255,8 +276,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render pools', function() {
-    var xml = require('../../fixtures/bpmn/draw/pools.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(poolsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -264,8 +284,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render vertical pools', function() {
-    var xml = require('../../fixtures/bpmn/draw/vertical-pools.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(verticalPoolsXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -273,8 +292,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render pool collection marker', function() {
-    var xml = require('../../fixtures/bpmn/draw/pools-with-collection-marker.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(poolsWithCollectionMarkerXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -282,8 +300,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render task types', function() {
-    var xml = require('../../fixtures/bpmn/draw/task-types.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(taskTypesXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -291,8 +308,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render text annotations', function() {
-    var xml = require('../../fixtures/bpmn/draw/text-annotation.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(textAnnotationXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -300,8 +316,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render flow markers', function() {
-    var xml = require('../../fixtures/bpmn/flow-markers.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(flowMarkersXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -309,8 +324,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render xor gateways blank and with X', function() {
-    var xml = require('../../fixtures/bpmn/draw/xor.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(xorXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -318,8 +332,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render boundary events with correct z-index', function() {
-    var xml = require('../../fixtures/bpmn/draw/boundary-event-z-index.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(boundaryEventZIndexXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -327,8 +340,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render boundary events without flowNodeRef', function() {
-    var xml = require('../../fixtures/bpmn/draw/boundary-event-without-refnode.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(boundaryEventWithoutRefnodeXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -336,8 +348,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render boundary event only once if referenced incorrectly via flowNodeRef (robustness)', function() {
-    var xml = require('../../fixtures/bpmn/draw/boundary-event-with-refnode.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(boundaryEventWithRefnodeXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -345,8 +356,7 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render gateway event if attribute is missing in XML', function() {
-    var xml = require('../../fixtures/bpmn/draw/gateway-type-default.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(gatewayTypeDefaultXML).call(this).then(function(result) {
 
       checkErrors(result.error, result.warnings);
     });
@@ -354,9 +364,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render call activity', function() {
-    var xml = require('../../fixtures/bpmn/draw/call-activity.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(callActivityXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -375,9 +384,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render adhoc sub process', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersSimpleXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -397,8 +405,7 @@ describe('draw - bpmn renderer', function() {
 
   it('should add random ID suffix to marker ID', function() {
 
-    var xml = require('../../fixtures/bpmn/simple.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(simpleXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -415,9 +422,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should properly render colored markers', function() {
-    var xml = require('./BpmnRenderer.colors.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(colorsXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -450,9 +456,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render collapsed subprocess marker centered', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersSimpleXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -471,9 +476,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should render compensation marker centered', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersSimpleXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -491,9 +495,8 @@ describe('draw - bpmn renderer', function() {
   });
 
   it('should render ad-hoc marker centered on expanded subprocess', function() {
-    var xml = require('../../fixtures/bpmn/draw/activity-markers-simple.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(activityMarkersSimpleXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -512,9 +515,8 @@ describe('draw - bpmn renderer', function() {
 
 
   it('should properly render connection markers (2)', function() {
-    var xml = require('./BpmnRenderer.connection-colors.bpmn');
 
-    return bootstrapViewer(xml).call(this).then(function(result) {
+    return bootstrapViewer(connectionColorsXML).call(this).then(function(result) {
 
       var err = result.error;
 
@@ -544,8 +546,7 @@ describe('draw - bpmn renderer', function() {
 
   it('should render sequenceFlows without source', function() {
 
-    var xml = require('./BpmnRenderer.sequenceFlow-no-source.bpmn');
-    return bootstrapModeler(xml, {
+    return bootstrapModeler(sequenceFlowNoSourceXML, {
       modules: [
         coreModule,
         rendererModule,
@@ -581,12 +582,10 @@ describe('draw - bpmn renderer', function() {
 
   describe('colors', function() {
 
-    var xml = require('./BpmnRenderer.colors.bpmn');
 
-    var groupXML = require('./BpmnRenderer.group-colors.bpmn');
 
     it('should render colors without warnings and errors', function() {
-      return bootstrapViewer(xml).call(this).then(function(result) {
+      return bootstrapViewer(colorsXML).call(this).then(function(result) {
 
         checkErrors(result.error, result.warnings);
       });
@@ -594,7 +593,7 @@ describe('draw - bpmn renderer', function() {
 
 
     it('should render group colors', function() {
-      return bootstrapViewer(groupXML).call(this).then(function(result) {
+      return bootstrapViewer(groupColorsXML).call(this).then(function(result) {
 
         checkErrors(result.error, result.warnings);
       });
@@ -630,7 +629,7 @@ describe('draw - bpmn renderer', function() {
         ];
       }
 
-      beforeEach(bootstrapViewer(xml,{
+      beforeEach(bootstrapViewer(colorsXML,{
         bpmnRenderer: {
           defaultFillColor: defaultFillColor,
           defaultStrokeColor: defaultStrokeColor,
@@ -711,9 +710,8 @@ describe('draw - bpmn renderer', function() {
 
       describe('events', function() {
 
-        const diagramXML = require('../../fixtures/bpmn/draw/events.bpmn');
 
-        beforeEach(bootstrapModeler(diagramXML, {
+        beforeEach(bootstrapModeler(eventsXML, {
           bpmnRenderer: {
             defaultFillColor: defaultFillColor,
             defaultStrokeColor: defaultStrokeColor,
@@ -743,11 +741,10 @@ describe('draw - bpmn renderer', function() {
 
   describe('path', function() {
 
-    var diagramXML = require('./BpmnRenderer.simple-cropping.bpmn');
 
     var testModules = [ coreModule, rendererModule ];
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(croppingXML, { modules: testModules }));
 
     describe('circle', function() {
 
@@ -827,9 +824,8 @@ describe('draw - bpmn renderer', function() {
 
   describe('extension API', function() {
 
-    var diagramXML = require('../../fixtures/bpmn/simple.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: [
         coreModule,
         rendererModule
@@ -856,7 +852,6 @@ describe('draw - bpmn renderer', function() {
 
     describe('colors', function() {
 
-      const diagramXML = require('../../fixtures/bpmn/kitchen-sink.bpmn');
 
       class CustomColors {
         constructor(eventBus) {
@@ -874,7 +869,7 @@ describe('draw - bpmn renderer', function() {
 
       CustomColors.$inject = [ 'eventBus' ];
 
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(kitchenSinkXML, {
         bpmnRenderer: {
           defaultFillColor: 'cyan',
           defaultStrokeColor: 'red'
@@ -913,7 +908,6 @@ describe('draw - bpmn renderer', function() {
 
     describe('bounds', function() {
 
-      const diagramXML = require('../../fixtures/bpmn/kitchen-sink.bpmn');
 
       class CustomBounds {
         constructor(eventBus) {
@@ -931,7 +925,7 @@ describe('draw - bpmn renderer', function() {
 
       CustomBounds.$inject = [ 'eventBus' ];
 
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(kitchenSinkXML, {
         additionalModules: [
           {
             __init__: [ 'customBounds' ],
@@ -994,9 +988,8 @@ describe('draw - bpmn renderer', function() {
 
   describe('custom icons', function() {
 
-    var xml = require('./BpmnRenderer.no-event-icons.bpmn');
 
-    beforeEach(bootstrapViewer(xml, {
+    beforeEach(bootstrapViewer(noEventIconsXML, {
       additionalModules: [ customRendererModule ]
     }));
 

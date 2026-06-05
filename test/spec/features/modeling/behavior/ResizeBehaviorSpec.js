@@ -18,6 +18,18 @@ import {
   getParticipantResizeConstraints
 } from 'bpmn-js/lib/features/modeling/behavior/ResizeBehavior.js';
 
+import participantXML from './ResizeBehavior.participant.bpmn';
+import participantVerticalXML from './ResizeBehavior.participant.vertical.bpmn';
+import lanesXML from './ResizeBehavior.lanes.bpmn';
+import lanesVerticalXML from './ResizeBehavior.lanes.vertical.bpmn';
+import subProcessXML from './ResizeBehavior.subProcess.bpmn';
+import textAnnotationXML from './ResizeBehavior.textAnnotation.bpmn';
+import utilityLanesXML from './ResizeBehavior.utility.lanes.bpmn';
+import utilityLanesFlowNodesXML from './ResizeBehavior.utility.lanes-flowNodes.bpmn';
+import utilityLanesVerticalXML from './ResizeBehavior.utility.lanes.vertical.bpmn';
+import utilityLanesVerticalFlowNodesXML from './ResizeBehavior.utility.lanes.vertical-flowNodes.bpmn';
+
+
 var testModules = [
   coreModule,
   modelingModule,
@@ -33,9 +45,7 @@ describe('features/modeling - resize behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./ResizeBehavior.participant.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantXML, { modules: testModules }));
 
 
       it('should snap to children from <se>', inject(function(dragging, elementRegistry, resize) {
@@ -158,9 +168,9 @@ describe('features/modeling - resize behavior', function() {
 
     describe('vertical minimum dimensions', function() {
 
-      var diagramXML = require('./ResizeBehavior.participant.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantVerticalXML, {
+        modules: testModules
+      }));
 
 
       it('should snap to min dimensions from <se>', inject(
@@ -283,9 +293,7 @@ describe('features/modeling - resize behavior', function() {
 
     describe('resize constraints', function() {
 
-      var diagramXML = require('./ResizeBehavior.lanes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(lanesXML, { modules: testModules }));
 
 
       it('should snap to child lanes from <nw>', inject(
@@ -392,9 +400,7 @@ describe('features/modeling - resize behavior', function() {
 
     describe('vertical resize constraints', function() {
 
-      var diagramXML = require('./ResizeBehavior.lanes.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(lanesVerticalXML, { modules: testModules }));
 
 
       it('should snap to child lanes from <nw>', inject(
@@ -443,9 +449,7 @@ describe('features/modeling - resize behavior', function() {
 
   describe('sub process', function() {
 
-    var diagramXML = require('./ResizeBehavior.subProcess.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(subProcessXML, { modules: testModules }));
 
 
     it('should set minimum dimensions', inject(function(dragging, elementRegistry, resize) {
@@ -470,9 +474,7 @@ describe('features/modeling - resize behavior', function() {
 
   describe('text annotation', function() {
 
-    var diagramXML = require('./ResizeBehavior.textAnnotation.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(textAnnotationXML, { modules: testModules }));
 
 
     it('should set minimum dimensions', inject(function(dragging, elementRegistry, resize) {
@@ -511,9 +513,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('lanes', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
+      beforeEach(bootstrapModeler(utilityLanesXML, { modules: [ coreModule ] }));
 
 
       it('resize participant (S)', inject(function(elementRegistry) {
@@ -644,9 +644,9 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('flowNodes', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes-flowNodes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
+      beforeEach(bootstrapModeler(utilityLanesFlowNodesXML, {
+        modules: [ coreModule ]
+      }));
 
 
       it('resize participant (S)', inject(function(elementRegistry) {
@@ -777,9 +777,9 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('lanes', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
+      beforeEach(bootstrapModeler(utilityLanesVerticalXML, {
+        modules: [ coreModule ]
+      }));
 
 
       it('resize participant (E)', inject(function(elementRegistry) {
@@ -910,9 +910,9 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('flowNodes', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes.vertical-flowNodes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: [ coreModule ] }));
+      beforeEach(bootstrapModeler(utilityLanesVerticalFlowNodesXML, {
+        modules: [ coreModule ]
+      }));
 
 
       it('resize participant (E)', inject(function(elementRegistry) {
@@ -1082,9 +1082,7 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('lane minimum dimensions', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(utilityLanesXML, { modules: testModules }));
 
 
       it('should hold for top sibling lane', inject(
@@ -1133,9 +1131,9 @@ describe('modeling/behavior - resize behavior - utilities', function() {
 
     describe('vertical lane minimum dimensions', function() {
 
-      var diagramXML = require('./ResizeBehavior.utility.lanes.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(utilityLanesVerticalXML, {
+        modules: testModules
+      }));
 
 
       it('should hold for left sibling lane', inject(

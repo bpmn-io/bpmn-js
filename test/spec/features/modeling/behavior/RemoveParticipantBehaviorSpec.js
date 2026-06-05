@@ -12,17 +12,21 @@ import {
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import collaborationMessageFlowsXML from '../../../../fixtures/bpmn/collaboration/collaboration-message-flows.bpmn';
+import collaborationDataStoreXML from '../../../../fixtures/bpmn/collaboration/collaboration-data-store.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling - remove participant behavior', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('when removing participant in collaboration', function() {
 
-    var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/collaboration-message-flows.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationMessageFlowsXML, { modules: testModules }));
 
 
     describe('retain collaboration', function() {
@@ -48,9 +52,7 @@ describe('features/modeling - remove participant behavior', function() {
 
   describe('when removing last remaining participant', function() {
 
-    var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/collaboration-data-store.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationDataStoreXML, { modules: testModules }));
 
 
     describe('should transform diagram into process diagram', function() {
@@ -133,9 +135,8 @@ describe('features/modeling - remove participant behavior', function() {
 
   describe('when removing all diagram content', function() {
 
-    var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/collaboration-data-store.bpmn');
+    beforeEach(bootstrapModeler(collaborationDataStoreXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
     describe('should transform diagram into process diagram', function() {
 

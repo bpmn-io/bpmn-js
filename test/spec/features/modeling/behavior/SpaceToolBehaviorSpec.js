@@ -23,6 +23,12 @@ import {
   SUB_PROCESS_MIN_DIMENSIONS
 } from 'bpmn-js/lib/features/modeling/behavior/ResizeBehavior.js';
 
+import subProcessXML from './SpaceToolBehaviorSpec.subprocess.bpmn';
+import participantXML from './SpaceToolBehaviorSpec.participant.bpmn';
+import participantVerticalXML from './SpaceToolBehaviorSpec.participant.vertical.bpmn';
+import groupXML from './SpaceToolBehaviorSpec.group.bpmn';
+
+
 var testModules = [
   coreModule,
   modelingModule,
@@ -38,9 +44,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.subprocess.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(subProcessXML, { modules: testModules }));
 
 
       it('should ensure subprocess minimum dimensions', inject(
@@ -70,9 +74,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.participant.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantXML, { modules: testModules }));
 
 
       it('should ensure participant minimum width', inject(
@@ -180,9 +182,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.participant.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantVerticalXML, { modules: testModules }));
 
 
       it('should ensure participant minimum height', inject(
@@ -290,9 +290,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.group.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(groupXML, { modules: testModules }));
 
 
       it('should ensure group minimum dimensions', inject(

@@ -15,6 +15,13 @@ import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 
 import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
+import participantXML from './FixHoverBehavior.participant.bpmn';
+import labelXML from './FixHoverBehavior.label.bpmn';
+import groupXML from './FixHoverBehavior.group.bpmn';
+import annotationXML from './FixHoverBehavior.annotation.bpmn';
+import laneConnectXML from './FixHoverBehavior.lane-connect.bpmn';
+
+
 var testModules = [
   coreModule,
   createModule,
@@ -27,9 +34,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('drop on lane', function() {
 
-    var diagramXML = require('./FixHoverBehavior.participant.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantXML, {
       modules: testModules
     }));
 
@@ -163,9 +168,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('label', function() {
 
-    var diagramXML = require('./FixHoverBehavior.label.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(labelXML, {
       modules: testModules
     }));
 
@@ -205,9 +208,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('group', function() {
 
-    var diagramXML = require('./FixHoverBehavior.group.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(groupXML, {
       modules: testModules
     }));
 
@@ -273,9 +274,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('Annotation', function() {
 
-    var diagramXML = require('./FixHoverBehavior.annotation.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(annotationXML, {
       modules: testModules
     }));
 
@@ -341,9 +340,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('connect lane', function() {
 
-    var diagramXML = require('./FixHoverBehavior.lane-connect.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(laneConnectXML, {
       modules: testModules.concat([
         globalConnectModule,
         bendpointsModule,
@@ -634,9 +631,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('participant with lane', function() {
 
-    var diagramXML = require('./FixHoverBehavior.lane-connect.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(laneConnectXML, {
       modules: testModules.concat([
         globalConnectModule,
         bendpointsModule
@@ -686,9 +681,7 @@ describe('features/modeling/behavior - fix hover', function() {
 
   describe('space tool', function() {
 
-    var diagramXML = require('./FixHoverBehavior.participant.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(participantXML, {
       modules: testModules
     }));
 

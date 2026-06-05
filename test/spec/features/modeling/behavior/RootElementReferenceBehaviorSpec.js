@@ -24,17 +24,17 @@ import {
   matchPattern
 } from 'min-dash';
 
-var testModules = [
-  coreModule,
-  modelingModule
-];
+import diagramXML from './RootElementReferenceBehavior.bpmn';
 
 
 describe('features/modeling - root element reference behavior', function() {
 
-  var diagramXML = require('./RootElementReferenceBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('add root element', function() {

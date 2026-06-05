@@ -9,19 +9,21 @@ import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 
+import collaborationXML from '../../../fixtures/bpmn/collaboration/collaboration-empty-participant.bpmn';
+
 
 describe('features/modeling - delete participant', function() {
-
-  var testModules = [ coreModule, modelingModule ];
-
 
   describe('last remaining', function() {
 
     describe('should transform diagram into process diagram', function() {
 
-      var processDiagramXML = require('../../../fixtures/bpmn/collaboration/collaboration-empty-participant.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(collaborationXML, {
+        modules: [
+          coreModule,
+          modelingModule
+        ]
+      }));
 
 
       it('execute', inject(function(modeling, elementRegistry, canvas) {

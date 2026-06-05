@@ -8,10 +8,10 @@ import coreModule from 'bpmn-js/lib/core';
 
 import LoggingCroppingConnectionDocking from './LoggingCroppingConnectionDocking.js';
 
+import diagramXML from './MoveStress.bpmn';
+
 
 describe.skip('modeling / MoveShape - connection cropping', function() {
-
-  var diagramXML = require('./MoveStress.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

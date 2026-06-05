@@ -33,26 +33,37 @@ import { isExpanded } from 'bpmn-js/lib/util/DiUtil.js';
 import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
 import { omit } from 'min-dash';
 
+import markersXML from '../../../fixtures/bpmn/draw/activity-markers-simple.bpmn';
+import boundaryEventsXML from '../../../fixtures/bpmn/features/replace/01_replace.bpmn';
+import dataElementsXML from '../../../fixtures/bpmn/features/replace/data-elements.bpmn';
+import dataStoresXML from '../../../fixtures/bpmn/features/replace/data-stores-positioned-against-participant.bpmn';
+import participantsXML from '../../../fixtures/bpmn/features/replace/participants.bpmn';
+import cancelEventsXML from '../../../fixtures/bpmn/features/replace/cancel-events.bpmn';
+import defaultFlowsXML from './ReplaceMenuProvider.defaultFlows.bpmn';
+import defaultFlowsFromInclusiveGatewaysXML from './ReplaceMenuProvider.defaultFlowsFromInclusiveGateways.bpmn';
+import defaultFlowsFromComplexGatewaysXML from './ReplaceMenuProvider.defaultFlowsFromComplexGateways.bpmn';
+import conditionalFlowsXML from './ReplaceMenuProvider.conditionalFlows.bpmn';
+import compensationActivityXML from './ReplaceMenuProvider.compensation-activity.bpmn';
+import subProcessesXML from './ReplaceMenuProvider.subProcesses.bpmn';
+import collapsedSubProcessXML from './ReplaceMenuProvider.collapsedSubProcess.bpmn';
+import poolsXML from './ReplaceMenuProvider.pools.bpmn';
+import eventsXML from './ReplaceMenuProvider.events.bpmn';
+import basicXML from '../../../fixtures/bpmn/basic.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule,
+  replaceMenuProviderModule,
+  customRulesModule
+];
+
 
 describe('features/popup-menu - replace menu provider', function() {
 
-  var diagramXMLMarkers = require('../../../fixtures/bpmn/draw/activity-markers-simple.bpmn'),
-      diagramXMLReplace = require('../../../fixtures/bpmn/features/replace/01_replace.bpmn'),
-      diagramXMLDataElements = require('../../../fixtures/bpmn/features/replace/data-elements.bpmn'),
-      diagramXMLDataStoresPositionedAgainstParticipant = require('../../../fixtures/bpmn/features/replace/data-stores-positioned-against-participant.bpmn'),
-      diagramXMLParticipants = require('../../../fixtures/bpmn/features/replace/participants.bpmn');
-
-  var testModules = [
-    coreModule,
-    modelingModule,
-    replaceMenuProviderModule,
-    customRulesModule
-  ];
-
-
   describe('data object - collection marker', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
+    beforeEach(bootstrapModeler(dataElementsXML, { modules: testModules }));
 
 
     it('should toggle on', inject(function(elementRegistry) {
@@ -193,7 +204,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('participants - multiplicity marker', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLParticipants, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantsXML, { modules: testModules }));
 
 
     it('should toggle on', inject(function(elementRegistry) {
@@ -290,8 +301,11 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('toggle', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLMarkers,{
-      modules: Object.assign(testModules, camundaModdleModule),
+    beforeEach(bootstrapModeler(markersXML,{
+      modules: [
+        ...testModules,
+        camundaModdleModule
+      ],
       moddleExtensions: {
         camunda: camundaPackage
       }
@@ -721,12 +735,17 @@ describe('features/popup-menu - replace menu provider', function() {
 
 
     describe('non-interrupting toggle', function() {
-      beforeEach(bootstrapModeler(diagramXMLReplace,{
-        modules: Object.assign(testModules, camundaModdleModule),
+
+      beforeEach(bootstrapModeler(boundaryEventsXML,{
+        modules: [
+          ...testModules,
+          camundaModdleModule
+        ],
         moddleExtensions: {
           camunda: camundaPackage
         }
       }));
+
 
       describe('start events', function() {
 
@@ -888,7 +907,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('replacing', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLMarkers, { modules: testModules }));
+    beforeEach(bootstrapModeler(markersXML, { modules: testModules }));
+
 
     it('should retain the loop characteristics', inject(function(elementRegistry) {
 
@@ -1087,7 +1107,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('events', function() {
 
-      beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
+
 
       it('should contain all except the current one',
         inject(function(elementRegistry) {
@@ -1370,9 +1391,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('cancel event definition', function() {
 
-      var diagramXML = require('../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(cancelEventsXML, { modules: testModules }));
 
 
       describe('for end events', function() {
@@ -1488,7 +1507,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('boundary events', function() {
 
-      beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+      beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
+
 
       it('should contain all boundary events (except for cancel and currently active) for an interrupting boundary event',
         inject(function(elementRegistry) {
@@ -1543,9 +1563,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('default flows', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(defaultFlowsXML, {
         modules: testModules
       }));
 
@@ -1593,9 +1611,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('default flows from inclusive gateways', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.defaultFlowsFromInclusiveGateways.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(defaultFlowsFromInclusiveGatewaysXML, {
         modules: testModules
       }));
 
@@ -1638,9 +1654,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('default flows from complex gateways', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.defaultFlowsFromComplexGateways.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(defaultFlowsFromComplexGatewaysXML, {
         modules: testModules
       }));
 
@@ -1683,9 +1697,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('conditional flows', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(conditionalFlowsXML, {
         modules: testModules
       }));
 
@@ -1724,9 +1736,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('compensate activities', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.compensation-activity.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(compensationActivityXML, { modules: testModules }));
 
 
       it('options should include subProcesses and callActivity', inject(function(elementRegistry) {
@@ -1750,9 +1760,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('subprocesses', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.subProcesses.bpmn');
+      beforeEach(bootstrapModeler(subProcessesXML, { modules: testModules }));
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
       describe('subprocess', function() {
 
@@ -1886,9 +1895,8 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('collapsed subprocesses', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.collapsedSubProcess.bpmn');
+      beforeEach(bootstrapModeler(collapsedSubProcessXML, { modules: testModules }));
 
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
       describe('collapsed subprocess', function() {
 
@@ -2022,9 +2030,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('pools', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.pools.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(poolsXML, { modules: testModules }));
 
 
       it('should indicate removing content', inject(function(elementRegistry) {
@@ -2063,7 +2069,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('data object', function() {
 
-      beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataElementsXML, { modules: testModules }));
 
 
       it('should only contain data store reference', inject(function(elementRegistry) {
@@ -2099,7 +2105,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('data store', function() {
 
-      beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataElementsXML, { modules: testModules }));
 
 
       it('should only contain data object reference', inject(function(elementRegistry) {
@@ -2135,7 +2141,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('data store positioned against participant', function() {
 
-      beforeEach(bootstrapModeler(diagramXMLDataStoresPositionedAgainstParticipant, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataStoresXML, { modules: testModules }));
 
 
       it('should only contain data object reference', inject(function(elementRegistry) {
@@ -2172,7 +2178,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('a11y', function() {
 
-    beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
     it('should report no violations', inject(async function(elementRegistry) {
@@ -2192,12 +2198,9 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('integration', function() {
 
-
     describe('default flows', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.defaultFlows.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(defaultFlowsXML, { modules: testModules }));
 
 
       it('should replace SequenceFlow with DefaultFlow [gateway]', inject(function(elementRegistry) {
@@ -2629,9 +2632,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('conditional flows', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.conditionalFlows.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(conditionalFlowsXML, {
         modules: testModules
       }));
 
@@ -2809,9 +2810,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('adhoc sub process', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.subProcesses.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(subProcessesXML, {
         modules: testModules.concat(autoResizeModule)
       }));
 
@@ -2894,9 +2893,7 @@ describe('features/popup-menu - replace menu provider', function() {
 
     describe('events', function() {
 
-      var diagramXML = require('./ReplaceMenuProvider.events.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(eventsXML, {
         modules: testModules
       }));
 
@@ -2964,10 +2961,11 @@ describe('features/popup-menu - replace menu provider', function() {
 
   describe('rules', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/basic.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules.concat([ customRulesModule ])
+    beforeEach(bootstrapModeler(basicXML, {
+      modules: [
+        ...testModules,
+        customRulesModule
+      ]
     }));
 
 

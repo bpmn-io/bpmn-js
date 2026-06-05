@@ -9,9 +9,10 @@ import {
 import appendPreviewModule from 'bpmn-js/lib/features/append-preview';
 import coreModule from 'bpmn-js/lib/core';
 
-describe('features/append-preview', function() {
+import diagramXML from './AppendPreview.bpmn';
 
-  var diagramXML = require('./AppendPreview.bpmn');
+
+describe('features/append-preview', function() {
 
   before(bootstrapModeler(diagramXML, {
     modules: [

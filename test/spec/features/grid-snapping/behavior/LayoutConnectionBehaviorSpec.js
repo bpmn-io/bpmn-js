@@ -11,12 +11,12 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
 
+import diagramXML from './LayoutConnectionBehavior.bpmn';
+
 
 describe('features/grid-snapping - layout connection', function() {
 
   describe('on connection create', function() {
-
-    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: [
@@ -66,8 +66,6 @@ describe('features/grid-snapping - layout connection', function() {
 
 
   describe('on connection layout', function() {
-
-    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: [
@@ -145,8 +143,6 @@ describe('features/grid-snapping - layout connection', function() {
 
 
   describe('on paste multiple', function() {
-
-    var diagramXML = require('./LayoutConnectionBehavior.bpmn');
 
     beforeEach(bootstrapModeler(diagramXML, {
       modules: [

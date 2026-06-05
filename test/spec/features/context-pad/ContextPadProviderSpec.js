@@ -29,6 +29,9 @@ import customRulesModule from 'bpmn-js/test/util/custom-rules/index.js';
 import autoPlaceModule from 'bpmn-js/lib/features/auto-place';
 import appendMenuProvider from 'bpmn-js/lib/features/popup-menu';
 
+import simpleXML from '../../../fixtures/bpmn/simple.bpmn';
+import activationXML from './ContextPad.activation.bpmn';
+
 
 describe('features - context-pad', function() {
 
@@ -45,9 +48,7 @@ describe('features - context-pad', function() {
 
   describe('remove action rules', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(simpleXML, { modules: testModules }));
 
 
     var deleteAction;
@@ -246,9 +247,8 @@ describe('features - context-pad', function() {
 
   describe('available entries', function() {
 
-    var diagramXML = require('./ContextPad.activation.bpmn');
+    beforeEach(bootstrapModeler(activationXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     function expectContextPadEntries(elementOrId, expectedEntries) {
 
@@ -405,9 +405,7 @@ describe('features - context-pad', function() {
 
   describe('create', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: testModules
     }));
 
@@ -532,9 +530,7 @@ describe('features - context-pad', function() {
 
   describe('replace', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: testModules
     }));
 
@@ -710,9 +706,7 @@ describe('features - context-pad', function() {
 
   describe('auto place', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: testModules.concat(autoPlaceModule)
     }));
 
@@ -739,9 +733,7 @@ describe('features - context-pad', function() {
 
   describe('disabled auto-place', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: testModules.concat(autoPlaceModule),
       contextPad: {
         autoPlace: false
@@ -782,9 +774,7 @@ describe('features - context-pad', function() {
 
   describe('preview', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(simpleXML, {
       modules: testModules.concat(autoPlaceModule)
     }));
 

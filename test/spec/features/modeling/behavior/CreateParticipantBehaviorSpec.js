@@ -19,22 +19,25 @@ import {
   createCanvasEvent as canvasEvent
 } from 'bpmn-js/test/util/MockEvents.js';
 
+import processEmptyXML from '../../../../fixtures/bpmn/collaboration/process-empty.bpmn';
+import processXML from '../../../../fixtures/bpmn/collaboration/process.bpmn';
+import collaborationParticipantXML from '../../../../fixtures/bpmn/collaboration/collaboration-participant.bpmn';
+
+
+var testModules = [
+  coreModule,
+  createModule,
+  modelingModule
+];
+
 
 describe('features/modeling - create participant', function() {
-
-  var testModules = [
-    coreModule,
-    createModule,
-    modelingModule
-  ];
 
   describe('process', function() {
 
     describe('turning process into collaboration', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processEmptyXML, { modules: testModules }));
 
       var collaboration,
           collaborationBo,
@@ -220,9 +223,7 @@ describe('features/modeling - create participant', function() {
 
     describe('moving process children', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
       var collaboration,
           collaborationDi,
@@ -308,9 +309,7 @@ describe('features/modeling - create participant', function() {
 
     describe('hovering process when creating first participant', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
       var participant,
           process,
@@ -375,9 +374,7 @@ describe('features/modeling - create participant', function() {
 
     describe('fitting participant (default size)', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
       var participant,
           process,
@@ -455,9 +452,8 @@ describe('features/modeling - create participant', function() {
 
     describe('fitting participant (only groups)', function() {
 
-      var processDiagramXML = require('../../../../fixtures/bpmn/collaboration/process-empty.bpmn');
+      beforeEach(bootstrapModeler(processEmptyXML, { modules: testModules }));
 
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
 
       it('should fit participant', inject(
         function(canvas, create, dragging, elementFactory, modeling) {
@@ -489,10 +485,7 @@ describe('features/modeling - create participant', function() {
 
   describe('collaboration', function() {
 
-    var collaborationDiagramXML =
-      require('../../../../fixtures/bpmn/collaboration/collaboration-participant.bpmn');
-
-    beforeEach(bootstrapModeler(collaborationDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationParticipantXML, { modules: testModules }));
 
     var collaborationBo,
         participant,

@@ -12,15 +12,15 @@ import {
 
 
 import customElementsModules from './custom-elements/index.js';
+import processDiagramXML from '../fixtures/bpmn/simple.bpmn';
+import collaborationDiagramXML from '../fixtures/bpmn/collaboration.bpmn';
 
 var modelerModules = Modeler.prototype._modules,
     customModules = [ customElementsModules ];
 
 var testModules = [].concat(modelerModules, customModules);
 
-var processDiagramXML = require('../fixtures/bpmn/simple.bpmn');
 
-var collaborationDiagramXML = require('../fixtures/bpmn/collaboration.bpmn');
 
 
 describe('custom elements', function() {

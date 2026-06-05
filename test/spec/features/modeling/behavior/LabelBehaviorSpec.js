@@ -29,12 +29,13 @@ import modelingModule from 'bpmn-js/lib/features/modeling';
 import coreModule from 'bpmn-js/lib/core';
 import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
 
+import basicXML from './LabelBehavior.bpmn';
+import copyPasteXML from './LabelBehavior.copyPaste.bpmn';
+
 
 describe('features/modeling/behavior - LabelBehavior', function() {
 
-  var diagramXML = require('./LabelBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(basicXML, {
     modules: [
       modelingModule,
       coreModule
@@ -866,9 +867,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
 describe('features/modeling/behavior - LabelBehavior - copy/paste integration', function() {
 
-  var diagramXML = require('./LabelBehavior.copyPaste.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(copyPasteXML, {
     modules: [
       modelingModule,
       coreModule,
