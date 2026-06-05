@@ -18,7 +18,7 @@ import customRulesModule from 'bpmn-js/test/util/custom-rules/index.js';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 import replaceMenuProviderModule from 'bpmn-js/lib/features/popup-menu';
 
-import camundaModdleModule from 'camunda-bpmn-moddle/lib';
+import camundaModdleModule from 'camunda-bpmn-moddle/lib/index.js';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {

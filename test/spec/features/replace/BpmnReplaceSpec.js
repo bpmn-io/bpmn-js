@@ -14,7 +14,7 @@ import replaceModule from 'bpmn-js/lib/features/replace';
 import moveModule from 'diagram-js/lib/features/move';
 import coreModule from 'bpmn-js/lib/core';
 
-import camundaModdleModule from 'camunda-bpmn-moddle/lib';
+import camundaModdleModule from 'camunda-bpmn-moddle/lib/index.js';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {

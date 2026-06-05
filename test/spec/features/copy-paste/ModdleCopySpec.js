@@ -8,7 +8,7 @@ import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
 import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
-import camundaModdleModule from 'camunda-bpmn-moddle/lib';
+import camundaModdleModule from 'camunda-bpmn-moddle/lib/index.js';
 import camundaPackage from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {
