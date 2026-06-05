@@ -11,7 +11,7 @@ import {
   reconnectEnd
 } from './Helper';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import modelingModule from 'lib/features/modeling';
 import coreModule from 'lib/core';

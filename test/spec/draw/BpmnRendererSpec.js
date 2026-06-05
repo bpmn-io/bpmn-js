@@ -19,7 +19,7 @@ import {
   queryAll as domQueryAll
 } from 'min-dom';
 
-import { getVisual } from 'diagram-js/lib/util/GraphicsUtil';
+import { getVisual } from 'diagram-js/lib/util/GraphicsUtil.js';
 
 import { isAny } from 'lib/features/modeling/util/ModelingUtil';
 

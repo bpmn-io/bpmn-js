@@ -7,7 +7,7 @@ import {
 
 import {
   resizeBounds
-} from 'diagram-js/lib/features/resize/ResizeUtil';
+} from 'diagram-js/lib/features/resize/ResizeUtil.js';
 
 import {
   DEFAULT_LABEL_SIZE,

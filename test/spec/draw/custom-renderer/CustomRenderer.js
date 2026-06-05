@@ -1,6 +1,6 @@
 import inherits from 'inherits-browser';
 
-import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer';
+import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer.js';
 
 import {
   is,

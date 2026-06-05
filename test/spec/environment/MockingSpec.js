@@ -4,7 +4,7 @@ import {
   inject
 } from 'test/TestHelper';
 
-import Events from 'diagram-js/lib/core/EventBus';
+import Events from 'diagram-js/lib/core/EventBus.js';
 
 import Viewer from 'lib/Viewer';
 

@@ -29,7 +29,7 @@ import {
   hasErrorEventDefinition
 } from 'lib/util/DiUtil';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 
 describe('features/replace - bpmn replace', function() {

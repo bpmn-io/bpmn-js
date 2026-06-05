@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import TestContainer from 'mocha-test-container-support';
 
-import Diagram from 'diagram-js/lib/Diagram';
+import Diagram from 'diagram-js/lib/Diagram.js';
 import { BpmnModdle } from 'bpmn-moddle';
 
 import {
@@ -16,7 +16,7 @@ import {
 
 import {
   getChildren as getChildrenGfx
-} from 'diagram-js/lib/util/GraphicsUtil';
+} from 'diagram-js/lib/util/GraphicsUtil.js';
 
 import {
   find

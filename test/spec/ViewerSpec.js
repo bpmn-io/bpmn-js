@@ -8,7 +8,7 @@ import {
 
 import TestContainer from 'mocha-test-container-support';
 
-import Diagram from 'diagram-js/lib/Diagram';
+import Diagram from 'diagram-js/lib/Diagram.js';
 
 import ViewerDefaultExport from '../../';
 

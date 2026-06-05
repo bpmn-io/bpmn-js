@@ -1,9 +1,9 @@
-import Canvas from 'diagram-js/lib/core/Canvas';
-import EventBus from 'diagram-js/lib/core/EventBus';
+import Canvas from 'diagram-js/lib/core/Canvas.js';
+import EventBus from 'diagram-js/lib/core/EventBus.js';
 
-import Modeler from './Modeler';
+import Modeler from './Modeler.js';
 
-import { testViewer } from './BaseViewer.spec';
+import { testViewer } from './BaseViewer.spec.js';
 
 const modeler = new Modeler({
   container: 'container'

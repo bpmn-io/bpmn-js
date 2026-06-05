@@ -10,10 +10,10 @@ import modelingModule from 'lib/features/modeling';
 
 import {
   getBBox
-} from 'diagram-js/lib/util/Elements';
+} from 'diagram-js/lib/util/Elements.js';
 
-import { asTRBL } from 'diagram-js/lib/layout/LayoutUtil';
 import { getDi } from 'lib/util/ModelUtil';
+import { asTRBL } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import {
   createCanvasEvent as canvasEvent

@@ -15,7 +15,7 @@ import {
 
 import {
   remove as collectionRemove
-} from 'diagram-js/lib/util/Collections';
+} from 'diagram-js/lib/util/Collections.js';
 
 import {
   filter,

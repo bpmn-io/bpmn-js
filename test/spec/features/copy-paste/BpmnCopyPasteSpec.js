@@ -30,7 +30,7 @@ import {
   is
 } from 'lib/util/ModelUtil';
 
-import { isRoot } from 'diagram-js/lib/util/ModelUtil';
+import { isRoot } from 'diagram-js/lib/util/ModelUtil.js';
 
 /**
  * @typedef {import('../../../../lib/model/Types').Element} Element

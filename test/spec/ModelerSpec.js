@@ -7,7 +7,7 @@ import NavigatedViewer from 'lib/NavigatedViewer';
 
 import { getDi, isAny } from 'lib/util/ModelUtil';
 
-import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard';
+import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard.js';
 
 import TestContainer from 'mocha-test-container-support';
 

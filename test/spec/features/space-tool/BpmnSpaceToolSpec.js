@@ -13,11 +13,11 @@ import spaceToolModule from 'lib/features/space-tool';
 
 import { createCanvasEvent as canvasEvent } from '../../../util/MockEvents';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import { isString, pick } from 'min-dash';
 
-import { isMac } from 'diagram-js/lib/util/Platform';
+import { isMac } from 'diagram-js/lib/util/Platform.js';
 
 var invertModifier = isMac() ? { metaKey: true } : { ctrlKey: true };
 

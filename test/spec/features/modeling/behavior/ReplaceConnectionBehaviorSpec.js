@@ -14,7 +14,7 @@ import {
 
 import {
   getMid
-} from 'diagram-js/lib/layout/LayoutUtil';
+} from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';

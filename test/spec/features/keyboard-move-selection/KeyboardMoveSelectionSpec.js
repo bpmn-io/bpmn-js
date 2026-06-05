@@ -9,7 +9,7 @@ import keyboardMoveSelectionModule from 'diagram-js/lib/features/keyboard-move-s
 import modelingModule from 'lib/features/modeling';
 import rulesModule from 'lib/features/rules';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 
 describe('features/keyboard-move-selection', function() {

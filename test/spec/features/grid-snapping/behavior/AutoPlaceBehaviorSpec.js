@@ -4,7 +4,7 @@ import {
   inject
 } from 'test/TestHelper';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import autoPlaceModule from 'lib/features/auto-place';
 import coreModule from 'lib/core';

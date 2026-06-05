@@ -16,7 +16,7 @@ import {
   createCanvasEvent as canvasEvent
 } from '../../../../util/MockEvents';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 
 describe('modeling/behavior - drop on connection', function() {

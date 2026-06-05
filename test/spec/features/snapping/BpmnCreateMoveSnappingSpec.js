@@ -18,7 +18,7 @@ import snappingModule from 'lib/features/snapping';
 import {
   isSnapped,
   mid
-} from 'diagram-js/lib/features/snapping/SnapUtil';
+} from 'diagram-js/lib/features/snapping/SnapUtil.js';
 
 import { createCanvasEvent as canvasEvent } from '../../../util/MockEvents';
 

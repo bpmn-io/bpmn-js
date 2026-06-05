@@ -1,10 +1,10 @@
 import inherits from 'inherits-browser';
 
-import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer';
+import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer.js';
 
 import {
   componentsToPath
-} from 'diagram-js/lib/util/RenderUtil';
+} from 'diagram-js/lib/util/RenderUtil.js';
 
 import {
   append as svgAppend,

@@ -1,4 +1,4 @@
-import TextRenderer from './TextRenderer';
+import TextRenderer from './TextRenderer.js';
 
 new TextRenderer({
   defaultStyle: {

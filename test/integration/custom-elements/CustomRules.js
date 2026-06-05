@@ -2,7 +2,7 @@ import { forEach } from 'min-dash';
 
 import inherits from 'inherits-browser';
 
-import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
+import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider.js';
 
 var HIGH_PRIORITY = 1500;
 
