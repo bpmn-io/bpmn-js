@@ -171,6 +171,7 @@ describe('Modeler', function() {
   });
 
 
+  // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   !collectTranslations && describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
