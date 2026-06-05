@@ -10,15 +10,12 @@ import {
   pick
 } from 'min-dash';
 
-import contextPadModule from 'bpmn-js/lib/features/context-pad';
 import coreModule from 'bpmn-js/lib/core';
 import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   getChildLanes
 } from 'bpmn-js/lib/features/modeling/util/LaneUtil.js';
-
-import { query as domQuery } from 'min-dom';
 
 import lanesXML from './lanes.bpmn';
 import lanesVerticalXML from './lanes.vertical.bpmn';
@@ -28,7 +25,6 @@ import participantNoLaneXML from './participant-no-lane.bpmn';
 import participantNoLaneVerticalXML from './participant-no-lane-vertical.bpmn';
 import lanesFlowNodesXML from './lanes-flow-nodes.bpmn';
 import lanesFlowNodesVerticalXML from './lanes-flow-nodes-vertical.bpmn';
-import participantSingleLaneXML from './participant-single-lane.bpmn';
 
 
 var DEFAULT_LANE_HEIGHT = 120,
@@ -1062,64 +1058,9 @@ describe('features/modeling - add Lane', function() {
 
   });
 
-
-  describe('Internet Explorer', function() {
-
-
-    var testModules = [
-      contextPadModule,
-      coreModule,
-      modelingModule
-    ];
-
-    beforeEach(bootstrapModeler(participantSingleLaneXML, { modules: testModules }));
-
-
-    // must be executed manually, cannot be reproduced programmatically
-    // https://github.com/bpmn-io/bpmn-js/issues/746
-    it('should NOT blow up in Internet Explorer', inject(
-      function(contextPad, elementRegistry) {
-
-        // given
-        var lane = elementRegistry.get('Lane_1');
-
-        contextPad.open(lane);
-
-        // mock event
-        var event = padEvent('lane-insert-below');
-
-        // when
-        contextPad.trigger('click', event);
-
-        // then
-        // expect Internet Explorer NOT to blow up
-      }
-    ));
-
-  });
-
 });
 
 // helpers //////////
-
-function padEntry(element, name) {
-  return domQuery('[data-action="' + name + '"]', element);
-}
-
-function padEvent(entry) {
-
-  return getBpmnJS().invoke(function(overlays) {
-
-    var target = padEntry(overlays._overlayRoot, entry);
-
-    return {
-      target: target,
-      preventDefault: function() {},
-      clientX: 100,
-      clientY: 100
-    };
-  });
-}
 
 function getPosition(element) {
   return {
