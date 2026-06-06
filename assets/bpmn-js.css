@@ -1,3 +1,60 @@
+:root {
+  /* Modo Claro (Default) */
+  --bpmn-fill: hsl(0, 0%, 100%);
+  --bpmn-stroke: hsl(225, 10%, 15%);
+}
+
+[data-theme="dark"] {
+  /* Modo Escuro */
+  --bpmn-fill: hsl(225, 10%, 15%);
+  --bpmn-stroke: hsl(0, 0%, 100%);
+
+  /* Ajuste de variáveis específicas da interface para dark mode */
+  --breadcrumbs-arrow-color: var(--color-white);
+  --drilldown-fill-color: var(--color-blue-205-100-50);
+  --drilldown-background-color: var(--color-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  .bjs-container {
+    --bpmn-fill: hsl(225, 10%, 15%) !important;
+    --bpmn-stroke: hsl(0, 0%, 100%) !important;
+  }
+
+  .bjs-container .djs-visual rect,
+  .bjs-container .djs-visual ellipse,
+  .bjs-container .djs-visual polygon,
+  .bjs-container .djs-visual circle,
+  .bjs-container .djs-visual path {
+    fill: var(--bpmn-fill) !important;
+    stroke: var(--bpmn-stroke) !important;
+  }
+
+  .bjs-container .djs-visual path {
+    fill: none !important;
+  }
+}
+
+/* Garante que o renderizador customizado tenha efeito */
+.bjs-container svg .djs-visual {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+/* 1. Formas (Tarefas, Gateways) recebem cor de fundo e borda */
+.bjs-container svg .djs-visual rect,
+.bjs-container svg .djs-visual ellipse,
+.bjs-container svg .djs-visual polygon,
+.bjs-container svg .djs-visual circle {
+  fill: var(--bpmn-fill) !important;
+  stroke: var(--bpmn-stroke) !important;
+}
+
+/* 2. Caminhos (Setas, Ícones, Linhas) NÃO devem ter preenchimento, apenas borda */
+.bjs-container svg .djs-visual path {
+  fill: none !important;
+  stroke: var(--bpmn-stroke) !important;
+}
+
 .bjs-container {
   --bjs-font-family: Arial, sans-serif;
 
@@ -120,7 +177,7 @@
   display: flex;
 }
 
-[data-popup="align-elements"] .djs-popup-body [data-group] + [data-group] {
+[data-popup="align-elements"] .djs-popup-body [data-group]+[data-group] {
   border-left: 1px solid var(--popup-border-color);
 }
 
