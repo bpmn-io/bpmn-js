@@ -8,8 +8,9 @@ ___Note:__ Yet to be released changes appear here._
 
 ### 18.18.0
 
+* `FEAT`: ship type declaration maps ([#2442](https://github.com/bpmn-io/bpmn-js/pull/2442))
 * `FEAT`: allow blocking canvas interactions ([bpmn-io/diagram-js#1032](https://github.com/bpmn-io/diagram-js/pull/1032))
-* `DEPS`: update to `diagram-js@15.16.0`
+* `DEPS`: update to `diagram-js@15.17.0`
 
 ### 18.17.1
 
