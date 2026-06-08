@@ -25,7 +25,7 @@
     "distro": "node tasks/build-distro.mjs",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
     "generate-types": "run-s generate-types:*",
-    "generate-types:generate": "del-cli \"lib/**/*.d.ts\" && npx bio-dts -r lib",
+    "generate-types:generate": "del-cli \"lib/**/*.d.ts\" \"lib/**/*.d.ts.map\" && npx bio-dts -r lib --declarationMap",
     "generate-types:test": "tsc --noEmit --noImplicitAny",
     "test:distro": "node tasks/test-distro.mjs",
     "postversion": "run-s distro test:distro",
