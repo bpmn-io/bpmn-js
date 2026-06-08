@@ -1492,6 +1492,75 @@ describe('features/replace - bpmn replace', function() {
     );
 
 
+    it('should replace sub process with collapsed event sub process',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        var collapsedEventSubProcess = bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          triggeredByEvent: true,
+          isExpanded: false
+        });
+
+        // then
+        expect(collapsedEventSubProcess.businessObject.triggeredByEvent).to.be.true;
+        expect(isExpanded(collapsedEventSubProcess)).to.be.false;
+      })
+    );
+
+
+    it('should replace event sub process with collapsed sub process',
+      inject(function(elementRegistry, bpmnReplace) {
+
+        // given
+        var eventSubProcess = elementRegistry.get('SubProcess_2');
+
+        // when
+        var collapsedSubProcess = bpmnReplace.replaceElement(eventSubProcess, {
+          type: 'bpmn:SubProcess',
+          isExpanded: false
+        });
+
+        // then
+        expect(collapsedSubProcess.businessObject.triggeredByEvent).to.be.false;
+        expect(isExpanded(collapsedSubProcess)).to.be.false;
+      })
+    );
+
+
+    it('should undo and redo replacing sub process with collapsed event sub process',
+      inject(function(elementRegistry, bpmnReplace, commandStack) {
+
+        // given
+        var subProcess = elementRegistry.get('SubProcess_1');
+
+        // when
+        bpmnReplace.replaceElement(subProcess, {
+          type: 'bpmn:SubProcess',
+          triggeredByEvent: true,
+          isExpanded: false
+        });
+
+        commandStack.undo();
+
+        var revertedSubProcess = elementRegistry.get('SubProcess_1');
+
+        commandStack.redo();
+
+        var redoneSubProcess = elementRegistry.get('SubProcess_1');
+
+        // then
+        expect(revertedSubProcess.businessObject.triggeredByEvent).to.be.false;
+        expect(isExpanded(revertedSubProcess)).to.be.true;
+        expect(redoneSubProcess.businessObject.triggeredByEvent).to.be.true;
+        expect(isExpanded(redoneSubProcess)).to.be.false;
+      })
+    );
+
+
     it('should replace non-interrupting start event after moving it outside event sub process',
       inject(function(bpmnReplace, elementRegistry, modeling) {
 
