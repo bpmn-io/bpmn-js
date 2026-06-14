@@ -2,6 +2,7 @@ node_modules/
 dist/
 coverage/
 lib/**/*.d.ts
+lib/**/*.d.ts.map
 .idea
 *.iml
 .DS_Store

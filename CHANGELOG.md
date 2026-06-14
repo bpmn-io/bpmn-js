@@ -6,6 +6,28 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### 18.18.0
+
+* `FEAT`: ship type declaration maps ([#2442](https://github.com/bpmn-io/bpmn-js/pull/2442))
+* `FEAT`: allow blocking canvas interactions ([bpmn-io/diagram-js#1032](https://github.com/bpmn-io/diagram-js/pull/1032))
+* `DEPS`: update to `diagram-js@15.17.0`
+
+### 18.17.1
+
+* `FIX`: correct popup menu closing on inside clicks ([bpmn-io/diagram-js#1045](https://github.com/bpmn-io/diagram-js/pull/1045))
+* `DEPS`: update to `diagram-js@15.15.1`
+
+### 18.17.0
+
+* `FEAT`: introduce multi-step navigation to popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: show search result number in popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: improve popup menu styling ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: improve popup menu assistive text and labels ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: do not cut of popup menu label and description tests ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `CHORE`: remove `businessObject.di` compatibility error ([#2429](https://github.com/bpmn-io/bpmn-js/pull/2429))
+* `DEPS`: update to `diagram-js@15.15.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.4.0`
+
 ### 18.16.1
 
 * `FIX`: render data output with filled arrow ([#2425](https://github.com/bpmn-io/bpmn-js/pull/2425))
