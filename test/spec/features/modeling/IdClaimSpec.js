@@ -2,19 +2,22 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import processDiagramXML from './IdClaim.bpmn';
 
 
 describe('features/modeling - id claim management', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-  var processDiagramXML = require('./IdClaim.bpmn');
-
-  beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(processDiagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
   var element, moddleElement, id;
 

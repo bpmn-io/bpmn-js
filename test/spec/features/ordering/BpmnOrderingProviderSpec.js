@@ -1,17 +1,24 @@
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   move,
   attach,
   connect,
   expectZOrder
-} from './Helper';
+} from 'bpmn-js/test/spec/features/ordering/Helper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import basicXML from './ordering.bpmn';
+import startEventXML from './ordering-start-event.bpmn';
+import subProcessesXML from './ordering-subprocesses.bpmn';
+import groupsXML from './groups.bpmn';
+import collapsedSubProcessesXML from './collapsed-subprocess.bpmn';
+import dataAssociationXML from './data-association.bpmn';
 
 
 describe('features/modeling - ordering', function() {
@@ -26,9 +33,7 @@ describe('features/modeling - ordering', function() {
 
     describe('move', function() {
 
-      var diagramXML = require('./ordering.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
       it('should stay in front of Task', inject(function() {
@@ -55,9 +60,7 @@ describe('features/modeling - ordering', function() {
 
     describe('add', function() {
 
-      var diagramXML = require('./ordering-start-event.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(startEventXML, { modules: testModules }));
 
 
       it('should add in front of Task', inject(function() {
@@ -76,9 +79,7 @@ describe('features/modeling - ordering', function() {
 
   describe('participants', function() {
 
-    var diagramXML = require('./ordering.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('should stay behind MessageFlow', inject(function() {
@@ -149,9 +150,7 @@ describe('features/modeling - ordering', function() {
 
   describe('sub processes', function() {
 
-    var diagramXML = require('./ordering-subprocesses.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(subProcessesXML, { modules: testModules }));
 
 
     it('should stay behind boundary events', inject(function() {
@@ -188,9 +187,7 @@ describe('features/modeling - ordering', function() {
 
   describe('transaction', function() {
 
-    var diagramXML = require('./ordering-subprocesses.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(subProcessesXML, { modules: testModules }));
 
 
     it('should stay behind boundary events', inject(function() {
@@ -227,9 +224,7 @@ describe('features/modeling - ordering', function() {
 
   describe('labels', function() {
 
-    var diagramXML = require('./ordering.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     describe('should stay always in front', function() {
@@ -295,9 +290,7 @@ describe('features/modeling - ordering', function() {
 
   describe('groups', function() {
 
-    var diagramXML = require('./groups.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(groupsXML, { modules: testModules }));
 
 
     describe('should stay always in front', function() {
@@ -346,9 +339,7 @@ describe('features/modeling - ordering', function() {
 
     describe('inside subprocess', function() {
 
-      var diagramXML = require('./collapsed-subprocess.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(collapsedSubProcessesXML, { modules: testModules }));
 
 
       describe('should stay always in front', function() {
@@ -383,6 +374,7 @@ describe('features/modeling - ordering', function() {
         }));
 
       });
+
     });
 
   });
@@ -390,9 +382,7 @@ describe('features/modeling - ordering', function() {
 
   describe('sequence flows', function() {
 
-    var diagramXML = require('./ordering.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('should render sequence flows behind tasks', inject(function() {
@@ -412,9 +402,8 @@ describe('features/modeling - ordering', function() {
 
   describe('data associations', function() {
 
-    var diagramXML = require('./data-association.bpmn');
+    beforeEach(bootstrapModeler(dataAssociationXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
 
     it('should render data associations infront of Collaboration', inject(function() {
 
@@ -438,7 +427,6 @@ describe('features/modeling - ordering', function() {
 
         // then
         expectZOrder('SubProcess_1', connection, 'SubProcess_2');
-
       }));
 
 
@@ -449,7 +437,6 @@ describe('features/modeling - ordering', function() {
 
         // then
         expectZOrder('collapsedSubProcess_plane', 'DataReference_2', connection);
-
       }));
 
     });

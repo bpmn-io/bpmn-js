@@ -4,13 +4,18 @@ import { forEach } from 'min-dash';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import bpmnDistributeElements from 'lib/features/distribute-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import bpmnDistributeElements from 'bpmn-js/lib/features/distribute-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
+
+import basicXML from '../../../fixtures/bpmn/distribute-elements.bpmn';
+import filteringXML from '../../../fixtures/bpmn/distribute-elements-filtering.bpmn';
+import filteringCollaborationXML from '../../../fixtures/bpmn/distribute-elements-filtering.collaboration.bpmn';
+
 
 function last(arr) {
   return arr[arr.length - 1];
@@ -19,12 +24,14 @@ function last(arr) {
 
 describe('features/distribute-elements', function() {
 
-  var testModules = [ bpmnDistributeElements, modelingModule, coreModule ];
+  var testModules = [
+    bpmnDistributeElements,
+    modelingModule,
+    coreModule
+  ];
 
 
   describe('basics', function() {
-
-    var basicXML = require('../../../fixtures/bpmn/distribute-elements.bpmn');
 
     beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
@@ -87,11 +94,9 @@ describe('features/distribute-elements', function() {
 
     describe('process', function() {
 
-      var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.bpmn'),
-          elements;
+      beforeEach(bootstrapModeler(filteringXML, { modules: testModules }));
 
-      beforeEach(bootstrapModeler(xml, { modules: testModules }));
-
+      var elements;
 
       beforeEach(inject(function(elementRegistry) {
         elements = elementRegistry.filter(function(element) {
@@ -139,11 +144,11 @@ describe('features/distribute-elements', function() {
 
     describe('collaboration', function() {
 
-      var xml = require('../../../fixtures/bpmn/distribute-elements-filtering.collaboration.bpmn'),
-          elements;
+      beforeEach(bootstrapModeler(filteringCollaborationXML, {
+        modules: testModules
+      }));
 
-      beforeEach(bootstrapModeler(xml, { modules: testModules }));
-
+      var elements;
 
       beforeEach(inject(function(elementRegistry) {
         elements = elementRegistry.filter(function(element) {

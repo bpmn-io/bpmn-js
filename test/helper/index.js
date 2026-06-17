@@ -36,13 +36,13 @@ import {
 
 import TestContainer from 'mocha-test-container-support';
 
-import Modeler from '../../lib/Modeler';
-import NavigatedViewer from '../../lib/NavigatedViewer';
-import Viewer from '../../lib/Viewer';
+import Modeler from 'bpmn-js/lib/Modeler.js';
+import NavigatedViewer from 'bpmn-js/lib/NavigatedViewer.js';
+import Viewer from 'bpmn-js/lib/Viewer.js';
 
 var OPTIONS, BPMN_JS;
 
-import translationModule from './TranslationCollector';
+import translationModule from './TranslationCollector.js';
 
 export var collectTranslations = window.__env__ && window.__env__.COLLECT_TRANSLATIONS;
 

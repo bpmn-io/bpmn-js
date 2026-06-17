@@ -2,23 +2,26 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   find
 } from 'min-dash';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import diagramXML from '../../../../fixtures/bpmn/containers.bpmn';
 
 
 describe('features/modeling - append text-annotation', function() {
 
-  var diagramXML = require('../../../../fixtures/bpmn/containers.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('should append', function() {

@@ -1,15 +1,15 @@
 import inherits from 'inherits-browser';
 
-import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer';
+import BaseRenderer from 'diagram-js/lib/draw/BaseRenderer.js';
 
 import {
   is,
   isAny
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   isLabel
-} from 'lib/util/LabelUtil';
+} from 'bpmn-js/lib/util/LabelUtil.js';
 
 
 var HIGH_PRIORITY = 1250;

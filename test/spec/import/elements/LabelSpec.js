@@ -2,7 +2,13 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
+
+import embeddedXML from '../../../fixtures/bpmn/import/labels/embedded.bpmn';
+import collaborationXML from '../../../fixtures/bpmn/import/labels/collaboration.bpmn';
+import collaborationMessageFlowsXML from '../../../fixtures/bpmn/import/labels/collaboration-message-flows.bpmn';
+import externalXML from '../../../fixtures/bpmn/import/labels/external.bpmn';
+import externalNoDiXML from '../../../fixtures/bpmn/import/labels/external-no-di.bpmn';
 
 
 describe('import - labels', function() {
@@ -10,24 +16,21 @@ describe('import - labels', function() {
   describe('should import embedded labels', function() {
 
     it('on flow nodes', function() {
-      var xml = require('../../../fixtures/bpmn/import/labels/embedded.bpmn');
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(embeddedXML)().then(function(result) {
         expect(result.error).not.to.exist;
       });
     });
 
 
     it('on pools and lanes', function() {
-      var xml = require('../../../fixtures/bpmn/import/labels/collaboration.bpmn');
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(collaborationXML)().then(function(result) {
         expect(result.error).not.to.exist;
       });
     });
 
 
     it('on message flows', function() {
-      var xml = require('../../../fixtures/bpmn/import/labels/collaboration-message-flows.bpmn');
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(collaborationMessageFlowsXML)().then(function(result) {
         expect(result.error).not.to.exist;
       });
     });
@@ -38,10 +41,9 @@ describe('import - labels', function() {
   describe('should import external labels', function() {
 
     it('with di', function() {
-      var xml = require('../../../fixtures/bpmn/import/labels/external.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(externalXML)().then(function(result) {
 
         var err = result.error;
 
@@ -73,8 +75,7 @@ describe('import - labels', function() {
 
 
     it('without di', function() {
-      var xml = require('../../../fixtures/bpmn/import/labels/external-no-di.bpmn');
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(externalNoDiXML)().then(function(result) {
         expect(result.error).not.to.exist;
       });
     });

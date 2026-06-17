@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import TestContainer from 'mocha-test-container-support';
 
-import Diagram from 'diagram-js/lib/Diagram';
+import Diagram from 'diagram-js/lib/Diagram.js';
 import { BpmnModdle } from 'bpmn-moddle';
 
 import {
   importBpmnDiagram
-} from 'lib/import/Importer';
+} from 'bpmn-js/lib/import/Importer.js';
 
-import CoreModule from 'lib/core';
+import CoreModule from 'bpmn-js/lib/core';
 
 import {
   matches as domMatches
@@ -16,13 +16,40 @@ import {
 
 import {
   getChildren as getChildrenGfx
-} from 'diagram-js/lib/util/GraphicsUtil';
+} from 'diagram-js/lib/util/GraphicsUtil.js';
 
 import {
   find
 } from 'min-dash';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
+
+import processXML from '../../fixtures/bpmn/import/process.bpmn';
+import collaborationXML from '../../fixtures/bpmn/import/collaboration.bpmn';
+import positionTestcaseXML from '../../fixtures/bpmn/import/position/position-testcase.bpmn';
+import sequenceFlowOrderingXML from './sequenceFlow-ordering.bpmn';
+import dataAssociationXML from './data-association.bpmn';
+import boundaryEventXML from '../../fixtures/bpmn/import/boundaryEvent.bpmn';
+import dataStoreInsideParticipantXML from '../../fixtures/bpmn/import/data-store.inside-participant.bpmn';
+import dataStoreOutsideParticipantParticipantXML from '../../fixtures/bpmn/import/data-store.outside-participant.participant.bpmn';
+import dataStoreOutsideParticipantSubprocessXML from '../../fixtures/bpmn/import/data-store.outside-participant.subprocess.bpmn';
+import dataStoreOutsideParticipantDanglingXML from '../../fixtures/bpmn/import/data-store.outside-participant.dangling.bpmn';
+import multipleDiagramsXML from '../../fixtures/bpmn/import/multiple-diagrams.bpmn';
+import groupsXML from '../../fixtures/bpmn/import/groups.bpmn';
+import invalidFlowElementXML from '../../fixtures/bpmn/import/error/invalid-flow-element.bpmn';
+import multipleDisXML from '../../fixtures/bpmn/import/error/multiple-dis.bpmn';
+import missingDiPlaneXML from './missing-di-plane.bpmn';
+import missingDiPlaneRootElementXML from './missing-di-plane-root-element.bpmn';
+import sequenceFlowMissingWaypointsXML from './sequenceFlow-missingWaypoints.bpmn';
+import defaultAttrsXML from '../../fixtures/bpmn/import/default-attrs.bpmn';
+import boundaryEventMissingAttachToRefXML from '../../fixtures/bpmn/import/error/boundaryEvent-missingAttachToRef.bpmn';
+import boundaryEventInvalidAttachToRefXML from '../../fixtures/bpmn/import/error/boundaryEvent-invalidAttachToRef.bpmn';
+import danglingProcessMessageFlowXML from '../../fixtures/bpmn/import/error/dangling-process-message-flow.bpmn';
+import textAnnotationMessageFlowXML from '../../fixtures/bpmn/import/text-annotation-message-flow.bpmn';
+import processWithChildrenXML from '../../fixtures/bpmn/import/collapsed/processWithChildren.bpmn';
+import multipleDiagrams2XML from '../../fixtures/bpmn/multiple-diagrams.bpmn';
+import multipleNestedProcessesXML from '../../fixtures/bpmn/multiple-nested-processes.bpmn';
+import collapsedSubprocessXML from '../../fixtures/bpmn/import/collapsed-subprocess.bpmn';
 
 
 describe('import - Importer', function() {
@@ -41,11 +68,11 @@ describe('import - Importer', function() {
   });
 
 
-  function runImport(diagram, xml, diagramId) {
+  function runImport(diagram, processXML, diagramId) {
 
     var moddle = new BpmnModdle();
 
-    return moddle.fromXML(xml).then(function(result) {
+    return moddle.fromXML(processXML).then(function(result) {
 
       var definitions = result.rootElement;
 
@@ -66,7 +93,6 @@ describe('import - Importer', function() {
     it('should fire <import.render.start> and <import.render.complete>', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/process.bpmn');
 
       var eventCount = 0;
 
@@ -87,7 +113,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, processXML).then(function() {
 
         // then
         expect(eventCount).to.equal(2);
@@ -98,7 +124,6 @@ describe('import - Importer', function() {
     it('should fire <bpmnElement.added> during import', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/process.bpmn');
 
       var eventCount = 0;
 
@@ -108,7 +133,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, processXML).then(function() {
 
         // then
         expect(eventCount).to.equal(9);
@@ -123,7 +148,6 @@ describe('import - Importer', function() {
     it('should import process', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/process.bpmn');
 
       var events = [];
 
@@ -138,7 +162,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, processXML).then(function() {
 
         // then
         expect(events).to.eql([
@@ -165,7 +189,6 @@ describe('import - Importer', function() {
     it('should import collaboration', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/collaboration.bpmn');
 
       var events = [];
 
@@ -180,7 +203,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, collaborationXML).then(function() {
 
         // then
         expect(events).to.eql([
@@ -208,8 +231,6 @@ describe('import - Importer', function() {
 
   describe('position', function() {
 
-    var xml = require('../../fixtures/bpmn/import/position/position-testcase.bpmn');
-
     it('should round shape coordinates', function() {
 
       // given
@@ -221,7 +242,7 @@ describe('import - Importer', function() {
         events[e.element.id] = e.element;
       });
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, positionTestcaseXML).then(function() {
 
         // round up
         expect(events.ID_End.x).to.equal(Math.round(340.6));
@@ -245,7 +266,7 @@ describe('import - Importer', function() {
         events[e.element.id] = e.element;
       });
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, positionTestcaseXML).then(function() {
 
         // round down
         expect(events.ID_Start.height).to.equal(Math.round(30.4));
@@ -261,13 +282,11 @@ describe('import - Importer', function() {
 
     it('should import lanes behind other flow nodes', function() {
 
-      var xml = require('./sequenceFlow-ordering.bpmn');
-
       // given
       var elementRegistry = diagram.get('elementRegistry');
 
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, sequenceFlowOrderingXML).then(function() {
 
         // when
         var processShape = elementRegistry.get('Participant_1jxpy8o');
@@ -289,13 +308,10 @@ describe('import - Importer', function() {
 
     it('should import sequence flows in front of other flow nodes', function() {
 
-      var xml = require('./sequenceFlow-ordering.bpmn');
-
       // given
       var elementRegistry = diagram.get('elementRegistry');
 
-
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, sequenceFlowOrderingXML).then(function() {
 
         // when
         var processShape = elementRegistry.get('Participant_1jxpy8o');
@@ -321,14 +337,10 @@ describe('import - Importer', function() {
     it('should import DataAssociations in root', function() {
 
       // given
-      var xml = require('./data-association.bpmn');
-
-      // given
       var elementRegistry = diagram.get('elementRegistry');
 
-
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, dataAssociationXML).then(function() {
 
         // then
         var process = elementRegistry.get('Collaboration'),
@@ -348,8 +360,6 @@ describe('import - Importer', function() {
     it('should import boundary events', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/boundaryEvent.bpmn');
-
       var events = [];
 
       // log events
@@ -363,7 +373,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, boundaryEventXML).then(function() {
 
         // then
         expect(events).to.eql([
@@ -373,7 +383,6 @@ describe('import - Importer', function() {
           { type: 'add', semantic: 'BoundaryEvent_1', di: '_BPMNShape_BoundaryEvent_2', diagramElement: 'BoundaryEvent_1' },
           { type: 'add', semantic: 'SequenceFlow_1', di: 'BPMNEdge_SequenceFlow_1', diagramElement: 'SequenceFlow_1' }
         ]);
-
       });
     });
 
@@ -381,8 +390,6 @@ describe('import - Importer', function() {
     it('should import data store as child of participant', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/data-store.inside-participant.bpmn');
-
       var events = {};
 
       // log events
@@ -391,19 +398,15 @@ describe('import - Importer', function() {
         events[e.element.id] = e.element;
       });
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, dataStoreInsideParticipantXML).then(function() {
         expect(events.DataStoreReference.parent).to.equal(events.Participant);
-
       });
-
     });
 
 
     it('should import data store in participant as child of collaboration', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.participant.bpmn');
-
       var events = {};
 
       // log events
@@ -412,7 +415,7 @@ describe('import - Importer', function() {
         events[e.element.id] = e.element;
       });
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, dataStoreOutsideParticipantParticipantXML).then(function() {
         expect(events.DataStoreReference.parent).to.equal(events.Collaboration);
 
       });
@@ -422,7 +425,6 @@ describe('import - Importer', function() {
     it('should import data store in subprocess as child of collaboration', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.subprocess.bpmn');
 
       var events = {};
 
@@ -432,7 +434,7 @@ describe('import - Importer', function() {
         events[e.element.id] = e.element;
       });
 
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, dataStoreOutsideParticipantSubprocessXML).then(function() {
         expect(events.DataStoreReference.parent).to.equal(events.Collaboration);
 
       });
@@ -441,17 +443,13 @@ describe('import - Importer', function() {
 
     it('should import data store outside of participant without warnings', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/data-store.outside-participant.dangling.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, dataStoreOutsideParticipantDanglingXML).then(function(result) {
 
         var warnings = result.warnings;
 
         // then
         expect(warnings).to.be.empty;
-
       });
     });
 
@@ -459,8 +457,6 @@ describe('import - Importer', function() {
     it('should import single diagram from multiple diagrams 2', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/multiple-diagrams.bpmn');
-
       var events = [];
 
       // log events
@@ -474,7 +470,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml, 'BPMNDiagram_2').then(function() {
+      return runImport(diagram, multipleDiagramsXML, 'BPMNDiagram_2').then(function() {
 
         // then
         expect(events).to.eql([
@@ -498,8 +494,6 @@ describe('import - Importer', function() {
     it('should import single diagram from multiple diagrams 1', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/multiple-diagrams.bpmn');
-
       var events = [];
 
       // log events
@@ -513,7 +507,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml, 'BPMNDiagram_1').then(function() {
+      return runImport(diagram, multipleDiagramsXML, 'BPMNDiagram_1').then(function() {
 
         // then
         expect(events).to.eql([
@@ -534,8 +528,6 @@ describe('import - Importer', function() {
     it('should import groups', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/import/groups.bpmn');
-
       var events = [];
 
       // log events
@@ -550,7 +542,7 @@ describe('import - Importer', function() {
       });
 
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, groupsXML).then(function() {
 
         // then
         expect(events).to.eql([
@@ -568,11 +560,8 @@ describe('import - Importer', function() {
 
     it('should import invalid flowElement', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/error/invalid-flow-element.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, invalidFlowElementXML).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -585,11 +574,8 @@ describe('import - Importer', function() {
 
     it('should import multiple DIs', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/error/multiple-dis.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, multipleDisXML).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -605,11 +591,8 @@ describe('import - Importer', function() {
 
     it('should import with missing BPMNDiagram#plane DI', function() {
 
-      // given
-      var xml = require('./missing-di-plane.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, missingDiPlaneXML).then(function(result) {
 
         var {
           error,
@@ -625,11 +608,8 @@ describe('import - Importer', function() {
 
     it('should error import with missing BPMNDiagram#plane DI', function() {
 
-      // given
-      var xml = require('./missing-di-plane-root-element.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, missingDiPlaneRootElementXML).then(function(result) {
 
         var {
           error,
@@ -647,11 +627,8 @@ describe('import - Importer', function() {
 
     it('should import sequence flow without waypoints', function() {
 
-      // given
-      var xml = require('./sequenceFlow-missingWaypoints.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, sequenceFlowMissingWaypointsXML).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -664,11 +641,8 @@ describe('import - Importer', function() {
 
     it('should extend attributes with default value', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/default-attrs.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, defaultAttrsXML).then(function() {
 
         var elementRegistry = diagram.get('elementRegistry');
 
@@ -684,11 +658,8 @@ describe('import - Importer', function() {
 
       it('should handle missing attachToRef', function() {
 
-        // given
-        var xml = require('../../fixtures/bpmn/import/error/boundaryEvent-missingAttachToRef.bpmn');
-
         // when
-        return runImport(diagram, xml).then(function(result) {
+        return runImport(diagram, boundaryEventMissingAttachToRefXML).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -704,11 +675,8 @@ describe('import - Importer', function() {
 
       it('should handle invalid attachToRef', function() {
 
-        // given
-        var xml = require('../../fixtures/bpmn/import/error/boundaryEvent-invalidAttachToRef.bpmn');
-
         // when
-        return runImport(diagram, xml).then(function(result) {
+        return runImport(diagram, boundaryEventInvalidAttachToRefXML).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -730,11 +698,8 @@ describe('import - Importer', function() {
 
     it('should import dangling process message flows', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/error/dangling-process-message-flow.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, danglingProcessMessageFlowXML).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -750,11 +715,8 @@ describe('import - Importer', function() {
 
     it('should import text annotations of message flows', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/text-annotation-message-flow.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, textAnnotationMessageFlowXML).then(function() {
 
         // then
         var textAnnotation = diagram.get('elementRegistry').get('TextAnnotation_1');
@@ -774,11 +736,8 @@ describe('import - Importer', function() {
 
     it('should hide shapes and connections inside of collapsed subprocess', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/import/collapsed/processWithChildren.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, processWithChildrenXML).then(function() {
 
         var elementRegistry = diagram.get('elementRegistry');
 
@@ -801,11 +760,8 @@ describe('import - Importer', function() {
 
     it('should import first bpmndi:BPMNDiagram (default)', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/multiple-diagrams.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function(result) {
+      return runImport(diagram, multipleDiagrams2XML).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -826,12 +782,10 @@ describe('import - Importer', function() {
     it('should import second bpmndi:BPMNDiagram (specified)', function() {
 
       // given
-      var xml = require('../../fixtures/bpmn/multiple-diagrams.bpmn');
-
       var selectedDiagram = 'BpmnDiagram_2';
 
       // when
-      return runImport(diagram, xml, selectedDiagram).then(function(result) {
+      return runImport(diagram, multipleDiagrams2XML, selectedDiagram).then(function(result) {
 
         var warnings = result.warnings;
 
@@ -851,11 +805,8 @@ describe('import - Importer', function() {
 
     it('should add root element for each bpmndi:BPMNDiagram when importing', function() {
 
-      // given
-      var xml = require('../../fixtures/bpmn/multiple-diagrams.bpmn');
-
       // when
-      return runImport(diagram, xml).then(function() {
+      return runImport(diagram, multipleDiagrams2XML).then(function() {
 
         var elementRegistry = diagram.get('elementRegistry'),
             canvas = diagram.get('canvas'),
@@ -879,12 +830,10 @@ describe('import - Importer', function() {
       it('should import collapsed sub process', function() {
 
         // given
-        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
-
         var selectedDiagram = 'BpmnDiagram_1';
 
         // when
-        return runImport(diagram, xml, selectedDiagram).then(function(result) {
+        return runImport(diagram, multipleNestedProcessesXML, selectedDiagram).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -908,12 +857,10 @@ describe('import - Importer', function() {
       it('should import and show collapsed sub process', function() {
 
         // given
-        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
-
         var selectedDiagram = 'SubProcessDiagram_1';
 
         // when
-        return runImport(diagram, xml, selectedDiagram).then(function(result) {
+        return runImport(diagram, multipleNestedProcessesXML, selectedDiagram).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -937,12 +884,10 @@ describe('import - Importer', function() {
       it('should import first bpmndi:BPMNDiagram when importing collapsed sub process', function() {
 
         // given
-        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
-
         var selectedDiagram = 'BpmnDiagram_2';
 
         // when
-        return runImport(diagram, xml, selectedDiagram).then(function(result) {
+        return runImport(diagram, multipleNestedProcessesXML, selectedDiagram).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -966,12 +911,10 @@ describe('import - Importer', function() {
       it('should import specified bpmndi:BPMNDiagram when importing collapsed sub process', function() {
 
         // given
-        var xml = require('../../fixtures/bpmn/multiple-nested-processes.bpmn');
-
         var selectedDiagram = 'SubProcess_2_diagram_B';
 
         // when
-        return runImport(diagram, xml, selectedDiagram).then(function(result) {
+        return runImport(diagram, multipleNestedProcessesXML, selectedDiagram).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -994,11 +937,8 @@ describe('import - Importer', function() {
 
       it('should add root element when importing collapsed sub process', function() {
 
-        // given
-        var xml = require('../../fixtures/bpmn/import/collapsed-subprocess.bpmn');
-
         // when
-        return runImport(diagram, xml).then(function(result) {
+        return runImport(diagram, collapsedSubprocessXML).then(function(result) {
 
           var warnings = result.warnings;
 
@@ -1026,6 +966,7 @@ describe('import - Importer', function() {
     });
 
   });
+
 });
 
 

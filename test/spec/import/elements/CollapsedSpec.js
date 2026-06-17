@@ -2,16 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
+
+import processXML from '../../../fixtures/bpmn/import/collapsed/process.bpmn';
+import collaborationXML from '../../../fixtures/bpmn/import/collapsed/collaboration.bpmn';
 
 
 describe('import - collapsed container', function() {
 
   describe('in process', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/import/collapsed/process.bpmn');
-
-    beforeEach(bootstrapViewer(diagramXML));
+    beforeEach(bootstrapViewer(processXML));
 
 
     it('should import collapsed subProcess', inject(function(elementRegistry, canvas) {
@@ -91,9 +92,7 @@ describe('import - collapsed container', function() {
 
   describe('in collaboration', function() {
 
-    var diagramXML = require('../../../fixtures/bpmn/import/collapsed/collaboration.bpmn');
-
-    beforeEach(bootstrapViewer(diagramXML));
+    beforeEach(bootstrapViewer(collaborationXML));
 
 
     it('should import collapsed subProcess in pool', inject(function(elementRegistry, canvas) {

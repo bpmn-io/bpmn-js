@@ -2,22 +2,24 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+
+import processDiagramXML from './MessageFlowBehavior.bpmn';
 
 
 describe('features/modeling - message flow behavior', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('when collapsing participant', function() {
 
-    var processDiagramXML = require('./MessageFlowBehavior.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(processDiagramXML, {
+      modules: [
+        coreModule,
+        modelingModule
+      ]
+    }));
 
 
     it('should reconnect message flows to collapsed participant (incoming)', inject(

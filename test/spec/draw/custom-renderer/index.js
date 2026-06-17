@@ -1,4 +1,4 @@
-import CustomRenderer from './CustomRenderer';
+import CustomRenderer from './CustomRenderer.js';
 
 export default {
   __init__: [ 'customRenderer' ],

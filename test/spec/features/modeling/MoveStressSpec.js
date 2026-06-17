@@ -1,17 +1,17 @@
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-import LoggingCroppingConnectionDocking from './LoggingCroppingConnectionDocking';
+import LoggingCroppingConnectionDocking from './LoggingCroppingConnectionDocking.js';
+
+import diagramXML from './MoveStress.bpmn';
 
 
 describe.skip('modeling / MoveShape - connection cropping', function() {
-
-  var diagramXML = require('./MoveStress.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import intersection from 'lib/features/modeling/behavior/util/LineIntersect';
+import intersection from 'bpmn-js/lib/features/modeling/behavior/util/LineIntersect.js';
 
 
 describe('modeling/behavior/util - LineIntersect', function() {

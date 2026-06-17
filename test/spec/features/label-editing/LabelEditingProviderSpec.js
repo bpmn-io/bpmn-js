@@ -2,21 +2,24 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import labelEditingModule from 'lib/features/label-editing';
-import coreModule from 'lib/core';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
+import coreModule from 'bpmn-js/lib/core';
 import draggingModule from 'diagram-js/lib/features/dragging';
-import modelingModule from 'lib/features/modeling';
-import autoPlaceModule from 'lib/features/auto-place';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import autoPlaceModule from 'bpmn-js/lib/features/auto-place';
 
 import {
   getLabel
-} from 'lib/util/LabelUtil';
+} from 'bpmn-js/lib/util/LabelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
+
+import diagramXML from './LabelEditing.bpmn';
+
 
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
@@ -24,9 +27,6 @@ var DELTA = 6;
 
 
 describe('features - label-editing', function() {
-
-  var diagramXML = require('./LabelEditing.bpmn');
-
 
   describe('basics', function() {
 

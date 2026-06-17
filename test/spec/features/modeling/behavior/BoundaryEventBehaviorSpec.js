@@ -2,21 +2,24 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
+
+import diagramXML from './BoundaryEvent.bpmn';
 
 
 describe('features/modeling/behavior - boundary event', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-  var diagramXML = require('./BoundaryEvent.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('should implicitly remove boundary events', function() {

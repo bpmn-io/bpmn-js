@@ -1,6 +1,6 @@
-import CommandStack from 'diagram-js/lib/command/CommandStack';
+import CommandStack from 'diagram-js/lib/command/CommandStack.js';
 
-import EventBus, { Event } from 'diagram-js/lib/core/EventBus';
+import EventBus, { Event } from 'diagram-js/lib/core/EventBus.js';
 
 import BaseViewer, {
   ImportDoneEvent,
@@ -8,10 +8,10 @@ import BaseViewer, {
   ImportParseStartEvent,
   SaveXMLDoneEvent,
   SaveXMLStartEvent
-} from './BaseViewer';
+} from './BaseViewer.js';
 
 import OverlaysModule from 'diagram-js/lib/features/overlays';
-import Canvas from 'diagram-js/lib/core/Canvas';
+import Canvas from 'diagram-js/lib/core/Canvas.js';
 
 const viewer = new BaseViewer();
 

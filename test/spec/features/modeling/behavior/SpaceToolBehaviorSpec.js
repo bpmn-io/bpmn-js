@@ -2,17 +2,17 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import rulesModule from 'lib/features/rules';
-import snappingModule from 'lib/features/snapping';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import rulesModule from 'bpmn-js/lib/features/rules';
+import snappingModule from 'bpmn-js/lib/features/snapping';
 import spaceToolModule from 'diagram-js/lib/features/space-tool';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   GROUP_MIN_DIMENSIONS,
@@ -21,7 +21,13 @@ import {
   VERTICAL_LANE_MIN_DIMENSIONS,
   VERTICAL_PARTICIPANT_MIN_DIMENSIONS,
   SUB_PROCESS_MIN_DIMENSIONS
-} from 'lib/features/modeling/behavior/ResizeBehavior';
+} from 'bpmn-js/lib/features/modeling/behavior/ResizeBehavior.js';
+
+import subProcessXML from './SpaceToolBehaviorSpec.subprocess.bpmn';
+import participantXML from './SpaceToolBehaviorSpec.participant.bpmn';
+import participantVerticalXML from './SpaceToolBehaviorSpec.participant.vertical.bpmn';
+import groupXML from './SpaceToolBehaviorSpec.group.bpmn';
+
 
 var testModules = [
   coreModule,
@@ -38,9 +44,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.subprocess.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(subProcessXML, { modules: testModules }));
 
 
       it('should ensure subprocess minimum dimensions', inject(
@@ -70,9 +74,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.participant.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantXML, { modules: testModules }));
 
 
       it('should ensure participant minimum width', inject(
@@ -180,9 +182,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.participant.vertical.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(participantVerticalXML, { modules: testModules }));
 
 
       it('should ensure participant minimum height', inject(
@@ -290,9 +290,7 @@ describe('features/modeling - space tool behavior', function() {
 
     describe('minimum dimensions', function() {
 
-      var diagramXML = require('./SpaceToolBehaviorSpec.group.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(groupXML, { modules: testModules }));
 
 
       it('should ensure group minimum dimensions', inject(

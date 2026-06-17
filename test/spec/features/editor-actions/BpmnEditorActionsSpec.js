@@ -3,25 +3,21 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-var pick = require('min-dash').pick;
-
-var getBBox = require('diagram-js/lib/util/Elements').getBBox;
-
-var getParent = require('lib/features/modeling/util/ModelingUtil').getParent;
-
-
-import bpmnEditorActionsModule from 'lib/features/editor-actions';
+import bpmnEditorActionsModule from 'bpmn-js/lib/features/editor-actions';
 import selectionModule from 'diagram-js/lib/features/selection';
 import alignElementsModule from 'diagram-js/lib/features/align-elements';
 import distributeElementsModule from 'diagram-js/lib/features/distribute-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import contextPad from 'lib/features/context-pad';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import contextPad from 'bpmn-js/lib/features/context-pad';
+import { pick } from 'min-dash';
+import { getBBox } from 'diagram-js/lib/util/Elements.js';
+import { getParent } from 'bpmn-js/lib/features/modeling/util/ModelingUtil.js';
 
-var basicXML = require('../../../fixtures/bpmn/nested-subprocesses.bpmn');
-var collaborationXML = require('../../../fixtures/bpmn/collaboration.bpmn');
+import subProcessesXML from '../../../fixtures/bpmn/nested-subprocesses.bpmn';
+import collaborationXML from '../../../fixtures/bpmn/collaboration.bpmn';
 
 
 describe('features/editor-actions', function() {
@@ -61,7 +57,7 @@ describe('features/editor-actions', function() {
     }
 
 
-    describe('single process', testMoveToOrigin(basicXML));
+    describe('single process', testMoveToOrigin(subProcessesXML));
 
 
     describe('collaboration', testMoveToOrigin(collaborationXML));
@@ -69,13 +65,14 @@ describe('features/editor-actions', function() {
 
     describe('subprocesses', function() {
 
-      beforeEach(bootstrapModeler(basicXML, {
+      beforeEach(bootstrapModeler(subProcessesXML, {
         modules: [
           bpmnEditorActionsModule,
           modelingModule,
           coreModule
         ]
       }));
+
 
       it('should ignore children of subprocesses', inject(
         function(editorActions, elementRegistry) {
@@ -99,7 +96,7 @@ describe('features/editor-actions', function() {
 
   describe('#alignElements', function() {
 
-    beforeEach(bootstrapModeler(basicXML, {
+    beforeEach(bootstrapModeler(subProcessesXML, {
       modules: [
         selectionModule,
         alignElementsModule,
@@ -158,7 +155,7 @@ describe('features/editor-actions', function() {
 
   describe('#distributeElements', function() {
 
-    beforeEach(bootstrapModeler(basicXML, {
+    beforeEach(bootstrapModeler(subProcessesXML, {
       modules: [
         selectionModule,
         distributeElementsModule,
@@ -217,7 +214,7 @@ describe('features/editor-actions', function() {
 
   describe('#replaceElement', function() {
 
-    beforeEach(bootstrapModeler(basicXML, {
+    beforeEach(bootstrapModeler(subProcessesXML, {
       modules: [
         selectionModule,
         bpmnEditorActionsModule,

@@ -3,24 +3,24 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
-import { getBusinessObject } from '../../../../../lib/util/ModelUtil';
+import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil.js';
+
+import diagramXML from './AttachEventBehavior.bpmn';
 
 
 describe('features/modeling/behavior - attach events', function() {
 
-  var testModules = [
-    coreModule,
-    modelingModule
-  ];
-
-  var attachEventBehaviorXML = require('./AttachEventBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(attachEventBehaviorXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('basics', function() {

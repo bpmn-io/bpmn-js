@@ -2,16 +2,22 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+
+import diagramXML from './AssociationBehavior.bpmn';
 
 
 describe('modeling/behavior - AssociationBehavior', function() {
 
-  var diagramXML = require('./AssociationBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: modelingModule }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   it('should move to new parent on source move', inject(function(modeling, elementRegistry) {

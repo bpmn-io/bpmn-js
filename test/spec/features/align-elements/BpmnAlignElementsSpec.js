@@ -2,20 +2,25 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import alignElementsModule from 'lib/features/align-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import alignElementsModule from 'bpmn-js/lib/features/align-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import basicXML from '../../../fixtures/bpmn/align-elements.bpmn';
 
 
 describe('features/align-elements', function() {
 
-  var testModules = [ alignElementsModule, modelingModule, coreModule ];
+  beforeEach(bootstrapModeler(basicXML, {
+    modules: [
+      alignElementsModule,
+      modelingModule,
+      coreModule
+    ]
+  }));
 
-  var basicXML = require('../../../fixtures/bpmn/align-elements.bpmn');
-
-  beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
   describe('integration', function() {
 

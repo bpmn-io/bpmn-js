@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import diagramXML from '../../../../fixtures/bpmn/basic.bpmn';
 
 
 describe('features/modeling - layout data association', function() {
-
-  var diagramXML = require('../../../../fixtures/bpmn/basic.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

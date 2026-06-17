@@ -13,10 +13,10 @@ function runTest(variant, env) {
   process.env.NODE_ENV = env;
 
   console.log('[TEST] ' + variant + '@' + env);
-  console.log(`[EXEC] VARIANT=${variant} NODE_ENV=${env} karma start test/config/karma.distro.js`);
+  console.log(`[EXEC] VARIANT=${variant} NODE_ENV=${env} karma start test/config/karma.distro.cjs`);
 
   try {
-    exec('karma', [ 'start', 'test/config/karma.distro.js' ], {
+    exec('karma', [ 'start', 'test/config/karma.distro.cjs' ], {
       stdio: 'inherit'
     });
   } catch (e) {

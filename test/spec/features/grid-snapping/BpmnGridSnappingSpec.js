@@ -2,25 +2,29 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import gridSnappingModule from 'lib/features/grid-snapping';
-import modelingModule from 'lib/features/modeling';
+import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
 
 import {
   isString,
   pick,
   assign
 } from 'min-dash';
+
+import basicXML from './basic.bpmn';
+import gridSnappingXML from './BpmnGridSnapping.bpmn';
+
 
 var LOW_PRIORITY = 500;
 
@@ -31,9 +35,7 @@ describe('features/grid-snapping', function() {
 
     describe('create', function() {
 
-      var diagramXML = require('./basic.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(basicXML, {
         modules: [
           coreModule,
           createModule,
@@ -95,9 +97,7 @@ describe('features/grid-snapping', function() {
 
   describe('snap top-left on move', function() {
 
-    var diagramXML = require('./BpmnGridSnapping.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(gridSnappingXML, {
       modules: [
         coreModule,
         createModule,
@@ -228,9 +228,7 @@ describe('features/grid-snapping', function() {
 
   describe('auto resize <nwse> on toggle collapse', function() {
 
-    var diagramXML = require('./BpmnGridSnapping.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(gridSnappingXML, {
       modules: [
         coreModule,
         createModule,

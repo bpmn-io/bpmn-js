@@ -2,32 +2,33 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
-import snappingModule from 'lib/features/snapping';
+import snappingModule from 'bpmn-js/lib/features/snapping';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
+
+import diagramXML from '../../../fixtures/bpmn/boundary-events.bpmn';
 
 
 describe('features/modeling - move', function() {
 
-  var testModules = [ coreModule, modelingModule, moveModule, snappingModule ];
-
-  var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-  beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      moveModule,
+      snappingModule
+    ]
+  }));
 
   beforeEach(inject(function(dragging, canvas) {
     dragging.setOptions({ manual: true });
-  }));
-
-  afterEach(inject(function(dragging) {
-    dragging.setOptions({ manual: false });
   }));
 
 

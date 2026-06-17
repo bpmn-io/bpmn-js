@@ -5,7 +5,7 @@ import {
 
 import {
   getDi
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 var BOUNDS_ATTRS = [ 'x', 'y', 'width', 'height' ],
     POSITION_ATTRS = [ 'x', 'y' ],

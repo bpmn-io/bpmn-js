@@ -2,20 +2,24 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
+
+import diagramXML from '../../../fixtures/bpmn/simple.bpmn';
 
 
 describe('features/bendpoints', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/drop/drop.bpmn');
-
-  var testModules = [ coreModule, bendpointsModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      bendpointsModule,
+      modelingModule
+    ]
+  }));
 
 
   it('should contain bendpoints', inject(function(bendpoints) {

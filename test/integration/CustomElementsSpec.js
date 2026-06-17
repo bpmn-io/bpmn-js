@@ -2,25 +2,25 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import Modeler from 'lib/Modeler';
+import Modeler from 'bpmn-js/lib/Modeler.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 
-import customElementsModules from './custom-elements';
+import customElementsModules from './custom-elements/index.js';
+import processDiagramXML from '../fixtures/bpmn/simple.bpmn';
+import collaborationDiagramXML from '../fixtures/bpmn/collaboration.bpmn';
 
 var modelerModules = Modeler.prototype._modules,
     customModules = [ customElementsModules ];
 
 var testModules = [].concat(modelerModules, customModules);
 
-var processDiagramXML = require('../fixtures/bpmn/simple.bpmn');
 
-var collaborationDiagramXML = require('../fixtures/bpmn/collaboration.bpmn');
 
 
 describe('custom elements', function() {

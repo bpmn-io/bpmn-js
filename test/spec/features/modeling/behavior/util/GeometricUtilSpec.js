@@ -5,7 +5,7 @@ import {
   getDistancePointPoint,
   perpendicularFoot,
   rotateVector
-} from 'lib/features/modeling/behavior/util/GeometricUtil';
+} from 'bpmn-js/lib/features/modeling/behavior/util/GeometricUtil.js';
 
 
 describe('modeling/behavior/util - GeometricUtil', function() {

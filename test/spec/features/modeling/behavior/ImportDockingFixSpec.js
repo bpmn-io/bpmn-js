@@ -2,15 +2,15 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import diagramXML from './ImportDockingFix.bpmn';
 
 
 describe('features/modeling/behavior - ImportDockingFix', function() {
-
-  var diagramXML = require('./ImportDockingFix.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

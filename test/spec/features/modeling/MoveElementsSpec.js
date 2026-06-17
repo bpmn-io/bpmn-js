@@ -2,19 +2,24 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import flowCollaborationXML from './MoveElements.flow-collaboration.bpmn';
+import boundaryConnectionXML from './MoveElements.boundary-connection.bpmn';
+import dataInputOutputXML from './MoveElements.data-input-output.bpmn';
+import collaborationAssociationXML from './MoveElements.collaboration-association.bpmn';
+import eventBasedTargetsXML from './MoveElements.eventBasedTargets.bpmn';
+import centeredConnectionXML from './MoveElements.centered-connection.bpmn';
 
 
 describe('features/modeling - move elements', function() {
 
   describe('flow parent', function() {
 
-    var diagramXML = require('./MoveElements.flow-collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(flowCollaborationXML, {
       modules: [
         coreModule,
         modelingModule
@@ -72,9 +77,7 @@ describe('features/modeling - move elements', function() {
 
   describe('boundary connection with tasks', function() {
 
-    var diagramXML = require('./MoveElements.boundary-connection.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(boundaryConnectionXML, {
       modules: [
         coreModule,
         modelingModule
@@ -109,9 +112,7 @@ describe('features/modeling - move elements', function() {
 
   describe('data input / data output', function() {
 
-    var diagramXML = require('./MoveElements.data-input-output.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(dataInputOutputXML, {
       modules: [
         coreModule,
         modelingModule
@@ -179,9 +180,7 @@ describe('features/modeling - move elements', function() {
 
   describe('association', function() {
 
-    var testXML = require('./MoveElements.collaboration-association.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, {
+    beforeEach(bootstrapModeler(collaborationAssociationXML, {
       modules: [
         coreModule,
         modelingModule
@@ -213,14 +212,13 @@ describe('features/modeling - move elements', function() {
 
   describe('incoming sequence flows of event based targets', function() {
 
-    var diagramXML = require('./MoveElements.eventBasedTargets.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(eventBasedTargetsXML, {
       modules: [
         coreModule,
         modelingModule
       ]
     }));
+
 
     it('should keep when moving source flow object', inject(function(elementRegistry, modeling) {
 
@@ -259,14 +257,13 @@ describe('features/modeling - move elements', function() {
 
   describe('center-to-center connection', function() {
 
-    var diagramXML = require('./MoveElements.centered-connection.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(centeredConnectionXML, {
       modules: [
         coreModule,
         modelingModule
       ]
     }));
+
 
     it('should properly adjust connection', inject(function(elementRegistry, modeling) {
 

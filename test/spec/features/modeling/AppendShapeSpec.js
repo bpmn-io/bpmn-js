@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   find
@@ -12,19 +12,22 @@ import {
   getDi,
   is,
   getBusinessObject
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import simpleXML from '../../../fixtures/bpmn/simple.bpmn';
 
 
 describe('features/modeling - append shape', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(simpleXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('shape handling', function() {

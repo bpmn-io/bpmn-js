@@ -7,14 +7,19 @@ import {
   getBpmnJS,
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import interactionEventsModule from 'lib/features/interaction-events';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import interactionEventsModule from 'bpmn-js/lib/features/interaction-events';
 
 import createModule from 'diagram-js/lib/features/create';
 import moveModule from 'diagram-js/lib/features/move';
+
+import collaborationXML from 'bpmn-js/test/fixtures/bpmn/collaboration.bpmn';
+import collaborationVerticalXML from 'bpmn-js/test/fixtures/bpmn/collaboration-vertical.bpmn';
+import containersXML from 'bpmn-js/test/fixtures/bpmn/containers.bpmn';
+
 
 var testModules = [
   coreModule,
@@ -33,9 +38,7 @@ describe('features/interaction-events', function() {
 
   describe('participant hits', function() {
 
-    var diagramXML = require('test/fixtures/bpmn/collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collaborationXML, {
       modules: testModules
     }));
 
@@ -102,9 +105,7 @@ describe('features/interaction-events', function() {
 
   describe('vertical participant hits', function() {
 
-    var diagramXML = require('test/fixtures/bpmn/collaboration-vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collaborationVerticalXML, {
       modules: testModules
     }));
 
@@ -171,9 +172,7 @@ describe('features/interaction-events', function() {
 
   describe('sub process hits', function() {
 
-    var diagramXML = require('test/fixtures/bpmn/containers.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(containersXML, {
       modules: testModules
     }));
 

@@ -6,8 +6,8 @@ const files = {
     'coverage'
   ],
   build: [
-    'test/config/*.js',
-    'tasks/**/*.mjs',
+    'test/config/*.cjs',
+    'tasks/**/*.js',
     '*.js',
     '*.mjs'
   ],
@@ -39,6 +39,17 @@ export default [
     };
   }),
 
+  ...bpmnIoPlugin.configs.esm.map(config => {
+
+    return {
+      ...config,
+      ignores: [
+        ...files.build,
+        ...files.test
+      ]
+    };
+  }),
+
   // test
   ...bpmnIoPlugin.configs.mocha.map(config => {
 
@@ -46,14 +57,5 @@ export default [
       ...config,
       files: files.test,
     };
-  }),
-  {
-    languageOptions: {
-      globals: {
-        sinon: true,
-        require: true
-      }
-    },
-    files: files.test
-  }
+  })
 ];

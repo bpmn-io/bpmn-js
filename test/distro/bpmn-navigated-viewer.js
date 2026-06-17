@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { testImport } from './helper';
+import { testImport } from './helper.js';
 
 
 describe('bpmn-navigated-viewer', function() {

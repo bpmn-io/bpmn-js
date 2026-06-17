@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
   getParticipantResizeConstraints
-} from 'lib/features/modeling/behavior/util/ResizeUtil';
+} from 'bpmn-js/lib/features/modeling/behavior/util/ResizeUtil.js';
 
 
 describe('modeling/behavior/util - Resize', function() {

@@ -2,7 +2,14 @@ import { expect } from 'chai';
 import {
   bootstrapViewer,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
+
+import textAnnotationXML from './AssociationSpec.text-annotation.bpmn';
+import compensationXML from './AssociationSpec.compensation.bpmn';
+import dataAssociationXML from './AssociationSpec.data-association.bpmn';
+import cataInputOutputXML from './AssociationSpec.data-input-output.bpmn';
+import collaborationXML from './AssociationSpec.collaboration.bpmn';
+import eventsXML from './AssociationSpec.events.bpmn';
 
 
 describe('import - associations', function() {
@@ -11,10 +18,8 @@ describe('import - associations', function() {
 
     it('connecting task -> text annotation', function() {
 
-      var xml = require('./AssociationSpec.text-annotation.bpmn');
-
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(textAnnotationXML)().then(function(result) {
 
         var err = result.error;
 
@@ -35,10 +40,9 @@ describe('import - associations', function() {
 
     it('connecting boundary -> compensate task', function() {
 
-      var xml = require('./AssociationSpec.compensation.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(compensationXML)().then(function(result) {
 
         var err = result.error;
 
@@ -81,10 +85,9 @@ describe('import - associations', function() {
 
     it('task -> data object -> task', function() {
 
-      var xml = require('./AssociationSpec.data-association.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(dataAssociationXML)().then(function(result) {
 
         var err = result.error;
 
@@ -101,10 +104,9 @@ describe('import - associations', function() {
 
     it('data input -> task -> data output', function() {
 
-      var xml = require('./AssociationSpec.data-input-output.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(cataInputOutputXML)().then(function(result) {
 
         var err = result.error;
 
@@ -121,10 +123,9 @@ describe('import - associations', function() {
 
     it('in collaboration', function() {
 
-      var xml = require('./AssociationSpec.collaboration.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(collaborationXML)().then(function(result) {
 
         var err = result.error;
 
@@ -141,10 +142,9 @@ describe('import - associations', function() {
 
     it('catch event -> data object -> throw event', function() {
 
-      var xml = require('./AssociationSpec.events.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(eventsXML)().then(function(result) {
 
         var err = result.error;
 
@@ -161,10 +161,9 @@ describe('import - associations', function() {
 
     it('boundary event -> data object', function() {
 
-      var xml = require('./AssociationSpec.data-association.bpmn');
 
       // given
-      return bootstrapViewer(xml)().then(function(result) {
+      return bootstrapViewer(dataAssociationXML)().then(function(result) {
 
         var err = result.error;
 

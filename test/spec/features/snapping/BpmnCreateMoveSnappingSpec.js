@@ -4,32 +4,40 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import TestContainer from 'mocha-test-container-support';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import createModule from 'diagram-js/lib/features/create';
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
-import rulesModule from 'lib/features/rules';
-import snappingModule from 'lib/features/snapping';
+import rulesModule from 'bpmn-js/lib/features/rules';
+import snappingModule from 'bpmn-js/lib/features/snapping';
 
 import {
   isSnapped,
   mid
-} from 'diagram-js/lib/features/snapping/SnapUtil';
+} from 'diagram-js/lib/features/snapping/SnapUtil.js';
 
-import { createCanvasEvent as canvasEvent } from '../../../util/MockEvents';
+import { createCanvasEvent as canvasEvent } from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   DEFAULT_LABEL_SIZE,
   getExternalLabelMid
-} from 'lib/util/LabelUtil';
+} from 'bpmn-js/lib/util/LabelUtil.js';
 
 import { queryAll as domQueryAll } from 'min-dom';
 
 import { attr as svgAttr } from 'tiny-svg';
+
+import processXML from './BpmnCreateMoveSnapping.process.bpmn';
+import collaborationXML from './BpmnCreateMoveSnapping.collaboration.bpmn';
+import boundaryEventsXML from './BpmnCreateMoveSnapping.boundary-events.bpmn';
+import sequenceFlowsXML from './BpmnCreateMoveSnapping.sequence-flows.bpmn';
+import dockingPointsXML from './BpmnCreateMoveSnapping.docking-points.bpmn';
+import dockingCreateModeXML from './BpmnCreateMoveSnapping.docking-create-mode.bpmn';
+import trblSnappingXML from './BpmnCreateMoveSnapping.trbl-snapping.bpmn';
 
 
 describe('features/snapping - BpmnCreateMoveSnapping', function() {
@@ -53,12 +61,9 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('process', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.process.bpmn');
-
-
       it('should snap participant if constrained', function(done) {
 
-        bootstrapModeler(diagramXML, {
+        bootstrapModeler(processXML, {
           container: TestContainer.get(this),
           modules: testModules
         })().then(function() {
@@ -99,14 +104,11 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('collaboration', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.collaboration.bpmn');
-
-
       it('should snap to participant border with higher priority', function(done) {
 
         var container = TestContainer.get(this);
 
-        bootstrapModeler(diagramXML, {
+        bootstrapModeler(collaborationXML, {
           container: container,
           modules: testModules
         })().then(function() {
@@ -154,9 +156,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('creating boundary event', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.process.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(processXML, {
         modules: testModules
       }));
 
@@ -364,9 +364,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('snapping to boundary events', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.boundary-events.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(boundaryEventsXML, {
         modules: testModules
       }));
 
@@ -409,9 +407,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   describe('sequence flows', function() {
 
-    var diagramXML = require('./BpmnCreateMoveSnapping.sequence-flows.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(sequenceFlowsXML, {
       modules: testModules
     }));
 
@@ -452,9 +448,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   describe('lanes', function() {
 
-    var diagramXML = require('./BpmnCreateMoveSnapping.collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(collaborationXML, {
       modules: testModules
     }));
 
@@ -491,9 +485,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('move mode', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.docking-points.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(dockingPointsXML, {
         modules: testModules
       }));
 
@@ -560,10 +552,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
     describe('create mode', function() {
 
-      var diagramXML = require('./BpmnCreateMoveSnapping.docking-create-mode.bpmn');
-
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(dockingCreateModeXML, {
         modules: testModules
       }));
 
@@ -603,9 +592,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   describe('TRBL snapping', function() {
 
-    var diagramXML = require('./BpmnCreateMoveSnapping.trbl-snapping.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(trblSnappingXML, {
       modules: testModules
     }));
 
@@ -716,6 +703,7 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
   });
 
 });
+
 
 // helpers //////////
 

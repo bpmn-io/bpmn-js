@@ -3,16 +3,16 @@ import {
   bootstrapModeler,
   collectTranslations,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import translateModule from 'diagram-js/lib/i18n/translate';
-import customTranslateModule from './custom-translate';
-import modelingModule from 'lib/features/modeling';
-import paletteModule from 'lib/features/palette';
-import contextPadModule from 'lib/features/context-pad';
+import customTranslateModule from './custom-translate/index.js';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import paletteModule from 'bpmn-js/lib/features/palette';
+import contextPadModule from 'bpmn-js/lib/features/context-pad';
 
-var diagramXML = require('test/fixtures/bpmn/simple.bpmn');
+import diagramXML from 'bpmn-js/test/fixtures/bpmn/simple.bpmn';
 
 
 // skipping this file during translation extraction

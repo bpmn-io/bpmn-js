@@ -2,27 +2,35 @@ import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import {
-  inject
-} from 'test/TestHelper';
+  inject,
+  bootstrapModeler,
+  getBpmnJS
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import drilldownModule from 'lib/features/drilldown';
-import modelingModule from 'lib/features/modeling';
-import { bootstrapModeler, getBpmnJS } from '../../../helper';
+import coreModule from 'bpmn-js/lib/core';
+import drilldownModule from 'bpmn-js/lib/features/drilldown';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+
 import { classes } from 'min-dom';
+
+import collaborationXML from './collaboration-subprocesses.bpmn';
+import multiLayerXML from './nested-subprocesses.bpmn';
+import legacyXML from './legacy-subprocesses.bpmn';
+import subprocessMissingDi_XML from './subprocess-missing-di.bpmn';
+import subprocessMissingBpmnDiagram_XML from './subprocess-missing-bpmndiagram.bpmn';
+import processMissingBpmnDiagram_XML from './process-missing-bpmndiagram.bpmn';
+import planeMissingBpmnElement_XML from './plane-missing-bpmnelement.bpmn';
+import diagramMissingPlane_XML from './diagram-missing-plane.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule,
+  drilldownModule
+];
 
 
 describe('features - drilldown', function() {
-
-  var testModules = [
-    coreModule,
-    modelingModule,
-    drilldownModule
-  ];
-
-  var collaborationXML = require('./collaboration-subprocesses.bpmn');
-  var multiLayerXML = require('./nested-subprocesses.bpmn');
-  var legacyXML = require('./legacy-subprocesses.bpmn');
 
   beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
@@ -263,6 +271,7 @@ describe('features - drilldown', function() {
 
     beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
+
     describe('Overlays', function() {
 
       it('should show overlay', inject(function(elementRegistry, overlays) {
@@ -486,6 +495,7 @@ describe('features - drilldown', function() {
 
     beforeEach(bootstrapModeler(legacyXML, { modules: testModules }));
 
+
     it('should import collapsed subprocess', inject(function(canvas) {
 
       // when
@@ -550,26 +560,10 @@ describe('features - drilldown', function() {
 
 describe('features/drilldown - integration', function() {
 
-  var testModules = [
-    coreModule,
-    modelingModule,
-    drilldownModule
-  ];
-
-  var workingXML = require('./nested-subprocesses.bpmn');
-
-  beforeEach(bootstrapModeler(workingXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
 
   describe('error handling - should handle broken DI', function() {
-
-    const subprocessMissingDi_XML = require('./subprocess-missing-di.bpmn');
-    const subprocessMissingBpmnDiagram_XML = require('./subprocess-missing-bpmndiagram.bpmn');
-    const processMissingBpmnDiagram_XML = require('./process-missing-bpmndiagram.bpmn');
-
-    const planeMissingBpmnElement_XML = require('./plane-missing-bpmnelement.bpmn');
-    const diagramMissingPlane_XML = require('./diagram-missing-plane.bpmn');
-
 
     async function importXML(xml) {
       const bpmnJS = getBpmnJS();
@@ -657,7 +651,7 @@ describe('features/drilldown - integration', function() {
 });
 
 
-// helpers
+// helpers ///////////
 
 function getBreadcrumbs() {
   return getBpmnJS().invoke(function(canvas) {

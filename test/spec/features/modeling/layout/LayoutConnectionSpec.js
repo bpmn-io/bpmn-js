@@ -2,12 +2,12 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import { getDi } from 'lib/util/ModelUtil';
+import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
 import connectionPreviewModule from 'diagram-js/lib/features/connection-preview';
@@ -16,7 +16,11 @@ import createModule from 'diagram-js/lib/features/create';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
+
+import sequenceFlowsXML from '../../../../fixtures/bpmn/sequence-flows.bpmn';
+import messageFlowsXML from 'bpmn-js/test/spec/features/modeling/behavior/ReplaceConnectionBehavior.message-sequence-flow.bpmn';
+import attachingXML from 'bpmn-js/test/spec/features/rules/BpmnRules.attaching.bpmn';
 
 
 var testModules = [
@@ -31,9 +35,7 @@ var testModules = [
 
 describe('features/modeling - layout connection', function() {
 
-  var diagramXML = require('../../../../fixtures/bpmn/sequence-flows.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(sequenceFlowsXML, {
     modules: testModules
   }));
 
@@ -402,18 +404,12 @@ describe('features/modeling - layout connection', function() {
 
     describe('connection preview with connection type replacement', function() {
 
-      var diagramXML = require('test/spec/features/modeling/behavior/ReplaceConnectionBehavior.message-sequence-flow.bpmn');
+      beforeEach(bootstrapModeler(messageFlowsXML, {
+        modules: testModules
+      }));
 
       beforeEach(inject(function(dragging) {
         dragging.setOptions({ manual: true });
-      }));
-
-      afterEach(inject(function(dragging) {
-        dragging.setOptions({ manual: false });
-      }));
-
-      beforeEach(bootstrapModeler(diagramXML, {
-        modules: testModules
       }));
 
 
@@ -454,9 +450,7 @@ describe('features/modeling - layout connection', function() {
 
     describe('attaching event', function() {
 
-      var diagramXML = require('test/spec/features/rules/BpmnRules.attaching.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(attachingXML, {
         modules: testModules
       }));
 

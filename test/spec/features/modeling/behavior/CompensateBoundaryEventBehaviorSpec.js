@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
-import copyPasteModule from 'lib/features/copy-paste';
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import diagramXML from './CompensateBoundaryEventBehavior.bpmn';
 

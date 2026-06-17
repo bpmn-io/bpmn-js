@@ -3,21 +3,21 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   resizeBounds
-} from 'diagram-js/lib/features/resize/ResizeUtil';
+} from 'diagram-js/lib/features/resize/ResizeUtil.js';
 
 import {
   DEFAULT_LABEL_SIZE,
   getExternalLabelMid
-} from 'lib/util/LabelUtil';
+} from 'bpmn-js/lib/util/LabelUtil.js';
 
 import {
   getBusinessObject,
   getDi
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   assign,
@@ -25,16 +25,17 @@ import {
   pick
 } from 'min-dash';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
-import gridSnappingModule from 'lib/features/grid-snapping';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import gridSnappingModule from 'bpmn-js/lib/features/grid-snapping';
+
+import basicXML from './LabelBehavior.bpmn';
+import copyPasteXML from './LabelBehavior.copyPaste.bpmn';
 
 
 describe('features/modeling/behavior - LabelBehavior', function() {
 
-  var diagramXML = require('./LabelBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(basicXML, {
     modules: [
       modelingModule,
       coreModule
@@ -866,9 +867,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
 describe('features/modeling/behavior - LabelBehavior - copy/paste integration', function() {
 
-  var diagramXML = require('./LabelBehavior.copyPaste.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, {
+  beforeEach(bootstrapModeler(copyPasteXML, {
     modules: [
       modelingModule,
       coreModule,

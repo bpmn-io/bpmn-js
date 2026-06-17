@@ -2,48 +2,50 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import replacePreviewModule from 'lib/features/replace-preview';
-import modelingModule from 'lib/features/modeling';
+import replacePreviewModule from 'bpmn-js/lib/features/replace-preview';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
-import coreModule from 'lib/core';
-import copyPasteModule from 'lib/features/copy-paste';
+import coreModule from 'bpmn-js/lib/core';
+import copyPasteModule from 'bpmn-js/lib/features/copy-paste';
 
 import {
   getBusinessObject,
   is
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
 import {
   query as domQuery
 } from 'min-dom';
 
+import eventSubProcessesXML from '../../../../fixtures/bpmn/event-sub-processes.bpmn';
+import cancelEventsXML from '../../../../fixtures/bpmn/features/replace/cancel-events.bpmn';
+import connectionXML from '../../../../fixtures/bpmn/features/replace/connection.bpmn';
+
+
 var ATTACH = { attach: true };
+
+var testModules = [
+  replacePreviewModule,
+  modelingModule,
+  coreModule,
+  moveModule,
+  copyPasteModule
+];
 
 
 describe('features/modeling - replace element behavior', function() {
 
   describe('<shape.move>', function() {
 
-    var testModules = [
-      replacePreviewModule,
-      modelingModule,
-      coreModule,
-      moveModule,
-      copyPasteModule
-    ];
-
-
     describe('Start Events', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(eventSubProcessesXML, {
         modules: testModules
       }));
 
@@ -153,9 +155,7 @@ describe('features/modeling - replace element behavior', function() {
 
     describe('Cancel Events', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/features/replace/cancel-events.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(cancelEventsXML, { modules: testModules }));
 
 
       describe('normal', function() {
@@ -467,9 +467,7 @@ describe('features/modeling - replace element behavior', function() {
 
     describe('outline', function() {
 
-      var diagramXML = require('../../../../fixtures/bpmn/features/replace/connection.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(connectionXML, { modules: testModules }));
 
 
       it('should update size of outline on replace', inject(function(bpmnReplace, elementRegistry) {
@@ -497,9 +495,8 @@ describe('features/modeling - replace element behavior', function() {
 
   describe('shape.create', function() {
 
-    var diagramXML = require('../../../../fixtures/bpmn/event-sub-processes.bpmn');
 
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(eventSubProcessesXML, {
       modules: [
         replacePreviewModule,
         modelingModule,

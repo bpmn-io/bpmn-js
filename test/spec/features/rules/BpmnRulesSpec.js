@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   expectCanConnect,
@@ -11,22 +11,46 @@ import {
   expectCanDrop,
   expectCanInsert,
   expectCanMove
-} from './Helper';
+} from 'bpmn-js/test/spec/features/rules/Helper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import processXML from './BpmnRules.process.bpmn';
+import collaborationEmptyXML from './BpmnRules.collaboration-empty.bpmn';
+import boundaryEventXML from './BpmnRules.boundaryEvent.bpmn';
+import compensationXML from './BpmnRules.compensation.bpmn';
+import compensationCollaborationXML from './BpmnRules.compensation-collaboration.bpmn';
+import collaborationXML from './BpmnRules.collaboration.bpmn';
+import collapsedPoolsXML from './BpmnRules.collapsedPools.bpmn';
+import messageFlowXML from './BpmnRules.messageFlow.bpmn';
+import dataAssociationXML from './BpmnRules.dataAssociation.bpmn';
+import subProcessDataAssociationXML from './BpmnRules.subProcess-dataAssociation.bpmn';
+import collaborationDataAssociationXML from './BpmnRules.collaboration-dataAssociation.bpmn';
+import multiSelectionPoolsXML from './BpmnRules.multiSelectionPools.bpmn';
+import boundaryEventsXML from '../../../fixtures/bpmn/boundary-events.bpmn';
+import attachingXML from './BpmnRules.attaching.bpmn';
+import groupsXML from './BpmnRules.groups.bpmn';
+import collaborationLanesXML from './BpmnRules.collaboration-lanes.bpmn';
+import insertXML from './BpmnRules.insert.bpmn';
+import connectOnCreateXML from './BpmnRules.connectOnCreate.bpmn';
+import dataInputOutputProcessXML from './BpmnRules.dataInputOutput.process.bpmn';
+import dataInputOutputCollaborationXML from './BpmnRules.dataInputOutput.collaboration.bpmn';
+import moveLaneXML from './BpmnRules.moveLane.bpmn';
+import simpleXML from '../../../fixtures/bpmn/simple.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 
 describe('features/modeling/rules - BpmnRules', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('create elements', function() {
 
-    var testXML = require('./BpmnRules.process.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
 
     it('create tasks -> process', inject(function(elementFactory) {
@@ -127,9 +151,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('empty pool', function() {
 
-      var testXML = require('./BpmnRules.collaboration-empty.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(collaborationEmptyXML, { modules: testModules }));
 
 
       it('should not allow to drop DataStoreReference when there is no process to append to',
@@ -149,9 +171,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('copy elements', function() {
 
-    var testXML = require('./BpmnRules.process.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
 
     it('copy task', inject(function(elementFactory) {
@@ -224,9 +244,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('on process diagram', function() {
 
-    var testXML = require('./BpmnRules.process.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(processXML, { modules: testModules }));
 
 
     it('connect StartEvent_None -> Task', inject(function() {
@@ -581,9 +599,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('boundary events', function() {
 
-    var testXML = require('./BpmnRules.boundaryEvent.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventXML, { modules: testModules }));
 
 
     it('connect BoundaryEvent_on_SubProcess -> Task', inject(function() {
@@ -726,9 +742,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('compensation', function() {
 
-    var testXML = require('./BpmnRules.compensation.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(compensationXML, { modules: testModules }));
 
 
     it('connect CompensationBoundary -> NoneTask', inject(function() {
@@ -871,9 +885,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('compensation in collaboration', function() {
 
-    var testXML = require('./BpmnRules.compensation-collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(compensationCollaborationXML, { modules: testModules }));
 
 
     it('connect CompensationTask -> CollapsedPool', inject(function() {
@@ -903,9 +915,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('on collaboration diagram', function() {
 
-    var testXML = require('./BpmnRules.collaboration.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationXML, { modules: testModules }));
 
 
     it('connect StartEvent_None -> IntermediateEvent', inject(function() {
@@ -1307,9 +1317,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('participants', function() {
 
-    var testXML = require('./BpmnRules.collapsedPools.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collapsedPoolsXML, { modules: testModules }));
 
 
     it('connect CollapsedPool_A -> CollapsedPool_B', inject(function() {
@@ -1352,9 +1360,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('message flows', function() {
 
-    var testXML = require('./BpmnRules.messageFlow.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(messageFlowXML, { modules: testModules }));
 
 
     it('drop MessageFlow -> Collaboration', inject(function() {
@@ -1369,9 +1375,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('on process diagram', function() {
 
-      var testXML = require('./BpmnRules.dataAssociation.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataAssociationXML, { modules: testModules }));
 
 
       it('move selection including data association', inject(function(elementRegistry) {
@@ -1395,9 +1399,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('on sub process', function() {
 
-      var testXML = require('./BpmnRules.subProcess-dataAssociation.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(subProcessDataAssociationXML, { modules: testModules }));
 
 
       it('move task and data association', inject(function(elementRegistry) {
@@ -1421,9 +1423,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('on collaboration', function() {
 
-      var testXML = require('./BpmnRules.collaboration-dataAssociation.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(collaborationDataAssociationXML, { modules: testModules }));
 
 
       it('move participant and data association', inject(function(elementRegistry) {
@@ -1447,9 +1447,8 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('multi selection move', function() {
 
-    var testXML = require('./BpmnRules.multiSelectionPools.bpmn');
+    beforeEach(bootstrapModeler(multiSelectionPoolsXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
     it('is allowed across pools when parent does not change', inject(function(elementRegistry) {
 
@@ -1474,9 +1473,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event move', function() {
 
-    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
     it('attach/move multiple BoundaryEvents -> SubProcess_1', inject(
@@ -1523,9 +1520,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event keyboard move', function() {
 
-    var testXML = require('./BpmnRules.boundaryEvent.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventXML, { modules: testModules }));
 
 
     it('should NOT allow keyboard move of boundary event without host',
@@ -1573,9 +1568,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event attaching', function() {
 
-    var testXML = require('./BpmnRules.attaching.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(attachingXML, { modules: testModules }));
 
 
     it('should allow to attach attachable events to SubProcess', inject(function(elementRegistry) {
@@ -1637,9 +1630,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event create', function() {
 
-    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
     it('attach IntermediateEvent to Task', inject(function(elementFactory) {
@@ -1841,9 +1832,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('event append', function() {
 
-    var testXML = require('../../../fixtures/bpmn/boundary-events.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(boundaryEventsXML, { modules: testModules }));
 
 
     it('append IntermediateEvent from Task', inject(
@@ -1921,9 +1910,8 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('groups', function() {
 
-    var testXML = require('./BpmnRules.groups.bpmn');
+    beforeEach(bootstrapModeler(groupsXML, { modules: testModules }));
 
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
 
     describe('should resize', function() {
 
@@ -1946,9 +1934,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('lanes', function() {
 
-    var testXML = require('./BpmnRules.collaboration-lanes.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(collaborationLanesXML, { modules: testModules }));
 
 
     describe('should add', function() {
@@ -2094,9 +2080,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('insert', function() {
 
-    var testXML = require('./BpmnRules.insert.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(insertXML, { modules: testModules }));
 
 
     it('insert END -> S1', function() {
@@ -2118,9 +2102,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('connect on create', function() {
 
-    var testXML = require('./BpmnRules.connectOnCreate.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(connectOnCreateXML, { modules: testModules }));
 
 
     it('should handle target without parent', inject(function(elementFactory) {
@@ -2156,9 +2138,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('in process', function() {
 
-      var testXML = require('./BpmnRules.dataInputOutput.process.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataInputOutputProcessXML, { modules: testModules }));
 
 
       it('should move', inject(function(elementRegistry) {
@@ -2185,9 +2165,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('in collaboration', function() {
 
-      var testXML = require('./BpmnRules.dataInputOutput.collaboration.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(dataInputOutputCollaborationXML, { modules: testModules }));
 
 
       it('should move', inject(function(elementRegistry) {
@@ -2226,9 +2204,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
     describe('move Lane', function() {
 
-      var testXML = require('./BpmnRules.moveLane.bpmn');
-
-      beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(moveLaneXML, { modules: testModules }));
 
 
       it('should disallow', inject(function(elementRegistry, rules) {
@@ -2252,9 +2228,7 @@ describe('features/modeling/rules - BpmnRules', function() {
 
   describe('start connection', function() {
 
-    var testXML = require('../../../fixtures/bpmn/simple.bpmn');
-
-    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(simpleXML, { modules: testModules }));
 
 
     it('should allow start for given element types', inject(function(elementFactory, rules) {

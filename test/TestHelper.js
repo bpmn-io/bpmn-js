@@ -1,17 +1,21 @@
-export * from './helper';
+export * from 'bpmn-js/test/helper';
 
 import fileDrop from 'file-drops';
 
 import {
   insertCSS,
   getBpmnJS
-} from './helper';
+} from 'bpmn-js/test/helper';
+
+import diagramJsCSS from 'diagram-js/assets/diagram-js.css';
+import bpmnJsCSS from '../assets/bpmn-js.css';
+import bpmnEmbeddedCSS from 'bpmn-font/dist/css/bpmn-embedded.css';
 
 
 // add core styles
-insertCSS('diagram-js.css', require('diagram-js/assets/diagram-js.css'));
-insertCSS('bpmn-js.css', require('../assets/bpmn-js.css'));
-insertCSS('bpmn-embedded.css', require('bpmn-font/dist/css/bpmn-embedded.css'));
+insertCSS('diagram-js.css', diagramJsCSS);
+insertCSS('bpmn-js.css', bpmnJsCSS);
+insertCSS('bpmn-embedded.css', bpmnEmbeddedCSS);
 insertCSS('diagram-js-testing.css',
   'body .test-container { height: auto }' +
   'body .test-content-container { height: 90vh; }'

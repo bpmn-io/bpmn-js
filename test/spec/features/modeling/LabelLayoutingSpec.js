@@ -2,17 +2,22 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import bendpointsModule from 'diagram-js/lib/features/bendpoints';
-import modelingModule from 'lib/features/modeling';
-import labelEditingModule from 'lib/features/label-editing';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import labelEditingModule from 'bpmn-js/lib/features/label-editing';
 import spaceTool from 'diagram-js/lib/features/space-tool';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
+
+import initialXML from './LabelLayouting.initial.bpmn';
+import moveXML from './LabelLayouting.move.bpmn';
+import integrationXML from './LabelLayouting.integration.bpmn';
+
 
 var testModules = [
   coreModule,
@@ -27,9 +32,7 @@ describe('modeling - label layouting', function() {
 
   describe('should position created label', function() {
 
-    var diagramXML = require('./LabelLayouting.initial.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(initialXML, {
       modules: testModules
     }));
 
@@ -72,11 +75,10 @@ describe('modeling - label layouting', function() {
 
   describe('should move label', function() {
 
-    var diagramXML = require('./LabelLayouting.move.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(moveXML, {
       modules: testModules
     }));
+
 
     describe('on segment move', function() {
 
@@ -521,9 +523,7 @@ describe('modeling - label layouting', function() {
 
     describe('space tool', function() {
 
-      var diagramXML = require('./LabelLayouting.integration.bpmn');
-
-      beforeEach(bootstrapModeler(diagramXML, {
+      beforeEach(bootstrapModeler(integrationXML, {
         modules: testModules
       }));
 

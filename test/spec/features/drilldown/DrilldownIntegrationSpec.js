@@ -1,25 +1,26 @@
 import { expect } from 'chai';
 import {
-  inject
-} from 'test/TestHelper';
+  inject,
+  bootstrapModeler,
+  getBpmnJS
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import DrilldownModule from 'lib/features/drilldown';
-import { bootstrapModeler, getBpmnJS } from '../../../helper';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import DrilldownModule from 'bpmn-js/lib/features/drilldown';
+import multiLayerXML from './nested-subprocesses.bpmn';
 
 
 describe('features - drilldown', function() {
 
-  var testModules = [
-    coreModule,
-    modelingModule,
-    DrilldownModule
-  ];
+  beforeEach(bootstrapModeler(multiLayerXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      DrilldownModule
+    ]
+  }));
 
-  var multiLayerXML = require('./nested-subprocesses.bpmn');
-
-  beforeEach(bootstrapModeler(multiLayerXML, { modules: testModules }));
 
   describe('navigation - collaboration', function() {
 

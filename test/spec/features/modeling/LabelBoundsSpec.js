@@ -3,11 +3,14 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import Modeler from 'lib/Modeler';
+import Modeler from 'bpmn-js/lib/Modeler.js';
 
 import TestContainer from 'mocha-test-container-support';
+
+import simpleXML from './LabelBoundsSpec.simple.bpmn';
+
 
 var DELTA = 2;
 
@@ -30,11 +33,11 @@ describe('label bounds', function() {
     container = TestContainer.get(this);
   });
 
+
   describe('on import', function() {
 
     it('should import simple label process', function() {
-      var xml = require('./LabelBoundsSpec.simple.bpmn');
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         expect(result.error).not.to.exist;
       });
@@ -45,9 +48,7 @@ describe('label bounds', function() {
 
   describe('on label change', function() {
 
-    var diagramXML = require('./LabelBoundsSpec.simple.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML));
+    beforeEach(bootstrapModeler(simpleXML));
 
     var updateLabel;
 
@@ -58,7 +59,6 @@ describe('label bounds', function() {
         directEditing._textbox.content.innerText = text;
         directEditing.complete();
       };
-
     }));
 
 
@@ -179,11 +179,9 @@ describe('label bounds', function() {
 
     it('should create DI when label has changed', function() {
 
-      var xml = require('./LabelBoundsSpec.simple.bpmn');
-
       var shape;
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var err = result.error;
         var modeler = result.modeler;
@@ -223,11 +221,9 @@ describe('label bounds', function() {
 
     it('should update existing DI when label has changed', function() {
 
-      var xml = require('./LabelBoundsSpec.simple.bpmn');
-
       var shape;
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(simpleXML).then(function(result) {
 
         var err = result.error;
         var modeler = result.modeler;
@@ -267,12 +263,10 @@ describe('label bounds', function() {
 
     it('should not update DI of unchanged labels', function() {
 
-      var xml = require('./LabelBoundsSpec.simple.bpmn');
-
       // strip windows line breaks (if any)
-      xml = xml.replace(/\r/g, '');
+      var diagramXML = simpleXML.replace(/\r/g, '');
 
-      return createModeler(xml).then(function(result) {
+      return createModeler(diagramXML).then(function(result) {
 
         var err = result.error;
         var modeler = result.modeler;
@@ -286,7 +280,7 @@ describe('label bounds', function() {
 
         var savedXML = result.xml;
 
-        expect(savedXML).to.equal(xml);
+        expect(savedXML).to.equal(diagramXML);
       });
     });
 

@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import { BpmnModdle } from 'bpmn-moddle';
 
+import complexXML from '../../fixtures/bpmn/complex.bpmn';
+
 
 describe('bpmn-moddle', function() {
 
@@ -14,7 +16,7 @@ describe('bpmn-moddle', function() {
 
     it('should parse simple xml', function() {
 
-      var xml =
+      var simpleXML =
         '<?xml version="1.0" encoding="UTF-8"?>' +
         '<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" ' +
                            'id="simple" ' +
@@ -23,7 +25,7 @@ describe('bpmn-moddle', function() {
         '</bpmn2:definitions>';
 
       // when
-      return parse(xml).then(function(result) {
+      return parse(simpleXML).then(function(result) {
 
         var definitions = result.rootElement;
 
@@ -39,12 +41,10 @@ describe('bpmn-moddle', function() {
 
     it('should parse complex xml', function() {
 
-      var xml = require('../../fixtures/bpmn/complex.bpmn');
-
       var start = new Date().getTime();
 
       // when
-      return parse(xml).then(function() {
+      return parse(complexXML).then(function() {
 
         // then
         // parsing a XML document should not take too long

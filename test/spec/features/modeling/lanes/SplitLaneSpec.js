@@ -2,31 +2,37 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-var pick = require('min-dash').pick;
+import { pick } from 'min-dash';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import { getChildLanes } from 'bpmn-js/lib/features/modeling/util/LaneUtil.js';
 
-var getChildLanes = require('lib/features/modeling/util/LaneUtil').getChildLanes;
+import participantLaneXML from './participant-lane.bpmn';
+import participantLaneVerticalXML from './participant-lane-vertical.bpmn';
+import participantNoLaneXML from './participant-no-lane.bpmn';
+import participantNoLaneVerticalXML from './participant-no-lane-vertical.bpmn';
+import nestedXML from './SplitLane.nested.bpmn';
+import nestedVerticalXML from './SplitLane.nested.vertical.bpmn';
 
 
 function getBounds(element) {
   return pick(element, [ 'x', 'y', 'width', 'height' ]);
 }
 
+var testModules = [
+  coreModule,
+  modelingModule
+];
+
 
 describe('features/modeling - SplitLane', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('should split Participant with Lane', function() {
 
-    var diagramXML = require('./participant-lane.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantLaneXML, { modules: testModules }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {
@@ -133,9 +139,7 @@ describe('features/modeling - SplitLane', function() {
 
   describe('should split vertical Participant with Lane', function() {
 
-    var diagramXML = require('./participant-lane-vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantLaneVerticalXML, { modules: testModules }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {
@@ -242,9 +246,7 @@ describe('features/modeling - SplitLane', function() {
 
   describe('should split Participant without Lane', function() {
 
-    var diagramXML = require('./participant-no-lane.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantNoLaneXML, { modules: testModules }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {
@@ -343,9 +345,9 @@ describe('features/modeling - SplitLane', function() {
 
   describe('should split vertical Participant without Lane', function() {
 
-    var diagramXML = require('./participant-no-lane-vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(participantNoLaneVerticalXML, {
+      modules: testModules
+    }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {
@@ -444,9 +446,7 @@ describe('features/modeling - SplitLane', function() {
 
   describe('should split nested Lane', function() {
 
-    var diagramXML = require('./SplitLane.nested.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(nestedXML, { modules: testModules }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {
@@ -504,9 +504,7 @@ describe('features/modeling - SplitLane', function() {
 
   describe('should split nested vertical Lane', function() {
 
-    var diagramXML = require('./SplitLane.nested.vertical.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(nestedVerticalXML, { modules: testModules }));
 
 
     it('into two lanes', inject(function(elementRegistry, modeling) {

@@ -3,19 +3,19 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   getBusinessObject,
   is
-} from 'lib/util/ModelUtil';
+} from 'bpmn-js/lib/util/ModelUtil.js';
 
 import {
   remove as collectionRemove
-} from 'diagram-js/lib/util/Collections';
+} from 'diagram-js/lib/util/Collections.js';
 
 import {
   filter,
@@ -24,17 +24,17 @@ import {
   matchPattern
 } from 'min-dash';
 
-var testModules = [
-  coreModule,
-  modelingModule
-];
+import diagramXML from './RootElementReferenceBehavior.bpmn';
 
 
 describe('features/modeling - root element reference behavior', function() {
 
-  var diagramXML = require('./RootElementReferenceBehavior.bpmn');
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
 
 
   describe('add root element', function() {

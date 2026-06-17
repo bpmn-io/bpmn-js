@@ -1,6 +1,6 @@
 import { expectType } from 'ts-expect';
 
-import Modeler from '../../Modeler';
+import Modeler from '../../Modeler.js';
 
 import {
   Connection,
@@ -8,14 +8,14 @@ import {
   Label,
   Parent,
   Shape
-} from '../../model/Types';
+} from '../../model/Types.js';
 
-import ElementFactory from './ElementFactory';
-import Modeling from './Modeling';
+import ElementFactory from './ElementFactory.js';
+import Modeling from './Modeling.js';
 
-import { getBusinessObject } from '../../util/ModelUtil';
+import { getBusinessObject } from '../../util/ModelUtil.js';
 
-import { CustomElementFactory } from './ElementFactory.test';
+import { CustomElementFactory } from './ElementFactory.test.js';
 
 const modeler = new Modeler();
 

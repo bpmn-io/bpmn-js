@@ -2,23 +2,27 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import basicXML from '../../../fixtures/bpmn/features/drop/drop.bpmn';
+import recursiveTaskXML from '../../../fixtures/bpmn/features/drop/recursive-task.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 
 describe('features/move - drop', function() {
 
-  var diagramXML = require('../../../fixtures/bpmn/features/drop/drop.bpmn');
-  var diagramXML2 = require('../../../fixtures/bpmn/features/drop/recursive-task.bpmn');
-
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('elements', function() {
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
+
 
     it('should update parent', inject(function(elementRegistry, modeling) {
 
@@ -57,7 +61,7 @@ describe('features/move - drop', function() {
 
   describe('connection handling', function() {
 
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('should remove flow if target and source have different parents', inject(
@@ -101,7 +105,8 @@ describe('features/move - drop', function() {
 
   describe('recursion', function() {
 
-    beforeEach(bootstrapModeler(diagramXML2, { modules: testModules }));
+    beforeEach(bootstrapModeler(recursiveTaskXML, { modules: testModules }));
+
 
     it('should update parent', inject(function(elementRegistry, modeling) {
 

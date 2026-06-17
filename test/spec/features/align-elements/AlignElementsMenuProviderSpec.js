@@ -3,7 +3,7 @@ import {
   bootstrapModeler,
   getBpmnJS,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   query as domQuery
@@ -13,19 +13,22 @@ import {
   forEach
 } from 'min-dash';
 
-import alignElementsModule from 'lib/features/align-elements';
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import alignElementsModule from 'bpmn-js/lib/features/align-elements';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
 
+import basicXML from '../../../fixtures/bpmn/align-elements.bpmn';
 
 
 describe('features/align-elements - popup menu', function() {
 
-  var testModules = [ alignElementsModule, modelingModule, coreModule ];
-
-  var basicXML = require('../../../fixtures/bpmn/align-elements.bpmn');
-
-  beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(basicXML, {
+    modules: [
+      alignElementsModule,
+      modelingModule,
+      coreModule
+    ]
+  }));
 
 
   it('should provide alignment buttons', inject(function(elementRegistry, popupMenu) {

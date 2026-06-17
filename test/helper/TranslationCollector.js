@@ -1,4 +1,4 @@
-import translate from 'diagram-js/lib/i18n/translate/translate';
+import translate from 'diagram-js/lib/i18n/translate/translate.js';
 
 function collectTranslations(template, replacements) {
   var log = {

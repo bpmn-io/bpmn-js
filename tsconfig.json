@@ -4,6 +4,8 @@
       "DOM",
       "ES2018"
     ],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true
   },
   "include": [

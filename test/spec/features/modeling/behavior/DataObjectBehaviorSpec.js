@@ -2,26 +2,32 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import { is } from 'lib/util/ModelUtil';
+import { is } from 'bpmn-js/lib/util/ModelUtil.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import dataObjectReferenceXML from './DataObjectBehavior.data-object-reference.bpmn';
+import createDataAssociationXML from './DataObjectBehavior.create-data-association.bpmn';
+import removeDataAssociationXML from './DataObjectBehavior.remove-data-association.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 
 describe('features/modeling/behavior - data object', function() {
-
-  var testModules = [ coreModule, modelingModule ];
 
   var rootShape;
 
 
   describe('DataObjectReference', function() {
 
-    var processDiagramXML = require('./DataObjectBehavior.data-object-reference.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(dataObjectReferenceXML, { modules: testModules }));
 
     var subProcess1;
 
@@ -99,9 +105,7 @@ describe('features/modeling/behavior - data object', function() {
 
   describe('create', function() {
 
-    var processDiagramXML = require('./DataObjectBehavior.create-data-association.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(createDataAssociationXML, { modules: testModules }));
 
     var dataObjectRefShape1,
         taskShape;
@@ -209,9 +213,7 @@ describe('features/modeling/behavior - data object', function() {
 
   describe('remove', function() {
 
-    var processDiagramXML = require('./DataObjectBehavior.remove-data-association.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(removeDataAssociationXML, { modules: testModules }));
 
     var task1Shape,
         task2Shape,

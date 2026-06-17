@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
   getBpmnJS
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   isArray,

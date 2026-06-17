@@ -3,14 +3,18 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import { getDi } from 'lib/util/ModelUtil';
+import { getDi } from 'bpmn-js/lib/util/ModelUtil.js';
 
 import { pick } from 'min-dash';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+
+import basicXML from './BpmnUpdater.bpmn';
+import incompleteDiXML from './BpmnUpdater.incompleteDi.bpmn';
+
 
 var testModules = [ coreModule, modelingModule ];
 
@@ -19,9 +23,7 @@ describe('features - bpmn-updater', function() {
 
   describe('connection di', function() {
 
-    var diagramXML = require('./BpmnUpdater.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: testModules
     }));
 
@@ -99,9 +101,7 @@ describe('features - bpmn-updater', function() {
 
   describe('connection cropping', function() {
 
-    var diagramXML = require('./BpmnUpdater.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: testModules
     }));
 
@@ -158,9 +158,7 @@ describe('features - bpmn-updater', function() {
 
   describe('incomplete DI', function() {
 
-    var diagramXML = require('./BpmnUpdater.incompleteDi.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(incompleteDiXML, {
       modules: testModules
     }));
 
@@ -214,9 +212,7 @@ describe('features - bpmn-updater', function() {
 
   describe('update embedded label bounds', function() {
 
-    var diagramXML = require('./BpmnUpdater.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, {
+    beforeEach(bootstrapModeler(basicXML, {
       modules: testModules
     }));
 

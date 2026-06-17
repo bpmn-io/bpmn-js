@@ -2,32 +2,32 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import coreModule from 'lib/core';
-import modelingModule from 'lib/features/modeling';
-import outlineModule from 'lib/features/outline';
-import drilldownModule from 'lib/features/drilldown';
-import labelLinkModule from 'lib/features/label-link';
+import coreModule from 'bpmn-js/lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import outlineModule from 'bpmn-js/lib/features/outline';
+import drilldownModule from 'bpmn-js/lib/features/drilldown';
+import labelLinkModule from 'bpmn-js/lib/features/label-link';
 
 import { queryAll as domQueryAll } from 'min-dom';
 
-import { expectSvgPath } from '../../../util/svgHelpers';
+import { expectSvgPath } from 'bpmn-js/test/util/svgHelpers.js';
+
+import diagramXML from './LabelLink.bpmn';
 
 
 describe('features/label-link - label link', function() {
 
-  var diagramXML = require('./LabelLink.bpmn');
-
-  var testModules = [
-    coreModule,
-    modelingModule,
-    outlineModule,
-    drilldownModule,
-    labelLinkModule
-  ];
-
-  beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule,
+      outlineModule,
+      drilldownModule,
+      labelLinkModule
+    ]
+  }));
 
 
   it('should not show when nothing selected', inject(function() {

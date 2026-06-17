@@ -3,10 +3,14 @@ import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import errorXML from './UpdateModdleProperties.error.bpmn';
+import dataObjectXML from './UpdateModdleProperties.dataObject.bpmn';
+
 
 var testModules = [ coreModule, modelingModule ];
 
@@ -15,9 +19,7 @@ describe('features/modeling - update moddle properties', function() {
 
   describe('updating bpmn:Error', function() {
 
-    var diagramXML = require('./UpdateModdleProperties.error.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(errorXML, { modules: testModules }));
 
 
     it('should update', inject(function(elementRegistry, modeling, eventBus) {
@@ -57,9 +59,7 @@ describe('features/modeling - update moddle properties', function() {
 
   describe('updating bpmn:DataObject', function() {
 
-    var diagramXML = require('./UpdateModdleProperties.dataObject.bpmn');
-
-    beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(dataObjectXML, { modules: testModules }));
 
 
     it('should update', inject(function(elementRegistry, modeling, eventBus) {

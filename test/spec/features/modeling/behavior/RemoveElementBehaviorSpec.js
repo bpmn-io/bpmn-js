@@ -2,25 +2,30 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
-import modelingModule from 'lib/features/modeling';
-import coreModule from 'lib/core';
+import modelingModule from 'bpmn-js/lib/features/modeling';
+import coreModule from 'bpmn-js/lib/core';
+
+import basicXML from './RemoveElementBehavior.bpmn';
+import perpendicularXML from './RemoveElementBehavior.perpendicular.bpmn';
+import diagonalXML from './RemoveElementBehavior.diagonal.bpmn';
+import verticalDiagonalXML from './RemoveElementBehavior.vertical.diagonal.bpmn';
+
+
+var testModules = [
+  coreModule,
+  modelingModule
+];
 
 
 describe('features/modeling - remove element behavior', function() {
 
-  var testModules = [ coreModule, modelingModule ];
-
-
   describe('combine sequence flow when deleting element', function() {
-
 
     describe('parallel connections', function() {
 
-      var processDiagramXML = require('./RemoveElementBehavior.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
       it('horizontal', inject(function(modeling, elementRegistry) {
@@ -73,9 +78,7 @@ describe('features/modeling - remove element behavior', function() {
 
     describe('perpendicular connections', function() {
 
-      var gatewayDiagramXML = require('./RemoveElementBehavior.perpendicular.bpmn');
-
-      beforeEach(bootstrapModeler(gatewayDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(perpendicularXML, { modules: testModules }));
 
 
       it('right-down', inject(function(modeling, elementRegistry) {
@@ -192,9 +195,7 @@ describe('features/modeling - remove element behavior', function() {
 
     describe('connection layouting', function() {
 
-      var processDiagramXML = require('./RemoveElementBehavior.diagonal.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(diagonalXML, { modules: testModules }));
 
 
       it('should execute', inject(function(modeling, elementRegistry) {
@@ -250,9 +251,7 @@ describe('features/modeling - remove element behavior', function() {
 
     describe('vertical connection layouting', function() {
 
-      var processDiagramXML = require('./RemoveElementBehavior.vertical.diagonal.bpmn');
-
-      beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+      beforeEach(bootstrapModeler(verticalDiagonalXML, { modules: testModules }));
 
 
       it('should execute', inject(function(modeling, elementRegistry) {
@@ -290,9 +289,7 @@ describe('features/modeling - remove element behavior', function() {
 
   describe('do not combine sequence flows ', function() {
 
-    var processDiagramXML = require('./RemoveElementBehavior.bpmn');
-
-    beforeEach(bootstrapModeler(processDiagramXML, { modules: testModules }));
+    beforeEach(bootstrapModeler(basicXML, { modules: testModules }));
 
 
     it('remove all if there are more than one incoming or outgoing', inject(function(modeling, elementRegistry) {

@@ -2,26 +2,26 @@ import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
-} from 'test/TestHelper';
+} from 'bpmn-js/test/TestHelper.js';
 
 import {
   flatten
 } from 'min-dash';
 
-import coreModule from 'lib/core';
+import coreModule from 'bpmn-js/lib/core';
 import moveModule from 'diagram-js/lib/features/move';
-import modelingModule from 'lib/features/modeling';
+import modelingModule from 'bpmn-js/lib/features/modeling';
 
 import {
   createCanvasEvent as canvasEvent
-} from '../../../../util/MockEvents';
+} from 'bpmn-js/test/util/MockEvents.js';
 
-import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+import { getMid } from 'diagram-js/lib/layout/LayoutUtil.js';
+
+import diagramXML from './DropOnFlowBehavior.bpmn';
 
 
 describe('modeling/behavior - drop on connection', function() {
-
-  var diagramXML = require('./DropOnFlowBehavior.bpmn');
 
   beforeEach(bootstrapModeler(diagramXML, {
     modules: [

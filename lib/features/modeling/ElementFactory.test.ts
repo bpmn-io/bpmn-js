@@ -1,13 +1,13 @@
-import Modeler from '../../Modeler';
+import Modeler from '../../Modeler.js';
 
-import ElementFactory from './ElementFactory';
+import ElementFactory from './ElementFactory.js';
 
 import {
   Connection,
   Label,
   Root,
   Shape
-} from '../../model/Types';
+} from '../../model/Types.js';
 
 const modeler = new Modeler();
 
