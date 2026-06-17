@@ -2,8 +2,6 @@
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox' ]
 var browsers = (process.env.TEST_BROWSERS || 'ChromeHeadless').split(',');
 
-// use puppeteer provided Chrome for testing
-
 var VARIANT = process.env.VARIANT;
 
 var NODE_ENV = process.env.NODE_ENV;
@@ -13,8 +11,7 @@ var basePath = '../..';
 var suite = 'test/distro/' + VARIANT + '.js';
 
 
-module.exports = async function(karma) {
-  process.env.CHROME_BIN = await require('puppeteer').executablePath();
+module.exports = function(karma) {
   karma.set({
 
     basePath,
