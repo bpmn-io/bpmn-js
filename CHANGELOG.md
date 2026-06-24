@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+### 18.19.0
+
+* `FEAT`: use parents' entries keywords for search in popup menu ([#1053](https://github.com/bpmn-io/diagram-js/pull/1053))
+* `DEPS`: update to `diagram-js@15.18.0`
+
 ### 18.18.0
 
 * `FEAT`: ship type declaration maps ([#2442](https://github.com/bpmn-io/bpmn-js/pull/2442))
