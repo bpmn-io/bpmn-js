@@ -8,6 +8,7 @@ import {
 import coreModule from 'lib/core';
 import drilldownModule from 'lib/features/drilldown';
 import modelingModule from 'lib/features/modeling';
+import replaceModule from 'lib/features/replace';
 import { bootstrapModeler, getBpmnJS } from '../../../helper';
 import { classes } from 'min-dom';
 
@@ -17,6 +18,7 @@ describe('features - drilldown', function() {
   var testModules = [
     coreModule,
     modelingModule,
+    replaceModule,
     drilldownModule
   ];
 
@@ -255,6 +257,44 @@ describe('features - drilldown', function() {
         expect(viewbox.scale).to.eql(expectedViewbox.scale);
       });
     }
+
+  });
+
+
+  describe('collapsed event subprocess markers', function() {
+
+    var collapsedEventSubProcessXML = require('./collapsed-event-subprocess.bpmn');
+
+    beforeEach(bootstrapModeler(collapsedEventSubProcessXML, { modules: testModules }));
+
+
+    it('should refresh marker after leaving drilldown',
+      inject(function(canvas, elementRegistry, bpmnReplace) {
+
+        // given
+        var rootElement = canvas.getRootElement(),
+            collapsedEventSubProcess = elementRegistry.get('SubProcess_1'),
+            collapsedGfx = canvas.getGraphics(collapsedEventSubProcess),
+            initialMarkup = collapsedGfx.querySelector('.djs-visual').innerHTML;
+
+        // when
+        canvas.setRootElement(canvas.findRoot('SubProcess_1_plane'));
+
+        var startEvent = elementRegistry.get('StartEvent_1');
+
+        bpmnReplace.replaceElement(startEvent, {
+          type: 'bpmn:StartEvent',
+          eventDefinitionType: 'bpmn:TimerEventDefinition'
+        });
+
+        canvas.setRootElement(rootElement);
+
+        // then
+        var updatedMarkup = canvas.getGraphics(collapsedEventSubProcess).querySelector('.djs-visual').innerHTML;
+
+        expect(updatedMarkup).to.not.equal(initialMarkup);
+      })
+    );
 
   });
 

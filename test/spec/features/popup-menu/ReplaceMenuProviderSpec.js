@@ -982,6 +982,24 @@ describe('features/popup-menu - replace menu provider', function() {
     );
 
 
+    it('should replace event sub processes -> collapsed event sub process',
+      inject(function(elementRegistry) {
+
+        // given
+        var eventSubProcess = elementRegistry.get('EventSubProcess');
+
+        openPopup(eventSubProcess);
+
+        // when
+        var collapsedEventSubProcess = triggerAction('replace-with-collapsed-event-subprocess');
+
+        // then
+        expect(collapsedEventSubProcess.businessObject.triggeredByEvent).to.be.true;
+        expect(isExpanded(collapsedEventSubProcess)).to.be.false;
+      })
+    );
+
+
     it('should retain the loop characteristics and the expanded status for transactions',
       inject(function(elementRegistry) {
 
@@ -1937,6 +1955,21 @@ describe('features/popup-menu - replace menu provider', function() {
         }));
 
 
+        it('options include collapsed event subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
+
+          // when
+          openPopup(collapsedSubProcess);
+
+          var entry = queryEntry('replace-with-collapsed-event-subprocess');
+
+          // then
+          expect(entry).to.exist;
+        }));
+
+
         it('options do not include ad hoc subprocess', inject(function(elementRegistry) {
 
           // given
@@ -2013,6 +2046,33 @@ describe('features/popup-menu - replace menu provider', function() {
 
           // then
           expect(entry).not.to.exist;
+        }));
+
+      });
+
+
+      describe('collapsed event subprocess', function() {
+
+        it('options include collapsed subprocess', inject(function(elementRegistry) {
+
+          // given
+          var collapsedSubProcess = elementRegistry.get('Task_1');
+
+          openPopup(collapsedSubProcess);
+
+          var collapsedEventSubProcess = triggerAction('replace-with-collapsed-event-subprocess');
+
+          // when
+          openPopup(collapsedEventSubProcess);
+
+          var collapsedSubProcessEntry = queryEntry('replace-with-collapsed-subprocess'),
+              collapsedEventSubProcessEntry = queryEntry('replace-with-collapsed-event-subprocess'),
+              expandedEventSubProcessEntry = queryEntry('replace-with-event-subprocess');
+
+          // then
+          expect(collapsedSubProcessEntry).to.exist;
+          expect(collapsedEventSubProcessEntry).not.to.exist;
+          expect(expandedEventSubProcessEntry).to.exist;
         }));
 
       });
