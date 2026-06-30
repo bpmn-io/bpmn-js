@@ -715,6 +715,100 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
 
   });
 
+
+  describe('label snapping', function() {
+
+    function moveLabel(label, hover, toPosition) {
+      getBpmnJS().invoke(function(dragging, move, canvas) {
+        move.start(canvasEvent(mid(label)), label);
+
+        dragging.hover({
+          element: hover,
+          gfx: canvas.getGraphics(hover)
+        });
+
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+        dragging.move(canvasEvent(toPosition));
+
+        dragging.end();
+      });
+    }
+
+
+    describe('inside participant', function() {
+
+      var diagramXML = require('./BpmnCreateMoveSnapping.label-snapping.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should snap label to peer shape inside participant', inject(
+        function(elementRegistry) {
+
+          // given
+          var label = elementRegistry.get('StartEvent_1').label,
+              gateway = elementRegistry.get('Gateway_1'),
+              participant = elementRegistry.get('Participant_1');
+
+          var labelMid = mid(label);
+
+          // when
+          // move label close to the gateway's horizontal center (peer)
+          moveLabel(label, participant, {
+            x: mid(gateway).x - 5,
+            y: labelMid.y
+          });
+
+          // then
+          expect(mid(label)).to.eql({
+            x: mid(gateway).x, // snapped to peer shape inside participant
+            y: labelMid.y
+          });
+        }
+      ));
+
+    });
+
+
+    describe('inside process (no participant)', function() {
+
+      var diagramXML = require('./BpmnCreateMoveSnapping.label-snapping-process.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+
+      it('should snap label to peer shape (same behavior independent of context)', inject(
+        function(elementRegistry, canvas) {
+
+          // given
+          var label = elementRegistry.get('StartEvent_1').label,
+              gateway = elementRegistry.get('Gateway_1'),
+              root = canvas.getRootElement();
+
+          var labelMid = mid(label);
+
+          // when
+          moveLabel(label, root, {
+            x: mid(gateway).x - 5,
+            y: labelMid.y
+          });
+
+          // then
+          expect(mid(label)).to.eql({
+            x: mid(gateway).x, // snapped to peer shape
+            y: labelMid.y
+          });
+        }
+      ));
+
+    });
+
+  });
 });
 
 // helpers //////////
