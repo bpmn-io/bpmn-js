@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `CHORE`: derive label link offset from (circular) outline shape ([#2457](https://github.com/bpmn-io/bpmn-js/pull/2457))
+
 ## 18.19.0
 
 * `FEAT`: use parents' entries keywords for search in popup menu ([#1053](https://github.com/bpmn-io/diagram-js/pull/1053))
