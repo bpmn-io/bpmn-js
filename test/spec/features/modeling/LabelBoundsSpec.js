@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -49,17 +50,15 @@ describe('label bounds', function() {
 
     beforeEach(bootstrapModeler(diagramXML));
 
-    var updateLabel;
 
-    beforeEach(inject(function(directEditing) {
-
-      updateLabel = function(shape, text) {
-        directEditing.activate(shape);
+    function updateLabel(element, text) {
+      return getBpmnJS().invoke(function(directEditing) {
+        directEditing.activate(element);
         directEditing._textbox.content.innerText = text;
         directEditing.complete();
-      };
+      });
+    }
 
-    }));
 
 
     describe('label position', function() {
