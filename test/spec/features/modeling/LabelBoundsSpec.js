@@ -59,6 +59,11 @@ describe('label bounds', function() {
       });
     }
 
+    function ensureOutline(element) {
+      return getBpmnJS().invoke(function(selection) {
+        selection.select(element);
+      });
+    }
 
 
     describe('label position', function() {
@@ -125,7 +130,10 @@ describe('label bounds', function() {
           // given
           var shape = elementRegistry.get('StartEvent_1');
 
-          var outlineSpy = sinon.spy(outline, 'updateShapeOutline');
+          // ensure label has outline to update
+          ensureOutline(shape.label);
+
+          var updateOutlineSpy = sinon.spy(outline, 'updateShapeOutline');
           var rendererSpy = sinon.spy(bpmnRenderer, 'drawShape');
 
           // when
@@ -136,7 +144,7 @@ describe('label bounds', function() {
           // updated the elements bounds dimensions and position
           sinon.assert.callOrder(
             rendererSpy.withArgs(sinon.match.any, shape.label),
-            outlineSpy.withArgs(sinon.match.any, shape.label)
+            updateOutlineSpy.withArgs(sinon.match.any, shape.label)
           );
         })
 
