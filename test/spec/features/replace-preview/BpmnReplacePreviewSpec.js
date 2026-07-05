@@ -18,6 +18,10 @@ import {
 } from 'min-dash';
 
 import {
+  query as domQuery
+} from 'min-dom';
+
+import {
   attr as svgAttr,
   clone as svgClone,
   innerSVG
@@ -169,7 +173,7 @@ describe('features/replace-preview', function() {
         eventDefinitionType: 'bpmn:MessageEventDefinition'
       });
 
-      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(startEventGfx));
+      expectVisuals(context.dragGroup.childNodes[0], startEventGfx);
     })
   );
 
@@ -186,7 +190,7 @@ describe('features/replace-preview', function() {
       // check if the visual replacement is a blank interrupting start event
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
+      expectVisuals(context.dragGroup.childNodes[1], startEventGfx);
     })
   );
 
@@ -210,7 +214,7 @@ describe('features/replace-preview', function() {
         eventDefinitionType: 'bpmn:MessageEventDefinition'
       });
 
-      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(startEventGfx));
+      expectVisuals(context.dragGroup.childNodes[0], startEventGfx);
     })
   );
 
@@ -230,7 +234,7 @@ describe('features/replace-preview', function() {
       // check if the visual representation remains a non interrupting message start event
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
+      expectVisuals(context.dragGroup.childNodes[1], startEventGfx);
     })
   );
 
@@ -253,9 +257,9 @@ describe('features/replace-preview', function() {
       // check if the visual replacements are blank interrupting start events
       var startEventGfx = getGfx({ type: 'bpmn:StartEvent' });
 
-      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
-      expect(innerSVG(context.dragGroup.childNodes[3])).to.equal(innerSVG(startEventGfx));
-      expect(innerSVG(context.dragGroup.childNodes[4])).to.equal(innerSVG(startEventGfx));
+      expectVisuals(context.dragGroup.childNodes[1], startEventGfx);
+      expectVisuals(context.dragGroup.childNodes[3], startEventGfx);
+      expectVisuals(context.dragGroup.childNodes[4], startEventGfx);
     })
   );
 
@@ -290,9 +294,9 @@ describe('features/replace-preview', function() {
       var context = dragging.context().data.context;
 
       // then
-      expect(innerSVG(context.dragGroup.childNodes[0])).to.equal(innerSVG(messageStartEventGfx));
-      expect(innerSVG(context.dragGroup.childNodes[1])).to.equal(innerSVG(startEventGfx));
-      expect(innerSVG(context.dragGroup.childNodes[2])).to.equal(innerSVG(timerStartEventGfx));
+      expectVisuals(context.dragGroup.childNodes[0], messageStartEventGfx);
+      expectVisuals(context.dragGroup.childNodes[1], startEventGfx);
+      expectVisuals(context.dragGroup.childNodes[2], timerStartEventGfx);
     })
   );
 
@@ -341,4 +345,32 @@ function skipCI(userAgent) {
   }
 
   return true;
+}
+
+
+/**
+ * Returns the inner markup of an element's visual, ignoring accompanying
+ * graphics such as the interaction hit box or the (lazily created,
+ * selection-only) outline that are not part of the rendered visual.
+ *
+ * @param {SVGElement} gfx
+ *
+ * @return {string}
+ */
+function getVisualInnerSVG(gfx) {
+  return innerSVG(domQuery('.djs-visual', gfx));
+}
+
+/**
+ * Expect that the two elements are visually "equal".
+ *
+ * @param {SVGElement} element
+ * @param {SVGElement} expectedElement
+ */
+function expectVisuals(element, expectedElement) {
+  expect(
+    getVisualInnerSVG(element)
+  ).to.eql(
+    getVisualInnerSVG(expectedElement)
+  );
 }
