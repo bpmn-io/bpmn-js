@@ -58,7 +58,7 @@ module.exports = function(karma) {
       ]
     },
 
-    envPreProcessor: [
+    envPreprocessor: [
       'CI'
     ],
 
