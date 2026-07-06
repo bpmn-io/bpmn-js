@@ -16,6 +16,7 @@ insertCSS('bpmn-font', bpmnFontCSS);
 
 
 const SIZES = [
+  { label: 'XS', phases: 2, tasksPerPhase: 10 }, // ~50 elements
   { label: 'S', phases: 10, tasksPerPhase: 50 }, // ~1k elements
   { label: 'M', phases: 20, tasksPerPhase: 100 }, // ~4k elements
   { label: 'L', phases: 20, tasksPerPhase: 200 } // ~8k elements
