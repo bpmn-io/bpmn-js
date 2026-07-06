@@ -73,7 +73,7 @@
     "@rollup/plugin-terser": "^1.0.0",
     "babel-loader": "^10.1.1",
     "babel-plugin-istanbul": "^8.0.0",
-    "bio-dts": "^0.15.2",
+    "bio-dts": "^0.15.3",
     "bpmn-font": "^0.12.1",
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "^6.2.2",
