@@ -188,6 +188,29 @@ describe('benchmark/huge-diagram', function() {
       });
 
 
+      it('paste', function() {
+        const copyPaste = modeler.get('copyPaste');
+        const canvas = modeler.get('canvas');
+
+        const root = canvas.getRootElement();
+
+        copyPaste.copy(elements);
+
+        // when pasting the whole diagram
+        //
+        // CreateElementsHandler resolves `getParents(elements)` and then, for
+        // every created element, probes membership to decide whether to
+        // auto-resize -- O(n * parents), quadratic when many top-level
+        // elements are pasted.
+        const ms = time(() => copyPaste.paste({
+          element: root,
+          point: { x: 3000, y: 3000 }
+        }));
+
+        record('paste', size, stats, ms);
+      });
+
+
       after(function() {
         modeler && modeler.destroy();
         container && container.remove();
