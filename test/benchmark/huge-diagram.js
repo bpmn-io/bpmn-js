@@ -170,6 +170,24 @@ describe('benchmark/huge-diagram', function() {
       });
 
 
+      it('move commit', function() {
+        const modeling = modeler.get('modeling');
+
+        const shapes = elements.filter(e => !e.waypoints);
+
+        // when committing a move of the whole diagram
+        //
+        // AttachSupport's `postExecuted('elements.move')` filters the moved
+        // shapes for attachers moved without their host. This exercises the
+        // guarded membership check (`isAttacher(shape) && !includes(...)`) --
+        // included so we can detect trade-offs (e.g. an unconditional `Set`
+        // allocation regressing the common, attacher-free case) early.
+        const ms = time(() => modeling.moveElements(shapes, { x: 20, y: 20 }));
+
+        record('move commit', size, stats, ms);
+      });
+
+
       after(function() {
         modeler && modeler.destroy();
         container && container.remove();
