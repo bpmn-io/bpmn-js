@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.20.0
+
 * `FEAT`: various performance improvements in many parts of the code base
 * `FIX`: disallow `move` when dropped outside of canvas ([#2437](https://github.com/bpmn-io/bpmn-js/pull/2437), [#2210](https://github.com/bpmn-io/bpmn-js/issues/2210))
 * `CHORE`: derive label link offset from (circular) outline shape ([#2457](https://github.com/bpmn-io/bpmn-js/pull/2457))
