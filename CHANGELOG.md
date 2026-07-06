@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FIX`: disallow `move` when dropped outside of canvas ([#2437](https://github.com/bpmn-io/bpmn-js/pull/2437), [#2210](https://github.com/bpmn-io/bpmn-js/issues/2210))
 * `CHORE`: derive label link offset from (circular) outline shape ([#2457](https://github.com/bpmn-io/bpmn-js/pull/2457))
+* `DEPS`: update to `diagram-js@15.18.1`
 
 ## 18.19.0
 
