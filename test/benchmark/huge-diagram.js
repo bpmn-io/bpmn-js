@@ -67,6 +67,52 @@ describe('benchmark/huge-diagram', function() {
       });
 
 
+      it('select all', function() {
+        const selection = modeler.get('selection');
+
+        // given no selection
+        selection.select(null);
+
+        // when selecting all elements
+        const ms = time(() => selection.select(elements));
+
+        record('select all', size, stats, ms);
+      });
+
+
+      it('reselect all', function() {
+        const selection = modeler.get('selection');
+
+        // given the full selection is active
+        selection.select(elements);
+
+        // when re-applying the same selection the `selection.changed`
+        // diff dominates -- the pre-Set implementation scanned the
+        // old/new selection linearly (O(n^2)) in both Selection and
+        // SelectionVisuals, with no actual marker changes to do
+        const ms = time(() => selection.select(elements.slice()));
+
+        record('reselect all', size, stats, ms);
+      });
+
+
+      it('isSelected', function() {
+        const selection = modeler.get('selection');
+
+        // given the full selection is active
+        selection.select(elements);
+
+        // when probing membership for every element
+        const ms = time(() => {
+          for (let i = 0; i < elements.length; i++) {
+            selection.isSelected(elements[i]);
+          }
+        });
+
+        record('isSelected', size, stats, ms);
+      });
+
+
       it('move preview', function() {
         const move = modeler.get('move');
         const dragging = modeler.get('dragging');
