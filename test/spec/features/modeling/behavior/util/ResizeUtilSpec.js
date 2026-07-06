@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   getParticipantResizeConstraints
 } from 'lib/features/modeling/behavior/util/ResizeUtil';

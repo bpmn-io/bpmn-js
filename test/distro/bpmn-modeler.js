@@ -1,3 +1,8 @@
+import { expect } from 'chai';
+
+import { testImport } from './helper';
+
+
 describe('bpmn-modeler', function() {
 
   it('should expose globals', function() {
@@ -28,7 +33,6 @@ describe('bpmn-modeler', function() {
     var BpmnJS = window.BpmnJS;
 
     // then
-    /* global testImport */
     return testImport(BpmnJS);
   });
 

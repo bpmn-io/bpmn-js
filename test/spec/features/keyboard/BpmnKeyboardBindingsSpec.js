@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import {
   bootstrapViewer,
   inject
@@ -56,7 +58,9 @@ describe('features/keyboard', function() {
         'undo',
         'redo',
         'copy',
+        'duplicate',
         'paste',
+        'cut',
         'zoom',
         'removeSelection',
         'selectElements',

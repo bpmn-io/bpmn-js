@@ -1,4 +1,5 @@
-import BpmnModdle from 'bpmn-moddle';
+import { expect } from 'chai';
+import { BpmnModdle } from 'bpmn-moddle';
 
 
 describe('bpmn-moddle', function() {

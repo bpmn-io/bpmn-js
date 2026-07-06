@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   collectTranslations,
@@ -16,6 +17,7 @@ var diagramXML = require('test/fixtures/bpmn/simple.bpmn');
 
 // skipping this file during translation extraction
 
+// eslint-disable-next-line mocha/consistent-spacing-between-blocks
 collectTranslations ? describe.skip : describe('i18n - translate', function() {
 
   beforeEach(bootstrapModeler(diagramXML, {

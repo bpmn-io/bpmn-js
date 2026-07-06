@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0b1zo4e" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.46.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_04cshd5" isExecutable="true">
+    <bpmn:subProcess id="SUB_PROCESS" name="SUB_PROCESS" />
+    <bpmn:textAnnotation id="TEXT_ANNOTATION_OVERFLOW_TOP">
+      <bpmn:text>TEXT_ANNOTATION_OVERFLOW_TOP</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TEXT_ANNOTATION_OVERFLOW_LEFT">
+      <bpmn:text>TEXT_ANNOTATION_OVERFLOW_LEFT</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TEXT_ANNOTATION_OVERFLOW_BOTTOM">
+      <bpmn:text>TEXT_ANNOTATION_OVERFLOW_BOTTOM</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TEXT_ANNOTATION_CONTAINED">
+      <bpmn:text>TEXT_ANNOTATION_CONTAINED</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TEXT_ANNOTATION_OVERFLOW_RIGHT">
+      <bpmn:text>TEXT_ANNOTATION_OVERFLOW_RIGHT</bpmn:text>
+    </bpmn:textAnnotation>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_04cshd5">
+      <bpmndi:BPMNShape id="Activity_0e0d2vx_di" bpmnElement="SUB_PROCESS" isExpanded="true">
+        <dc:Bounds x="160" y="80" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1ync48t_di" bpmnElement="TEXT_ANNOTATION_CONTAINED">
+        <dc:Bounds x="220" y="200" width="100" height="53" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0jqvp44" bpmnElement="TEXT_ANNOTATION_OVERFLOW_BOTTOM">
+        <dc:Bounds x="380" y="250" width="100" height="68" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0habugk" bpmnElement="TEXT_ANNOTATION_OVERFLOW_LEFT">
+        <dc:Bounds x="450" y="140" width="100" height="53" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0b51vw4" bpmnElement="TEXT_ANNOTATION_OVERFLOW_RIGHT">
+        <dc:Bounds x="120" y="110" width="100" height="54.999996185302734" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0anjhfc" bpmnElement="TEXT_ANNOTATION_OVERFLOW_TOP">
+        <dc:Bounds x="390" y="60" width="100" height="53" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

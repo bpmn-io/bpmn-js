@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -145,21 +146,6 @@ describe('features - element factory', function() {
 
       expect(is(eventDefinition, 'bpmn:LinkEventDefinition')).to.be.true;
       expect(eventDefinition.name).to.eql('');
-    }));
-
-
-    it('should error when accessing <di> via businessObject', inject(function(elementFactory) {
-
-      // given
-      var shape = elementFactory.createShape({
-        type: 'bpmn:Task',
-      });
-
-      // then
-      expect(shape.di).to.exist;
-      expect(function() {
-        shape.businessObject.di;
-      }).to.throw(/The di is available through the diagram element only./);
     }));
 
 

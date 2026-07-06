@@ -1,5 +1,4 @@
-
-async function testImport(BpmnJS, done) {
+export async function testImport(BpmnJS) {
 
   var container = document.createElement('div');
   container.style.height = '500px';
@@ -25,5 +24,3 @@ async function testImport(BpmnJS, done) {
 
   return modeler;
 }
-
-window.testImport = testImport;

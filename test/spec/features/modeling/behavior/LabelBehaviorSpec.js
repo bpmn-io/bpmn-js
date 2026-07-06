@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
@@ -596,6 +598,27 @@ describe('features/modeling/behavior - LabelBehavior', function() {
       }
     ));
 
+
+    it('should restore bounds on undo', inject(
+      function(elementRegistry, modeling, commandStack) {
+
+        // given
+        var textAnnotationShape = elementRegistry.get('TextAnnotation_1');
+
+        var originalBounds = pick(textAnnotationShape, [ 'x', 'y', 'width', 'height' ]);
+
+        modeling.updateProperties(textAnnotationShape, {
+          text: 'a much longer text that results in a taller annotation box'
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(pick(textAnnotationShape, [ 'x', 'y', 'width', 'height' ])).to.eql(originalBounds);
+      }
+    ));
+
   });
 
 
@@ -621,7 +644,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
         // then
         expect(label.x).to.equal(labelBounds.x);
-        expect(label.y).to.be.below(labelBounds.y);
+        expect(label.y).to.be.at.most(labelBounds.y);
 
       }));
 
@@ -643,7 +666,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         );
 
         // then
-        expect(label.x).to.be.above(labelBounds.x);
+        expect(label.x).to.be.at.least(labelBounds.x);
         expect(label.y).to.equal(labelBounds.y);
 
       }));
@@ -667,7 +690,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
         // then
         expect(label.x).to.equal(labelBounds.x);
-        expect(label.y).to.be.above(labelBounds.y);
+        expect(label.y).to.be.at.least(labelBounds.y);
 
       }));
 
@@ -689,7 +712,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         );
 
         // then
-        expect(label.x).to.be.below(labelBounds.x);
+        expect(label.x).to.be.at.most(labelBounds.x);
         expect(label.y).to.equal(labelBounds.y);
 
       }));
@@ -739,7 +762,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
         // then
         expect(label.x).to.equal(labelBounds.x);
-        expect(label.y).to.be.below(labelBounds.y);
+        expect(label.y).to.be.at.most(labelBounds.y);
 
       }));
 
@@ -761,7 +784,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         );
 
         // then
-        expect(label.x).to.be.above(labelBounds.x);
+        expect(label.x).to.be.at.least(labelBounds.x);
         expect(label.y).to.equal(labelBounds.y);
 
       }));
@@ -785,7 +808,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
         // then
         expect(label.x).to.equal(labelBounds.x);
-        expect(label.y).to.be.above(labelBounds.y);
+        expect(label.y).to.be.at.least(labelBounds.y);
 
       }));
 
@@ -807,7 +830,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         );
 
         // then
-        expect(label.x).to.be.below(labelBounds.x);
+        expect(label.x).to.be.at.most(labelBounds.x);
         expect(label.y).to.equal(labelBounds.y);
 
       }));

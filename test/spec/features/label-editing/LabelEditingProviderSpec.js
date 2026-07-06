@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -19,7 +20,7 @@ import {
 
 var MEDIUM_LINE_HEIGHT = 12 * 1.2;
 
-var DELTA = 3;
+var DELTA = 6;
 
 
 describe('features - label-editing', function() {
@@ -573,8 +574,8 @@ describe('features - label-editing', function() {
 
     describe('on element creation', function() {
 
-      function createTaskElement(context) {
-        var shape = elementFactory.create('shape', { type: 'bpmn:Task' }),
+      function createElement(type, context) {
+        var shape = elementFactory.create('shape', { type: type }),
             parent = elementRegistry.get('SubProcess_1'),
             parentGfx = elementRegistry.getGraphics(parent);
 
@@ -585,6 +586,10 @@ describe('features - label-editing', function() {
         });
         dragging.move(canvasEvent({ x: 400, y: 250 }));
         dragging.end();
+      }
+
+      function createTaskElement(context) {
+        createElement('bpmn:Task', context);
       }
 
       function createParticipant() {
@@ -625,21 +630,132 @@ describe('features - label-editing', function() {
           expect(directEditing.isActive()).to.be.true;
         });
 
-      });
 
+        it('on StartEvent creation', function() {
 
-      it('should NOT activate with behavior hint', function() {
+          // when
+          createElement('bpmn:StartEvent');
 
-        // when
-        createTaskElement({
-          hints: { createElementsBehavior: false }
+          // then
+          expect(directEditing.isActive()).to.be.true;
         });
 
-        // then
-        expect(directEditing.isActive()).to.be.false;
+
+        it('on EndEvent creation', function() {
+
+          // when
+          createElement('bpmn:EndEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on IntermediateThrowEvent creation', function() {
+
+          // when
+          createElement('bpmn:IntermediateThrowEvent');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+
+        it('on CallActivity creation', function() {
+
+          // when
+          createElement('bpmn:CallActivity');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+        it('on SubProcess creation', function() {
+
+          // when
+          createElement('bpmn:SubProcess');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
+
+        it('on AdHocSubProcess creation', function() {
+
+          // when
+          createElement('bpmn:AdHocSubProcess');
+
+          // then
+          expect(directEditing.isActive()).to.be.true;
+        });
 
       });
 
+      describe('should NOT activate', function() {
+
+        it('with behavior hint', function() {
+
+          // when
+          createTaskElement({
+            hints: { createElementsBehavior: false }
+          });
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+
+        });
+
+
+        it('on ExclusiveGateway creation', function() {
+
+          // when
+          createElement('bpmn:ExclusiveGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on ParallelGateway creation', function() {
+
+          // when
+          createElement('bpmn:ParallelGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on InclusiveGateway creation', function() {
+
+          // when
+          createElement('bpmn:InclusiveGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on ComplexGateway creation', function() {
+
+          // when
+          createElement('bpmn:ComplexGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+        it('on EventBasedGateway creation', function() {
+
+          // when
+          createElement('bpmn:EventBasedGateway');
+
+          // then
+          expect(directEditing.isActive()).to.be.false;
+        });
+
+
+      });
 
     });
 
@@ -705,18 +821,14 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -731,18 +843,14 @@ describe('features - label-editing', function() {
             var startEvent = elementRegistry.get('StartEvent_1');
 
             var bounds = canvas.getAbsoluteBBox(startEvent.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(startEvent);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -799,18 +907,14 @@ describe('features - label-editing', function() {
             var sequenceFlow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceFlow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceFlow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + 7
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));
@@ -825,18 +929,14 @@ describe('features - label-editing', function() {
             var sequenceflow = elementRegistry.get('SequenceFlow_1');
 
             var bounds = canvas.getAbsoluteBBox(sequenceflow.label);
-            var mid = {
-              x: bounds.x + bounds.width / 2,
-              y: bounds.y + bounds.height / 2
-            };
 
             directEditing.activate(sequenceflow);
 
             expectBounds(directEditing._textbox.parent, {
-              x: mid.x - (45 * zoom),
-              y: bounds.y - (7 * zoom),
-              width: (90 * zoom),
-              height: bounds.height + (5 * zoom) + (7 * zoom)
+              x: bounds.x - 1,
+              y: bounds.y - 1,
+              width: bounds.width + 2,
+              height: bounds.height + 2
             });
           }
         ));

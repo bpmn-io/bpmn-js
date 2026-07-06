@@ -1,3 +1,8 @@
+import { expect } from 'chai';
+
+import { testImport } from './helper';
+
+
 describe('bpmn-navigated-viewer', function() {
 
   it('should expose globals', function() {
@@ -24,7 +29,6 @@ describe('bpmn-navigated-viewer', function() {
     var BpmnJS = window.BpmnJS;
 
     // then
-    /* global testImport */
     return testImport(BpmnJS);
   });
 

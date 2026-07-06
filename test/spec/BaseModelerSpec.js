@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import BaseModeler from 'lib/BaseModeler';
 import BaseViewer from 'lib/BaseViewer';
 

@@ -31,6 +31,7 @@
     <sequenceFlow id="SequenceFlow_1qmllcx" sourceRef="Task" targetRef="LabelImpossible" />
     <sequenceFlow id="SequenceFlow_0s993e4" sourceRef="Task" targetRef="LabelImpossible" />
     <sequenceFlow id="SequenceFlow_022at7e" sourceRef="Task" targetRef="LabelImpossible" />
+    <exclusiveGateway id="LabelIntersecting" name="Intersecting" />
     <exclusiveGateway id="NoLabel">
       <outgoing>SequenceFlow_0isa70k</outgoing>
     </exclusiveGateway>
@@ -114,6 +115,12 @@
         <omgdc:Bounds x="683" y="82" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="120" y="570" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LabelIntersecting_di" bpmnElement="LabelIntersecting" isMarkerVisible="true">
+        <omgdc:Bounds x="1200" y="82" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1200" y="107" width="50" height="30" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_02fomt2_di" bpmnElement="ExclusiveGateway_02fomt2" isMarkerVisible="true">

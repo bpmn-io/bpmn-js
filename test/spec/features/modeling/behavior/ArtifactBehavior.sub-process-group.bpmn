@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0b1zo4e" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.46.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:category id="Category_0ei8scb">
+    <bpmn:categoryValue id="CategoryValue_14c326o" value="GROUP_CONTAINED" />
+  </bpmn:category>
+  <bpmn:process id="Process_04cshd5" isExecutable="true">
+    <bpmn:subProcess id="SUB_PROCESS" name="SUB_PROCESS" />
+    <bpmn:group id="GROUP_CONTAINED" categoryValueRef="CategoryValue_14c326o" />
+    <bpmn:group id="GROUP_OVERFLOW" categoryValueRef="CategoryValue_0of0o0h" />
+  </bpmn:process>
+  <bpmn:category id="Category_1aidpcl">
+    <bpmn:categoryValue id="CategoryValue_0of0o0h" value="GROUP_OVERFLOW" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_04cshd5">
+      <bpmndi:BPMNShape id="Activity_0e0d2vx_di" bpmnElement="SUB_PROCESS" isExpanded="true">
+        <dc:Bounds x="160" y="80" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1xukybi_di" bpmnElement="GROUP_CONTAINED">
+        <dc:Bounds x="190" y="135" width="220" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="258" y="142" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_04odpl6" bpmnElement="GROUP_OVERFLOW">
+        <dc:Bounds x="310" y="245" width="220" height="90" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="321" y="296" width="78" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

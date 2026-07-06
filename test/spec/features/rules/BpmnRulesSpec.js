@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -1517,6 +1518,113 @@ describe('features/modeling/rules - BpmnRules', function() {
         });
       }
     ));
+  });
+
+
+  describe('event keyboard move', function() {
+
+    var testXML = require('./BpmnRules.boundaryEvent.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should NOT allow keyboard move of boundary event without host',
+      inject(function(elementRegistry, rules) {
+
+        // given
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+        // when
+        var canMove = rules.allowed('elements.move', {
+          shapes: [ boundaryEvent ],
+          hints: {
+            keyboardMove: true
+          }
+        });
+
+        // then
+        expect(canMove).to.be.false;
+      })
+    );
+
+
+    it('should allow keyboard move of boundary event with host',
+      inject(function(elementRegistry, rules) {
+
+        // given
+        var task = elementRegistry.get('Task');
+        var boundaryEvent = elementRegistry.get('BoundaryEvent_on_Task');
+
+        // when
+        var canMove = rules.allowed('elements.move', {
+          shapes: [ task, boundaryEvent ],
+          hints: {
+            keyboardMove: true
+          }
+        });
+
+        // then
+        expect(canMove).to.be.true;
+      })
+    );
+
+  });
+
+
+  describe('move outside canvas', function() {
+
+    var testXML = require('./BpmnRules.process.bpmn');
+
+    beforeEach(bootstrapModeler(testXML, { modules: testModules }));
+
+
+    it('should not allow move when dropped outside the canvas', inject(function(elementRegistry, rules) {
+
+      // given
+      var task = elementRegistry.get('Task');
+
+      // when
+      // dragging outside the canvas yields a `null` target (#2210)
+      var canMove = rules.allowed('elements.move', {
+        shapes: [ task ],
+        target: null
+      });
+
+      // then
+      expect(canMove).to.be.false;
+    }));
+
+
+    it('should not allow move of group when dropped outside the canvas', inject(function(elementRegistry, rules) {
+
+      // given
+      var group = elementRegistry.get('Group');
+
+      // when
+      // dragging outside the canvas yields a `null` target (#2210)
+      var canMove = rules.allowed('elements.move', {
+        shapes: [ group ],
+        target: null
+      });
+
+      // then
+      expect(canMove).to.be.false;
+    }));
+
+
+    it('should allow move to start without a target', inject(function(elementRegistry, rules) {
+
+      // given
+      var task = elementRegistry.get('Task');
+
+      // when
+      var canMove = rules.allowed('elements.move', {
+        shapes: [ task ]
+      });
+
+      // then
+      expect(canMove).to.be.true;
+    }));
 
   });
 

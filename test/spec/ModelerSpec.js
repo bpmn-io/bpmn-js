@@ -1,32 +1,21 @@
+import { expect } from 'chai';
 import { expectToBeAccessible } from '@bpmn-io/a11y';
 
 import Modeler from 'lib/Modeler';
 import Viewer from 'lib/Viewer';
 import NavigatedViewer from 'lib/NavigatedViewer';
 
-import { isAny } from 'lib/util/ModelUtil';
+import { getDi, isAny } from 'lib/util/ModelUtil';
 
 import Clipboard from 'diagram-js/lib/features/clipboard/Clipboard';
 
 import TestContainer from 'mocha-test-container-support';
 
-import {
-  createCanvasEvent
-} from '../util/MockEvents';
+import { createCanvasEvent } from '../util/MockEvents';
 
-import {
-  setBpmnJS,
-  clearBpmnJS,
-  collectTranslations,
-  enableLogging
-} from 'test/TestHelper';
+import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
 
-import {
-  pick,
-  find
-} from 'min-dash';
-
-import { getDi } from 'lib/util/ModelUtil';
+import { find, pick } from 'min-dash';
 
 
 var singleStart = window.__env__ && window.__env__.SINGLE_START === 'modeler';
@@ -182,6 +171,7 @@ describe('Modeler', function() {
   });
 
 
+  // eslint-disable-next-line mocha/consistent-spacing-between-blocks
   !collectTranslations && describe('translate support', function() {
 
     var xml = require('../fixtures/bpmn/simple.bpmn');
@@ -288,7 +278,9 @@ describe('Modeler', function() {
         'undo',
         'redo',
         'copy',
+        'duplicate',
         'paste',
+        'cut',
         'stepZoom',
         'zoom',
         'removeSelection',
@@ -501,27 +493,6 @@ describe('Modeler', function() {
   });
 
 
-  it('should error when accessing <di> from businessObject', function() {
-
-    var xml = require('../fixtures/bpmn/simple.bpmn');
-
-    var modeler = new Modeler({ container: container });
-
-    return modeler.importXML(xml).then(function() {
-
-      // given
-      var elementRegistry = modeler.get('elementRegistry'),
-          shape = elementRegistry.get('Task_1');
-
-      // then
-      expect(shape.di).to.exist;
-      expect(function() {
-        shape.businessObject.di;
-      }).to.throw(/The di is available through the diagram element only./);
-    });
-  });
-
-
   it('should create new diagram', function() {
     var modeler = new Modeler({ container: container });
     return modeler.createDiagram();
@@ -621,6 +592,7 @@ describe('Modeler', function() {
         expect(modeler.get('keyboard')).to.exist;
         expect(modeler.get('keyboardMoveSelection')).to.exist;
         expect(modeler.get('labelEditingProvider')).to.exist;
+        expect(modeler.get('labelLink')).to.exist;
         expect(modeler.get('modeling')).to.exist;
         expect(modeler.get('move')).to.exist;
         expect(modeler.get('paletteProvider')).to.exist;
@@ -946,6 +918,61 @@ describe('Modeler', function() {
     });
 
   });
+
+  describe('resize text element and preserve width', function() {
+
+    var diagramXML = require('../fixtures/bpmn/simple.bpmn');
+
+    it('should adapt width of StartEvent label when text is changed and resized horizontally', async function() {
+
+      const result = await createModeler(diagramXML);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var modeling = modeler.get('modeling');
+
+      var startEvent = elementRegistry.get('StartEvent_2');
+      expect(startEvent).to.exist;
+
+      var label = startEvent.label;
+      expect(label).to.exist;
+      expect(label.businessObject.name).to.equal('Start');
+
+      modeling.updateLabel(startEvent, 'This is a much longer start event text');
+
+      modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width + 20, height: label.height }, 'e');
+
+      const updatedLabel = elementRegistry.get(label.id);
+      expect(updatedLabel.width).to.closeTo(105, 3);
+    });
+
+    it('should adapt width of StartEvent label when text is changed and resized vertically', async function() {
+
+      const result = await createModeler(diagramXML);
+      expect(result.error).not.to.exist;
+
+      var modeler = result.modeler;
+      var elementRegistry = modeler.get('elementRegistry');
+      var modeling = modeler.get('modeling');
+
+      var startEvent = elementRegistry.get('StartEvent_2');
+      expect(startEvent).to.exist;
+
+      var label = startEvent.label;
+      expect(label).to.exist;
+      expect(label.businessObject.name).to.equal('Start');
+
+      modeling.updateLabel(startEvent, 'This is a much longer start event text');
+
+      modeling.resizeShape(label, { x: label.x, y: label.y, width: label.width, height: label.height - 20 }, 'e');
+
+      const updatedLabel = elementRegistry.get(label.id);
+      expect(updatedLabel.height).to.equal(40);
+    });
+
+  });
+
 
 });
 

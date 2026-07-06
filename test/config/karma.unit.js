@@ -11,9 +11,6 @@ var coverage = process.env.COVERAGE;
 // any of [ 'ChromeHeadless', 'Chrome', 'Firefox', 'Safari' ]
 var browsers = (process.env.TEST_BROWSERS || 'ChromeHeadless').split(',');
 
-// use puppeteer provided Chrome for testing
-process.env.CHROME_BIN = require('puppeteer').executablePath();
-
 var tmpDir = path.join(__dirname, 'tmp');
 
 fs.mkdirSync(tmpDir, { recursive: true });
@@ -28,14 +25,12 @@ var suite = coverage ? 'test/coverageBundle.js' : 'test/testBundle.js';
 
 
 module.exports = function(karma) {
-
   var config = {
 
     basePath,
 
     frameworks: [
       'mocha',
-      'sinon-chai',
       'webpack'
     ],
 
@@ -47,7 +42,7 @@ module.exports = function(karma) {
       [ suite ]: [ 'webpack', 'env' ]
     },
 
-    reporters: [ 'progress' ].concat(coverage ? 'coverage' : []),
+    reporters: [ 'tldr' ].concat(coverage ? 'coverage' : []),
 
     customLaunchers: {
       'FirefoxHeadless': {
@@ -80,6 +75,10 @@ module.exports = function(karma) {
         rules: [
           {
             test: require.resolve('../TestHelper.js'),
+            sideEffects: true
+          },
+          {
+            test: require.resolve('../globals.js'),
             sideEffects: true
           },
           {

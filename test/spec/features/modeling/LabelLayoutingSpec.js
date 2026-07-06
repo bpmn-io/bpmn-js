@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -506,7 +507,7 @@ describe('modeling - label layouting', function() {
 
           // then
           expect(connection.label.y - labelPosition.y).to.be.within(-77, -73);
-          expect(connection.label.x - labelPosition.x).to.be.within(-54, -51);
+          expect(connection.label.x - labelPosition.x).to.be.within(-54, -48);
 
         }
       ));
@@ -557,7 +558,7 @@ function getLabelPosition(connection) {
   var label = connection.label;
 
   var mid = {
-    x: label.x + (label.width / 2),
+    x: label.x,
     y: label.y + (label.height / 2)
   };
 

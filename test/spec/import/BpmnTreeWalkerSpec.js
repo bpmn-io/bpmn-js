@@ -1,6 +1,8 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import BpmnTreeWalker from 'lib/import/BpmnTreeWalker';
 
-import BpmnModdle from 'bpmn-moddle';
+import { BpmnModdle } from 'bpmn-moddle';
 
 import { find } from 'min-dash';
 

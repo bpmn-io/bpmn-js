@@ -6,6 +6,119 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: disallow `move` when dropped outside of canvas ([#2437](https://github.com/bpmn-io/bpmn-js/pull/2437), [#2210](https://github.com/bpmn-io/bpmn-js/issues/2210))
+* `CHORE`: derive label link offset from (circular) outline shape ([#2457](https://github.com/bpmn-io/bpmn-js/pull/2457))
+
+## 18.19.0
+
+* `FEAT`: use parents' entries keywords for search in popup menu ([#1053](https://github.com/bpmn-io/diagram-js/pull/1053))
+* `DEPS`: update to `diagram-js@15.18.0`
+
+## 18.18.0
+
+* `FEAT`: ship type declaration maps ([#2442](https://github.com/bpmn-io/bpmn-js/pull/2442))
+* `FEAT`: allow blocking canvas interactions ([bpmn-io/diagram-js#1032](https://github.com/bpmn-io/diagram-js/pull/1032))
+* `DEPS`: update to `diagram-js@15.17.0`
+
+## 18.17.1
+
+* `FIX`: correct popup menu closing on inside clicks ([bpmn-io/diagram-js#1045](https://github.com/bpmn-io/diagram-js/pull/1045))
+* `DEPS`: update to `diagram-js@15.15.1`
+
+## 18.17.0
+
+* `FEAT`: introduce multi-step navigation to popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: show search result number in popup menu ([bpmn-io/diagram-js#1040](https://github.com/bpmn-io/diagram-js/pull/1040))
+* `FEAT`: improve popup menu styling ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: improve popup menu assistive text and labels ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `FEAT`: do not cut of popup menu label and description tests ([bpmn-io/diagram-js#1041](https://github.com/bpmn-io/diagram-js/pull/1041))
+* `CHORE`: remove `businessObject.di` compatibility error ([#2429](https://github.com/bpmn-io/bpmn-js/pull/2429))
+* `DEPS`: update to `diagram-js@15.15.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.4.0`
+
+## 18.16.1
+
+* `FIX`: render data output with filled arrow ([#2425](https://github.com/bpmn-io/bpmn-js/pull/2425))
+
+## 18.16.0
+
+* `FEAT`: make external labels resizable ([#2414](https://github.com/bpmn-io/bpmn-js/pull/2414))
+
+## 18.15.0
+
+* `FEAT`: show outline around lasso-selected elements ([#173](https://github.com/bpmn-io/bpmn-js/issues/173), [bpmn-io/diagram-js#1021](https://github.com/bpmn-io/diagram-js/pull/1021))
+* `FEAT`: improve text rendering performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
+* `FEAT`: improve diagram import performance ([bpmn-io/diagram-js#1026](https://github.com/bpmn-io/diagram-js/issues/1026), [bpmn-io/diagram-js#1027](https://github.com/bpmn-io/diagram-js/pull/1027))
+* `FEAT`: move enclosed artifacts with participants / sub-processes ([#1929](https://github.com/bpmn-io/bpmn-js/issues/1929), [#2419](https://github.com/bpmn-io/bpmn-js/issues/2419))
+* `FIX`: ignore broken `BPMNDI` when setting label colors ([#2418](https://github.com/bpmn-io/bpmn-js/pull/2418))
+* `DEPS`: update to `diagram-js@15.13.0`
+* `DEPS`: update to `min-dom@5.3.0`
+
+## 18.14.0
+
+* `FEAT`: prioritize full word matches in search ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `FEAT`: factor match density into search ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `CHORE`: prioritize later search matches slightly lower ([bpmn-io/diagram-js#1017](https://github.com/bpmn-io/diagram-js/pull/1017))
+* `DEPS`: update to `diagram-js@15.11.0`
+* `DEPS`: update to `ids@3.0.3`
+
+## 18.13.2
+
+* `FIX`: disable grouping in popup menu during search ([bpmn-io/diagram-js#1014](https://github.com/bpmn-io/diagram-js/pull/1014))
+* `FIX`: correct handling of annotations during sub-process collapse/expand, copy/paste, and remove actions ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388))
+* `FIX`: allow undo of pasted sub-process ([#2388](https://github.com/bpmn-io/bpmn-js/pull/2388), [#2269](https://github.com/bpmn-io/bpmn-js/issues/2269))
+* `DEPS`: update to `diagram-js@15.10.0`
+
+## 18.13.1
+
+* `FIX`: correct sequence flow layout for corner boundary events whose target is strictly axis-aligned ([#2270](https://github.com/bpmn-io/bpmn-js/issues/2270))
+
+## 18.13.0
+
+* `FEAT`: allow to create child elements from the context pad ([#2391](https://github.com/bpmn-io/bpmn-js/issues/2391))
+
+## 18.12.1
+
+* `FIX`: correctly replace non-interrupting event with an interrupting one ([#2313](https://github.com/bpmn-io/bpmn-js/issues/2313))
+
+## 18.12.0
+
+* `FEAT`: activate wheel zoom/scoll on `mouseover` ([#1008](https://github.com/bpmn-io/diagram-js/pull/1008))
+* `FEAT`: prevent keyboard movement for boundary events without host ([#2386](https://github.com/bpmn-io/bpmn-js/pull/2386))
+* `FIX`: prevent accidental creation of intermediate events during keyboard move ([#1803](https://github.com/bpmn-io/bpmn-js/issues/1803), [#1876](https://github.com/bpmn-io/bpmn-js/issues/1876))
+* `DEPS`: update to `diagram-js@15.9.0`
+
+## 18.11.0
+
+* `FEAT`: add `cut` action and keyboard shortcut ([bpmn-io/diagram-js#1006](https://github.com/bpmn-io/diagram-js/pull/1006))
+* `DEPS`: update to `diagram-js@15.7.0`
+* `DEPS`: update to `bpmn-moddle@10.0.0`
+* `DEPS`: update to `min-dash@5.0.0`
+* `DEPS`: update to `ids@3.0.0`
+* `DEPS`: update to `tiny-svg@4.1.4`
+* `DEPS`: update to `diagram-js-direct-editing@3.3.0`
+* `DEPS`: update to `min-dom@5.2.0`
+
+## 18.10.1
+
+* `DEPS`: update to `min-dash@4.2.3`
+* `DEPS`: update to `tiny-svg@3.1.3`
+
+## 18.10.0
+
+* `FEAT`: add ability to duplicate elements ([bpmn-io/diagram-js#998](https://github.com/bpmn-io/diagram-js/pull/998))
+* `DEPS`: update to `diagram-js@15.5.0`
+
+## 18.9.1
+
+* `FIX`: only draw links for currently selected elements ([#2365](https://github.com/bpmn-io/bpmn-js/pull/2365))
+
+## 18.9.0
+
+* `FEAT`: visually link external label with its target ([#2328](https://github.com/bpmn-io/bpmn-js/pull/2328))
+* `FEAT`: add support for labels to `OutlineProvider#getOutline`
+* `FIX`: ensure `BpmnRenderer#getShapePath` returns correct path for labels
+
 ## 18.8.0
 
 * `FEAT`: allow copying data object references and `isCollection` property ([#2348](https://github.com/bpmn-io/bpmn-js/pull/2348))
@@ -360,20 +473,20 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 14.1.3
 
-* `CHORE`: correctly output tag in https://github.com/bpmn-io/bpmn-js/pull/1982
+* `CHORE`: correctly output tag in [#1982](https://github.com/bpmn-io/bpmn-js/pull/1982)
 
 ## 14.1.2
 
-* `CHORE`: fix POST_RELEASE job in https://github.com/bpmn-io/bpmn-js/pull/1980
+* `CHORE`: fix POST_RELEASE job in [#1980](https://github.com/bpmn-io/bpmn-js/pull/1980)
 
 ## 14.1.1
 
-* `FIX`: asset path by @nikku in https://github.com/bpmn-io/bpmn-js/pull/1977
+* `FIX`: asset path by [__@nikku__](https://github.com/nikku) in [#1977](https://github.com/bpmn-io/bpmn-js/pull/1977)
 
 ## 14.1.0
 
-* `FEAT`: ensure lanes aren't resized when using space tool in https://github.com/bpmn-io/bpmn-js/pull/1972
-* `DOCS`: update translations for v14.0.0 by @bpmn-io-bot in https://github.com/bpmn-io/bpmn-js/pull/1948
+* `FEAT`: ensure lanes aren't resized when using space tool in [#1972](https://github.com/bpmn-io/bpmn-js/pull/1972)
+* `DOCS`: update translations for v14.0.0 by [__@bpmn-io-bot__](https://github.com/bpmn-io-bot) in [#1948](https://github.com/bpmn-io/bpmn-js/pull/1948)
 
 ## 14.0.0
 

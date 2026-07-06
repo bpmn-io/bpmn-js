@@ -1,4 +1,4 @@
-name: MERGE_MASTER_TO_DEVELOP
+name: MERGE_MAIN_TO_DEVELOP
 on:
   push:
     branches:
@@ -12,8 +12,10 @@ jobs:
 
     steps:
     - name: Checkout develop
-      uses: actions/checkout@v5
+      uses: actions/checkout@v7
       with:
+        token: ${{ secrets.BPMN_IO_TOKEN }}
+        persist-credentials: true
         ref: develop
         fetch-depth: 0
     - name: Merge main to develop and push
@@ -25,7 +27,7 @@ jobs:
 
     - name: Notify failure on Slack
       if: failure()
-      uses: slackapi/slack-github-action@v2
+      uses: slackapi/slack-github-action@v3
       with:
         method: chat.postMessage
         token: ${{ secrets.SLACK_BOT_TOKEN }}

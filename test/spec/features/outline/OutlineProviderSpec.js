@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -139,7 +140,7 @@ describe('features/outline - outline provider', function() {
 
       var DELTA = 3;
 
-      it('should update label according to label dimentions', inject(function(elementRegistry, selection, modeling) {
+      it('should update label according to label dimensions', inject(function(elementRegistry, selection, modeling) {
 
         // given
         var event = elementRegistry.get('Event');

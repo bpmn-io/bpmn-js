@@ -28,7 +28,7 @@
           <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
         </extensionElements>
       </dataInput>
-      <dataInput id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF" isCollection="true">
+      <dataInput id="DataInput_2_collection" isCollection="true">
         <extensionElements>
           <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
           <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
@@ -41,7 +41,7 @@
           <signavio:signavioLabel align="left" ref="text_name" valign="top" x="18.0" y="55.0"/>
         </extensionElements>
       </dataOutput>
-      <dataOutput id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510" isCollection="true">
+      <dataOutput id="DataOutput_2_collection" isCollection="true">
         <extensionElements>
           <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
           <signavio:signavioMetaData metaKey="userstory" metaValue=""/>
@@ -49,11 +49,11 @@
       </dataOutput>
       <inputSet id="sid-8c0a0c80-098c-4972-bac0-8cc303d82bfd">
         <dataInputRefs>DataInput_1</dataInputRefs>
-        <dataInputRefs>sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF</dataInputRefs>
+        <dataInputRefs>DataInput_2_collection</dataInputRefs>
       </inputSet>
       <outputSet id="sid-60cf6782-0fff-4304-882d-7d2b33336aed">
         <dataOutputRefs>DataOutput_1</dataOutputRefs>
-        <dataOutputRefs>sid-16646BD1-38D3-499A-95A6-42A75D8D2510</dataOutputRefs>
+        <dataOutputRefs>DataOutput_2_collection</dataOutputRefs>
       </outputSet>
     </ioSpecification>
     <dataObject id="sid-b71dc346-6ba3-481d-9ea6-03c3fe207b3f" name="Data Object"/>
@@ -97,7 +97,7 @@
         <targetRef>sid-b4a08214-9dd4-40ad-8f82-4620ee384231</targetRef>
       </dataInputAssociation>
       <dataInputAssociation id="DataInputAssociation_2">
-        <sourceRef>sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF</sourceRef>
+        <sourceRef>DataInput_2_collection</sourceRef>
       </dataInputAssociation>
       <dataOutputAssociation id="DataOutputAssociation_1">
         <extensionElements>
@@ -120,7 +120,7 @@
         <targetRef>DataObjectReference_1</targetRef>
       </dataOutputAssociation>
       <dataOutputAssociation id="DataOutputAssociation_5">
-        <targetRef>sid-16646BD1-38D3-499A-95A6-42A75D8D2510</targetRef>
+        <targetRef>DataOutput_2_collection</targetRef>
       </dataOutputAssociation>
     </task>
     <task id="Task_2">
@@ -217,13 +217,13 @@
       <bpmndi:BPMNShape id="DataInput_1_gui" bpmnElement="DataInput_1">
         <omgdc:Bounds height="50.0" width="36.0" x="355.0" y="84.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF_gui" bpmnElement="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF">
+      <bpmndi:BPMNShape id="DataInput_2_collection_gui" bpmnElement="DataInput_2_collection">
         <omgdc:Bounds height="97.0" width="88.0" x="420.0" y="382.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="DataOutput_1_gui" bpmnElement="DataOutput_1">
         <omgdc:Bounds height="50.0" width="36.0" x="480.0" y="84.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-16646BD1-38D3-499A-95A6-42A75D8D2510_gui" bpmnElement="sid-16646BD1-38D3-499A-95A6-42A75D8D2510">
+      <bpmndi:BPMNShape id="DataOutput_2_collection_gui" bpmnElement="DataOutput_2_collection">
         <omgdc:Bounds height="97.0" width="88.0" x="624.0" y="382.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="DataInputAssociation_3_gui" bpmnElement="DataInputAssociation_3">
@@ -248,12 +248,12 @@
         <omgdi:waypoint xsi:type="omgdc:Point" x="471.0" y="296.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="432.0" y="269.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation_2" bpmnElement="DataOutputAssociation_5" sourceElement="Task_1_gui" targetElement="sid-16646BD1-38D3-499A-95A6-42A75D8D2510_gui">
+      <bpmndi:BPMNEdge id="BPMNEdge_DataOutputAssociation_2" bpmnElement="DataOutputAssociation_5" sourceElement="Task_1_gui" targetElement="DataOutput_2_collection_gui">
         <omgdi:waypoint xsi:type="omgdc:Point" x="572.0" y="296.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="581.0" y="361.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="624.0" y="395.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation_1" bpmnElement="DataInputAssociation_2" sourceElement="sid-ADF95ACC-DEA6-4F6F-AF91-8F5BABB299AF_gui" targetElement="Task_1_gui">
+      <bpmndi:BPMNEdge id="BPMNEdge_DataInputAssociation_1" bpmnElement="DataInputAssociation_2" sourceElement="DataInput_2_collection_gui" targetElement="Task_1_gui">
         <omgdi:waypoint xsi:type="omgdc:Point" x="508.0" y="397.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="557.0" y="360.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="563.0" y="296.0"/>

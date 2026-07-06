@@ -35,20 +35,6 @@ try {
 Checkout our [examples](https://github.com/bpmn-io/bpmn-js-examples) for many
 more supported usage scenarios.
 
-### Dynamic Attach/Detach
-
-You may attach or detach the viewer dynamically to any element on the page, too:
-
-```javascript
-const viewer = new BpmnJS();
-
-// attach it to some element
-viewer.attachTo('#container');
-
-// detach the panel
-viewer.detach();
-```
-
 ## Resources
 
 * [Demo](http://demo.bpmn.io)
@@ -88,7 +74,7 @@ bpmn-js builds on top of a few powerful tools:
 * [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
 * [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
 
-It is an extensible toolkit, complemented by many [additional utilities](https://github.com/bpmn-io/awesome-bpmn-io). 
+It is an extensible toolkit, complemented by many [additional utilities](https://github.com/bpmn-io/awesome-bpmn-io).
 
 ## License
 

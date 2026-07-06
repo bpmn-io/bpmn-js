@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -24,6 +25,7 @@ describe('features/modeling - Toggle Collapse Connection Behavior', function() {
 
       // given
       var subProcess = elementRegistry.get('Subprocess_1'),
+          task = elementRegistry.get('Task_1'),
           commentConnection = elementRegistry.get('Association_1'),
           incommingDataConnection = elementRegistry.get('DataAssociation_1'),
           outgoingDataConnection = elementRegistry.get('DataAssociation_2'),
@@ -34,7 +36,7 @@ describe('features/modeling - Toggle Collapse Connection Behavior', function() {
       modeling.toggleCollapse(subProcess);
 
       // then
-      expect(commentConnection.source).to.equal(subProcess);
+      expect(commentConnection.source).to.equal(task);
       expect(incommingDataConnection.target).to.equal(subProcess);
       expect(outgoingDataConnection.source).to.equal(subProcess);
       expect(incommingMessageFlow.target).to.equal(subProcess);
@@ -71,6 +73,7 @@ describe('features/modeling - Toggle Collapse Connection Behavior', function() {
 
       // given
       var subProcess = elementRegistry.get('Subprocess_1'),
+          task = elementRegistry.get('Task_1'),
           commentConnection = elementRegistry.get('Association_1'),
           incommingDataConnection = elementRegistry.get('DataAssociation_1'),
           outgoingDataConnection = elementRegistry.get('DataAssociation_2'),
@@ -84,7 +87,7 @@ describe('features/modeling - Toggle Collapse Connection Behavior', function() {
       commandStack.redo();
 
       // then
-      expect(commentConnection.source).to.equal(subProcess);
+      expect(commentConnection.source).to.equal(task);
       expect(incommingDataConnection.target).to.equal(subProcess);
       expect(outgoingDataConnection.source).to.equal(subProcess);
       expect(incommingMessageFlow.target).to.equal(subProcess);

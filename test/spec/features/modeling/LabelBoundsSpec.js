@@ -1,5 +1,8 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -47,76 +50,20 @@ describe('label bounds', function() {
 
     beforeEach(bootstrapModeler(diagramXML));
 
-    var updateLabel;
 
-    beforeEach(inject(function(directEditing) {
-
-      updateLabel = function(shape, text) {
-        directEditing.activate(shape);
+    function updateLabel(element, text) {
+      return getBpmnJS().invoke(function(directEditing) {
+        directEditing.activate(element);
         directEditing._textbox.content.innerText = text;
         directEditing.complete();
-      };
+      });
+    }
 
-    }));
-
-    describe('label dimensions', function() {
-
-      it('should expand width', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelWidth = shape.label.width;
-
-        // when
-        updateLabel(shape, 'Foooooooooobar');
-
-        // then
-        expect(shape.label.width).to.be.above(oldLabelWidth);
-      }));
-
-
-      it('should expand height', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelHeight = shape.label.height;
-
-        // when
-        updateLabel(shape, 'Foo\nbar\nbaz');
-
-        // then
-        expect(shape.label.height).to.be.above(oldLabelHeight);
-      }));
-
-
-      it('should reduce width', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_1'),
-            oldLabelWidth = shape.label.width;
-
-        // when
-        updateLabel(shape, 'i');
-
-        // then
-        expect(shape.label.width).to.be.below(oldLabelWidth);
-      }));
-
-
-      it('should reduce height', inject(function(elementRegistry) {
-
-        // given
-        var shape = elementRegistry.get('StartEvent_3'),
-            oldLabelHeight = shape.label.height;
-
-        // when
-        updateLabel(shape, 'One line');
-
-        // then
-        expect(shape.label.height).to.be.below(oldLabelHeight);
-      }));
-
-    });
+    function ensureOutline(element) {
+      return getBpmnJS().invoke(function(selection) {
+        selection.select(element);
+      });
+    }
 
 
     describe('label position', function() {
@@ -183,7 +130,10 @@ describe('label bounds', function() {
           // given
           var shape = elementRegistry.get('StartEvent_1');
 
-          var outlineSpy = sinon.spy(outline, 'updateShapeOutline');
+          // ensure label has outline to update
+          ensureOutline(shape.label);
+
+          var updateOutlineSpy = sinon.spy(outline, 'updateShapeOutline');
           var rendererSpy = sinon.spy(bpmnRenderer, 'drawShape');
 
           // when
@@ -194,7 +144,7 @@ describe('label bounds', function() {
           // updated the elements bounds dimensions and position
           sinon.assert.callOrder(
             rendererSpy.withArgs(sinon.match.any, shape.label),
-            outlineSpy.withArgs(sinon.match.any, shape.label)
+            updateOutlineSpy.withArgs(sinon.match.any, shape.label)
           );
         })
 

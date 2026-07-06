@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 var getAttachment = require('lib/features/modeling/behavior/util/LineAttachmentUtil').getAttachment;
 
 var EPSILON = 0.1;

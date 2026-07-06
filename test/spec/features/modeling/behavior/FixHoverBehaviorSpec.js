@@ -1,3 +1,5 @@
+import { expect } from 'chai';
+import sinon from 'sinon';
 import {
   bootstrapModeler,
   inject
@@ -196,6 +198,36 @@ describe('features/modeling/behavior - fix hover', function() {
         }
       ));
 
+
+      it('should not move when dropped outside the canvas', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent');
+
+          var label = startEvent.label;
+
+          var position = { x: label.x, y: label.y };
+
+          move.start(canvasEvent({ x: 175, y: 150 }), label, true);
+
+          // when
+          dragging.hover({ element: startEvent, gfx: elementRegistry.getGraphics(startEvent) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          // dragging outside the canvas yields a `null` hover (#2210)
+          dragging.out();
+
+          dragging.move(canvasEvent({ x: 400, y: 400 }));
+
+          dragging.end();
+
+          // then
+          expect({ x: label.x, y: label.y }).to.eql(position);
+        }
+      ));
+
     });
 
   });
@@ -264,6 +296,34 @@ describe('features/modeling/behavior - fix hover', function() {
         }
       ));
 
+
+      it('should not move when dropped outside the canvas', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          var group = elementRegistry.get('Group');
+
+          var position = { x: group.x, y: group.y };
+
+          move.start(canvasEvent({ x: 175, y: 150 }), group, true);
+
+          // when
+          dragging.hover({ element: group, gfx: elementRegistry.getGraphics(group) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          // dragging outside the canvas yields a `null` hover (#2210)
+          dragging.out();
+
+          dragging.move(canvasEvent({ x: 400, y: 400 }));
+
+          dragging.end();
+
+          // then
+          expect({ x: group.x, y: group.y }).to.eql(position);
+        }
+      ));
+
     });
 
   });
@@ -329,6 +389,34 @@ describe('features/modeling/behavior - fix hover', function() {
 
           // then
           expect(annotation.parent).to.equal(canvas.getRootElement());
+        }
+      ));
+
+
+      it('should not move when dropped outside the canvas', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          var annotation = elementRegistry.get('TextAnnotation_1');
+
+          var position = { x: annotation.x, y: annotation.y };
+
+          move.start(canvasEvent({ x: 175, y: 150 }), annotation, true);
+
+          // when
+          dragging.hover({ element: annotation, gfx: elementRegistry.getGraphics(annotation) });
+
+          dragging.move(canvasEvent({ x: 240, y: 220 }));
+
+          // dragging outside the canvas yields a `null` hover (#2210)
+          dragging.out();
+
+          dragging.move(canvasEvent({ x: 400, y: 400 }));
+
+          dragging.end();
+
+          // then
+          expect({ x: annotation.x, y: annotation.y }).to.eql(position);
         }
       ));
 

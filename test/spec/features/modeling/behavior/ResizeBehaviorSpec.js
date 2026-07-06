@@ -1,3 +1,4 @@
+import { expect } from 'chai';
 import {
   bootstrapModeler,
   inject
@@ -480,15 +481,14 @@ describe('features/modeling - resize behavior', function() {
       var textAnnotation = elementRegistry.get('TextAnnotation');
 
       // when
-      resize.activate(canvasEvent({ x: 0, y: 0 }), textAnnotation, 'se');
+      resize.activate(canvasEvent({ x: 0, y: 0 }), textAnnotation, 'e');
 
-      dragging.move(canvasEvent({ x: -400, y: -400 }));
+      dragging.move(canvasEvent({ x: -400, y: 0 }));
 
       dragging.end();
 
       // then
-      expect(textAnnotation.width).to.equal(50);
-      expect(textAnnotation.height).to.equal(30);
+      expect(textAnnotation.width).to.equal(100);
     }));
 
   });
