@@ -97,6 +97,33 @@ describe('benchmark/huge-diagram', function() {
       });
 
 
+      it('space tool preview', function() {
+        const spaceTool = modeler.get('spaceTool');
+        const dragging = modeler.get('dragging');
+        const canvas = modeler.get('canvas');
+
+        const root = canvas.getRootElement();
+
+        dragging.setOptions({ manual: true });
+
+        const ms = time(() => {
+          spaceTool.activateMakeSpace(canvasEvent(modeler, { x: 200, y: 200 }));
+
+          dragging.hover({
+            element: root,
+            gfx: canvas.getGraphics(root)
+          });
+
+          // triggers space tool init (selfAndAllChildren + adjustment calculation)
+          dragging.move(canvasEvent(modeler, { x: 260, y: 200 }));
+        });
+
+        dragging.cancel();
+
+        record('space preview', size, stats, ms);
+      });
+
+
       after(function() {
         modeler && modeler.destroy();
         container && container.remove();
