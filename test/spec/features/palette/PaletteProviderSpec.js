@@ -46,7 +46,7 @@ describe('features/palette', function() {
     var entries = domQueryAll('.entry', paletteElement);
 
     // then
-    expect(entries.length).to.equal(14);
+    expect(entries.length).to.equal(15);
   }));
 
 
@@ -89,6 +89,22 @@ describe('features/palette', function() {
 
       expect(selected).to.have.length(1);
       expect(is(selected[0], 'bpmn:SubProcess')).to.be.true;
+    }));
+
+
+    it('should create collapsed event sub process', inject(function(dragging) {
+
+      // when
+      triggerPaletteEntry('create.event-subprocess-collapsed');
+
+      // then
+      var context = dragging.context(),
+          elements = context.data.elements;
+
+      expect(elements).to.have.length(1);
+      expect(is(elements[0], 'bpmn:SubProcess')).to.be.true;
+      expect(elements[0].businessObject.triggeredByEvent).to.be.true;
+      expect(elements[0].collapsed).to.be.true;
     }));
 
   });
