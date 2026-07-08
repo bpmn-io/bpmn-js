@@ -6,6 +6,12 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: improve aural interface / accessibility of popup menu ([bpmn-io/diagram-js#1059](https://github.com/bpmn-io/diagram-js/pull/1059), [bpmn-io/diagram-js#735](https://github.com/bpmn-io/diagram-js/issues/735))
+* `FEAT`: allow `Canvas#findRoot` to find shared root for multiple elements ([bpmn-io/diagram-js#1075](https://github.com/bpmn-io/diagram-js/pull/1075))
+* `FEAT`: support scrolling to multiple elements via `Canvas#scrollToElement` ([bpmn-io/diagram-js#1075](https://github.com/bpmn-io/diagram-js/pull/1075))
+* `FIX`: improve mouse/keyboard interaction in popup menu ([bpmn-io/diagram-js#1060](https://github.com/bpmn-io/diagram-js/pull/1060))
+* `DEPS`: update to `diagram-js@15.20.0`
+
 ## 18.20.0
 
 * `FEAT`: various performance improvements in many parts of the code base
