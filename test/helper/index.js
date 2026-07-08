@@ -258,11 +258,34 @@ export function createViewer(container, viewerInstance, xml, diagramId) {
 
   setBpmnJS(viewer);
 
+  observeContainerResize(viewer);
+
   return viewer.importXML(xml, diagramId).then(function(result) {
     return { warnings: result.warnings, viewer: viewer };
   }).catch(function(err) {
     return { error: err, viewer: viewer, warnings: err.warnings };
   });
+}
+
+/**
+ * Notify the instance of container size changes in single-start mode.
+ *
+ * Canvas#resized must be called by the embedding application when the
+ * container size changes; observe the container to simulate that.
+ *
+ * @param {object} instance viewer or modeler instance
+ */
+export function observeContainerResize(instance) {
+
+  if (!(window.__env__ && window.__env__.SINGLE_START)) {
+    return;
+  }
+
+  var canvas = instance.get('canvas');
+
+  new ResizeObserver(function() {
+    canvas.resized();
+  }).observe(canvas.getContainer());
 }
 
 function logConfigured(type, force) {
