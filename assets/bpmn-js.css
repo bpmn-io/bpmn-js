@@ -146,15 +146,42 @@
 
 .sticky-lane-label {
   position: absolute;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   pointer-events: none;
   white-space: nowrap;
-  /*transform: rotate(270deg);*/
+  border-style: solid;
+  border-width: thin;
+  border-block-color: black;
+  overflow-x: visible;
+  overflow-y: hidden;
+}
+
+.sticky-lane-label-text {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  text-align: center;
+  padding: 0;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  font-family: var(--bjs-font-family);
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 1.2;
 }
 
 .hidden{
   display: none;
 }
-
-
