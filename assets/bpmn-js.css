@@ -160,6 +160,10 @@
   border-block-color: black;
 }
 
+.djs-overlay-sticky-lane-label {
+  z-index: 10;
+}
+
 .sticky-lane-label-text {
   display: block;
   width: 100%;
