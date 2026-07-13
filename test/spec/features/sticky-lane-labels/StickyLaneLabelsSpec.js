@@ -132,6 +132,24 @@ describe('features/sticky-lane-labels', function() {
     assertNoRightJumpWhileWalkingLeftFromRightEdge(canvas, searchRoot, lane, LANE_ID, 'lane');
   }));
 
+
+  it('should move participant and lane overlays together while panning', inject(function(canvas) {
+    var searchRoot = getSearchRoot(canvas);
+
+    canvas.zoom(2, { x: 0, y: 0 });
+
+    assertOverlaysMoveTogether(canvas, searchRoot, PARTICIPANT_ID, LANE_ID);
+  }));
+
+
+  it('should keep first overlay visible when second overlay appears', inject(function(canvas) {
+    var searchRoot = getSearchRoot(canvas);
+
+    canvas.zoom(2, { x: 0, y: 0 });
+
+    assertFirstOverlayStaysVisibleWhenSecondAppears(canvas, searchRoot, PARTICIPANT_ID, LANE_ID);
+  }));
+
 });
 
 
@@ -650,4 +668,116 @@ function getViewportBounds(searchRoot) {
   var viewport = searchRoot.querySelector('.viewport');
 
   return viewport.getBoundingClientRect();
+}
+
+
+function getOverlayTranslateX(overlay) {
+  var transformMatrix = new DOMMatrix(window.getComputedStyle(overlay).transform);
+
+  return transformMatrix.m41 || 0;
+}
+
+
+function assertOverlaysMoveTogether(canvas, searchRoot, participantId, laneId) {
+  var participantOverlay = getOverlay(searchRoot, participantId);
+  var laneOverlay = getOverlay(searchRoot, laneId);
+  var participantLabel = participantOverlay.querySelector('.sticky-lane-label');
+  var laneLabel = laneOverlay.querySelector('.sticky-lane-label');
+  var participant = getTargetElement(searchRoot, participantId);
+  var direction = getDirectionDecreasingXOffset(canvas, searchRoot, participant);
+  var totalPanX = 0;
+  var bothVisible = false;
+
+  expect(participantOverlay, 'participant overlay should exist').to.exist;
+  expect(laneOverlay, 'lane overlay should exist').to.exist;
+
+  for (var i = 0; i < PAN_ITERATIONS; i++) {
+    if (!participantLabel.classList.contains('hidden') && !laneLabel.classList.contains('hidden')) {
+      bothVisible = true;
+      break;
+    }
+
+    canvas.scroll({ dx: direction * STEP_RIGHT_PX, dy: 0 });
+    totalPanX += direction * STEP_RIGHT_PX;
+  }
+
+  expect(bothVisible, 'participant and lane overlays should become visible together').to.be.true;
+
+  var previousParticipantTranslateX = getOverlayTranslateX(participantOverlay);
+  var previousLaneTranslateX = getOverlayTranslateX(laneOverlay);
+  var comparedSteps = 0;
+
+  for (var j = 0; j < EDGE_BOUNCE_STEPS; j++) {
+    canvas.scroll({ dx: direction * STEP_RIGHT_PX, dy: 0 });
+    totalPanX += direction * STEP_RIGHT_PX;
+
+    if (participantLabel.classList.contains('hidden') || laneLabel.classList.contains('hidden')) {
+      break;
+    }
+
+    var participantTranslateX = getOverlayTranslateX(participantOverlay);
+    var laneTranslateX = getOverlayTranslateX(laneOverlay);
+    var participantDelta = participantTranslateX - previousParticipantTranslateX;
+    var laneDelta = laneTranslateX - previousLaneTranslateX;
+
+    expect(
+      Math.abs(participantDelta - laneDelta),
+      'participant and lane overlays should move by same delta'
+    ).to.be.at.most(EDGE_DELTA);
+
+    previousParticipantTranslateX = participantTranslateX;
+    previousLaneTranslateX = laneTranslateX;
+    comparedSteps++;
+  }
+
+  canvas.scroll({ dx: -totalPanX, dy: 0 });
+
+  expect(comparedSteps, 'should compare at least one shared movement step').to.be.greaterThan(0);
+}
+
+
+function assertFirstOverlayStaysVisibleWhenSecondAppears(canvas, searchRoot, firstId, secondId) {
+  var firstOverlay = getOverlay(searchRoot, firstId);
+  var secondOverlay = getOverlay(searchRoot, secondId);
+  var firstLabel = firstOverlay.querySelector('.sticky-lane-label');
+  var secondLabel = secondOverlay.querySelector('.sticky-lane-label');
+  var firstElement = getTargetElement(searchRoot, firstId);
+  var direction = getDirectionDecreasingXOffset(canvas, searchRoot, firstElement);
+  var totalPanX = 0;
+  var firstSeenVisible = false;
+  var secondAppeared = false;
+  var comparedSteps = 0;
+
+  for (var i = 0; i < RIGHT_WALK_ITERATIONS; i++) {
+    canvas.scroll({ dx: direction * STEP_RIGHT_PX, dy: 0 });
+    totalPanX += direction * STEP_RIGHT_PX;
+
+    var firstVisible = !firstLabel.classList.contains('hidden');
+    var secondVisible = !secondLabel.classList.contains('hidden');
+
+    if (firstVisible) {
+      firstSeenVisible = true;
+    }
+
+    if (!secondAppeared && secondVisible) {
+      secondAppeared = true;
+    }
+
+    if (!secondAppeared) {
+      continue;
+    }
+
+    expect(firstVisible, 'first overlay should remain visible while second overlay is visible').to.be.true;
+    comparedSteps++;
+
+    if (comparedSteps >= EDGE_BOUNCE_STEPS) {
+      break;
+    }
+  }
+
+  canvas.scroll({ dx: -totalPanX, dy: 0 });
+
+  expect(firstSeenVisible, 'first overlay should become visible').to.be.true;
+  expect(secondAppeared, 'second overlay should appear').to.be.true;
+  expect(comparedSteps, 'should compare at least one step after second appears').to.be.greaterThan(0);
 }
