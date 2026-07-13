@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: restore canvas focus in next render cycle ([bpmn-io/diagram-js#1081](https://github.com/bpmn-io/diagram-js/pull/1081))
+* `FEAT`: use auto width with max value of 300px for popup menu ([bpmn-io/diagram-js#1078](https://github.com/bpmn-io/diagram-js/pull/1078))
+* `DEPS`: update to `min-dash@5.1.0`
+* `DEPS`: update to `diagram-js@15.22.0`
+
 ## 18.21.0
 
 * `FEAT`: improve aural interface / accessibility of popup menu ([bpmn-io/diagram-js#1059](https://github.com/bpmn-io/diagram-js/pull/1059), [bpmn-io/diagram-js#735](https://github.com/bpmn-io/diagram-js/issues/735))
