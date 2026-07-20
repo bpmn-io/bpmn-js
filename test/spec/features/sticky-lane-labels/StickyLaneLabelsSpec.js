@@ -8,7 +8,10 @@ import {
 var diagramXML = require('../../../fixtures/bpmn/draw/pools.bpmn');
 
 var PARTICIPANT_ID = 'sid-55BF12B8-A470-4AC8-BA67-9CD9635C0237';
+var PARTICIPANT_WITH_LANES_ID = 'sid-B6042939-0D7C-4AF0-BAFF-9C4E6077762C';
+var COLLAPSED_POOL_ID = 'sid-466F4E40-A5E9-4F4C-B93A-9CE8E398FAEF';
 var LANE_ID = 'sid-0573A65C-9800-42E4-86E0-9DB1CF5027E5';
+var SUBLANE_ID = 'sid-54427248-3EE5-4B6B-B580-794CE6ABC2CD';
 
 describe('features/sticky-lane-labels', function() {
 
@@ -129,6 +132,30 @@ describe('features/sticky-lane-labels', function() {
   }));
 
 
+  it('should keep nested lane indentation stable across zoom changes', inject(function(canvas) {
+
+    // given
+    var container = canvas.getContainer();
+    var parentLaneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+    var parentLaneOverlay = parentLaneLabel.parentNode;
+    var sublaneOverlay = sublaneLabel.parentNode;
+    var initialGap = parseFloat(sublaneOverlay.style.left) - parseFloat(parentLaneOverlay.style.left);
+
+    // when
+    canvas.zoom(2);
+
+    // then
+    expect(parseFloat(sublaneOverlay.style.left) - parseFloat(parentLaneOverlay.style.left)).to.be.closeTo(initialGap, 1);
+
+    // when
+    canvas.zoom(0.5);
+
+    // then
+    expect(parseFloat(sublaneOverlay.style.left) - parseFloat(parentLaneOverlay.style.left)).to.be.closeTo(initialGap, 1);
+  }));
+
+
   it('should keep participant label inside with very deep zoom out and in', inject(function(canvas) {
 
     // given
@@ -197,6 +224,129 @@ describe('features/sticky-lane-labels', function() {
     // then
     expect(participantLabel.classList.contains('hidden')).to.be.false;
     expect(participantLabel.getBoundingClientRect().left).to.be.below(rightEdgeLeft);
+  }));
+
+  it('should keep nested overlays separated when coming back from right', inject(function(canvas) {
+
+    // given
+    var container = canvas.getContainer();
+    var parentLaneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+    var rightStep = 120;
+    var leftStep = -120;
+    var i;
+
+    for (i = 0; i < 20; i++) {
+      canvas.scroll({ dx: rightStep, dy: 0 });
+
+      if (parentLaneLabel.classList.contains('hidden') && sublaneLabel.classList.contains('hidden')) {
+        break;
+      }
+    }
+
+    expect(parentLaneLabel.classList.contains('hidden')).to.be.true;
+    expect(sublaneLabel.classList.contains('hidden')).to.be.true;
+
+    // when
+    for (i = 0; i < 15; i++) {
+      canvas.scroll({ dx: leftStep, dy: 0 });
+
+      // then - once both overlays are visible, they must not overlap
+      if (!parentLaneLabel.classList.contains('hidden') && !sublaneLabel.classList.contains('hidden')) {
+        expectNoOverlap(parentLaneLabel.parentNode, sublaneLabel.parentNode);
+      }
+    }
+  }));
+
+
+  it('should keep hierarchy overlays separated when appearing at max zoom out', inject(function(canvas) {
+
+    // given
+    var maxZoomOut = canvas.zoom(0.1);
+    var container = canvas.getContainer();
+    var containerBounds = container.getBoundingClientRect();
+    var laneBounds = getShape(container, LANE_ID).getBoundingClientRect();
+    var scrollToStart = containerBounds.left - laneBounds.left;
+    var stepRight = -15;
+    var laneWidth = getShape(container, LANE_ID).getBoundingClientRect().width;
+    var rightSteps = Math.ceil((laneWidth + containerBounds.width) / Math.abs(stepRight)) + 80;
+    var participantLabel = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var collapsedPoolLabel = getStickyLabel(container, COLLAPSED_POOL_ID);
+    var laneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+    var hierarchyVisibleWithoutCollapsedPool = false;
+
+    canvas.scroll({ dx: scrollToStart, dy: 0 });
+
+    expect(maxZoomOut).to.equal(0.1);
+
+    // when - walk right in fine-grained steps until hierarchy overlays are visible
+    // while collapsed pool overlay is not visible anymore
+    for (var i = 0; i < rightSteps; i++) {
+      canvas.scroll({ dx: stepRight, dy: 0 });
+
+      if (!participantLabel.classList.contains('hidden') &&
+        !laneLabel.classList.contains('hidden') &&
+        !sublaneLabel.classList.contains('hidden') &&
+        collapsedPoolLabel.classList.contains('hidden')) {
+
+        hierarchyVisibleWithoutCollapsedPool = true;
+
+        // then - at this point visible overlays keep pool -> lane -> sublane hierarchy order
+        expectHierarchyOrder(participantLabel.parentNode, laneLabel.parentNode, sublaneLabel.parentNode);
+        expect(collapsedPoolLabel.classList.contains('hidden')).to.be.true;
+
+        break;
+      }
+    }
+
+    expect(hierarchyVisibleWithoutCollapsedPool).to.be.true;
+  }));
+
+
+  it('should keep hierarchy overlays separated when appearing at zoom 0.6380360126495361', inject(function(canvas) {
+
+    // given
+    var zoomLevel = 0.6380360126495361;
+    var appliedZoom = canvas.zoom(zoomLevel);
+    var container = canvas.getContainer();
+    var containerBounds = container.getBoundingClientRect();
+    var laneBounds = getShape(container, LANE_ID).getBoundingClientRect();
+    var scrollToStart = containerBounds.left - laneBounds.left;
+    var stepRight = -15;
+    var laneWidth = getShape(container, LANE_ID).getBoundingClientRect().width;
+    var rightSteps = Math.ceil((laneWidth + containerBounds.width) / Math.abs(stepRight)) + 80;
+    var participantLabel = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var collapsedPoolLabel = getStickyLabel(container, COLLAPSED_POOL_ID);
+    var laneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+    var hierarchyVisibleWithoutCollapsedPool = false;
+
+    canvas.scroll({ dx: scrollToStart, dy: 0 });
+
+    expect(appliedZoom).to.be.closeTo(zoomLevel, 0.001);
+
+    // when - walk right in fine-grained steps until hierarchy overlays are visible
+    // while collapsed pool overlay is not visible anymore
+    for (var i = 0; i < rightSteps; i++) {
+      canvas.scroll({ dx: stepRight, dy: 0 });
+
+      if (!participantLabel.classList.contains('hidden') &&
+        !laneLabel.classList.contains('hidden') &&
+        !sublaneLabel.classList.contains('hidden') &&
+        collapsedPoolLabel.classList.contains('hidden')) {
+
+        hierarchyVisibleWithoutCollapsedPool = true;
+
+        // then - at this point visible overlays keep pool -> lane -> sublane hierarchy order
+        expectHierarchyOrder(participantLabel.parentNode, laneLabel.parentNode, sublaneLabel.parentNode);
+        expect(collapsedPoolLabel.classList.contains('hidden')).to.be.true;
+
+        break;
+      }
+    }
+
+    expect(hierarchyVisibleWithoutCollapsedPool).to.be.true;
   }));
 
 
@@ -282,4 +432,18 @@ function expectInsideBounds(inner, outer) {
   expect(inner.top).to.be.at.least(outer.top - 1);
   expect(inner.right).to.be.at.most(outer.right + 1);
   expect(inner.bottom).to.be.at.most(outer.bottom + 1);
+}
+
+
+function expectNoOverlap(leftOverlay, rightOverlay) {
+  expect(rightOverlay.getBoundingClientRect().left).to.be.at.least(
+    leftOverlay.getBoundingClientRect().right - 1
+  );
+}
+
+
+function expectHierarchyOrder(participantOverlay, laneOverlay, sublaneOverlay) {
+  expectNoOverlap(participantOverlay, laneOverlay);
+  expectNoOverlap(laneOverlay, sublaneOverlay);
+  expectNoOverlap(participantOverlay, sublaneOverlay);
 }
