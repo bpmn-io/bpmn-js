@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+             id="Definitions_1"
+             targetNamespace="http://bpmn.io/schema/bpmn">
+  <category id="Category_1">
+    <categoryValue id="CategoryValue_1" value="Group 1" />
+  </category>
+  <process id="Process_1" isExecutable="false">
+    <task id="Task_1" categoryValueRef="CategoryValue_1" />
+  </process>
+  <collaboration id="Collaboration_1">
+    <participant id="Participant_1" processRef="Process_1" />
+    <group id="Group_1" categoryValueRef="CategoryValue_1" />
+  </collaboration>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1">
+        <dc:Bounds x="100" y="100" width="500" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <dc:Bounds x="150" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Group_1_di" bpmnElement="Group_1">
+        <dc:Bounds x="125" y="125" width="150" height="125" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
