@@ -143,3 +143,34 @@
   height: 20px;
   width: 20px;
 }
+
+.sticky-lane-label {
+  position: absolute;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  border-style: solid;
+  border-width: thin;
+  border-block-color: black;
+}
+
+.djs-overlay-sticky-lane-label {
+  z-index: 10;
+}
+
+.sticky-lane-label-text {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hidden{
+  display: none;
+}
