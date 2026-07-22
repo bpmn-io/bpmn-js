@@ -405,6 +405,163 @@ describe('features/sticky-lane-labels', function() {
     expect(participantLabel.classList.contains('hidden')).to.be.false;
     expect(laneLabel.classList.contains('hidden')).to.be.false;
   }));
+
+
+  it('should update overlay positions after moving a participant', inject(function(canvas, modeling, elementRegistry) {
+
+    // given
+    canvas.scroll({ dx: -600, dy: 0 });
+    var container = canvas.getContainer();
+    var participant = elementRegistry.get(PARTICIPANT_ID);
+    var participantLabel = getStickyLabel(container, PARTICIPANT_ID);
+
+    expect(participantLabel.classList.contains('hidden')).to.be.false;
+    var labelBoundsBefore = participantLabel.getBoundingClientRect();
+
+    // when
+    modeling.moveElements([ participant ], { x: 200, y: 0 });
+
+    // then
+    var participantLabelAfter = getStickyLabel(container, PARTICIPANT_ID);
+    var participantBounds = getShape(container, PARTICIPANT_ID).getBoundingClientRect();
+
+    expect(participantLabelAfter.classList.contains('hidden')).to.be.false;
+    expectInsideBounds(participantLabelAfter.getBoundingClientRect(), participantBounds);
+  }));
+
+
+  it('should update overlay positions after moving a lane', inject(function(canvas, modeling, elementRegistry) {
+
+    // given
+    canvas.scroll({ dx: -800, dy: 0 });
+    var container = canvas.getContainer();
+    var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
+    var laneLabel = getStickyLabel(container, LANE_ID);
+
+    expect(laneLabel.classList.contains('hidden')).to.be.false;
+    var laneBoundsBefore = getShape(container, LANE_ID).getBoundingClientRect();
+
+    // when
+    modeling.moveElements([ participantWithLanes ], { x: 100, y: 0 });
+
+    // then
+    var laneLabelAfter = getStickyLabel(container, LANE_ID);
+    var laneBoundsAfter = getShape(container, LANE_ID).getBoundingClientRect();
+
+    expect(laneLabelAfter.classList.contains('hidden')).to.be.false;
+    expectInsideBounds(laneLabelAfter.getBoundingClientRect(), laneBoundsAfter);
+  }));
+
+
+  it('should update overlay positions after moving a participant when zoomed in', inject(function(canvas, modeling, elementRegistry) {
+
+    // given
+    canvas.zoom(2);
+    canvas.scroll({ dx: -400, dy: 0 });
+    var container = canvas.getContainer();
+    var participant = elementRegistry.get(PARTICIPANT_ID);
+    var participantLabel = getStickyLabel(container, PARTICIPANT_ID);
+
+    expect(participantLabel.classList.contains('hidden')).to.be.false;
+    var labelLeftBefore = participantLabel.getBoundingClientRect().left;
+
+    // when
+    modeling.moveElements([ participant ], { x: 150, y: 0 });
+
+    // then
+    var participantLabelAfter = getStickyLabel(container, PARTICIPANT_ID);
+    var participantBounds = getShape(container, PARTICIPANT_ID).getBoundingClientRect();
+
+    expect(participantLabelAfter.classList.contains('hidden')).to.be.false;
+    expectInsideBounds(participantLabelAfter.getBoundingClientRect(), participantBounds);
+  }));
+
+
+  it('should update sublane overlay positions after moving participant when zoomed in', inject(function(canvas, modeling, elementRegistry) {
+
+    // given
+    canvas.zoom(2);
+    canvas.scroll({ dx: -600, dy: 0 });
+    var container = canvas.getContainer();
+    var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
+    var participantLabel = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var laneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+
+    expect(laneLabel.classList.contains('hidden')).to.be.false;
+    expect(sublaneLabel.classList.contains('hidden')).to.be.false;
+
+    // when
+    modeling.moveElements([ participantWithLanes ], { x: 150, y: 0 });
+
+    // then
+    var participantLabelAfter = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var laneLabelAfter = getStickyLabel(container, LANE_ID);
+    var sublaneLabelAfter = getStickyLabel(container, SUBLANE_ID);
+    var laneBounds = getShape(container, LANE_ID).getBoundingClientRect();
+    var sublaneBounds = getShape(container, SUBLANE_ID).getBoundingClientRect();
+
+    expect(laneLabelAfter.classList.contains('hidden')).to.be.false;
+    expectInsideBounds(laneLabelAfter.getBoundingClientRect(), laneBounds);
+
+    expect(sublaneLabelAfter.classList.contains('hidden')).to.be.false;
+    expectInsideBounds(sublaneLabelAfter.getBoundingClientRect(), sublaneBounds);
+
+    // hierarchy order must be maintained: participant -> lane -> sublane
+    if (!participantLabelAfter.classList.contains('hidden')) {
+      expectHierarchyOrder(participantLabelAfter.parentNode, laneLabelAfter.parentNode, sublaneLabelAfter.parentNode);
+    } else {
+      expectNoOverlap(laneLabelAfter.parentNode, sublaneLabelAfter.parentNode);
+    }
+  }));
+
+
+  it('should maintain hierarchy after moving participant far right when zoomed in', inject(function(canvas, modeling, elementRegistry) {
+
+    // given - zoom in and scroll so labels are sticky
+    canvas.zoom(2);
+    canvas.scroll({ dx: -800, dy: 0 });
+    var container = canvas.getContainer();
+    var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
+    var participantLabel = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var laneLabel = getStickyLabel(container, LANE_ID);
+    var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
+
+    // assume - labels are visible and in hierarchy order before move
+    expect(participantLabel.classList.contains('hidden')).to.be.false;
+    expect(laneLabel.classList.contains('hidden')).to.be.false;
+    expect(sublaneLabel.classList.contains('hidden')).to.be.false;
+    expectHierarchyOrder(participantLabel.parentNode, laneLabel.parentNode, sublaneLabel.parentNode);
+
+    // when - move participant far to the right (enough that left edge becomes visible)
+    modeling.moveElements([ participantWithLanes ], { x: 800, y: 0 });
+
+    // then - labels should still be inside their bounds and maintain order
+    var participantLabelAfter = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+    var laneLabelAfter = getStickyLabel(container, LANE_ID);
+    var sublaneLabelAfter = getStickyLabel(container, SUBLANE_ID);
+    var participantBounds = getShape(container, PARTICIPANT_WITH_LANES_ID).getBoundingClientRect();
+    var laneBounds = getShape(container, LANE_ID).getBoundingClientRect();
+    var sublaneBounds = getShape(container, SUBLANE_ID).getBoundingClientRect();
+
+    if (!participantLabelAfter.classList.contains('hidden')) {
+      expectInsideBounds(participantLabelAfter.getBoundingClientRect(), participantBounds);
+    }
+
+    if (!laneLabelAfter.classList.contains('hidden')) {
+      expectInsideBounds(laneLabelAfter.getBoundingClientRect(), laneBounds);
+    }
+
+    if (!sublaneLabelAfter.classList.contains('hidden')) {
+      expectInsideBounds(sublaneLabelAfter.getBoundingClientRect(), sublaneBounds);
+    }
+
+    if (!participantLabelAfter.classList.contains('hidden') &&
+        !laneLabelAfter.classList.contains('hidden') &&
+        !sublaneLabelAfter.classList.contains('hidden')) {
+      expectHierarchyOrder(participantLabelAfter.parentNode, laneLabelAfter.parentNode, sublaneLabelAfter.parentNode);
+    }
+  }));
 });
 
 function getShape(container, elementId) {
