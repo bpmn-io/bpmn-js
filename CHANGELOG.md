@@ -10,7 +10,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: restore canvas focus in next render cycle ([bpmn-io/diagram-js#1081](https://github.com/bpmn-io/diagram-js/pull/1081))
 * `FEAT`: use auto width with max value of 300px for popup menu ([bpmn-io/diagram-js#1078](https://github.com/bpmn-io/diagram-js/pull/1078))
 * `DEPS`: update to `min-dash@5.1.0`
-* `DEPS`: update to `diagram-js@15.22.0`
+* `DEPS`: update to `diagram-js@15.23.0`
 * `DEPS`: update to `diagram-js-direct-editing@3.5.1`
 
 ## 18.21.0
