@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.22.0
+
 * `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
 * `FEAT`: make replace menu width configurable via css variable ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
 * `FEAT`: complete direct editing on blur ([bpmn-io/diagram-js-direct-editing#74](https://github.com/bpmn-io/diagram-js-direct-editing/pull/74), [#2327](https://github.com/bpmn-io/bpmn-js/issues/2327), [#2464](https://github.com/bpmn-io/bpmn-js/pull/2464))
