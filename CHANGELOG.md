@@ -6,6 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.22.0](https://github.com/bpmn-io/bpmn-js/compare/v18.21.0...v18.22.0) (2026-07-24)
+
+
+### Features
+
+* allow overriding the replace menu width via css variable ([4ed19f0](https://github.com/bpmn-io/bpmn-js/commit/4ed19f0e00241868575ecaff775af6b0315c80e0))
+* **popup-menu:** add shared popup entries and use them in the replace menu ([cf6977c](https://github.com/bpmn-io/bpmn-js/commit/cf6977cbac2221fb1ff9e269982d1e6d905636ef))
+
 ## 18.22.0
 
 * `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
