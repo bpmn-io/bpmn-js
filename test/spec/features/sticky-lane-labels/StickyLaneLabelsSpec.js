@@ -416,7 +416,6 @@ describe('features/sticky-lane-labels', function() {
     var participantLabel = getStickyLabel(container, PARTICIPANT_ID);
 
     expect(participantLabel.classList.contains('hidden')).to.be.false;
-    var labelBoundsBefore = participantLabel.getBoundingClientRect();
 
     // when
     modeling.moveElements([ participant ], { x: 200, y: 0 });
@@ -439,7 +438,6 @@ describe('features/sticky-lane-labels', function() {
     var laneLabel = getStickyLabel(container, LANE_ID);
 
     expect(laneLabel.classList.contains('hidden')).to.be.false;
-    var laneBoundsBefore = getShape(container, LANE_ID).getBoundingClientRect();
 
     // when
     modeling.moveElements([ participantWithLanes ], { x: 100, y: 0 });
@@ -463,7 +461,6 @@ describe('features/sticky-lane-labels', function() {
     var participantLabel = getStickyLabel(container, PARTICIPANT_ID);
 
     expect(participantLabel.classList.contains('hidden')).to.be.false;
-    var labelLeftBefore = participantLabel.getBoundingClientRect().left;
 
     // when
     modeling.moveElements([ participant ], { x: 150, y: 0 });
@@ -484,7 +481,6 @@ describe('features/sticky-lane-labels', function() {
     canvas.scroll({ dx: -600, dy: 0 });
     var container = canvas.getContainer();
     var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
-    var participantLabel = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
     var laneLabel = getStickyLabel(container, LANE_ID);
     var sublaneLabel = getStickyLabel(container, SUBLANE_ID);
 
@@ -513,6 +509,43 @@ describe('features/sticky-lane-labels', function() {
     } else {
       expectNoOverlap(laneLabelAfter.parentNode, sublaneLabelAfter.parentNode);
     }
+  }));
+
+
+  it('should keep lane and sublane labels contiguous after moving participant far right when zoomed in', inject(function(canvas, modeling, elementRegistry) {
+
+    // given
+    canvas.zoom(2);
+    var container = canvas.getContainer();
+    var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
+
+    // when
+    modeling.moveElements([ participantWithLanes ], { x: 800, y: 0 });
+
+    // then - pan right in small steps and ensure labels stay contiguous once visible
+    var contiguityChecked = false;
+
+    for (var i = 0; i < 60; i++) {
+      canvas.scroll({ dx: -40, dy: 0 });
+
+      var participantLabelAfter = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
+      var laneLabelAfter = getStickyLabel(container, LANE_ID);
+      var sublaneLabelAfter = getStickyLabel(container, SUBLANE_ID);
+      var participantHidden = participantLabelAfter.classList.contains('hidden');
+      var laneHidden = laneLabelAfter.classList.contains('hidden');
+      var sublaneHidden = sublaneLabelAfter.classList.contains('hidden');
+
+      if (!laneHidden && !sublaneHidden) {
+        contiguityChecked = true;
+        expectLabelsContiguous(laneLabelAfter, sublaneLabelAfter);
+
+        if (!participantHidden) {
+          expectLabelsContiguous(participantLabelAfter, laneLabelAfter);
+        }
+      }
+    }
+
+    expect(contiguityChecked).to.be.true;
   }));
 
 
@@ -596,6 +629,15 @@ function expectNoOverlap(leftOverlay, rightOverlay) {
   expect(rightOverlay.getBoundingClientRect().left).to.be.at.least(
     leftOverlay.getBoundingClientRect().right - 1
   );
+}
+
+
+function expectLabelsContiguous(leftLabel, rightLabel) {
+  var gap = rightLabel.getBoundingClientRect().left - leftLabel.getBoundingClientRect().right;
+
+  // no overlap and no visible gap
+  expect(gap).to.be.at.least(-1);
+  expect(gap).to.be.at.most(1);
 }
 
 
