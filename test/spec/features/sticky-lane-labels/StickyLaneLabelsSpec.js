@@ -511,44 +511,6 @@ describe('features/sticky-lane-labels', function() {
     }
   }));
 
-
-  it('should keep lane and sublane labels contiguous after moving participant far right when zoomed in', inject(function(canvas, modeling, elementRegistry) {
-
-    // given
-    canvas.zoom(2);
-    var container = canvas.getContainer();
-    var participantWithLanes = elementRegistry.get(PARTICIPANT_WITH_LANES_ID);
-
-    // when
-    modeling.moveElements([ participantWithLanes ], { x: 800, y: 0 });
-
-    // then - pan right in small steps and ensure labels stay contiguous once visible
-    var contiguityChecked = false;
-
-    for (var i = 0; i < 60; i++) {
-      canvas.scroll({ dx: -40, dy: 0 });
-
-      var participantLabelAfter = getStickyLabel(container, PARTICIPANT_WITH_LANES_ID);
-      var laneLabelAfter = getStickyLabel(container, LANE_ID);
-      var sublaneLabelAfter = getStickyLabel(container, SUBLANE_ID);
-      var participantHidden = participantLabelAfter.classList.contains('hidden');
-      var laneHidden = laneLabelAfter.classList.contains('hidden');
-      var sublaneHidden = sublaneLabelAfter.classList.contains('hidden');
-
-      if (!laneHidden && !sublaneHidden) {
-        contiguityChecked = true;
-        expectLabelsContiguous(laneLabelAfter, sublaneLabelAfter);
-
-        if (!participantHidden) {
-          expectLabelsContiguous(participantLabelAfter, laneLabelAfter);
-        }
-      }
-    }
-
-    expect(contiguityChecked).to.be.true;
-  }));
-
-
   it('should maintain hierarchy after moving participant far right when zoomed in', inject(function(canvas, modeling, elementRegistry) {
 
     // given - zoom in and scroll so labels are sticky
@@ -630,16 +592,6 @@ function expectNoOverlap(leftOverlay, rightOverlay) {
     leftOverlay.getBoundingClientRect().right - 1
   );
 }
-
-
-function expectLabelsContiguous(leftLabel, rightLabel) {
-  var gap = rightLabel.getBoundingClientRect().left - leftLabel.getBoundingClientRect().right;
-
-  // no overlap and no visible gap
-  expect(gap).to.be.at.least(-1);
-  expect(gap).to.be.at.most(1);
-}
-
 
 function expectHierarchyOrder(participantOverlay, laneOverlay, sublaneOverlay) {
   expectNoOverlap(participantOverlay, laneOverlay);

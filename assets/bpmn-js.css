@@ -171,6 +171,6 @@
   overflow: visible;
 }
 
-.hidden{
+.sticky-lane-label.hidden{
   display: none;
 }
