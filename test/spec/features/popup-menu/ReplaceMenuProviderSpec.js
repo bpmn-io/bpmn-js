@@ -50,6 +50,44 @@ describe('features/popup-menu - replace menu provider', function() {
   ];
 
 
+  describe('element descriptions', function() {
+
+    beforeEach(bootstrapModeler(diagramXMLReplace, { modules: testModules }));
+
+
+    it('should render a provided description', inject(function(elementRegistry, popupMenu) {
+
+      // given
+      var startEvent = elementRegistry.get('StartEvent_1');
+      popupMenu.registerProvider('bpmn-replace', {
+        getPopupMenuEntries() {
+          return function(entries) {
+            return {
+              ...entries,
+              'replace-with-message-start': {
+                ...entries['replace-with-message-start'],
+                description: 'foo'
+              }
+            };
+          };
+        }
+      });
+
+      // when
+      openPopup(startEvent);
+
+      // then
+      var description = domQuery(
+        '.djs-popup-entry-description',
+        queryEntry('replace-with-message-start')
+      );
+
+      expect(description).to.exist;
+      expect(description.textContent).to.eql('foo');
+    }));
+  });
+
+
   describe('data object - collection marker', function() {
 
     beforeEach(bootstrapModeler(diagramXMLDataElements, { modules: testModules }));

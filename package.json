@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js",
-  "version": "18.19.0",
+  "version": "18.22.0",
   "description": "A bpmn 2.0 toolkit and web modeler",
   "main": "lib/index.js",
   "files": [
@@ -22,6 +22,7 @@
     "start:navigated-viewer": "cross-env SINGLE_START=navigated-viewer npm run dev",
     "dev": "npm test -- --auto-watch --no-single-run",
     "test": "karma start test/config/karma.unit.js",
+    "benchmark": "karma start test/config/karma.benchmark.js",
     "distro": "node tasks/build-distro.mjs",
     "collect-translations": "cross-env COLLECT_TRANSLATIONS=1 npm test",
     "generate-types": "run-s generate-types:*",
@@ -63,7 +64,7 @@
     "*.css"
   ],
   "devDependencies": {
-    "@babel/core": "^8.0.0",
+    "@babel/core": "^7.29.7",
     "@bpmn-io/a11y": "^0.1.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-json": "^6.1.0",
@@ -72,7 +73,7 @@
     "@rollup/plugin-terser": "^1.0.0",
     "babel-loader": "^10.1.1",
     "babel-plugin-istanbul": "^8.0.0",
-    "bio-dts": "^0.15.2",
+    "bio-dts": "^0.15.3",
     "bpmn-font": "^0.12.1",
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "^6.2.2",
@@ -97,7 +98,7 @@
     "karma-webpack": "^5.0.1",
     "mocha": "^11.0.0",
     "mocha-test-container-support": "0.2.0",
-    "npm-run-all2": "^9.0.1",
+    "npm-run-all2": "^9.0.2",
     "remark-cli": "^12.0.1",
     "remark-preset-bpmn-io": "^0.4.0",
     "rollup": "^4.61.1",
@@ -110,11 +111,11 @@
   },
   "dependencies": {
     "bpmn-moddle": "^10.0.0",
-    "diagram-js": "^15.18.0",
-    "diagram-js-direct-editing": "^3.4.0",
+    "diagram-js": "^15.23.0",
+    "diagram-js-direct-editing": "^3.5.1",
     "ids": "^3.0.2",
     "inherits-browser": "^0.1.0",
-    "min-dash": "^5.0.0",
+    "min-dash": "^5.1.0",
     "min-dom": "^5.3.0",
     "tiny-svg": "^4.1.4"
   },

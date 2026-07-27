@@ -6,8 +6,31 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.22.0
+
+* `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
+* `FEAT`: make replace menu width configurable via css variable ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
+* `FEAT`: complete direct editing on blur ([bpmn-io/diagram-js-direct-editing#74](https://github.com/bpmn-io/diagram-js-direct-editing/pull/74), [#2327](https://github.com/bpmn-io/bpmn-js/issues/2327), [#2464](https://github.com/bpmn-io/bpmn-js/pull/2464))
+* `FEAT`: restore canvas focus in next render cycle ([bpmn-io/diagram-js#1081](https://github.com/bpmn-io/diagram-js/pull/1081))
+* `FEAT`: use auto width with max value of 300px for popup menu ([bpmn-io/diagram-js#1078](https://github.com/bpmn-io/diagram-js/pull/1078))
+* `DEPS`: update to `min-dash@5.1.0`
+* `DEPS`: update to `diagram-js@15.23.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.5.1`
+
+## 18.21.0
+
+* `FEAT`: improve aural interface / accessibility of popup menu ([bpmn-io/diagram-js#1059](https://github.com/bpmn-io/diagram-js/pull/1059), [bpmn-io/diagram-js#735](https://github.com/bpmn-io/diagram-js/issues/735))
+* `FEAT`: allow `Canvas#findRoot` to find shared root for multiple elements ([bpmn-io/diagram-js#1075](https://github.com/bpmn-io/diagram-js/pull/1075))
+* `FEAT`: support scrolling to multiple elements via `Canvas#scrollToElement` ([bpmn-io/diagram-js#1075](https://github.com/bpmn-io/diagram-js/pull/1075))
+* `FIX`: improve mouse/keyboard interaction in popup menu ([bpmn-io/diagram-js#1060](https://github.com/bpmn-io/diagram-js/pull/1060))
+* `DEPS`: update to `diagram-js@15.20.0`
+
+## 18.20.0
+
+* `FEAT`: various performance improvements in many parts of the code base
 * `FIX`: disallow `move` when dropped outside of canvas ([#2437](https://github.com/bpmn-io/bpmn-js/pull/2437), [#2210](https://github.com/bpmn-io/bpmn-js/issues/2210))
 * `CHORE`: derive label link offset from (circular) outline shape ([#2457](https://github.com/bpmn-io/bpmn-js/pull/2457))
+* `DEPS`: update to `diagram-js@15.19.0`
 
 ## 18.19.0
 
