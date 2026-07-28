@@ -6,6 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: keep selection visible on canvas resize ([bpmn-io/diagram-js#1038](https://github.com/bpmn-io/diagram-js/pull/1038), [#2435](https://github.com/bpmn-io/bpmn-js/pull/2435))
 * `FIX`: do not copy message flows without participants ([#1902](https://github.com/bpmn-io/bpmn-js/issues/1902), [#2475](https://github.com/bpmn-io/bpmn-js/pull/2475))
 
 ## 18.22.0
