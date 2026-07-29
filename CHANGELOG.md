@@ -6,6 +6,13 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.22.1](https://github.com/bpmn-io/bpmn-js/compare/v18.22.0...v18.22.1) (2026-07-29)
+
+
+### Bug Fixes
+
+* **export:** prevent clipped strokes in exported diagrams ([15f956f](https://github.com/bpmn-io/bpmn-js/commit/15f956fb7c10ed0423dc8ea3cb76deca3e334948))
+
 ## 18.22.0
 
 * `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
