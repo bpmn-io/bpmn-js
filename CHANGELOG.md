@@ -8,6 +8,11 @@ ___Note:__ Yet to be released changes appear here._
 
 * `FIX`: do not copy message flows without participants ([#1902](https://github.com/bpmn-io/bpmn-js/issues/1902), [#2475](https://github.com/bpmn-io/bpmn-js/pull/2475))
 
+## 18.22.1
+
+* `FIX`: prevent clipped strokes in exported diagrams ([#2476](https://github.com/bpmn-io/bpmn-js/pull/2476))
+* `DEPS`: update to `diagram-js@15.23.2`
+
 ## 18.22.0
 
 * `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
