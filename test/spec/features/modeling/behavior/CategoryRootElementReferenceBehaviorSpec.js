@@ -190,6 +190,76 @@ describe('features/modeling - category root element reference behavior', functio
 });
 
 
+describe('features/modeling - category root element reference behavior (ref updates)', function() {
+
+  var diagramXML = require('../UpdateCategoryValueRefs.bpmn');
+
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      coreModule,
+      modelingModule
+    ]
+  }));
+
+
+  describe('should maintain healed categories', function() {
+
+    var category,
+        categoryValue,
+        group;
+
+    beforeEach(inject(function(elementRegistry, modeling) {
+
+      // given
+      group = elementRegistry.get('Group_2');
+      var task = elementRegistry.get('LegacyTask_1');
+
+      // when
+      modeling.moveShape(task, { x: 10, y: 0 });
+
+      categoryValue = getBusinessObject(group).categoryValueRef;
+      category = categoryValue.$parent;
+    }));
+
+
+    it('<do>', function() {
+
+      // then
+      expect(categoryValue).to.exist;
+      expect(category.get('categoryValue')).to.include(categoryValue);
+      expectRootElement(category);
+    });
+
+
+    it('<undo>', inject(function(commandStack) {
+
+      // when
+      commandStack.undo();
+
+      // then
+      expect(getBusinessObject(group).categoryValueRef).not.to.exist;
+      expect(category.get('categoryValue')).not.to.include(categoryValue);
+      expectNoRootElement(category);
+    }));
+
+
+    it('<redo>', inject(function(commandStack) {
+
+      // when
+      commandStack.undo();
+      commandStack.redo();
+
+      // then
+      expect(getBusinessObject(group).categoryValueRef).to.equal(categoryValue);
+      expect(category.get('categoryValue')).to.include(categoryValue);
+      expectRootElement(category);
+    }));
+
+  });
+
+});
+
+
 // helpers //////////
 
 function expectRootElement(category) {
