@@ -108,6 +108,11 @@
   background-color: var(--drilldown-background-color);
 }
 
+.bjs-drilldown:focus-visible {
+  outline: 2px solid var(--color-blue-205-100-45);
+  outline-offset: 1px;
+}
+
 .bjs-drilldown-empty {
   display: none;
 }
