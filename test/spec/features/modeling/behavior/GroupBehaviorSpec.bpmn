@@ -9,6 +9,7 @@
   </category>
   <process id="Process_1" isExecutable="false">
     <subProcess id="Subprocess_1" />
+    <task id="LegacyTask_1" />
     <group id="Group_1" categoryValueRef="CategoryValue_1" />
     <group id="Group_2" categoryValueRef="CategoryValue_1" />
     <group id="Group_3" categoryValueRef="CategoryValue_2" />
@@ -37,6 +38,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Group_NO_CATEGORY_VALUE_di" bpmnElement="Group_NO_CATEGORY_VALUE">
         <omgdc:Bounds x="610" y="320" width="199" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="LegacyTask_1_di" bpmnElement="LegacyTask_1">
+        <omgdc:Bounds x="650" y="370" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

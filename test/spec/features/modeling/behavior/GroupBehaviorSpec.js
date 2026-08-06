@@ -249,6 +249,81 @@ describe('features/modeling/behavior - groups', function() {
   });
 
 
+  describe('auto-healing', function() {
+
+    [ 'move', 'resize' ].forEach(function(type) {
+
+      describe(`should heal group on ${ type }`, function() {
+
+        var group,
+            groupBo,
+            categoryValueBo,
+            categoryBo;
+
+        beforeEach(inject(function(elementRegistry, modeling) {
+
+          // given
+          group = elementRegistry.get('Group_NO_CATEGORY_VALUE');
+          groupBo = getBusinessObject(group);
+
+          // assume
+          expect(groupBo.categoryValueRef).not.to.exist;
+
+          // when
+          if (type === 'move') {
+            modeling.moveShape(group, { x: 10, y: 0 });
+          } else {
+            modeling.resizeShape(group, {
+              x: group.x,
+              y: group.y,
+              width: group.width,
+              height: group.height + 10
+            });
+          }
+
+          categoryValueBo = groupBo.categoryValueRef;
+          categoryBo = categoryValueBo.$parent;
+        }));
+
+
+        it('<do>', function() {
+
+          // then
+          expect(categoryValueBo).to.exist;
+          expectRootElement(categoryBo);
+        });
+
+
+        it('<undo>', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(groupBo.categoryValueRef).not.to.exist;
+          expectNoRootElement(categoryBo);
+        }));
+
+
+        it('<redo>', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(groupBo.categoryValueRef).to.equal(categoryValueBo);
+          expect(groupBo.categoryValueRef.$parent).to.equal(categoryBo);
+          expectRootElement(categoryBo);
+        }));
+
+      });
+
+    });
+
+  });
+
+
   describe('deletion', function() {
 
     it('should NOT remove CategoryValue if still referenced', inject(
