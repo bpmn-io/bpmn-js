@@ -132,15 +132,19 @@ describe('features/modeling/behavior - groups', function() {
     });
 
 
-    describe('should paste with Category', function() {
+    describe('should paste with copied Category', function() {
 
-      var groupBo, rootElements;
+      var groupBo,
+          sourceGroupBo,
+          rootElements;
 
       beforeEach(inject(function(canvas, copyPaste, elementRegistry) {
 
         // given
         var group = elementRegistry.get('Group_1'),
             rootElement = canvas.getRootElement();
+
+        sourceGroupBo = getBusinessObject(group);
 
         copyPaste.copy(group);
 
@@ -169,6 +173,9 @@ describe('features/modeling/behavior - groups', function() {
         expect(groupBo.categoryValueRef).to.exist;
         expect(groupBo.categoryValueRef.$parent).to.exist;
         expect(groupBo.categoryValueRef.value).to.equal('Value 1');
+        expect(groupBo.categoryValueRef).not.to.equal(sourceGroupBo.categoryValueRef);
+        expect(groupBo.categoryValueRef.$parent).not.to.equal(sourceGroupBo.categoryValueRef.$parent);
+
         expect(rootElements).to.have.length(4);
       });
 
