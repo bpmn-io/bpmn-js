@@ -41,23 +41,25 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var group1 = elementRegistry.get('Group_1'),
-            categoryValue = getBusinessObject(group1).categoryValueRef,
+            categoryValueBo = getBusinessObject(group1).categoryValueRef,
             root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent,
-            originalSize = definitions.get('rootElements').length;
+            definitionsBo = getBusinessObject(root).$parent;
+
+        var originalRootElementCount = definitionsBo.get('rootElements').length;
 
         var group = elementFactory.createShape({ type: 'bpmn:Group' });
 
-        getBusinessObject(group).categoryValueRef = categoryValue;
+        // re-using existing categoryValue
+        getBusinessObject(group).categoryValueRef = categoryValueBo;
 
         // when
         var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
-            categoryValueRef = getBusinessObject(groupShape).categoryValueRef;
+            groupBo = getBusinessObject(groupShape);
 
         // then
-        expect(categoryValueRef).to.eql(categoryValue);
+        expect(groupBo.categoryValueRef).to.eql(categoryValueBo);
 
-        expect(definitions.get('rootElements')).to.have.length(originalSize);
+        expect(definitionsBo.get('rootElements')).to.have.length(originalRootElementCount);
       }
     ));
 
@@ -167,7 +169,6 @@ describe('features/modeling/behavior - groups', function() {
         expect(groupBo.categoryValueRef).to.exist;
         expect(groupBo.categoryValueRef.$parent).to.exist;
         expect(groupBo.categoryValueRef.value).to.equal('Value 1');
-
         expect(rootElements).to.have.length(4);
       });
 
