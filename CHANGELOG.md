@@ -6,6 +6,20 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## [18.23.0](https://github.com/bpmn-io/bpmn-js/compare/v18.22.1...v18.23.0) (2026-08-10)
+
+
+### Features
+
+* **modeling:** add category -&gt; categoryValue to groups on change ([8bb463c](https://github.com/bpmn-io/bpmn-js/commit/8bb463cd61aa271bbae0051717da754b4bb98cfc))
+* **modeling:** eagerly create group category values ([ead71be](https://github.com/bpmn-io/bpmn-js/commit/ead71bee61951f00c85bb098964a2f595c648a3b))
+* tag elements contained in Group via categoryValueRef ([52a2cfd](https://github.com/bpmn-io/bpmn-js/commit/52a2cfd6865f1e0b0e97f68d2de853dca65ecc30))
+
+
+### Bug Fixes
+
+* **modeling:** handle external label moves when updating lane refs ([136c595](https://github.com/bpmn-io/bpmn-js/commit/136c595fb5cca30d799114b499d80b546df4dcf9))
+
 ## 18.23.0
 
 * `FEAT`: tag elements visually inside a group via `categoryValueRef` ([#2469](https://github.com/bpmn-io/bpmn-js/pull/2469))
