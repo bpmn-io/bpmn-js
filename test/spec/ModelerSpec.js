@@ -13,7 +13,7 @@ import TestContainer from 'mocha-test-container-support';
 
 import { createCanvasEvent } from '../util/MockEvents';
 
-import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
+import { clearBpmnJS, collectTranslations, enableLogging, observeContainerResize, setBpmnJS } from 'test/TestHelper';
 
 import { find, pick } from 'min-dash';
 
@@ -42,6 +42,8 @@ describe('Modeler', function() {
     setBpmnJS(modeler);
 
     enableLogging(modeler, singleStart);
+
+    observeContainerResize(modeler);
 
     return modeler.importXML(xml).then(function(result) {
       return { error: null, warnings: result.warnings, modeler: modeler };
