@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.24.0
+
 * `FEAT`: support tabs in popup menu ([bpmn-io/diagram-js#1096](https://github.com/bpmn-io/diagram-js/pull/1096))
 * `FIX`: lay out docs link and drill-in chevron in popup menu as sibling actions ([bpmn-io/diagram-js#1088](https://github.com/bpmn-io/diagram-js/pull/1088))
 * `DEPS`: update to `diagram-js@15.24.0`
