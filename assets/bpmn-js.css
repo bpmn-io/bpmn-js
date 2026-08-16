@@ -42,11 +42,14 @@
   align-items: center;
   top: 30px;
   left: 30px;
-  padding: 0px;
+  padding: 6px 10px;
   margin: 0px;
   font-family: var(--breadcrumbs-font-family);
   font-size: 16px;
   line-height: normal;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .bjs-breadcrumbs-shown .bjs-breadcrumbs {
@@ -143,3 +146,4 @@
   height: 20px;
   width: 20px;
 }
+
