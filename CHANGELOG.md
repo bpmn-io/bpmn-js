@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.25.0
+
 * `FEAT`: expose default element sizes via `lib/util/ElementSizeUtil` ([#2485](https://github.com/bpmn-io/bpmn-js/issues/2485))
 * `FIX`: do not throw when getting default size of participant without DI ([#2485](https://github.com/bpmn-io/bpmn-js/issues/2485))
 
