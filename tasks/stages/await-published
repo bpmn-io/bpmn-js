@@ -16,7 +16,7 @@ do
     exit 0
   fi
 
-  i=$(($i+1))
+  i=$((i+1))
 
   sleep "${interval}s"
 done
