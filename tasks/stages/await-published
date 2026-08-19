@@ -5,6 +5,7 @@ shopt -s inherit_errexit nullglob
 
 i=0
 tries=9
+interval=5
 pkg="$PKG"
 until [ $i -gt $tries ]
 do
@@ -17,7 +18,7 @@ do
 
   i=$(($i+1))
 
-  sleep 5s
+  sleep "${interval}s"
 done
 
 echo "Not found after $i tries. Giving up."
