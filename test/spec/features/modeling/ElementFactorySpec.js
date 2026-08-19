@@ -13,6 +13,10 @@ import {
 } from '../../../../lib/util/ModelUtil';
 
 import {
+  getDefaultSize
+} from '../../../../lib/util/ElementSizeUtil';
+
+import {
   assign
 } from 'min-dash';
 
@@ -317,6 +321,38 @@ describe('features - element factory', function() {
       }));
 
     });
+
+  });
+
+
+  describe('#getDefaultSize', function() {
+
+    it('should delegate to ElementSizeUtil', inject(function(elementFactory, bpmnFactory) {
+
+      // given
+      var task = bpmnFactory.create('bpmn:Task'),
+          gateway = bpmnFactory.create('bpmn:ExclusiveGateway');
+
+      // then
+      expect(elementFactory.getDefaultSize(task)).to.eql(getDefaultSize(task));
+      expect(elementFactory.getDefaultSize(gateway)).to.eql(getDefaultSize(gateway));
+    }));
+
+
+    it('should respect override', inject(function(elementFactory) {
+
+      // given
+      elementFactory.getDefaultSize = function() {
+        return { width: 1, height: 1 };
+      };
+
+      // when
+      var task = elementFactory.createShape({ type: 'bpmn:Task' });
+
+      // then
+      expect(task.width).to.eql(1);
+      expect(task.height).to.eql(1);
+    }));
 
   });
 
