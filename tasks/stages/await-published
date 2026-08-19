@@ -21,5 +21,5 @@ do
   sleep "${interval}s"
 done
 
-echo "Not found after $i tries. Giving up."
+echo "Not found after $((i*interval))s ($i attempts). Giving up."
 exit 1;
