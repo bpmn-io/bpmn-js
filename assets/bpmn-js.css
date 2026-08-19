@@ -35,6 +35,7 @@
   --breadcrumbs-border-color: var(--color-grey-225-10-75);
   --drilldown-fill-color: var(--color-white);
   --drilldown-background-color: var(--color-blue-205-100-50);
+  --drilldown-focus-outline-color: var(--color-blue-205-100-50);
 }
 
 .bjs-breadcrumbs {
@@ -107,10 +108,14 @@
   cursor: pointer;
   border: none;
   border-radius: 2px;
-  outline: none;
 
   fill: var(--drilldown-fill-color);
   background-color: var(--drilldown-background-color);
+}
+
+.bjs-drilldown:focus-visible {
+  outline: solid 1px var(--drilldown-focus-outline-color);
+  outline-offset: 1px;
 }
 
 .bjs-drilldown-empty {
