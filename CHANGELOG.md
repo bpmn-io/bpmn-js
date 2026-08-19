@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: give breadcrumps a background ([#2487](https://github.com/bpmn-io/bpmn-js/pull/2487), [#2482](https://github.com/bpmn-io/bpmn-js/issues/2482))
+
 ## 18.25.0
 
 * `FEAT`: expose default element sizes via `lib/util/ElementSizeUtil` ([#2485](https://github.com/bpmn-io/bpmn-js/issues/2485))
