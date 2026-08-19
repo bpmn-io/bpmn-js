@@ -4,7 +4,7 @@ set -eo pipefail
 shopt -s inherit_errexit nullglob
 
 i=0
-tries=9
+tries=20
 interval=5
 pkg="$PKG"
 until [ $i -gt $tries ]
