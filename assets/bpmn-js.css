@@ -33,6 +33,7 @@
   --breadcrumbs-arrow-color: var(--color-black);
   --breadcrumbs-background-color: var(--color-grey-225-10-97);
   --breadcrumbs-border-color: var(--color-grey-225-10-75);
+  --breadcrumbs-focus-outline-color: var(--color-blue-205-100-50);
   --drilldown-fill-color: var(--color-white);
   --drilldown-background-color: var(--color-blue-205-100-50);
   --drilldown-focus-outline-color: var(--color-blue-205-100-50);
@@ -73,14 +74,15 @@
   align-items: center;
 }
 
-.bjs-breadcrumbs li a {
+.bjs-breadcrumbs a.bjs-crumb {
   cursor: pointer;
   color: var(--breadcrumbs-item-color);
+  text-decoration: none;
 }
 
-.bjs-breadcrumbs li:last-of-type a {
-  color: inherit;
-  cursor: default;
+.bjs-breadcrumbs a.bjs-crumb:focus-visible {
+  outline: solid 1px var(--breadcrumbs-focus-outline-color);
+  outline-offset: 1px;
 }
 
 .bjs-breadcrumbs li:not(:first-child)::before {
