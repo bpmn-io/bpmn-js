@@ -1,4 +1,4 @@
-# Project Setup
+# Project Setup Awesome
 
 This document describes the necessary steps to setup a `bpmn-js` development environment.
 
