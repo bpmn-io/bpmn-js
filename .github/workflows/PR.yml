@@ -1,0 +1,15 @@
+name: PR
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  Validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR quality
+        uses: bpmn-io/actions/pull-request-quality@54c91f06efd8c83346090fe954540a2ac5b030b1
