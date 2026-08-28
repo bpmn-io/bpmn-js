@@ -11,6 +11,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FEAT`: add `--accent-color` theming token ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
 * `FIX`: use WCAG AA compliant primary accent color ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
 * `DEPS`: update to `diagram-js@15.25.0`
+* `DEPS`: update to `bpmn-moddle@10.2.0`
 
 ## 18.25.1
 
