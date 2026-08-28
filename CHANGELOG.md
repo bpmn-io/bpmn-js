@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: point label link to the closest point of the connection ([#2493](https://github.com/bpmn-io/bpmn-js/pull/2493))
+
 ## 18.26.0
 
 * `FEAT`: give resize handle a border radius ([bpmn-io/diagram-js#1100](https://github.com/bpmn-io/diagram-js/pull/1100))

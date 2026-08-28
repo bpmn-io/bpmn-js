@@ -2,6 +2,7 @@ import { expect } from 'chai';
 
 import {
   asEdges,
+  asLines,
   getReferencePoint
 } from 'lib/util/LineUtil';
 
@@ -96,17 +97,26 @@ describe('util/LineUtil', function() {
 
   });
 
+
+  describe('#asLines', function() {
+
+    it('should convert waypoints to segments', function() {
+
+      // when
+      const lines = asLines([
+        { x: 0, y: 0 },
+        { x: 100, y: 0 },
+        { x: 100, y: 50 }
+      ]);
+
+      // then
+      expect(lines).to.eql([
+        [ { x: 0, y: 0 }, { x: 100, y: 0 } ],
+        [ { x: 100, y: 0 }, { x: 100, y: 50 } ]
+      ]);
+    });
+
+  });
+
 });
 
-
-// helpers //////////
-
-function asLines(waypoints) {
-  const lines = [];
-
-  for (let i = 0; i < waypoints.length - 1; i++) {
-    lines.push([ waypoints[i], waypoints[i + 1] ]);
-  }
-
-  return lines;
-}
