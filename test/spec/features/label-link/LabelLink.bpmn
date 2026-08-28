@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.41.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.51.0-rc.1">
   <bpmn:process id="Process_1" isExecutable="false">
     <bpmn:startEvent id="Start_Event" name="Start Event">
       <bpmn:outgoing>Sequence</bpmn:outgoing>
@@ -10,18 +10,24 @@
       <bpmn:outgoing>Sequence_Curved</bpmn:outgoing>
       <bpmn:outgoing>Flow_08zlypo</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Sequence" name="Sequence" sourceRef="Start_Event" targetRef="Gateway" />
+    <bpmn:sequenceFlow id="Sequence" name="Above segment" sourceRef="Start_Event" targetRef="Gateway" />
     <bpmn:sequenceFlow id="Flow_1n4vntt" sourceRef="Gateway" targetRef="End_Event" />
-    <bpmn:sequenceFlow id="Sequence_Curved" name="Sequence" sourceRef="Gateway" targetRef="End_Event" />
+    <bpmn:sequenceFlow id="Sequence_Curved" name="Below segment" sourceRef="Gateway" targetRef="End_Event" />
     <bpmn:endEvent id="End_Event" name="End Event">
       <bpmn:incoming>Flow_1n4vntt</bpmn:incoming>
       <bpmn:incoming>Sequence_Curved</bpmn:incoming>
+      <bpmn:incoming>Sequence_Around</bpmn:incoming>
+      <bpmn:incoming>Sequence_Inside</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_08zlypo" sourceRef="Gateway" targetRef="Subprocess" />
     <bpmn:subProcess id="Subprocess">
       <bpmn:incoming>Flow_08zlypo</bpmn:incoming>
+      <bpmn:outgoing>Sequence_Around</bpmn:outgoing>
+      <bpmn:outgoing>Sequence_Inside</bpmn:outgoing>
       <bpmn:startEvent id="Subprocess_Event" name="Sub Event" />
     </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Sequence_Around" name="Bendpoint docked" sourceRef="Subprocess" targetRef="End_Event" />
+    <bpmn:sequenceFlow id="Sequence_Inside" name="Inside" sourceRef="Subprocess" targetRef="End_Event" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
@@ -56,7 +62,7 @@
         <di:waypoint x="158" y="210" />
         <di:waypoint x="275" y="210" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="192" y="192" width="50" height="14" />
+          <dc:Bounds x="174" y="192" width="71" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1n4vntt_di" bpmnElement="Flow_1n4vntt">
@@ -69,7 +75,7 @@
         <di:waypoint x="300" y="310" />
         <di:waypoint x="432" y="310" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="345" y="253" width="50" height="14" />
+          <dc:Bounds x="312" y="363" width="76" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_08zlypo_di" bpmnElement="Flow_08zlypo">
@@ -77,6 +83,23 @@
         <di:waypoint x="450" y="210" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="645" y="183" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1th15d0_di" bpmnElement="Sequence_Around">
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="670" y="190" />
+        <di:waypoint x="670" y="310" />
+        <di:waypoint x="468" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="666" y="323" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0idyefv_di" bpmnElement="Sequence_Inside">
+        <di:waypoint x="540" y="250" />
+        <di:waypoint x="540" y="310" />
+        <di:waypoint x="468" y="310" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="455" y="263" width="30" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

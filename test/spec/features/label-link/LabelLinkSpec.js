@@ -51,19 +51,53 @@ describe('features/label-link - label link', function() {
   );
 
 
-  it('should show for sequence flow', inject(
-    function(selection, elementRegistry) {
+  describe('should show for sequence flow', function() {
 
-      // given
-      const element = elementRegistry.get('Sequence_Curved');
+    it('below segment', inject(
+      function(selection, elementRegistry) {
 
-      // when
-      selection.select(element);
+        // given
+        const element = elementRegistry.get('Sequence_Curved');
 
-      // then
-      expectLinkWithPath('M328,310L364,267');
-    })
-  );
+        // when
+        selection.select(element);
+
+        // then
+        expectLinkWithPath('M350,310L350,363');
+      })
+    );
+
+
+    it('inside of segment', inject(
+      function(selection, elementRegistry) {
+
+        // given
+        const element = elementRegistry.get('Sequence_Inside');
+
+        // when
+        selection.select(element);
+
+        // then
+        expectLinkWithPath('M470,310L470,277');
+      })
+    );
+
+
+    it('bendpoint docking', inject(
+      function(selection, elementRegistry) {
+
+        // given
+        const element = elementRegistry.get('Sequence_Around');
+
+        // when
+        selection.select(element);
+
+        // then
+        expectLinkWithPath('M670,310L697,323');
+      })
+    );
+
+  });
 
 
   it('should show for gateway', inject(
@@ -235,6 +269,7 @@ describe('features/label-link - label link', function() {
       expect(links).to.have.length(0);
     })
   );
+
 });
 
 // helpers
