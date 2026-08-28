@@ -12,6 +12,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: use WCAG AA compliant primary accent color ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
 * `DEPS`: update to `diagram-js@15.25.0`
 * `DEPS`: update to `bpmn-moddle@10.2.0`
+* `DEPS`: update to `bpmn-font@0.13.0`
 
 ## 18.25.1
 
