@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR quality
-        uses: bpmn-io/actions/pull-request-quality@54c91f06efd8c83346090fe954540a2ac5b030b1
+        uses: bpmn-io/actions/pull-request-quality@dadd26245e7ccf2399bafb558cf2ca29c8b44f9e
