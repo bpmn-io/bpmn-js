@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.26.0
+
 * `FEAT`: give resize handle a border radius ([bpmn-io/diagram-js#1100](https://github.com/bpmn-io/diagram-js/pull/1100))
 * `FEAT`: give segment dragger a border radius ([bpmn-io/diagram-js#1100](https://github.com/bpmn-io/diagram-js/pull/1100))
 * `FEAT`: add `--accent-color` theming token ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
