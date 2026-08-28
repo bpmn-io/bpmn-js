@@ -11,6 +11,7 @@
   --color-grey-225-10-95: hsl(225, 10%, 95%);
   --color-grey-225-10-97: hsl(225, 10%, 97%);
 
+  --color-blue-205-100-40: hsl(205, 100%, 40%);
   --color-blue-205-100-45: hsl(205, 100%, 45%);
   --color-blue-205-100-45-opacity-30: hsla(205, 100%, 45%, 30%);
   --color-blue-205-100-50: hsl(205, 100%, 50%);
@@ -28,15 +29,17 @@
   --color-black-opacity-05: hsla(0, 0%, 0%, 5%);
   --color-black-opacity-10: hsla(0, 0%, 0%, 10%);
 
+  --accent-color: var(--color-blue-205-100-40);
+
   --breadcrumbs-font-family: var(--bjs-font-family);
-  --breadcrumbs-item-color: var(--color-blue-205-100-50);
+  --breadcrumbs-item-color: var(--accent-color);
   --breadcrumbs-arrow-color: var(--color-black);
   --breadcrumbs-background-color: var(--color-grey-225-10-97);
   --breadcrumbs-border-color: var(--color-grey-225-10-75);
-  --breadcrumbs-focus-outline-color: var(--color-blue-205-100-50);
+  --breadcrumbs-focus-outline-color: var(--accent-color);
   --drilldown-fill-color: var(--color-white);
-  --drilldown-background-color: var(--color-blue-205-100-50);
-  --drilldown-focus-outline-color: var(--color-blue-205-100-50);
+  --drilldown-background-color: var(--accent-color);
+  --drilldown-focus-outline-color: var(--accent-color);
 }
 
 .bjs-breadcrumbs {
