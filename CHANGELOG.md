@@ -6,6 +6,9 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add `--accent-color` theming token ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
+* `FIX`: use WCAG AA compliant primary accent color ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
+
 ## 18.25.1
 
 * `FIX`: make breadcrumps keyboard accessible ([#2487](https://github.com/bpmn-io/bpmn-js/pull/2487))
