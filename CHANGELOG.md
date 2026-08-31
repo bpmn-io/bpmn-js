@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.27.0
+
 * `FEAT`: add tooltip with title and shortcut on palette entries ([#2465](https://github.com/bpmn-io/bpmn-js/pull/2465))
 * `FIX`: point label link to the closest point of the connection ([#2493](https://github.com/bpmn-io/bpmn-js/pull/2493))
 * `DEPS`: update to `diagram-js@15.26.0`
