@@ -13,8 +13,9 @@
     "!lib/**/*.spec.ts"
   ],
   "scripts": {
-    "all": "run-s lint test generate-types distro test:distro",
+    "all": "run-s lint lint:theme test generate-types distro test:distro",
     "lint": "eslint .",
+    "lint:theme": "bpmn-io-theme-validate assets/bpmn-js.css",
     "format": "run-s format:markdown 'lint -- --fix'",
     "format:markdown": "remark . -qo",
     "start": "cross-env SINGLE_START=modeler npm run dev",
@@ -66,6 +67,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@bpmn-io/a11y": "^0.1.0",
+    "@bpmn-io/theme": "^0.0.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
