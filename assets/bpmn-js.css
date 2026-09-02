@@ -1,43 +1,16 @@
 .bjs-container {
   --bjs-font-family: Arial, sans-serif;
 
-  --color-grey-225-10-15: hsl(225, 10%, 15%);
-  --color-grey-225-10-35: hsl(225, 10%, 35%);
-  --color-grey-225-10-55: hsl(225, 10%, 55%);
-  --color-grey-225-10-75: hsl(225, 10%, 75%);
-  --color-grey-225-10-80: hsl(225, 10%, 80%);
-  --color-grey-225-10-85: hsl(225, 10%, 85%);
-  --color-grey-225-10-90: hsl(225, 10%, 90%);
-  --color-grey-225-10-95: hsl(225, 10%, 95%);
-  --color-grey-225-10-97: hsl(225, 10%, 97%);
-
-  --color-blue-205-100-40: hsl(205, 100%, 40%);
-  --color-blue-205-100-45: hsl(205, 100%, 45%);
-  --color-blue-205-100-45-opacity-30: hsla(205, 100%, 45%, 30%);
-  --color-blue-205-100-50: hsl(205, 100%, 50%);
-  --color-blue-205-100-95: hsl(205, 100%, 95%);
-
-  --color-green-150-86-44: hsl(150, 86%, 44%);
-
-  --color-red-360-100-40: hsl(360, 100%, 40%);
-  --color-red-360-100-45: hsl(360, 100%, 45%);
-  --color-red-360-100-92: hsl(360, 100%, 92%);
-  --color-red-360-100-97: hsl(360, 100%, 97%);
-
-  --color-white: hsl(0, 0%, 100%);
-  --color-black: hsl(0, 0%, 0%);
-  --color-black-opacity-05: hsla(0, 0%, 0%, 5%);
-  --color-black-opacity-10: hsla(0, 0%, 0%, 10%);
-
+  /* navigation chrome keeps the editor blue, not the theme accent */
   --accent-color: var(--color-blue-205-100-40);
 
   --breadcrumbs-font-family: var(--bjs-font-family);
   --breadcrumbs-item-color: var(--accent-color);
-  --breadcrumbs-arrow-color: var(--color-black);
-  --breadcrumbs-background-color: var(--color-grey-225-10-97);
-  --breadcrumbs-border-color: var(--color-grey-225-10-75);
+  --breadcrumbs-arrow-color: var(--bio-text);
+  --breadcrumbs-background-color: var(--bio-surface-subtle);
+  --breadcrumbs-border-color: var(--bio-border);
   --breadcrumbs-focus-outline-color: var(--accent-color);
-  --drilldown-fill-color: var(--color-white);
+  --drilldown-fill-color: var(--bio-surface);
   --drilldown-background-color: var(--accent-color);
   --drilldown-focus-outline-color: var(--accent-color);
 }

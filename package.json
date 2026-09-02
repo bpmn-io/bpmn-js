@@ -66,6 +66,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.7",
     "@bpmn-io/a11y": "^0.1.0",
+    "@bpmn-io/theme": "^0.0.0",
     "@rollup/plugin-commonjs": "^29.0.3",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^16.0.3",

@@ -35,6 +35,14 @@ async function run() {
   console.log('copy bpmn-js.css to ' + dest);
   await cp('./assets/*.css', dest + '/assets');
 
+  // the design tokens are authored once in @bpmn-io/theme; inline them so the
+  // published stylesheet is self-contained, as diagram-js.css already is
+  console.log('inline design tokens into ' + dest + '/assets/bpmn-js.css');
+  const themeCss = fs.readFileSync(resolve('@bpmn-io/theme', '/assets/theme.css'), 'utf8');
+  const bpmnJsCss = fs.readFileSync(dest + '/assets/bpmn-js.css', 'utf8');
+
+  fs.writeFileSync(dest + '/assets/bpmn-js.css', `${themeCss}\n${bpmnJsCss}`);
+
   console.log('building pre-packaged distributions');
 
   await exec('rollup', [ '-c', '--bundleConfigAsCjs' ], {
