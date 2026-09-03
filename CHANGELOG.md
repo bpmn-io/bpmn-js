@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.27.1
+
+* `FIX`: do not move group label away from the group ([#2495](https://github.com/bpmn-io/bpmn-js/pull/2495))
+
 ## 18.27.0
 
 * `FEAT`: add tooltip with title and shortcut on palette entries ([#2465](https://github.com/bpmn-io/bpmn-js/pull/2465))

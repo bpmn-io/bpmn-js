@@ -308,6 +308,32 @@ describe('modeling/behavior - AdaptiveLabelPositioningBehavior', function() {
 
       });
 
+
+      describe('through <modeling#updateLabel>', function() {
+
+        it('should keep group label inside the group', inject(
+          function(canvas, modeling) {
+
+            // given
+            var root = canvas.getRootElement();
+
+            var group = modeling.createShape(
+              { type: 'bpmn:Group' },
+              { x: 400, y: 400, width: 300, height: 200 },
+              root
+            );
+
+            // when
+            modeling.updateLabel(group, 'FOO BAR');
+
+            // then
+            expectLabelOrientation(group, 'intersect');
+            expect(group.label.y).to.be.above(group.y);
+          }
+        ));
+
+      });
+
     });
 
   });
