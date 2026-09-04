@@ -6,6 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.28.0
+
+* `FEAT`: keep selection visible on canvas resize ([bpmn-io/diagram-js#1038](https://github.com/bpmn-io/diagram-js/pull/1038), [#2435](https://github.com/bpmn-io/bpmn-js/pull/2435))
+
 ## 18.27.1
 
 * `FIX`: do not move group label away from the group ([#2495](https://github.com/bpmn-io/bpmn-js/pull/2495))
