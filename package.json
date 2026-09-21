@@ -65,7 +65,7 @@
     "*.css"
   ],
   "devDependencies": {
-    "@babel/core": "^7.29.7",
+    "@babel/core": "^8.0.5",
     "@bpmn-io/a11y": "^0.1.0",
     "@bpmn-io/theme": "^0.1.0",
     "@rollup/plugin-commonjs": "^29.0.3",
@@ -109,7 +109,7 @@
     "sinon-chai": "^4.0.0",
     "ts-expect": "^1.3.0",
     "typescript": "^5.9.3",
-    "webpack": "^5.107.2"
+    "webpack": "^5.110.3"
   },
   "dependencies": {
     "bpmn-moddle": "^10.3.1",
