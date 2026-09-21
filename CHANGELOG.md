@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.29.1
+
 * `DEPS`: update to `bpmn-moddle@10.3.1`
 
 ## 18.29.0
