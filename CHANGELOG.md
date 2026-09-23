@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.30.0
+
+* `FEAT`: source colors and corner radii from `@bpmn-io/theme` tokens ([#2497](https://github.com/bpmn-io/bpmn-js/pull/2497))
+* `DEPS`: update to `diagram-js@15.27.0`
+
 ## 18.29.1
 
 * `DEPS`: update to `bpmn-moddle@10.3.1`
