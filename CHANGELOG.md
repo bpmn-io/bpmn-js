@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.30.1
+
 * `FIX`: prevent overflowing of text when layouting it ([bpmn-io/diagram-js#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
 * `FIX`: prevent text layouting from looping in certain scenarios ([#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [bpmn-io/diagram-js#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
 * `DEPS`: update to `diagram-js@15.27.1`
