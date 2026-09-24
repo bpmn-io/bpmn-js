@@ -80,7 +80,7 @@
     "camunda-bpmn-moddle": "^4.0.1",
     "chai": "^6.2.2",
     "chai-match": "^1.1.1",
-    "cpy": "^13.2.1",
+    "cpy": "^13.2.3",
     "cross-env": "^10.1.0",
     "del": "^8.0.0",
     "del-cli": "^7.0.0",
