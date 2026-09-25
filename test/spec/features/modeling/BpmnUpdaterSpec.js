@@ -284,20 +284,16 @@ describe('features - bpmn-updater', function() {
 
   });
 
-
   describe('BPMNLabel', function() {
 
     describe('embedded', function() {
 
       it('should set BPMNLabel on task', inject(function(modeling, elementRegistry) {
 
-        // given
         var task = elementRegistry.get('Task_1');
 
-        // when
         modeling.updateLabel(task, 'foo');
 
-        // then
         expect(task.businessObject.name).to.equal('foo');
         expect(getDi(task).label).to.exist;
       }));
@@ -305,19 +301,61 @@ describe('features - bpmn-updater', function() {
 
       it('should unset BPMNLabel on task', inject(function(modeling, elementRegistry) {
 
-        // given
         var task = elementRegistry.get('Task_3');
 
-        // when
         modeling.updateLabel(task, '');
 
-        // then
         expect(task.businessObject.name).to.equal('');
         expect(getDi(task)).not.to.have.property('label');
       }));
+
     });
 
 
-  });
+    describe('external', function() {
 
-});
+      it('should unset BPMNLabel when external label is removed', inject(
+        function(modeling, elementRegistry) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_2');
+
+          modeling.updateLabel(event, 'foo');
+
+          var label = event.label;
+
+          expect(label).to.exist;
+          expect(getDi(event).label).to.exist;
+
+          // when
+          modeling.removeElements([ label ]);
+
+          // then
+          expect(getDi(event)).not.to.have.property('label');
+        }
+      ));
+
+      it('should restore BPMNLabel when external label deletion is undone', inject(
+        function(modeling, elementRegistry, commandStack) {
+
+          // given
+          var event = elementRegistry.get('StartEvent_2');
+
+          modeling.updateLabel(event, 'foo');
+
+          var label = event.label;
+
+          // when
+          modeling.removeElements([ label ]);
+          commandStack.undo();
+
+          // then
+          expect(getDi(event).label).to.exist;
+        }
+      ));
+
+    });
+
+  }); // closes BPMNLabel
+
+}); // closes features - bpmn-updater
