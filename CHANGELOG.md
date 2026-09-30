@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: remove `BPMNLabel` with external label ([#2499](https://github.com/bpmn-io/bpmn-js/pull/2499), [#1893](https://github.com/bpmn-io/bpmn-js/issues/1893))
+
 ## 18.30.1
 
 * `FIX`: prevent overflowing of text when layouting it ([bpmn-io/diagram-js#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
