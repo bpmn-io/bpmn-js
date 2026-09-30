@@ -12,6 +12,7 @@ ___Note:__ Yet to be released changes appear here._
 * `FIX`: cancel canvas move on diagram destroy ([bpmn-io/diagrma-js#1110](https://github.com/bpmn-io/diagram-js/pull/1110), [#1109](https://github.com/bpmn-io/diagram-js/issues/1109))
 * `FIX`: display documentation link in the popup menu bottom when keyboard is used ([bpmn-io/diagram-js#1103](https://github.com/bpmn-io/diagram-js/issues/1103))
 * `DEPS`: update to `diagram-js@15.27.3`
+* `DEPS`: update to `diagram-js-direct-editing@3.6.0`
 
 ## 18.30.1
 
