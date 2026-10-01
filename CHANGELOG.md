@@ -6,10 +6,10 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.31.0
+
 * `FEAT`: support letter shortcuts on non-Latin keyboard layouts ([bpmn-io/diagram-js#1112](https://github.com/bpmn-io/diagram-js/pull/1112), [#1888](https://github.com/bpmn-io/bpmn-js/issues/1888), [#2108](https://github.com/bpmn-io/bpmn-js/issues/2108))
 * `FIX`: remove `BPMNLabel` with external label ([#2499](https://github.com/bpmn-io/bpmn-js/pull/2499), [#1893](https://github.com/bpmn-io/bpmn-js/issues/1893))
-* `FIX`: prevent overflowing of text when layouting it ([bpmn-io/diagrma-js#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
-* `FIX`: prevent text layouting from looping in certain scenarios ([bpmn-io/diagrma-js#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [bpmn-io/diagrma-js#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
 * `FIX`: cancel canvas move on diagram destroy ([bpmn-io/diagrma-js#1110](https://github.com/bpmn-io/diagram-js/pull/1110), [#1109](https://github.com/bpmn-io/diagram-js/issues/1109))
 * `FIX`: display documentation link in the popup menu bottom when keyboard is used ([bpmn-io/diagram-js#1103](https://github.com/bpmn-io/diagram-js/issues/1103))
 * `DEPS`: update to `diagram-js@15.28.0`
