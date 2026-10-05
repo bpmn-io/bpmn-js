@@ -71,7 +71,7 @@ building the latest development snapshot.
 
 bpmn-js builds on top of a few powerful tools:
 
-* [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browsers
+* [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle): Read / write support for BPMN 2.0 XML in the browser
 * [diagram-js](https://github.com/bpmn-io/diagram-js): Diagram rendering and editing toolkit
 
 It is an extensible toolkit, complemented by many [additional utilities](https://github.com/bpmn-io/awesome-bpmn-io).
