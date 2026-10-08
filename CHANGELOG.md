@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+TEST CHANGE!
+
 ## 18.31.0
 
 * `FEAT`: support letter shortcuts on non-Latin keyboard layouts ([bpmn-io/diagram-js#1112](https://github.com/bpmn-io/diagram-js/pull/1112), [#1888](https://github.com/bpmn-io/bpmn-js/issues/1888), [#2108](https://github.com/bpmn-io/bpmn-js/issues/2108))
