@@ -79,6 +79,48 @@ describe('import - labels', function() {
       });
     });
 
+
+    describe('with custom label width', function() {
+
+      var xml = require('../../../fixtures/bpmn/import/labels/external-resized.bpmn');
+
+      beforeEach(bootstrapViewer(xml));
+
+
+      it('should keep width narrower than default', inject(function(elementRegistry) {
+
+        // when
+        var label = elementRegistry.get('NarrowLabelEvent').label;
+
+        // then
+        expect(label.x).to.eql(93);
+        expect(label.width).to.eql(50);
+      }));
+
+
+      it('should keep width wider than text', inject(function(elementRegistry) {
+
+        // when
+        var label = elementRegistry.get('WideLabelEvent').label;
+
+        // then
+        expect(label.x).to.eql(243);
+        expect(label.width).to.eql(150);
+      }));
+
+
+      it('should fit zero width to text', inject(function(elementRegistry) {
+
+        // when
+        var label = elementRegistry.get('ZeroWidthLabelEvent').label;
+
+        // then
+        expect(label.width).to.be.above(0);
+        expect(label.x + label.width / 2).to.be.closeTo(518, 1);
+      }));
+
+    });
+
   });
 
 });
