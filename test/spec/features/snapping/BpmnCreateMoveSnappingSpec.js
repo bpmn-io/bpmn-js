@@ -487,38 +487,76 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
   });
 
 
-  describe('label snapping inside participant', function() {
+  [
+    {
+      name: 'participant with lanes',
+      xml: require('./BpmnCreateMoveSnapping.label-snapping.bpmn'),
+      hover: 'Lane_1'
+    },
+    {
+      name: 'participant without lanes',
+      xml: require('./BpmnCreateMoveSnapping.label-snapping-no-lanes.bpmn'),
+      hover: 'Participant_1'
+    }
+  ].forEach(function(scenario) {
 
-    var diagramXML = require('./BpmnCreateMoveSnapping.label-snapping.bpmn');
+    describe('label snapping inside ' + scenario.name, function() {
 
-    beforeEach(bootstrapModeler(diagramXML, {
-      modules: testModules
-    }));
+      beforeEach(bootstrapModeler(scenario.xml, {
+        modules: testModules
+      }));
 
 
-    it('should add snap targets from participant when moving label', inject(
-      function(dragging, elementRegistry, move) {
+      [ 'Start', 'A much wider start event label' ].forEach(function(labelText) {
 
-        // given
-        var startEvent = elementRegistry.get('StartEvent_1');
-        var startEventLabel = startEvent.label;
+        [ 'shape', 'label' ].forEach(function(snapTarget) {
 
-        var labelMid = mid(startEventLabel);
+          it('should snap to sibling ' + snapTarget + ': ' + labelText, inject(
+            function(canvas, dragging, elementRegistry, modeling, move) {
 
-        // when
-        move.start(canvasEvent(labelMid), startEventLabel);
+              // given
+              var startEvent = elementRegistry.get('StartEvent_1');
+              var gateway = elementRegistry.get('Gateway_1');
+              var participant = elementRegistry.get('Participant_1');
+              var hover = elementRegistry.get(scenario.hover);
 
-        dragging.hover({ element: startEvent.parent, gfx: elementRegistry.getGraphics(startEvent.parent) });
-        dragging.move(canvasEventTopLeft({ x: 395, y: labelMid.y + 50 }, startEventLabel));
-        dragging.end();
+              modeling.updateLabel(startEvent, labelText);
 
-        // then
-        expect(mid(startEventLabel)).to.eql({
-          x: 400, // 395 snapped to 400
-          y: labelMid.y + 50
+              var label = startEvent.label;
+              var labelMid = mid(label);
+              var peer = snapTarget === 'shape' ? gateway : gateway.label;
+              var peerMid = mid(peer);
+              var destination = { x: peerMid.x - 5, y: labelMid.y + 50 };
+
+              // Keep competing snap targets outside the snapping tolerance.
+              expect(mid(gateway).x).to.equal(500);
+              expect(mid(participant).x).to.equal(400);
+              expect(Math.abs(mid(gateway.label).x - mid(gateway).x)).to.be.greaterThan(7);
+              expect(Math.abs(mid(hover).x - peerMid.x)).to.be.greaterThan(7);
+
+              // when
+              move.start(canvasEvent(labelMid), label, true);
+              dragging.hover({ element: hover, gfx: elementRegistry.getGraphics(hover) });
+
+              // Establish the hover target before approaching the snap point.
+              dragging.move(canvasEvent(labelMid));
+              dragging.move(canvasEvent(destination));
+              dragging.end();
+
+              // then
+              expect(label.parent).to.equal(canvas.getRootElement());
+              expect(mid(label)).to.eql({
+                x: peerMid.x,
+                y: destination.y
+              });
+            }
+          ));
+
         });
-      }
-    ));
+
+      });
+
+    });
 
   });
 
@@ -532,34 +570,49 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
     }));
 
 
-    it('should handle label move when no participant ancestor exists', inject(
-      function(dragging, elementRegistry, move, modeling, elementFactory, canvas) {
+    [ 'shape', 'label' ].forEach(function(snapTarget) {
 
-        // given - create a StartEvent with external label in the process (no participant)
-        var process = elementRegistry.get('Process_1');
-        var startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+      it('should snap to sibling ' + snapTarget, inject(
+        function(dragging, elementRegistry, move, modeling, elementFactory) {
 
-        modeling.createShape(startEvent, { x: 300, y: 150 }, process);
-        modeling.updateLabel(startEvent, 'Start');
+          // given
+          var process = elementRegistry.get('Process_1');
+          var startEvent = elementFactory.createShape({ type: 'bpmn:StartEvent' });
+          var gateway = elementFactory.createShape({ type: 'bpmn:ExclusiveGateway' });
 
-        var startEventLabel = startEvent.label;
+          modeling.createShape(startEvent, { x: 300, y: 150 }, process);
+          modeling.updateLabel(startEvent, 'Start');
+          modeling.createShape(gateway, { x: 500, y: 150 }, process);
+          modeling.updateLabel(gateway, 'Decision');
+          modeling.moveShape(gateway.label, { x: 50, y: 0 });
 
-        // Verify label was created
-        expect(startEventLabel).to.exist;
-        expect(startEventLabel.labelTarget).to.equal(startEvent);
+          var label = startEvent.label;
+          var labelMid = mid(label);
+          var peer = snapTarget === 'shape' ? gateway : gateway.label;
+          var peerMid = mid(peer);
+          var destination = { x: peerMid.x - 5, y: labelMid.y + 50 };
 
-        var labelMid = mid(startEventLabel);
+          expect(Math.abs(mid(gateway.label).x - mid(gateway).x)).to.be.greaterThan(7);
 
-        // when - move the label (getParticipantAncestor returns null for process)
-        // This exercises the code path where no participant ancestor exists
-        move.start(canvasEvent(labelMid), startEventLabel);
-        dragging.move(canvasEvent({ x: labelMid.x + 50, y: labelMid.y }));
-        dragging.end();
+          // when
+          move.start(canvasEvent(labelMid), label, true);
+          dragging.hover({ element: process, gfx: elementRegistry.getGraphics(process) });
 
-        // then
-        expect(startEventLabel.x).to.exist;
-      }
-    ));
+          // Establish the hover target before approaching the snap point.
+          dragging.move(canvasEvent(labelMid));
+          dragging.move(canvasEvent(destination));
+          dragging.end();
+
+          // then
+          expect(label.parent).to.equal(process);
+          expect(mid(label)).to.eql({
+            x: peerMid.x,
+            y: destination.y
+          });
+        }
+      ));
+
+    });
 
   });
 

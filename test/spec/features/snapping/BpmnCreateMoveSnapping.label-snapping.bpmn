@@ -32,9 +32,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1_di" bpmnElement="Gateway_1" isMarkerVisible="true">
-        <dc:Bounds x="375" y="135" width="50" height="50" />
+        <dc:Bounds x="475" y="135" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="375" y="192" width="50" height="14" />
+          <dc:Bounds x="525" y="192" width="50" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
