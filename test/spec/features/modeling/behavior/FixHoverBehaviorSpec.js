@@ -230,6 +230,54 @@ describe('features/modeling/behavior - fix hover', function() {
 
     });
 
+
+    describe('inside participant', function() {
+
+      var diagramXML = require('./FixHoverBehavior.participant-label.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, {
+        modules: testModules
+      }));
+
+      beforeEach(inject(function(dragging) {
+        dragging.setOptions({ manual: true });
+      }));
+
+
+      it('should <shape.move.hover> root', inject(
+        function(dragging, elementRegistry, move, eventBus, canvas) {
+
+          // given
+          var startEvent = elementRegistry.get('StartEvent'),
+              task = elementRegistry.get('Task');
+
+          var label = startEvent.label;
+
+          // capture the move target (assigned at low priority)
+          var moveTarget;
+
+          eventBus.on('shape.move.move', 100, function(event) {
+            moveTarget = event.context.target;
+          });
+
+          move.start(canvasEvent({ x: 270, y: 220 }), label, true);
+
+          // when
+          dragging.hover({ element: task, gfx: elementRegistry.getGraphics(task) });
+
+          dragging.move(canvasEvent({ x: 450, y: 195 }));
+
+          dragging.end();
+
+          // then
+          // hovering a sibling inside the participant,
+          // the root remains the move target
+          expect(moveTarget).to.equal(canvas.getRootElement());
+        }
+      ));
+
+    });
+
   });
 
 
