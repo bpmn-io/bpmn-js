@@ -52,6 +52,7 @@ describe('features/copy-paste', function() {
       complexXML = require('./complex.bpmn'),
       collaborationXML = require('./collaboration.bpmn'),
       collaborationMultipleXML = require('./collaboration-multiple.bpmn'),
+      collaborationMessageFlowXML = require('./collaboration-message-flow.bpmn'),
       collaborationAssociationsXML = require('./data-associations.bpmn'),
       eventBasedGatewayXML = require('./event-based-gateway.bpmn'),
       collapsedSubprocessXML = require('./collapsed-subprocess.bpmn'),
@@ -641,6 +642,98 @@ describe('features/copy-paste', function() {
       });
 
     });
+
+  });
+
+
+  describe('collaboration (message flow)', function() {
+
+    beforeEach(bootstrapModeler(collaborationMessageFlowXML, { modules: testModules }));
+
+
+    describe('rules', function() {
+
+      it('should NOT copy message flow if participants were not copied', function() {
+
+        // when
+        var tree = copy([ 'Task_1', 'Task_2', 'MessageFlow_1' ]);
+
+        // then
+        var descriptors = getAllElementsInTree(tree);
+
+        var messageFlowDescriptor = find(descriptors, function(descriptor) {
+          return descriptor.id === 'MessageFlow_1';
+        });
+
+        expect(messageFlowDescriptor).not.to.exist;
+      });
+
+
+      it('should copy message flow if participants were copied', function() {
+
+        // when
+        var tree = copy([ 'Participant_1', 'Participant_2' ]);
+
+        // then
+        var descriptors = getAllElementsInTree(tree);
+
+        var messageFlowDescriptor = find(descriptors, function(descriptor) {
+          return descriptor.id === 'MessageFlow_1';
+        });
+
+        expect(messageFlowDescriptor).to.exist;
+      });
+
+    });
+
+
+    it('should paste without message flow into process', inject(
+      function(canvas, copyPaste, elementRegistry, modeling) {
+
+        // given
+        // copy elements without their participants
+        copyPaste.copy([
+          elementRegistry.get('Task_1'),
+          elementRegistry.get('Task_2'),
+          elementRegistry.get('MessageFlow_1')
+        ]);
+
+        // turn collaboration into process by removing the participants
+        modeling.removeElements([
+          elementRegistry.get('Participant_1'),
+          elementRegistry.get('Participant_2')
+        ]);
+
+        var rootElement = canvas.getRootElement();
+
+        // assume
+        expect(rootElement).to.be.exist;
+        expect(is(rootElement, 'bpmn:Process')).to.be.true;
+
+        // when
+        var elements = copyPaste.paste({
+          element: rootElement,
+          point: {
+            x: 400,
+            y: 400
+          }
+        });
+
+        // then
+        // tasks pasted, message flow silently dropped, no error thrown
+        var pastedMessageFlows = elements.filter(function(element) {
+          return is(element, 'bpmn:MessageFlow');
+        });
+
+        expect(pastedMessageFlows).to.be.empty;
+
+        var pastedTasks = elements.filter(function(element) {
+          return is(element, 'bpmn:Task');
+        });
+
+        expect(pastedTasks).to.have.length(2);
+      }
+    ));
 
   });
 
