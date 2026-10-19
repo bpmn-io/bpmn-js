@@ -83,7 +83,7 @@
     "cpy": "^13.2.3",
     "cross-env": "^10.1.0",
     "del": "^9.0.0",
-    "del-cli": "^7.0.0",
+    "del-cli": "^8.0.0",
     "eslint": "^9.39.5",
     "eslint-plugin-bpmn-io": "^2.4.0",
     "execa": "^10.0.1",
