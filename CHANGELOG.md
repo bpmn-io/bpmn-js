@@ -8,7 +8,8 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 18.31.1
 
-* `FIX`: keep size of resized external labels on import
+* `FIX`: keep size of resized external labels on import ([#2503](https://github.com/bpmn-io/bpmn-js/pull/2503))
+* `FIX`: snap external labels to nested elements ([#2504](https://github.com/bpmn-io/bpmn-js/pull/2504))
 
 ## 18.31.0
 
