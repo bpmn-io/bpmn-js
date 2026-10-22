@@ -506,6 +506,22 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
+      it('should set loop characteristics parent', inject(function(elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-parallel-mi');
+
+        // then
+        expect(businessObject.loopCharacteristics.$parent).to.equal(businessObject);
+      }));
+
+
       it('should keep sequential properties', inject(function(elementRegistry) {
 
         // given
@@ -632,6 +648,22 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
 
 
+      it('should set loop characteristics parent', inject(function(elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-sequential-mi');
+
+        // then
+        expect(businessObject.loopCharacteristics.$parent).to.equal(businessObject);
+      }));
+
+
       it('should keep parallel properties', inject(function(elementRegistry) {
 
         // given
@@ -754,6 +786,22 @@ describe('features/popup-menu - replace menu provider', function() {
 
         expect(is(newLoopCharacteristics, 'bpmn:StandardLoopCharacteristics')).to.be.true;
         expect(newLoopCharacteristics.isSequential).to.be.undefined;
+      }));
+
+
+      it('should set loop characteristics parent', inject(function(elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            businessObject = getBusinessObject(task);
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-loop');
+
+        // then
+        expect(businessObject.loopCharacteristics.$parent).to.equal(businessObject);
       }));
     });
 
