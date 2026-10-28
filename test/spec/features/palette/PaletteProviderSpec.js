@@ -50,6 +50,19 @@ describe('features/palette', function() {
   }));
 
 
+  it('should provide keyboard shortcuts on tool entries', inject(function(palette) {
+
+    // when
+    var entries = palette.getEntries();
+
+    // then
+    expect(entries[ 'hand-tool' ].shortcut).to.eql('H');
+    expect(entries[ 'lasso-tool' ].shortcut).to.eql('L');
+    expect(entries[ 'space-tool' ].shortcut).to.eql('S');
+    expect(entries[ 'global-connect-tool' ].shortcut).to.eql('C');
+  }));
+
+
   describe('sub process', function() {
 
     it('should create sub process with start event', inject(function(dragging) {

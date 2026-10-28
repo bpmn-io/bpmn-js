@@ -23,6 +23,19 @@ describe('BaseViewer', function() {
   });
 
 
+  it('should scope theme variables to the container', function() {
+
+    // given
+    const instance = new BaseViewer();
+
+    // when
+    const container = instance._createContainer({ width: '100%', height: '100%' });
+
+    // then
+    expect(container.classList.contains('bio-theme-parent')).to.be.true;
+  });
+
+
   describe('#getModule', function() {
 
     it('should allow override with context', function() {

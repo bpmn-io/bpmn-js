@@ -487,6 +487,150 @@ describe('features/snapping - BpmnCreateMoveSnapping', function() {
   });
 
 
+  describe('labels', function() {
+
+    var diagramXML = require('./BpmnCreateMoveSnapping.labels.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: testModules
+    }));
+
+    var gateway, label;
+
+    beforeEach(inject(function(elementRegistry) {
+      gateway = elementRegistry.get('Gateway_1');
+
+      label = gateway.label;
+    }));
+
+
+    it('should snap label to its label target inside participant', inject(
+      function(dragging, elementRegistry, move) {
+
+        // given
+        // label target (gateway) mid is at { x: 275, y: 195 }
+        move.start(canvasEventTopLeft({ x: label.x, y: label.y }, label), label, true);
+
+        dragging.hover({
+          element: gateway,
+          gfx: elementRegistry.getGraphics(gateway)
+        });
+
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+        // when
+        dragging.move(canvasEventTopLeft({ x: 270 - label.width / 2, y: 300 }, label));
+
+        dragging.end();
+
+        // then
+        // label mid x snapped to gateway mid x
+        expect(mid(label).x).to.equal(275); // 270 snapped
+        expect(label.y).to.equal(300);
+      }
+    ));
+
+
+    it('should snap label to sibling elements inside participant', inject(
+      function(dragging, elementRegistry, move) {
+
+        // given
+        // task (sibling) mid is at { x: 450, y: 195 }
+        move.start(canvasEventTopLeft({ x: label.x, y: label.y }, label), label, true);
+
+        dragging.hover({
+          element: gateway,
+          gfx: elementRegistry.getGraphics(gateway)
+        });
+
+        dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+        // when
+        dragging.move(canvasEventTopLeft({ x: 445 - label.width / 2, y: 300 }, label));
+
+        dragging.end();
+
+        // then
+        // label mid x snapped to task mid x
+        expect(mid(label).x).to.equal(450); // 445 snapped
+        expect(label.y).to.equal(300);
+      }
+    ));
+
+
+    describe('inside lane', function() {
+
+      var laneDiagramXML = require('./BpmnCreateMoveSnapping.labels-lane.bpmn');
+
+      beforeEach(bootstrapModeler(laneDiagramXML, {
+        modules: testModules
+      }));
+
+      beforeEach(inject(function(elementRegistry) {
+        gateway = elementRegistry.get('Gateway_1');
+
+        label = gateway.label;
+      }));
+
+
+      it('should snap label to its label target inside lane', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          // label target (gateway) mid is at { x: 275, y: 195 }
+          move.start(canvasEventTopLeft({ x: label.x, y: label.y }, label), label, true);
+
+          dragging.hover({
+            element: gateway,
+            gfx: elementRegistry.getGraphics(gateway)
+          });
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          // when
+          dragging.move(canvasEventTopLeft({ x: 270 - label.width / 2, y: 300 }, label));
+
+          dragging.end();
+
+          // then
+          // label mid x snapped to gateway mid x
+          expect(mid(label).x).to.equal(275); // 270 snapped
+          expect(label.y).to.equal(300);
+        }
+      ));
+
+
+      it('should snap label to sibling elements inside lane', inject(
+        function(dragging, elementRegistry, move) {
+
+          // given
+          // task (sibling) mid is at { x: 450, y: 195 }
+          move.start(canvasEventTopLeft({ x: label.x, y: label.y }, label), label, true);
+
+          dragging.hover({
+            element: gateway,
+            gfx: elementRegistry.getGraphics(gateway)
+          });
+
+          dragging.move(canvasEvent({ x: 0, y: 0 }));
+
+          // when
+          dragging.move(canvasEventTopLeft({ x: 445 - label.width / 2, y: 300 }, label));
+
+          dragging.end();
+
+          // then
+          // label mid x snapped to task mid x
+          expect(mid(label).x).to.equal(450); // 445 snapped
+          expect(label.y).to.equal(300);
+        }
+      ));
+
+    });
+
+  });
+
+
   describe('docking points', function() {
 
     describe('move mode', function() {

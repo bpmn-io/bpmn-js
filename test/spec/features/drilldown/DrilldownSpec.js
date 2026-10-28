@@ -176,6 +176,39 @@ describe('features - drilldown', function() {
       ).to.equal(subRoot);
     }));
 
+
+    it('should render navigable crumbs as focusable links', inject(function(canvas) {
+
+      // given
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+
+      // when
+      var crumbs = getCrumbs();
+
+      // then
+      // all but the last (current) crumb are navigable links
+      crumbs.slice(0, -1).forEach(function(crumb) {
+        expect(crumb.tagName).to.equal('A');
+        expect(crumb.getAttribute('href')).to.exist;
+      });
+    }));
+
+
+    it('should render current crumb as plain, non-focusable text', inject(function(canvas) {
+
+      // given
+      canvas.setRootElement(canvas.findRoot('collapsedProcess_2_plane'));
+
+      // when
+      var crumbs = getCrumbs();
+
+      // then
+      var current = crumbs[crumbs.length - 1];
+
+      expect(current.tagName).to.equal('SPAN');
+      expect(current.getAttribute('href')).not.to.exist;
+    }));
+
   });
 
 
@@ -677,4 +710,8 @@ function expectBreadcrumbs(expected) {
 
 function clickBreadcrumb(index) {
   getBreadcrumbs().children[index].click();
+}
+
+function getCrumbs() {
+  return Array.from(getBreadcrumbs().querySelectorAll('.bjs-crumb'));
 }

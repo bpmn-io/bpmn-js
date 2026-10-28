@@ -13,7 +13,7 @@ import TestContainer from 'mocha-test-container-support';
 
 import { createCanvasEvent } from '../util/MockEvents';
 
-import { clearBpmnJS, collectTranslations, enableLogging, setBpmnJS } from 'test/TestHelper';
+import { clearBpmnJS, collectTranslations, enableLogging, observeContainerResize, setBpmnJS } from 'test/TestHelper';
 
 import { find, pick } from 'min-dash';
 
@@ -42,6 +42,8 @@ describe('Modeler', function() {
     setBpmnJS(modeler);
 
     enableLogging(modeler, singleStart);
+
+    observeContainerResize(modeler);
 
     return modeler.importXML(xml).then(function(result) {
       return { error: null, warnings: result.warnings, modeler: modeler };
@@ -969,6 +971,80 @@ describe('Modeler', function() {
 
       const updatedLabel = elementRegistry.get(label.id);
       expect(updatedLabel.height).to.equal(40);
+    });
+
+
+    describe('re-import', function() {
+
+      function getLabelLayout(modeler, id) {
+        var elementRegistry = modeler.get('elementRegistry');
+
+        var label = elementRegistry.get(id);
+
+        var lines = Array.from(
+          elementRegistry.getGraphics(label).querySelectorAll('tspan'),
+          tspan => tspan.textContent
+        );
+
+        return {
+          x: label.x,
+          y: label.y,
+          width: label.width,
+          height: label.height,
+          lines
+        };
+      }
+
+      async function resizeLabel(width) {
+        const { modeler } = await createModeler(diagramXML);
+
+        var modeling = modeler.get('modeling');
+
+        var startEvent = modeler.get('elementRegistry').get('StartEvent_2');
+
+        modeling.updateLabel(startEvent, 'This is a much longer start event text');
+
+        var label = startEvent.label;
+
+        modeling.resizeShape(label, { x: label.x, y: label.y, width, height: label.height }, 'e');
+
+        return modeler;
+      }
+
+
+      it('should keep label resized narrower than default', async function() {
+
+        // given
+        const modeler = await resizeLabel(50);
+
+        const expectedLayout = getLabelLayout(modeler, 'StartEvent_2_label');
+
+        const { xml } = await modeler.saveXML();
+
+        // when
+        await modeler.importXML(xml);
+
+        // then
+        expect(getLabelLayout(modeler, 'StartEvent_2_label')).to.eql(expectedLayout);
+      });
+
+
+      it('should keep label resized wider than text', async function() {
+
+        // given
+        const modeler = await resizeLabel(300);
+
+        const expectedLayout = getLabelLayout(modeler, 'StartEvent_2_label');
+
+        const { xml } = await modeler.saveXML();
+
+        // when
+        await modeler.importXML(xml);
+
+        // then
+        expect(getLabelLayout(modeler, 'StartEvent_2_label')).to.eql(expectedLayout);
+      });
+
     });
 
   });

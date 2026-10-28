@@ -4,7 +4,8 @@ set -eo pipefail
 shopt -s inherit_errexit nullglob
 
 i=0
-tries=9
+tries=20
+interval=5
 pkg="$PKG"
 until [ $i -gt $tries ]
 do
@@ -15,10 +16,10 @@ do
     exit 0
   fi
 
-  i=$(($i+1))
+  i=$((i+1))
 
-  sleep 5s
+  sleep "${interval}s"
 done
 
-echo "Not found after $i tries. Giving up."
+echo "Not found after $((i*interval))s ($i attempts). Giving up."
 exit 1;

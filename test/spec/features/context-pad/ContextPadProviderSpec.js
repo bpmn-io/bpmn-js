@@ -561,6 +561,21 @@ describe('features - context-pad', function() {
     }));
 
 
+    it('should open popup menu with default width', inject(function(elementRegistry, contextPad) {
+
+      // given
+      var element = elementRegistry.get('StartEvent_1');
+
+      contextPad.open(element);
+
+      // when
+      contextPad.trigger('click', padEvent('replace'));
+
+      // then
+      expect(getComputedStyle(getPopupMenu()).width).to.eql('300px');
+    }));
+
+
     it('should hide wrench if replacement is disallowed', inject(
       function(elementRegistry, contextPad, customRules) {
 

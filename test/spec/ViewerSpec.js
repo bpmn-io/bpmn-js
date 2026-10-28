@@ -1418,6 +1418,13 @@ describe('Viewer', function() {
       return new Date().getTime();
     }
 
+    function getViewBox(svg) {
+      return new DOMParser()
+        .parseFromString(svg, 'image/svg+xml')
+        .querySelector('svg')
+        .getAttribute('viewBox');
+    }
+
     function validSVG(svg) {
       var expectedStart = '<?xml version="1.0" encoding="utf-8"?>';
       var expectedEnd = '</svg>';
@@ -1471,6 +1478,95 @@ describe('Viewer', function() {
 
         // then
         expect(validSVG(svg)).to.be.true;
+      });
+    });
+
+
+    it('should pad viewport to not clip strokes at diagram bounds', function() {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      return createViewer(container, Viewer, xml).then(function(result) {
+
+        var err = result.error;
+        var viewer = result.viewer;
+
+        if (err) {
+          throw err;
+        }
+
+        var bbox = viewer.get('canvas').getActiveLayer().getBBox();
+
+        // when
+        return viewer.saveSVG().then(function(result) {
+          return { bbox: bbox, svg: result.svg };
+        });
+      }).then(function(result) {
+
+        var bbox = result.bbox;
+
+        var svgNode = new DOMParser()
+          .parseFromString(result.svg, 'image/svg+xml')
+          .querySelector('svg');
+
+        // then
+        expect(svgNode.getAttribute('width')).to.eql(String(bbox.width + 10));
+        expect(svgNode.getAttribute('height')).to.eql(String(bbox.height + 10));
+        expect(svgNode.getAttribute('viewBox')).to.eql(
+          [ bbox.x - 5, bbox.y - 5, bbox.width + 10, bbox.height + 10 ].join(' ')
+        );
+      });
+    });
+
+
+    it('should ignore outlines when computing export bounds', function() {
+
+      // given
+      var xml = require('../fixtures/bpmn/simple.bpmn');
+
+      var viewer;
+
+      return createViewer(container, Viewer, xml).then(function(result) {
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        viewer = result.viewer;
+
+        // export bounds without any outline present
+        return viewer.saveSVG();
+      }).then(function(withoutOutline) {
+
+        var elementRegistry = viewer.get('elementRegistry');
+
+        var element = elementRegistry.get('EndEvent_1'),
+            gfx = elementRegistry.getGraphics(element);
+
+        // simulate a lazily created outline (as after hover / selection),
+        // extending well beyond the diagram bounds
+        var outline = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+
+        outline.setAttribute('class', 'djs-outline');
+        outline.setAttribute('x', -1000);
+        outline.setAttribute('y', -1000);
+        outline.setAttribute('width', element.width + 2000);
+        outline.setAttribute('height', element.height + 2000);
+
+        gfx.appendChild(outline);
+
+        // when
+        return viewer.saveSVG().then(function(withOutline) {
+          return {
+            withoutOutline: withoutOutline.svg,
+            withOutline: withOutline.svg
+          };
+        });
+      }).then(function(result) {
+
+        // then
+        expect(getViewBox(result.withOutline)).to.eql(getViewBox(result.withoutOutline));
       });
     });
 

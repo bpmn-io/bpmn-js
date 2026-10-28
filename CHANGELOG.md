@@ -6,11 +6,101 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.31.1
+
+* `FIX`: keep size of resized external labels on import ([#2503](https://github.com/bpmn-io/bpmn-js/pull/2503))
+* `FIX`: snap external labels to nested elements ([#2504](https://github.com/bpmn-io/bpmn-js/pull/2504))
+
+## 18.31.0
+
+* `FEAT`: support letter shortcuts on non-Latin keyboard layouts ([bpmn-io/diagram-js#1112](https://github.com/bpmn-io/diagram-js/pull/1112), [#1888](https://github.com/bpmn-io/bpmn-js/issues/1888), [#2108](https://github.com/bpmn-io/bpmn-js/issues/2108))
+* `FIX`: remove `BPMNLabel` with external label ([#2499](https://github.com/bpmn-io/bpmn-js/pull/2499), [#1893](https://github.com/bpmn-io/bpmn-js/issues/1893))
+* `FIX`: cancel canvas move on diagram destroy ([bpmn-io/diagrma-js#1110](https://github.com/bpmn-io/diagram-js/pull/1110), [#1109](https://github.com/bpmn-io/diagram-js/issues/1109))
+* `FIX`: display documentation link in the popup menu bottom when keyboard is used ([bpmn-io/diagram-js#1103](https://github.com/bpmn-io/diagram-js/issues/1103))
+* `DEPS`: update to `diagram-js@15.28.0`
+* `DEPS`: update to `diagram-js-direct-editing@3.6.0`
+
+## 18.30.1
+
+* `FIX`: prevent overflowing of text when layouting it ([bpmn-io/diagram-js#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
+* `FIX`: prevent text layouting from looping in certain scenarios ([#1106](https://github.com/bpmn-io/diagram-js/pull/1106), [bpmn-io/diagram-js#1105](https://github.com/bpmn-io/diagram-js/pull/1105))
+* `DEPS`: update to `diagram-js@15.27.1`
+
+## 18.30.0
+
+* `FEAT`: source colors and corner radii from `@bpmn-io/theme` tokens ([#2497](https://github.com/bpmn-io/bpmn-js/pull/2497))
+* `DEPS`: update to `diagram-js@15.27.0`
+
+## 18.29.1
+
+* `DEPS`: update to `bpmn-moddle@10.3.1`
+
+## 18.29.0
+
+* `DEPS`: update to `bpmn-moddle@10.3.0`
+
+## 18.28.0
+
+* `FEAT`: keep selection visible on canvas resize ([bpmn-io/diagram-js#1038](https://github.com/bpmn-io/diagram-js/pull/1038), [#2435](https://github.com/bpmn-io/bpmn-js/pull/2435))
+
+## 18.27.1
+
+* `FIX`: do not move group label away from the group ([#2495](https://github.com/bpmn-io/bpmn-js/pull/2495))
+
+## 18.27.0
+
+* `FEAT`: add tooltip with title and shortcut on palette entries ([#2465](https://github.com/bpmn-io/bpmn-js/pull/2465))
+* `FIX`: point label link to the closest point of the connection ([#2493](https://github.com/bpmn-io/bpmn-js/pull/2493))
+* `DEPS`: update to `diagram-js@15.26.0`
+
+## 18.26.0
+
+* `FEAT`: give resize handle a border radius ([bpmn-io/diagram-js#1100](https://github.com/bpmn-io/diagram-js/pull/1100))
+* `FEAT`: give segment dragger a border radius ([bpmn-io/diagram-js#1100](https://github.com/bpmn-io/diagram-js/pull/1100))
+* `FEAT`: add `--accent-color` theming token ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
+* `FIX`: use WCAG AA compliant primary accent color ([#2492](https://github.com/bpmn-io/bpmn-js/pull/2492))
+* `DEPS`: update to `diagram-js@15.25.0`
+* `DEPS`: update to `bpmn-moddle@10.2.0`
+* `DEPS`: update to `bpmn-font@0.13.0`
+
+## 18.25.1
+
+* `FIX`: make breadcrumps keyboard accessible ([#2487](https://github.com/bpmn-io/bpmn-js/pull/2487))
+* `FIX`: give breadcrumps a background ([#2487](https://github.com/bpmn-io/bpmn-js/pull/2487), [#2482](https://github.com/bpmn-io/bpmn-js/issues/2482))
+
+## 18.25.0
+
+* `FEAT`: expose default element sizes via `lib/util/ElementSizeUtil` ([#2485](https://github.com/bpmn-io/bpmn-js/issues/2485))
+* `FIX`: do not throw when getting default size of participant without DI ([#2485](https://github.com/bpmn-io/bpmn-js/issues/2485))
+
+## 18.24.0
+
+* `FEAT`: support tabs in popup menu ([bpmn-io/diagram-js#1096](https://github.com/bpmn-io/diagram-js/pull/1096))
+* `FIX`: lay out docs link and drill-in chevron in popup menu as sibling actions ([bpmn-io/diagram-js#1088](https://github.com/bpmn-io/diagram-js/pull/1088))
+* `DEPS`: update to `diagram-js@15.24.0`
+
+## 18.23.0
+
+* `FEAT`: tag elements visually inside a group via `categoryValueRef` ([#2469](https://github.com/bpmn-io/bpmn-js/pull/2469))
+* `FEAT`: eagerly create category value when creating or updating a group ([#2469](https://github.com/bpmn-io/bpmn-js/pull/2469))
+* `FIX`: do not copy message flows without participants ([#1902](https://github.com/bpmn-io/bpmn-js/issues/1902), [#2475](https://github.com/bpmn-io/bpmn-js/pull/2475))
+* `FIX`: ignore labels in `laneRef` updates ([#2469](https://github.com/bpmn-io/bpmn-js/pull/2469))
+* `FIX`: do not copy message flows without participants ([#1902](https://github.com/bpmn-io/bpmn-js/issues/1902), [#2475](https://github.com/bpmn-io/bpmn-js/pull/2475))
+
+## 18.22.1
+
+* `FIX`: prevent clipped strokes in exported diagrams ([#2476](https://github.com/bpmn-io/bpmn-js/pull/2476))
+* `DEPS`: update to `diagram-js@15.23.2`
+
+## 18.22.0
+
+* `FEAT`: add shared popup entries list ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
+* `FEAT`: make replace menu width configurable via css variable ([#2463](https://github.com/bpmn-io/bpmn-js/pull/2463))
 * `FEAT`: complete direct editing on blur ([bpmn-io/diagram-js-direct-editing#74](https://github.com/bpmn-io/diagram-js-direct-editing/pull/74), [#2327](https://github.com/bpmn-io/bpmn-js/issues/2327), [#2464](https://github.com/bpmn-io/bpmn-js/pull/2464))
 * `FEAT`: restore canvas focus in next render cycle ([bpmn-io/diagram-js#1081](https://github.com/bpmn-io/diagram-js/pull/1081))
 * `FEAT`: use auto width with max value of 300px for popup menu ([bpmn-io/diagram-js#1078](https://github.com/bpmn-io/diagram-js/pull/1078))
 * `DEPS`: update to `min-dash@5.1.0`
-* `DEPS`: update to `diagram-js@15.22.0`
+* `DEPS`: update to `diagram-js@15.23.0`
 * `DEPS`: update to `diagram-js-direct-editing@3.5.1`
 
 ## 18.21.0

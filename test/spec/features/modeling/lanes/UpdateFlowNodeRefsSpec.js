@@ -258,6 +258,21 @@ describe('features/modeling - lanes - flowNodeRefs', function() {
   });
 
 
+  it('should not update flow node refs when moving an external label', inject(function(elementRegistry, modeling) {
+
+    // given
+    var eventShape = elementRegistry.get('Event'),
+        event = eventShape.businessObject,
+        lane = elementRegistry.get('Lane').businessObject;
+
+    // when
+    modeling.moveShape(eventShape.label, { x: 10, y: 0 });
+
+    // then
+    expect(lane.flowNodeRef).to.contain(event);
+  }));
+
+
   it('should unwire moving multiple', inject(function(elementRegistry, modeling) {
 
     // given

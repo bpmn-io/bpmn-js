@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -40,30 +41,32 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var group1 = elementRegistry.get('Group_1'),
-            categoryValue = getBusinessObject(group1).categoryValueRef,
+            categoryValueBo = getBusinessObject(group1).categoryValueRef,
             root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent,
-            originalSize = definitions.get('rootElements').length;
+            definitionsBo = getBusinessObject(root).$parent;
+
+        var originalRootElementCount = definitionsBo.get('rootElements').length;
 
         var group = elementFactory.createShape({ type: 'bpmn:Group' });
 
-        getBusinessObject(group).categoryValueRef = categoryValue;
+        // re-using existing categoryValue
+        getBusinessObject(group).categoryValueRef = categoryValueBo;
 
         // when
         var groupShape = modeling.createShape(group, { x: 100, y: 100 }, root),
-            categoryValueRef = getBusinessObject(groupShape).categoryValueRef;
+            groupBo = getBusinessObject(groupShape);
 
         // then
-        expect(categoryValueRef).to.eql(categoryValue);
+        expect(groupBo.categoryValueRef).to.eql(categoryValueBo);
 
-        expect(definitions.get('rootElements')).to.have.length(originalSize);
+        expect(definitionsBo.get('rootElements')).to.have.length(originalRootElementCount);
       }
     ));
 
 
-    describe('should NOT create Category for new Group', function() {
+    describe('should create Category for new Group', function() {
 
-      it('execute', inject(function(canvas, elementFactory, modeling) {
+      it('execute', inject(function(canvas, elementFactory, modeling, bpmnjs) {
 
         // given
         var root = canvas.getRootElement();
@@ -71,10 +74,16 @@ describe('features/modeling/behavior - groups', function() {
         // when
         var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
             groupBo = getBusinessObject(group),
-            categoryValue = groupBo.categoryValueRef;
+            categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = categoryValueBo?.$parent;
 
         // then
-        expect(categoryValue).not.to.exist;
+        // a category value is created up front so that visually enclosed
+        // elements can be categorized even before the group is labeled
+        expect(categoryValueBo).to.exist;
+        expect(categoryBo).to.exist;
+
+        expectRootElement(categoryBo);
       }));
 
 
@@ -85,18 +94,20 @@ describe('features/modeling/behavior - groups', function() {
 
         // when
         var group = modeling.createShape({ type: 'bpmn:Group' }, { x: 100, y: 100 }, root),
-            groupBo = getBusinessObject(group);
+            groupBo = getBusinessObject(group),
+            categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = groupBo.categoryValueRef?.$parent;
 
         commandStack.undo();
 
-        var categoryValue = groupBo.categoryValueRef;
-
         // then
-        expect(categoryValue).not.to.exist;
+        expect(groupBo.categoryValueRef).not.to.exist;
+        expect(categoryValueBo).to.exist;
+        expect(categoryBo).to.exist;
       }));
 
 
-      it('redo', inject(function(canvas, elementFactory, modeling, commandStack) {
+      it('redo', inject(function(canvas, elementFactory, modeling, commandStack, bpmnjs) {
 
         // given
         var root = canvas.getRootElement();
@@ -108,22 +119,32 @@ describe('features/modeling/behavior - groups', function() {
         commandStack.undo();
         commandStack.redo();
 
+        var categoryValueBo = groupBo.categoryValueRef;
+        var categoryBo = groupBo.categoryValueRef?.$parent;
+
         // then
-        expect(groupBo.categoryValueRef).not.to.exist;
+        expect(categoryValueBo).to.exist;
+        expect(categoryBo).to.exist;
+
+        expectRootElement(categoryBo);
       }));
 
     });
 
 
-    describe('should paste with Category', function() {
+    describe('should paste with copied Category', function() {
 
-      var groupBo, rootElements;
+      var groupBo,
+          sourceGroupBo,
+          rootElements;
 
       beforeEach(inject(function(canvas, copyPaste, elementRegistry) {
 
         // given
         var group = elementRegistry.get('Group_1'),
             rootElement = canvas.getRootElement();
+
+        sourceGroupBo = getBusinessObject(group);
 
         copyPaste.copy(group);
 
@@ -152,6 +173,8 @@ describe('features/modeling/behavior - groups', function() {
         expect(groupBo.categoryValueRef).to.exist;
         expect(groupBo.categoryValueRef.$parent).to.exist;
         expect(groupBo.categoryValueRef.value).to.equal('Value 1');
+        expect(groupBo.categoryValueRef).not.to.equal(sourceGroupBo.categoryValueRef);
+        expect(groupBo.categoryValueRef.$parent).not.to.equal(sourceGroupBo.categoryValueRef.$parent);
 
         expect(rootElements).to.have.length(4);
       });
@@ -159,10 +182,17 @@ describe('features/modeling/behavior - groups', function() {
 
       it('<undo>', inject(function(commandStack) {
 
+        // given
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = groupBo.categoryValueRef?.$parent;
+
         // when
         commandStack.undo();
 
         // then
+        expect(groupBo.categoryValueRef).not.to.exist;
+        expect(categoryValueBo).to.exist;
+        expect(categoryBo).to.exist;
         expect(rootElements).to.have.length(3);
       }));
 
@@ -170,16 +200,16 @@ describe('features/modeling/behavior - groups', function() {
       it('<redo>', inject(function(commandStack) {
 
         // given
-        var categoryValue = groupBo.categoryValueRef,
-            category = categoryValue.$parent;
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = groupBo.categoryValueRef?.$parent;
 
         // when
         commandStack.undo();
         commandStack.redo();
 
         // then
-        expect(groupBo.categoryValueRef).to.equal(categoryValue);
-        expect(groupBo.categoryValueRef.$parent).to.equal(category);
+        expect(groupBo.categoryValueRef).to.equal(categoryValueBo);
+        expect(groupBo.categoryValueRef.$parent).to.equal(categoryBo);
 
         expect(rootElements).to.have.length(4);
       }));
@@ -215,6 +245,81 @@ describe('features/modeling/behavior - groups', function() {
         expect(definitions.get('rootElements')).to.include(category);
       }
     ));
+
+  });
+
+
+  describe('auto-healing', function() {
+
+    [ 'move', 'resize' ].forEach(function(type) {
+
+      describe(`should heal group on ${ type }`, function() {
+
+        var group,
+            groupBo,
+            categoryValueBo,
+            categoryBo;
+
+        beforeEach(inject(function(elementRegistry, modeling) {
+
+          // given
+          group = elementRegistry.get('Group_NO_CATEGORY_VALUE');
+          groupBo = getBusinessObject(group);
+
+          // assume
+          expect(groupBo.categoryValueRef).not.to.exist;
+
+          // when
+          if (type === 'move') {
+            modeling.moveShape(group, { x: 10, y: 0 });
+          } else {
+            modeling.resizeShape(group, {
+              x: group.x,
+              y: group.y,
+              width: group.width,
+              height: group.height + 10
+            });
+          }
+
+          categoryValueBo = groupBo.categoryValueRef;
+          categoryBo = categoryValueBo.$parent;
+        }));
+
+
+        it('<do>', function() {
+
+          // then
+          expect(categoryValueBo).to.exist;
+          expectRootElement(categoryBo);
+        });
+
+
+        it('<undo>', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+
+          // then
+          expect(groupBo.categoryValueRef).not.to.exist;
+          expectNoRootElement(categoryBo);
+        }));
+
+
+        it('<redo>', inject(function(commandStack) {
+
+          // when
+          commandStack.undo();
+          commandStack.redo();
+
+          // then
+          expect(groupBo.categoryValueRef).to.equal(categoryValueBo);
+          expect(groupBo.categoryValueRef.$parent).to.equal(categoryBo);
+          expectRootElement(categoryBo);
+        }));
+
+      });
+
+    });
 
   });
 
@@ -271,20 +376,18 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
-            groupBo = getBusinessObject(groupShape),
-            root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent;
+            groupBo = getBusinessObject(groupShape);
 
-        var categoryValue = groupBo.categoryValueRef,
-            category = categoryValue.$parent;
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = categoryValueBo.$parent;
 
         // when
         modeling.removeShape(groupShape);
 
         // then
-        expect(category.get('categoryValue')).not.to.contain(categoryValue);
+        expect(categoryBo.get('categoryValue')).not.to.contain(categoryValueBo);
 
-        expect(definitions.get('rootElements')).not.to.contain(category);
+        expectNoRootElement(categoryBo);
       }));
 
 
@@ -292,12 +395,10 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
-            groupBo = getBusinessObject(groupShape),
-            root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent;
+            groupBo = getBusinessObject(groupShape);
 
-        var categoryValue = groupBo.categoryValueRef,
-            category = categoryValue.$parent;
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = categoryValueBo.$parent;
 
         // when
         modeling.removeShape(groupShape);
@@ -305,8 +406,9 @@ describe('features/modeling/behavior - groups', function() {
         commandStack.undo();
 
         // then
-        expect(category.get('categoryValue')).to.include(categoryValue);
-        expect(definitions.get('rootElements')).to.include(category);
+        expect(categoryBo.get('categoryValue')).to.include(categoryValueBo);
+
+        expectRootElement(categoryBo);
       }));
 
 
@@ -314,12 +416,10 @@ describe('features/modeling/behavior - groups', function() {
 
         // given
         var groupShape = elementRegistry.get('Group_4'),
-            groupBo = getBusinessObject(groupShape),
-            root = canvas.getRootElement(),
-            definitions = getBusinessObject(root).$parent;
+            groupBo = getBusinessObject(groupShape);
 
-        var categoryValue = groupBo.categoryValueRef,
-            category = categoryValue.$parent;
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = categoryValueBo.$parent;
 
         // when
         modeling.removeShape(groupShape);
@@ -328,8 +428,9 @@ describe('features/modeling/behavior - groups', function() {
         commandStack.redo();
 
         // then
-        expect(category.get('categoryValue')).not.to.include(categoryValue);
-        expect(definitions.get('rootElements')).not.to.include(category);
+        expect(categoryBo.get('categoryValue')).not.to.include(categoryValueBo);
+
+        expectNoRootElement(categoryBo);
       }));
 
     });
@@ -424,10 +525,15 @@ describe('features/modeling/behavior - groups', function() {
         // when
         modeling.updateLabel(group, 'Foo bar');
 
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = groupBo.categoryValueRef?.$parent;
+
         commandStack.undo();
 
         // then
         expect(groupBo.categoryValueRef).not.to.exist;
+        expect(categoryValueBo).to.exist;
+        expect(categoryBo).to.exist;
       }));
 
 
@@ -443,14 +549,20 @@ describe('features/modeling/behavior - groups', function() {
         // when
         modeling.updateLabel(group, 'Foo bar');
 
+        var categoryValueBo = groupBo.categoryValueRef,
+            categoryBo = groupBo.categoryValueRef?.$parent;
+
         commandStack.undo();
         commandStack.redo();
 
         // then
         expect(groupBo.categoryValueRef).to.exist;
-        expect(groupBo.categoryValueRef.value).to.eql('Foo bar');
+        expect(groupBo.categoryValueRef).to.equal(categoryValueBo);
+        expect(groupBo.categoryValueRef.$parent).to.equal(categoryBo);
 
-        expect(groupBo.categoryValueRef.$parent).to.exist;
+        expect(categoryValueBo.value).to.eql('Foo bar');
+
+        expectRootElement(categoryBo);
       }));
 
     });
@@ -458,3 +570,18 @@ describe('features/modeling/behavior - groups', function() {
   });
 
 });
+
+
+// helpers /////////////
+
+function expectNoRootElement(moddleElement) {
+  const definitions = getBpmnJS().getDefinitions();
+
+  expect(definitions.get('rootElements')).not.to.include(moddleElement);
+}
+
+function expectRootElement(moddleElement) {
+  const definitions = getBpmnJS().getDefinitions();
+
+  expect(definitions.get('rootElements')).to.include(moddleElement);
+}

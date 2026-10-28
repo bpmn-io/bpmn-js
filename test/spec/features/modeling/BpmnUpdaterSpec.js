@@ -318,6 +318,72 @@ describe('features - bpmn-updater', function() {
     });
 
 
+    describe('external', function() {
+
+      var event,
+          diLabel;
+
+      beforeEach(inject(function(modeling, elementRegistry) {
+
+        // given
+        event = elementRegistry.get('StartEvent_2');
+
+        modeling.updateLabel(event, 'foo');
+
+        diLabel = getDi(event).get('label');
+      }));
+
+
+      it('should unset BPMNLabel on label removal', inject(function(modeling) {
+
+        // when
+        modeling.removeElements([ event.label ]);
+
+        // then
+        expect(getDi(event)).not.to.have.property('label');
+      }));
+
+
+      it('should unset BPMNLabel on name removal', inject(function(modeling) {
+
+        // when
+        modeling.updateProperties(event, { name: '' });
+
+        // then
+        expect(event.label).not.to.exist;
+        expect(getDi(event)).not.to.have.property('label');
+      }));
+
+
+      it('<undo>', inject(function(modeling, commandStack) {
+
+        // given
+        modeling.removeElements([ event.label ]);
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(getDi(event).get('label')).to.equal(diLabel);
+      }));
+
+
+      it('<redo>', inject(function(modeling, commandStack) {
+
+        // given
+        modeling.removeElements([ event.label ]);
+
+        // when
+        commandStack.undo();
+        commandStack.redo();
+
+        // then
+        expect(getDi(event)).not.to.have.property('label');
+      }));
+
+    });
+
+
   });
 
 });

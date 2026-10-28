@@ -219,6 +219,58 @@ describe('features/modeling/rules - BpmnRules', function() {
       expectCanCopy(boundaryEvent, [ boundaryEvent ], true);
     }));
 
+
+    it('copy message flow with both participants', inject(function(elementFactory) {
+
+      // given
+      var participant1 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          participant2 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          task1 = elementFactory.createShape({ type: 'bpmn:Task', parent: participant1 }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task', parent: participant2 }),
+          messageFlow = elementFactory.createConnection({
+            type: 'bpmn:MessageFlow',
+            source: task1,
+            target: task2
+          });
+
+      // then
+      expectCanCopy(messageFlow, [ participant1, participant2, task1, task2, messageFlow ], true);
+    }));
+
+
+    it('copy message flow between participants', inject(function(elementFactory) {
+
+      // given
+      var participant1 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          participant2 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          messageFlow = elementFactory.createConnection({
+            type: 'bpmn:MessageFlow',
+            source: participant1,
+            target: participant2
+          });
+
+      // then
+      expectCanCopy(messageFlow, [ participant1, participant2, messageFlow ], true);
+    }));
+
+
+    it('copy message flow without participants', inject(function(elementFactory) {
+
+      // given
+      var participant1 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          participant2 = elementFactory.createShape({ type: 'bpmn:Participant' }),
+          task1 = elementFactory.createShape({ type: 'bpmn:Task', parent: participant1 }),
+          task2 = elementFactory.createShape({ type: 'bpmn:Task', parent: participant2 }),
+          messageFlow = elementFactory.createConnection({
+            type: 'bpmn:MessageFlow',
+            source: task1,
+            target: task2
+          });
+
+      // then
+      expectCanCopy(messageFlow, [ task1, task2, messageFlow ], false);
+    }));
+
   });
 
 
