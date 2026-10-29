@@ -12,9 +12,25 @@ jobs:
       pull-requests: write
 
     steps:
+    - name: Read pull request template
+      id: template
+      env:
+        GH_TOKEN: ${{ github.token }}
+        SOURCE: main
+        TARGET: develop
+      run: |
+        if ! template=$(gh api -H "Accept: application/vnd.github.raw" "repos/$GITHUB_REPOSITORY/contents/.github/PULL_REQUEST_TEMPLATE.md?ref=$TARGET" 2>/dev/null); then
+          template=$(gh api -H "Accept: application/vnd.github.raw" "repos/bpmn-io/.github/contents/.github/PULL_REQUEST_TEMPLATE.md" 2>/dev/null) || template="Merges changes from \`$SOURCE\` into \`$TARGET\`."
+        fi
+        {
+          echo "body<<PULL_REQUEST_BODY"
+          printf '%s\n' "$template"
+          echo "PULL_REQUEST_BODY"
+        } >> "$GITHUB_OUTPUT"
     - name: Open sync pull request
       uses: bpmn-io/actions/sync-branches@latest
       with:
         token: ${{ secrets.BPMN_IO_TOKEN }}
         source: main
         target: develop
+        body: ${{ steps.template.outputs.body }}
