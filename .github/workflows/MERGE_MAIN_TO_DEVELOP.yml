@@ -30,7 +30,6 @@ jobs:
     - name: Open sync pull request
       uses: bpmn-io/actions/sync-branches@latest
       with:
-        token: ${{ secrets.BPMN_IO_TOKEN }}
         source: main
         target: develop
         body: ${{ steps.template.outputs.body }}
