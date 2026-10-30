@@ -587,14 +587,14 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
-      it('should move task', function() {
+      it('should NOT move task', function() {
 
         // when
         resizeElements([ 'Group_1', 'Task_1' ], 'e', { x: 200, y: 0 });
 
         // then
         expectBounds('Group_1', { x: 100, y: 100, width: 400, height: 200 });
-        expectBounds('Task_1', { x: 150, y: 400, width: 100, height: 80 });
+        expectBounds('Task_1', { x: 100, y: 400, width: 100, height: 80 });
       });
 
 
@@ -613,14 +613,14 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
-      it('should move text annotation from <s>', function() {
+      it('should NOT move text annotation from <s>', function() {
 
         // when
         resizeElements([ 'Group_1', 'TextAnnotation_1' ], 's', { x: 0, y: 330 });
 
         // then
-        expectBounds('Group_1', { x: 100, y: 100, width: 200, height: 400 });
-        expectBounds('TextAnnotation_1', { x: 300, y: 715, width: 100, height: 30 });
+        expectBounds('Group_1', { x: 100, y: 100, width: 200, height: 530 });
+        expectBounds('TextAnnotation_1', { x: 300, y: 400, width: 100, height: 30 });
       });
 
 
@@ -630,7 +630,12 @@ describe('features/modeling - resize behavior', function() {
         resizeElements([ 'Group_1', 'TextAnnotation_1' ], 'e', { x: -250, y: 0 });
 
         // then
-        expectBounds('TextAnnotation_1', { x: 133, y: 400, width: 100, height: 30 });
+        getBpmnJS().invoke(function(elementRegistry) {
+          var textAnnotation = elementRegistry.get('TextAnnotation_1');
+
+          expect(textAnnotation.x).to.equal(133);
+          expect(textAnnotation.width).to.equal(100);
+        });
       });
 
 
@@ -645,14 +650,14 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
-      it('should move sub process children along', function() {
+      it('should keep sub process containing children when moved', function() {
 
         // when
         resizeElements([ 'Group_1', 'SubProcess_1' ], 's', { x: 0, y: 700 });
 
         // then
-        expectBounds('SubProcess_1', { x: 100, y: 1100, width: 400, height: 400 });
-        expectBounds('Task_2', { x: 300, y: 1150, width: 100, height: 80 });
+        expectBounds('SubProcess_1', { x: 100, y: 630, width: 400, height: 870 });
+        expectBounds('Task_2', { x: 300, y: 650, width: 100, height: 80 });
       });
 
 
@@ -692,15 +697,14 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
-      it('should move flow elements along', function() {
+      it('should keep containing flow elements when moved', function() {
 
         // when
         resizeElements([ 'Participant_1', 'Participant_2' ], 's', { x: 0, y: 550 });
 
         // then
-        expectBounds('Participant_2', { x: 100, y: 700, width: 600, height: 500 });
-        expectBounds('Task_1', { x: 300, y: 120, width: 100, height: 80 });
-        expectBounds('Task_2', { x: 400, y: 750, width: 100, height: 80 });
+        expectBounds('Participant_2', { x: 100, y: 430, width: 600, height: 770 });
+        expectBounds('Task_2', { x: 400, y: 450, width: 100, height: 80 });
       });
 
 

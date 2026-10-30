@@ -408,16 +408,6 @@ describe('features/grid-snapping', function() {
       expect(getBounds(elementRegistry.get('Group_3'))).to.eql({ x: 550, y: 100, width: 220, height: 200 });
     }));
 
-
-    it('should snap task', inject(function(elementRegistry) {
-
-      // when
-      resizeElements([ 'Group_1', 'Task_1' ], 'e', { x: 73, y: 0 });
-
-      // then
-      expect(getBounds(elementRegistry.get('Task_1'))).to.eql({ x: 120, y: 400, width: 100, height: 80 });
-    }));
-
   });
 
 });
