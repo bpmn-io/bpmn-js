@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -17,6 +18,12 @@ import {
 import {
   getParticipantResizeConstraints
 } from 'lib/features/modeling/behavior/ResizeBehavior';
+
+import { getReferencePoint } from 'diagram-js/lib/features/resize/Resize';
+
+import { getBBox } from 'diagram-js/lib/util/Elements';
+
+import { queryAll as domQueryAll } from 'min-dom';
 
 var testModules = [
   coreModule,
@@ -490,6 +497,252 @@ describe('features/modeling - resize behavior', function() {
       // then
       expect(textAnnotation.width).to.equal(100);
     }));
+
+  });
+
+
+  describe('multiple elements', function() {
+
+    function resizeElements(ids, direction, delta) {
+      getBpmnJS().invoke(function(dragging, elementRegistry, resizeElements) {
+        var elements = ids.map(function(id) {
+          return elementRegistry.get(id);
+        });
+
+        var point = getReferencePoint(getBBox(elements), direction);
+
+        resizeElements.activate(canvasEvent(point), elements, direction);
+
+        dragging.move(canvasEvent({
+          x: point.x + delta.x,
+          y: point.y + delta.y
+        }));
+
+        dragging.end();
+      });
+    }
+
+    function expectBounds(id, bounds) {
+      getBpmnJS().invoke(function(elementRegistry) {
+        expect(elementRegistry.get(id)).to.have.bounds(bounds);
+      });
+    }
+
+
+    describe('process', function() {
+
+      var diagramXML = require('./ResizeBehavior.multiple.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      describe('handles', function() {
+
+        function getResizeHandles() {
+          return getBpmnJS().invoke(function(resizeHandles) {
+            return domQueryAll('.djs-resizer', resizeHandles._getResizersParent());
+          });
+        }
+
+        function select(ids) {
+          getBpmnJS().invoke(function(elementRegistry, selection) {
+            selection.select(ids.map(function(id) {
+              return elementRegistry.get(id);
+            }));
+          });
+        }
+
+
+        it('should add for groups', function() {
+
+          // when
+          select([ 'Group_1', 'Group_2' ]);
+
+          // then
+          expect(getResizeHandles()).to.have.length(8);
+        });
+
+
+        it('should NOT add for tasks', function() {
+
+          // when
+          select([ 'Task_1', 'Task_2' ]);
+
+          // then
+          expect(getResizeHandles()).to.have.length(0);
+        });
+
+      });
+
+
+      it('should resize adjacent groups', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'Group_2', 'Group_3' ], 'e', { x: 600, y: 0 });
+
+        // then
+        expectBounds('Group_1', { x: 100, y: 100, width: 400, height: 200 });
+        expectBounds('Group_2', { x: 500, y: 100, width: 400, height: 200 });
+        expectBounds('Group_3', { x: 900, y: 100, width: 400, height: 200 });
+      });
+
+
+      it('should NOT move task', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'Task_1' ], 'e', { x: 200, y: 0 });
+
+        // then
+        expectBounds('Group_1', { x: 100, y: 100, width: 400, height: 200 });
+        expectBounds('Task_1', { x: 100, y: 400, width: 100, height: 80 });
+      });
+
+
+      it('should resize text annotation from <e>', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'TextAnnotation_1' ], 'e', { x: 300, y: 0 });
+
+        // then
+        getBpmnJS().invoke(function(elementRegistry) {
+          var textAnnotation = elementRegistry.get('TextAnnotation_1');
+
+          expect(textAnnotation.x).to.equal(500);
+          expect(textAnnotation.width).to.equal(200);
+        });
+      });
+
+
+      it('should push text annotation from <s>', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'TextAnnotation_1' ], 's', { x: 0, y: 330 });
+
+        // then
+        expectBounds('Group_1', { x: 100, y: 100, width: 200, height: 530 });
+        expectBounds('TextAnnotation_1', { x: 300, y: 730, width: 100, height: 30 });
+      });
+
+
+      it('should push end event out of the way', function() {
+
+        // when
+        resizeElements([ 'SubProcess_1', 'EndEvent_1' ], 'e', { x: 200, y: 0 });
+
+        // then
+        expectBounds('SubProcess_1', { x: 100, y: 600, width: 600, height: 200 });
+        expectBounds('EndEvent_1', { x: 782, y: 682, width: 36, height: 36 });
+      });
+
+
+      it('should keep text annotation minimum dimensions', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'TextAnnotation_1' ], 'e', { x: -250, y: 0 });
+
+        // then
+        getBpmnJS().invoke(function(elementRegistry) {
+          var textAnnotation = elementRegistry.get('TextAnnotation_1');
+
+          expect(textAnnotation.x).to.equal(133);
+          expect(textAnnotation.width).to.equal(100);
+        });
+      });
+
+
+      it('should keep sub process containing children', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'SubProcess_1' ], 'e', { x: -300, y: 0 });
+
+        // then
+        expectBounds('SubProcess_1', { x: 100, y: 600, width: 320, height: 200 });
+        expectBounds('Task_2', { x: 300, y: 650, width: 100, height: 80 });
+      });
+
+
+      it('should keep sub process containing children when moved', function() {
+
+        // when
+        resizeElements([ 'Group_1', 'SubProcess_1' ], 's', { x: 0, y: 700 });
+
+        // then
+        expectBounds('SubProcess_1', { x: 100, y: 630, width: 400, height: 870 });
+        expectBounds('Task_2', { x: 300, y: 650, width: 100, height: 80 });
+      });
+
+
+      it('should undo', inject(function(commandStack) {
+
+        // given
+        resizeElements([ 'Group_1', 'Group_2', 'Group_3' ], 'e', { x: 600, y: 0 });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expectBounds('Group_1', { x: 100, y: 100, width: 200, height: 200 });
+        expectBounds('Group_2', { x: 300, y: 100, width: 200, height: 200 });
+        expectBounds('Group_3', { x: 500, y: 100, width: 200, height: 200 });
+      }));
+
+    });
+
+
+    describe('participants', function() {
+
+      var diagramXML = require('./ResizeBehavior.multiple.participants.bpmn');
+
+      beforeEach(bootstrapModeler(diagramXML, { modules: testModules }));
+
+
+      it('should resize lanes along', function() {
+
+        // when
+        resizeElements([ 'Participant_1', 'Participant_2' ], 's', { x: 0, y: 550 });
+
+        // then
+        expectBounds('Participant_1', { x: 100, y: 100, width: 600, height: 500 });
+        expectBounds('Lane_1', { x: 130, y: 100, width: 570, height: 125 });
+        expectBounds('Lane_2', { x: 130, y: 225, width: 570, height: 375 });
+      });
+
+
+      it('should keep containing flow elements when moved', function() {
+
+        // when
+        resizeElements([ 'Participant_1', 'Participant_2' ], 's', { x: 0, y: 550 });
+
+        // then
+        expectBounds('Participant_2', { x: 100, y: 430, width: 600, height: 770 });
+        expectBounds('Task_2', { x: 400, y: 450, width: 100, height: 80 });
+      });
+
+
+      it('should keep containing flow elements and lanes', function() {
+
+        // when
+        resizeElements([ 'Participant_1', 'Participant_2' ], 'e', { x: -500, y: 0 });
+
+        // then
+        expectBounds('Participant_1', { x: 100, y: 100, width: 330, height: 250 });
+        expectBounds('Lane_1', { x: 130, y: 100, width: 300, height: 125 });
+        expectBounds('Participant_2', { x: 100, y: 400, width: 420, height: 250 });
+      });
+
+
+      it('should ignore lanes', function() {
+
+        // when
+        resizeElements([ 'Participant_1', 'Lane_1' ], 'e', { x: 300, y: 0 });
+
+        // then
+        expectBounds('Participant_1', { x: 100, y: 100, width: 900, height: 250 });
+        expectBounds('Lane_1', { x: 130, y: 100, width: 870, height: 125 });
+        expectBounds('Lane_2', { x: 130, y: 225, width: 870, height: 125 });
+      });
+
+    });
 
   });
 

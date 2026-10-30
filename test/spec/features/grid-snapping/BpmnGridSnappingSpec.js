@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -9,12 +10,18 @@ import createModule from 'diagram-js/lib/features/create';
 import gridSnappingModule from 'lib/features/grid-snapping';
 import modelingModule from 'lib/features/modeling';
 import moveModule from 'diagram-js/lib/features/move';
+import resizeModule from 'diagram-js/lib/features/resize';
+import rulesModule from 'lib/features/rules';
 
 import {
   createCanvasEvent as canvasEvent
 } from '../../../util/MockEvents';
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
+
+import { getReferencePoint } from 'diagram-js/lib/features/resize/Resize';
+
+import { getBBox } from 'diagram-js/lib/util/Elements';
 
 import {
   isString,
@@ -352,6 +359,54 @@ describe('features/grid-snapping', function() {
       }));
 
     });
+
+  });
+
+
+  describe('resize elements', function() {
+
+    var diagramXML = require('../modeling/behavior/ResizeBehavior.multiple.bpmn');
+
+    beforeEach(bootstrapModeler(diagramXML, {
+      modules: [
+        coreModule,
+        gridSnappingModule,
+        modelingModule,
+        resizeModule,
+        rulesModule
+      ]
+    }));
+
+    function resizeElements(ids, direction, delta) {
+      getBpmnJS().invoke(function(dragging, elementRegistry, resizeElements) {
+        var elements = ids.map(function(id) {
+          return elementRegistry.get(id);
+        });
+
+        var point = getReferencePoint(getBBox(elements), direction);
+
+        resizeElements.activate(canvasEvent(point), elements, direction);
+
+        dragging.move(canvasEvent({
+          x: point.x + delta.x,
+          y: point.y + delta.y
+        }));
+
+        dragging.end();
+      });
+    }
+
+
+    it('should snap groups', inject(function(elementRegistry) {
+
+      // when
+      resizeElements([ 'Group_1', 'Group_2', 'Group_3' ], 'e', { x: 70, y: 0 });
+
+      // then
+      expect(getBounds(elementRegistry.get('Group_1'))).to.eql({ x: 100, y: 100, width: 220, height: 200 });
+      expect(getBounds(elementRegistry.get('Group_2'))).to.eql({ x: 320, y: 100, width: 230, height: 200 });
+      expect(getBounds(elementRegistry.get('Group_3'))).to.eql({ x: 550, y: 100, width: 220, height: 200 });
+    }));
 
   });
 
