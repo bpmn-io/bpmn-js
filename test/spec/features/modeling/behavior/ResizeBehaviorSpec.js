@@ -613,14 +613,25 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
-      it('should NOT move text annotation from <s>', function() {
+      it('should push text annotation from <s>', function() {
 
         // when
         resizeElements([ 'Group_1', 'TextAnnotation_1' ], 's', { x: 0, y: 330 });
 
         // then
         expectBounds('Group_1', { x: 100, y: 100, width: 200, height: 530 });
-        expectBounds('TextAnnotation_1', { x: 300, y: 400, width: 100, height: 30 });
+        expectBounds('TextAnnotation_1', { x: 300, y: 730, width: 100, height: 30 });
+      });
+
+
+      it('should push end event out of the way', function() {
+
+        // when
+        resizeElements([ 'SubProcess_1', 'EndEvent_1' ], 'e', { x: 200, y: 0 });
+
+        // then
+        expectBounds('SubProcess_1', { x: 100, y: 600, width: 600, height: 200 });
+        expectBounds('EndEvent_1', { x: 782, y: 682, width: 36, height: 36 });
       });
 
 
