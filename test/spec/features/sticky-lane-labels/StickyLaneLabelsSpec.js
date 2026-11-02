@@ -4,6 +4,7 @@ import {
   bootstrapModeler,
   inject
 } from 'test/TestHelper';
+import StickyLaneLabelsModule from 'lib/features/sticky-lane-labels';
 
 var diagramXML = require('../../../fixtures/bpmn/draw/pools.bpmn');
 
@@ -15,7 +16,9 @@ var SUBLANE_ID = 'sid-54427248-3EE5-4B6B-B580-794CE6ABC2CD';
 
 describe('features/sticky-lane-labels', function() {
 
-  beforeEach(bootstrapModeler(diagramXML));
+  beforeEach(bootstrapModeler(diagramXML, {
+    additionalModules: [ StickyLaneLabelsModule ]
+  }));
 
 
   it('should keep labels inside participant and lane without zoom', inject(function(canvas) {
@@ -556,6 +559,21 @@ describe('features/sticky-lane-labels', function() {
         !sublaneLabelAfter.classList.contains('hidden')) {
       expectHierarchyOrder(participantLabelAfter.parentNode, laneLabelAfter.parentNode, sublaneLabelAfter.parentNode);
     }
+  }));
+});
+
+describe('features/sticky-lane-labels without extension', function() {
+
+  beforeEach(bootstrapModeler(diagramXML));
+
+
+  it('should not render sticky labels by default', inject(function(canvas) {
+
+    // when
+    var labels = canvas.getContainer().querySelectorAll('.djs-overlay-sticky-lane-label');
+
+    // then
+    expect(labels).to.have.length(0);
   }));
 });
 
