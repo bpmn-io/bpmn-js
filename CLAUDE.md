@@ -1,4 +1,5 @@
 # CLAUDE.md
 
-Claude does not natively support `AGENTS.md` yet.
-Until it does, please read and follow [`./AGENTS.md`](./AGENTS.md) before starting any task.
+Claude Code does not read `AGENTS.md` on its own when this file exists, so it is imported here:
+
+@AGENTS.md
