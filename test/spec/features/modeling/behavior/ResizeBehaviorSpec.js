@@ -731,6 +731,17 @@ describe('features/modeling - resize behavior', function() {
       });
 
 
+      it('should NOT resize sub process along with participant', function() {
+
+        // when
+        resizeElements([ 'Participant_2', 'SubProcess_1' ], 'e', { x: 300, y: 0 });
+
+        // then
+        expectBounds('Participant_2', { x: 100, y: 400, width: 900, height: 250 });
+        expectBounds('SubProcess_1', { x: 150, y: 450, width: 200, height: 150 });
+      });
+
+
       it('should ignore lanes', function() {
 
         // when
