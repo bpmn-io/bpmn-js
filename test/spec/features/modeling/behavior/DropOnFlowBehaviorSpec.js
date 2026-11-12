@@ -18,6 +18,8 @@ import {
 
 import { getMid } from 'diagram-js/lib/layout/LayoutUtil';
 
+import { getStrokeColor } from 'lib/draw/BpmnRenderUtil';
+
 
 describe('modeling/behavior - drop on connection', function() {
 
@@ -389,6 +391,66 @@ describe('modeling/behavior - drop on connection', function() {
           ]));
 
           expect(targetConnection).to.have.startDocking(getMid(dropBounds));
+        }
+      ));
+
+
+      it('should keep connection color', inject(
+        function(elementFactory, elementRegistry, modeling) {
+
+          // given
+          var intermediateThrowEvent = elementFactory.createShape({
+            type: 'bpmn:IntermediateThrowEvent'
+          });
+
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+          modeling.setColor([ sequenceFlow ], { stroke: '#1e88e5' });
+
+          var dropPosition = { x: 340, y: 120 };
+
+          // when
+          var newShape = modeling.createShape(
+            intermediateThrowEvent,
+            dropPosition,
+            sequenceFlow
+          );
+
+          // then
+          var targetConnection = newShape.outgoing[0];
+
+          expect(getStrokeColor(sequenceFlow)).to.eql('#1e88e5');
+          expect(getStrokeColor(targetConnection)).to.eql('#1e88e5');
+        }
+      ));
+
+
+      it('should keep legacy bioc:stroke connection color', inject(
+        function(elementFactory, elementRegistry, modeling) {
+
+          // given
+          var intermediateThrowEvent = elementFactory.createShape({
+            type: 'bpmn:IntermediateThrowEvent'
+          });
+
+          var sequenceFlow = elementRegistry.get('SequenceFlow_1');
+
+          sequenceFlow.di.set('bioc:stroke', '#e53935');
+
+          var dropPosition = { x: 340, y: 120 };
+
+          // when
+          var newShape = modeling.createShape(
+            intermediateThrowEvent,
+            dropPosition,
+            sequenceFlow
+          );
+
+          // then
+          var targetConnection = newShape.outgoing[0];
+
+          expect(getStrokeColor(sequenceFlow)).to.eql('#e53935');
+          expect(getStrokeColor(targetConnection)).to.eql('#e53935');
         }
       ));
 
