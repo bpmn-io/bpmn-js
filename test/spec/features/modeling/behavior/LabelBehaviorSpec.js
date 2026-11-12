@@ -458,6 +458,23 @@ describe('features/modeling/behavior - LabelBehavior', function() {
 
   describe('move label', function() {
 
+    it('should NOT double move external label when moving target and label together', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var startEventShape = elementRegistry.get('StartEvent_1'),
+            labelShape = startEventShape.label,
+            initialLabelPos = { x: labelShape.x, y: labelShape.y };
+
+        // when
+        modeling.moveElements([ startEventShape, labelShape ], { x: 50, y: 50 });
+
+        // then
+        expect(labelShape.x).to.equal(initialLabelPos.x + 50);
+        expect(labelShape.y).to.equal(initialLabelPos.y + 50);
+      }
+    ));
+
     it('should move start event label', inject(function(elementRegistry, modeling) {
 
       // given
