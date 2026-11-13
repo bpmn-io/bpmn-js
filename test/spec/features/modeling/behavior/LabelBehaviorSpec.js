@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import {
   bootstrapModeler,
+  getBpmnJS,
   inject
 } from 'test/TestHelper';
 
@@ -538,6 +539,7 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         expect(pick(label, [ 'x', 'y' ])).to.eql(oldLabelPosition);
       }));
 
+
     });
 
   });
@@ -909,6 +911,151 @@ describe('features/modeling/behavior - LabelBehavior - copy/paste integration', 
       expect(label).to.have.position({ x: 681, y: 287 });
     }
   ));
+
+});
+
+
+describe('features/modeling/behavior - LabelBehavior - move with connection', function() {
+
+  // Cf. https://github.com/bpmn-io/bpmn-js/issues/1766
+
+  var diagramXML = require('./LabelBehavior.move-connection-label.bpmn');
+
+  beforeEach(bootstrapModeler(diagramXML, {
+    modules: [
+      modelingModule,
+      coreModule
+    ]
+  }));
+
+  var delta = { x: 0, y: 50 };
+
+
+  describe('should move label once', function() {
+
+    it('connection source', inject(function(elementRegistry) {
+
+      // given
+      var source = elementRegistry.get('Task_1'),
+          label = elementRegistry.get('MessageFlow_1').label;
+
+      var expectedPosition = getLabelPositionAfterMove([ source ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ source, label ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
+
+    it('connection target', inject(function(elementRegistry) {
+
+      // given
+      var target = elementRegistry.get('Task_3'),
+          label = elementRegistry.get('MessageFlow_1').label;
+
+      var expectedPosition = getLabelPositionAfterMove([ target ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ target, label ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
+
+    it('host of connection source', inject(function(elementRegistry) {
+
+      // given
+      var host = elementRegistry.get('Task_1'),
+          label = elementRegistry.get('SequenceFlow_1').label;
+
+      var expectedPosition = getLabelPositionAfterMove([ host ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ host, label ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
+
+    it('parent of connection source', inject(function(elementRegistry) {
+
+      // given
+      var parent = elementRegistry.get('Participant_1'),
+          label = elementRegistry.get('MessageFlow_1').label;
+
+      var expectedPosition = getLabelPositionAfterMove([ parent ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ parent, label ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
+  });
+
+
+  describe('should move label with selection', function() {
+
+    it('connection source and target', inject(function(elementRegistry) {
+
+      // given
+      var source = elementRegistry.get('Task_1'),
+          target = elementRegistry.get('Task_2'),
+          label = elementRegistry.get('SequenceFlow_1').label,
+          oldPosition = pick(label, [ 'x', 'y' ]);
+
+      // when
+      var position = getLabelPositionAfterMove([ source, target, label ], label);
+
+      // then
+      expect(position).to.eql({
+        x: oldPosition.x + delta.x,
+        y: oldPosition.y + delta.y
+      });
+    }));
+
+
+    it('label only', inject(function(elementRegistry) {
+
+      // given
+      var label = elementRegistry.get('SequenceFlow_1').label,
+          oldPosition = pick(label, [ 'x', 'y' ]);
+
+      // when
+      var position = getLabelPositionAfterMove([ label ], label);
+
+      // then
+      expect(position).to.eql({
+        x: oldPosition.x + delta.x,
+        y: oldPosition.y + delta.y
+      });
+    }));
+
+  });
+
+
+  // helpers //////////
+
+  /**
+   * Return label position after moving given elements,
+   * reverting the move afterwards.
+   */
+  function getLabelPositionAfterMove(elements, label) {
+    return getBpmnJS().invoke(function(commandStack, modeling) {
+      modeling.moveElements(elements, delta);
+
+      var position = pick(label, [ 'x', 'y' ]);
+
+      commandStack.undo();
+
+      return position;
+    });
+  }
 
 });
 
