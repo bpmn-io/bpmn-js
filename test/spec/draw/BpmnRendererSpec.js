@@ -273,6 +273,48 @@ describe('draw - bpmn renderer', function() {
   });
 
 
+  it('should render message label with zero bounds fallback (detached / first-render)', function() {
+    var originalGetBBox = SVGGraphicsElement.prototype.getBBox;
+    SVGGraphicsElement.prototype.getBBox = function() {
+      return { x: 0, y: 0, width: 0, height: 0 };
+    };
+
+    var xml = require('../../fixtures/bpmn/draw/message-label.bpmn');
+
+    return bootstrapViewer(xml).call(this).then(function(result) {
+      SVGGraphicsElement.prototype.getBBox = originalGetBBox;
+
+      checkErrors(result.error, result.warnings);
+
+      inject(function(elementRegistry, textRenderer) {
+        var dataFlow = elementRegistry.getGraphics('dataFlow');
+
+        var label = domQuery('.djs-label', dataFlow);
+        expect(label).to.exist;
+
+        var dims = textRenderer.getDimensions('Invoice', {
+          align: 'center-top',
+          fitBox: true
+        });
+
+        var transformAttr = label.getAttribute('transform');
+        var match = /matrix\(1 0 0 1 ([-\d.]+) ([-\d.]+)\)/.exec(transformAttr);
+
+        expect(match).to.exist;
+
+        var translateX = parseFloat(match[1]),
+            translateY = parseFloat(match[2]);
+
+        expect(translateX + dims.width / 2).to.be.closeTo(310, 0.5);
+        expect(translateY).to.equal(212);
+      })();
+    }).catch(function(err) {
+      SVGGraphicsElement.prototype.getBBox = originalGetBBox;
+      throw err;
+    });
+  });
+
+
   it('should render pools', function() {
     var xml = require('../../fixtures/bpmn/draw/pools.bpmn');
     return bootstrapViewer(xml).call(this).then(function(result) {
