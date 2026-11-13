@@ -6,6 +6,7 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: correct label double move on batch movement ([#1766](https://github.com/bpmn-io/bpmn-js/issues/1766), [#2517](https://github.com/bpmn-io/bpmn-js/pull/2517))
 * `DEPS`: update to `diagram-js@15.29.1`
 
 ## 18.31.1
