@@ -993,6 +993,40 @@ describe('features/modeling/behavior - LabelBehavior - move with connection', fu
       expect(position).to.eql(expectedPosition);
     }));
 
+
+    it('connection source and connection', inject(function(elementRegistry) {
+
+      // given
+      var source = elementRegistry.get('Task_1'),
+          connection = elementRegistry.get('MessageFlow_1'),
+          label = connection.label;
+
+      var expectedPosition = getLabelPositionAfterMove([ source ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ source, connection ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
+
+    it('connection source, connection and label', inject(function(elementRegistry) {
+
+      // given
+      var source = elementRegistry.get('Task_1'),
+          connection = elementRegistry.get('MessageFlow_1'),
+          label = connection.label;
+
+      var expectedPosition = getLabelPositionAfterMove([ source ], label);
+
+      // when
+      var position = getLabelPositionAfterMove([ source, connection, label ], label);
+
+      // then
+      expect(position).to.eql(expectedPosition);
+    }));
+
   });
 
 
@@ -1008,6 +1042,26 @@ describe('features/modeling/behavior - LabelBehavior - move with connection', fu
 
       // when
       var position = getLabelPositionAfterMove([ source, target, label ], label);
+
+      // then
+      expect(position).to.eql({
+        x: oldPosition.x + delta.x,
+        y: oldPosition.y + delta.y
+      });
+    }));
+
+
+    it('connection source, target, connection and label', inject(function(elementRegistry) {
+
+      // given
+      var source = elementRegistry.get('Task_1'),
+          target = elementRegistry.get('Task_2'),
+          connection = elementRegistry.get('SequenceFlow_1'),
+          label = connection.label,
+          oldPosition = pick(label, [ 'x', 'y' ]);
+
+      // when
+      var position = getLabelPositionAfterMove([ source, target, connection, label ], label);
 
       // then
       expect(position).to.eql({
