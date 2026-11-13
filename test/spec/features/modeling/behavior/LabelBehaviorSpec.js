@@ -475,6 +475,30 @@ describe('features/modeling/behavior - LabelBehavior', function() {
       }
     ));
 
+    it('should NOT double move connection label when moving connection with its source and target', inject(
+  function(bpmnFactory, elementRegistry, modeling) {
+
+    // given
+    var startEvent = elementRegistry.get('StartEvent_1'),
+        task = elementRegistry.get('Task_1');
+
+    var connection = modeling.createConnection(startEvent, task, {
+      type: 'bpmn:SequenceFlow',
+      businessObject: bpmnFactory.create('bpmn:SequenceFlow', { name: 'foo' })
+    }, startEvent.parent);
+
+    var label = connection.label,
+        initial = { x: label.x, y: label.y };
+
+    // when
+    modeling.moveElements([ startEvent, task, connection, label ], { x: 50, y: 50 });
+
+    // then
+    expect(label.x).to.be.closeTo(initial.x + 50, 1);
+    expect(label.y).to.be.closeTo(initial.y + 50, 1);
+  }
+));
+
     it('should move start event label', inject(function(elementRegistry, modeling) {
 
       // given
