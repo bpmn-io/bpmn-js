@@ -539,7 +539,6 @@ describe('features/modeling/behavior - LabelBehavior', function() {
         expect(pick(label, [ 'x', 'y' ])).to.eql(oldLabelPosition);
       }));
 
-
     });
 
   });
@@ -916,8 +915,6 @@ describe('features/modeling/behavior - LabelBehavior - copy/paste integration', 
 
 
 describe('features/modeling/behavior - LabelBehavior - move with connection', function() {
-
-  // Cf. https://github.com/bpmn-io/bpmn-js/issues/1766
 
   var diagramXML = require('./LabelBehavior.move-connection-label.bpmn');
 
