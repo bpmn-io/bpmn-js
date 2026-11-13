@@ -20,6 +20,7 @@ export type BpmnAttributes = {
   isHorizontal: boolean;
   isForCompensation: boolean;
   isInterrupting: boolean;
+  messageRef: ModdleElement;
   processRef: ModdleElement;
   triggeredByEvent: boolean;
 };
@@ -37,5 +38,9 @@ export type Label = BaseLabel & Element;
 export type Root = BaseRoot & Element;
 
 export type Shape = BaseShape & Element;
+
+export type Message = Shape & {
+  type: 'bpmn:Message';
+};
 
 export type Parent = Root | Shape;
