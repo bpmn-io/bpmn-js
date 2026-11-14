@@ -86,7 +86,7 @@
     "del-cli": "^8.0.0",
     "eslint": "^9.39.5",
     "eslint-plugin-bpmn-io": "^2.4.0",
-    "execa": "^10.0.1",
+    "execa": "^10.2.1",
     "file-drops": "^0.7.0",
     "karma": "^6.4.4",
     "karma-chrome-launcher-2": "^3.3.0",
