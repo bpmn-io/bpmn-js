@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `diagram-js@15.29.1`
+
 ## 18.31.1
 
 * `FIX`: keep size of resized external labels on import ([#2503](https://github.com/bpmn-io/bpmn-js/pull/2503))
