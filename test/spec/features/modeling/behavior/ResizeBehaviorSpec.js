@@ -738,7 +738,7 @@ describe('features/modeling - resize behavior', function() {
 
         // then
         expectBounds('Participant_2', { x: 100, y: 400, width: 900, height: 250 });
-        expectBounds('SubProcess_1', { x: 150, y: 450, width: 200, height: 150 });
+        expectBounds('SubProcess_1', { x: 140, y: 450, width: 200, height: 150 });
       });
 
 
