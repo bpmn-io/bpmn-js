@@ -6,7 +6,14 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.32.0
+
+* `FEAT`: support optional dependency injection via `?` annotations or default parameter values ([bpmn-io/diagram-js#1116](https://github.com/bpmn-io/diagram-js/pull/1116))
 * `FIX`: correct label double move on batch movement ([#1766](https://github.com/bpmn-io/bpmn-js/issues/1766), [#2517](https://github.com/bpmn-io/bpmn-js/pull/2517))
+* `FIX`: treat connection as enclosed only if both ends are ([bpmn-io/diagram-js#1129](https://github.com/bpmn-io/diagram-js/pull/1129))
+* `FIX`: avoid backtracking when measuring text ([bpmn-io/diagram-js#1127](https://github.com/bpmn-io/diagram-js/pull/1127), [`GHSA-h54p-wcrm-cv7w`](https://github.com/bpmn-io/diagram-js/security/advisories/GHSA-h54p-wcrm-cv7w))
+* `FIX`: correct `Diagram#get` to return `undefined` instead of `null` when a service is missing and strict lookup is disabled ([bpmn-io/diagram-js#1116](https://github.com/bpmn-io/diagram-js/pull/1116))
+* `FIX`: cancel active drag on listener error ([bpmn-io/diagram-js#961](https://github.com/bpmn-io/diagram-js/issues/961))
 * `DEPS`: update to `diagram-js@15.29.1`
 
 ## 18.31.1
