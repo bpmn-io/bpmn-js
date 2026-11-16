@@ -52,6 +52,91 @@ describe('features/modeling - update moddle properties', function() {
 
     }));
 
+
+    describe('semantic parent', function() {
+
+      it('should set on contained element', inject(function(elementRegistry, modeling, moddle) {
+
+        // given
+        var eventShape = elementRegistry.get('StartEvent_1'),
+            eventDefinition = eventShape.businessObject.eventDefinitions[0],
+            extensionElements = moddle.create('bpmn:ExtensionElements');
+
+        // when
+        modeling.updateModdleProperties(eventShape, eventDefinition, { extensionElements: extensionElements });
+
+        // then
+        expect(extensionElements.$parent).to.equal(eventDefinition);
+      }));
+
+
+      it('should set on contained collection elements', inject(function(elementRegistry, modeling, moddle) {
+
+        // given
+        var eventShape = elementRegistry.get('StartEvent_1'),
+            eventDefinition = eventShape.businessObject.eventDefinitions[0],
+            documentation = moddle.create('bpmn:Documentation');
+
+        // when
+        modeling.updateModdleProperties(eventShape, eventDefinition, { documentation: [ documentation ] });
+
+        // then
+        expect(documentation.$parent).to.equal(eventDefinition);
+      }));
+
+
+      it('should NOT change on referenced element', inject(function(elementRegistry, modeling, moddle) {
+
+        // given
+        var eventShape = elementRegistry.get('StartEvent_1'),
+            eventDefinition = eventShape.businessObject.eventDefinitions[0],
+            error = moddle.create('bpmn:Error');
+
+        // when
+        modeling.updateModdleProperties(eventShape, eventDefinition, { errorRef: error });
+
+        // then
+        expect(error.$parent).not.to.exist;
+      }));
+
+
+      it('should unset on undo', inject(function(elementRegistry, modeling, moddle, commandStack) {
+
+        // given
+        var eventShape = elementRegistry.get('StartEvent_1'),
+            eventDefinition = eventShape.businessObject.eventDefinitions[0],
+            extensionElements = moddle.create('bpmn:ExtensionElements');
+
+        modeling.updateModdleProperties(eventShape, eventDefinition, { extensionElements: extensionElements });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(extensionElements.$parent).not.to.exist;
+      }));
+
+
+      it('should set on redo', inject(function(elementRegistry, modeling, moddle, commandStack) {
+
+        // given
+        var eventShape = elementRegistry.get('StartEvent_1'),
+            eventDefinition = eventShape.businessObject.eventDefinitions[0],
+            extensionElements = moddle.create('bpmn:ExtensionElements');
+
+        modeling.updateModdleProperties(eventShape, eventDefinition, { extensionElements: extensionElements });
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(extensionElements.$parent).to.equal(eventDefinition);
+      }));
+
+    });
+
   });
 
 

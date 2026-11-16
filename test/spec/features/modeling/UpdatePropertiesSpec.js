@@ -544,6 +544,133 @@ describe('features/modeling - update properties', function() {
   });
 
 
+  describe('semantic parent', function() {
+
+    it('should set on contained element', inject(
+      function(elementRegistry, modeling, moddle) {
+
+        // given
+        var loopCharacteristics = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+
+        var taskShape = elementRegistry.get('ServiceTask_1');
+
+        // when
+        modeling.updateProperties(taskShape, {
+          loopCharacteristics: loopCharacteristics
+        });
+
+        // then
+        expect(loopCharacteristics.$parent).to.equal(taskShape.businessObject);
+      }
+    ));
+
+
+    it('should set on contained collection elements', inject(
+      function(elementRegistry, modeling, moddle) {
+
+        // given
+        var property = moddle.create('bpmn:Property');
+
+        var taskShape = elementRegistry.get('ServiceTask_1');
+
+        // when
+        modeling.updateProperties(taskShape, {
+          properties: [ property ]
+        });
+
+        // then
+        expect(property.$parent).to.equal(taskShape.businessObject);
+      }
+    ));
+
+
+    it('should NOT change on referenced element', inject(
+      function(elementRegistry, modeling) {
+
+        // given
+        var gatewayShape = elementRegistry.get('ExclusiveGateway_1'),
+            flowBo = elementRegistry.get('SequenceFlow_2').businessObject,
+            flowParent = flowBo.$parent;
+
+        // when
+        modeling.updateProperties(gatewayShape, {
+          'default': flowBo
+        });
+
+        // then
+        expect(flowBo.$parent).to.equal(flowParent);
+      }
+    ));
+
+
+    it('should NOT change existing', inject(
+      function(elementRegistry, modeling, moddle) {
+
+        // given
+        var otherParent = moddle.create('bpmn:Task'),
+            loopCharacteristics = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+
+        loopCharacteristics.$parent = otherParent;
+
+        var taskShape = elementRegistry.get('ServiceTask_1');
+
+        // when
+        modeling.updateProperties(taskShape, {
+          loopCharacteristics: loopCharacteristics
+        });
+
+        // then
+        expect(loopCharacteristics.$parent).to.equal(otherParent);
+      }
+    ));
+
+
+    it('should unset on undo', inject(
+      function(elementRegistry, modeling, moddle, commandStack) {
+
+        // given
+        var loopCharacteristics = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+
+        var taskShape = elementRegistry.get('ServiceTask_1');
+
+        modeling.updateProperties(taskShape, {
+          loopCharacteristics: loopCharacteristics
+        });
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(loopCharacteristics.$parent).not.to.exist;
+      }
+    ));
+
+
+    it('should set on redo', inject(
+      function(elementRegistry, modeling, moddle, commandStack) {
+
+        // given
+        var loopCharacteristics = moddle.create('bpmn:MultiInstanceLoopCharacteristics');
+
+        var taskShape = elementRegistry.get('ServiceTask_1');
+
+        modeling.updateProperties(taskShape, {
+          loopCharacteristics: loopCharacteristics
+        });
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(loopCharacteristics.$parent).to.equal(taskShape.businessObject);
+      }
+    ));
+
+  });
+
+
   describe('error handling', function() {
 
     it('should ignore unchanged id', inject(

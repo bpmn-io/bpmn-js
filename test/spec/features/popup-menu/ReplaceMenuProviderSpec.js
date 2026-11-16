@@ -921,6 +921,98 @@ describe('features/popup-menu - replace menu provider', function() {
       }));
     });
 
+
+    describe('loop characteristics parent', function() {
+
+      [
+        'toggle-parallel-mi',
+        'toggle-sequential-mi',
+        'toggle-loop'
+      ].forEach(function(action) {
+
+        it('should set on <' + action + '>', inject(function(elementRegistry) {
+
+          // given
+          var task = elementRegistry.get('Task'),
+              bo = getBusinessObject(task);
+
+          openPopup(task);
+
+          // when
+          triggerAction(action);
+
+          // then
+          expect(bo.get('loopCharacteristics').$parent).to.equal(bo);
+        }));
+
+      });
+
+
+      it('should keep on switching parallel -> sequential', inject(function(elementRegistry) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            bo = getBusinessObject(task);
+
+        openPopup(task);
+        triggerAction('toggle-parallel-mi');
+
+        var loopCharacteristics = bo.get('loopCharacteristics');
+
+        openPopup(task);
+
+        // when
+        triggerAction('toggle-sequential-mi');
+
+        // then
+        expect(bo.get('loopCharacteristics')).to.equal(loopCharacteristics);
+        expect(loopCharacteristics.$parent).to.equal(bo);
+      }));
+
+
+      it('should unset on undo', inject(function(elementRegistry, commandStack) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            bo = getBusinessObject(task);
+
+        openPopup(task);
+        triggerAction('toggle-parallel-mi');
+
+        var loopCharacteristics = bo.get('loopCharacteristics');
+
+        // when
+        commandStack.undo();
+
+        // then
+        expect(bo.get('loopCharacteristics')).not.to.exist;
+        expect(loopCharacteristics.$parent).not.to.exist;
+      }));
+
+
+      it('should set on redo', inject(function(elementRegistry, commandStack) {
+
+        // given
+        var task = elementRegistry.get('Task'),
+            bo = getBusinessObject(task);
+
+        openPopup(task);
+        triggerAction('toggle-parallel-mi');
+
+        var loopCharacteristics = bo.get('loopCharacteristics');
+
+        commandStack.undo();
+
+        // when
+        commandStack.redo();
+
+        // then
+        expect(bo.get('loopCharacteristics')).to.equal(loopCharacteristics);
+        expect(loopCharacteristics.$parent).to.equal(bo);
+      }));
+
+    });
+
   });
 
 
