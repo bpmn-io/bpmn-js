@@ -6,6 +6,11 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FEAT`: add `MoveCanvas#toggle` API and `config.moveCanvas.enabled` option ([bpmn-io/diagram-js#1123](https://github.com/bpmn-io/diagram-js/pull/1123), [bpmn-io/diagram-js#760](https://github.com/bpmn-io/diagram-js/issues/760))
+* `FEAT`: preserve explicitly configured wheel navigation enablement across hover changes ([bpmn-io/diagram-js#1128](https://github.com/bpmn-io/diagram-js/pull/1128))
+* `FIX`: handle wheel events over overlays ([bpmn-io/diagram-js#1128](https://github.com/bpmn-io/diagram-js/pull/1128), [bpmn-io/diagram-js#1077](https://github.com/bpmn-io/diagram-js/issues/1077))
+* `DEPS`: update to `diagram-js@15.30.0`
+
 ## 18.32.0
 
 * `FEAT`: support optional dependency injection via `?` annotations or default parameter values ([bpmn-io/diagram-js#1116](https://github.com/bpmn-io/diagram-js/pull/1116))
