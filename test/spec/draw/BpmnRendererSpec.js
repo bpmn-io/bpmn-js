@@ -240,17 +240,40 @@ describe('draw - bpmn renderer', function() {
   });
 
 
-  it('should render message label', function() {
+  describe('message label', function() {
+
     var xml = require('../../fixtures/bpmn/draw/message-label.bpmn');
-    return bootstrapViewer(xml).call(this).then(function(result) {
-      checkErrors(result.error, result.warnings);
-      inject(function(elementRegistry) {
 
-        var dataFlow = elementRegistry.getGraphics('dataFlow');
+    beforeEach(bootstrapViewer(xml));
 
-        expect(domQuery('.djs-label', dataFlow)).to.exist;
-      })();
-    });
+
+    it('should render', inject(function(elementRegistry) {
+
+      // given
+      var messageFlow = elementRegistry.getGraphics('dataFlow');
+
+      // then
+      expect(domQuery('.djs-label', messageFlow)).to.exist;
+    }));
+
+
+    it('should render centered below marker', inject(function(elementRegistry) {
+
+      // given
+      var messageFlow = elementRegistry.getGraphics('dataFlow');
+
+      var marker = domQueryAll('.djs-visual > path', messageFlow)[ 1 ],
+          label = domQuery('.djs-label', messageFlow);
+
+      var markerBounds = marker.getBoundingClientRect(),
+          labelBounds = label.getBoundingClientRect();
+
+      // then
+      expectDistance(marker, label, { x: 0 });
+
+      expect(labelBounds.top - markerBounds.bottom).to.be.closeTo(10, 3);
+    }));
+
   });
 
 

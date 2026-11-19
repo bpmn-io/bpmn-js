@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: place referenced message label correctly on message flow ([#1986](https://github.com/bpmn-io/bpmn-js/issues/1986), [#2516](https://github.com/bpmn-io/bpmn-js/pull/2516))
+
 ## 18.33.0
 
 * `FEAT`: add `MoveCanvas#toggle` API and `config.moveCanvas.enabled` option ([bpmn-io/diagram-js#1123](https://github.com/bpmn-io/diagram-js/pull/1123), [bpmn-io/diagram-js#760](https://github.com/bpmn-io/diagram-js/issues/760))
