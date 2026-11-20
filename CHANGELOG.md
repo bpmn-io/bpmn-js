@@ -6,6 +6,8 @@ All notable changes to [bpmn-js](https://github.com/bpmn-io/bpmn-js) are documen
 
 ___Note:__ Yet to be released changes appear here._
 
+## 18.33.1
+
 * `FIX`: place referenced message label correctly on message flow ([#1986](https://github.com/bpmn-io/bpmn-js/issues/1986), [#2516](https://github.com/bpmn-io/bpmn-js/pull/2516))
 * `FIX`: preserve stroke color when dropping a shape on a flow ([#2515](https://github.com/bpmn-io/bpmn-js/pull/2515), [#1892](https://github.com/bpmn-io/bpmn-js/issues/1892))
 
