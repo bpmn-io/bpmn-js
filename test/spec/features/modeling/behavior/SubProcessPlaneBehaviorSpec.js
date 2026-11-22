@@ -611,6 +611,93 @@ describe('features/modeling/behavior - subprocess planes', function() {
       })
     );
 
+
+    describe('collapsed event subprocess start event', function() {
+
+      var eventSubProcessXML = require('../../../../fixtures/bpmn/draw/event-subprocess-icons.bpmn');
+
+      beforeEach(bootstrapModeler(eventSubProcessXML, {
+        modules: [
+          coreModule,
+          modelingModule,
+          replaceModule
+        ]
+      }));
+
+
+      it('should rerender primary shape when start event in plane is changed',
+        inject(function(modeling, elementRegistry, eventBus) {
+
+          // given
+          var subProcess = elementRegistry.get('SignalEventSubprocess_4'),
+              startEvent = elementRegistry.get('StartEvent_44');
+
+          var changedSpy = sinon.spy();
+
+          eventBus.on('element.changed', 5000, changedSpy);
+
+          // when
+          modeling.updateProperties(startEvent, { isInterrupting: false });
+
+          // then
+          var matchingCalls = changedSpy.getCalls().filter(function(call) {
+            return call.args[0].element === subProcess;
+          });
+          expect(matchingCalls).to.not.be.empty;
+        })
+      );
+
+
+      it('should rerender primary shape when start event in plane is replaced',
+        inject(function(bpmnReplace, elementRegistry, eventBus) {
+
+          // given
+          var subProcess = elementRegistry.get('SignalEventSubprocess_4'),
+              startEvent = elementRegistry.get('StartEvent_44');
+
+          var changedSpy = sinon.spy();
+
+          eventBus.on('element.changed', 5000, changedSpy);
+
+          // when
+          bpmnReplace.replaceElement(startEvent, {
+            type: 'bpmn:StartEvent',
+            eventDefinitionType: 'bpmn:MessageEventDefinition'
+          });
+
+          // then
+          var matchingCalls = changedSpy.getCalls().filter(function(call) {
+            return call.args[0].element === subProcess;
+          });
+          expect(matchingCalls).to.not.be.empty;
+        })
+      );
+
+
+      it('should rerender primary shape when start event in plane is deleted',
+        inject(function(modeling, elementRegistry, eventBus) {
+
+          // given
+          var subProcess = elementRegistry.get('SignalEventSubprocess_4'),
+              startEvent = elementRegistry.get('StartEvent_44');
+
+          var changedSpy = sinon.spy();
+
+          eventBus.on('element.changed', 5000, changedSpy);
+
+          // when
+          modeling.removeShape(startEvent);
+
+          // then
+          var matchingCalls = changedSpy.getCalls().filter(function(call) {
+            return call.args[0].element === subProcess;
+          });
+          expect(matchingCalls).to.not.be.empty;
+        })
+      );
+
+    });
+
   });
 
 
