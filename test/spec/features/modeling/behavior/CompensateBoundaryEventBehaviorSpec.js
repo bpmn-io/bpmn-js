@@ -439,4 +439,79 @@ describe('features/modeling/behavior - compensation boundary event', function() 
 
   });
 
+
+  describe('association direction', function() {
+
+    it('should set direction to None when reconnecting to text annotation', inject(
+      function(canvas, commandStack, elementRegistry, modeling) {
+
+        // given
+        const oldTarget = elementRegistry.get('Task_Compensation');
+        const connection = elementRegistry.get('Association');
+        const textAnnotation = modeling.createShape(
+          { type: 'bpmn:TextAnnotation' },
+          { x: 400, y: 400 },
+          canvas.getRootElement()
+        );
+
+        // when
+        modeling.reconnectEnd(connection, textAnnotation, { x: 400, y: 400 });
+
+        // then
+        expect(connection.businessObject.associationDirection).to.equal('None');
+        expect(oldTarget.businessObject.isForCompensation).to.be.false;
+
+        // undo
+        commandStack.undo();
+
+        expect(connection.businessObject.associationDirection).to.equal('One');
+        expect(oldTarget.businessObject.isForCompensation).to.be.true;
+
+        // redo
+        commandStack.redo();
+
+        expect(connection.businessObject.associationDirection).to.equal('None');
+        expect(oldTarget.businessObject.isForCompensation).to.be.false;
+      }
+    ));
+
+
+    it('should set direction to One when reconnecting to compensation activity', inject(
+      function(canvas, commandStack, elementRegistry, modeling) {
+
+        // given
+        const boundaryEvent = elementRegistry.get('Attached_Event2');
+        const task = elementRegistry.get('Task');
+        const textAnnotation = modeling.createShape(
+          { type: 'bpmn:TextAnnotation' },
+          { x: 400, y: 400 },
+          canvas.getRootElement()
+        );
+
+        const connection = modeling.connect(boundaryEvent, textAnnotation);
+        expect(connection.businessObject.associationDirection).to.equal('None');
+
+        // when
+        modeling.reconnectEnd(connection, task, { x: task.x, y: task.y });
+
+        // then
+        expect(connection.businessObject.associationDirection).to.equal('One');
+        expect(task.businessObject.isForCompensation).to.be.true;
+
+        // undo
+        commandStack.undo();
+
+        expect(connection.businessObject.associationDirection).to.equal('None');
+        expect(task.businessObject.isForCompensation).to.be.false;
+
+        // redo
+        commandStack.redo();
+
+        expect(connection.businessObject.associationDirection).to.equal('One');
+        expect(task.businessObject.isForCompensation).to.be.true;
+      }
+    ));
+
+  });
+
 });
