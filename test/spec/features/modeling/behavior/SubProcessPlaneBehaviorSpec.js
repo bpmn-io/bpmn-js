@@ -696,6 +696,81 @@ describe('features/modeling/behavior - subprocess planes', function() {
         })
       );
 
+
+      it('should rerender primary shape on undo and redo of deleting start event',
+        inject(function(modeling, elementRegistry, eventBus, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SignalEventSubprocess_4'),
+              startEvent = elementRegistry.get('StartEvent_44'),
+              flowCounts = [];
+
+          eventBus.on('element.changed', 5000, function(context) {
+            if (context.element === subProcess) {
+              var startEvents = (subProcess.businessObject.get('flowElements') || []).filter(function(el) {
+                return is(el, 'bpmn:StartEvent');
+              });
+              flowCounts.push(startEvents.length);
+            }
+          });
+
+          // when
+          modeling.removeShape(startEvent);
+          expect(flowCounts[flowCounts.length - 1]).to.equal(0);
+
+          flowCounts.length = 0;
+          commandStack.undo();
+          expect(flowCounts).to.not.be.empty;
+          expect(flowCounts[flowCounts.length - 1]).to.equal(1);
+
+          flowCounts.length = 0;
+          commandStack.redo();
+
+          // then
+          expect(flowCounts).to.not.be.empty;
+          expect(flowCounts[flowCounts.length - 1]).to.equal(0);
+        })
+      );
+
+
+      it('should rerender primary shape on undo and redo of creating start event',
+        inject(function(modeling, elementRegistry, eventBus, commandStack) {
+
+          // given
+          var subProcess = elementRegistry.get('SignalEventSubprocess_4'),
+              startEvent = elementRegistry.get('StartEvent_44'),
+              plane = elementRegistry.get(subProcess.id + '_plane'),
+              flowCounts = [];
+
+          modeling.removeShape(startEvent);
+
+          eventBus.on('element.changed', 5000, function(context) {
+            if (context.element === subProcess) {
+              var startEvents = (subProcess.businessObject.get('flowElements') || []).filter(function(el) {
+                return is(el, 'bpmn:StartEvent');
+              });
+              flowCounts.push(startEvents.length);
+            }
+          });
+
+          // when
+          modeling.createShape({ type: 'bpmn:StartEvent' }, { x: 200, y: 200 }, plane);
+          expect(flowCounts[flowCounts.length - 1]).to.equal(1);
+
+          flowCounts.length = 0;
+          commandStack.undo();
+          expect(flowCounts).to.not.be.empty;
+          expect(flowCounts[flowCounts.length - 1]).to.equal(0);
+
+          flowCounts.length = 0;
+          commandStack.redo();
+
+          // then
+          expect(flowCounts).to.not.be.empty;
+          expect(flowCounts[flowCounts.length - 1]).to.equal(1);
+        })
+      );
+
     });
 
   });
